@@ -1,3 +1,5 @@
+labelNameNotSet = false;
+
 function showLabelNamePopUp(xCoordinate, yCoordinate){
   let labelNamePopUp = document.getElementById('labelNamePopUp');
   labelNamePopUp.style.display = 'block';
@@ -28,6 +30,15 @@ function labelBndBox(){
     strokeWidth: 2,
     fill: 'rgba(255,0,0,0.1)',
   });
+  labelNameNotSet = true;
   canvas.remove(rect);
   canvas.add(group);
+}
+
+function removeBndBxIfLabelNamePending(){
+  if(labelNameNotSet){
+    canvas.remove(rect);
+    labelNameNotSet = false;
+    document.getElementById('labelNamePopUp').style.display = "none";
+  }
 }

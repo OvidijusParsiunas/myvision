@@ -41,6 +41,7 @@ canvas.on('mouse:up', function(o){
 });
 
 function newRectangle(){
+  removeBndBxIfLabelNamePending();
   canvas.discardActiveObject();
   canvas.renderAll();
   canvas.forEachObject(function(object){
@@ -65,8 +66,10 @@ function newRectangle(){
       });
       canvas.add(rect);
   }]
+  labelNameNotSet = true;
 }
 
 function removeRectangle(){
+    removeBndBxIfLabelNamePending();
     canvas.remove(canvas.getActiveObject());
 }

@@ -1,4 +1,5 @@
 function downloadXML(){
+  removeBndBxIfLabelNamePending();
   if(imageUploaded){
     let xml = generateXML()
     downloadXMLFile(xml);
