@@ -6,6 +6,20 @@ canvas.setBackgroundColor({ source: 'sample-img.jpg', repeat: 'repeat' }, functi
         canvas.renderAll();
 })
 
+canvas.on('mouse:over', function(e) {
+   if(e.target && e.target._objects){
+     e.target._objects[0].set('fill', 'rgba(255,0,0,0.2)');
+     canvas.renderAll();
+   }
+ });
+
+ canvas.on('mouse:out', function(e) {
+   if(e.target && e.target._objects){
+     e.target._objects[0].set('fill', 'rgba(255,0,0,0');
+     canvas.renderAll();
+   }
+ });
+
 canvas.on('mouse:move', function(o){
     if (!isDown) return;
     var pointer = canvas.getPointer(o.e);
@@ -62,7 +76,7 @@ function newRectangle(){
           height: pointer.y-origY,
           stroke: 'rgba(255,0,0)',
           strokeWidth: 2,
-          fill: 'rgba(255,0,0,0.1)',
+          fill: 'rgba(255,0,0,0)',
       });
       canvas.add(rect);
   }]
