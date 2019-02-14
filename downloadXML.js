@@ -1,7 +1,7 @@
 function downloadXML(){
   removeBndBxIfLabelNamePending();
   if(imageUploaded){
-    let xml = generateXML()
+    let xml = generateXML();
     downloadXMLFile(xml);
   }
 }
@@ -10,7 +10,7 @@ function generateXML() {
   let annotatedImageJSON = {};
   annotatedImageJSON.annotations = getImageDetails();
   annotatedImageJSON.annotations.object = getBoundingBoxCoordinates();
-  return annotatedImageXML = convertJSONToXML(annotatedImageJSON);
+  return convertJSONToXML(annotatedImageJSON);
 }
 
 function getImageDetails(){
@@ -27,7 +27,7 @@ function getImageDetails(){
       depth: 1,
     },
     segmented: 0
-  }
+  };
 }
 function getBoundingBoxCoordinates(){
   let shape = {};
@@ -45,7 +45,7 @@ function getBoundingBoxCoordinates(){
         xmax: rectangleObject.left + rectangleObject.width,
         ymax: rectangleObject.top + rectangleObject.height
       }
-    }
+    };
   });
   return shape;
 }
@@ -54,7 +54,6 @@ function downloadXMLFile(xml){
   let regexToFindFirstWordBeforeFullStop = new RegExp("^([^.]+)");
   var pom = document.createElement('a');
   var filename = imageName + ".xml";
-  var pom = document.createElement('a');
   var bb = new Blob([xml], {type: 'text/plain'});
   pom.setAttribute('href', window.URL.createObjectURL(bb));
   pom.setAttribute('download', regexToFindFirstWordBeforeFullStop.exec(imageName)[0] + ".xml");

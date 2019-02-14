@@ -1,7 +1,6 @@
 function convertJSONToXML(JSONObject){
   let XMLObject = "";
-  XMLObject = iterateObjectProperties(JSONObject)
-  return XMLObject;
+  return iterateObjectProperties(JSONObject);
 }
 
 function iterateObjectProperties(JSONObject){

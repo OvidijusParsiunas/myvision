@@ -4,7 +4,7 @@ var rect, isDown, origX, origY;
 
 canvas.setBackgroundColor({ source: 'sample-img.jpg', repeat: 'repeat' }, function () {
         canvas.renderAll();
-})
+});
 
 canvas.on('mouse:over', function(e) {
    if(e.target && e.target._objects){
@@ -68,7 +68,6 @@ function newRectangle(){
       var pointer = canvas.getPointer(o.e);
       origX = pointer.x;
       origY = pointer.y;
-      var pointer = canvas.getPointer(o.e);
       rect = new fabric.Rect({
           left: origX,
           top: origY,
@@ -79,7 +78,7 @@ function newRectangle(){
           fill: 'rgba(255,0,0,0)',
       });
       canvas.add(rect);
-  }]
+  }];
   labelNameNotSet = true;
 }
 

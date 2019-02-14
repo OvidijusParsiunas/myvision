@@ -1,6 +1,6 @@
 imageUploaded = false;
 
-function readURL(input) {
+function readURL (input) {
        removeBndBxIfLabelNamePending();
        if (input.files && input.files[0]) {
            let maximumCanvasHeight = window.innerHeight - 54;
@@ -27,7 +27,7 @@ function readURL(input) {
                  canvas.setHeight(canvas2.height);
                  canvas.setBackgroundColor({ source: canvas2.toDataURL() }, function () {
                          canvas.renderAll();
-                 })
+                 });
                }
                else if(maximumCanvasWidth < this.width){
                  let canvas2 = document.createElement("canvas");
@@ -39,16 +39,16 @@ function readURL(input) {
                  canvas.setHeight(canvas2.height);
                  canvas.setBackgroundColor({ source: canvas2.toDataURL() }, function () {
                          canvas.renderAll();
-                 })
+                 });
                }
                else{
                  canvas.setWidth(this.width);
                  canvas.setHeight(this.height);
                  canvas.setBackgroundColor({ source: e.target.result }, function () {
                          canvas.renderAll();
-                 })
+                 });
                }
-             }
+             };
            };
            reader.readAsDataURL(input.files[0]);
        }
