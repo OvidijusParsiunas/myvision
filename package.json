@@ -1,0 +1,28 @@
+{
+  "name": "mylabel",
+  "version": "1.0.0",
+  "description": "This is an image labelling tool for generating computer vision training data on the web.",
+  "main": "index.js",
+  "dependencies": {
+    "webpack": "^4.29.4",
+    "webpack-cli": "^3.2.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OvidijusParsiunas/mylabel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OvidijusParsiunas/mylabel/issues"
+  },
+  "homepage": "https://github.com/OvidijusParsiunas/mylabel#readme"
+}
