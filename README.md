@@ -21,6 +21,8 @@ npm install --save-dev webpack-cli
 
 #start webpack (win)
 .\node_modules\.bin\webpack
+
+#start eslint (win)
 .\node_modules\.bin\eslint .
 or
 npx eslint .

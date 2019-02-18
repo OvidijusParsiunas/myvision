@@ -4,6 +4,10 @@
   "description": "This is an image labelling tool for generating computer vision training data on the web.",
   "main": "index.js",
   "dependencies": {
+    "browser": {
+      "child_process": false,
+      "fs": false
+    },
     "webpack": "^4.29.4",
     "webpack-cli": "^3.2.3"
   },
