@@ -1,3 +1,5 @@
 import constructCanvas from './fabricScript';
+import { setCanvas } from './uploadFile';
 
-constructCanvas();
+const canvas = constructCanvas();
+setCanvas(canvas);

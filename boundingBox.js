@@ -1,11 +1,12 @@
 import fabric from 'fabric';
 import leftMouseBtn from './mouseEvents';
+import { removeBndBxIfLabelNamePending, showLabelNamePopUp } from './labelNamePopUp';
 
 let canvas = null;
 const bndBoxProps = {};
 
 function createNewBndBox() {
-  // removeBndBxIfLabelNamePending();
+  removeBndBxIfLabelNamePending();
   canvas.discardActiveObject();
   canvas.renderAll();
   canvas.forEachObject((iteratedObj) => {
@@ -29,7 +30,6 @@ function createNewBndBox() {
     });
     canvas.add(bndBoxProps.rect);
   }];
-  // labelNameNotSet = true;
 }
 
 function drawBndBox(canvasObj) {
@@ -46,7 +46,7 @@ function drawBndBox(canvasObj) {
   canvas.renderAll();
 }
 
-function finishDrawingBndBox(canvasObj) {
+function finishDrawingBndBox(canvasObj, canvasElement) {
   if (leftMouseBtn.down) {
     leftMouseBtn.down = false;
     bndBoxProps.rect.setCoords();
@@ -58,7 +58,7 @@ function finishDrawingBndBox(canvasObj) {
       iteratedObj.selectable = true;
     });
     const pointer = canvas.getPointer(canvasObj.e);
-    // showLabelNamePopUp(pointer.x, pointer.y, rect);
+    showLabelNamePopUp(pointer.x, pointer.y, bndBoxProps.rect, canvasElement);
   }
 }
 
@@ -77,7 +77,7 @@ function removeBndBoxHighlight(canvasObj) {
 }
 
 function removeBndBox() {
-  // removeBndBxIfLabelNamePending();
+  removeBndBxIfLabelNamePending();
   canvas.remove(canvas.getActiveObject());
 }
 

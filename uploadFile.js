@@ -1,55 +1,66 @@
-imageUploaded = false;
+const fileStatus = { uploaded: false, name: null };
+const canvasProperties = {};
+let canvas = null;
 
-function readURL (input) {
-       removeBndBxIfLabelNamePending();
-       if (input.files && input.files[0]) {
-           let maximumCanvasHeight = window.innerHeight - 54;
-           let maximumCanvasWidth = window.innerWidth - 110;
-           var reader = new FileReader();
-           imageName = input.files[0].name;
-           reader.onload = function (e) {
-             var image = new Image();
-             image.src = e.target.result;
-             image.onload = function(){
-               imageUploaded = true;
-               if(maximumCanvasHeight < this.height){
-                 let canvas2 = document.createElement("canvas");
-                 let heightRatio = maximumCanvasHeight / this.height;
-                 canvas2.height = maximumCanvasHeight;
-                 canvas2.width = this.width * heightRatio;
-                 if(maximumCanvasWidth < canvas2.width){
-                   let widthRatio = maximumCanvasWidth / this.width;
-                   canvas2.width = maximumCanvasWidth;
-                   canvas2.height = canvas2.height * widthRatio;
-                 }
-                 canvas2.getContext("2d").drawImage(this, 0, 0, canvas2.width, canvas2.height);
-                 canvas.setWidth(canvas2.width);
-                 canvas.setHeight(canvas2.height);
-                 canvas.setBackgroundColor({ source: canvas2.toDataURL() }, function () {
-                         canvas.renderAll();
-                 });
-               }
-               else if(maximumCanvasWidth < this.width){
-                 let canvas2 = document.createElement("canvas");
-                 let widthRatio = maximumCanvasWidth / this.width;
-                 canvas2.width = maximumCanvasWidth;
-                 canvas2.height = canvas2.height * widthRatio;
-                 canvas2.getContext("2d").drawImage(this, 0, 0, canvas2.width, canvas2.height);
-                 canvas.setWidth(canvas2.width);
-                 canvas.setHeight(canvas2.height);
-                 canvas.setBackgroundColor({ source: canvas2.toDataURL() }, function () {
-                         canvas.renderAll();
-                 });
-               }
-               else{
-                 canvas.setWidth(this.width);
-                 canvas.setHeight(this.height);
-                 canvas.setBackgroundColor({ source: e.target.result }, function () {
-                         canvas.renderAll();
-                 });
-               }
-             };
-           };
-           reader.readAsDataURL(input.files[0]);
-       }
-   }
+function onImageLoad() {
+  fileStatus.uploaded = true;
+  const tempCanvasObj = document.createElement('canvas');
+  if (canvasProperties.maximumCanvasHeight < this.height) {
+    const heightRatio = canvasProperties.maximumCanvasHeight / this.height;
+    tempCanvasObj.height = canvasProperties.maximumCanvasHeight;
+    tempCanvasObj.width = this.width * heightRatio;
+    if (canvasProperties.maximumCanvasWidth < tempCanvasObj.width) {
+      const widthRatio = canvasProperties.maximumCanvasWidth / this.width;
+      tempCanvasObj.width = canvasProperties.maximumCanvasWidth;
+      tempCanvasObj.height *= widthRatio;
+    }
+    tempCanvasObj.getContext('2d').drawImage(this, 0, 0, tempCanvasObj.width, tempCanvasObj.height);
+    canvas.setWidth(tempCanvasObj.width);
+    canvas.setHeight(tempCanvasObj.height);
+    canvas.setBackgroundColor({ source: tempCanvasObj.toDataURL() }, () => {
+      canvas.renderAll();
+    });
+  } else if (canvasProperties.maximumCanvasWidth < this.width) {
+    const widthRatio = canvasProperties.maximumCanvasWidth / this.width;
+    tempCanvasObj.width = canvasProperties.maximumCanvasWidth;
+    tempCanvasObj.height *= widthRatio;
+    tempCanvasObj.getContext('2d').drawImage(this, 0, 0, tempCanvasObj.width, tempCanvasObj.height);
+    canvas.setWidth(tempCanvasObj.width);
+    canvas.setHeight(tempCanvasObj.height);
+    canvas.setBackgroundColor({ source: tempCanvasObj.toDataURL() }, () => {
+      canvas.renderAll();
+    });
+  } else {
+    canvas.setWidth(this.width);
+    canvas.setHeight(this.height);
+    canvas.setBackgroundColor({ source: this.src }, () => {
+      canvas.renderAll();
+    });
+  }
+}
+
+function onFileLoad(e) {
+  const image = new Image();
+  image.src = e.target.result;
+  image.onload = onImageLoad;
+}
+
+function readURL(input) {
+  // removeBndBxIfLabelNamePending();
+  if (input.files && input.files[0]) {
+    canvasProperties.maximumCanvasHeight = window.innerHeight - 54;
+    canvasProperties.maximumCanvasWidth = window.innerWidth - 110;
+    const reader = new FileReader();
+    fileStatus.name = input.files[0].name;
+    reader.onload = onFileLoad;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function setCanvas(canvasObj) {
+  canvas = canvasObj;
+}
+
+window.readURL = readURL;
+
+export { fileStatus, setCanvas };

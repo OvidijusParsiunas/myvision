@@ -1,44 +1,55 @@
-labelNameNotSet = false;
+import fabric from 'fabric';
 
-function showLabelNamePopUp(xCoordinate, yCoordinate){
-  let labelNamePopUp = document.getElementById('labelNamePopUp');
+let displayLabelNamePopUp = false;
+let targetBndBox = null;
+let canvas = null;
+
+function showLabelNamePopUp(xCoordinate, yCoordinate, bndBox, canvasObj) {
+  targetBndBox = bndBox;
+  canvas = canvasObj;
+  const labelNamePopUp = document.getElementById('labelNamePopUp');
   labelNamePopUp.style.display = 'block';
-  let canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
-  let canvasY = canvasWrapperCoordinates.top;
-  let canvasX = canvasWrapperCoordinates.left;
-  labelNamePopUp.style.top = yCoordinate + canvasY + 'px';
-  labelNamePopUp.style.left = xCoordinate + canvasX + 'px';
+  const canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
+  const canvasY = canvasWrapperCoordinates.top;
+  const canvasX = canvasWrapperCoordinates.left;
+  labelNamePopUp.style.top = `${yCoordinate + canvasY}px`;
+  labelNamePopUp.style.left = `${xCoordinate + canvasX}px`;
+  displayLabelNamePopUp = true;
 }
 
-function labelBndBox(){
-  let text = document.getElementById("label-title").value;
-  document.getElementById('labelNamePopUp').style.display = "none";
-  var textShape = new fabric.Text(text, {
-  fontSize: 10,
-  fill: 'yellow',
-  left: rect.left,
-  top: rect.top,
-  width: rect.width,
-  height: rect.height
-});
-  var group = new fabric.Group([ rect, textShape ], {
-    left: rect.left,
-    top: rect.top,
-    width: rect.width,
-    height: rect.height,
+function labelBndBox() {
+  const text = document.getElementById('label-title').value;
+  document.getElementById('labelNamePopUp').style.display = 'none';
+  const textShape = new fabric.Text(text, {
+    fontSize: 10,
+    fill: 'yellow',
+    left: targetBndBox.left,
+    top: targetBndBox.top,
+    width: targetBndBox.width,
+    height: targetBndBox.height,
+  });
+  const group = new fabric.Group([targetBndBox, textShape], {
+    left: targetBndBox.left,
+    top: targetBndBox.top,
+    width: targetBndBox.width,
+    height: targetBndBox.height,
     stroke: 'rgba(255,0,0)',
     strokeWidth: 2,
     fill: 'rgba(255,0,0,0.1)',
   });
-  labelNameNotSet = true;
-  canvas.remove(rect);
+  displayLabelNamePopUp = true;
+  canvas.remove(targetBndBox);
   canvas.add(group);
 }
 
-function removeBndBxIfLabelNamePending(){
-  if(labelNameNotSet){
-    canvas.remove(rect);
-    labelNameNotSet = false;
-    document.getElementById('labelNamePopUp').style.display = "none";
+
+function removeBndBxIfLabelNamePending() {
+  if (displayLabelNamePopUp) {
+    canvas.remove(targetBndBox);
+    displayLabelNamePopUp = false;
+    document.getElementById('labelNamePopUp').style.display = 'none';
   }
 }
+
+window.labelBndBox = labelBndBox;
+export { removeBndBxIfLabelNamePending, showLabelNamePopUp };

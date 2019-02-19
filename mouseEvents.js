@@ -1,5 +1,3 @@
-const leftMouseBtn = {
-  down: false,
-};
+const leftMouseBtn = { down: false };
 
 export default leftMouseBtn;

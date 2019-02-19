@@ -20,7 +20,7 @@ function assignMouseEvents(canvas) {
   });
 
   canvas.on('mouse:up', (o) => {
-    finishDrawingBndBox(o);
+    finishDrawingBndBox(o, canvas);
   });
 }
 
