@@ -43,7 +43,7 @@ function labelBndBox() {
 }
 
 
-function removeBndBxIfLabelNamePending() {
+function removeBndBoxIfLabelNamePending() {
   if (displayLabelNamePopUp) {
     canvas.remove(targetBndBox);
     displayLabelNamePopUp = false;
@@ -52,4 +52,4 @@ function removeBndBxIfLabelNamePending() {
 }
 
 window.labelBndBox = labelBndBox;
-export { removeBndBxIfLabelNamePending, showLabelNamePopUp };
+export { removeBndBoxIfLabelNamePending, showLabelNamePopUp };

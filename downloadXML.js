@@ -1,5 +1,5 @@
 import { fileStatus } from './uploadFile';
-import { removeBndBxIfLabelNamePending } from './labelNamePopUp';
+import { removeBndBoxIfLabelNamePending } from './labelNamePopUp';
 import convertJSONToXML from './JSONtoXML';
 
 let canvas = null;
@@ -63,7 +63,7 @@ function generateXML() {
 }
 
 function downloadXML() {
-  removeBndBxIfLabelNamePending();
+  removeBndBoxIfLabelNamePending();
   if (fileStatus.uploaded) {
     const xml = generateXML();
     downloadXMLFile(xml);
