@@ -59,10 +59,8 @@ function readURL(input) {
   }
 }
 
-function setCanvas(canvasObj) {
-  canvas = canvasObj;
+function assignCanvasToNewImageUpload(newCanvas) {
+  canvas = newCanvas;
 }
 
-window.readURL = readURL;
-
-export { fileStatus, setCanvas };
+export { fileStatus, readURL, assignCanvasToNewImageUpload };
