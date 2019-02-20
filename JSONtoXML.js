@@ -1,17 +1,17 @@
-function convertJSONToXML(JSONObject){
-  let XMLObject = "";
+function iterateObjectProperties(JSONObject) {
+  let tagString = '';
+  Object.keys(JSONObject).forEach((key) => {
+    if (typeof (JSONObject[key]) === 'object') {
+      tagString += `<${key}>${iterateObjectProperties(JSONObject[key])}</${key}>`;
+    } else {
+      tagString += `<${key}>${JSONObject[key]}</${key}>`;
+    }
+  });
+  return tagString;
+}
+
+function convertJSONToXML(JSONObject) {
   return iterateObjectProperties(JSONObject);
 }
 
-function iterateObjectProperties(JSONObject){
-  let tagString = "";
-  for(let key in JSONObject){
-    if(typeof(JSONObject[key]) === 'object'){
-      tagString += "<" + key + ">" + iterateObjectProperties(JSONObject[key]) + "</" + key + ">";
-    }
-    else{
-      tagString += "<" + key + ">" + JSONObject[key] + "</" + key + ">";
-    }
-  }
-  return tagString;
-}
+export { convertJSONToXML as default };

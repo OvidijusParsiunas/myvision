@@ -1,39 +1,31 @@
-function downloadXML() {
-  removeBndBxIfLabelNamePending();
-  if(imageUploaded){
-    let xml = generateXML();
-    downloadXMLFile(xml);
-  }
-}
+import { fileStatus } from './uploadFile';
+import { removeBndBxIfLabelNamePending } from './labelNamePopUp';
+import convertJSONToXML from './JSONtoXML';
 
-function generateXML() {
-  let annotatedImageJSON = {};
-  annotatedImageJSON.annotations = getImageDetails();
-  annotatedImageJSON.annotations.object = getBoundingBoxCoordinates();
-  return convertJSONToXML(annotatedImageJSON);
-}
+let canvas = null;
 
-function getImageDetails(){
+function getImageDetails() {
   return {
-    folder: 'sadasd',
-    filename: imageName,
-    path: 'sadasds',
+    folder: 'Unknown',
+    filename: fileStatus.name,
+    path: 'Unknown',
     source: {
-      database: 'Unknown'
+      database: 'Unknown',
     },
     size: {
       width: canvas.getWidth(),
       height: canvas.getHeight(),
       depth: 1,
     },
-    segmented: 0
+    segmented: 0,
   };
 }
-function getBoundingBoxCoordinates(){
+
+function getBoundingBoxCoordinates() {
   let shape = {};
-  canvas.forEachObject(function(object){
-    let rectangleObject = object._objects[0];
-    let rectangleText = object._objects[1].text;
+  canvas.forEachObject((object) => {
+    const rectangleObject = object._objects[0];
+    const rectangleText = object._objects[1].text;
     shape = {
       name: rectangleText,
       pose: 'Unspecified',
@@ -43,22 +35,44 @@ function getBoundingBoxCoordinates(){
         xmin: rectangleObject.left,
         ymin: rectangleObject.top,
         xmax: rectangleObject.left + rectangleObject.width,
-        ymax: rectangleObject.top + rectangleObject.height
-      }
+        ymax: rectangleObject.top + rectangleObject.height,
+      },
     };
   });
   return shape;
 }
 
-function downloadXMLFile(xml){
-  let regexToFindFirstWordBeforeFullStop = new RegExp("^([^.]+)");
-  var pom = document.createElement('a');
-  var filename = imageName + ".xml";
-  var bb = new Blob([xml], {type: 'text/plain'});
+function downloadXMLFile(xml) {
+  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
+  const pom = document.createElement('a');
+  const bb = new Blob([xml], { type: 'text/plain' });
   pom.setAttribute('href', window.URL.createObjectURL(bb));
-  pom.setAttribute('download', regexToFindFirstWordBeforeFullStop.exec(imageName)[0] + ".xml");
+  const fileNameNoTail = `${regexToFindFirstWordBeforeFullStop.exec(fileStatus.name)[0]}.xml`;
+  pom.setAttribute('download', fileNameNoTail);
   pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
   pom.draggable = true;
   pom.classList.add('dragout');
   pom.click();
 }
+
+function generateXML() {
+  const annotatedImageJSON = {};
+  annotatedImageJSON.annotations = getImageDetails();
+  annotatedImageJSON.annotations.object = getBoundingBoxCoordinates();
+  return convertJSONToXML(annotatedImageJSON);
+}
+
+function downloadXML() {
+  removeBndBxIfLabelNamePending();
+  if (fileStatus.uploaded) {
+    const xml = generateXML();
+    downloadXMLFile(xml);
+  }
+}
+
+function setCanvasDownloadXML(canvasObj) {
+  window.downloadXML = downloadXML;
+  canvas = canvasObj;
+}
+
+export { setCanvasDownloadXML as default };

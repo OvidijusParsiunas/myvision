@@ -83,6 +83,7 @@ function removeBndBox() {
 
 function setCanvas(newCanvas) {
   canvas = newCanvas;
+  window.removeBndBox = removeBndBox;
 }
 
 export {

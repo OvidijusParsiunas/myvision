@@ -1,3 +1,5 @@
+import { removeBndBxIfLabelNamePending } from './labelNamePopUp';
+
 const fileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
@@ -46,7 +48,7 @@ function onFileLoad(e) {
 }
 
 function readURL(input) {
-  // removeBndBxIfLabelNamePending();
+  removeBndBxIfLabelNamePending();
   if (input.files && input.files[0]) {
     canvasProperties.maximumCanvasHeight = window.innerHeight - 54;
     canvasProperties.maximumCanvasWidth = window.innerWidth - 110;
