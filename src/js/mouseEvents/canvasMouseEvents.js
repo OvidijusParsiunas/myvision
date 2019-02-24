@@ -1,7 +1,7 @@
 import {
   setBndBoxCanvas, instantiateNewBndBox, drawBndBox,
   finishDrawingBndBox, highlightBndBox, removeBndBoxHighlight,
-} from './boundingBox';
+} from '../canvas/canvasObjects/boundingBox';
 
 function boundingBoxEvents(canvas) {
   setBndBoxCanvas(canvas);

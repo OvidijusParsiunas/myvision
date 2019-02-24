@@ -36,11 +36,11 @@ function getBoundingBoxCoordinates(canvas) {
   return shape;
 }
 
-function buildDownloadableAnnotationsObject(canvas, fileStatus) {
-  const downloadableObject = {};
-  downloadableObject.annotations = getImageDetails(canvas, fileStatus);
-  downloadableObject.annotations.object = getBoundingBoxCoordinates(canvas);
-  return downloadableObject;
+function builAnnotationsObject(canvas, fileStatus) {
+  const annotationsObject = {};
+  annotationsObject.annotations = getImageDetails(canvas, fileStatus);
+  annotationsObject.annotations.object = getBoundingBoxCoordinates(canvas);
+  return annotationsObject;
 }
 
-export { buildDownloadableAnnotationsObject as default };
+export { builAnnotationsObject as default };

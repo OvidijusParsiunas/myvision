@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import { removeBndBoxIfLabelNamePending, showLabelNamePopUp } from './labelNamePopUp';
+import { removeBndBoxIfLabelNamePending, showLabelNamePopUp } from '../externalObjects/labelNamePopUp';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;

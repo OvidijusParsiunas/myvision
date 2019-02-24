@@ -1,6 +1,6 @@
-import { createNewBndBoxBtnClick, removeBndBoxBtnClick } from './boundingBox';
-import { uploadImage } from './uploadImage';
-import { downloadXML } from './downloadXML';
+import { createNewBndBoxBtnClick, removeBndBoxBtnClick } from '../canvas/canvasObjects/boundingBox';
+import { uploadImage } from '../uploadFile/uploadImage';
+import { downloadXML } from '../downloadFile/downloadXML';
 
 function assignButtonEvents() {
   window.createNewBndBox = createNewBndBoxBtnClick;

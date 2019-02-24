@@ -1,7 +1,7 @@
-import { fileStatus } from './uploadImage';
-import { removeBndBoxIfLabelNamePending } from './labelNamePopUp';
-import convertJSONToXML from './JSONtoXML';
-import buildDownloadableAnnotationsObject from './downloadableAnnotationsObjFactory';
+import { fileStatus } from '../uploadFile/uploadImage';
+import { removeBndBoxIfLabelNamePending } from '../canvas/externalObjects/labelNamePopUp';
+import convertJSONToXML from './utils/JSONtoXML';
+import buildAnnotationsObject from './utils/annotationsObjFactory';
 
 let canvas = null;
 
@@ -27,7 +27,7 @@ function downloadXMLFile(xml) {
 }
 
 function generateXML() {
-  const downloadableObject = buildDownloadableAnnotationsObject(canvas, fileStatus);
+  const downloadableObject = buildAnnotationsObject(canvas, fileStatus);
   return convertJSONToXML(downloadableObject);
 }
 

@@ -1,7 +1,7 @@
 import fabric from 'fabric';
-import assignCanvasMouseEvents from './canvasMouseEvents';
-import { assignCanvasForNewImageUpload } from './uploadImage';
-import { assignCanvasForDownloadingAnnotationsXML } from './downloadXML';
+import assignCanvasMouseEvents from '../mouseEvents/canvasMouseEvents';
+import { assignCanvasForNewImageUpload } from '../uploadFile/uploadImage';
+import { assignCanvasForDownloadingAnnotationsXML } from '../downloadFile/downloadXML';
 
 
 function constructCanvas() {

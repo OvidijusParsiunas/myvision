@@ -1,4 +1,4 @@
-import { removeBndBoxIfLabelNamePending } from './labelNamePopUp';
+import { removeBndBoxIfLabelNamePending } from '../canvas/externalObjects/labelNamePopUp';
 
 const fileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
