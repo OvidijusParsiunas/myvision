@@ -1,3 +1,4 @@
+import fabric from 'fabric';
 import { removeBndBoxIfLabelNamePending } from '../canvas/externalObjects/labelNamePopUp';
 
 const fileStatus = { uploaded: false, name: null };
@@ -5,14 +6,13 @@ const canvasProperties = {};
 let canvas = null;
 
 function drawResizedImage(image, newImageDimensions) {
-  const temporaryCanvas = document.createElement('canvas');
-  temporaryCanvas.width = newImageDimensions.width;
-  temporaryCanvas.height = newImageDimensions.height;
-  temporaryCanvas.getContext('2d').drawImage(image, 0, 0, newImageDimensions.width, newImageDimensions.height);
-  canvas.setWidth(temporaryCanvas.width);
-  canvas.setHeight(temporaryCanvas.height);
-  canvas.setBackgroundColor({ source: temporaryCanvas.toDataURL() }, () => {
-    canvas.renderAll();
+  canvas.setWidth(newImageDimensions.width);
+  canvas.setHeight(newImageDimensions.height);
+  fabric.Image.fromURL(image.src, (img) => {
+    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+      scaleX: canvas.width / img.width,
+      scaleY: canvas.height / img.height,
+    });
   });
 }
 
