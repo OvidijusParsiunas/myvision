@@ -1,4 +1,4 @@
-import { fileStatus } from './uploadFile';
+import { fileStatus } from './uploadImage';
 import { removeBndBoxIfLabelNamePending } from './labelNamePopUp';
 import convertJSONToXML from './JSONtoXML';
 import buildDownloadableAnnotationsObject from './downloadableAnnotationsObjFactory';

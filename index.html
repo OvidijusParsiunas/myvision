@@ -11,15 +11,15 @@
   <div id="canvas-wrapper">
     <canvas id="c" style="border:1px solid #ccc;"></canvas>
   </div>
-  <button onclick="createNewBndBox()">New Rectangle</button>
-  <button onclick="removeBndBox()">Delete Rectangle</button>
-  <input type='file' onchange="readURL(this);" />
-  <button onclick="downloadXML()">GenerateXML</button>
+  <button onclick="createNewBndBox()">New Bounding Box</button>
+  <button onclick="removeBndBox()">Delete Bounding Box</button>
+  <input type='file' onchange="uploadImage(this);" />
+  <button onclick="downloadXML()">DownloadXML</button>
   <div id="labelNamePopUp" style="position: absolute; background-color: white; border-width: 1px; border-style: solid; border-color: grey" hidden>
-  Label name:<br>
-  <input type="text" id="label-title" name="labelName" value=""><br><br>
-  <button onclick="labelBndBox()">Submit</button>
-</div>
+    Label name:<br>
+    <input type="text" id="label-title" name="labelName" value=""><br><br>
+    <button onclick="labelBndBox()">Submit</button>
+  </div>
 <script src="dist/bundle.js" type="text/javascript"></script>
 </body>
 </html>

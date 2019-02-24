@@ -26,15 +26,17 @@ function instantiateNewBndBox() {
 }
 
 function createNewBndBoxBtnClick() {
-  removeBndBoxIfLabelNamePending();
-  createNewBoundingBoxBtnClicked = true;
-  canvas.discardActiveObject();
-  canvas.renderAll();
-  canvas.forEachObject((iteratedObj) => {
-    iteratedObj.selectable = false;
-  });
-  canvas.defaultCursor = 'crosshair';
-  canvas.hoverCursor = 'crosshair';
+  if (canvas.backgroundColor) {
+    removeBndBoxIfLabelNamePending();
+    createNewBoundingBoxBtnClicked = true;
+    canvas.discardActiveObject();
+    canvas.renderAll();
+    canvas.forEachObject((iteratedObj) => {
+      iteratedObj.selectable = false;
+    });
+    canvas.defaultCursor = 'crosshair';
+    canvas.hoverCursor = 'crosshair';
+  }
 }
 
 function drawBndBox(obj) {

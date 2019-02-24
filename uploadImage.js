@@ -71,7 +71,7 @@ function onFileLoad(e) {
   image.onload = onImageLoad;
 }
 
-function readURL(input) {
+function uploadImage(input) {
   removeBndBoxIfLabelNamePending();
   if (input.files && input.files[0]) {
     const reader = new FileReader();
@@ -91,4 +91,4 @@ function assignCanvasForNewImageUpload(newCanvas) {
   setCanvasProperties();
 }
 
-export { fileStatus, readURL, assignCanvasForNewImageUpload };
+export { fileStatus, uploadImage, assignCanvasForNewImageUpload };

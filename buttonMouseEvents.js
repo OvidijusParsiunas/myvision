@@ -1,11 +1,11 @@
 import { createNewBndBoxBtnClick, removeBndBoxBtnClick } from './boundingBox';
-import { readURL } from './uploadFile';
+import { uploadImage } from './uploadImage';
 import { downloadXML } from './downloadXML';
 
 function assignButtonEvents() {
   window.createNewBndBox = createNewBndBoxBtnClick;
   window.removeBndBox = removeBndBoxBtnClick;
-  window.readURL = readURL;
+  window.uploadImage = uploadImage;
   window.downloadXML = downloadXML;
 }
 

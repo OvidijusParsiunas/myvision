@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import assignCanvasMouseEvents from './canvasMouseEvents';
-import { assignCanvasForNewImageUpload } from './uploadFile';
+import { assignCanvasForNewImageUpload } from './uploadImage';
 import { assignCanvasForDownloadingAnnotationsXML } from './downloadXML';
 
 
