@@ -16,6 +16,7 @@ multi page annotating
 disable box label name
 
 generate XML for all shapes
+redraw shape on mouse up when stretching
 
 #webpack installation
 npm install --save-dev webpack
