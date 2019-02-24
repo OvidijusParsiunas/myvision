@@ -15,6 +15,8 @@ multi page annotating
 
 disable box label name
 
+generate XML for all shapes
+
 #webpack installation
 npm install --save-dev webpack
 npm install --save-dev webpack-cli

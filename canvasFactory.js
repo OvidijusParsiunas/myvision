@@ -1,20 +1,15 @@
 import fabric from 'fabric';
 import assignCanvasMouseEvents from './canvasMouseEvents';
-import { assignCanvasToNewImageUpload } from './uploadFile';
+import { assignCanvasForNewImageUpload } from './uploadFile';
+import { assignCanvasForDownloadingAnnotationsXML } from './downloadXML';
 
-function thisWillBeRemoved(canvas) {
-  canvas.setBackgroundColor({ source: 'sample-img.jpg', repeat: 'repeat' }, () => {
-    canvas.renderAll();
-  });
-  return canvas;
-}
 
 function constructCanvas() {
   const canvas = new fabric.Canvas('c', { selection: false });
   fabric.Object.prototype.transparentCorners = false;
   assignCanvasMouseEvents(canvas);
-  assignCanvasToNewImageUpload(canvas);
-  return thisWillBeRemoved(canvas);
+  assignCanvasForNewImageUpload(canvas);
+  assignCanvasForDownloadingAnnotationsXML(canvas);
 }
 
 export { constructCanvas as default };

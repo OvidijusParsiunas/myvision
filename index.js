@@ -1,7 +1,5 @@
 import constructCanvas from './canvasFactory';
 import assignButtonEvents from './buttonMouseEvents';
-import setCanvasDownloadXML from './downloadXML';
 
-const canvas = constructCanvas();
+constructCanvas();
 assignButtonEvents();
-setCanvasDownloadXML(canvas);

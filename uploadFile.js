@@ -86,9 +86,9 @@ function setCanvasProperties() {
   canvasProperties.maximumCanvasWidth = window.innerWidth - 110;
 }
 
-function assignCanvasToNewImageUpload(newCanvas) {
+function assignCanvasForNewImageUpload(newCanvas) {
   canvas = newCanvas;
   setCanvasProperties();
 }
 
-export { fileStatus, readURL, assignCanvasToNewImageUpload };
+export { fileStatus, readURL, assignCanvasForNewImageUpload };
