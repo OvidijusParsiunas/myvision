@@ -25,7 +25,8 @@ function instantiateNewBndBox() {
   }
 }
 
-function createNewBndBoxBtnClick() {
+function prepareCanvasForNewBndBox(canvasObj) {
+  canvas = canvasObj;
   if (canvas.backgroundColor) {
     removeBndBoxIfLabelNamePending();
     createNewBoundingBoxBtnClicked = true;
@@ -88,13 +89,9 @@ function removeBndBoxBtnClick() {
   canvas.remove(canvas.getActiveObject());
 }
 
-function setBndBoxCanvas(newCanvas) {
-  canvas = newCanvas;
-}
 
 export {
-  setBndBoxCanvas,
-  createNewBndBoxBtnClick,
+  prepareCanvasForNewBndBox,
   instantiateNewBndBox,
   drawBndBox,
   finishDrawingBndBox,
