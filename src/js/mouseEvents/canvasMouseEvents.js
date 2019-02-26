@@ -41,6 +41,8 @@ function assignPolygonEvents() {
   canvas.on('mouse:over', (e) => {
     if (e.target && e.target.selectable) {
       canvas.hoverCursor = 'move';
+    } else {
+      canvas.hoverCursor = 'crosshair';
     }
   });
 }
