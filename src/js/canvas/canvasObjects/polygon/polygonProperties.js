@@ -1,14 +1,15 @@
 const polygonProperties = {};
 
-function generateNewCircle(id, options, canvas) {
+function generateNewCircle(id, event, canvas) {
+  const pointer = canvas.getPointer(event.e);
   return {
     radius: 5,
     fill: '#ffffff',
     stroke: '#333333',
     strokeWidth: 0.5,
-    left: (options.e.layerX / canvas.getZoom()),
-    top: (options.e.layerY / canvas.getZoom()),
-    selectable: false,
+    left: pointer.x,
+    top: pointer.y,
+    selectable: true,
     hasBorders: false,
     hasControls: false,
     originX: 'center',

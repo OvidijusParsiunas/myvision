@@ -1,5 +1,6 @@
 import fabric from 'fabric';
 import polygonProperties from './polygon/polygonProperties';
+import { removeBndBoxIfLabelNamePending } from '../externalObjects/labelNamePopUp';
 
 const min = 99;
 const max = 999999;
@@ -11,9 +12,9 @@ let polygonMode = true;
 let activeLine = null;
 let activeShape = false;
 
-function drawPolygon(options) {
+function drawPolygon(event) {
   if (activeLine && activeLine.class === 'line') {
-    const pointer = canvas.getPointer(options.e);
+    const pointer = canvas.getPointer(event.e);
     activeLine.set({ x2: pointer.x, y2: pointer.y });
     const points = activeShape.get('points');
     points[pointArray.length] = {
@@ -47,27 +48,28 @@ function generatePolygon() {
   activeLine = null;
   activeShape = null;
   polygonMode = false;
-  canvas.selection = true;
+  canvas.defaultCursor = 'default';
+  canvas.hoverCursor = 'move';
+  canvas.forEachObject((iteratedObj) => {
+    iteratedObj.selectable = true;
+  });
 }
 
-function addPoint(options) {
+function addPoint(event) {
   const random = Math.floor(Math.random() * (max - min + 1)) + min;
   const id = new Date().getTime() + random;
-  const circle = new fabric.Circle(polygonProperties.newCircle(id, options, canvas));
+  const pointer = canvas.getPointer(event.e);
+  const circle = new fabric.Circle(polygonProperties.newCircle(id, event, canvas));
   if (pointArray.length === 0) {
     circle.set(polygonProperties.firstCircle);
   }
-  let points = [(options.e.layerX / canvas.getZoom()),
-    (options.e.layerY / canvas.getZoom()),
-    (options.e.layerX / canvas.getZoom()),
-    (options.e.layerY / canvas.getZoom())];
+  let points = [pointer.x, pointer.y, pointer.x, pointer.y];
   const line = new fabric.Line(points, polygonProperties.newLine);
   if (activeShape) {
-    const pos = canvas.getPointer(options.e);
     points = activeShape.get('points');
     points.push({
-      x: pos.x,
-      y: pos.y,
+      x: pointer.x,
+      y: pointer.y,
     });
     const polygon = new fabric.Polygon(points, polygonProperties.newTempPolygon);
     canvas.remove(activeShape);
@@ -76,8 +78,8 @@ function addPoint(options) {
     canvas.renderAll();
   } else {
     const polyPoint = [{
-      x: (options.e.layerX / canvas.getZoom()),
-      y: (options.e.layerY / canvas.getZoom()),
+      x: pointer.x,
+      y: pointer.y,
     }];
     const polygon = new fabric.Polygon(polyPoint, polygonProperties.newTempPolygon);
     activeShape = polygon;
@@ -100,22 +102,31 @@ function clearData() {
   activeLine = null;
 }
 
-function instantiatePolygon(options) {
-  if (options.target && options.target.id === pointArray[0].id) {
+function instantiatePolygon(event) {
+  if (event.target && event.target.id && event.target.id === pointArray[0].id) {
     generatePolygon(pointArray);
   }
   if (polygonMode) {
-    addPoint(options);
+    addPoint(event);
   }
 }
 
-function setPolygonCanvas(newCanvas) {
-  canvas = newCanvas;
+function prepareCanvasForNewPolygon(canvasObj) {
+  canvas = canvasObj;
+  clearData();
+  removeBndBoxIfLabelNamePending();
+  canvas.discardActiveObject();
+  canvas.renderAll();
+  canvas.forEachObject((iteratedObj) => {
+    iteratedObj.selectable = false;
+  });
+  canvas.defaultCursor = 'crosshair';
+  canvas.hoverCursor = 'crosshair';
 }
 
 export {
   instantiatePolygon,
   drawPolygon,
-  setPolygonCanvas,
+  prepareCanvasForNewPolygon,
   clearData,
 };

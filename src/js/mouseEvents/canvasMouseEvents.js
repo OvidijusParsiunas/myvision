@@ -2,10 +2,7 @@ import {
   prepareCanvasForNewBndBox, instantiateNewBndBox, drawBndBox,
   finishDrawingBndBox, highlightBndBox, removeBndBoxHighlight,
 } from '../canvas/canvasObjects/boundingBox';
-import {
-  instantiatePolygon, setPolygonCanvas,
-  drawPolygon, clearData,
-} from '../canvas/canvasObjects/polygon';
+import { instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon } from '../canvas/canvasObjects/polygon';
 
 let canvas = null;
 
@@ -14,33 +11,37 @@ function assignBoundingBoxEvents() {
     instantiateNewBndBox();
   });
 
-  canvas.on('mouse:over', (o) => {
-    highlightBndBox(o);
+  canvas.on('mouse:over', (e) => {
+    highlightBndBox(e);
   });
 
-  canvas.on('mouse:out', (o) => {
-    removeBndBoxHighlight(o);
+  canvas.on('mouse:out', (e) => {
+    removeBndBoxHighlight(e);
   });
 
-  canvas.on('mouse:move', (o) => {
-    drawBndBox(o);
+  canvas.on('mouse:move', (e) => {
+    drawBndBox(e);
   });
 
-  canvas.on('mouse:up', (o) => {
-    finishDrawingBndBox(o);
+  canvas.on('mouse:up', (e) => {
+    finishDrawingBndBox(e);
   });
 }
 
 function assignPolygonEvents() {
-  setPolygonCanvas(canvas);
-  clearData();
-
-  canvas.on('mouse:down', (o) => {
-    instantiatePolygon(o);
+  // if selected, stretch
+  canvas.on('mouse:down', (e) => {
+    instantiatePolygon(e);
   });
 
-  canvas.on('mouse:move', (o) => {
-    drawPolygon(o);
+  canvas.on('mouse:move', (e) => {
+    drawPolygon(e);
+  });
+
+  canvas.on('mouse:over', (e) => {
+    if (e.target && e.target.selectable) {
+      canvas.hoverCursor = 'move';
+    }
   });
 }
 
@@ -62,6 +63,7 @@ function createNewBndBoxBtnClick() {
 
 function createNewPolygonBtnClick() {
   purgeCanvasMouseEvents();
+  prepareCanvasForNewPolygon(canvas);
   assignPolygonEvents();
 }
 

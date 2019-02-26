@@ -27,7 +27,7 @@ function instantiateNewBndBox() {
 
 function prepareCanvasForNewBndBox(canvasObj) {
   canvas = canvasObj;
-  if (canvas.backgroundColor) {
+  if (canvas.backgroundImage) {
     removeBndBoxIfLabelNamePending();
     createNewBoundingBoxBtnClicked = true;
     canvas.discardActiveObject();
@@ -40,9 +40,9 @@ function prepareCanvasForNewBndBox(canvasObj) {
   }
 }
 
-function drawBndBox(obj) {
+function drawBndBox(event) {
   if (!leftMouseBtnDown) return;
-  const pointer = canvas.getPointer(obj.e);
+  const pointer = canvas.getPointer(event.e);
   if (bndBoxProps.origX > pointer.x) {
     bndBoxProps.rect.set({ left: Math.abs(pointer.x) });
   }
@@ -54,7 +54,7 @@ function drawBndBox(obj) {
   canvas.renderAll();
 }
 
-function finishDrawingBndBox(obj) {
+function finishDrawingBndBox(event) {
   if (leftMouseBtnDown) {
     createNewBoundingBoxBtnClicked = false;
     leftMouseBtnDown = false;
@@ -65,21 +65,21 @@ function finishDrawingBndBox(obj) {
     canvas.forEachObject((iteratedObj) => {
       iteratedObj.selectable = true;
     });
-    const pointer = canvas.getPointer(obj.e);
+    const pointer = canvas.getPointer(event.e);
     showLabelNamePopUp(pointer.x, pointer.y, bndBoxProps.rect, canvas);
   }
 }
 
-function highlightBndBox(obj) {
-  if (obj.target && obj.target._objects) {
-    obj.target._objects[0].set('fill', 'rgba(255,0,0,0.2)');
+function highlightBndBox(event) {
+  if (event.target && event.target._objects) {
+    event.target._objects[0].set('fill', 'rgba(255,0,0,0.2)');
     canvas.renderAll();
   }
 }
 
-function removeBndBoxHighlight(obj) {
-  if (obj.target && obj.target._objects) {
-    obj.target._objects[0].set('fill', 'rgba(255,0,0,0');
+function removeBndBoxHighlight(event) {
+  if (event.target && event.target._objects) {
+    event.target._objects[0].set('fill', 'rgba(255,0,0,0');
     canvas.renderAll();
   }
 }
