@@ -1,5 +1,5 @@
 import { fileStatus } from '../uploadFile/uploadImage';
-import { removeBndBoxIfLabelNamePending } from '../canvas/externalObjects/labelNamePopUp';
+import { removeActiveObjectsOnButtonClick } from '../canvas/externalObjects/labelNamePopUp';
 import convertJSONToXML from './utils/JSONtoXML';
 import buildAnnotationsObject from './utils/annotationsObjFactory';
 
@@ -32,7 +32,7 @@ function generateXML() {
 }
 
 function downloadXML() {
-  removeBndBoxIfLabelNamePending();
+  removeActiveObjectsOnButtonClick();
   if (canvas.backgroundColor) {
     const xml = generateXML();
     downloadXMLFile(xml);

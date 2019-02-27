@@ -1,6 +1,7 @@
 import fabric from 'fabric';
 import polygonProperties from './polygon/polygonProperties';
-import { removeBndBoxIfLabelNamePending } from '../externalObjects/labelNamePopUp';
+import { removeActiveObjectsOnButtonClick, showLabelNamePopUp } from '../externalObjects/labelNamePopUp';
+import { changeCanvasToDrawCursor, changeCanvasToDefaultCursor } from '../utils/objectMouseEvents';
 
 const min = 99;
 const max = 999999;
@@ -29,7 +30,14 @@ function drawPolygon(event) {
   canvas.renderAll();
 }
 
-function generatePolygon() {
+function removeActiveLinesAndShape() {
+  lineArray.forEach((line) => {
+    canvas.remove(line);
+  });
+  canvas.remove(activeShape).remove(activeLine);
+}
+
+function generatePolygon(event) {
   const points = [];
   pointArray.forEach((point) => {
     points.push({
@@ -38,21 +46,16 @@ function generatePolygon() {
     });
     canvas.remove(point);
   });
-  lineArray.forEach((line) => {
-    canvas.remove(line);
-  });
-  canvas.remove(activeShape).remove(activeLine);
+  removeActiveLinesAndShape();
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon);
   canvas.add(polygon);
 
   activeLine = null;
   activeShape = null;
   polygonMode = false;
-  canvas.defaultCursor = 'default';
-  canvas.hoverCursor = 'move';
-  canvas.forEachObject((iteratedObj) => {
-    iteratedObj.selectable = true;
-  });
+  const pointer = canvas.getPointer(event.e);
+  showLabelNamePopUp(pointer.x, pointer.y, polygon, canvas, polygonProperties.newPolygon);
+  changeCanvasToDefaultCursor(canvas);
 }
 
 function addPoint(event) {
@@ -89,22 +92,25 @@ function addPoint(event) {
 
   pointArray.push(circle);
   lineArray.push(line);
-
   canvas.add(line);
   canvas.add(circle);
   canvas.selection = false;
 }
 
-function clearData() {
-  polygonMode = true;
+function clearPolygonData() {
+  pointArray.forEach((point) => {
+    canvas.remove(point);
+  });
+  removeActiveLinesAndShape();
   pointArray = [];
   lineArray = [];
+  activeShape = null;
   activeLine = null;
 }
 
 function instantiatePolygon(event) {
   if (event.target && event.target.id && event.target.id === pointArray[0].id) {
-    generatePolygon(pointArray);
+    generatePolygon(event);
   }
   if (polygonMode) {
     addPoint(event);
@@ -113,20 +119,16 @@ function instantiatePolygon(event) {
 
 function prepareCanvasForNewPolygon(canvasObj) {
   canvas = canvasObj;
-  clearData();
-  removeBndBoxIfLabelNamePending();
+  polygonMode = true;
+  clearPolygonData();
+  removeActiveObjectsOnButtonClick();
   canvas.discardActiveObject();
-  canvas.renderAll();
-  canvas.forEachObject((iteratedObj) => {
-    iteratedObj.selectable = false;
-  });
-  canvas.defaultCursor = 'crosshair';
-  canvas.hoverCursor = 'crosshair';
+  changeCanvasToDrawCursor(canvas);
 }
 
 export {
   instantiatePolygon,
   drawPolygon,
   prepareCanvasForNewPolygon,
-  clearData,
+  clearPolygonData,
 };

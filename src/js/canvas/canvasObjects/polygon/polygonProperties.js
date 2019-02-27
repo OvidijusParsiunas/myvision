@@ -28,6 +28,9 @@ function generateNewCircle(id, event, canvas) {
     perPixelTargetFind: true,
     hasBorders: false,
     hasControls: false,
+    lockMovementY: true,
+    lockMovementX: true,
+    shapeName: 'polygon',
   };
   polygonProperties.newTempPolygon = {
     stroke: '#333333',

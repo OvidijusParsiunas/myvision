@@ -1,11 +1,14 @@
 import fabric from 'fabric';
+import getLabelProps from '../canvasObjects/label/labelProperties';
+import { getFinalBndBoxProps } from '../canvasObjects/boundingBox/boundingBoxProperties';
+import polygonProperties from '../canvasObjects/polygon/polygonProperties';
 
 let displayLabelNamePopUp = false;
-let targetBndBox = null;
+let targetShape = null;
 let canvas = null;
 
-function showLabelNamePopUp(xCoordinate, yCoordinate, bndBox, canvasObj) {
-  targetBndBox = bndBox;
+function showLabelNamePopUp(xCoordinate, yCoordinate, shape, canvasObj) {
+  targetShape = shape;
   canvas = canvasObj;
   const labelNamePopUp = document.getElementById('labelNamePopUp');
   labelNamePopUp.style.display = 'block';
@@ -17,39 +20,28 @@ function showLabelNamePopUp(xCoordinate, yCoordinate, bndBox, canvasObj) {
   displayLabelNamePopUp = true;
 }
 
-function labelBndBox() {
+function labelShape() {
   const text = document.getElementById('label-title').value;
   document.getElementById('labelNamePopUp').style.display = 'none';
-  const textShape = new fabric.Text(text, {
-    fontSize: 10,
-    fill: 'yellow',
-    left: targetBndBox.left,
-    top: targetBndBox.top,
-    width: targetBndBox.width,
-    height: targetBndBox.height,
-  });
-  const group = new fabric.Group([targetBndBox, textShape], {
-    left: targetBndBox.left,
-    top: targetBndBox.top,
-    width: targetBndBox.width,
-    height: targetBndBox.height,
-    stroke: 'rgba(255,0,0)',
-    strokeWidth: 2,
-    fill: 'rgba(255,0,0,0.1)',
-  });
+  const textShape = new fabric.Text(text, getLabelProps(targetShape));
+  if (targetShape.shapeName === 'bndBoxTemp') {
+    const group = new fabric.Group([targetShape, textShape], getFinalBndBoxProps(targetShape));
+    canvas.add(group);
+  } else if (targetShape.shapeName === 'polygon') {
+    const group = new fabric.Group([targetShape, textShape], polygonProperties.newPolygon);
+    canvas.add(group);
+  }
   displayLabelNamePopUp = true;
-  canvas.remove(targetBndBox);
-  canvas.add(group);
+  canvas.remove(targetShape);
 }
 
-
-function removeBndBoxIfLabelNamePending() {
+function removeActiveObjectsOnButtonClick() {
   if (displayLabelNamePopUp) {
-    canvas.remove(targetBndBox);
+    canvas.remove(targetShape);
     displayLabelNamePopUp = false;
     document.getElementById('labelNamePopUp').style.display = 'none';
   }
 }
 
-window.labelBndBox = labelBndBox;
-export { removeBndBoxIfLabelNamePending, showLabelNamePopUp };
+window.labelShape = labelShape;
+export { removeActiveObjectsOnButtonClick, showLabelNamePopUp };

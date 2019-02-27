@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import { removeBndBoxIfLabelNamePending } from '../canvas/externalObjects/labelNamePopUp';
+import { removeActiveObjectsOnButtonClick } from '../canvas/externalObjects/labelNamePopUp';
 
 const fileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
@@ -72,7 +72,7 @@ function onFileLoad(e) {
 }
 
 function uploadImage(input) {
-  removeBndBoxIfLabelNamePending();
+  removeActiveObjectsOnButtonClick();
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     fileStatus.name = input.files[0].name;
