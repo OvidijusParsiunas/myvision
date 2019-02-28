@@ -34,7 +34,7 @@ function generateNewCircle(id, event, canvas) {
   };
   polygonProperties.newTempPolygon = {
     stroke: '#333333',
-    strokeWidth: 0.4,
+    strokeWidth: 0.8,
     fill: '#cccccc',
     opacity: 0.3,
     selectable: false,
@@ -53,7 +53,7 @@ function generateNewCircle(id, event, canvas) {
     selectable: true,
   };
   polygonProperties.newLine = {
-    strokeWidth: 1,
+    strokeWidth: 1.1,
     fill: '#999999',
     stroke: '#999999',
     class: 'line',
