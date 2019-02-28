@@ -13,6 +13,20 @@ let polygonMode = true;
 let activeLine = null;
 let activeShape = false;
 
+function highlightPolygon(event) {
+  if (event.target && event.target.shapeName === 'polygon') {
+    event.target._objects[0].set('fill', 'rgba(237, 237, 237, 0.1)');
+    canvas.renderAll();
+  }
+}
+
+function removePolygonHighlight(event) {
+  if (event.target && event.target.shapeName === 'polygon') {
+    event.target._objects[0].set('fill', 'rgba(237, 237, 237, 0.01)');
+    canvas.renderAll();
+  }
+}
+
 function drawPolygon(event) {
   if (activeLine && activeLine.class === 'line') {
     const pointer = canvas.getPointer(event.e);
@@ -54,7 +68,7 @@ function generatePolygon(event) {
   activeShape = null;
   polygonMode = false;
   const pointer = canvas.getPointer(event.e);
-  showLabelNamePopUp(pointer.x, pointer.y, polygon, canvas, polygonProperties.newPolygon);
+  showLabelNamePopUp(pointer.x, pointer.y, polygon, canvas);
   changeCanvasToDefaultCursor(canvas);
 }
 
@@ -131,4 +145,6 @@ export {
   drawPolygon,
   prepareCanvasForNewPolygon,
   clearPolygonData,
+  highlightPolygon,
+  removePolygonHighlight,
 };

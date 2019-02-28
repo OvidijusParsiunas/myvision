@@ -20,6 +20,7 @@ function getFinalBndBoxProps(targetShape) {
     stroke: 'rgba(255,0,0)',
     strokeWidth: 2,
     fill: 'rgba(255,0,0,0.1)',
+    shapeName: 'bndBox',
   };
 }
 

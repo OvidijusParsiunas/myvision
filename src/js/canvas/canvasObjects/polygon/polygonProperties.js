@@ -21,20 +21,20 @@ function generateNewCircle(id, event, canvas) {
 
 (function setProperties() {
   polygonProperties.newPolygon = {
-    stroke: '#333333',
-    strokeWidth: 0.5,
-    fill: 'red',
-    opacity: 1,
+    stroke: 'rgba(255,0,0)',
+    strokeWidth: 2,
+    fill: 'rgba(237, 237, 237, 0.01)',
     perPixelTargetFind: true,
     hasBorders: false,
     hasControls: false,
     lockMovementY: true,
     lockMovementX: true,
     shapeName: 'polygon',
+    selectable: true,
   };
   polygonProperties.newTempPolygon = {
     stroke: '#333333',
-    strokeWidth: 1,
+    strokeWidth: 0.4,
     fill: '#cccccc',
     opacity: 0.3,
     selectable: false,
@@ -43,8 +43,17 @@ function generateNewCircle(id, event, canvas) {
     evented: false,
     objectCaching: false,
   };
+  polygonProperties.newPolygonOverride = {
+    perPixelTargetFind: true,
+    hasBorders: false,
+    hasControls: false,
+    lockMovementY: true,
+    lockMovementX: true,
+    shapeName: 'polygon',
+    selectable: true,
+  };
   polygonProperties.newLine = {
-    strokeWidth: 2,
+    strokeWidth: 1,
     fill: '#999999',
     stroke: '#999999',
     class: 'line',

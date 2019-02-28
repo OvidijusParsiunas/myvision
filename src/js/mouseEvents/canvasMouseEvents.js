@@ -1,22 +1,16 @@
 import {
-  prepareCanvasForNewBndBox, instantiateNewBndBox, drawBndBox,
-  finishDrawingBndBox, highlightBndBox, removeBndBoxHighlight,
+  prepareCanvasForNewBndBox, instantiateNewBndBox,
+  drawBndBox, finishDrawingBndBox,
 } from '../canvas/canvasObjects/boundingBox';
-import { instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon } from '../canvas/canvasObjects/polygon';
+import {
+  instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon,
+} from '../canvas/canvasObjects/polygon';
 
 let canvas = null;
 
 function assignBoundingBoxEvents() {
   canvas.on('mouse:down', () => {
     instantiateNewBndBox();
-  });
-
-  canvas.on('mouse:over', (e) => {
-    highlightBndBox(e);
-  });
-
-  canvas.on('mouse:out', (e) => {
-    removeBndBoxHighlight(e);
   });
 
   canvas.on('mouse:move', (e) => {

@@ -28,7 +28,7 @@ function labelShape() {
     const group = new fabric.Group([targetShape, textShape], getFinalBndBoxProps(targetShape));
     canvas.add(group);
   } else if (targetShape.shapeName === 'polygon') {
-    const group = new fabric.Group([targetShape, textShape], polygonProperties.newPolygon);
+    const group = new fabric.Group([targetShape, textShape], polygonProperties.newPolygonOverride);
     canvas.add(group);
   }
   displayLabelNamePopUp = true;
