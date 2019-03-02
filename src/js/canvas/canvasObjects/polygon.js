@@ -70,7 +70,7 @@ function generatePolygon(event) {
   activeShape = null;
   polygonMode = false;
   const pointer = canvas.getPointer(event.e);
-  prepareLabelAndShapeGroup(polygon, canvas);
+  prepareLabelAndShapeGroup(polygon, canvas, pointArray);
   showLabelPopUp(pointer.x, pointer.y);
   setDefaultCursorMode(canvas);
 }

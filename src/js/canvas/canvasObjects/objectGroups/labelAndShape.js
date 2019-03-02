@@ -6,10 +6,12 @@ import polygonProperties from '../polygon/polygonProperties';
 
 const labellingState = { inProgress: false };
 let targetShape = null;
+let targetPolygonPoints = [];
 let canvas = null;
 
-function prepareLabelAndShapeGroup(shape, canvasObj) {
+function prepareLabelAndShapeGroup(shape, canvasObj, polygonPoints) {
   targetShape = shape;
+  targetPolygonPoints = polygonPoints;
   canvas = canvasObj;
   labellingState.inProgress = true;
 }
@@ -23,11 +25,13 @@ function createLabelAndShapeGroup() {
   const text = getLabelPopUpText();
   hideLabelPopUp();
   const textShape = new fabric.Text(text, getLabelProps(targetShape));
-  if (targetShape.shapeName === 'bndBoxTemp') {
-    const group = new fabric.Group([targetShape, textShape], getFinalBndBoxProps(targetShape));
+  if (targetShape.shapeName === 'polygon') {
+    targetPolygonPoints.forEach((point) => { point.visible = false; point.stroke = null; point.fill = 'red'; });
+    const group = new fabric.Group([targetShape, textShape, ...targetPolygonPoints],
+      polygonProperties.newFinalPolygon);
     canvas.add(group);
-  } else if (targetShape.shapeName === 'polygon') {
-    const group = new fabric.Group([targetShape, textShape], polygonProperties.newFinalPolygon);
+  } else if (targetShape.shapeName === 'bndBoxTemp') {
+    const group = new fabric.Group([targetShape, textShape], getFinalBndBoxProps(targetShape));
     canvas.add(group);
   }
   removeTargetShape();

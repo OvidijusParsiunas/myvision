@@ -1,6 +1,16 @@
+import { displayPolygonPoints, hidePolygonPoints } from '../../../canvas/canvasObjects/polygon/changePolygon';
+
+const selectedPolygonPoints = {};
+
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
-    canvas.setActiveObject(e.target);
+    hidePolygonPoints();
+    if (e.target) {
+      canvas.setActiveObject(e.target);
+      if (e.target.shapeName === 'polygon') {
+        displayPolygonPoints(canvas, e.target._objects);
+      }
+    }
   });
 
   canvas.on('mouse:over', (e) => {
@@ -22,4 +32,4 @@ function assignDefaultEvents(canvas) {
   });
 }
 
-export { assignDefaultEvents as default };
+export { assignDefaultEvents, selectedPolygonPoints };

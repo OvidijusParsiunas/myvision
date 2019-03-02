@@ -1,10 +1,11 @@
 import { clearPolygonData } from '../polygon';
 import { cancelLabellingProcess } from '../../labelPopUp/labelPopUpActions';
+import { hidePolygonPoints } from '../polygon/changePolygon';
 
-// this will need to be exported
 function interruptAllCanvasEvents() {
   clearPolygonData();
   cancelLabellingProcess();
+  hidePolygonPoints();
 }
 
 export { interruptAllCanvasEvents as default };

@@ -3,7 +3,7 @@ const polygonProperties = {};
 function generateNewCircle(id, event, canvas) {
   const pointer = canvas.getPointer(event.e);
   return {
-    radius: 5,
+    radius: 3,
     fill: '#ffffff',
     stroke: '#333333',
     strokeWidth: 0.5,

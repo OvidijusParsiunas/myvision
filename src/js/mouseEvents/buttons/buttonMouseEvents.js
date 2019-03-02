@@ -3,11 +3,10 @@ import { createNewBndBoxBtnClick, createNewPolygonBtnClick, removeActiveShapeBtn
 import { labelShape } from '../../canvas/labelPopUp/labelPopUpActions';
 import { interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeImageUpload } from './utils/buttonEventsMiddleware';
 
-// deletion of polygon
 function assignButtonEvents() {
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = interruptAllCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
-  window.removeBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, removeActiveShapeBtnClick);
+  window.removeShape = interruptAllCanvasEventsBeforeFunc.bind(this, removeActiveShapeBtnClick);
   window.downloadXML = interruptAllCanvasEventsBeforeFunc.bind(this, downloadXML);
   window.uploadImage = interruptAllCanvasEventsBeforeImageUpload;
   window.labelShape = labelShape;

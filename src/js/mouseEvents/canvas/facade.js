@@ -1,7 +1,7 @@
 import setDefaultCursorMode from './cursorModes/defaultMode';
 import assignDrawBoundingBoxEvents from './events/drawBndBoxEvents';
 import assignDrawPolygonEvents from './events/drawPolygonEvents';
-import assignDefaultEvents from './events/defaultEvents';
+import { assignDefaultEvents } from './events/defaultEvents';
 import purgeCanvasMouseEvents from './events/purgeEvents';
 
 let canvas = null;
