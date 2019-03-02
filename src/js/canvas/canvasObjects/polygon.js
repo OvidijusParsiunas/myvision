@@ -1,6 +1,5 @@
 import fabric from 'fabric';
 import polygonProperties from './polygon/polygonProperties';
-import interruptCanvasProcess from './utils/interruptHandlers';
 import { prepareLabelAndShapeGroup } from './objectGroups/labelAndShape';
 import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
 import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
@@ -141,7 +140,6 @@ function prepareCanvasForNewPolygon(canvasObj) {
   canvas = canvasObj;
   polygonMode = true;
   clearPolygonData();
-  interruptCanvasProcess();
   canvas.discardActiveObject();
   setDrawCursorMode(canvas);
 }

@@ -1,5 +1,4 @@
 import fabric from 'fabric';
-import interruptCanvasProcess from './utils/interruptHandlers';
 import { getTempBndBoxProps } from './boundingBox/boundingBoxProperties';
 import { prepareLabelAndShapeGroup } from './objectGroups/labelAndShape';
 import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
@@ -25,7 +24,6 @@ function instantiateNewBndBox() {
 function prepareCanvasForNewBndBox(canvasObj) {
   canvas = canvasObj;
   if (canvas.backgroundImage) {
-    interruptCanvasProcess();
     createNewBoundingBoxBtnClicked = true;
     setDrawCursorMode(canvas);
     canvas.discardActiveObject();
@@ -73,11 +71,6 @@ function removeBndBoxHighlight(event) {
   }
 }
 
-function removeBndBoxBtnClick() {
-  interruptCanvasProcess();
-  canvas.remove(canvas.getActiveObject());
-}
-
 export {
   prepareCanvasForNewBndBox,
   instantiateNewBndBox,
@@ -85,5 +78,4 @@ export {
   finishDrawingBndBox,
   highlightBndBox,
   removeBndBoxHighlight,
-  removeBndBoxBtnClick,
 };

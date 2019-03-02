@@ -19,6 +19,10 @@ function createNewPolygonBtnClick() {
   defaultState = false;
 }
 
+function removeActiveShapeBtnClick() {
+  canvas.remove(canvas.getActiveObject());
+}
+
 function resetCanvasEventsToDefault() {
   if (!defaultState) {
     purgeCanvasMouseEvents(canvas);
@@ -33,6 +37,9 @@ function assignCanvasMouseEvents(canvasObj) {
 }
 
 export {
-  assignCanvasMouseEvents, createNewBndBoxBtnClick,
-  createNewPolygonBtnClick, resetCanvasEventsToDefault,
+  assignCanvasMouseEvents,
+  createNewBndBoxBtnClick,
+  createNewPolygonBtnClick,
+  resetCanvasEventsToDefault,
+  removeActiveShapeBtnClick,
 };

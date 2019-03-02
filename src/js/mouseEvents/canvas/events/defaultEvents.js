@@ -1,4 +1,8 @@
 function assignDefaultEvents(canvas) {
+  canvas.on('mouse:down', (e) => {
+    canvas.setActiveObject(e.target);
+  });
+
   canvas.on('mouse:over', (e) => {
     if (e.target && e.target._objects) {
       e.target._objects[0].set('fill', 'rgba(255,0,0,0.2)');
