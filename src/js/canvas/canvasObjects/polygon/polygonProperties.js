@@ -22,7 +22,7 @@ function generateNewCircle(id, event, canvas) {
 (function setProperties() {
   polygonProperties.newPolygon = {
     stroke: 'rgba(255,0,0)',
-    strokeWidth: 2,
+    strokeWidth: 1.75,
     fill: 'rgba(237, 237, 237, 0.01)',
     perPixelTargetFind: true,
     hasBorders: false,
@@ -43,7 +43,7 @@ function generateNewCircle(id, event, canvas) {
     evented: false,
     objectCaching: false,
   };
-  polygonProperties.newPolygonOverride = {
+  polygonProperties.newFinalPolygon = {
     perPixelTargetFind: true,
     hasBorders: false,
     hasControls: false,

@@ -1,7 +1,10 @@
 import fabric from 'fabric';
-import { removeActiveObjectsOnButtonClick, showLabelNamePopUp } from '../externalObjects/labelNamePopUp';
-import { changeCanvasToDrawCursor, changeCanvasToDefaultCursor } from '../utils/objectMouseEvents';
+import interruptCanvasProcess from './utils/interruptHandlers';
 import { getTempBndBoxProps } from './boundingBox/boundingBoxProperties';
+import { prepareLabelAndShapeGroup } from './objectGroups/labelAndShape';
+import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
+import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
+import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -22,10 +25,10 @@ function instantiateNewBndBox() {
 function prepareCanvasForNewBndBox(canvasObj) {
   canvas = canvasObj;
   if (canvas.backgroundImage) {
-    removeActiveObjectsOnButtonClick();
+    interruptCanvasProcess();
     createNewBoundingBoxBtnClicked = true;
+    setDrawCursorMode(canvas);
     canvas.discardActiveObject();
-    changeCanvasToDrawCursor(canvas);
   }
 }
 
@@ -49,9 +52,10 @@ function finishDrawingBndBox(event) {
     leftMouseBtnDown = false;
     bndBoxProps.rect.setCoords();
     bndBoxProps.rect.selectable = false;
-    changeCanvasToDefaultCursor(canvas);
+    setDefaultCursorMode(canvas);
     const pointer = canvas.getPointer(event.e);
-    showLabelNamePopUp(pointer.x, pointer.y, bndBoxProps.rect, canvas);
+    prepareLabelAndShapeGroup(bndBoxProps.rect, canvas);
+    showLabelPopUp(pointer.x, pointer.y);
   }
 }
 
@@ -70,7 +74,7 @@ function removeBndBoxHighlight(event) {
 }
 
 function removeBndBoxBtnClick() {
-  removeActiveObjectsOnButtonClick();
+  interruptCanvasProcess();
   canvas.remove(canvas.getActiveObject());
 }
 

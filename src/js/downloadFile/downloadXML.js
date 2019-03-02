@@ -1,5 +1,4 @@
 import { fileStatus } from '../uploadFile/uploadImage';
-import { removeActiveObjectsOnButtonClick } from '../canvas/externalObjects/labelNamePopUp';
 import convertJSONToXML from './utils/JSONtoXML';
 import buildAnnotationsObject from './utils/annotationsObjFactory';
 
@@ -32,8 +31,7 @@ function generateXML() {
 }
 
 function downloadXML() {
-  removeActiveObjectsOnButtonClick();
-  if (canvas.backgroundColor) {
+  if (canvas.backgroundImage) {
     const xml = generateXML();
     downloadXMLFile(xml);
   }

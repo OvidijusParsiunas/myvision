@@ -1,7 +1,10 @@
 import fabric from 'fabric';
 import polygonProperties from './polygon/polygonProperties';
-import { removeActiveObjectsOnButtonClick, showLabelNamePopUp } from '../externalObjects/labelNamePopUp';
-import { changeCanvasToDrawCursor, changeCanvasToDefaultCursor } from '../utils/objectMouseEvents';
+import interruptCanvasProcess from './utils/interruptHandlers';
+import { prepareLabelAndShapeGroup } from './objectGroups/labelAndShape';
+import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
+import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
+import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
 
 const min = 99;
 const max = 999999;
@@ -68,8 +71,9 @@ function generatePolygon(event) {
   activeShape = null;
   polygonMode = false;
   const pointer = canvas.getPointer(event.e);
-  showLabelNamePopUp(pointer.x, pointer.y, polygon, canvas);
-  changeCanvasToDefaultCursor(canvas);
+  prepareLabelAndShapeGroup(polygon, canvas);
+  showLabelPopUp(pointer.x, pointer.y);
+  setDefaultCursorMode(canvas);
 }
 
 function addPoint(event) {
@@ -112,14 +116,16 @@ function addPoint(event) {
 }
 
 function clearPolygonData() {
-  pointArray.forEach((point) => {
-    canvas.remove(point);
-  });
-  removeActiveLinesAndShape();
-  pointArray = [];
-  lineArray = [];
-  activeShape = null;
-  activeLine = null;
+  if (pointArray[0]) {
+    pointArray.forEach((point) => {
+      canvas.remove(point);
+    });
+    removeActiveLinesAndShape();
+    pointArray = [];
+    lineArray = [];
+    activeShape = null;
+    activeLine = null;
+  }
 }
 
 function instantiatePolygon(event) {
@@ -135,9 +141,9 @@ function prepareCanvasForNewPolygon(canvasObj) {
   canvas = canvasObj;
   polygonMode = true;
   clearPolygonData();
-  removeActiveObjectsOnButtonClick();
+  interruptCanvasProcess();
   canvas.discardActiveObject();
-  changeCanvasToDrawCursor(canvas);
+  setDrawCursorMode(canvas);
 }
 
 export {

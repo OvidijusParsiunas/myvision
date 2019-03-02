@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import { assignCanvasMouseEvents } from '../mouseEvents/canvasMouseEvents';
+import { assignCanvasMouseEvents } from '../mouseEvents/canvas/facade';
 import { assignCanvasForNewImageUpload } from '../uploadFile/uploadImage';
 import { assignCanvasForDownloadingAnnotationsXML } from '../downloadFile/downloadXML';
 
