@@ -3,7 +3,7 @@ import interruptAllCanvasEvents from '../../../canvas/canvasObjects/utils/interr
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();
-  func();
+  if (func) func();
 }
 
 function interruptAllCanvasEventsBeforeImageUpload(input) {
