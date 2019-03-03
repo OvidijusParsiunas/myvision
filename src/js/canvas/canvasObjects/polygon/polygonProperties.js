@@ -1,6 +1,6 @@
 const polygonProperties = {};
 
-function generateNewCircle(id, event, canvas) {
+function generateNewCircle(circleId, event, canvas) {
   const pointer = canvas.getPointer(event.e);
   return {
     radius: 3,
@@ -14,7 +14,8 @@ function generateNewCircle(id, event, canvas) {
     hasControls: false,
     originX: 'center',
     originY: 'center',
-    id,
+    shapeName: 'tempCircle',
+    circleId,
     objectCaching: false,
   };
 }
@@ -67,6 +68,7 @@ function generateNewCircle(id, event, canvas) {
   };
   polygonProperties.firstCircle = {
     fill: 'red',
+    shapeName: 'firstCircle',
   };
   polygonProperties.newCircle = generateNewCircle;
 }());

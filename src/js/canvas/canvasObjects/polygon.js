@@ -5,15 +5,19 @@ import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
 import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
 import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
 
-const min = 99;
-const max = 999999;
-
 let canvas = null;
 let pointArray = [];
 let lineArray = [];
 let polygonMode = true;
 let activeLine = null;
 let activeShape = false;
+let circleId = 0;
+
+function movePoints(event) {
+  activeShape.points[event.target.circleId] = {
+    x: event.target.getCenterPoint().x, y: event.target.getCenterPoint().y,
+  };
+}
 
 function highlightPolygon(event) {
   if (event.target && event.target.shapeName === 'polygon') {
@@ -76,10 +80,9 @@ function generatePolygon(event) {
 }
 
 function addPoint(event) {
-  const random = Math.floor(Math.random() * (max - min + 1)) + min;
-  const id = new Date().getTime() + random;
   const pointer = canvas.getPointer(event.e);
-  const circle = new fabric.Circle(polygonProperties.newCircle(id, event, canvas));
+  const circle = new fabric.Circle(polygonProperties.newCircle(circleId, event, canvas));
+  circleId += 1;
   if (pointArray.length === 0) {
     circle.set(polygonProperties.firstCircle);
   }
@@ -109,7 +112,6 @@ function addPoint(event) {
 
   pointArray.push(circle);
   lineArray.push(line);
-  canvas.add(line);
   canvas.add(circle);
   canvas.selection = false;
 }
@@ -124,11 +126,12 @@ function clearPolygonData() {
     lineArray = [];
     activeShape = null;
     activeLine = null;
+    circleId = 0;
   }
 }
 
 function instantiatePolygon(event) {
-  if (event.target && event.target.id && event.target.id === pointArray[0].id) {
+  if (event.target && event.target.shapeName && event.target.shapeName === 'firstCircle') {
     generatePolygon(event);
   }
   if (polygonMode) {
@@ -151,4 +154,5 @@ export {
   clearPolygonData,
   highlightPolygon,
   removePolygonHighlight,
+  movePoints,
 };

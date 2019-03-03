@@ -1,12 +1,17 @@
 import {
-  instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon,
+  instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon, movePoints,
 } from '../../../canvas/canvasObjects/polygon';
 
 function assignDrawPolygonEvents(canvas) {
   prepareCanvasForNewPolygon(canvas);
-  // if selected, stretch
   canvas.on('mouse:down', (e) => {
-    instantiatePolygon(e);
+    if (!e.target || (e.target && e.target.shapeName !== 'tempCircle')) {
+      instantiatePolygon(e);
+    }
+  });
+
+  canvas.on('object:moving', (e) => {
+    movePoints(e);
   });
 
   canvas.on('mouse:move', (e) => {
