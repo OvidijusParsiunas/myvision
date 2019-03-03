@@ -1,8 +1,8 @@
-import { downloadXML } from '../../downloadFile/downloadXML';
 import {
   createNewBndBoxBtnClick, createNewPolygonBtnClick,
   removeActiveShapeBtnClick, resetCanvasEventsToDefault,
 } from '../canvas/facade';
+import { downloadXML } from '../../downloadFile/downloadXML';
 import { labelShape } from '../../canvas/labelPopUp/labelPopUpActions';
 import { interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeImageUpload } from './utils/buttonEventsMiddleware';
 
