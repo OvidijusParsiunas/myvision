@@ -26,7 +26,7 @@ function createLabelAndShapeGroup() {
   hideLabelPopUp();
   const textShape = new fabric.Text(text, getLabelProps(targetShape));
   if (targetShape.shapeName === 'polygon') {
-    targetPolygonPoints.forEach((point) => { point.visible = false; point.stroke = null; point.fill = 'red'; });
+    targetPolygonPoints.forEach((point) => { point.visible = false; point.stroke = null; point.fill = 'blue'; point.shapeName = 'point'; });
     const group = new fabric.Group([targetShape, textShape, ...targetPolygonPoints],
       polygonProperties.newFinalPolygon);
     canvas.add(group);

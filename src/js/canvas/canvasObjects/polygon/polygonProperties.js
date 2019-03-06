@@ -28,10 +28,8 @@ function generateNewCircle(circleId, event, canvas) {
     perPixelTargetFind: true,
     hasBorders: false,
     hasControls: false,
-    lockMovementY: true,
-    lockMovementX: true,
     shapeName: 'polygon',
-    selectable: true,
+    selectable: false,
   };
   polygonProperties.newTempPolygon = {
     stroke: '#333333',
@@ -48,10 +46,9 @@ function generateNewCircle(circleId, event, canvas) {
     perPixelTargetFind: true,
     hasBorders: false,
     hasControls: false,
-    lockMovementY: true,
-    lockMovementX: true,
-    shapeName: 'polygon',
+    shapeName: 'polygonGrp',
     selectable: true,
+    subTargetCheck: true,
   };
   polygonProperties.newLine = {
     strokeWidth: 1.1,
