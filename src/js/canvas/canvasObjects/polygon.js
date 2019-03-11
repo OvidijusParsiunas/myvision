@@ -20,14 +20,14 @@ function movePoints(event) {
 }
 
 function highlightPolygon(event) {
-  if (event.target && event.target.shapeName === 'polygonGrp') {
+  if (event.target && event.target.shapeName === 'polygon') {
     event.target._objects[0].set('fill', 'rgba(237, 237, 237, 0.1)');
     canvas.renderAll();
   }
 }
 
 function removePolygonHighlight(event) {
-  if (event.target && event.target.shapeName === 'polygonGrp') {
+  if (event.target && event.target.shapeName === 'polygon') {
     event.target._objects[0].set('fill', 'rgba(237, 237, 237, 0.01)');
     canvas.renderAll();
   }
@@ -74,7 +74,8 @@ function generatePolygon(event) {
   activeShape = null;
   polygonMode = false;
   const pointer = canvas.getPointer(event.e);
-  prepareLabelAndShapeGroup(polygon, canvas, pointArray);
+  // needs renaming
+  prepareLabelAndShapeGroup(polygon, canvas);
   showLabelPopUp(pointer.x, pointer.y);
   setDefaultCursorMode(canvas);
 }

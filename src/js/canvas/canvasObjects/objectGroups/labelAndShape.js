@@ -1,17 +1,14 @@
-import fabric from 'fabric';
 import { getLabelPopUpText, hideLabelPopUp } from '../../labelPopUp/manipulateLabelPopUp';
-import { getFinalBndBoxProps } from '../boundingBox/boundingBoxProperties';
-import getLabelProps from '../label/labelProperties';
-import polygonProperties from '../polygon/polygonProperties';
+
+const labelKeyPairObj = {};
+// rename everything to labelShape
 
 const labellingState = { inProgress: false };
 let targetShape = null;
-let targetPolygonPoints = [];
 let canvas = null;
 
-function prepareLabelAndShapeGroup(shape, canvasObj, polygonPoints) {
+function prepareLabelAndShapeGroup(shape, canvasObj) {
   targetShape = shape;
-  targetPolygonPoints = polygonPoints;
   canvas = canvasObj;
   labellingState.inProgress = true;
 }
@@ -24,17 +21,9 @@ function removeTargetShape() {
 function createLabelAndShapeGroup() {
   const text = getLabelPopUpText();
   hideLabelPopUp();
-  const textShape = new fabric.Text(text, getLabelProps(targetShape));
-  if (targetShape.shapeName === 'polygon') {
-    targetPolygonPoints.forEach((point) => { point.visible = false; point.stroke = null; point.fill = 'blue'; point.shapeName = 'point'; });
-    const group = new fabric.Group([targetShape, textShape, ...targetPolygonPoints],
-      polygonProperties.newFinalPolygon);
-    canvas.add(group);
-  } else if (targetShape.shapeName === 'bndBoxTemp') {
-    const group = new fabric.Group([targetShape, textShape], getFinalBndBoxProps(targetShape));
-    canvas.add(group);
-  }
-  removeTargetShape();
+  // const textShape = new fabric.Text(text, getLabelProps(targetShape));
+  labelKeyPairObj[targetShape[targetShape.id]] = text;
+  // the rectangle final properties should be set before passed in here
 }
 
 export {

@@ -1,5 +1,6 @@
+import fabric from 'fabric';
 import {
-  displayPolygonPoints, movePolygonPoint, finishEditingPolygon, hidePolygonPoints
+  displayPolygonPoints, movePolygonPoint, finishEditingPolygon, hidePolygonPoints,
 } from '../../../canvas/canvasObjects/polygon/changePolygon';
 
 const selectedPolygonPoints = {};
@@ -7,27 +8,33 @@ let editing = false;
 let selectedPolygon = null;
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
-    if(e.target && e.target.aCoords) {
-      console.log(e.target.aCoords);
-    }
-    window.result2 = e.target;
     if (!e.target) {
       finishEditingPolygon();
     }
     if (!editing) {
-      if (e.target && e.target.shapeName === 'polygonGrp') {
-        const objectsInGroup = e.target.getObjects();
-        objectsInGroup.forEach((object) => {
-          if(object.shapeName === 'polygon'){
-            window.result = object;
-        }
-        canvas.add(object);
-        });
+      if (e.target && e.target.shapeName === 'polygon') {
+        displayPolygonPoints(canvas, e.target);
+        selectedPolygon = e.target;
+        e.target.get('points').forEach((point) => {
+            const circle = new fabric.Circle(
+            {
+              radius: 3,
+              fill: 'blue',
+              stroke: '#333333',
+              strokeWidth: 0.5,
+              left: point.x,
+              top: point.y,
+              selectable: true,
+              hasBorders: false,
+              hasControls: false,
+              originX: 'center',
+              originY: 'center',
+              shapeName: 'point',
+              objectCaching: false,
+            });
+            canvas.add(circle);
+        })
         canvas.renderAll();
-        canvas.remove(e.target);
-        const objectsInGroupArrayIndex = 0;
-        selectedPolygon = objectsInGroup[objectsInGroupArrayIndex];
-        displayPolygonPoints(canvas, objectsInGroup, e.target.top, e.target.left);
         editing = true;
       }
     }
@@ -38,12 +45,9 @@ function assignDefaultEvents(canvas) {
       hidePolygonPoints(e.target.top);
     }
     if (e.target && e.target.shapeName === 'point') {
-      movePolygonPoint(e, selectedPolygon);
+      movePolygonPoint(e);
     }
   });
-  // canvas.on('object:moving', (e) => {
-  //   movePoints(e);
-  // });
 
   canvas.on('mouse:over', (e) => {
     if (e.target && e.target._objects) {
@@ -56,7 +60,7 @@ function assignDefaultEvents(canvas) {
     if (e.target && e.target._objects) {
       if (e.target.shapeName === 'bndBox') {
         e.target._objects[0].set('fill', 'rgba(255,0,0,0');
-      } else if (e.target.shapeName === 'polygonGrp') {
+      } else if (e.target.shapeName === 'polygon') {
         e.target._objects[0].set('fill', 'rgba(255,0,0,0.01)');
       }
       canvas.renderAll();
