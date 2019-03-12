@@ -6,12 +6,14 @@ let selectedPolygonText;
 let selectedPolygonPoints;
 let canvas;
 let polygon;
+const polygonPoints = [];
 
 function generatePolygonPointsOnCanvas() {
   let circleId = 0;
   polygon.get('points').forEach((point) => {
     const circle = new fabric.Circle(polygonProperties.existingPolygonCircle(circleId, point));
     canvas.add(circle);
+    polygonPoints.push(circle);
     circleId += 1;
   });
 }
@@ -27,13 +29,19 @@ function setEditablePolygon(canvasObj, polygonObject) {
   generatePolygonPointsOnCanvas();
 }
 
+function displayPolygonPoints() {
+  generatePolygonPointsOnCanvas();
+}
+
+function removePolygonPoints() {
+  polygonPoints.forEach((point) => {
+    canvas.remove(point);
+  });
+  canvas.renderAll();
+}
+
 function hidePolygonPoints() {
-  if (selectedPolygonPoints) {
-    selectedPolygonPoints.forEach((point) => {
-      point.set('visible', false);
-    });
-    canvas.renderAll();
-  }
+
 }
 
 function movePolygonPoint(event) {
@@ -57,4 +65,5 @@ function finishEditingPolygon() {
 export {
   setEditablePolygon, hidePolygonPoints,
   movePolygonPoint, finishEditingPolygon,
+  removePolygonPoints, displayPolygonPoints,
 };

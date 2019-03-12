@@ -1,22 +1,33 @@
-import fabric from 'fabric';
 import {
-  setEditablePolygon, movePolygonPoint, finishEditingPolygon, hidePolygonPoints,
+  setEditablePolygon, movePolygonPoint, finishEditingPolygon, removePolygonPoints, displayPolygonPoints
 } from '../../../canvas/canvasObjects/polygon/changePolygon';
 
 const selectedPolygonPoints = {};
-let editing = false;
+let editingPolygon = false;
+let movingPolygon = false;
 let selectedPolygon = null;
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
     if (e.target && e.target.shapeName === 'polygon') {
+      editingPolygon = true;
       setEditablePolygon(canvas, e.target);
       selectedPolygon = e.target;
     }
   });
 
+  canvas.on('mouse:up', () => {
+    if (movingPolygon) {
+      displayPolygonPoints();
+      movingPolygon = true;
+    }
+  });
+
   canvas.on('object:moving', (e) => {
     if (e.target && e.target.shapeName === 'polygon') {
-      hidePolygonPoints(e.target.top);
+      if (editingPolygon) {
+        movingPolygon = true;
+        removePolygonPoints();
+      }
     }
     if (e.target && e.target.shapeName === 'point') {
       movePolygonPoint(e, selectedPolygon);
