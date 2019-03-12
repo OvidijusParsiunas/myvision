@@ -20,6 +20,25 @@ function generateNewCircle(circleId, event, canvas) {
   };
 }
 
+function generateExistingPolygonCircle(circleId, pointCoordinates) {
+  return {
+    radius: 3,
+    fill: 'blue',
+    stroke: '#333333',
+    strokeWidth: 0.5,
+    left: pointCoordinates.x,
+    top: pointCoordinates.y,
+    selectable: true,
+    hasBorders: false,
+    hasControls: false,
+    originX: 'center',
+    originY: 'center',
+    shapeName: 'point',
+    objectCaching: false,
+    circleId,
+  };
+}
+
 (function setProperties() {
   polygonProperties.newPolygon = {
     stroke: 'rgba(255,0,0)',
@@ -32,7 +51,7 @@ function generateNewCircle(circleId, event, canvas) {
     selectable: false,
     evented: true,
     objectCaching: false,
-};
+  };
   polygonProperties.newTempPolygon = {
     stroke: '#333333',
     strokeWidth: 0.8,
@@ -70,6 +89,7 @@ function generateNewCircle(circleId, event, canvas) {
     shapeName: 'firstCircle',
   };
   polygonProperties.newCircle = generateNewCircle;
+  polygonProperties.existingPolygonCircle = generateExistingPolygonCircle;
 }());
 
 

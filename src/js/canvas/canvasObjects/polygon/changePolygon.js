@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import polygonProperties from "./polygonProperties";
+import polygonProperties from './polygonProperties';
 
 let selectedPolygon;
 let selectedPolygonText;
@@ -7,9 +7,24 @@ let selectedPolygonPoints;
 let canvas;
 let polygon;
 
-function displayPolygonPoints(canvasObj, polygonObject) {
-  canvas = canvasObj;
-  polygon = polygonObject;
+function generatePolygonPointsOnCanvas() {
+  let circleId = 0;
+  polygon.get('points').forEach((point) => {
+    const circle = new fabric.Circle(polygonProperties.existingPolygonCircle(circleId, point));
+    canvas.add(circle);
+    circleId += 1;
+  });
+}
+
+function setActiveObjects(activeCanvasObj, activePolygonObject) {
+  canvas = activeCanvasObj;
+  polygon = activePolygonObject;
+}
+
+function setEditablePolygon(canvasObj, polygonObject) {
+  setActiveObjects(canvasObj, polygonObject);
+  canvasObj.discardActiveObject();
+  generatePolygonPointsOnCanvas();
 }
 
 function hidePolygonPoints() {
@@ -22,8 +37,8 @@ function hidePolygonPoints() {
 }
 
 function movePolygonPoint(event) {
-  let left = event.target.left;
-  let top = event.target.top;
+  const { left } = event.target;
+  const { top } = event.target;
   const polygonPoint = event.target;
   polygon.points[polygonPoint.circleId] = {
     x: left, y: top,
@@ -40,6 +55,6 @@ function finishEditingPolygon() {
 }
 
 export {
-  displayPolygonPoints, hidePolygonPoints,
+  setEditablePolygon, hidePolygonPoints,
   movePolygonPoint, finishEditingPolygon,
 };

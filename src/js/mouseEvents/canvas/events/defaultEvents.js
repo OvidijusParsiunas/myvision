@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import {
-  displayPolygonPoints, movePolygonPoint, finishEditingPolygon, hidePolygonPoints,
+  setEditablePolygon, movePolygonPoint, finishEditingPolygon, hidePolygonPoints,
 } from '../../../canvas/canvasObjects/polygon/changePolygon';
 
 const selectedPolygonPoints = {};
@@ -8,34 +8,9 @@ let editing = false;
 let selectedPolygon = null;
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
-      if (e.target && e.target.shapeName === 'polygon') {
-        displayPolygonPoints(canvas, e.target);
-        selectedPolygon = e.target;
-        canvas.discardActiveObject();
-        let circleId = 0;
-        e.target.get('points').forEach((point) => {
-            const circle = new fabric.Circle(
-            {
-              radius: 3,
-              fill: 'blue',
-              stroke: '#333333',
-              strokeWidth: 0.5,
-              left: point.x,
-              top: point.y,
-              selectable: true,
-              hasBorders: false,
-              hasControls: false,
-              originX: 'center',
-              originY: 'center',
-              shapeName: 'point',
-              objectCaching: false,
-              circleId,
-            });
-            circleId++;
-            canvas.add(circle);
-            circle.bringToFront();
-        })
-
+    if (e.target && e.target.shapeName === 'polygon') {
+      setEditablePolygon(canvas, e.target);
+      selectedPolygon = e.target;
     }
   });
 
