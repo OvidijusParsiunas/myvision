@@ -30,7 +30,9 @@ function generateNewCircle(circleId, event, canvas) {
     hasControls: false,
     shapeName: 'polygon',
     selectable: false,
-  };
+    evented: true,
+    objectCaching: false,
+};
   polygonProperties.newTempPolygon = {
     stroke: '#333333',
     strokeWidth: 0.8,

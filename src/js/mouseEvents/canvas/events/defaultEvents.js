@@ -8,13 +8,10 @@ let editing = false;
 let selectedPolygon = null;
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
-    if (!e.target) {
-      finishEditingPolygon();
-    }
-    if (!editing) {
       if (e.target && e.target.shapeName === 'polygon') {
         displayPolygonPoints(canvas, e.target);
         selectedPolygon = e.target;
+        let circleId = 0;
         e.target.get('points').forEach((point) => {
             const circle = new fabric.Circle(
             {
@@ -31,12 +28,11 @@ function assignDefaultEvents(canvas) {
               originY: 'center',
               shapeName: 'point',
               objectCaching: false,
+              circleId,
             });
+            circleId++;
             canvas.add(circle);
         })
-        canvas.renderAll();
-        editing = true;
-      }
     }
   });
 
@@ -45,7 +41,7 @@ function assignDefaultEvents(canvas) {
       hidePolygonPoints(e.target.top);
     }
     if (e.target && e.target.shapeName === 'point') {
-      movePolygonPoint(e);
+      movePolygonPoint(e, selectedPolygon);
     }
   });
 

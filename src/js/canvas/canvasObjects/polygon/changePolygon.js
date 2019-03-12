@@ -6,12 +6,10 @@ let selectedPolygonText;
 let selectedPolygonPoints;
 let canvas;
 let polygon;
-let currentPoints;
 
 function displayPolygonPoints(canvasObj, polygonObject) {
   canvas = canvasObj;
   polygon = polygonObject;
-  canvasObj.renderAll();
 }
 
 function hidePolygonPoints() {
@@ -29,9 +27,7 @@ function movePolygonPoint(event) {
   polygon.points[polygonPoint.circleId] = {
     x: pointer.x, y: pointer.y,
   };
-  polygon = polygon.points;
-  currentPoints = pointer.x;
-  currentPoints = pointer.x;
+  canvas.renderAll();
 }
 
 function finishEditingPolygon() {
