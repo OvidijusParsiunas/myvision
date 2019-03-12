@@ -22,10 +22,11 @@ function hidePolygonPoints() {
 }
 
 function movePolygonPoint(event) {
-  const pointer = canvas.getPointer(event.e);
+  let left = event.target.left;
+  let top = event.target.top;
   const polygonPoint = event.target;
   polygon.points[polygonPoint.circleId] = {
-    x: pointer.x, y: pointer.y,
+    x: left, y: top,
   };
   canvas.renderAll();
 }

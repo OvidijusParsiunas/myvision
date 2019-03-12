@@ -8,6 +8,10 @@ let editing = false;
 let selectedPolygon = null;
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
+    console.log(e.target);
+      if(e.target && e.target.shapeName === 'point') {
+        const pointer = canvas.getPointer(e.e);
+      }
       if (e.target && e.target.shapeName === 'polygon') {
         displayPolygonPoints(canvas, e.target);
         selectedPolygon = e.target;
