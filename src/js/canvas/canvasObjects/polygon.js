@@ -2,7 +2,6 @@ import fabric from 'fabric';
 import polygonProperties from './polygon/polygonProperties';
 import { prepareLabelAndShapeGroup } from './objectGroups/labelAndShape';
 import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
-import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
 import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
 
 let canvas = null;
@@ -77,7 +76,6 @@ function generatePolygon(event) {
   // needs renaming
   prepareLabelAndShapeGroup(polygon, canvas);
   showLabelPopUp(pointer.x, pointer.y);
-  setDefaultCursorMode(canvas);
 }
 
 function addPoint(event) {
