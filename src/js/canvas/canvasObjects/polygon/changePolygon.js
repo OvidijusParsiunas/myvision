@@ -49,7 +49,7 @@ function displayPolygonPoints() {
     const circle = new fabric.Circle(polygonProperties.existingPolygonCircle(circleId, p))
     canvas.add(circle);
     polygonPoints.push(circle);
-    polygonAreaPoints.push({x: circle.left, y: circle.top-1.5});
+    polygonAreaPoints.push({x: circle.left-1, y: circle.top-1});
     circleId += 1;
 });
 polygon2.set({'id': polygon.id, 'selectable': true});

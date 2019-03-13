@@ -49,7 +49,6 @@ function generateExistingPolygonCircle(circleId, pointCoordinates) {
     hasControls: false,
     shapeName: 'polygon',
     selectable: false,
-    evented: true,
     objectCaching: false,
   };
   polygonProperties.newTempPolygon = {
