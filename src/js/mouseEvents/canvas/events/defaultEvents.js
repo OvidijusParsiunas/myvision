@@ -25,7 +25,9 @@ function assignDefaultEvents(canvas) {
         selectedPolygonId = null;
       }
       if (e.target && e.target.shapeName === 'polygon' && e.target.id !== selectedPolygonId) {
-        console.log('sadasda');
+        if (editingPolygon) {
+          removePolygonPoints();
+        }
           editingPolygon = true;
           setEditablePolygon(canvas, e.target);
           selectedPolygonId = e.target.id;
