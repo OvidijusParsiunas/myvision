@@ -7,15 +7,31 @@ let editingPolygon = false;
 let movingPolygon = false;
 let selectedPolygonId = null;
 let polygonEdited = false;
+let differentPolygon = false;
 
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
-
+    if (e.target && e.target.shapeName === 'polygon' && e.target.id !== selectedPolygonId) {
+      differentPolygon = true;
+    } else {
+      differentPolygon = false;
+    }
   });
 
   canvas.on('mouse:up', (e) => {
     if (movingPolygon) {
-      displayPolygonPoints();
+      if (differentPolygon) {
+        setEditablePolygon(canvas, e.target);
+        selectedPolygonId = e.target.id;
+        if(polygonEdited){
+          removePolygonPoints();
+          displayPolygonPoints();
+          polygonEdited = false;
+        }
+      }
+      else {
+        displayPolygonPoints();
+      }
       movingPolygon = false;
       editingPolygon = true;
     } else {
@@ -24,7 +40,7 @@ function assignDefaultEvents(canvas) {
         editingPolygon = false;
         selectedPolygonId = null;
       }
-      if (e.target && e.target.shapeName === 'polygon' && e.target.id !== selectedPolygonId) {
+      if (differentPolygon) {
         if (editingPolygon) {
           removePolygonPoints();
         }
