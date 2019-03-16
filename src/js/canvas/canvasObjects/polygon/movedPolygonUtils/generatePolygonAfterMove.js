@@ -29,11 +29,11 @@ function calculateMovedPointsCoordinates() {
   return movedPoints;
 }
 
-function generateNewCircles(movedPoints) {
+function generateNewPoints(movedPoints) {
   let pointId = 0;
   const movedPointsCoordinates = [];
   movedPoints.forEach((p) => {
-    const point = new fabric.Circle(polygonProperties.existingPolygonCircle(pointId, p));
+    const point = new fabric.Circle(polygonProperties.existingPolygonPoint(pointId, p));
     canvas.add(point);
     polygonPoints.push(point);
     movedPointsCoordinates.push({ x: point.left - 1, y: point.top - 1 });
@@ -63,7 +63,7 @@ function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, pol
   const newPolygon = generateNewPolygon();
   canvas.add(newPolygon);
   const movedPoints = calculateMovedPointsCoordinates();
-  const polygonPointsCoordinates = generateNewCircles(movedPoints);
+  const polygonPointsCoordinates = generateNewPoints(movedPoints);
   canvas.remove(currentPolygon);
   currentPolygon = newPolygon;
   currentPolygon.set('points', polygonPointsCoordinates);

@@ -1,6 +1,6 @@
 import {
   instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon, movePoints,
-} from '../../../canvas/canvasObjects/polygon';
+} from '../../../canvas/canvasObjects/polygon/polygon';
 
 function assignDrawPolygonEvents(canvas) {
   prepareCanvasForNewPolygon(canvas);

@@ -1,6 +1,6 @@
 const polygonProperties = {};
 
-function generateNewCircle(pointId, event, canvas) {
+function generateNewPoint(pointId, event, canvas) {
   const pointer = canvas.getPointer(event.e);
   return {
     radius: 3,
@@ -20,7 +20,7 @@ function generateNewCircle(pointId, event, canvas) {
   };
 }
 
-function generateExistingPolygonCircle(pointId, pointCoordinates) {
+function generateExistingPolygonPoint(pointId, pointCoordinates) {
   return {
     radius: 3,
     fill: 'blue',
@@ -84,12 +84,12 @@ function generateExistingPolygonCircle(pointId, pointCoordinates) {
     evented: false,
     objectCaching: false,
   };
-  polygonProperties.firstCircle = {
+  polygonProperties.firstPoint = {
     fill: 'red',
-    shapeName: 'firstCircle',
+    shapeName: 'firstPoint',
   };
-  polygonProperties.newCircle = generateNewCircle;
-  polygonProperties.existingPolygonCircle = generateExistingPolygonCircle;
+  polygonProperties.newPoint = generateNewPoint;
+  polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;
 }());
 
 

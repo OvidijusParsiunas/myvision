@@ -7,17 +7,17 @@ let polygon;
 let polygonPoints = [];
 const alternatePolygonPoints = [];
 
-function generatePolygonPoints() {
+function displayPolygonPoints() {
   let pointId = 0;
   polygon.get('points').forEach((point) => {
-    const circle = new fabric.Circle(polygonProperties.existingPolygonCircle(pointId, point));
-    canvas.add(circle);
-    polygonPoints.push(circle);
+    const pointObj = new fabric.Circle(polygonProperties.existingPolygonPoint(pointId, point));
+    canvas.add(pointObj);
+    polygonPoints.push(pointObj);
     pointId += 1;
   });
 }
 
-function generatePolygonPointsAfterMove() {
+function displayPolygonPointsAfterMove() {
   polygon = generatePolygonAfterMove(polygon, polygonPoints, canvas, polygonProperties);
 }
 
@@ -29,13 +29,13 @@ function setSelectedObjects(activeCanvasObj, activePolygonObject) {
 function setEditablePolygon(canvasObj, polygonObj) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
-  generatePolygonPoints();
+  displayPolygonPoints();
 }
 
 function setEditablePolygonAfterMoving(canvasObj, polygonObj) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
-  generatePolygonPointsAfterMove();
+  displayPolygonPointsAfterMove();
 }
 
 function removePolygonPoints() {
@@ -87,6 +87,6 @@ function hidePolygonPoints() {
 export {
   setEditablePolygon, hidePolygonPoints,
   movePolygonPoint, finishEditingPolygon,
-  removePolygonPoints, generatePolygonPointsAfterMove,
+  removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
 };

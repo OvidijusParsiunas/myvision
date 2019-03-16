@@ -1,4 +1,4 @@
-import { clearPolygonData } from '../polygon';
+import { clearPolygonData } from '../polygon/polygon';
 import { cancelLabellingProcess } from '../../labelPopUp/labelPopUpActions';
 import { hidePolygonPoints } from '../polygon/changePolygon';
 

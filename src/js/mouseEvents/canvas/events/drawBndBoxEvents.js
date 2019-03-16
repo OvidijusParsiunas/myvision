@@ -1,7 +1,7 @@
 import {
   prepareCanvasForNewBndBox, instantiateNewBndBox,
   drawBndBox, finishDrawingBndBox,
-} from '../../../canvas/canvasObjects/boundingBox';
+} from '../../../canvas/canvasObjects/boundingBox/boundingBox';
 
 function assignDrawBoundingBoxEvents(canvas) {
   prepareCanvasForNewBndBox(canvas);

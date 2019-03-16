@@ -1,9 +1,9 @@
 import fabric from 'fabric';
-import { getTempBndBoxProps } from './boundingBox/boundingBoxProperties';
-import { prepareLabelShape } from './objectGroups/labelAndShape';
-import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
-import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
-import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
+import { getTempBndBoxProps } from './boundingBoxProperties';
+import { prepareLabelShape } from '../objectGroups/labelAndShape';
+import { showLabelPopUp } from '../../labelPopUp/manipulateLabelPopUp';
+import setDefaultCursorMode from '../../../mouseEvents/canvas/cursorModes/defaultMode';
+import setDrawCursorMode from '../../../mouseEvents/canvas/cursorModes/drawMode';
 // import { getFinalBndBoxProps } from '../boundingBox/boundingBoxProperties';
 
 let canvas = null;

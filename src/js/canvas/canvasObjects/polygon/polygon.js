@@ -1,8 +1,8 @@
 import fabric from 'fabric';
-import polygonProperties from './polygon/polygonProperties';
-import { prepareLabelShape } from './objectGroups/labelAndShape';
-import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
-import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
+import polygonProperties from './polygonProperties';
+import { prepareLabelShape } from '../objectGroups/labelAndShape';
+import { showLabelPopUp } from '../../labelPopUp/manipulateLabelPopUp';
+import setDrawCursorMode from '../../../mouseEvents/canvas/cursorModes/drawMode';
 
 let canvas = null;
 let pointArray = [];
@@ -79,10 +79,10 @@ function generatePolygon(event) {
 
 function addPoint(event) {
   const pointer = canvas.getPointer(event.e);
-  const point = new fabric.Circle(polygonProperties.newCircle(pointId, event, canvas));
+  const point = new fabric.Circle(polygonProperties.newPoint(pointId, event, canvas));
   pointId += 1;
   if (pointArray.length === 0) {
-    point.set(polygonProperties.firstCircle);
+    point.set(polygonProperties.firstPoint);
   }
   let points = [pointer.x, pointer.y, pointer.x, pointer.y];
   const line = new fabric.Line(points, polygonProperties.newLine);
@@ -129,7 +129,7 @@ function clearPolygonData() {
 }
 
 function instantiatePolygon(event) {
-  if (event.target && event.target.shapeName && event.target.shapeName === 'firstCircle') {
+  if (event.target && event.target.shapeName && event.target.shapeName === 'firstPoint') {
     generatePolygon(event);
   }
   if (polygonMode) {

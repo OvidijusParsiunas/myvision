@@ -1,6 +1,6 @@
 import {
   setEditablePolygon, movePolygonPoint,
-  removePolygonPoints, generatePolygonPointsAfterMove,
+  removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
 } from '../../../../canvas/canvasObjects/polygon/changePolygon';
 
@@ -25,7 +25,7 @@ function setEditablePolygonWhenPolygonMoved(event, canvas) {
     setEditablePolygonAfterMoving(canvas, event.target);
     selectedPolygonId = event.target.id;
   } else {
-    generatePolygonPointsAfterMove();
+    displayPolygonPointsAfterMove();
   }
   polygonMoved = false;
   editingPolygon = true;
