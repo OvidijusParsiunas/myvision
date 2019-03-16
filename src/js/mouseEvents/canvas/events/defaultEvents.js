@@ -1,72 +1,64 @@
 import {
-  setEditablePolygon, movePolygonPoint, finishEditingPolygon, removePolygonPoints, displayPolygonPoints
+  setEditablePolygon, movePolygonPoint,
+  removePolygonPoints, displayPolygonPoints,
+  setEditablePolygonAfterMoving, resetPolygonSelectableArea,
 } from '../../../canvas/canvasObjects/polygon/changePolygon';
 
 const selectedPolygonPoints = {};
 let editingPolygon = false;
-let movingPolygon = false;
+let polygonMoved = false;
+let polygonPointMoved = false;
 let selectedPolygonId = null;
-let polygonEdited = false;
-let differentPolygon = false;
+let newPolygonSelected = false;
 
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
     if (e.target && e.target.shapeName === 'polygon' && e.target.id !== selectedPolygonId) {
-      differentPolygon = true;
+      newPolygonSelected = true;
     } else {
-      differentPolygon = false;
+      newPolygonSelected = false;
     }
   });
 
   canvas.on('mouse:up', (e) => {
-    if (movingPolygon) {
-      if (differentPolygon) {
-        setEditablePolygon(canvas, e.target);
+    if (polygonMoved) {
+      if (newPolygonSelected) {
+        setEditablePolygonAfterMoving(canvas, e.target);
         selectedPolygonId = e.target.id;
-        if(polygonEdited){
-          removePolygonPoints();
-          displayPolygonPoints();
-          polygonEdited = false;
-        }
-      }
-      else {
+      } else {
         displayPolygonPoints();
       }
-      movingPolygon = false;
+      polygonMoved = false;
       editingPolygon = true;
-    } else {
-      if (!e.target && editingPolygon) {
+    } else if (polygonPointMoved) {
+      resetPolygonSelectableArea();
+      polygonPointMoved = false;
+    } else if (newPolygonSelected) {
+      if (editingPolygon) {
+        // when selecting another polygon without moving the first one
         removePolygonPoints();
-        editingPolygon = false;
-        selectedPolygonId = null;
       }
-      if (differentPolygon) {
-        if (editingPolygon) {
-          removePolygonPoints();
-        }
-          editingPolygon = true;
-          setEditablePolygon(canvas, e.target);
-          selectedPolygonId = e.target.id;
-          if(polygonEdited){
-            removePolygonPoints();
-            displayPolygonPoints();
-            polygonEdited = false;
-          }
-      }
+      setEditablePolygon(canvas, e.target);
+      selectedPolygonId = e.target.id;
+      editingPolygon = true;
+    } else if (!e.target && editingPolygon) {
+      removePolygonPoints();
+      editingPolygon = false;
+      selectedPolygonId = null;
     }
   });
 
   canvas.on('object:moving', (e) => {
     if (e.target && e.target.shapeName === 'polygon') {
-      polygonEdited = true;
       if (editingPolygon) {
-        editingPolygon = false;
         removePolygonPoints();
-        movingPolygon = true;
+        editingPolygon = false;
       }
+      polygonMoved = true;
     }
     if (e.target && e.target.shapeName === 'point') {
       movePolygonPoint(e);
+      polygonPointMoved = true;
     }
   });
 

@@ -20,15 +20,61 @@ function generatePolygonPointsOnCanvas() {
   });
 }
 
-function setActiveObjects(activeCanvasObj, activePolygonObject) {
+function setSelectedObjects(activeCanvasObj, activePolygonObject) {
   canvas = activeCanvasObj;
   polygon = activePolygonObject;
 }
 
-function setEditablePolygon(canvasObj, polygonObject) {
-  setActiveObjects(canvasObj, polygonObject);
+function setEditablePolygon(canvasObj, polygonObj) {
+  setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
   generatePolygonPointsOnCanvas();
+}
+
+function displayPolygonPointsAfterMoving() {
+  let polygonAreaPoints = [];
+  const polygon2 = new fabric.Polygon([], polygonProperties.newPolygon);
+  canvas.add(polygon2);
+  canvas.discardActiveObject();
+
+  matrix = polygon.calcTransformMatrix();
+  const transformedPoints = polygon.get('points')
+    .map(p => new fabric.Point(
+      p.x - polygon.pathOffset.x,
+      p.y - polygon.pathOffset.y,
+    ))
+    .map(p => fabric.util.transformPoint(p, matrix));
+    let circleId = 0;
+    transformedPoints.map(p => {
+    const circle = new fabric.Circle(polygonProperties.existingPolygonCircle(circleId, p))
+    canvas.add(circle);
+    polygonPoints.push(circle);
+    polygonAreaPoints.push({x: circle.left-1, y: circle.top-1});
+    circleId += 1;
+});
+polygon2.set({'id': polygon.id, 'selectable': true});
+canvas.remove(polygon);
+polygon = polygon2;
+polygon.set('points', polygonAreaPoints);
+let newPosition = polygon._calcDimensions();
+polygon.set({
+  left: newPosition.left,
+  top: newPosition.top,
+  height: newPosition.height,
+  width: newPosition.width,
+  pathOffset: {
+      x: newPosition.left + newPosition.width / 2,
+      y: newPosition.top + newPosition.height / 2
+  }
+});
+polygon.setCoords();
+canvas.renderAll();
+}
+
+function setEditablePolygonAfterMoving(canvasObj, polygonObj) {
+  setSelectedObjects(canvasObj, polygonObj);
+  canvasObj.discardActiveObject();
+  displayPolygonPointsAfterMoving();
 }
 
 function displayPolygonPoints() {
@@ -84,15 +130,8 @@ function hidePolygonPoints() {
 
 }
 
-function movePolygonPoint(event) {
-  const { left } = event.target;
-  const { top } = event.target;
-  const polygonPoint = event.target;
-  polygon.points[polygonPoint.circleId] = {
-    x: left, y: top,
-  };
+function resetPolygonSelectableArea() {
   let newPosition = polygon._calcDimensions();
-  console.log(newPosition);
   polygon.set({
     left: newPosition.left,
     top: newPosition.top,
@@ -107,6 +146,15 @@ polygon.setCoords();
   canvas.renderAll();
 }
 
+function movePolygonPoint(event) {
+  const { left } = event.target;
+  const { top } = event.target;
+  const polygonPoint = event.target;
+  polygon.points[polygonPoint.circleId] = {
+    x: left, y: top,
+  };
+}
+
 function finishEditingPolygon() {
   canvas.remove(selectedPolygon);
   canvas.remove(selectedPolygonText);
@@ -119,4 +167,5 @@ export {
   setEditablePolygon, hidePolygonPoints,
   movePolygonPoint, finishEditingPolygon,
   removePolygonPoints, displayPolygonPoints,
+  setEditablePolygonAfterMoving, resetPolygonSelectableArea,
 };
