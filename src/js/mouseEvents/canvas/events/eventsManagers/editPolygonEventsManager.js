@@ -1,6 +1,6 @@
 import {
   setEditablePolygon, movePolygonPoint,
-  removePolygonPoints, displayPolygonPoints,
+  removePolygonPoints, generatePolygonPointsAfterMove,
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
 } from '../../../../canvas/canvasObjects/polygon/changePolygon';
 
@@ -10,22 +10,6 @@ let polygonPointMoved = false;
 let selectedPolygonId = null;
 let newPolygonSelected = false;
 
-function setEditablePolygonWhenPolygonMoved(event, canvas) {
-  if (newPolygonSelected) {
-    setEditablePolygonAfterMoving(canvas, event.target);
-    selectedPolygonId = event.target.id;
-  } else {
-    displayPolygonPoints();
-  }
-  polygonMoved = false;
-  editingPolygon = true;
-}
-
-function resetPolygonSelectableAreaAfterPointMoved() {
-  resetPolygonSelectableArea();
-  polygonPointMoved = false;
-}
-
 function setEditablePolygonOnClick(event, canvas) {
   if (editingPolygon) {
     // selecting another polygon without moving the first one
@@ -34,6 +18,22 @@ function setEditablePolygonOnClick(event, canvas) {
   setEditablePolygon(canvas, event.target);
   selectedPolygonId = event.target.id;
   editingPolygon = true;
+}
+
+function setEditablePolygonWhenPolygonMoved(event, canvas) {
+  if (newPolygonSelected) {
+    setEditablePolygonAfterMoving(canvas, event.target);
+    selectedPolygonId = event.target.id;
+  } else {
+    generatePolygonPointsAfterMove();
+  }
+  polygonMoved = false;
+  editingPolygon = true;
+}
+
+function resetPolygonSelectableAreaAfterPointMoved() {
+  resetPolygonSelectableArea();
+  polygonPointMoved = false;
 }
 
 function removePolygonPointsOnCanvasClick() {

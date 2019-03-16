@@ -1,7 +1,5 @@
 import { polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents } from './eventsManagers/editPolygonEventsManager';
 
-const selectedPolygonPoints = {};
-
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
     polygonMouseDownEvents(e);
@@ -34,4 +32,4 @@ function assignDefaultEvents(canvas) {
   });
 }
 
-export { assignDefaultEvents, selectedPolygonPoints };
+export { assignDefaultEvents as default };
