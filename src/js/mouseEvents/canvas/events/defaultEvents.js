@@ -1,65 +1,18 @@
-import {
-  setEditablePolygon, movePolygonPoint,
-  removePolygonPoints, displayPolygonPoints,
-  setEditablePolygonAfterMoving, resetPolygonSelectableArea,
-} from '../../../canvas/canvasObjects/polygon/changePolygon';
+import { polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents } from './eventsManagers/editPolygonEventsManager';
 
 const selectedPolygonPoints = {};
-let editingPolygon = false;
-let polygonMoved = false;
-let polygonPointMoved = false;
-let selectedPolygonId = null;
-let newPolygonSelected = false;
 
 function assignDefaultEvents(canvas) {
   canvas.on('mouse:down', (e) => {
-    if (e.target && e.target.shapeName === 'polygon' && e.target.id !== selectedPolygonId) {
-      newPolygonSelected = true;
-    } else {
-      newPolygonSelected = false;
-    }
+    polygonMouseDownEvents(e);
   });
 
   canvas.on('mouse:up', (e) => {
-    if (polygonMoved) {
-      if (newPolygonSelected) {
-        setEditablePolygonAfterMoving(canvas, e.target);
-        selectedPolygonId = e.target.id;
-      } else {
-        displayPolygonPoints();
-      }
-      polygonMoved = false;
-      editingPolygon = true;
-    } else if (polygonPointMoved) {
-      resetPolygonSelectableArea();
-      polygonPointMoved = false;
-    } else if (newPolygonSelected) {
-      if (editingPolygon) {
-        // when selecting another polygon without moving the first one
-        removePolygonPoints();
-      }
-      setEditablePolygon(canvas, e.target);
-      selectedPolygonId = e.target.id;
-      editingPolygon = true;
-    } else if (!e.target && editingPolygon) {
-      removePolygonPoints();
-      editingPolygon = false;
-      selectedPolygonId = null;
-    }
+    polygonMouseUpEvents(e, canvas);
   });
 
   canvas.on('object:moving', (e) => {
-    if (e.target && e.target.shapeName === 'polygon') {
-      if (editingPolygon) {
-        removePolygonPoints();
-        editingPolygon = false;
-      }
-      polygonMoved = true;
-    }
-    if (e.target && e.target.shapeName === 'point') {
-      movePolygonPoint(e);
-      polygonPointMoved = true;
-    }
+    polygonMoveEvents(e);
   });
 
   canvas.on('mouse:over', (e) => {
