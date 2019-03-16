@@ -2,14 +2,13 @@ import { getLabelPopUpText, hideLabelPopUp } from '../../labelPopUp/manipulateLa
 import setDefaultCursorMode from '../../../mouseEvents/canvas/cursorModes/defaultMode';
 
 const labelKeyPairObj = {};
-// rename everything to labelShape
 
 const labellingState = { inProgress: false };
 let targetShape = null;
 let canvas = null;
 let currentId = 0;
 
-function prepareLabelAndShapeGroup(shape, canvasObj) {
+function prepareLabelShape(shape, canvasObj) {
   targetShape = shape;
   canvas = canvasObj;
   labellingState.inProgress = true;
@@ -20,7 +19,7 @@ function removeTargetShape() {
   labellingState.inProgress = false;
 }
 
-function createLabelAndShapeGroup() {
+function createLabelShape() {
   const text = getLabelPopUpText();
   setDefaultCursorMode(canvas);
   hideLabelPopUp();
@@ -32,5 +31,5 @@ function createLabelAndShapeGroup() {
 }
 
 export {
-  prepareLabelAndShapeGroup, createLabelAndShapeGroup, removeTargetShape, labellingState,
+  prepareLabelShape, createLabelShape, removeTargetShape, labellingState,
 };

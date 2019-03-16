@@ -5,7 +5,7 @@ import {
 function assignDrawPolygonEvents(canvas) {
   prepareCanvasForNewPolygon(canvas);
   canvas.on('mouse:down', (e) => {
-    if (!e.target || (e.target && e.target.shapeName !== 'tempCircle')) {
+    if (!e.target || (e.target && e.target.shapeName !== 'tempPoint')) {
       instantiatePolygon(e);
     }
   });

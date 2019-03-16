@@ -8,12 +8,12 @@ let polygonPoints = [];
 const alternatePolygonPoints = [];
 
 function generatePolygonPoints() {
-  let circleId = 0;
+  let pointId = 0;
   polygon.get('points').forEach((point) => {
-    const circle = new fabric.Circle(polygonProperties.existingPolygonCircle(circleId, point));
+    const circle = new fabric.Circle(polygonProperties.existingPolygonCircle(pointId, point));
     canvas.add(circle);
     polygonPoints.push(circle);
-    circleId += 1;
+    pointId += 1;
   });
 }
 
@@ -67,7 +67,7 @@ function movePolygonPoint(event) {
   const { left } = event.target;
   const { top } = event.target;
   const polygonPoint = event.target;
-  polygon.points[polygonPoint.circleId] = {
+  polygon.points[polygonPoint.pointId] = {
     x: left, y: top,
   };
 }

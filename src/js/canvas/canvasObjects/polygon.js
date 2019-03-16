@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import polygonProperties from './polygon/polygonProperties';
-import { prepareLabelAndShapeGroup } from './objectGroups/labelAndShape';
+import { prepareLabelShape } from './objectGroups/labelAndShape';
 import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
 import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
 
@@ -10,10 +10,10 @@ let lineArray = [];
 let polygonMode = true;
 let activeLine = null;
 let activeShape = false;
-let circleId = 0;
+let pointId = 0;
 
 function movePoints(event) {
-  activeShape.points[event.target.circleId] = {
+  activeShape.points[event.target.pointId] = {
     x: event.target.getCenterPoint().x, y: event.target.getCenterPoint().y,
   };
 }
@@ -73,17 +73,16 @@ function generatePolygon(event) {
   activeShape = null;
   polygonMode = false;
   const pointer = canvas.getPointer(event.e);
-  // needs renaming
-  prepareLabelAndShapeGroup(polygon, canvas);
+  prepareLabelShape(polygon, canvas);
   showLabelPopUp(pointer.x, pointer.y);
 }
 
 function addPoint(event) {
   const pointer = canvas.getPointer(event.e);
-  const circle = new fabric.Circle(polygonProperties.newCircle(circleId, event, canvas));
-  circleId += 1;
+  const point = new fabric.Circle(polygonProperties.newCircle(pointId, event, canvas));
+  pointId += 1;
   if (pointArray.length === 0) {
-    circle.set(polygonProperties.firstCircle);
+    point.set(polygonProperties.firstCircle);
   }
   let points = [pointer.x, pointer.y, pointer.x, pointer.y];
   const line = new fabric.Line(points, polygonProperties.newLine);
@@ -109,9 +108,9 @@ function addPoint(event) {
   }
   activeLine = line;
 
-  pointArray.push(circle);
+  pointArray.push(point);
   lineArray.push(line);
-  canvas.add(circle);
+  canvas.add(point);
   canvas.selection = false;
 }
 
@@ -125,7 +124,7 @@ function clearPolygonData() {
     lineArray = [];
     activeShape = null;
     activeLine = null;
-    circleId = 0;
+    pointId = 0;
   }
 }
 

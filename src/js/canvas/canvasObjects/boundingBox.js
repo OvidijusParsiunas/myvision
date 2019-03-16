@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import { getTempBndBoxProps } from './boundingBox/boundingBoxProperties';
-import { prepareLabelAndShapeGroup } from './objectGroups/labelAndShape';
+import { prepareLabelShape } from './objectGroups/labelAndShape';
 import { showLabelPopUp } from '../labelPopUp/manipulateLabelPopUp';
 import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
 import setDrawCursorMode from '../../mouseEvents/canvas/cursorModes/drawMode';
@@ -53,7 +53,7 @@ function finishDrawingBndBox(event) {
     bndBoxProps.rect.selectable = false;
     setDefaultCursorMode(canvas);
     const pointer = canvas.getPointer(event.e);
-    prepareLabelAndShapeGroup(bndBoxProps.rect, canvas);
+    prepareLabelShape(bndBoxProps.rect, canvas);
     showLabelPopUp(pointer.x, pointer.y);
   }
 }
