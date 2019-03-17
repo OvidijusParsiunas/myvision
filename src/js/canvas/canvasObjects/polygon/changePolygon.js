@@ -39,12 +39,14 @@ function setEditablePolygonAfterMoving(canvasObj, polygonObj) {
 }
 
 function removePolygonPoints() {
-  polygonPoints.forEach((point) => {
-    canvas.remove(point);
-    alternatePolygonPoints.push(point);
-  });
-  canvas.renderAll();
-  polygonPoints = [];
+  if (polygonPoints.length !== 0) {
+    polygonPoints.forEach((point) => {
+      canvas.remove(point);
+      alternatePolygonPoints.push(point);
+    });
+    canvas.renderAll();
+    polygonPoints = [];
+  }
 }
 
 function resetPolygonSelectableArea() {

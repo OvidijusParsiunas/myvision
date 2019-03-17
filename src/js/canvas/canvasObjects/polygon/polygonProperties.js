@@ -63,14 +63,6 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
     evented: false,
     objectCaching: false,
   };
-  polygonProperties.newFinalPolygon = {
-    perPixelTargetFind: true,
-    hasBorders: false,
-    hasControls: false,
-    shapeName: 'polygonGrp',
-    selectable: true,
-    subTargetCheck: true,
-  };
   polygonProperties.newLine = {
     strokeWidth: 1.1,
     fill: '#999999',

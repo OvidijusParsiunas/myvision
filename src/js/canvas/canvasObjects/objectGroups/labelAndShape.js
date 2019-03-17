@@ -28,6 +28,7 @@ function createLabelShape() {
   // const textShape = new fabric.Text(text, getLabelProps(targetShape));
   labelKeyPairObj[targetShape[targetShape.id]] = text;
   // the rectangle final properties should be set before passed in here
+  labellingState.inProgress = false;
 }
 
 export {
