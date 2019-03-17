@@ -36,15 +36,22 @@ function resetPolygonSelectableAreaAfterPointMoved() {
   polygonPointMoved = false;
 }
 
-function removePolygonPointsOnCanvasClick() {
+function setPolygonNotEditableOnClick() {
   removePolygonPoints();
   editingPolygon = false;
   selectedPolygonId = null;
 }
 
 function polygonMouseDownEvents(event) {
-  if (event.target && event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
-    newPolygonSelected = true;
+  if (event.target) {
+    if (event.target.shapeName === 'bndBox' && editingPolygon) {
+      setPolygonNotEditableOnClick();
+      newPolygonSelected = false;
+    } else if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+      newPolygonSelected = true;
+    } else {
+      newPolygonSelected = false;
+    }
   } else {
     newPolygonSelected = false;
   }
@@ -58,21 +65,22 @@ function polygonMouseUpEvents(event, canvas) {
   } else if (polygonPointMoved) {
     resetPolygonSelectableAreaAfterPointMoved();
   } else if (!event.target && editingPolygon) {
-    removePolygonPointsOnCanvasClick();
+    setPolygonNotEditableOnClick();
   }
 }
 
 function polygonMoveEvents(event) {
-  if (event.target && event.target.shapeName === 'polygon') {
-    if (editingPolygon) {
-      removePolygonPoints();
-      editingPolygon = false;
+  if (event.target) {
+    if (event.target.shapeName === 'polygon') {
+      if (editingPolygon) {
+        removePolygonPoints();
+        editingPolygon = false;
+      }
+      polygonMoved = true;
+    } else if (event.target.shapeName === 'point') {
+      movePolygonPoint(event);
+      polygonPointMoved = true;
     }
-    polygonMoved = true;
-  }
-  if (event.target && event.target.shapeName === 'point') {
-    movePolygonPoint(event);
-    polygonPointMoved = true;
   }
 }
 

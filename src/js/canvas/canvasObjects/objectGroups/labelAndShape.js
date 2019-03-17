@@ -24,6 +24,14 @@ function createLabelShape() {
   setDefaultCursorMode(canvas);
   hideLabelPopUp();
   targetShape.set('id', currentId);
+  if (targetShape.shapeName === 'bndBoxTemp') {
+    targetShape.set(
+      {
+        fill: 'rgba(255,0,0,0.1)',
+        shapeName: 'bndBox',
+      },
+    );
+  }
   currentId += 1;
   // const textShape = new fabric.Text(text, getLabelProps(targetShape));
   labelKeyPairObj[targetShape[targetShape.id]] = text;
