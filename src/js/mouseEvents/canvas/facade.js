@@ -3,6 +3,7 @@ import assignDrawBoundingBoxEvents from './events/drawBndBoxEvents';
 import assignDrawPolygonEvents from './events/drawPolygonEvents';
 import assignDefaultEvents from './events/defaultEvents';
 import purgeCanvasMouseEvents from './events/purgeEvents';
+import { removePolygon } from '../../canvas/canvasObjects/polygon/changePolygon';
 
 let canvas = null;
 let defaultState = false;
@@ -20,7 +21,11 @@ function createNewPolygonBtnClick() {
 }
 
 function removeActiveShapeBtnClick() {
-  canvas.remove(canvas.getActiveObject());
+  if (canvas.getActiveObject()) {
+    canvas.remove(canvas.getActiveObject());
+  } else {
+    removePolygon();
+  }
 }
 
 function resetCanvasEventsToDefault() {

@@ -18,6 +18,7 @@ function getTempBndBoxProps(bndBoxProps, pointer) {
   bndBoxProperties.finalBndBoxProps = {
     fill: 'rgba(255,0,0,0.1)',
     shapeName: 'bndBox',
+    objectCaching: false,
   };
 }());
 

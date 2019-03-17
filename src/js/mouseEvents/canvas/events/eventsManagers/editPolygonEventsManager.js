@@ -87,4 +87,11 @@ function polygonMoveEvents(event) {
   }
 }
 
-export { polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents };
+function removeSelectedPolygonId() {
+  selectedPolygonId = null;
+}
+
+export {
+  polygonMouseDownEvents, polygonMouseUpEvents,
+  polygonMoveEvents, removeSelectedPolygonId,
+};

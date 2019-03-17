@@ -13,9 +13,11 @@ let activeShape = false;
 let pointId = 0;
 
 function movePoints(event) {
-  activeShape.points[event.target.pointId] = {
-    x: event.target.getCenterPoint().x, y: event.target.getCenterPoint().y,
-  };
+  if (activeShape) {
+    activeShape.points[event.target.pointId] = {
+      x: event.target.getCenterPoint().x, y: event.target.getCenterPoint().y,
+    };
+  }
 }
 
 function highlightPolygon(event) {

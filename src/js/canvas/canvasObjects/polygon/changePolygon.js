@@ -2,8 +2,8 @@ import fabric from 'fabric';
 import polygonProperties from './polygonProperties';
 import generatePolygonAfterMove from './movedPolygonUtils/generatePolygonAfterMove';
 
-let canvas;
-let polygon;
+let canvas = null;
+let polygon = null;
 let polygonPoints = [];
 
 function sendPolygonPointsToFront() {
@@ -79,9 +79,15 @@ function movePolygonPoint(event) {
   };
 }
 
+function removePolygon() {
+  if (polygon) {
+    canvas.remove(polygon);
+  }
+}
+
 export {
   setEditablePolygon, resetPolygonSelectableArea,
   movePolygonPoint, sendPolygonPointsToFront,
   removePolygonPoints, displayPolygonPointsAfterMove,
-  setEditablePolygonAfterMoving,
+  setEditablePolygonAfterMoving, removePolygon,
 };

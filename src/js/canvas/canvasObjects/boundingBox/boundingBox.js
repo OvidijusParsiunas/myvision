@@ -4,7 +4,6 @@ import { prepareLabelShape } from '../../labelPopUp/labelShape';
 import { showLabelPopUp } from '../../labelPopUp/manipulateLabelPopUp';
 import setDefaultCursorMode from '../../../mouseEvents/canvas/cursorModes/defaultMode';
 import setDrawCursorMode from '../../../mouseEvents/canvas/cursorModes/drawMode';
-// import { getFinalBndBoxProps } from '../boundingBox/boundingBoxProperties';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
