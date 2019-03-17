@@ -1,5 +1,6 @@
-import { getLabelPopUpText, hideLabelPopUp } from '../../labelPopUp/manipulateLabelPopUp';
-import setDefaultCursorMode from '../../../mouseEvents/canvas/cursorModes/defaultMode';
+import { getLabelPopUpText, hideLabelPopUp } from './manipulateLabelPopUp';
+import setDefaultCursorMode from '../../mouseEvents/canvas/cursorModes/defaultMode';
+import bndBoxProperties from '../canvasObjects/boundingBox/boundingBoxProperties';
 
 const labelKeyPairObj = {};
 
@@ -26,10 +27,7 @@ function createLabelShape() {
   targetShape.set('id', currentId);
   if (targetShape.shapeName === 'bndBoxTemp') {
     targetShape.set(
-      {
-        fill: 'rgba(255,0,0,0.1)',
-        shapeName: 'bndBox',
-      },
+      bndBoxProperties.finalBndBoxProps,
     );
   }
   currentId += 1;

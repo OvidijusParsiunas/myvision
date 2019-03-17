@@ -2,6 +2,7 @@ import {
   setEditablePolygon, movePolygonPoint,
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
+  sendPolygonPointsToFront,
 } from '../../../../canvas/canvasObjects/polygon/changePolygon';
 
 let editingPolygon = false;
@@ -64,6 +65,8 @@ function polygonMouseUpEvents(event, canvas) {
     setEditablePolygonOnClick(event, canvas);
   } else if (polygonPointMoved) {
     resetPolygonSelectableAreaAfterPointMoved();
+  } else if (event.target && event.target.shapeName === 'polygon') {
+    sendPolygonPointsToFront();
   } else if (!event.target && editingPolygon) {
     setPolygonNotEditableOnClick();
   }

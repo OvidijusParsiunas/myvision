@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import polygonProperties from './polygonProperties';
-import { prepareLabelShape } from '../objectGroups/labelAndShape';
+import { prepareLabelShape } from '../../labelPopUp/labelShape';
 import { showLabelPopUp } from '../../labelPopUp/manipulateLabelPopUp';
 import setDrawCursorMode from '../../../mouseEvents/canvas/cursorModes/drawMode';
 

@@ -5,7 +5,13 @@ import generatePolygonAfterMove from './movedPolygonUtils/generatePolygonAfterMo
 let canvas;
 let polygon;
 let polygonPoints = [];
-const alternatePolygonPoints = [];
+
+function sendPolygonPointsToFront() {
+  canvas.discardActiveObject();
+  polygonPoints.forEach((point) => {
+    point.bringForward();
+  });
+}
 
 function displayPolygonPoints() {
   let pointId = 0;
@@ -42,7 +48,6 @@ function removePolygonPoints() {
   if (polygonPoints.length !== 0) {
     polygonPoints.forEach((point) => {
       canvas.remove(point);
-      alternatePolygonPoints.push(point);
     });
     canvas.renderAll();
     polygonPoints = [];
@@ -74,21 +79,9 @@ function movePolygonPoint(event) {
   };
 }
 
-function finishEditingPolygon() {
-  // canvas.remove(selectedPolygon);
-  // canvas.remove(selectedPolygonText);
-  // selectedPolygonPoints.forEach((point) => {
-  //   canvas.remove(point);
-  // });
-}
-
-function hidePolygonPoints() {
-  // wsadasdasd
-}
-
 export {
-  setEditablePolygon, hidePolygonPoints,
-  movePolygonPoint, finishEditingPolygon,
+  setEditablePolygon, resetPolygonSelectableArea,
+  movePolygonPoint, sendPolygonPointsToFront,
   removePolygonPoints, displayPolygonPointsAfterMove,
-  setEditablePolygonAfterMoving, resetPolygonSelectableArea,
+  setEditablePolygonAfterMoving,
 };

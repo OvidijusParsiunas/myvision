@@ -1,3 +1,5 @@
+const bndBoxProperties = {};
+
 function getTempBndBoxProps(bndBoxProps, pointer) {
   return {
     left: bndBoxProps.origX,
@@ -11,17 +13,12 @@ function getTempBndBoxProps(bndBoxProps, pointer) {
   };
 }
 
-function getFinalBndBoxProps(targetShape) {
-  return {
-    left: targetShape.left,
-    top: targetShape.top,
-    width: targetShape.width,
-    height: targetShape.height,
-    stroke: 'rgba(255,0,0)',
-    strokeWidth: 2,
+(function setProperties() {
+  bndBoxProperties.tempBndBoxProps = getTempBndBoxProps;
+  bndBoxProperties.finalBndBoxProps = {
     fill: 'rgba(255,0,0,0.1)',
     shapeName: 'bndBox',
   };
-}
+}());
 
-export { getTempBndBoxProps, getFinalBndBoxProps };
+export { bndBoxProperties as default };

@@ -1,4 +1,4 @@
-import { createLabelShape, removeTargetShape, labellingState } from '../canvasObjects/objectGroups/labelAndShape';
+import { createLabelShape, removeTargetShape, labellingState } from './labelShape';
 import { resetCanvasEventsToDefault } from '../../mouseEvents/canvas/facade';
 import { hideLabelPopUp } from './manipulateLabelPopUp';
 

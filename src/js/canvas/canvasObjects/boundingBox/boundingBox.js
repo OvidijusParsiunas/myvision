@@ -1,6 +1,6 @@
 import fabric from 'fabric';
-import { getTempBndBoxProps } from './boundingBoxProperties';
-import { prepareLabelShape } from '../objectGroups/labelAndShape';
+import bndBoxProperties from './boundingBoxProperties';
+import { prepareLabelShape } from '../../labelPopUp/labelShape';
 import { showLabelPopUp } from '../../labelPopUp/manipulateLabelPopUp';
 import setDefaultCursorMode from '../../../mouseEvents/canvas/cursorModes/defaultMode';
 import setDrawCursorMode from '../../../mouseEvents/canvas/cursorModes/drawMode';
@@ -17,7 +17,7 @@ function instantiateNewBndBox() {
     const pointer = canvas.getPointer(canvas.e);
     bndBoxProps.origX = pointer.x;
     bndBoxProps.origY = pointer.y;
-    bndBoxProps.rect = new fabric.Rect(getTempBndBoxProps(bndBoxProps, pointer));
+    bndBoxProps.rect = new fabric.Rect(bndBoxProperties.tempBndBoxProps(bndBoxProps, pointer));
     canvas.add(bndBoxProps.rect);
   }
 }
