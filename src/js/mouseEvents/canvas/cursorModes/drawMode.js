@@ -1,6 +1,4 @@
 function setDrawCursorMode(canvas) {
-  // should be called by the calling function
-  // purgeCanvasMouseEvents(canvas);
   canvas.discardActiveObject();
   canvas.renderAll();
   canvas.forEachObject((iteratedObj) => {

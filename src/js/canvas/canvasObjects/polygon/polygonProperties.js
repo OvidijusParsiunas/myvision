@@ -3,7 +3,7 @@ const polygonProperties = {};
 function generateNewPoint(pointId, event, canvas) {
   const pointer = canvas.getPointer(event.e);
   return {
-    radius: 3,
+    radius: 3.5,
     fill: '#ffffff',
     stroke: '#333333',
     strokeWidth: 0.5,
@@ -22,7 +22,7 @@ function generateNewPoint(pointId, event, canvas) {
 
 function generateExistingPolygonPoint(pointId, pointCoordinates) {
   return {
-    radius: 3,
+    radius: 3.5,
     fill: 'blue',
     stroke: '#333333',
     strokeWidth: 0.5,
@@ -36,6 +36,7 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
     shapeName: 'point',
     objectCaching: false,
     pointId,
+    perPixelTargetFind: true,
   };
 }
 

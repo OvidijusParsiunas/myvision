@@ -5,11 +5,14 @@ import generatePolygonAfterMove from './movedPolygonUtils/generatePolygonAfterMo
 let canvas = null;
 let polygon = null;
 let polygonPoints = [];
+let numeberOfNullPolygonPoints = 0;
 
 function sendPolygonPointsToFront() {
   canvas.discardActiveObject();
   polygonPoints.forEach((point) => {
-    point.bringForward();
+    if (point) {
+      point.bringForward();
+    }
   });
 }
 
@@ -85,9 +88,40 @@ function removePolygon() {
   }
 }
 
+function removePolygonPoint(pointId) {
+  if (polygon.points.length - numeberOfNullPolygonPoints !== 3) {
+    if (Object.keys(polygon.points[pointId]).length === 0) {
+      polygon.points[polygon.points.length - 1] = polygon.points[pointId - 1];
+      polygon.points[pointId - 1] = {};
+    } else if ((polygon.points.length - 1) === pointId) {
+      for (let i = pointId - 1; i > -1; i -= 1) {
+        if (Object.keys(polygon.points[i]).length !== 0) {
+          polygon.points[pointId] = polygon.points[i];
+          polygon.points[i] = {};
+          break;
+        }
+      }
+    } else {
+      polygon.points[pointId] = {};
+    }
+    canvas.remove(polygonPoints[pointId]);
+    polygonPoints[pointId] = null;
+    numeberOfNullPolygonPoints += 1;
+    if (polygon.points.length - numeberOfNullPolygonPoints !== 3) {
+      // click on another polygon
+      // fix environment when going back
+      // make sure removable points when editing
+      // make invisible circle width a little bit bigger
+      console.log('need to signal restrictions');
+    }
+    canvas.renderAll();
+  }
+}
+
 export {
   setEditablePolygon, resetPolygonSelectableArea,
   movePolygonPoint, sendPolygonPointsToFront,
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
+  removePolygonPoint,
 };
