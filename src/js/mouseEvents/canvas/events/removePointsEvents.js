@@ -1,57 +1,26 @@
 import {
-  setEditablePolygon, sendPolygonPointsToFront,
-  removePolygonPoint, removePolygonPoints,
-  getPolygonEditingStatus
-} from '../../../canvas/canvasObjects/polygon/changePolygon';
-
-let selectedPolygonId = null;
-let newPolygonSelected = false;
-
-function setEditablePolygonOnClick(event, canvas) {
-  if (getPolygonEditingStatus()) {
-    // selecting another polygon without moving the first one
-    removePolygonPoints();
-  }
-  setEditablePolygon(canvas, event.target, true);
-  selectedPolygonId = event.target.id;
-}
-
-function setPolygonNotEditableOnClick() {
-  removePolygonPoints();
-  selectedPolygonId = null;
-}
+  pointMouseDownEvents, pointMouseOverEvents,
+  pointMouseUpEvents, pointMouseOutEvents,
+  setRemovablePointsEventsCanvas,
+} from './eventsManagers/removePointsEventsManager';
 
 function assignRemovePointsEvents(canvas) {
+  setRemovablePointsEventsCanvas(canvas);
+
   canvas.on('mouse:down', (e) => {
-    if (e.target) {
-      if (e.target.shapeName === 'polygon' && e.target.id !== selectedPolygonId) {
-        newPolygonSelected = true;
-      } else if (e.target.shapeName === 'point') {
-        removePolygonPoint(e.target.pointId);
-      }
-    }
+    pointMouseDownEvents(e);
   });
 
   canvas.on('mouse:over', (e) => {
-    if (e.target && e.target.shapeName === 'point') {
-      e.target.stroke = 'red';
-      canvas.renderAll();
-    }
+    pointMouseOverEvents(e);
   });
 
   canvas.on('mouse:up', (e) => {
-    if (e.target && e.target.shapeName === 'polygon' && newPolygonSelected) {
-      setEditablePolygonOnClick(e, canvas);
-    } else if (!e.target && getPolygonEditingStatus()) {
-      setPolygonNotEditableOnClick();
-    }
+    pointMouseUpEvents(e);
   });
 
   canvas.on('mouse:out', (e) => {
-    if (e.target && e.target.shapeName === 'point') {
-      e.target.stroke = 'black';
-      canvas.renderAll();
-    }
+    pointMouseOutEvents(e);
   });
 }
 

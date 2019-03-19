@@ -130,8 +130,7 @@ function removePolygonPoint(pointId) {
     canvas.remove(polygonPoints[pointId]);
     polygonPoints[pointId] = null;
     polygon.numberOfNullPolygonPoints += 1;
-    if (polygon.points.length - polygon.numberOfNullPolygonPoints !== 3) {
-      // fix environment when going back
+    if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
       // make sure removable points when editing
       // make invisible circle width a little bit bigger
       console.log('need to signal restrictions');

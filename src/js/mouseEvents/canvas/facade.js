@@ -9,7 +9,7 @@ import { removePolygon } from '../../canvas/canvasObjects/polygon/changePolygon'
 
 let canvas = null;
 let defaultState = false;
-let editingPoints = false;
+let removingPoints = false;
 
 function createNewBndBoxBtnClick() {
   purgeCanvasMouseEvents(canvas);
@@ -34,10 +34,10 @@ function removeActiveShapeBtnClick() {
 function resetCanvasEventsToDefault() {
   if (!defaultState) {
     purgeCanvasMouseEvents(canvas);
-    setDefaultCursorMode(canvas, editingPoints);
+    setDefaultCursorMode(canvas, removingPoints);
     assignDefaultEvents(canvas);
-    if (editingPoints) {
-      editingPoints = false;
+    if (removingPoints) {
+      removingPoints = false;
     }
     defaultState = true;
   }
@@ -48,7 +48,7 @@ function removePolygonPointBtnClick() {
   assignRemovePolygonEvents(canvas);
   setRemovePointsMode(canvas);
   defaultState = false;
-  editingPoints = true;
+  removingPoints = true;
 }
 
 function assignCanvasMouseEvents(canvasObj) {

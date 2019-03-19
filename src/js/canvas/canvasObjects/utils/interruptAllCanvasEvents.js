@@ -1,3 +1,6 @@
+import {
+  getRemovingPointsState, setRemovingPointsStateToFalse, undoRemovePointsEventsObjectsProperties,
+} from '../../../mouseEvents/canvas/events/eventsManagers/removePointsEventsManager';
 import { clearPolygonData } from '../polygon/polygon';
 import { cancelLabellingProcess } from '../../labelPopUp/labelPopUpActions';
 import { removePolygonPoints } from '../polygon/changePolygon';
@@ -8,6 +11,10 @@ function interruptAllCanvasEvents() {
   cancelLabellingProcess();
   removePolygonPoints();
   removeSelectedPolygonId();
+  if (getRemovingPointsState()) {
+    undoRemovePointsEventsObjectsProperties();
+    setRemovingPointsStateToFalse();
+  }
 }
 
 export { interruptAllCanvasEvents as default };
