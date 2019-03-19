@@ -16,9 +16,10 @@ function getTempBndBoxProps(bndBoxProps, pointer) {
 (function setProperties() {
   bndBoxProperties.tempBndBoxProps = getTempBndBoxProps;
   bndBoxProperties.finalBndBoxProps = {
-    fill: 'rgba(255,0,0,0.1)',
+    fill: 'rgba(255,0,0,0)',
     shapeName: 'bndBox',
     objectCaching: false,
+    selectable: false,
   };
 }());
 

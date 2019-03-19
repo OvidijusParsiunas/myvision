@@ -82,6 +82,17 @@ function polygonMoveEvents(event) {
   }
 }
 
+function polygonMouseOutEvents(event) {
+  event.target.set('fill', 'rgba(255,0,0,0.01)');
+}
+
+function pointMouseOverEvents(event, canvas) {
+  if (event.target && event.target.shapeName !== 'point') {
+    event.target.set('fill', 'rgba(255,0,0,0.2)');
+    canvas.renderAll();
+  }
+}
+
 function removeSelectedPolygonId() {
   selectedPolygonId = null;
 }
@@ -89,4 +100,5 @@ function removeSelectedPolygonId() {
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeSelectedPolygonId,
+  polygonMouseOutEvents, pointMouseOverEvents,
 };
