@@ -2,23 +2,21 @@ import {
   setEditablePolygon, movePolygonPoint,
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
-  sendPolygonPointsToFront,
+  sendPolygonPointsToFront, getPolygonEditingStatus,
 } from '../../../../canvas/canvasObjects/polygon/changePolygon';
 
-let editingPolygon = false;
 let polygonMoved = false;
 let polygonPointMoved = false;
 let selectedPolygonId = null;
 let newPolygonSelected = false;
 
 function setEditablePolygonOnClick(event, canvas) {
-  if (editingPolygon) {
+  if (getPolygonEditingStatus()) {
     // selecting another polygon without moving the first one
     removePolygonPoints();
   }
   setEditablePolygon(canvas, event.target);
   selectedPolygonId = event.target.id;
-  editingPolygon = true;
 }
 
 function setEditablePolygonWhenPolygonMoved(event, canvas) {
@@ -29,7 +27,6 @@ function setEditablePolygonWhenPolygonMoved(event, canvas) {
     displayPolygonPointsAfterMove();
   }
   polygonMoved = false;
-  editingPolygon = true;
 }
 
 function resetPolygonSelectableAreaAfterPointMoved() {
@@ -39,13 +36,12 @@ function resetPolygonSelectableAreaAfterPointMoved() {
 
 function setPolygonNotEditableOnClick() {
   removePolygonPoints();
-  editingPolygon = false;
   selectedPolygonId = null;
 }
 
 function polygonMouseDownEvents(event) {
   if (event.target) {
-    if (event.target.shapeName === 'bndBox' && editingPolygon) {
+    if (event.target.shapeName === 'bndBox' && getPolygonEditingStatus()) {
       setPolygonNotEditableOnClick();
       newPolygonSelected = false;
     } else if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
@@ -67,7 +63,7 @@ function polygonMouseUpEvents(event, canvas) {
     resetPolygonSelectableAreaAfterPointMoved();
   } else if (event.target && event.target.shapeName === 'polygon') {
     sendPolygonPointsToFront();
-  } else if (!event.target && editingPolygon) {
+  } else if (!event.target && getPolygonEditingStatus()) {
     setPolygonNotEditableOnClick();
   }
 }
@@ -75,9 +71,8 @@ function polygonMouseUpEvents(event, canvas) {
 function polygonMoveEvents(event) {
   if (event.target) {
     if (event.target.shapeName === 'polygon') {
-      if (editingPolygon) {
+      if (getPolygonEditingStatus()) {
         removePolygonPoints();
-        editingPolygon = false;
       }
       polygonMoved = true;
     } else if (event.target.shapeName === 'point') {

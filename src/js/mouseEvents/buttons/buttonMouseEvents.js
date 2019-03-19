@@ -10,7 +10,7 @@ import { interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeImage
 function assignButtonEvents() {
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = interruptAllCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
-  window.removePoint = removePolygonPointBtnClick;
+  window.removePoint = removePolygonPointBtnClick; // should light up when using
   window.removeShape = interruptAllCanvasEventsBeforeFunc.bind(this, removeActiveShapeBtnClick);
   window.downloadXML = interruptAllCanvasEventsBeforeFunc.bind(this, downloadXML);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);

@@ -40,6 +40,28 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
   };
 }
 
+function generateRemovablePolygonPoint(pointId, pointCoordinates) {
+  return {
+    radius: 4,
+    fill: 'red',
+    stroke: '#333333',
+    strokeWidth: 0.5,
+    left: pointCoordinates.x,
+    top: pointCoordinates.y,
+    selectable: true,
+    hasBorders: false,
+    hasControls: false,
+    originX: 'center',
+    originY: 'center',
+    shapeName: 'point',
+    objectCaching: false,
+    pointId,
+    perPixelTargetFind: true,
+    lockMovementX: true,
+    lockMovementY: true,
+  };
+}
+
 (function setProperties() {
   polygonProperties.newPolygon = {
     stroke: 'rgba(255,0,0)',
@@ -52,6 +74,7 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
     selectable: false,
     evented: true,
     objectCaching: false,
+    numberOfNullPolygonPoints: 0,
   };
   polygonProperties.newTempPolygon = {
     stroke: '#333333',
@@ -83,6 +106,7 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
   };
   polygonProperties.newPoint = generateNewPoint;
   polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;
+  polygonProperties.removablePolygonPoint = generateRemovablePolygonPoint;
 }());
 
 
