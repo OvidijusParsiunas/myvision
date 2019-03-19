@@ -20,20 +20,6 @@ function movePoints(event) {
   }
 }
 
-function highlightPolygon(event) {
-  if (event.target && event.target.shapeName === 'polygon') {
-    event.target._objects[0].set('fill', 'rgba(237, 237, 237, 0.1)');
-    canvas.renderAll();
-  }
-}
-
-function removePolygonHighlight(event) {
-  if (event.target && event.target.shapeName === 'polygon') {
-    event.target._objects[0].set('fill', 'rgba(237, 237, 237, 0.01)');
-    canvas.renderAll();
-  }
-}
-
 function drawPolygon(event) {
   if (activeLine && activeLine.class === 'line') {
     const pointer = canvas.getPointer(event.e);
@@ -46,7 +32,6 @@ function drawPolygon(event) {
     activeShape.set({
       points,
     });
-    canvas.renderAll();
   }
   canvas.renderAll();
 }
@@ -152,7 +137,5 @@ export {
   drawPolygon,
   prepareCanvasForNewPolygon,
   clearPolygonData,
-  highlightPolygon,
-  removePolygonHighlight,
   movePoints,
 };

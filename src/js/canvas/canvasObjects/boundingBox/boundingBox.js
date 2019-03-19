@@ -57,25 +57,9 @@ function finishDrawingBndBox(event) {
   }
 }
 
-function highlightBndBox(event) {
-  if (event.target && event.target.shapeName === 'bndBox') {
-    event.target._objects[0].set('fill', 'rgba(255,0,0,0.2)');
-    canvas.renderAll();
-  }
-}
-
-function removeBndBoxHighlight(event) {
-  if (event.target && event.target.shapeName === 'bndBox') {
-    event.target._objects[0].set('fill', 'rgba(255,0,0,0');
-    canvas.renderAll();
-  }
-}
-
 export {
   prepareCanvasForNewBndBox,
   instantiateNewBndBox,
   drawBndBox,
   finishDrawingBndBox,
-  highlightBndBox,
-  removeBndBoxHighlight,
 };
