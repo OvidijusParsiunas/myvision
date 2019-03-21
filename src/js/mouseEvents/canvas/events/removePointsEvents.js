@@ -2,7 +2,8 @@ import {
   pointMouseDownEvents, pointMouseOverEvents,
   pointMouseUpEvents, pointMouseOutEvents,
   setRemovablePointsEventsCanvas,
-} from './eventsManagers/removePointsEventsManager';
+} from './eventsManagers/removePointsOnNewPolygonEventsManager';
+// changed
 
 function assignRemovePointsEvents(canvas) {
   setRemovablePointsEventsCanvas(canvas);

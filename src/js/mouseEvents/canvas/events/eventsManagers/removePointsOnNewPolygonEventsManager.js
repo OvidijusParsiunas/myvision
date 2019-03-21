@@ -32,7 +32,7 @@ function setRemovePointsEventsObjectsProperties() {
       iteratedObj.lockMovementX = true;
       iteratedObj.lockMovementY = true;
     }
-    if (iteratedObj.shapeName === 'point') {
+    if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
       iteratedObj.fill = 'red';
       iteratedObj.radius = 4;
     }
@@ -69,7 +69,7 @@ function pointMouseDownEvents(event) {
 }
 
 function pointMouseOverEvents(event) {
-  if (event.target && event.target.shapeName === 'point') {
+  if (event.target && (event.target.shapeName === 'tempPoint' || event.target.shapeName === 'firstPoint')) {
     event.target.stroke = 'red';
     canvas.renderAll();
   }
@@ -85,7 +85,7 @@ function pointMouseUpEvents(event) {
 }
 
 function pointMouseOutEvents(event) {
-  if (event.target && event.target.shapeName === 'point') {
+  if (event.target && (event.target.shapeName === 'tempPoint' || event.target.shapeName === 'firstPoint')) {
     event.target.stroke = 'black';
     canvas.renderAll();
   }

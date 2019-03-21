@@ -1,4 +1,5 @@
-import { setRemovePointsEventsObjectsProperties } from '../events/eventsManagers/removePointsEventsManager';
+import { setRemovePointsEventsObjectsProperties } from '../events/eventsManagers/removePointsOnNewPolygonEventsManager';
+// changed
 
 function setRemovePointsMode(canvas) {
   setRemovePointsEventsObjectsProperties();
