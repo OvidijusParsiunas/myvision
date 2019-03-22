@@ -25,6 +25,7 @@ function undoRemovePointsEventsObjectsProperties() {
 }
 
 function setRemovePointsEventsObjectsProperties() {
+  // does this get regenerated for a new polygon selected?
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'bndBox') {
       iteratedObj.selectable = false;
@@ -45,6 +46,7 @@ function setEditablePolygonOnClick(event) {
     removePolygonPoints();
     removingPoints = true;
   }
+  // performance dropdown as we are displaying polygons twice
   setEditablePolygon(canvas, event.target, true);
   selectedPolygonId = event.target.id;
 }

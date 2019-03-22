@@ -86,6 +86,7 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     hasControls: false,
     evented: false,
     objectCaching: false,
+    numberOfNullPolygonPoints: -3,
   };
   polygonProperties.newLine = {
     strokeWidth: 1.1,

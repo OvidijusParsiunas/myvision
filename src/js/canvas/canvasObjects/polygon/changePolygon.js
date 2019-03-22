@@ -111,6 +111,7 @@ function removePolygon() {
 }
 
 function removePolygonPoint(pointId) {
+  console.log(pointId);
   if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
     // bug somewhere here
     if (Object.keys(polygon.points[pointId]).length === 0) {
@@ -132,6 +133,8 @@ function removePolygonPoint(pointId) {
     polygon.numberOfNullPolygonPoints += 1;
     if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
       // make sure removable points when editing
+      // after all polygon points are removed from new polygon, completely remove
+      // optimise algorithm by not generating all of the points
       // make invisible circle width a little bit bigger
       console.log('need to signal restrictions');
     }

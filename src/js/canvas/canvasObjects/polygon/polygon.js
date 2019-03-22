@@ -101,6 +101,10 @@ function addPoint(event) {
   canvas.selection = false;
 }
 
+function getTempPolygon() {
+  return activeShape;
+}
+
 function clearPolygonData() {
   if (pointArray[0]) {
     pointArray.forEach((point) => {
@@ -138,4 +142,5 @@ export {
   prepareCanvasForNewPolygon,
   clearPolygonData,
   movePoints,
+  getTempPolygon,
 };

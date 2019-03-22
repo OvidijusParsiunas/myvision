@@ -1,11 +1,7 @@
 import {
-  setEditablePolygon,
-  removePolygonPoint, removePolygonPoints,
-  getPolygonEditingStatus,
+  setEditablePolygon, removePolygonPoint,
 } from '../../../../canvas/canvasObjects/polygon/changePolygon';
 
-let selectedPolygonId = null;
-let newPolygonSelected = false;
 let removingPoints = false;
 let canvas = null;
 
@@ -26,66 +22,36 @@ function undoRemovePointsEventsObjectsProperties() {
 
 function setRemovePointsEventsObjectsProperties() {
   canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'bndBox') {
-      iteratedObj.selectable = false;
-    } else {
-      iteratedObj.lockMovementX = true;
-      iteratedObj.lockMovementY = true;
-    }
     if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
-      iteratedObj.fill = 'red';
-      iteratedObj.radius = 4;
+      canvas.remove(iteratedObj);
     }
   });
 }
 
-function setEditablePolygonOnClick(event) {
-  if (getPolygonEditingStatus()) {
-    // selecting another polygon without moving the first one
-    removePolygonPoints();
-    removingPoints = true;
-  }
-  setEditablePolygon(canvas, event.target, true);
-  selectedPolygonId = event.target.id;
-}
-
-function setPolygonNotEditableOnClick() {
-  removePolygonPoints();
-  selectedPolygonId = null;
-}
-
-function setRemovablePointsEventsCanvas(canvasObj) {
+function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
   canvas = canvasObj;
+  setEditablePolygon(canvas, polygonObj, true);
 }
 
 function pointMouseDownEvents(event) {
-  if (event.target) {
-    if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
-      newPolygonSelected = true;
-    } else if (event.target.shapeName === 'point') {
-      removePolygonPoint(event.target.pointId);
-    }
+  if (event.target && event.target.shapeName === 'point') {
+    removePolygonPoint(event.target.pointId);
   }
 }
 
 function pointMouseOverEvents(event) {
-  if (event.target && (event.target.shapeName === 'tempPoint' || event.target.shapeName === 'firstPoint')) {
+  if (event.target && event.target.shapeName === 'point') {
     event.target.stroke = 'red';
     canvas.renderAll();
   }
 }
 
-function pointMouseUpEvents(event) {
-  if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
-    // subset can be reused
-    setEditablePolygonOnClick(event, canvas);
-  } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
-    setPolygonNotEditableOnClick();
-  }
+function pointMouseUpEvents() {
+  // filler function for the default parent call
 }
 
 function pointMouseOutEvents(event) {
-  if (event.target && (event.target.shapeName === 'tempPoint' || event.target.shapeName === 'firstPoint')) {
+  if (event.target && event.target.shapeName === 'point') {
     event.target.stroke = 'black';
     canvas.renderAll();
   }
