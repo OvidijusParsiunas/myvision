@@ -102,6 +102,9 @@ function addPoint(event) {
 }
 
 function getTempPolygon() {
+  const points = activeShape.get('points');
+  points[points.length - 1] = points[points.length - 2];
+  points[points.length - 2] = {};
   return activeShape;
 }
 
