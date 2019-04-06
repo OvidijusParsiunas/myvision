@@ -1,9 +1,13 @@
 import {
-  instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon, movePoints,
+  instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon, movePoints, resumeDrawCanvasPolygon,
 } from '../../../canvas/canvasObjects/polygon/polygon';
 
-function assignDrawPolygonEvents(canvas) {
-  prepareCanvasForNewPolygon(canvas);
+function assignDrawPolygonEvents(canvas, resume) {
+  if (!resume) {
+    prepareCanvasForNewPolygon(canvas);
+  } else {
+    resumeDrawCanvasPolygon();
+  }
   canvas.on('mouse:down', (e) => {
     if (!e.target || (e.target && e.target.shapeName !== 'tempPoint')) {
       instantiatePolygon(e);

@@ -20,17 +20,10 @@ function undoRemovePointsEventsObjectsProperties() {
   });
 }
 
-function setRemovePointsEventsObjectsProperties() {
-  canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
-      canvas.remove(iteratedObj);
-    }
-  });
-}
-
 function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
   canvas = canvasObj;
-  setEditablePolygon(canvas, polygonObj, true);
+  // edit this
+  setEditablePolygon(canvas, polygonObj, true, true);
 }
 
 function pointMouseDownEvents(event) {
@@ -70,5 +63,4 @@ export {
   pointMouseUpEvents, pointMouseOutEvents,
   setRemovablePointsEventsCanvas, undoRemovePointsEventsObjectsProperties,
   getRemovingPointsState, setRemovingPointsStateToFalse,
-  setRemovePointsEventsObjectsProperties,
 };

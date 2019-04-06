@@ -1,4 +1,4 @@
-import { createLabelShape, removeTargetShape, getLabellingState } from './labelShape';
+import { createLabelShape, removeTargetShape, isLabelling } from './labelShape';
 import { resetCanvasEventsToDefault } from '../../mouseEvents/canvas/facade';
 import { hideLabelPopUp } from './manipulateLabelPopUp';
 
@@ -8,7 +8,7 @@ function labelShape() {
 }
 
 function cancelLabellingProcess() {
-  if (getLabellingState()) {
+  if (isLabelling()) {
     hideLabelPopUp();
     removeTargetShape();
   }

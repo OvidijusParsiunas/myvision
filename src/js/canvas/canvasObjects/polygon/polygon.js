@@ -139,10 +139,50 @@ function prepareCanvasForNewPolygon(canvasObj) {
   setDrawCursorMode(canvas);
 }
 
+function cleanPolygonFromEmptyPoints() {
+  const polygonPoints = activeShape.get('points');
+  const points = [];
+  const tempPointArray = [];
+  polygonPoints.forEach((point) => {
+    if (Object.keys(point).length > 0) {
+      points.push({
+        x: point.x,
+        y: point.y,
+      });
+      tempPointArray.push({
+        left: point.x,
+        top: point.y,
+      });
+    }
+  });
+  activeShape.set({
+    points,
+  });
+  pointArray = tempPointArray;
+  canvas.renderAll();
+
+  const tempPointX = points[0].x - points[points.length - 1].x;
+  const tempPointY = points[0].y - points[points.length - 1].y;
+  activeLine.set({ x2: Math.abs(tempPointX), y2: Math.abs(tempPointY) });
+  points[pointArray.length] = {
+    x: tempPointX,
+    y: tempPointY,
+  };
+  activeShape.set({
+    points,
+  });
+  canvas.renderAll();
+}
+
+function resumeDrawCanvasPolygon() {
+  cleanPolygonFromEmptyPoints();
+}
+
 export {
   instantiatePolygon,
   drawPolygon,
   prepareCanvasForNewPolygon,
+  resumeDrawCanvasPolygon,
   clearPolygonData,
   movePoints,
   getTempPolygon,

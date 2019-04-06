@@ -31,10 +31,10 @@ function createLabelShape() {
   labellingState = false;
 }
 
-function getLabellingState() {
+function isLabelling() {
   return labellingState;
 }
 
 export {
-  prepareLabelShape, createLabelShape, removeTargetShape, getLabellingState,
+  prepareLabelShape, createLabelShape, removeTargetShape, isLabelling,
 };

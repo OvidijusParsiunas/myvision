@@ -41,6 +41,17 @@ function displayRemovablePolygonPoints() {
   });
 }
 
+function changePolygonPointsToRemovable() {
+  let pointId = 0;
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
+      iteratedObj.set(polygonProperties.removablePolygonPoint(pointId));
+      polygonPoints.push(iteratedObj);
+      pointId += 1;
+    }
+  });
+}
+
 function displayPolygonPointsAfterMove() {
   polygon = generatePolygonAfterMove(polygon, polygonPoints, canvas, polygonProperties);
   editingPolygon = true;
@@ -51,13 +62,16 @@ function setSelectedObjects(activeCanvasObj, activePolygonObject) {
   polygon = activePolygonObject;
 }
 
-function setEditablePolygon(canvasObj, polygonObj, removablePoints) {
+function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
+  // edit this
   if (!removablePoints) {
     displayPolygonPoints();
-  } else {
+  } else if (!creatingPolygon) {
     displayRemovablePolygonPoints();
+  } else {
+    changePolygonPointsToRemovable();
   }
   editingPolygon = true;
 }
@@ -111,11 +125,12 @@ function removePolygon() {
 }
 
 function removePolygonPoint(pointId) {
+  console.log(polygon.points);
   if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
     if (Object.keys(polygon.points[pointId]).length === 0) {
-      // when the last polygons are removed, the ones before it are moved
+      /* when the last polygons are removed, the ones before it are moved
       // to the last position - thus causing the possibility of getting nulls
-      // TIP - when point is null - it was already moved to the last element
+       TIP - when point is null - it was already moved to the last element */
       for (let i = pointId - 1; i > -1; i -= 1) {
         if (Object.keys(polygon.points[i]).length !== 0) {
           polygon.points[polygon.points.length - 1] = polygon.points[i];
@@ -124,8 +139,8 @@ function removePolygonPoint(pointId) {
         }
       }
     } else if ((polygon.points.length - 1) === pointId) {
-      // when last element - remove and find the next not null below it to
-      // to be the last element in order to enable the polygon to stay
+      /* when last element - remove and find the next not null below it to
+      to be the last element in order to enable the polygon to stay */
       for (let i = pointId - 1; i > -1; i -= 1) {
         if (Object.keys(polygon.points[i]).length !== 0) {
           polygon.points[pointId] = polygon.points[i];
@@ -143,7 +158,6 @@ function removePolygonPoint(pointId) {
       // after all polygon points are removed from new polygon, completely remove -
       // depending on how we add new points
 
-      // optimise algorithm by not generating all of the points again
       // attempt to remove lines when deleting/editing
       // the event files are temporarily swapped
       // change cursor modes name convention

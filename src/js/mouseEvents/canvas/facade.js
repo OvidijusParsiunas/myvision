@@ -44,11 +44,17 @@ function resetCanvasEventsToDefault() {
 }
 
 function removePolygonPointBtnClick() {
-  purgeCanvasMouseEvents(canvas);
-  assignRemovePolygonEvents(canvas);
-  setRemovePointsMode(canvas);
-  defaultState = false;
-  removingPoints = true;
+  if (!removingPoints) {
+    purgeCanvasMouseEvents(canvas);
+    assignRemovePolygonEvents(canvas);
+    setRemovePointsMode(canvas);
+    defaultState = false;
+    removingPoints = true;
+  } else {
+    purgeCanvasMouseEvents(canvas);
+    assignDrawPolygonEvents(canvas, true);
+    removingPoints = false;
+  }
 }
 
 function assignCanvasMouseEvents(canvasObj) {

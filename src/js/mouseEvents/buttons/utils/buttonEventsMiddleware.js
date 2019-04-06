@@ -1,5 +1,5 @@
 import { uploadImage } from '../../../uploadFile/uploadImage';
-import { getLabellingState } from '../../../canvas/labelPopUp/labelShape';
+import { isLabelling } from '../../../canvas/labelPopUp/labelShape';
 import interruptAllCanvasEvents from '../../../canvas/canvasObjects/utils/interruptAllCanvasEvents';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
@@ -13,13 +13,13 @@ function interruptAllCanvasEventsBeforeImageUpload(input) {
 }
 
 function doNothingIfLabellingInProgress(func) {
-  if (!getLabellingState()) {
+  if (!isLabelling()) {
     if (func) func();
   }
 }
 
 function interruptAllCanvasEventsIfLabellingInProgress(func) {
-  if (getLabellingState()) {
+  if (isLabelling()) {
     interruptAllCanvasEvents();
   }
   if (func) func();

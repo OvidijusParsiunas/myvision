@@ -41,13 +41,11 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
 }
 
 function generateRemovablePolygonPoint(pointId, pointCoordinates) {
-  return {
+  const returnObj = {
     radius: 4,
     fill: 'red',
     stroke: '#333333',
     strokeWidth: 0.5,
-    left: pointCoordinates.x,
-    top: pointCoordinates.y,
     selectable: true,
     hasBorders: false,
     hasControls: false,
@@ -60,6 +58,11 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     lockMovementX: true,
     lockMovementY: true,
   };
+  if (pointCoordinates) {
+    returnObj.left = pointCoordinates.x;
+    returnObj.top = pointCoordinates.y;
+  }
+  return returnObj;
 }
 
 (function setProperties() {
