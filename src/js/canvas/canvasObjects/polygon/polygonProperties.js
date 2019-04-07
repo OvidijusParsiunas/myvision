@@ -29,6 +29,8 @@ function changeRemovablePointToTemp(pointId) {
     selectable: true,
     shapeName: 'tempPoint',
     pointId,
+    lockMovementX: false,
+    lockMovementY: false,
   };
 }
 
@@ -104,7 +106,7 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     numberOfNullPolygonPoints: -3,
   };
   polygonProperties.newLine = {
-    strokeWidth: 1.1,
+    strokeWidth: 0.1,
     fill: '#999999',
     stroke: '#999999',
     class: 'line',
@@ -119,6 +121,8 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
   polygonProperties.firstPoint = {
     fill: 'red',
     shapeName: 'firstPoint',
+    lockMovementX: true,
+    lockMovementY: true,
   };
   polygonProperties.newPoint = generateNewPoint;
   polygonProperties.changeRemovablePointToTemp = changeRemovablePointToTemp;

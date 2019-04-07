@@ -20,10 +20,10 @@ function undoRemovePointsEventsObjectsProperties() {
   });
 }
 
-function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
+function setRemovablePointsEventsCanvas(canvasObj, polygonObj, lineArray) {
   canvas = canvasObj;
   // edit this
-  setEditablePolygon(canvas, polygonObj, true, true);
+  setEditablePolygon(canvas, polygonObj, true, true, lineArray);
 }
 
 function pointMouseDownEvents(event) {

@@ -6,7 +6,7 @@ let canvas = null;
 let polygon = null;
 let polygonPoints = [];
 let editingPolygon = false;
-
+let lineArray = [];
 function getPolygonEditingStatus() {
   return editingPolygon;
 }
@@ -58,13 +58,14 @@ function displayPolygonPointsAfterMove() {
   editingPolygon = true;
 }
 
-function setSelectedObjects(activeCanvasObj, activePolygonObject) {
+function setSelectedObjects(activeCanvasObj, activePolygonObject, lineArrayObj) {
   canvas = activeCanvasObj;
   polygon = activePolygonObject;
+  lineArray = lineArrayObj;
 }
 
-function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon) {
-  setSelectedObjects(canvasObj, polygonObj);
+function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, lineArrayObj) {
+  setSelectedObjects(canvasObj, polygonObj, lineArrayObj);
   canvasObj.discardActiveObject();
   // edit this
   if (!removablePoints) {
@@ -125,9 +126,8 @@ function removePolygon() {
   }
 }
 
+// need editable polygon version
 function removePolygonPoint(pointId) {
-  console.log(polygon.points);
-  console.log(`point id ${pointId}`);
   if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
     if (Object.keys(polygon.points[pointId]).length === 0) {
       /* when the last polygons are removed, the ones before it are moved
@@ -155,6 +155,16 @@ function removePolygonPoint(pointId) {
     }
     canvas.remove(polygonPoints[pointId]);
     polygonPoints[pointId] = null;
+    if (lineArray) {
+      if (pointId === 0) {
+        canvas.remove(lineArray[pointId]);
+      } else {
+        const { x1 } = lineArray[pointId - 1];
+        const { y1 } = lineArray[pointId - 1];
+        lineArray[pointId].set({ x1, y1 });
+        canvas.remove(lineArray[pointId - 1]);
+      }
+    }
     polygon.numberOfNullPolygonPoints += 1;
     if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
       // after all polygon points are removed from new polygon, completely remove -
@@ -165,6 +175,8 @@ function removePolygonPoint(pointId) {
       // change cursor modes name convention
       // make invisible circle width a little bit bigger
       // make sure to test with thresholded performance
+      // when finished creating polygon, have popup option to go back to editing
+      // have tick box for moving first point
       console.log('need to signal restrictions');
     }
     canvas.renderAll();

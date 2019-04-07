@@ -14,9 +14,13 @@ let pointId = 0;
 
 function movePoints(event) {
   if (activeShape) {
+    const xCenterPoint = event.target.getCenterPoint().x;
+    const yCenterPoint = event.target.getCenterPoint().y;
     activeShape.points[event.target.pointId] = {
-      x: event.target.getCenterPoint().x, y: event.target.getCenterPoint().y,
+      x: xCenterPoint, y: yCenterPoint,
     };
+    lineArray[event.target.pointId - 1].set({ x2: xCenterPoint, y2: yCenterPoint });
+    lineArray[event.target.pointId].set({ x1: xCenterPoint, y1: yCenterPoint });
   }
 }
 
@@ -95,6 +99,8 @@ function addPoint(event) {
   }
   activeLine = line;
 
+  canvas.add(activeLine);
+
   pointArray.push(point);
   lineArray.push(line);
   canvas.add(point);
@@ -102,9 +108,14 @@ function addPoint(event) {
 }
 
 function getTempPolygon() {
+  canvas.remove(activeLine);
   const points = activeShape.get('points');
   points.length -= 1;
   return activeShape;
+}
+
+function getLineArray() {
+  return lineArray;
 }
 
 function clearPolygonData() {
@@ -141,41 +152,22 @@ function prepareCanvasForNewPolygon(canvasObj) {
 function cleanPolygonFromEmptyPoints() {
   const polygonPoints = activeShape.get('points');
   const points = [];
-  const tempPointArray = [];
   polygonPoints.forEach((point) => {
     if (Object.keys(point).length > 0) {
       points.push({
         x: point.x,
         y: point.y,
       });
-      tempPointArray.push({
-        left: point.x,
-        top: point.y,
-      });
     }
   });
   activeShape.set({
     points,
   });
-  pointArray = tempPointArray;
   canvas.renderAll();
 
-  const tempPointX = points[0].x - points[points.length - 1].x;
-  const tempPointY = points[0].y - points[points.length - 1].y;
-  activeLine.set({ x2: Math.abs(tempPointX), y2: Math.abs(tempPointY) });
-  points[pointArray.length] = {
-    x: tempPointX,
-    y: tempPointY,
-  };
-  activeShape.set({
-    points,
-  });
-  canvas.renderAll();
-}
 
-function resumeDrawCanvasPolygon() {
-  cleanPolygonFromEmptyPoints();
   let currentPointId = 0;
+  const tempPointArray = [];
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.changeRemovablePointToTemp(currentPointId));
@@ -183,9 +175,28 @@ function resumeDrawCanvasPolygon() {
         iteratedObj.set(polygonProperties.firstPoint);
       }
       currentPointId += 1;
+      tempPointArray.push(iteratedObj);
     }
   });
+  pointArray = tempPointArray;
+  pointId = currentPointId;
   canvas.renderAll();
+
+  activeLine.set({ x2: points[0].x, y2: points[0].y });
+  points[pointArray.length] = {
+    x: points[0].x,
+    y: points[0].y,
+  };
+  activeShape.set({
+    points,
+  });
+  canvas.renderAll();
+  setDrawCursorMode(canvas, true);
+  canvas.renderAll();
+}
+
+function resumeDrawCanvasPolygon() {
+  cleanPolygonFromEmptyPoints();
 }
 
 export {
@@ -196,4 +207,5 @@ export {
   clearPolygonData,
   movePoints,
   getTempPolygon,
+  getLineArray,
 };
