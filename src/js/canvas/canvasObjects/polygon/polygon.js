@@ -37,6 +37,7 @@ function drawPolygon(event) {
 
 function removeActiveShape() {
   canvas.remove(activeShape);
+  activeShape = null;
 }
 
 function generatePolygon(event) {
@@ -99,6 +100,10 @@ function getTempPolygon() {
   return activeShape;
 }
 
+function isDrawingInProgress() {
+  return activeShape !== null;
+}
+
 function clearPolygonData() {
   if (pointArray[0]) {
     pointArray.forEach((point) => {
@@ -123,7 +128,6 @@ function instantiatePolygon(event) {
 function prepareCanvasForNewPolygon(canvasObj) {
   canvas = canvasObj;
   polygonMode = true;
-  clearPolygonData();
   canvas.discardActiveObject();
   setDrawCursorMode(canvas);
 }
@@ -185,4 +189,5 @@ export {
   clearPolygonData,
   movePoints,
   getTempPolygon,
+  isDrawingInProgress,
 };

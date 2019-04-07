@@ -5,6 +5,7 @@ import {
 let removingPoints = false;
 let canvas = null;
 
+// call these event workers
 function undoRemovePointsEventsObjectsProperties() {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'bndBox') {

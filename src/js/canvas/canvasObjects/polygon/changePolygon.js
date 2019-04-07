@@ -170,8 +170,6 @@ function removePolygonPoint(pointId) {
       // after all polygon points are removed from new polygon, completely remove -
       // depending on how we add new points
 
-      // attempt to remove lines when deleting/editing
-      // the event files are temporarily swapped
       // change cursor modes name convention
       // make invisible circle width a little bit bigger
       // make sure to test with thresholded performance
