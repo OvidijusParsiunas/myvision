@@ -1,3 +1,5 @@
+// call these files workers
+
 function boundingBoxScalingEvents(event) {
   if (event.target.shapeName === 'bndBox') {
     const boundingBox = event.target;

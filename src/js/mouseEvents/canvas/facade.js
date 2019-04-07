@@ -11,16 +11,20 @@ let canvas = null;
 let defaultState = false;
 let removingPoints = false;
 
+// rename this as toolsFacade
+// create toolsFacadeWorkers
 function createNewBndBoxBtnClick() {
   purgeCanvasMouseEvents(canvas);
   assignDrawBoundingBoxEvents(canvas);
   defaultState = false;
+  removingPoints = false;
 }
 
 function createNewPolygonBtnClick() {
   purgeCanvasMouseEvents(canvas);
   assignDrawPolygonEvents(canvas);
   defaultState = false;
+  removingPoints = false;
 }
 
 function removeActiveShapeBtnClick() {
@@ -29,6 +33,7 @@ function removeActiveShapeBtnClick() {
   } else {
     removePolygon();
   }
+  removingPoints = false;
 }
 
 function resetCanvasEventsToDefault() {

@@ -1,3 +1,9 @@
+// have a callback here that would set the properties into certain values
+// no obbject changing logic in these files
+// rename canvas folder to mouseInteractions
+// { move all to the canvas folder }
+// rename events folder to mouseEvents
+
 function changeOjectPropertiesForRemovalePoints(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'bndBox') {

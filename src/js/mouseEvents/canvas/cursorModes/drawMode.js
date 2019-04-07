@@ -1,3 +1,7 @@
+// lift folder out of canvas folder
+// rename buttons folder to toolsPanel
+// rename contents to toolsButtonEvents
+
 function setAllObjectsUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.selectable = false;
@@ -6,12 +10,12 @@ function setAllObjectsUneditable(canvas) {
 
 function setDrawCursorMode(canvas, afterEditingPolygon) {
   canvas.discardActiveObject();
-  canvas.renderAll();
   if (!afterEditingPolygon) {
     setAllObjectsUneditable(canvas);
   }
   canvas.defaultCursor = 'crosshair';
   canvas.hoverCursor = 'crosshair';
+  canvas.renderAll();
 }
 
 export { setDrawCursorMode as default };
