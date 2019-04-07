@@ -43,6 +43,7 @@ function displayRemovablePolygonPoints() {
 
 function changePolygonPointsToRemovable() {
   let pointId = 0;
+  polygonPoints = [];
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
       iteratedObj.set(polygonProperties.removablePolygonPoint(pointId));
