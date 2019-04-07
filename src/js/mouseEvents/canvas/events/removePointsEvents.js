@@ -4,12 +4,12 @@ import {
   setRemovablePointsEventsCanvas,
 } from './eventsManagers/removePointsOnNewPolygonEventsManager';
 import {
-  getTempPolygon, getLineArray,
+  getTempPolygon,
 } from '../../../canvas/canvasObjects/polygon/polygon';
 // changed
 
 function assignRemovePointsEvents(canvas) {
-  setRemovablePointsEventsCanvas(canvas, getTempPolygon(), getLineArray());
+  setRemovablePointsEventsCanvas(canvas, getTempPolygon());
 
   canvas.on('mouse:down', (e) => {
     pointMouseDownEvents(e);

@@ -6,9 +6,7 @@ import setDrawCursorMode from '../../../mouseEvents/canvas/cursorModes/drawMode'
 
 let canvas = null;
 let pointArray = [];
-let lineArray = [];
 let polygonMode = true;
-let activeLine = null;
 let activeShape = false;
 let pointId = 0;
 
@@ -19,15 +17,12 @@ function movePoints(event) {
     activeShape.points[event.target.pointId] = {
       x: xCenterPoint, y: yCenterPoint,
     };
-    lineArray[event.target.pointId - 1].set({ x2: xCenterPoint, y2: yCenterPoint });
-    lineArray[event.target.pointId].set({ x1: xCenterPoint, y1: yCenterPoint });
   }
 }
 
 function drawPolygon(event) {
-  if (activeLine && activeLine.class === 'line') {
+  if (activeShape) {
     const pointer = canvas.getPointer(event.e);
-    activeLine.set({ x2: pointer.x, y2: pointer.y });
     const points = activeShape.get('points');
     points[pointArray.length] = {
       x: pointer.x,
@@ -40,11 +35,8 @@ function drawPolygon(event) {
   canvas.renderAll();
 }
 
-function removeActiveLinesAndShape() {
-  lineArray.forEach((line) => {
-    canvas.remove(line);
-  });
-  canvas.remove(activeShape).remove(activeLine);
+function removeActiveShape() {
+  canvas.remove(activeShape);
 }
 
 function generatePolygon(event) {
@@ -56,11 +48,10 @@ function generatePolygon(event) {
     });
     canvas.remove(point);
   });
-  removeActiveLinesAndShape();
+  removeActiveShape();
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon);
   canvas.add(polygon);
 
-  activeLine = null;
   activeShape = null;
   polygonMode = false;
   const pointer = canvas.getPointer(event.e);
@@ -76,7 +67,6 @@ function addPoint(event) {
     point.set(polygonProperties.firstPoint);
   }
   let points = [pointer.x, pointer.y, pointer.x, pointer.y];
-  const line = new fabric.Line(points, polygonProperties.newLine);
   if (activeShape) {
     points = activeShape.get('points');
     points.push({
@@ -97,25 +87,16 @@ function addPoint(event) {
     activeShape = polygon;
     canvas.add(polygon);
   }
-  activeLine = line;
-
-  canvas.add(activeLine);
 
   pointArray.push(point);
-  lineArray.push(line);
   canvas.add(point);
   canvas.selection = false;
 }
 
 function getTempPolygon() {
-  canvas.remove(activeLine);
   const points = activeShape.get('points');
   points.length -= 1;
   return activeShape;
-}
-
-function getLineArray() {
-  return lineArray;
 }
 
 function clearPolygonData() {
@@ -123,11 +104,9 @@ function clearPolygonData() {
     pointArray.forEach((point) => {
       canvas.remove(point);
     });
-    removeActiveLinesAndShape();
+    removeActiveShape();
     pointArray = [];
-    lineArray = [];
     activeShape = null;
-    activeLine = null;
     pointId = 0;
   }
 }
@@ -182,7 +161,6 @@ function cleanPolygonFromEmptyPoints() {
   pointId = currentPointId;
   canvas.renderAll();
 
-  activeLine.set({ x2: points[0].x, y2: points[0].y });
   points[pointArray.length] = {
     x: points[0].x,
     y: points[0].y,
@@ -207,5 +185,4 @@ export {
   clearPolygonData,
   movePoints,
   getTempPolygon,
-  getLineArray,
 };

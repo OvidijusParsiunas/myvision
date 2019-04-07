@@ -106,7 +106,7 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     numberOfNullPolygonPoints: -3,
   };
   polygonProperties.newLine = {
-    strokeWidth: 0.1,
+    strokeWidth: 1.1,
     fill: '#999999',
     stroke: '#999999',
     class: 'line',
