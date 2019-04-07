@@ -103,8 +103,7 @@ function addPoint(event) {
 
 function getTempPolygon() {
   const points = activeShape.get('points');
-  points[points.length - 1] = points[points.length - 2];
-  points[points.length - 2] = {};
+  points.length -= 1;
   return activeShape;
 }
 
@@ -176,6 +175,17 @@ function cleanPolygonFromEmptyPoints() {
 
 function resumeDrawCanvasPolygon() {
   cleanPolygonFromEmptyPoints();
+  let currentPointId = 0;
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'point') {
+      iteratedObj.set(polygonProperties.changeRemovablePointToTemp(currentPointId));
+      if (currentPointId === 0) {
+        iteratedObj.set(polygonProperties.firstPoint);
+      }
+      currentPointId += 1;
+    }
+  });
+  canvas.renderAll();
 }
 
 export {

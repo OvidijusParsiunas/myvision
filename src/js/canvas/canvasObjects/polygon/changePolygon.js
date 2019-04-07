@@ -126,6 +126,7 @@ function removePolygon() {
 
 function removePolygonPoint(pointId) {
   console.log(polygon.points);
+  console.log(`point id ${pointId}`);
   if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
     if (Object.keys(polygon.points[pointId]).length === 0) {
       /* when the last polygons are removed, the ones before it are moved

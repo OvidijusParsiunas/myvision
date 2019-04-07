@@ -20,6 +20,18 @@ function generateNewPoint(pointId, event, canvas) {
   };
 }
 
+function changeRemovablePointToTemp(pointId) {
+  return {
+    radius: 3.5,
+    fill: '#ffffff',
+    stroke: '#333333',
+    strokeWidth: 0.5,
+    selectable: true,
+    shapeName: 'tempPoint',
+    pointId,
+  };
+}
+
 function generateExistingPolygonPoint(pointId, pointCoordinates) {
   return {
     radius: 3.5,
@@ -109,6 +121,7 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     shapeName: 'firstPoint',
   };
   polygonProperties.newPoint = generateNewPoint;
+  polygonProperties.changeRemovablePointToTemp = changeRemovablePointToTemp;
   polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;
   polygonProperties.removablePolygonPoint = generateRemovablePolygonPoint;
 }());
