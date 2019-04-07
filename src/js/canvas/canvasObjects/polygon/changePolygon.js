@@ -6,7 +6,6 @@ let canvas = null;
 let polygon = null;
 let polygonPoints = [];
 let editingPolygon = false;
-let lineArray = [];
 function getPolygonEditingStatus() {
   return editingPolygon;
 }
@@ -58,14 +57,13 @@ function displayPolygonPointsAfterMove() {
   editingPolygon = true;
 }
 
-function setSelectedObjects(activeCanvasObj, activePolygonObject, lineArrayObj) {
+function setSelectedObjects(activeCanvasObj, activePolygonObject) {
   canvas = activeCanvasObj;
   polygon = activePolygonObject;
-  lineArray = lineArrayObj;
 }
 
-function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, lineArrayObj) {
-  setSelectedObjects(canvasObj, polygonObj, lineArrayObj);
+function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon) {
+  setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
   // edit this
   if (!removablePoints) {
@@ -155,16 +153,7 @@ function removePolygonPoint(pointId) {
     }
     canvas.remove(polygonPoints[pointId]);
     polygonPoints[pointId] = null;
-    if (lineArray) {
-      if (pointId === 0) {
-        canvas.remove(lineArray[pointId]);
-      } else {
-        const { x1 } = lineArray[pointId - 1];
-        const { y1 } = lineArray[pointId - 1];
-        lineArray[pointId].set({ x1, y1 });
-        canvas.remove(lineArray[pointId - 1]);
-      }
-    }
+
     polygon.numberOfNullPolygonPoints += 1;
     if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
       // after all polygon points are removed from new polygon, completely remove -
