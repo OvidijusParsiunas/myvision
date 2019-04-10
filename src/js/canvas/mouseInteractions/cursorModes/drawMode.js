@@ -1,7 +1,3 @@
-// lift folder out of canvas folder
-// rename buttons folder to toolkitPanel
-// rename contents to toolkitButtonEvents
-
 function setAllObjectsUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.selectable = false;

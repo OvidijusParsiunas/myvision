@@ -1,6 +1,6 @@
 import { uploadImage } from '../buttonEvents/eventWorkersUtils/uploadFile/uploadImage';
 import { isLabelling } from '../../labellerPopUp/labellingProcess';
-import interruptAllCanvasEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvas/resetCanvasState';
+import interruptAllCanvasEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();

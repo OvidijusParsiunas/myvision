@@ -4,7 +4,7 @@ import assignDrawBoundingBoxEvents from '../../../canvas/mouseInteractions/mouse
 import assignDrawPolygonEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { assignRemovePointsEvents, exitRemovePointsEvents } from '../../../canvas/mouseInteractions/mouseEvents/eventManagers/removePointsEventsManager';
 import assignDefaultEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
-import purgeCanvasMouseEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvas/purgeAllMouseHandlers';
+import purgeCanvasMouseEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import { removePolygon } from '../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 
 let canvas = null;

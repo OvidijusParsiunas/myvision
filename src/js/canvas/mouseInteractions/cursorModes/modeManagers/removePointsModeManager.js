@@ -1,9 +1,5 @@
 // all of this logic should be implemented to facade workers
 // draw modes should be re-set here
-// move interruptAllCanvasEvents to events folder
-// create utils folder in canvas folder
-// put labelPopUp, downloadFile and uploadFile into utils folder
-// rename canvasObjects to objects
 
 import { isDrawingInProgress } from '../../../objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../removePointsOnExistingPolygonMode';

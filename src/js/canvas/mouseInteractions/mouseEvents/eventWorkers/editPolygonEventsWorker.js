@@ -3,6 +3,7 @@ import {
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
   sendPolygonPointsToFront, getPolygonEditingStatus,
+  enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 
 let polygonMoved = false;
@@ -41,12 +42,14 @@ function setPolygonNotEditableOnClick() {
 
 function polygonMouseDownEvents(event) {
   if (event.target) {
+    enableActiveObjectsAppearInFront();
     if (event.target.shapeName === 'bndBox' && getPolygonEditingStatus()) {
       setPolygonNotEditableOnClick();
       newPolygonSelected = false;
     } else if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
       newPolygonSelected = true;
     } else {
+      preventActiveObjectsAppearInFront();
       newPolygonSelected = false;
     }
   } else {

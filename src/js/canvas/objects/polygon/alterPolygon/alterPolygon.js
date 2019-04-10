@@ -1,11 +1,12 @@
 import fabric from 'fabric';
 import polygonProperties from '../properties';
-import generatePolygonAfterMove from './utils/regeneratePolygonAfterMove';
+import generatePolygonAfterMove from './resetCoordinatesAfterMove';
 
 let canvas = null;
 let polygon = null;
 let polygonPoints = [];
 let editingPolygon = false;
+
 function getPolygonEditingStatus() {
   return editingPolygon;
 }
@@ -171,11 +172,22 @@ function removePolygonPoint(pointId) {
   }
 }
 
+function enableActiveObjectsAppearInFront() {
+  if (canvas) {
+    canvas.preserveObjectStacking = false;
+  }
+}
+
+function preventActiveObjectsAppearInFront() {
+  canvas.preserveObjectStacking = true;
+}
+
 export {
   setEditablePolygon, resetPolygonSelectableArea,
   movePolygonPoint, sendPolygonPointsToFront,
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
-  displayRemovablePolygonPoints,
+  displayRemovablePolygonPoints, enableActiveObjectsAppearInFront,
+  preventActiveObjectsAppearInFront,
 };
