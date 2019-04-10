@@ -1,10 +1,10 @@
 module.exports = {
   entry: './src/js/index.js',
   output: {
-    filename: './bundle.js'
+    filename: './bundle.js',
   },
   externals: {
-   fabric: 'fabric'
- },
- watch: true
+    fabric: 'fabric',
+  },
+  watch: true,
 };

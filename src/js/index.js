@@ -1,5 +1,5 @@
-import constructCanvas from './canvas/canvasFactory';
-import assignButtonEvents from './mouseEvents/buttons/buttonMouseEvents';
+import constructCanvas from './canvas/canvas';
+import assignButtonEvents from './utils/toolkit/toolkit';
 
 constructCanvas();
 assignButtonEvents();
