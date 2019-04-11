@@ -1,7 +1,6 @@
 const polygonProperties = {};
 
-function generateNewPoint(pointId, event, canvas) {
-  const pointer = canvas.getPointer(event.e);
+function generateNewPoint(pointId, pointer) {
   return {
     radius: 3.5,
     fill: '#ffffff',

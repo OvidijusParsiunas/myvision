@@ -9,6 +9,14 @@ let pointArray = [];
 let polygonMode = true;
 let activeShape = false;
 let pointId = 0;
+let coordinatesOfLastMouseHover = null;
+
+function isRightMouseButtonClicked(pointer) {
+  if (activeShape && (coordinatesOfLastMouseHover.x !== pointer.x)) {
+    return true;
+  }
+  return false;
+}
 
 function movePoints(event) {
   if (activeShape) {
@@ -23,6 +31,7 @@ function movePoints(event) {
 function drawPolygon(event) {
   if (activeShape) {
     const pointer = canvas.getPointer(event.e);
+    coordinatesOfLastMouseHover = pointer;
     const points = activeShape.get('points');
     points[pointArray.length] = {
       x: pointer.x,
@@ -40,7 +49,7 @@ function removeActiveShape() {
   activeShape = null;
 }
 
-function generatePolygon(event) {
+function generatePolygon(pointer) {
   const points = [];
   pointArray.forEach((point) => {
     points.push({
@@ -55,14 +64,12 @@ function generatePolygon(event) {
 
   activeShape = null;
   polygonMode = false;
-  const pointer = canvas.getPointer(event.e);
   prepareLabelShape(polygon, canvas);
   showLabelPopUp(pointer.x, pointer.y);
 }
 
-function addPoint(event) {
-  const pointer = canvas.getPointer(event.e);
-  const point = new fabric.Circle(polygonProperties.newPoint(pointId, event, canvas));
+function addPoint(pointer) {
+  const point = new fabric.Circle(polygonProperties.newPoint(pointId, pointer));
   pointId += 1;
   if (pointArray.length === 0) {
     point.set(polygonProperties.firstPoint);
@@ -117,11 +124,13 @@ function clearPolygonData() {
 }
 
 function instantiatePolygon(event) {
-  if (event.target && event.target.shapeName && event.target.shapeName === 'firstPoint') {
-    generatePolygon(event);
-  }
-  if (polygonMode) {
-    addPoint(event);
+  const pointer = canvas.getPointer(event.e);
+  if (!isRightMouseButtonClicked(pointer)) {
+    if (event.target && event.target.shapeName && event.target.shapeName === 'firstPoint') {
+      generatePolygon(pointer);
+    } else if (polygonMode) {
+      addPoint(pointer);
+    }
   }
 }
 
