@@ -1,5 +1,5 @@
 import setDefaultCursorMode from '../../../canvas/mouseInteractions/cursorModes/defaultMode';
-import setRemovePointsMode from '../../../canvas/mouseInteractions/cursorModes/modeManagers/removePointsModeManager';
+import setRemovePointsCursorMode from '../../../canvas/mouseInteractions/cursorModes/modeManagers/removePointsModeManager';
 import assignDrawBoundingBoxEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 import assignDrawPolygonEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { assignRemovePointsEvents, exitRemovePointsEvents } from '../../../canvas/mouseInteractions/mouseEvents/eventManagers/removePointsEventsManager';
@@ -52,7 +52,7 @@ function removePolygonPointBtnClick() {
   if (!removingPoints) {
     purgeCanvasMouseEvents(canvas);
     assignRemovePointsEvents(canvas);
-    setRemovePointsMode(canvas);
+    setRemovePointsCursorMode(canvas);
     defaultState = false;
     removingPoints = true;
   } else {

@@ -3,16 +3,15 @@
 
 import { isDrawingInProgress } from '../../../objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../removePointsOnExistingPolygonMode';
-import setRemovePointsOnDrawPolygonMode from '../removePointsOnDrawPolygonMode';
+import setRemovePointsOnDrawNewPolygonMode from '../removePointsOnDrawNewPolygonMode';
 
-// rename to cursor mode
-function setRemovePointsMode(canvas) {
+function setRemovePointsCursorMode(canvas) {
   const drawing = isDrawingInProgress();
   if (drawing) {
-    setRemovePointsOnDrawPolygonMode(canvas);
+    setRemovePointsOnDrawNewPolygonMode(canvas);
   } else if (!drawing) {
     setRemovePointsOnExistingPolygonMode(canvas);
   }
 }
 
-export { setRemovePointsMode as default };
+export { setRemovePointsCursorMode as default };
