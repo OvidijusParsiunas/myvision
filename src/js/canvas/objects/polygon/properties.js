@@ -123,6 +123,10 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     lockMovementX: true,
     lockMovementY: true,
   };
+  polygonProperties.editablePoint = {
+    fill: 'red',
+    radius: 4,
+  };
   polygonProperties.newPoint = generateNewPoint;
   polygonProperties.changeRemovablePointToTemp = changeRemovablePointToTemp;
   polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;

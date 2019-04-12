@@ -1,5 +1,4 @@
-// have a callback here that would set the properties into certain values
-// no obbject changing logic in these files
+import polygonProperties from '../../objects/polygon/properties';
 
 function changeOjectPropertiesForRemovalePoints(canvas) {
   canvas.forEachObject((iteratedObj) => {
@@ -10,8 +9,7 @@ function changeOjectPropertiesForRemovalePoints(canvas) {
       iteratedObj.lockMovementY = true;
     }
     if (iteratedObj.shapeName === 'point') {
-      iteratedObj.fill = 'red';
-      iteratedObj.radius = 4;
+      iteratedObj.set(polygonProperties.editablePoint);
     }
   });
   canvas.renderAll();
