@@ -32,11 +32,12 @@ function discardRemovePointsEvents(canvas) {
   const drawing = isDrawingInProgress();
   if (drawing) {
     assignDrawPolygonEvents(canvas, true);
-    return false;
+    setDefaultState(false);
+  } else {
+    setDefaultCursorMode(canvas, true);
+    assignDefaultEvents(canvas);
+    setDefaultState(true);
   }
-  setDefaultCursorMode(canvas, true);
-  assignDefaultEvents(canvas);
-  return true;
 }
 
 function initiateRemovePolygonPointsEvents(canvas) {
@@ -48,7 +49,7 @@ function initiateRemovePolygonPointsEvents(canvas) {
     setRemovingPointsState(true);
   } else {
     purgeCanvasMouseEvents(canvas);
-    setDefaultState(discardRemovePointsEvents(canvas));
+    discardRemovePointsEvents(canvas);
     setRemovingPointsState(false);
   }
 }
