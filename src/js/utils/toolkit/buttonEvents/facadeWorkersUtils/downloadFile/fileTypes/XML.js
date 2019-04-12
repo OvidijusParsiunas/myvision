@@ -20,21 +20,15 @@ function generateTempDownloadableElement(xml) {
   return pom;
 }
 
-function downloadXMLFile(xml) {
-  const downloadableElement = generateTempDownloadableElement(xml);
-  downloadableElement.click();
-}
-
 function generateXML() {
   const downloadableObject = buildAnnotationsObject(canvas, fileStatus);
   return convertJSONToXML(downloadableObject);
 }
 
 function downloadXML() {
-  if (canvas.backgroundImage) {
-    const xml = generateXML();
-    downloadXMLFile(xml);
-  }
+  const xml = generateXML();
+  const downloadableElement = generateTempDownloadableElement(xml);
+  downloadableElement.click();
 }
 
 function assignCanvasForDownloadingAnnotationsXML(canvasObj) {

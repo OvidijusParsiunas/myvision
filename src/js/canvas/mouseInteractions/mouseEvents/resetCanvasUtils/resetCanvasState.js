@@ -2,15 +2,15 @@ import {
   getRemovingPointsState, setRemovingPointsStateToFalse, undoRemovePointsEventsObjectsProperties,
 } from '../eventWorkers/removePointsEventsWorker';
 import { clearPolygonData } from '../../../objects/polygon/polygon';
-import { cancelLabellingProcess } from '../../../../utils/labellerPopUp/buttonEvents';
+import { cancelLabellingProcess } from '../../../../utils/labellerPopUp/buttonsEvents';
 import { removePolygonPoints } from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { removeSelectedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
+import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
 
 function interruptAllCanvasEvents() {
   clearPolygonData();
   cancelLabellingProcess();
   removePolygonPoints();
-  removeSelectedPolygonId();
+  removeEditedPolygonId();
   if (getRemovingPointsState()) {
     undoRemovePointsEventsObjectsProperties();
     setRemovingPointsStateToFalse();

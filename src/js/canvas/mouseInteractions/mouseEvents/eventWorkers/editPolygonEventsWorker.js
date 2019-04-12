@@ -96,12 +96,12 @@ function pointMouseOverEvents(event, canvas) {
   }
 }
 
-function removeSelectedPolygonId() {
+function removeEditedPolygonId() {
   selectedPolygonId = null;
 }
 
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
-  polygonMoveEvents, removeSelectedPolygonId,
+  polygonMoveEvents, removeEditedPolygonId,
   polygonMouseOutEvents, pointMouseOverEvents,
 };

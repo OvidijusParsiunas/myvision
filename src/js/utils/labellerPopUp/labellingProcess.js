@@ -1,6 +1,7 @@
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 import setDefaultCursorMode from '../../canvas/mouseInteractions/cursorModes/defaultMode';
 
+
 const labelKeyPairObj = {};
 
 let labellingState = false;

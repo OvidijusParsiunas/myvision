@@ -1,15 +1,14 @@
-import { uploadImage } from '../buttonEvents/eventWorkersUtils/uploadFile/uploadImage';
 import { isLabelling } from '../../labellerPopUp/labellingProcess';
 import interruptAllCanvasEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 
-function interruptAllCanvasEventsBeforeFunc(func) {
+function interruptCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();
   if (func) func();
 }
 
-function interruptAllCanvasEventsBeforeImageUpload(input) {
+function interruptCanvasEventsBeforeFuncWParams(placeHolder, func, input) {
   interruptAllCanvasEvents();
-  uploadImage(input);
+  if (func) func(input);
 }
 
 function doNothingIfLabellingInProgress(func) {
@@ -26,8 +25,8 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 }
 
 export {
-  interruptAllCanvasEventsBeforeFunc,
-  interruptAllCanvasEventsBeforeImageUpload,
+  interruptCanvasEventsBeforeFunc,
+  interruptCanvasEventsBeforeFuncWParams,
   interruptAllCanvasEventsIfLabellingInProgress,
   doNothingIfLabellingInProgress,
 };

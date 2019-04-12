@@ -70,12 +70,12 @@ function onFileLoad(e) {
   image.onload = onImageLoad;
 }
 
-function uploadImage(input) {
-  if (input.files && input.files[0]) {
+function uploadImage(uploadData) {
+  if (uploadData.files && uploadData.files[0]) {
     const reader = new FileReader();
-    fileStatus.name = input.files[0].name;
+    fileStatus.name = uploadData.files[0].name;
     reader.onload = onFileLoad;
-    reader.readAsDataURL(input.files[0]);
+    reader.readAsDataURL(uploadData.files[0]);
   }
 }
 

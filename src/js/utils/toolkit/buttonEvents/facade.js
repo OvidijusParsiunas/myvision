@@ -1,69 +1,43 @@
-import setDefaultCursorMode from '../../../canvas/mouseInteractions/cursorModes/defaultMode';
-import setRemovePointsCursorMode from '../../../canvas/mouseInteractions/cursorModes/modeManagers/removePointsModeManager';
-import assignDrawBoundingBoxEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
-import assignDrawPolygonEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
-import { assignRemovePointsEvents, exitRemovePointsEvents } from '../../../canvas/mouseInteractions/mouseEvents/eventManagers/removePointsEventsManager';
-import assignDefaultEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
-import purgeCanvasMouseEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import { removePolygon } from '../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import initiateCreateNewBndBoxEvents from './facadeWorkers/createNewBndBoxWorker';
+import initiateCreateNewPolygonEvents from './facadeWorkers/createNewPolygonWorker';
+import initiateActiveShapeEvent from './facadeWorkers/removeActiveShapeWorker';
+import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
+import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
+import downloadXMLFile from './facadeWorkers/downloadAnnotationsFileWorker';
+import uploadImageFile from './facadeWorkers/uploadImageWorker';
 
 let canvas = null;
-let defaultState = false;
-let removingPoints = false;
 
-// create toolkitFacadeWorkers
-// implement downloadFile and uploadFile as workers
 function createNewBndBoxBtnClick() {
-  purgeCanvasMouseEvents(canvas);
-  assignDrawBoundingBoxEvents(canvas);
-  defaultState = false;
-  removingPoints = false;
+  initiateCreateNewBndBoxEvents(canvas);
 }
 
 function createNewPolygonBtnClick() {
-  purgeCanvasMouseEvents(canvas);
-  assignDrawPolygonEvents(canvas);
-  defaultState = false;
-  removingPoints = false;
+  initiateCreateNewPolygonEvents(canvas);
 }
 
 function removeActiveShapeBtnClick() {
-  if (canvas.getActiveObject()) {
-    canvas.remove(canvas.getActiveObject());
-  } else {
-    removePolygon();
-  }
-  removingPoints = false;
+  initiateActiveShapeEvent(canvas);
 }
 
 function resetCanvasEventsToDefault() {
-  if (!defaultState) {
-    purgeCanvasMouseEvents(canvas);
-    setDefaultCursorMode(canvas, removingPoints);
-    assignDefaultEvents(canvas);
-    if (removingPoints) {
-      removingPoints = false;
-    }
-    defaultState = true;
-  }
+  initiateResetCanvasEventsToDefaultEvent(canvas);
 }
 
 function removePolygonPointBtnClick() {
-  if (!removingPoints) {
-    purgeCanvasMouseEvents(canvas);
-    assignRemovePointsEvents(canvas);
-    setRemovePointsCursorMode(canvas);
-    defaultState = false;
-    removingPoints = true;
-  } else {
-    purgeCanvasMouseEvents(canvas);
-    defaultState = exitRemovePointsEvents(canvas);
-    removingPoints = false;
-  }
+  initiateRemovePolygonPointsEvents(canvas);
 }
 
 function assignCanvasMouseEvents(canvasObj) {
   canvas = canvasObj;
+}
+
+function downloadXMLBtnClick() {
+  downloadXMLFile(canvas);
+}
+
+function uploadImageBtnClick(uploadData) {
+  uploadImageFile(uploadData);
 }
 
 export {
@@ -73,4 +47,6 @@ export {
   resetCanvasEventsToDefault,
   removeActiveShapeBtnClick,
   removePolygonPointBtnClick,
+  downloadXMLBtnClick,
+  uploadImageBtnClick,
 };

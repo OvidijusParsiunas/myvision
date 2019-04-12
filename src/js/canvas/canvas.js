@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import { assignCanvasMouseEvents } from '../utils/toolkit/buttonEvents/facade';
-import { assignCanvasForNewImageUpload } from '../utils/toolkit/buttonEvents/eventWorkersUtils/uploadFile/uploadImage';
-import { assignCanvasForDownloadingAnnotationsXML } from '../utils/toolkit/buttonEvents/eventWorkersUtils/downloadFile/fileTypes/XML';
+import { assignCanvasForNewImageUpload } from '../utils/toolkit/buttonEvents/facadeWorkersUtils/uploadFile/uploadImage';
+import { assignCanvasForDownloadingAnnotationsXML } from '../utils/toolkit/buttonEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
 
 function constructCanvas() {
   const canvas = new fabric.Canvas('c', { selection: false });

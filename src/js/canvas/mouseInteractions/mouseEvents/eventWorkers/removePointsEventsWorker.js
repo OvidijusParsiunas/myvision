@@ -3,6 +3,7 @@ import {
   removePolygonPoint, removePolygonPoints,
   getPolygonEditingStatus,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
+import { removeEditedPolygonId } from './editPolygonEventsWorker';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -65,6 +66,7 @@ function pointMouseOverEvents(event) {
 function pointMouseUpEvents(event) {
   if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
     // subset can be reused
+    removeEditedPolygonId();
     setEditablePolygonOnClick(event, canvas);
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     setPolygonNotEditableOnClick();

@@ -21,7 +21,7 @@ function assignRemovePointsEvents(canvas) {
   }
 }
 
-function exitRemovePointsEvents(canvas) {
+function discardRemovePointsEvents(canvas) {
   // is this still drawing after manually removing all polygon points
   const drawing = isDrawingInProgress();
   if (drawing) {
@@ -33,4 +33,4 @@ function exitRemovePointsEvents(canvas) {
   return true;
 }
 
-export { assignRemovePointsEvents, exitRemovePointsEvents };
+export { assignRemovePointsEvents, discardRemovePointsEvents };
