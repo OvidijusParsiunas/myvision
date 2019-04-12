@@ -1,10 +1,13 @@
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents,
-  polygonMouseOutEvents, pointMouseOverEvents,
+  polygonMouseOutEvents, pointMouseOverEvents, setSelectedPolygonId,
 } from '../eventWorkers/editPolygonEventsWorker';
 import { boundingBoxScalingEvents, boundingBoxMouseOutEvents } from '../eventWorkers/editBoundingBoxEventsWorker';
 
-function assignDefaultEvents(canvas) {
+function assignDefaultEvents(canvas, polygonId) {
+  if (polygonId) {
+    setSelectedPolygonId(polygonId);
+  }
   canvas.on('mouse:down', (e) => {
     polygonMouseDownEvents(e);
   });

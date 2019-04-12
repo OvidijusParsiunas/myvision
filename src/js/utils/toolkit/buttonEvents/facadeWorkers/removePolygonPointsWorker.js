@@ -8,6 +8,7 @@ import assignRemovePointsOnDrawPolygonEvents from '../../../../canvas/mouseInter
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import setDefaultCursorMode from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
+import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 
 function setRemovePointsCursorMode(canvas) {
   const drawing = isDrawingInProgress();
@@ -35,7 +36,8 @@ function discardRemovePointsEvents(canvas) {
     setDefaultState(false);
   } else {
     setDefaultCursorMode(canvas, true);
-    assignDefaultEvents(canvas);
+    const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
+    assignDefaultEvents(canvas, currentlySelectedPolygonId);
     setDefaultState(true);
   }
 }

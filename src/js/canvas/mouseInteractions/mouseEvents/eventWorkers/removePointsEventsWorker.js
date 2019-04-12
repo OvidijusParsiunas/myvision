@@ -88,9 +88,14 @@ function setRemovingPointsStateToFalse() {
   removingPoints = false;
 }
 
+function getSelectedPolygonIdForRemovingPoints() {
+  return selectedPolygonId;
+}
+
 export {
   pointMouseDownEvents, pointMouseOverEvents,
   pointMouseUpEvents, pointMouseOutEvents,
   setRemovablePointsEventsCanvas, undoRemovePointsEventsObjectsProperties,
   getRemovingPointsState, setRemovingPointsStateToFalse,
+  getSelectedPolygonIdForRemovingPoints,
 };

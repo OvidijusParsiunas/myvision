@@ -100,8 +100,13 @@ function removeEditedPolygonId() {
   selectedPolygonId = null;
 }
 
+function setSelectedPolygonId(polygonId) {
+  selectedPolygonId = polygonId;
+}
+
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeEditedPolygonId,
   polygonMouseOutEvents, pointMouseOverEvents,
+  setSelectedPolygonId,
 };
