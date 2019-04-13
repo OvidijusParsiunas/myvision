@@ -1,5 +1,6 @@
 let defaultState = false;
 let removingPoints = false;
+let addingPoints = false;
 
 function getDefaultState() {
   return defaultState;
@@ -7,6 +8,10 @@ function getDefaultState() {
 
 function getRemovingPointsState() {
   return removingPoints;
+}
+
+function getAddingPointsState() {
+  return addingPoints;
 }
 
 function setDefaultState(state) {
@@ -17,6 +22,11 @@ function setRemovingPointsState(state) {
   removingPoints = state;
 }
 
+function setAddingPointsState(state) {
+  addingPoints = state;
+}
+
 export {
-  getDefaultState, getRemovingPointsState, setDefaultState, setRemovingPointsState,
+  getDefaultState, getRemovingPointsState, getAddingPointsState,
+  setDefaultState, setRemovingPointsState, setAddingPointsState,
 };

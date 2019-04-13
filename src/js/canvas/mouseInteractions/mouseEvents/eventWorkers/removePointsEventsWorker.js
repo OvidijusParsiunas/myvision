@@ -1,7 +1,6 @@
 import {
-  setEditablePolygon,
-  removePolygonPoint, removePolygonPoints,
-  getPolygonEditingStatus,
+  setEditablePolygon, removePolygonPoint, removePolygonPoints, getPolygonEditingStatus,
+  enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 
@@ -32,7 +31,6 @@ function setEditablePolygonOnClick(event) {
     removePolygonPoints();
     removingPoints = true;
   }
-  // performance dropdown as we are displaying polygons twice
   setEditablePolygon(canvas, event.target, true);
   selectedPolygonId = event.target.id;
 }
@@ -48,10 +46,13 @@ function setRemovablePointsEventsCanvas(canvasObj) {
 
 function pointMouseDownEvents(event) {
   if (event.target) {
+    enableActiveObjectsAppearInFront();
     if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
       newPolygonSelected = true;
     } else if (event.target.shapeName === 'point') {
       removePolygonPoint(event.target.pointId);
+    } else {
+      preventActiveObjectsAppearInFront();
     }
   }
 }

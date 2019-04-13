@@ -1,6 +1,6 @@
 import polygonProperties from '../../objects/polygon/properties';
 
-function changeOjectPropertiesForRemovalePoints(canvas) {
+function changeOjectPropertiesForChoosingInitialPoint(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'bndBox') {
       iteratedObj.selectable = false;
@@ -9,16 +9,16 @@ function changeOjectPropertiesForRemovalePoints(canvas) {
       iteratedObj.lockMovementY = true;
     }
     if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.removablePoint);
+      iteratedObj.set(polygonProperties.additionalPoint);
     }
   });
   canvas.renderAll();
 }
 
-function setRemovePointsOnExistingPolygonMode(canvas) {
-  changeOjectPropertiesForRemovalePoints(canvas);
+function setInitialStageOfAddPointsOnExistingPolygonMode(canvas) {
+  changeOjectPropertiesForChoosingInitialPoint(canvas);
   canvas.defaultCursor = 'default';
   canvas.hoverCursor = 'default';
 }
 
-export { setRemovePointsOnExistingPolygonMode as default };
+export { setInitialStageOfAddPointsOnExistingPolygonMode as default };

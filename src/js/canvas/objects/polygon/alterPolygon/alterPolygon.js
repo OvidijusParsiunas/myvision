@@ -11,6 +11,10 @@ function getPolygonEditingStatus() {
   return editingPolygon;
 }
 
+function setPolygonEditingStatus(status) {
+  editingPolygon = status;
+}
+
 function sendPolygonPointsToFront() {
   canvas.discardActiveObject();
   polygonPoints.forEach((point) => {
@@ -19,6 +23,10 @@ function sendPolygonPointsToFront() {
     }
   });
   editingPolygon = true;
+}
+
+function getPolygonPoint() {
+  return polygonPoints;
 }
 
 function displayPolygonPoints() {
@@ -83,7 +91,10 @@ function setEditablePolygonAfterMoving(canvasObj, polygonObj) {
   displayPolygonPointsAfterMove();
 }
 
-function removePolygonPoints() {
+function removePolygonPoints(polygonPointsArr) {
+  if (polygonPoints.length === 0 && polygonPointsArr) {
+    polygonPoints = polygonPointsArr;
+  }
   if (polygonPoints.length !== 0) {
     polygonPoints.forEach((point) => {
       canvas.remove(point);
@@ -188,6 +199,7 @@ export {
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
+  setPolygonEditingStatus, preventActiveObjectsAppearInFront,
   displayRemovablePolygonPoints, enableActiveObjectsAppearInFront,
-  preventActiveObjectsAppearInFront,
+  getPolygonPoint,
 };

@@ -78,6 +78,31 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
   return returnObj;
 }
 
+function generateInitialAddPolygonPoint(pointId, pointCoordinates) {
+  const returnObj = {
+    radius: 4,
+    fill: 'green',
+    stroke: '#333333',
+    strokeWidth: 0.5,
+    selectable: true,
+    hasBorders: false,
+    hasControls: false,
+    originX: 'center',
+    originY: 'center',
+    shapeName: 'point',
+    objectCaching: false,
+    pointId,
+    perPixelTargetFind: true,
+    lockMovementX: true,
+    lockMovementY: true,
+  };
+  if (pointCoordinates) {
+    returnObj.left = pointCoordinates.x;
+    returnObj.top = pointCoordinates.y;
+  }
+  return returnObj;
+}
+
 (function setProperties() {
   polygonProperties.newPolygon = {
     stroke: 'rgba(255,0,0)',
@@ -123,14 +148,23 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     lockMovementX: true,
     lockMovementY: true,
   };
-  polygonProperties.editablePoint = {
+  polygonProperties.removablePoint = {
     fill: 'red',
     radius: 4,
+  };
+  polygonProperties.additionalPoint = {
+    fill: 'green',
+    radius: 4,
+  };
+  polygonProperties.disabledButton = {
+    fill: 'white',
+    radius: 3,
   };
   polygonProperties.newPoint = generateNewPoint;
   polygonProperties.changeRemovablePointToTemp = changeRemovablePointToTemp;
   polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;
   polygonProperties.removablePolygonPoint = generateRemovablePolygonPoint;
+  polygonProperties.initialAddPolygonPoint = generateInitialAddPolygonPoint;
 }());
 
 

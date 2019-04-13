@@ -1,8 +1,8 @@
 import {
   createNewBndBoxBtnClick, createNewPolygonBtnClick,
-  removeActiveShapeBtnClick, resetCanvasEventsToDefault,
+  addPointsBtnClick, removeActiveShapeBtnClick,
   removePolygonPointBtnClick, downloadXMLBtnClick,
-  uploadImageBtnClick,
+  uploadImageBtnClick, resetCanvasEventsToDefault,
 } from './buttonEvents/facade';
 import {
   interruptCanvasEventsBeforeFunc, interruptCanvasEventsBeforeFuncWParams,
@@ -12,6 +12,7 @@ import {
 function assignToolkitButtonEvents() {
   window.createNewBndBox = interruptCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = interruptCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
+  window.addPoints = doNothingIfLabellingInProgress.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
   window.removeShape = interruptCanvasEventsBeforeFunc.bind(this, removeActiveShapeBtnClick);
   window.downloadXML = interruptCanvasEventsBeforeFunc.bind(this, downloadXMLBtnClick);
