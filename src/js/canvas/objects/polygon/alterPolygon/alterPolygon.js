@@ -35,6 +35,21 @@ function displayPolygonPoints() {
   });
 }
 
+function undoRemovePointsEventsObjectsProperties() {
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'bndBox') {
+      iteratedObj.selectable = true;
+    } else {
+      iteratedObj.lockMovementX = false;
+      iteratedObj.lockMovementY = false;
+    }
+    if (iteratedObj.shapeName === 'point') {
+      iteratedObj.fill = 'blue';
+      iteratedObj.radius = 3.5;
+    }
+  });
+}
+
 function removePolygonPoints() {
   if (polygonPoints.length !== 0) {
     polygonPoints.forEach((point) => {
@@ -214,5 +229,5 @@ export {
   removePolygonPoint, getPolygonEditingStatus,
   preventActiveObjectsAppearInFront, displayRemovablePolygonPoints,
   enableActiveObjectsAppearInFront, displayInitialAddPolygonPoints,
-  getPolygonPoint,
+  getPolygonPoint, undoRemovePointsEventsObjectsProperties,
 };

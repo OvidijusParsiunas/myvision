@@ -1,4 +1,4 @@
-import { undoRemovePointsEventsObjectsProperties } from '../mouseEvents/eventWorkers/removePointsEventsWorker';
+import { undoRemovePointsEventsObjectsProperties } from '../../objects/polygon/alterPolygon/alterPolygon';
 
 function setDefaultCursorMode(canvas, alteringPolygonPoints) {
   if (alteringPolygonPoints) {

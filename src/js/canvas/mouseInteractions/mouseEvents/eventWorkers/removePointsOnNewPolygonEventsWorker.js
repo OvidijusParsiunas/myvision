@@ -5,22 +5,6 @@ import {
 let removingPoints = false;
 let canvas = null;
 
-// call these event workers
-function undoRemovePointsEventsObjectsProperties() {
-  canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'bndBox') {
-      iteratedObj.selectable = true;
-    } else {
-      iteratedObj.lockMovementX = false;
-      iteratedObj.lockMovementY = false;
-    }
-    if (iteratedObj.shapeName === 'point') {
-      iteratedObj.fill = 'blue';
-      iteratedObj.radius = 3.5;
-    }
-  });
-}
-
 function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
   canvas = canvasObj;
   // edit this
@@ -62,6 +46,6 @@ function setRemovingPointsStateToFalse() {
 export {
   pointMouseDownEvents, pointMouseOverEvents,
   pointMouseUpEvents, pointMouseOutEvents,
-  setRemovablePointsEventsCanvas, undoRemovePointsEventsObjectsProperties,
-  getRemovingPointsState, setRemovingPointsStateToFalse,
+  setRemovablePointsEventsCanvas, getRemovingPointsState,
+  setRemovingPointsStateToFalse,
 };

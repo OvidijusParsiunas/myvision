@@ -9,22 +9,6 @@ let newPolygonSelected = false;
 let removingPoints = false;
 let canvas = null;
 
-// move this
-function undoRemovePointsEventsObjectsProperties() {
-  canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'bndBox') {
-      iteratedObj.selectable = true;
-    } else {
-      iteratedObj.lockMovementX = false;
-      iteratedObj.lockMovementY = false;
-    }
-    if (iteratedObj.shapeName === 'point') {
-      iteratedObj.fill = 'blue';
-      iteratedObj.radius = 3.5;
-    }
-  });
-}
-
 function setEditablePolygonOnClick(event) {
   if (getPolygonEditingStatus()) {
     // selecting another polygon without moving the first one
@@ -96,7 +80,6 @@ function getSelectedPolygonIdForRemovingPoints() {
 export {
   pointMouseDownEvents, pointMouseOverEvents,
   pointMouseUpEvents, pointMouseOutEvents,
-  setRemovablePointsEventsCanvas, undoRemovePointsEventsObjectsProperties,
-  getRemovingPointsState, setRemovingPointsStateToFalse,
-  getSelectedPolygonIdForRemovingPoints,
+  setRemovablePointsEventsCanvas, getRemovingPointsState,
+  setRemovingPointsStateToFalse, getSelectedPolygonIdForRemovingPoints,
 };

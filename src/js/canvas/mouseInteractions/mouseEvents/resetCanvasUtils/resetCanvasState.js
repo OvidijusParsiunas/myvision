@@ -1,7 +1,6 @@
-import { undoRemovePointsEventsObjectsProperties } from '../eventWorkers/removePointsEventsWorker';
+import { undoRemovePointsEventsObjectsProperties, removePolygonPoints } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { clearPolygonData } from '../../../objects/polygon/polygon';
 import { cancelLabellingProcess } from '../../../../utils/labellerPopUp/buttonsEvents';
-import { removePolygonPoints } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
 import {
   getAlteringPolygonPointsState, setAlteringPolygonPointsState,
