@@ -11,10 +11,6 @@ function getPolygonEditingStatus() {
   return editingPolygon;
 }
 
-function setPolygonEditingStatus(status) {
-  editingPolygon = status;
-}
-
 function sendPolygonPointsToFront() {
   canvas.discardActiveObject();
   polygonPoints.forEach((point) => {
@@ -37,6 +33,36 @@ function displayPolygonPoints() {
     polygonPoints.push(pointObj);
     pointId += 1;
   });
+}
+
+function removePolygonPoints() {
+  if (polygonPoints.length !== 0) {
+    polygonPoints.forEach((point) => {
+      canvas.remove(point);
+    });
+    canvas.renderAll();
+    polygonPoints = [];
+  }
+  editingPolygon = false;
+}
+
+function displayInitialAddPolygonPoints(canvasObj, polygonObj) {
+  canvas = canvasObj;
+  polygon = polygonObj;
+  if (getPolygonEditingStatus()) {
+    removePolygonPoints(polygonPoints);
+    polygonPoints = [];
+  }
+  canvas.discardActiveObject();
+  let pointId = 0;
+  polygon.get('points').forEach((point) => {
+    const pointObj = new fabric.Circle(polygonProperties.initialAddPolygonPoint(pointId, point));
+    canvas.add(pointObj);
+    polygonPoints.push(pointObj);
+    pointId += 1;
+  });
+  editingPolygon = true;
+  return polygon.id;
 }
 
 function displayRemovablePolygonPoints() {
@@ -71,6 +97,7 @@ function setSelectedObjects(activeCanvasObj, activePolygonObject) {
   polygon = activePolygonObject;
 }
 
+
 function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
@@ -89,20 +116,6 @@ function setEditablePolygonAfterMoving(canvasObj, polygonObj) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
   displayPolygonPointsAfterMove();
-}
-
-function removePolygonPoints(polygonPointsArr) {
-  if (polygonPoints.length === 0 && polygonPointsArr) {
-    polygonPoints = polygonPointsArr;
-  }
-  if (polygonPoints.length !== 0) {
-    polygonPoints.forEach((point) => {
-      canvas.remove(point);
-    });
-    canvas.renderAll();
-    polygonPoints = [];
-  }
-  editingPolygon = false;
 }
 
 function resetPolygonSelectableArea() {
@@ -199,7 +212,7 @@ export {
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
-  setPolygonEditingStatus, preventActiveObjectsAppearInFront,
-  displayRemovablePolygonPoints, enableActiveObjectsAppearInFront,
+  preventActiveObjectsAppearInFront, displayRemovablePolygonPoints,
+  enableActiveObjectsAppearInFront, displayInitialAddPolygonPoints,
   getPolygonPoint,
 };

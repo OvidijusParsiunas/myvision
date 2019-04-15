@@ -1,11 +1,10 @@
-import fabric from 'fabric';
 import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import {
-  removePolygonPoints, getPolygonEditingStatus, setPolygonEditingStatus,
+  removePolygonPoints, getPolygonEditingStatus,
   enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront,
+  displayInitialAddPolygonPoints,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
-import polygonProperties from '../../../objects/polygon/properties';
 
 // import {
 //   // setEditablePolygon,
@@ -19,36 +18,15 @@ import polygonProperties from '../../../objects/polygon/properties';
 let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
-let polygonPoints = [];
 
-function displayInitialAddPolygonPoints(polygon) {
-  if (getPolygonEditingStatus()) {
-    removePolygonPoints(polygonPoints);
-    polygonPoints = [];
-  }
-  canvas.discardActiveObject();
-  let pointId = 0;
-  polygon.get('points').forEach((point) => {
-    const pointObj = new fabric.Circle(polygonProperties.initialAddPolygonPoint(pointId, point));
-    canvas.add(pointObj);
-    polygonPoints.push(pointObj);
-    pointId += 1;
-  });
-  selectedPolygonId = polygon.id;
-  setPolygonEditingStatus(true);
-}
+// consider extending functionality
+// to multiple files in the
+// alterPolygon folder
 
 /* make sure to reuse this all */
-// cancel not working after selecting add
-// then deselecting and selecting again
+
 // generates new points every time clicked on
 // for all event types
-
-function setPolygonNotEditableOnClick() {
-  removePolygonPoints(polygonPoints);
-  polygonPoints = [];
-  selectedPolygonId = null;
-}
 
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;
@@ -72,9 +50,10 @@ function pointMouseUpEvents(event) {
   if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
     // subset can be reused
     removeEditedPolygonId();
-    displayInitialAddPolygonPoints(event.target);
+    selectedPolygonId = displayInitialAddPolygonPoints(canvas, event.target);
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
-    setPolygonNotEditableOnClick();
+    removePolygonPoints();
+    selectedPolygonId = null;
   }
 }
 
