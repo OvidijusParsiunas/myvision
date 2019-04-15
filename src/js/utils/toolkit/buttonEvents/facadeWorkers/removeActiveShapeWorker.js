@@ -1,5 +1,5 @@
 import { removePolygon } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { setRemovingPointsState } from '../facadeWorkersUtils/stateManager';
+import { setAlteringPolygonPointsState } from '../facadeWorkersUtils/stateManager';
 
 function initiateActiveShapeEvent(canvas) {
   if (canvas.getActiveObject()) {
@@ -7,7 +7,7 @@ function initiateActiveShapeEvent(canvas) {
   } else {
     removePolygon();
   }
-  setRemovingPointsState(false);
+  setAlteringPolygonPointsState(false);
 }
 
 export { initiateActiveShapeEvent as default };

@@ -1,32 +1,25 @@
 let defaultState = false;
-let removingPoints = false;
-let addingPoints = false;
+let alteringPolygonPointsState = false;
 
 function getDefaultState() {
   return defaultState;
 }
 
-function getRemovingPointsState() {
-  return removingPoints;
-}
-
-function getAddingPointsState() {
-  return addingPoints;
+function getAlteringPolygonPointsState() {
+  return alteringPolygonPointsState;
 }
 
 function setDefaultState(state) {
   defaultState = state;
 }
 
-function setRemovingPointsState(state) {
-  removingPoints = state;
-}
-
-function setAddingPointsState(state) {
-  addingPoints = state;
+function setAlteringPolygonPointsState(state) {
+  alteringPolygonPointsState = state;
 }
 
 export {
-  getDefaultState, getRemovingPointsState, getAddingPointsState,
-  setDefaultState, setRemovingPointsState, setAddingPointsState,
+  getDefaultState,
+  setDefaultState,
+  getAlteringPolygonPointsState,
+  setAlteringPolygonPointsState,
 };

@@ -1,7 +1,7 @@
 import { undoRemovePointsEventsObjectsProperties } from '../mouseEvents/eventWorkers/removePointsEventsWorker';
 
-function setDefaultCursorMode(canvas, removingPoints) {
-  if (removingPoints) {
+function setDefaultCursorMode(canvas, alteringPolygonPoints) {
+  if (alteringPolygonPoints) {
     undoRemovePointsEventsObjectsProperties();
   } else {
     canvas.forEachObject((iteratedObj) => {

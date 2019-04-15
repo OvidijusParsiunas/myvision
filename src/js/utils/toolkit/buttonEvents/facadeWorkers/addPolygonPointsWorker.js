@@ -1,5 +1,5 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import { setDefaultState, setAddingPointsState } from '../facadeWorkersUtils/stateManager';
+import { setDefaultState, setAlteringPolygonPointsState } from '../facadeWorkersUtils/stateManager';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 // import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/
@@ -42,7 +42,7 @@ function initiateAddPolygonPointsEvents(canvas) {
   assignAddPointsOnExistingPolygonEvents(canvas);
   setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
   setDefaultState(false);
-  setAddingPointsState(true);
+  setAlteringPolygonPointsState(true);
 }
 
 export { initiateAddPolygonPointsEvents as default };
