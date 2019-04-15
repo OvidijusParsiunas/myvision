@@ -69,6 +69,7 @@ function displayInitialAddPolygonPoints(canvasObj, polygonObj) {
     polygonPoints = [];
   }
   canvas.discardActiveObject();
+  polygon.bringForward();
   let pointId = 0;
   polygon.get('points').forEach((point) => {
     const pointObj = new fabric.Circle(polygonProperties.initialAddPolygonPoint(pointId, point));
@@ -116,6 +117,7 @@ function setSelectedObjects(activeCanvasObj, activePolygonObject) {
 function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
+  polygon.bringForward();
   // edit this
   if (!removablePoints) {
     displayPolygonPoints();
