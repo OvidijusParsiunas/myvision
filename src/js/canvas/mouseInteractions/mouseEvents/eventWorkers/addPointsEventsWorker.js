@@ -3,7 +3,7 @@ import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import {
   removePolygonPoints, getPolygonEditingStatus,
   enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront,
-  displayInitialAddPolygonPoints,
+  displayInitialAddPolygonPoints, setEditablePolygon,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 
 // import {
@@ -19,17 +19,24 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 
-// consider extending functionality
-// to multiple files in the
-// alterPolygon folder
-
 /* make sure to reuse this all */
 
 // generates new points every time clicked on
 // for all event types
 
+// prevent stacking is not working
+// when clicking to remove polygon points, initial click moves the points
+
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;
+}
+
+function prepareToAddPolygonPoints(event) {
+  if (getPolygonEditingStatus()) {
+    removePolygonPoints();
+  }
+  setEditablePolygon(canvas, event.target, false, false, true);
+  selectedPolygonId = event.target.id;
 }
 
 function pointMouseDownEvents(event) {
@@ -50,6 +57,9 @@ function pointMouseUpEvents(event) {
   if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
     // subset can be reused
     removeEditedPolygonId();
+    // good naming convention
+    prepareToAddPolygonPoints(event);
+    // repetition
     selectedPolygonId = displayInitialAddPolygonPoints(canvas, event.target);
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     removePolygonPoints();

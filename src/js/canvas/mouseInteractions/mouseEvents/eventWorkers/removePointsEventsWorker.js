@@ -6,6 +6,7 @@ import { removeEditedPolygonId } from './editPolygonEventsWorker';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
+// variable not used
 let removingPoints = false;
 let canvas = null;
 

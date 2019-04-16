@@ -1,6 +1,14 @@
-import fabric from 'fabric';
 import polygonProperties from '../properties';
-import generatePolygonAfterMove from './resetCoordinatesAfterMove';
+import removePolygonPointImpl from './removePoint';
+import sendPolygonPointsToFrontImpl from './stackPoints';
+import removePolygonPointsImpl from './removePoints';
+import removePolygonImpl from './removePolygon';
+import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint';
+import {
+  displayPolygonPointsWithStyleImpl,
+  changeDrawingPolygonPointsToRemovableImpl,
+  changePolygonPointsPropertiesToDefaultImpl,
+} from './changePointsStyle';
 
 let canvas = null;
 let polygon = null;
@@ -12,121 +20,48 @@ function getPolygonEditingStatus() {
 }
 
 function sendPolygonPointsToFront() {
-  canvas.discardActiveObject();
-  polygonPoints.forEach((point) => {
-    if (point) {
-      point.bringForward();
-    }
-  });
+  sendPolygonPointsToFrontImpl(canvas, polygonPoints);
   editingPolygon = true;
-}
-
-function getPolygonPoint() {
-  return polygonPoints;
 }
 
 function displayPolygonPoints() {
-  let pointId = 0;
-  polygon.get('points').forEach((point) => {
-    const pointObj = new fabric.Circle(polygonProperties.existingPolygonPoint(pointId, point));
-    canvas.add(pointObj);
-    polygonPoints.push(pointObj);
-    pointId += 1;
-  });
-}
-
-function undoRemovePointsEventsObjectsProperties() {
-  canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'bndBox') {
-      iteratedObj.selectable = true;
-    } else {
-      iteratedObj.lockMovementX = false;
-      iteratedObj.lockMovementY = false;
-    }
-    if (iteratedObj.shapeName === 'point') {
-      iteratedObj.fill = 'blue';
-      iteratedObj.radius = 3.5;
-    }
-  });
-}
-
-function removePolygonPoints() {
-  if (polygonPoints.length !== 0) {
-    polygonPoints.forEach((point) => {
-      canvas.remove(point);
-    });
-    canvas.renderAll();
-    polygonPoints = [];
-  }
-  editingPolygon = false;
-}
-
-function displayInitialAddPolygonPoints(canvasObj, polygonObj) {
-  canvas = canvasObj;
-  polygon = polygonObj;
-  if (getPolygonEditingStatus()) {
-    removePolygonPoints(polygonPoints);
-    polygonPoints = [];
-  }
-  canvas.discardActiveObject();
-  polygon.bringForward();
-  let pointId = 0;
-  polygon.get('points').forEach((point) => {
-    const pointObj = new fabric.Circle(polygonProperties.initialAddPolygonPoint(pointId, point));
-    canvas.add(pointObj);
-    polygonPoints.push(pointObj);
-    pointId += 1;
-  });
-  editingPolygon = true;
-  return polygon.id;
+  displayPolygonPointsWithStyleImpl(
+    canvas, polygon, polygonPoints, polygonProperties.existingPolygonPoint,
+  );
 }
 
 function displayRemovablePolygonPoints() {
-  let pointId = 0;
-  polygon.get('points').forEach((point) => {
-    const pointObj = new fabric.Circle(polygonProperties.removablePolygonPoint(pointId, point));
-    canvas.add(pointObj);
-    polygonPoints.push(pointObj);
-    pointId += 1;
-  });
+  displayPolygonPointsWithStyleImpl(
+    canvas, polygon, polygonPoints, polygonProperties.removablePolygonPoint,
+  );
 }
 
+function displayInitialAddPolygonPoints() {
+  displayPolygonPointsWithStyleImpl(
+    canvas, polygon, polygonPoints, polygonProperties.initialAddPolygonPoint,
+  );
+}
 function changePolygonPointsToRemovable() {
-  let pointId = 0;
-  polygonPoints = [];
-  canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
-      iteratedObj.set(polygonProperties.removablePolygonPoint(pointId));
-      polygonPoints.push(iteratedObj);
-      pointId += 1;
-    }
-  });
+  polygonPoints = changeDrawingPolygonPointsToRemovableImpl(canvas);
+}
+
+function removePolygonPoints() {
+  polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
+  editingPolygon = false;
+}
+
+function changePolygonPointsPropertiesToDefault() {
+  changePolygonPointsPropertiesToDefaultImpl(canvas);
 }
 
 function displayPolygonPointsAfterMove() {
-  polygon = generatePolygonAfterMove(polygon, polygonPoints, canvas, polygonProperties);
+  polygon = displayPolygonPointsAfterMoveImpl(canvas, polygon, polygonPoints);
   editingPolygon = true;
 }
 
 function setSelectedObjects(activeCanvasObj, activePolygonObject) {
   canvas = activeCanvasObj;
   polygon = activePolygonObject;
-}
-
-
-function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon) {
-  setSelectedObjects(canvasObj, polygonObj);
-  canvasObj.discardActiveObject();
-  polygon.bringForward();
-  // edit this
-  if (!removablePoints) {
-    displayPolygonPoints();
-  } else if (!creatingPolygon) {
-    displayRemovablePolygonPoints();
-  } else {
-    changePolygonPointsToRemovable();
-  }
-  editingPolygon = true;
 }
 
 function setEditablePolygonAfterMoving(canvasObj, polygonObj) {
@@ -136,81 +71,19 @@ function setEditablePolygonAfterMoving(canvasObj, polygonObj) {
 }
 
 function resetPolygonSelectableArea() {
-  const newPosition = polygon._calcDimensions();
-  polygon.set({
-    left: newPosition.left,
-    top: newPosition.top,
-    height: newPosition.height,
-    width: newPosition.width,
-    pathOffset: {
-      x: newPosition.left + newPosition.width / 2,
-      y: newPosition.top + newPosition.height / 2,
-    },
-  });
-  polygon.setCoords();
-  canvas.renderAll();
+  resetPolygonSelectableAreaImpl(canvas, polygon);
 }
 
 function movePolygonPoint(event) {
-  const { left } = event.target;
-  const { top } = event.target;
-  const polygonPoint = event.target;
-  polygon.points[polygonPoint.pointId] = {
-    x: left, y: top,
-  };
+  movePolygonPointImpl(event, polygon);
 }
 
 function removePolygon() {
-  if (polygon) {
-    canvas.remove(polygon);
-  }
+  removePolygonImpl(canvas, polygon);
 }
 
-// need editable polygon version
 function removePolygonPoint(pointId) {
-  if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
-    if (Object.keys(polygon.points[pointId]).length === 0) {
-      /* when the last polygons are removed, the ones before it are moved
-      // to the last position - thus causing the possibility of getting nulls
-       TIP - when point is null - it was already moved to the last element */
-      for (let i = pointId - 1; i > -1; i -= 1) {
-        if (Object.keys(polygon.points[i]).length !== 0) {
-          polygon.points[polygon.points.length - 1] = polygon.points[i];
-          polygon.points[i] = {};
-          break;
-        }
-      }
-    } else if ((polygon.points.length - 1) === pointId) {
-      /* when last element - remove and find the next not null below it to
-      to be the last element in order to enable the polygon to stay */
-      for (let i = pointId - 1; i > -1; i -= 1) {
-        if (Object.keys(polygon.points[i]).length !== 0) {
-          polygon.points[pointId] = polygon.points[i];
-          polygon.points[i] = {};
-          break;
-        }
-      }
-    } else {
-      polygon.points[pointId] = {};
-    }
-    canvas.remove(polygonPoints[pointId]);
-    polygonPoints[pointId] = null;
-
-    polygon.numberOfNullPolygonPoints += 1;
-    if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
-      // after all polygon points are removed from new polygon, completely remove -
-      // depending on how we add new points
-
-      // change cursor modes name convention
-      // make invisible circle width a little bit bigger
-      // make sure to test with thresholded performance
-      // when finished creating polygon, have popup option to go back to editing
-      // have tick box for moving first point
-      // make sure the least amount of points when removing is same for drawing
-      console.log('need to signal restrictions');
-    }
-    canvas.renderAll();
-  }
+  removePolygonPointImpl(canvas, polygon, polygonPoints, pointId);
 }
 
 function enableActiveObjectsAppearInFront() {
@@ -223,6 +96,23 @@ function preventActiveObjectsAppearInFront() {
   canvas.preserveObjectStacking = true;
 }
 
+function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, addingPoints) {
+  setSelectedObjects(canvasObj, polygonObj);
+  canvasObj.discardActiveObject();
+  polygon.bringForward();
+  // edit this
+  if (addingPoints) {
+    displayInitialAddPolygonPoints();
+  } else if (!removablePoints) {
+    displayPolygonPoints();
+  } else if (!creatingPolygon) {
+    displayRemovablePolygonPoints();
+  } else {
+    changePolygonPointsToRemovable();
+  }
+  editingPolygon = true;
+}
+
 export {
   setEditablePolygon, resetPolygonSelectableArea,
   movePolygonPoint, sendPolygonPointsToFront,
@@ -231,5 +121,5 @@ export {
   removePolygonPoint, getPolygonEditingStatus,
   preventActiveObjectsAppearInFront, displayRemovablePolygonPoints,
   enableActiveObjectsAppearInFront, displayInitialAddPolygonPoints,
-  getPolygonPoint, undoRemovePointsEventsObjectsProperties,
+  changePolygonPointsPropertiesToDefault,
 };

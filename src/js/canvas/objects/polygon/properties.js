@@ -152,6 +152,10 @@ function generateInitialAddPolygonPoint(pointId, pointCoordinates) {
     fill: 'red',
     radius: 4,
   };
+  polygonProperties.defaultPoint = {
+    fill: 'blue',
+    radius: 3.5,
+  };
   polygonProperties.additionalPoint = {
     fill: 'green',
     radius: 4,

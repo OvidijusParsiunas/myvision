@@ -1,8 +1,8 @@
-import { undoRemovePointsEventsObjectsProperties } from '../../objects/polygon/alterPolygon/alterPolygon';
+import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/alterPolygon/alterPolygon';
 
 function setDefaultCursorMode(canvas, alteringPolygonPoints) {
   if (alteringPolygonPoints) {
-    undoRemovePointsEventsObjectsProperties();
+    changePolygonPointsPropertiesToDefault();
   } else {
     canvas.forEachObject((iteratedObj) => {
       iteratedObj.selectable = true;

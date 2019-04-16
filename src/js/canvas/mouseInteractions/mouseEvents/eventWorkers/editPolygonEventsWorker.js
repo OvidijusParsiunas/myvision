@@ -57,6 +57,7 @@ function polygonMouseDownEvents(event) {
   }
 }
 
+// look at this
 function polygonMouseUpEvents(event, canvas) {
   if (polygonMoved) {
     setEditablePolygonWhenPolygonMoved(event, canvas);
