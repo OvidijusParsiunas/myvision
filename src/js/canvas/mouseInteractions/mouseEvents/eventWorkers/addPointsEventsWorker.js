@@ -3,7 +3,7 @@ import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import {
   removePolygonPoints, getPolygonEditingStatus,
   enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront,
-  displayInitialAddPolygonPoints, setEditablePolygon,
+  setEditablePolygon,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 
 // import {
@@ -48,7 +48,6 @@ function pointMouseDownEvents(event) {
       setAddPointsMode(canvas);
     } else {
       preventActiveObjectsAppearInFront();
-      newPolygonSelected = false;
     }
   }
 }
@@ -59,8 +58,6 @@ function pointMouseUpEvents(event) {
     removeEditedPolygonId();
     // good naming convention
     prepareToAddPolygonPoints(event);
-    // repetition
-    selectedPolygonId = displayInitialAddPolygonPoints(canvas, event.target);
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     removePolygonPoints();
     selectedPolygonId = null;
