@@ -1,7 +1,7 @@
-import { assignCanvasMouseEvents } from '../windowUtils/toolkit/buttonEvents/facade';
-import { assignCanvasForNewImageUpload } from '../windowUtils/toolkit/buttonEvents/facadeWorkersUtils/uploadFile/uploadImage';
-import { assignCanvasForDownloadingAnnotationsXML } from '../windowUtils/toolkit/buttonEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
-import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas } from './canvasUtils/fabricUtils';
+import { assignCanvasMouseEvents } from '../tools/toolkit/buttonEvents/facade';
+import { assignCanvasForNewImageUpload } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/uploadFile/uploadImage';
+import { assignCanvasForDownloadingAnnotationsXML } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
+import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas } from './utils/fabricUtils';
 
 function constructCanvas() {
   const canvas = createNewCanvas();

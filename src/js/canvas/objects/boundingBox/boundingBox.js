@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import bndBoxProperties from './properties';
-import { prepareLabelShape } from '../../../windowUtils/labellerPopUp/labellingProcess';
-import { showLabelPopUp } from '../../../windowUtils/labellerPopUp/style';
+import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
+import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import setDefaultCursorMode from '../../mouseInteractions/cursorModes/defaultMode';
 import setDrawCursorMode from '../../mouseInteractions/cursorModes/drawMode';
 

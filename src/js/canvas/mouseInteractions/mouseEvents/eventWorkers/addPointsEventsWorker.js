@@ -1,7 +1,7 @@
 import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import { removePolygonPoints, getPolygonEditingStatus, setEditablePolygon } from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../canvasUtils/canvasUtils';
+import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 // import {
 //   // setEditablePolygon,
 //   removePolygonPoint,
