@@ -13,7 +13,7 @@ function interruptAllCanvasEvents() {
   removeEditedPolygonId();
   if (getAlteringPolygonPointsState()) {
     changePolygonPointsPropertiesToDefault();
-    setAlteringPolygonPointsState();
+    setAlteringPolygonPointsState(false);
   }
 }
 

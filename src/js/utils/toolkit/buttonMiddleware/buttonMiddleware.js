@@ -26,6 +26,7 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 
 export {
   interruptCanvasEventsBeforeFunc,
+  // rename
   interruptCanvasEventsBeforeFuncWParams,
   interruptAllCanvasEventsIfLabellingInProgress,
   doNothingIfLabellingInProgress,

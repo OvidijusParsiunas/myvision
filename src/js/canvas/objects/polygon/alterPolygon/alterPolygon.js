@@ -7,7 +7,7 @@ import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, move
 import {
   displayPolygonPointsWithStyleImpl,
   changeDrawingPolygonPointsToRemovableImpl,
-  changePolygonPointsPropertiesToDefaultImpl,
+  changePolygonPointsToDefaultImpl,
 } from './changePointsStyle';
 
 let canvas = null;
@@ -41,6 +41,7 @@ function displayInitialAddPolygonPoints() {
     canvas, polygon, polygonPoints, polygonProperties.initialAddPolygonPoint,
   );
 }
+
 function changePolygonPointsToRemovable() {
   polygonPoints = changeDrawingPolygonPointsToRemovableImpl(canvas);
 }
@@ -51,7 +52,7 @@ function removePolygonPoints() {
 }
 
 function changePolygonPointsPropertiesToDefault() {
-  changePolygonPointsPropertiesToDefaultImpl(canvas);
+  changePolygonPointsToDefaultImpl(canvas);
 }
 
 function displayPolygonPointsAfterMove() {

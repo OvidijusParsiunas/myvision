@@ -24,7 +24,7 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas) {
   return polygonPoints;
 }
 
-function changePolygonPointsPropertiesToDefaultImpl(canvas) {
+function changePolygonPointsToDefaultImpl(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'bndBox') {
       iteratedObj.selectable = true;
@@ -41,5 +41,5 @@ function changePolygonPointsPropertiesToDefaultImpl(canvas) {
 export {
   displayPolygonPointsWithStyleImpl,
   changeDrawingPolygonPointsToRemovableImpl,
-  changePolygonPointsPropertiesToDefaultImpl,
+  changePolygonPointsToDefaultImpl,
 };

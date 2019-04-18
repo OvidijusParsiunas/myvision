@@ -1,19 +1,18 @@
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents,
-  polygonMouseOutEvents, pointMouseOverEvents, setSelectedPolygonId,
+  polygonMouseOutEvents, pointMouseOverEvents, setEditPolygonEventObjects,
 } from '../eventWorkers/editPolygonEventsWorker';
 import { boundingBoxScalingEvents, boundingBoxMouseOutEvents } from '../eventWorkers/editBoundingBoxEventsWorker';
 
 function assignDefaultEvents(canvas, polygonId) {
-  if (polygonId) {
-    setSelectedPolygonId(polygonId);
-  }
+  setEditPolygonEventObjects(canvas, polygonId);
+
   canvas.on('mouse:down', (e) => {
     polygonMouseDownEvents(e);
   });
 
   canvas.on('mouse:up', (e) => {
-    polygonMouseUpEvents(e, canvas);
+    polygonMouseUpEvents(e);
   });
 
   canvas.on('object:moving', (e) => {
@@ -25,9 +24,10 @@ function assignDefaultEvents(canvas, polygonId) {
   });
 
   canvas.on('mouse:over', (e) => {
-    pointMouseOverEvents(e, canvas);
+    pointMouseOverEvents(e);
   });
 
+  // edit this
   canvas.on('mouse:out', (e) => {
     if (e.target && e.target.shapeName !== 'point') {
       if (e.target.shapeName === 'bndBox') {

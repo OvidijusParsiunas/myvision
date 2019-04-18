@@ -1,5 +1,8 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import { setDefaultState, setAlteringPolygonPointsState, getAlteringPolygonPointsState } from '../facadeWorkersUtils/stateManager';
+import {
+  setDefaultState, getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  getAddingPolygonPointsState, setAddingPolygonPointsState,
+} from '../facadeWorkersUtils/stateManager';
 import { isDrawingInProgress } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
 import setRemovePointsOnDrawNewPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode';
@@ -43,16 +46,19 @@ function discardRemovePointsEvents(canvas) {
 }
 
 function initiateRemovePolygonPointsEvents(canvas) {
-  if (!getAlteringPolygonPointsState()) {
+  if (!getRemovingPolygonPointsState()) {
+    if (getAddingPolygonPointsState()) {
+      setAddingPolygonPointsState(false);
+    }
     purgeCanvasMouseEvents(canvas);
     assignRemovePointsEvents(canvas);
     setRemovePointsCursorMode(canvas);
     setDefaultState(false);
-    setAlteringPolygonPointsState(true);
+    setRemovingPolygonPointsState(true);
   } else {
     purgeCanvasMouseEvents(canvas);
     discardRemovePointsEvents(canvas);
-    getAlteringPolygonPointsState(false);
+    setRemovingPolygonPointsState(false);
   }
 }
 

@@ -1,12 +1,21 @@
 let defaultState = false;
-let alteringPolygonPointsState = false;
+let removingPolygonPointsState = false;
+let addingPolygonPointsState = false;
 
 function getDefaultState() {
   return defaultState;
 }
 
 function getAlteringPolygonPointsState() {
-  return alteringPolygonPointsState;
+  return removingPolygonPointsState || addingPolygonPointsState;
+}
+
+function getRemovingPolygonPointsState() {
+  return removingPolygonPointsState;
+}
+
+function getAddingPolygonPointsState() {
+  return addingPolygonPointsState;
 }
 
 function setDefaultState(state) {
@@ -14,7 +23,16 @@ function setDefaultState(state) {
 }
 
 function setAlteringPolygonPointsState(state) {
-  alteringPolygonPointsState = state;
+  removingPolygonPointsState = state;
+  addingPolygonPointsState = state;
+}
+
+function setRemovingPolygonPointsState(state) {
+  removingPolygonPointsState = state;
+}
+
+function setAddingPolygonPointsState(state) {
+  addingPolygonPointsState = state;
 }
 
 export {
@@ -22,4 +40,8 @@ export {
   setDefaultState,
   getAlteringPolygonPointsState,
   setAlteringPolygonPointsState,
+  getRemovingPolygonPointsState,
+  setRemovingPolygonPointsState,
+  getAddingPolygonPointsState,
+  setAddingPolygonPointsState,
 };

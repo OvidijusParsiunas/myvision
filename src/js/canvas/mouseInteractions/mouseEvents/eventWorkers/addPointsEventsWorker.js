@@ -1,11 +1,7 @@
 import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
-import {
-  removePolygonPoints, getPolygonEditingStatus,
-  enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront,
-  setEditablePolygon,
-} from '../../../objects/polygon/alterPolygon/alterPolygon';
-
+import { removePolygonPoints, getPolygonEditingStatus, setEditablePolygon } from '../../../objects/polygon/alterPolygon/alterPolygon';
+import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../canvasUtils/canvasProperties';
 // import {
 //   // setEditablePolygon,
 //   removePolygonPoint,
@@ -24,7 +20,6 @@ let canvas = null;
 // generates new points every time clicked on
 // for all event types
 
-// prevent stacking is not working
 // when clicking to remove polygon points, initial click moves the points
 
 function setAddPointsEventsCanvas(canvasObj) {
@@ -41,13 +36,14 @@ function prepareToAddPolygonPoints(event) {
 
 function pointMouseDownEvents(event) {
   if (event.target) {
-    enableActiveObjectsAppearInFront();
-    if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
-      newPolygonSelected = true;
-    } else if (event.target.shapeName === 'point') {
+    enableActiveObjectsAppearInFront(canvas);
+    if (event.target.shapeName === 'point') {
       setAddPointsMode(canvas);
     } else {
-      preventActiveObjectsAppearInFront();
+      if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+        newPolygonSelected = true;
+      }
+      preventActiveObjectsAppearInFront(canvas);
     }
   }
 }
