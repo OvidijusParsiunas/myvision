@@ -10,14 +10,12 @@ let newPolygonSelected = false;
 let removingPoints = false;
 let canvas = null;
 
-function setEditablePolygonOnClick(event) {
-  if (getPolygonEditingStatus()) {
-    // selecting another polygon without moving the first one
-    removePolygonPoints();
-    removingPoints = true;
+function prepareToEditPolygonPoints(event) {
+  if (!getPolygonEditingStatus()) {
+    removeEditedPolygonId();
+    setEditablePolygon(canvas, event.target, true);
+    selectedPolygonId = event.target.id;
   }
-  setEditablePolygon(canvas, event.target, true);
-  selectedPolygonId = event.target.id;
 }
 
 function setPolygonNotEditableOnClick() {
@@ -32,11 +30,12 @@ function setRemovablePointsEventsCanvas(canvasObj) {
 function pointMouseDownEvents(event) {
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
-    if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
-      newPolygonSelected = true;
-    } else if (event.target.shapeName === 'point') {
+    if (event.target.shapeName === 'point') {
       removePolygonPoint(event.target.pointId);
     } else {
+      if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+        newPolygonSelected = true;
+      }
       preventActiveObjectsAppearInFront(canvas);
     }
   }
@@ -52,8 +51,7 @@ function pointMouseOverEvents(event) {
 function pointMouseUpEvents(event) {
   if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
     // subset can be reused
-    removeEditedPolygonId();
-    setEditablePolygonOnClick(event, canvas);
+    prepareToEditPolygonPoints(event);
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     setPolygonNotEditableOnClick();
   }

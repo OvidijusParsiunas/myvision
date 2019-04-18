@@ -7,7 +7,7 @@ import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, move
 import {
   displayPolygonPointsWithStyleImpl,
   changeDrawingPolygonPointsToRemovableImpl,
-  changePolygonPointsToDefaultImpl,
+  changeObjectsToPolygonPointsToDefaultImpl,
 } from './changePointsStyle';
 
 let canvas = null;
@@ -52,7 +52,7 @@ function removePolygonPoints() {
 }
 
 function changePolygonPointsPropertiesToDefault() {
-  changePolygonPointsToDefaultImpl(canvas);
+  changeObjectsToPolygonPointsToDefaultImpl(canvas);
 }
 
 function displayPolygonPointsAfterMove() {
@@ -87,16 +87,6 @@ function removePolygonPoint(pointId) {
   removePolygonPointImpl(canvas, polygon, polygonPoints, pointId);
 }
 
-function enableActiveObjectsAppearInFront() {
-  if (canvas) {
-    canvas.preserveObjectStacking = false;
-  }
-}
-
-function preventActiveObjectsAppearInFront() {
-  canvas.preserveObjectStacking = true;
-}
-
 function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, addingPoints) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
@@ -120,7 +110,6 @@ export {
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
-  preventActiveObjectsAppearInFront, displayRemovablePolygonPoints,
-  enableActiveObjectsAppearInFront, displayInitialAddPolygonPoints,
+  displayRemovablePolygonPoints, displayInitialAddPolygonPoints,
   changePolygonPointsPropertiesToDefault,
 };

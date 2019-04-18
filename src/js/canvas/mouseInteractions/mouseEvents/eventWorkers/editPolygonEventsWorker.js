@@ -47,11 +47,13 @@ function polygonMouseDownEvents(event) {
     if (event.target.shapeName === 'bndBox' && getPolygonEditingStatus()) {
       setPolygonNotEditableOnClick();
       newPolygonSelected = false;
-    } else if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
-      newPolygonSelected = true;
     } else {
+      if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+        newPolygonSelected = true;
+      } else {
+        newPolygonSelected = false;
+      }
       preventActiveObjectsAppearInFront(canvas);
-      newPolygonSelected = false;
     }
   } else {
     newPolygonSelected = false;

@@ -2,13 +2,6 @@ import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import { removePolygonPoints, getPolygonEditingStatus, setEditablePolygon } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-// import {
-//   // setEditablePolygon,
-//   removePolygonPoint,
-//   // removePolygonPoints,
-//   // getPolygonEditingStatus,
-// } from '../../../objects/polygon/alterPolygon/alterPolygon';
-// import { removeEditedPolygonId } from './editPolygonEventsWorker';
 
 
 let selectedPolygonId = null;
@@ -27,11 +20,11 @@ function setAddPointsEventsCanvas(canvasObj) {
 }
 
 function prepareToAddPolygonPoints(event) {
-  if (getPolygonEditingStatus()) {
-    removePolygonPoints();
+  if (!getPolygonEditingStatus()) {
+    removeEditedPolygonId();
+    setEditablePolygon(canvas, event.target, false, false, true);
+    selectedPolygonId = event.target.id;
   }
-  setEditablePolygon(canvas, event.target, false, false, true);
-  selectedPolygonId = event.target.id;
 }
 
 function pointMouseDownEvents(event) {
@@ -42,6 +35,8 @@ function pointMouseDownEvents(event) {
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         newPolygonSelected = true;
+      } else {
+        newPolygonSelected = false;
       }
       preventActiveObjectsAppearInFront(canvas);
     }
@@ -50,9 +45,6 @@ function pointMouseDownEvents(event) {
 
 function pointMouseUpEvents(event) {
   if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
-    // subset can be reused
-    removeEditedPolygonId();
-    // good naming convention
     prepareToAddPolygonPoints(event);
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     removePolygonPoints();

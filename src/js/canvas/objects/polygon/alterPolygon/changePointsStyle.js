@@ -1,5 +1,6 @@
 import fabric from 'fabric';
 import polygonProperties from '../properties';
+import prepareObjectsForEditablePolygonPoints from '../../objectsProperties/changeProperties';
 
 function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPoints, polygonPointsProps) {
   let pointId = 0;
@@ -9,6 +10,16 @@ function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPoints, polyg
     polygonPoints.push(pointObj);
     pointId += 1;
   });
+}
+
+function changePolygonPointsToWaitForAddingFirstPointImpl(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'point') {
+      iteratedObj.set(polygonProperties.disabledButton);
+      iteratedObj.selectable = false;
+    }
+  });
+  canvas.renderAll();
 }
 
 function changeDrawingPolygonPointsToRemovableImpl(canvas) {
@@ -24,22 +35,29 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas) {
   return polygonPoints;
 }
 
-function changePolygonPointsToDefaultImpl(canvas) {
+function changeObjectsToPolygonPointsToDefaultImpl(canvas) {
   canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'bndBox') {
-      iteratedObj.selectable = true;
-    } else {
-      iteratedObj.lockMovementX = false;
-      iteratedObj.lockMovementY = false;
-    }
+    prepareObjectsForEditablePolygonPoints(iteratedObj);
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.defaultPoint);
     }
   });
 }
 
+function changeObjectsToPolygonPointsRemovaleImpl(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    prepareObjectsForEditablePolygonPoints(iteratedObj);
+    if (iteratedObj.shapeName === 'point') {
+      iteratedObj.set(polygonProperties.removablePoint);
+    }
+  });
+  canvas.renderAll();
+}
+
 export {
   displayPolygonPointsWithStyleImpl,
+  changePolygonPointsToWaitForAddingFirstPointImpl,
   changeDrawingPolygonPointsToRemovableImpl,
-  changePolygonPointsToDefaultImpl,
+  changeObjectsToPolygonPointsToDefaultImpl,
+  changeObjectsToPolygonPointsRemovaleImpl,
 };

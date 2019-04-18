@@ -1,17 +1,7 @@
-import polygonProperties from '../../objects/polygon/properties';
-
-function changeOjectPropertiesForAddingPoints(canvas) {
-  canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.disabledButton);
-      iteratedObj.selectable = false;
-    }
-  });
-  canvas.renderAll();
-}
+import { changePolygonPointsToWaitForAddingFirstPointImpl } from '../../objects/polygon/alterPolygon/changePointsStyle';
 
 function setAddPointsMode(canvas) {
-  changeOjectPropertiesForAddingPoints(canvas);
+  changePolygonPointsToWaitForAddingFirstPointImpl(canvas);
   canvas.defaultCursor = 'default';
   canvas.hoverCursor = 'default';
 }
