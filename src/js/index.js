@@ -1,6 +1,6 @@
 import constructCanvas from './canvas/canvas';
-import assignToolkitButtonEvents from './utils/toolkit/buttons';
-import assignLabellerPopUpButtonEvents from './utils/labellerPopUp/buttons';
+import assignToolkitButtonEvents from './windowUtils/toolkit/buttons';
+import assignLabellerPopUpButtonEvents from './windowUtils/labellerPopUp/buttons';
 
 constructCanvas();
 assignToolkitButtonEvents();

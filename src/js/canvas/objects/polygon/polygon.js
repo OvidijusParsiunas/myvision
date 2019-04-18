@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import polygonProperties from './properties';
-import { prepareLabelShape } from '../../../utils/labellerPopUp/labellingProcess';
-import { showLabelPopUp } from '../../../utils/labellerPopUp/style';
+import { prepareLabelShape } from '../../../windowUtils/labellerPopUp/labellingProcess';
+import { showLabelPopUp } from '../../../windowUtils/labellerPopUp/style';
 import setDrawCursorMode from '../../mouseInteractions/cursorModes/drawMode';
 
 let canvas = null;
