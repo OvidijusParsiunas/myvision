@@ -1,7 +1,7 @@
 import {
   setEditablePolygon, removePolygonPoint, removePolygonPoints, getPolygonEditingStatus,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../canvasUtils/canvasProperties';
+import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../canvasUtils/canvasUtils';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 
 let selectedPolygonId = null;

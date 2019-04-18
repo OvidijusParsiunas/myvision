@@ -4,7 +4,7 @@ import {
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
   sendPolygonPointsToFront, getPolygonEditingStatus,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../canvasUtils/canvasProperties';
+import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../canvasUtils/canvasUtils';
 
 let polygonMoved = false;
 let polygonPointMoved = false;
