@@ -50,6 +50,7 @@ function finishDrawingBndBox(event) {
     leftMouseBtnDown = false;
     bndBoxProps.rect.setCoords();
     bndBoxProps.rect.set(bndBoxProperties.finalBndBoxProps);
+    console.log('1');
     setDefaultCursorMode(canvas);
     const pointer = canvas.getPointer(event.e);
     prepareLabelShape(bndBoxProps.rect, canvas);

@@ -38,6 +38,7 @@ function discardRemovePointsEvents(canvas) {
     assignDrawPolygonEvents(canvas, true);
     setDefaultState(false);
   } else {
+    console.log('3');
     setDefaultCursorMode(canvas, true);
     const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
     assignDefaultEvents(canvas, currentlySelectedPolygonId);

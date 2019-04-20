@@ -1,5 +1,4 @@
 import { getLabelPopUpText, hideLabelPopUp } from './style';
-import setDefaultCursorMode from '../../canvas/mouseInteractions/cursorModes/defaultMode';
 
 
 const labelKeyPairObj = {};
@@ -22,7 +21,6 @@ function removeTargetShape() {
 
 function createLabelShape() {
   const text = getLabelPopUpText();
-  setDefaultCursorMode(canvas);
   hideLabelPopUp();
   targetShape.set('id', currentId);
   currentId += 1;
