@@ -1,6 +1,7 @@
 import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/alterPolygon/alterPolygon';
 
 function setDefaultCursorMode(canvas, alteringPolygonPoints) {
+  console.log('called');
   if (alteringPolygonPoints) {
     changePolygonPointsPropertiesToDefault();
   } else {

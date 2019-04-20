@@ -19,6 +19,13 @@ function getPolygonEditingStatus() {
   return editingPolygon;
 }
 
+function getPolygonIdIfEditing() {
+  if (editingPolygon) {
+    return polygon.id;
+  }
+  return null;
+}
+
 function sendPolygonPointsToFront() {
   sendPolygonPointsToFrontImpl(canvas, polygonPoints);
   editingPolygon = true;
@@ -113,5 +120,5 @@ export {
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
   displayRemovablePolygonPoints, displayInitialAddPolygonPoints,
-  changePolygonPointsPropertiesToDefault,
+  changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
 };

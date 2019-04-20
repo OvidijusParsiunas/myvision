@@ -1,5 +1,6 @@
 import {
   setEditablePolygon, removePolygonPoint, removePolygonPoints, getPolygonEditingStatus,
+  getPolygonIdIfEditing,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
@@ -10,21 +11,21 @@ let newPolygonSelected = false;
 let removingPoints = false;
 let canvas = null;
 
+function setRemovablePointsEventsCanvas(canvasObj) {
+  canvas = canvasObj;
+  selectedPolygonId = getPolygonIdIfEditing();
+}
+
 function prepareToEditPolygonPoints(event) {
-  if (!getPolygonEditingStatus()) {
-    removeEditedPolygonId();
-    setEditablePolygon(canvas, event.target, true);
-    selectedPolygonId = event.target.id;
-  }
+  removePolygonPoints();
+  removeEditedPolygonId();
+  setEditablePolygon(canvas, event.target, true);
+  selectedPolygonId = event.target.id;
 }
 
 function setPolygonNotEditableOnClick() {
   removePolygonPoints();
   selectedPolygonId = null;
-}
-
-function setRemovablePointsEventsCanvas(canvasObj) {
-  canvas = canvasObj;
 }
 
 function pointMouseDownEvents(event) {

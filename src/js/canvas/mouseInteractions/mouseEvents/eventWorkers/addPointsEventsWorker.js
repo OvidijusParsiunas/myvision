@@ -1,6 +1,8 @@
 import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
-import { removePolygonPoints, getPolygonEditingStatus, setEditablePolygon } from '../../../objects/polygon/alterPolygon/alterPolygon';
+import {
+  removePolygonPoints, getPolygonEditingStatus, setEditablePolygon, getPolygonIdIfEditing,
+} from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 
 
@@ -17,14 +19,14 @@ let canvas = null;
 
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;
+  selectedPolygonId = getPolygonIdIfEditing();
 }
 
 function prepareToAddPolygonPoints(event) {
-  if (!getPolygonEditingStatus()) {
-    removeEditedPolygonId();
-    setEditablePolygon(canvas, event.target, false, false, true);
-    selectedPolygonId = event.target.id;
-  }
+  removePolygonPoints();
+  removeEditedPolygonId();
+  setEditablePolygon(canvas, event.target, false, false, true);
+  selectedPolygonId = event.target.id;
 }
 
 function pointMouseDownEvents(event) {
