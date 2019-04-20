@@ -15,7 +15,8 @@ let canvas = null;
 // generates new points every time clicked on
 // for all event types
 
-// when clicking to remove polygon points, initial click moves the points
+// remove shape doesn't work anymore
+// when clicking another button after remove, the mode should go back to default
 
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;

@@ -1,6 +1,5 @@
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 
-
 const labelKeyPairObj = {};
 
 let labellingState = false;

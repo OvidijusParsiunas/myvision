@@ -6,6 +6,11 @@ function interruptCanvasEventsBeforeFunc(func) {
   if (func) func();
 }
 
+function interruptCanvasEventsAfterFunc(func) {
+  if (func) func();
+  interruptAllCanvasEvents();
+}
+
 function interruptCanvasEventsBeforeFuncWParams(placeHolder, func, input) {
   interruptAllCanvasEvents();
   if (func) func(input);
@@ -26,6 +31,7 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 
 export {
   interruptCanvasEventsBeforeFunc,
+  interruptCanvasEventsAfterFunc,
   // rename
   interruptCanvasEventsBeforeFuncWParams,
   interruptAllCanvasEventsIfLabellingInProgress,
