@@ -80,7 +80,9 @@ function movePolygonPoint(event) {
 }
 
 function removePolygon() {
-  removePolygonImpl(canvas, polygon);
+  if (editingPolygon) {
+    removePolygonImpl(canvas, polygon);
+  }
 }
 
 function removePolygonPoint(pointId) {
