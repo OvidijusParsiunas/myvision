@@ -7,4 +7,13 @@ function prepareObjectsForEditablePolygonPoints(object) {
   }
 }
 
-export { prepareObjectsForEditablePolygonPoints as default };
+function setObjectPropertiesToDefault(object) {
+  if (object.shapeName === 'bndBox') {
+    object.selectable = true;
+  } else {
+    object.lockMovementX = false;
+    object.lockMovementY = false;
+  }
+}
+
+export { prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault };

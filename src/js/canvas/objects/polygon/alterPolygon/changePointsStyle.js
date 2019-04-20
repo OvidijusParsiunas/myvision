@@ -1,6 +1,8 @@
 import fabric from 'fabric';
 import polygonProperties from '../properties';
-import prepareObjectsForEditablePolygonPoints from '../../objectsProperties/changeProperties';
+import {
+  prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault,
+} from '../../objectsProperties/changeProperties';
 
 function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPoints, polygonPointsProps) {
   let pointId = 0;
@@ -37,7 +39,7 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas) {
 
 function changeObjectsToPolygonPointsToDefaultImpl(canvas) {
   canvas.forEachObject((iteratedObj) => {
-    prepareObjectsForEditablePolygonPoints(iteratedObj);
+    setObjectPropertiesToDefault(iteratedObj);
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.defaultPoint);
     }
