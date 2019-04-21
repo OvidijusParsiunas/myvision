@@ -1,4 +1,6 @@
-import { pointMouseDownEvents, setAddPointsEventsCanvas, pointMouseUpEvents } from '../eventWorkers/addPointsEventsWorker';
+import {
+  pointMouseDownEvents, setAddPointsEventsCanvas, pointMouseUpEvents, drawLine,
+} from '../eventWorkers/addPointsEventsWorker';
 
 function assignAddPointsOnExistingPolygonEvents(canvas) {
   setAddPointsEventsCanvas(canvas);
@@ -9,6 +11,10 @@ function assignAddPointsOnExistingPolygonEvents(canvas) {
 
   canvas.on('mouse:over', () => {
 
+  });
+
+  canvas.on('mouse:move', (e) => {
+    drawLine(e);
   });
 
   canvas.on('mouse:up', (e) => {

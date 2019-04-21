@@ -1,5 +1,6 @@
 import polygonProperties from '../../objects/polygon/properties';
 
+// change
 function changeOjectPropertiesForChoosingInitialPoint(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'bndBox') {

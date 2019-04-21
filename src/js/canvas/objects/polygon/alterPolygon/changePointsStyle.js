@@ -18,8 +18,8 @@ function changePolygonPointsToWaitForAddingFirstPointImpl(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.disabledButton);
-      iteratedObj.selectable = false;
     }
+    iteratedObj.selectable = false;
   });
   canvas.renderAll();
 }
@@ -35,6 +35,15 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas) {
     }
   });
   return polygonPoints;
+}
+
+function changePolygonPointsToAddImpl(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'point') {
+      iteratedObj.set(polygonProperties.additionalPoint);
+    }
+  });
+  canvas.renderAll();
 }
 
 function changeObjectsToPolygonPointsToDefaultImpl(canvas) {
@@ -64,4 +73,5 @@ export {
   changeDrawingPolygonPointsToRemovableImpl,
   changeObjectsToPolygonPointsToDefaultImpl,
   changeObjectsToPolygonPointsRemovaleImpl,
+  changePolygonPointsToAddImpl,
 };
