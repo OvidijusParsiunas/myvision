@@ -7,4 +7,5 @@ module.exports = {
     fabric: 'fabric',
   },
   watch: true,
+  mode: 'development',
 };

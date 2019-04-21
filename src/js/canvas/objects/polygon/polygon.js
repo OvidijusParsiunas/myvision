@@ -102,9 +102,12 @@ function addPoint(pointer) {
 }
 
 function getTempPolygon() {
-  const points = activeShape.get('points');
-  points.length -= 1;
-  return activeShape;
+  if (activeShape) {
+    const points = activeShape.get('points');
+    points.length -= 1;
+    return activeShape;
+  }
+  return null;
 }
 
 function isDrawingInProgress() {

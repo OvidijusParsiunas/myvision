@@ -38,12 +38,14 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas) {
 }
 
 function changeObjectsToPolygonPointsToDefaultImpl(canvas) {
-  canvas.forEachObject((iteratedObj) => {
-    setObjectPropertiesToDefault(iteratedObj);
-    if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.defaultPoint);
-    }
-  });
+  if (canvas) {
+    canvas.forEachObject((iteratedObj) => {
+      setObjectPropertiesToDefault(iteratedObj);
+      if (iteratedObj.shapeName === 'point') {
+        iteratedObj.set(polygonProperties.defaultPoint);
+      }
+    });
+  }
 }
 
 function changeObjectsToPolygonPointsRemovaleImpl(canvas) {

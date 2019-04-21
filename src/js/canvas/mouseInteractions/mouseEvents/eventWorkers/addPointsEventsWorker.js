@@ -12,11 +12,7 @@ let canvas = null;
 
 /* make sure to reuse this all */
 
-// generates new points every time clicked on
-// for all event types
-
-// remove shape doesn't work anymore
-// when clicking another button after remove, the mode should go back to default
+// when adding point in initial mode, other objects should not be selectable
 
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;

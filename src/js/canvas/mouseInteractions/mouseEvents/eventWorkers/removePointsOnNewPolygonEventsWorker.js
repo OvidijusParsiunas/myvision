@@ -8,7 +8,9 @@ let canvas = null;
 function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
   canvas = canvasObj;
   // edit this
-  setEditablePolygon(canvas, polygonObj, true, true);
+  if (polygonObj) {
+    setEditablePolygon(canvas, polygonObj, true, true);
+  }
 }
 
 function pointMouseDownEvents(event) {

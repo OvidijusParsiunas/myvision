@@ -6,8 +6,8 @@ function interruptCanvasEventsBeforeFunc(func) {
   if (func) func();
 }
 
-function interruptCanvasEventsAfterFunc(func) {
-  if (func) func();
+function interruptCanvasEventsAfterFunc(...funcs) {
+  funcs.forEach((func) => { func(); });
   interruptAllCanvasEvents();
 }
 

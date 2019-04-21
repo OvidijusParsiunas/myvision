@@ -14,10 +14,11 @@ function assignToolkitButtonEvents() {
   window.createNewPolygon = interruptCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
   window.addPoints = doNothingIfLabellingInProgress.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
-  window.removeShape = interruptCanvasEventsAfterFunc.bind(this, removeActiveShapeBtnClick);
   window.downloadXML = interruptCanvasEventsBeforeFunc.bind(this, downloadXMLBtnClick);
   window.cancel = interruptCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
   window.uploadImage = interruptCanvasEventsBeforeFuncWParams.bind(this, this, uploadImageBtnClick);
+  window.removeShape = interruptCanvasEventsAfterFunc.bind(this,
+    removeActiveShapeBtnClick, resetCanvasEventsToDefault);
 }
 
 export { assignToolkitButtonEvents as default };
