@@ -12,19 +12,43 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let addingPoints = false;
-let initialCoordinates = [];
 let activeLine = null;
 const lineArray = [];
 let initialMode = false;
 let tempPointIndex = 0;
+let activeFunction = null;
 
 /* make sure to reuse this all */
 
 // when adding point in initial mode, other objects should not be selectable
 
+function initialMouseOverEventsPlaceHolderFunction() {}
+
+function addingNewPointsFunction(events) {
+  if (events.target) {
+    if (events.target.shapeName === 'point') {
+      canvas.hoverCursor = 'default';
+    } else if (events.target.shapeName === 'tempPoint') {
+      canvas.hoverCursor = 'move';
+    }
+  } else {
+    canvas.hoverCursor = 'crosshair';
+  }
+  canvas.renderAll();
+}
+
+function switchActiveFunction(newFunc) {
+  activeFunction = newFunc;
+}
+
+function mouseOverEvents(events) {
+  activeFunction(events);
+}
+
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;
   selectedPolygonId = getPolygonIdIfEditing();
+  activeFunction = initialMouseOverEventsPlaceHolderFunction;
 }
 
 function prepareToAddPolygonPoints(event) {
@@ -36,13 +60,16 @@ function prepareToAddPolygonPoints(event) {
 
 function drawLine(event) {
   if (addingPoints) {
-    canvas.remove(activeLine);
     const pointer = canvas.getPointer(event.e);
-    const points = [initialCoordinates.x, initialCoordinates.y, pointer.x, pointer.y];
-    activeLine = new fabric.Line(points, polygonProperties.newLine);
-    canvas.add(activeLine);
+    activeLine.set({ x2: pointer.x, y2: pointer.y });
     canvas.renderAll();
   }
+}
+
+function createNewLine(...coordinates) {
+  activeLine = new fabric.Line(coordinates, polygonProperties.newLine);
+  canvas.add(activeLine);
+  canvas.renderAll();
 }
 
 function pointMouseDownEvents(event) {
@@ -54,8 +81,8 @@ function pointMouseDownEvents(event) {
         event.target.set({ shapeName: 'initialAddPoint', radius: 3.5 });
         addingPoints = true;
         initialMode = true;
-        initialCoordinates.x = event.target.left;
-        initialCoordinates.y = event.target.top;
+        const pointer = canvas.getPointer(event.e);
+        createNewLine(event.target.left, event.target.top, pointer.x, pointer.y);
       } else {
         if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
           newPolygonSelected = true;
@@ -69,18 +96,19 @@ function pointMouseDownEvents(event) {
     if (initialMode) {
       changePolygonPointsToAddImpl(canvas);
       initialMode = false;
+      switchActiveFunction(addingNewPointsFunction);
     }
     if (event.target && event.target.shapeName === 'point') {
       addingPoints = false;
-    } else if (!event.target || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
+    } else if (!event.target
+      || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
       // need to be selectable
       const pointer = canvas.getPointer(event.e);
+      lineArray.push(activeLine);
+      createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
       const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
       canvas.add(point);
       tempPointIndex += 1;
-      initialCoordinates = pointer;
-      lineArray.push(activeLine);
-      activeLine = null;
     }
   }
 }
@@ -106,4 +134,5 @@ export {
   pointMouseUpEvents,
   getSelectedPolygonIdForAddPoints,
   drawLine,
+  mouseOverEvents,
 };
