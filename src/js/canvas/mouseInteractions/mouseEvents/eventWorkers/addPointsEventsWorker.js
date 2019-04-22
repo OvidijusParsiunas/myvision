@@ -17,6 +17,7 @@ const lineArray = [];
 let initialMode = false;
 let tempPointIndex = 0;
 let activeFunction = null;
+let initialPoint = null;
 
 /* make sure to reuse this all */
 
@@ -85,6 +86,7 @@ function pointMouseDownEvents(event) {
         initialMode = true;
         const pointer = canvas.getPointer(event.e);
         createNewLine(event.target.left, event.target.top, pointer.x, pointer.y);
+        initialPoint = event.target;
       } else {
         if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
           newPolygonSelected = true;
@@ -105,6 +107,7 @@ function pointMouseDownEvents(event) {
       const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
       canvas.add(point);
       tempPointIndex += 1;
+      canvas.bringToFront(initialPoint);
     }
   } else if (event.target && event.target.shapeName === 'point') {
     addingPoints = false;
