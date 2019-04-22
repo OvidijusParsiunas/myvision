@@ -30,6 +30,8 @@ function addingNewPointsFunction(events) {
       canvas.hoverCursor = 'default';
     } else if (events.target.shapeName === 'tempPoint') {
       canvas.hoverCursor = 'move';
+    } else if (!events.target.selectable) {
+      canvas.hoverCursor = 'crosshair';
     }
   } else {
     canvas.hoverCursor = 'crosshair';
