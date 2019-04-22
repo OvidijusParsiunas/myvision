@@ -16,6 +16,8 @@ let initialCoordinates = [];
 let activeLine = null;
 const lineArray = [];
 let initialMode = false;
+let tempPointIndex = 0;
+
 /* make sure to reuse this all */
 
 // when adding point in initial mode, other objects should not be selectable
@@ -49,6 +51,7 @@ function pointMouseDownEvents(event) {
       enableActiveObjectsAppearInFront(canvas);
       if (event.target.shapeName === 'point') {
         setAddPointsMode(canvas);
+        event.target.set({ shapeName: 'initialAddPoint', radius: 3.5 });
         addingPoints = true;
         initialMode = true;
         initialCoordinates.x = event.target.left;
@@ -68,11 +71,13 @@ function pointMouseDownEvents(event) {
       initialMode = false;
     }
     if (event.target && event.target.shapeName === 'point') {
-      // make sure not first point
-      console.log('done');
       addingPoints = false;
-    } else {
+    } else if (!event.target || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
+      // need to be selectable
       const pointer = canvas.getPointer(event.e);
+      const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
+      canvas.add(point);
+      tempPointIndex += 1;
       initialCoordinates = pointer;
       lineArray.push(activeLine);
       activeLine = null;

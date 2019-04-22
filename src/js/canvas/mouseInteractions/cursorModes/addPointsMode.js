@@ -2,8 +2,8 @@ import { changePolygonPointsToWaitForAddingFirstPointImpl } from '../../objects/
 
 function setAddPointsMode(canvas) {
   changePolygonPointsToWaitForAddingFirstPointImpl(canvas);
-  canvas.defaultCursor = 'default';
-  canvas.hoverCursor = 'default';
+  canvas.defaultCursor = 'crosshair';
+  canvas.hoverCursor = 'crosshair';
 }
 
 export { setAddPointsMode as default };
