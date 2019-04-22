@@ -92,17 +92,11 @@ function pointMouseDownEvents(event) {
         preventActiveObjectsAppearInFront(canvas);
       }
     }
-  } else {
-    if (initialMode) {
+  } else if (initialMode) {
+    if (!event.target || (event.target && (event.target.shapeName !== 'point' && event.target.shapeName !== 'initialAddPoint'))) {
       changePolygonPointsToAddImpl(canvas);
       initialMode = false;
       switchActiveFunction(addingNewPointsFunction);
-    }
-    if (event.target && event.target.shapeName === 'point') {
-      addingPoints = false;
-    } else if (!event.target
-      || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
-      // need to be selectable
       const pointer = canvas.getPointer(event.e);
       lineArray.push(activeLine);
       createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
@@ -110,6 +104,16 @@ function pointMouseDownEvents(event) {
       canvas.add(point);
       tempPointIndex += 1;
     }
+  } else if (event.target && event.target.shapeName === 'point') {
+    addingPoints = false;
+  } else if (!event.target
+      || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
+    const pointer = canvas.getPointer(event.e);
+    lineArray.push(activeLine);
+    createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
+    const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
+    canvas.add(point);
+    tempPointIndex += 1;
   }
 }
 
