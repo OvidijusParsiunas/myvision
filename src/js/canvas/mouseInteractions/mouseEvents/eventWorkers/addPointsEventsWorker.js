@@ -21,8 +21,6 @@ let initialPoint = null;
 
 /* make sure to reuse this all */
 
-// when adding point in initial mode, other objects should not be selectable
-
 function initialMouseOverEventsPlaceHolderFunction() {}
 
 function addingNewPointsFunction(events) {
@@ -59,6 +57,20 @@ function prepareToAddPolygonPoints(event) {
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, false, false, true);
   selectedPolygonId = event.target.id;
+}
+
+function moveAddPoints(event) {
+  if (addingPoints) {
+    const xCenterPoint = event.target.getCenterPoint().x;
+    const yCenterPoint = event.target.getCenterPoint().y;
+    const { pointId } = event.target;
+    lineArray[pointId].set({ x2: xCenterPoint, y2: yCenterPoint });
+    if ((pointId + 1) !== tempPointIndex) {
+      lineArray[pointId + 1].set({ x1: xCenterPoint, y1: yCenterPoint });
+    } else {
+      activeLine.set({ x1: xCenterPoint, y1: yCenterPoint });
+    }
+  }
 }
 
 function drawLine(event) {
@@ -108,6 +120,7 @@ function pointMouseDownEvents(event) {
       canvas.add(point);
       tempPointIndex += 1;
       canvas.bringToFront(initialPoint);
+      initialPoint = null;
     }
   } else if (event.target && event.target.shapeName === 'point') {
     addingPoints = false;
@@ -144,4 +157,5 @@ export {
   getSelectedPolygonIdForAddPoints,
   drawLine,
   mouseOverEvents,
+  moveAddPoints,
 };
