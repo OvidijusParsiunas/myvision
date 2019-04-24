@@ -3,6 +3,7 @@ import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import {
   removePolygonPoints, getPolygonEditingStatus, setEditablePolygon, getPolygonIdIfEditing,
+  getPolygonIfEditing,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import polygonProperties from '../../../objects/polygon/properties';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
@@ -13,11 +14,12 @@ let newPolygonSelected = false;
 let canvas = null;
 let addingPoints = false;
 let activeLine = null;
-const lineArray = [];
+let lineArray = [];
 let initialMode = false;
 let tempPointIndex = 0;
 let activeFunction = null;
 let initialPoint = null;
+let pointsArray = [];
 
 /* make sure to reuse this all */
 
@@ -57,6 +59,7 @@ function prepareToAddPolygonPoints(event) {
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, false, false, true);
   selectedPolygonId = event.target.id;
+  // should not be managed here
 }
 
 function moveAddPoints(event) {
@@ -86,6 +89,41 @@ function createNewLine(...coordinates) {
   canvas.add(activeLine);
   canvas.renderAll();
 }
+
+function clearAddPointsData() {
+  pointsArray.forEach((point) => {
+    canvas.remove(point);
+  });
+  pointsArray = [];
+  lineArray.forEach((line) => {
+    canvas.remove(line);
+  });
+  lineArray = [];
+  canvas.remove(activeLine);
+  activeLine = null;
+}
+
+function addNewPointsToExistingPoints(polygon, originalPointsArray) {
+  // dereference
+  const derefPointsArray = originalPointsArray.slice();
+  let initialId = initialPoint.pointId;
+  initialId += 1;
+  const newPointsArray = derefPointsArray.slice(0, initialId);
+  pointsArray.forEach((point) => {
+    newPointsArray.push({ x: point.left, y: point.top });
+  });
+  for (let i = initialId; i < derefPointsArray.length; i += 1) {
+    newPointsArray.push(derefPointsArray[i]);
+  }
+  polygon.set({ points: newPointsArray });
+  clearAddPointsData();
+}
+
+function completePolygon() {
+  const polygon = getPolygonIfEditing();
+  addNewPointsToExistingPoints(polygon, polygon.points);
+}
+
 
 function pointMouseDownEvents(event) {
   if (!addingPoints) {
@@ -118,12 +156,13 @@ function pointMouseDownEvents(event) {
       createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
       const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
       canvas.add(point);
+      pointsArray.push(point);
       tempPointIndex += 1;
       canvas.bringToFront(initialPoint);
-      initialPoint = null;
     }
   } else if (event.target && event.target.shapeName === 'point') {
     addingPoints = false;
+    completePolygon();
   } else if (!event.target
       || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
     const pointer = canvas.getPointer(event.e);
@@ -131,6 +170,7 @@ function pointMouseDownEvents(event) {
     createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
     const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
     canvas.add(point);
+    pointsArray.push(point);
     tempPointIndex += 1;
   }
 }

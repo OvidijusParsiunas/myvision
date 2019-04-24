@@ -15,6 +15,11 @@ let polygon = null;
 let polygonPoints = [];
 let editingPolygon = false;
 
+// temporary
+function getPolygonIfEditing() {
+  return polygon;
+}
+
 function getPolygonEditingStatus() {
   return editingPolygon;
 }
@@ -121,4 +126,5 @@ export {
   removePolygonPoint, getPolygonEditingStatus,
   displayRemovablePolygonPoints, displayInitialAddPolygonPoints,
   changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
+  getPolygonIfEditing,
 };
