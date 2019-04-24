@@ -23,7 +23,7 @@ let pointsArray = [];
 let coordinatesOfLastMouseHover = null;
 
 function isRightMouseButtonClicked(pointer) {
-  if (addingPoints && (coordinatesOfLastMouseHover.x !== pointer.x)) {
+  if (coordinatesOfLastMouseHover.x !== pointer.x) {
     return true;
   }
   return false;
@@ -111,25 +111,38 @@ function clearAddPointsData() {
   activeLine = null;
 }
 
-function addNewPointsToExistingPoints(polygon, originalPointsArray) {
+function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) {
   // dereference
   const derefPointsArray = originalPointsArray.slice();
   let initialId = initialPoint.pointId;
+  const finalId = finalPoint.pointId;
+  const pointOppositeOfInitialPoint = initialId - Math.abs((derefPointsArray.length / 2));
+  const difference = Math.abs(initialId - finalId);
+  let newPointsArray = [];
   initialId += 1;
-  const newPointsArray = derefPointsArray.slice(0, initialId);
-  pointsArray.forEach((point) => {
-    newPointsArray.push({ x: point.left, y: point.top });
-  });
-  for (let i = initialId; i < derefPointsArray.length; i += 1) {
-    newPointsArray.push(derefPointsArray[i]);
+  if (finalId < pointOppositeOfInitialPoint) {
+    newPointsArray = derefPointsArray.slice(finalId, initialId);
+    pointsArray.forEach((point) => {
+      newPointsArray.push({ x: point.left, y: point.top });
+    });
+  } else {
+    newPointsArray = derefPointsArray.slice(0, initialId);
+    pointsArray.forEach((point) => {
+      newPointsArray.push({ x: point.left, y: point.top });
+    });
+    initialId = initialId + difference - 1;
+    for (let i = initialId; i < derefPointsArray.length; i += 1) {
+      newPointsArray.push(derefPointsArray[i]);
+    }
   }
+
   polygon.set({ points: newPointsArray });
   clearAddPointsData();
 }
 
-function completePolygon() {
+function completePolygon(finalPoint) {
   const polygon = getPolygonIfEditing();
-  addNewPointsToExistingPoints(polygon, polygon.points);
+  addNewPointsToExistingPoints(polygon, polygon.points, finalPoint);
 }
 
 
@@ -170,7 +183,7 @@ function pointMouseDownEvents(event) {
     }
   } else if (event.target && event.target.shapeName === 'point') {
     addingPoints = false;
-    completePolygon();
+    completePolygon(event.target);
   } else if (!event.target
       || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
     const pointer = canvas.getPointer(event.e);
