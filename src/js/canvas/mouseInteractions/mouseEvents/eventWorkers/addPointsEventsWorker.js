@@ -20,7 +20,14 @@ let tempPointIndex = 0;
 let activeFunction = null;
 let initialPoint = null;
 let pointsArray = [];
+let coordinatesOfLastMouseHover = null;
 
+function isRightMouseButtonClicked(pointer) {
+  if (addingPoints && (coordinatesOfLastMouseHover.x !== pointer.x)) {
+    return true;
+  }
+  return false;
+}
 /* make sure to reuse this all */
 
 function initialMouseOverEventsPlaceHolderFunction() {}
@@ -79,6 +86,7 @@ function moveAddPoints(event) {
 function drawLine(event) {
   if (addingPoints) {
     const pointer = canvas.getPointer(event.e);
+    coordinatesOfLastMouseHover = pointer;
     activeLine.set({ x2: pointer.x, y2: pointer.y });
     canvas.renderAll();
   }
@@ -166,12 +174,14 @@ function pointMouseDownEvents(event) {
   } else if (!event.target
       || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
     const pointer = canvas.getPointer(event.e);
-    lineArray.push(activeLine);
-    createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
-    const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
-    canvas.add(point);
-    pointsArray.push(point);
-    tempPointIndex += 1;
+    if (!isRightMouseButtonClicked(pointer)) {
+      lineArray.push(activeLine);
+      createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
+      const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
+      canvas.add(point);
+      pointsArray.push(point);
+      tempPointIndex += 1;
+    }
   }
 }
 
