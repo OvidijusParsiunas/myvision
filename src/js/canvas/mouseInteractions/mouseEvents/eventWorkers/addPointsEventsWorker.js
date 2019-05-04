@@ -116,27 +116,51 @@ function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) 
   const derefPointsArray = originalPointsArray.slice();
   let initialId = initialPoint.pointId;
   const finalId = finalPoint.pointId;
-  const pointOppositeOfInitialPoint = initialId - Math.abs((derefPointsArray.length / 2));
-  const difference = Math.abs(initialId - finalId);
-  let newPointsArray = [];
-  initialId += 1;
-  if (finalId < pointOppositeOfInitialPoint) {
-    newPointsArray = derefPointsArray.slice(finalId, initialId);
-    pointsArray.forEach((point) => {
-      newPointsArray.push({ x: point.left, y: point.top });
-    });
+  let rightPoint = null;
+  if ((initialId - 1) < 0) {
+    rightPoint = derefPointsArray[derefPointsArray.length - 1];
   } else {
-    newPointsArray = derefPointsArray.slice(0, initialId);
-    pointsArray.forEach((point) => {
-      newPointsArray.push({ x: point.left, y: point.top });
-    });
-    initialId = initialId + difference - 1;
-    for (let i = initialId; i < derefPointsArray.length; i += 1) {
-      newPointsArray.push(derefPointsArray[i]);
-    }
+    rightPoint = derefPointsArray[initialId - 1];
   }
+  const leftPoint = derefPointsArray[initialId + 1];
+  const originalPoint = derefPointsArray[initialId];
 
-  polygon.set({ points: newPointsArray });
+  const firstPoint = pointsArray[0];
+  const firstHypotenuse = Math.hypot(originalPoint.x - firstPoint.left, originalPoint.y - firstPoint.top);
+  const secondHypotenuse = Math.hypot(rightPoint.x - originalPoint.x, rightPoint.y - originalPoint.y);
+  const thirdHypotenuse = Math.hypot(rightPoint.x - firstPoint.left, rightPoint.y - firstPoint.top);
+  const origanlPointAngle = ((firstHypotenuse * firstHypotenuse) + (secondHypotenuse * secondHypotenuse) - (thirdHypotenuse * thirdHypotenuse)) / (2 * firstHypotenuse * secondHypotenuse);
+  console.log(origanlPointAngle);
+  console.log(Math.acos(origanlPointAngle) * 180/ Math.PI);
+
+
+  const firstHypotenuse2 = Math.hypot(originalPoint.x - firstPoint.left, originalPoint.y - firstPoint.top);
+  const secondHypotenuse2 = Math.hypot(leftPoint.x - originalPoint.x, leftPoint.y - originalPoint.y);
+  const thirdHypotenuse2 = Math.hypot(leftPoint.x - firstPoint.left, leftPoint.y - firstPoint.top);
+  const origanlPointAngle2 = ((firstHypotenuse2 * firstHypotenuse2) + (secondHypotenuse2 * secondHypotenuse2) - (thirdHypotenuse2 * thirdHypotenuse2)) / (2 * firstHypotenuse2 * secondHypotenuse2);
+  console.log(Math.acos(origanlPointAngle2) * 180/ Math.PI);
+  // const pointOppositeOfInitialPoint = initialId - Math.abs((derefPointsArray.length / 2));
+  // const difference = Math.abs(initialId - finalId);
+  // let newPointsArray = [];
+  // initialId += 1;
+  // if (finalId < pointOppositeOfInitialPoint) {
+  //   newPointsArray = derefPointsArray.slice(finalId, initialId);
+  //   pointsArray.forEach((point) => {
+  //     newPointsArray.push({ x: point.left, y: point.top });
+  //   });
+  // } else {
+  //   newPointsArray = derefPointsArray.slice(0, initialId);
+  //   pointsArray.forEach((point) => {
+  //     newPointsArray.push({ x: point.left, y: point.top });
+  //   });
+  //   initialId = initialId + difference - 1;
+  //   for (let i = initialId; i < derefPointsArray.length; i += 1) {
+  //     newPointsArray.push(derefPointsArray[i]);
+  //   }
+  // }
+
+//  polygon.set({ points: newPointsArray });
+  // regenerate polygon array points
   clearAddPointsData();
 }
 
