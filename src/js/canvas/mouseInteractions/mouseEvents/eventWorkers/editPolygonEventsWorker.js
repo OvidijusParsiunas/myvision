@@ -11,14 +11,23 @@ let polygonPointMoved = false;
 let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
+let setEditablePolygonOnClick = null;
 
-function setEditablePolygonOnClick(event) {
+function setEditablePolygonOnClickFunc(event) {
   if (getPolygonEditingStatus()) {
     // selecting another polygon without moving the first one
     removePolygonPoints();
   }
   setEditablePolygon(canvas, event.target);
   selectedPolygonId = event.target.id;
+}
+
+function assignSetEditablePolygonOnClickFunc() {
+  setEditablePolygonOnClick = setEditablePolygonOnClickFunc;
+}
+
+function skipMouseUpEvent() {
+  assignSetEditablePolygonOnClickFunc();
 }
 
 function setEditablePolygonWhenPolygonMoved(event) {
@@ -105,10 +114,15 @@ function removeEditedPolygonId() {
   selectedPolygonId = null;
 }
 
-function setEditPolygonEventObjects(canvasObj, polygonIdObj) {
+function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
   canvas = canvasObj;
   if (polygonIdObj) {
     selectedPolygonId = polygonIdObj;
+  }
+  if (afterAddPoints) {
+    setEditablePolygonOnClick = skipMouseUpEvent;
+  } else {
+    setEditablePolygonOnClick = setEditablePolygonOnClickFunc;
   }
 }
 

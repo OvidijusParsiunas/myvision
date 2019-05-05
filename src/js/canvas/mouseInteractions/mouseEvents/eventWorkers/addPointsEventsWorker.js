@@ -8,6 +8,7 @@ import {
 import polygonProperties from '../../../objects/polygon/properties';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { changePolygonPointsToAddImpl } from '../../../objects/polygon/alterPolygon/changePointsStyle';
+import { resetCanvasEventsToDefault } from '../resetCanvasUtils/resetCanvasEventsFacade';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -21,7 +22,6 @@ let activeFunction = null;
 let initialPoint = null;
 let pointsArray = [];
 let coordinatesOfLastMouseHover = null;
-let pointsToRemove = [];
 
 function isRightMouseButtonClicked(pointer) {
   if (coordinatesOfLastMouseHover.x !== pointer.x) {
@@ -99,6 +99,17 @@ function createNewLine(...coordinates) {
   canvas.renderAll();
 }
 
+function removeEditingPolygonPoints() {
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'point') {
+      canvas.remove(iteratedObj);
+    } else if (iteratedObj.shapeName === 'initialAddPoint') {
+      canvas.remove(iteratedObj);
+    }
+  });
+  canvas.renderAll();
+}
+
 function clearAddPointsData() {
   pointsArray.forEach((point) => {
     canvas.remove(point);
@@ -110,6 +121,8 @@ function clearAddPointsData() {
   lineArray = [];
   canvas.remove(activeLine);
   activeLine = null;
+  removeEditingPolygonPoints();
+  resetCanvasEventsToDefault();
 }
 
 function calculateTotalLineDistance(pointsArr) {
@@ -143,38 +156,27 @@ function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) 
   let newPointsArray = [];
   if (finalId < initialId) {
     let oppositeArray = [];
-    let tempPointsToRemoveOpposite = [];
-    oppositeArray.push(derefPointsArray[initialId]);
-    for (let i = initialId - 1; i > finalId; i -= 1) {
+    for (let i = initialId; i > finalId - 1; i -= 1) {
       oppositeArray.push(derefPointsArray[i]);
-      tempPointsToRemoveOpposite.push(derefPointsArray[i]);
     }
-    oppositeArray.push(derefPointsArray[finalId]);
     const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
 
     let forwardArray = [];
-    let tempPointsToRemoveForward = [];
-    forwardArray.push(derefPointsArray[initialId]);
-    for (let i = initialId + 1; i < derefPointsArray.length; i += 1) {
+    for (let i = initialId; i < derefPointsArray.length; i += 1) {
       forwardArray.push(derefPointsArray[i]);
-      tempPointsToRemoveForward.push(derefPointsArray[i]);
     }
-    for (let i = 0; i < finalId; i += 1) {
+    for (let i = 0; i < finalId + 1; i += 1) {
       forwardArray.push(derefPointsArray[i]);
-      tempPointsToRemoveForward.push(derefPointsArray[i]);
     }
-    forwardArray.push(derefPointsArray[finalId]);
     const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
 
     if (forwardArrayDistance < oppositeArrayDistance) {
-      pointsToRemove = tempPointsToRemoveForward;
       initialId += 1;
       newPointsArray = derefPointsArray.slice(finalId, initialId);
       pointsArray.forEach((point) => {
         newPointsArray.push({ x: point.left, y: point.top });
       });
     } else {
-      pointsToRemove = tempPointsToRemoveOpposite;
       newPointsArray = derefPointsArray.slice(0, finalId + 1);
       for (let i = pointsArray.length - 1; i > -1; i -= 1) {
         const point = pointsArray[i];
@@ -186,31 +188,23 @@ function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) 
     }
   } else {
     let oppositeArray = [];
-    let tempPointsToRemoveOpposite = [];
-    oppositeArray.push(derefPointsArray[finalId]);
-    for (let i = finalId + 1; i < derefPointsArray.length; i += 1) {
+    for (let i = finalId; i < derefPointsArray.length; i += 1) {
       oppositeArray.push(derefPointsArray[i]);
-      tempPointsToRemoveOpposite.push(derefPointsArray[i])
     }
-    for (let i = 0; i < initialId; i += 1) {
+    for (let i = 0; i < initialId + 1; i += 1) {
       oppositeArray.push(derefPointsArray[i]);
-      tempPointsToRemoveOpposite.push(derefPointsArray[i])
     }
-    oppositeArray.push(derefPointsArray[initialId]);
 
     const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
 
     let forwardArray = [];
-    let tempPointsToRemoveForward = [];
-    forwardArray.push(derefPointsArray[initialId]);
-    for (let i = initialId + 1; i < finalId; i += 1) {
+    for (let i = initialId; i < finalId + 1; i += 1) {
       forwardArray.push(derefPointsArray[i]);
-      tempPointsToRemoveForward.push(derefPointsArray[i]);
     }
-    forwardArray.push(derefPointsArray[finalId]);
+
     const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
+
     if (forwardArrayDistance < oppositeArrayDistance) {
-      pointsToRemove = tempPointsToRemoveForward;
       initialId += 1;
       newPointsArray = derefPointsArray.slice(0, initialId);
       pointsArray.forEach((point) => {
@@ -220,65 +214,13 @@ function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) 
         newPointsArray.push(derefPointsArray[i]);
       }
     } else {
-      pointsToRemove = tempPointsToRemoveOpposite;
       newPointsArray = derefPointsArray.slice(initialId, finalId + 1);
       for (let i = pointsArray.length - 1; i > -1; i -= 1) {
         newPointsArray.push({ x: pointsArray[i].left, y: pointsArray[i].top });
       }
     }
   }
-  //
-  // if ((totalDistance / 2)
-  //  > calculateTotalLineDistance(derefPointsArray.slice(initialId, finalId + 1))) {
-  //   if (initialId < finalId) {
-  //     initialId += 1;
-  //     newPointsArray = derefPointsArray.slice(0, initialId);
-  //     pointsArray.forEach((point) => {
-  //       newPointsArray.push({ x: point.left, y: point.top });
-  //     });
-  //     initialId = initialId + difference - 1;
-  //     for (let i = initialId; i < derefPointsArray.length; i += 1) {
-  //       newPointsArray.push(derefPointsArray[i]);
-  //     }
-  //   } else {
-  //     newPointsArray = derefPointsArray.slice(0, finalId + 1);
-  //     for (let i = pointsArray.length - 1; i > -1; i -= 1) {
-  //       const point = pointsArray[i];
-  //       newPointsArray.push({ x: point.left, y: point.top });
-  //     }
-  //     for (let i = initialId; i < derefPointsArray.length; i += 1) {
-  //       newPointsArray.push(derefPointsArray[i]);
-  //     }
-  //   }
-  // } else {
-  //   console.log('called');
-  //   newPointsArray = derefPointsArray.slice(0, finalId + 1);
-  //   for (let i = pointsArray.length - 1; i > -1; i -= 1) {
-  //     const point = pointsArray[i];
-  //     newPointsArray.push({ x: point.left, y: point.top });
-  //   }
-  //   for (let i = initialId; i < derefPointsArray.length; i += 1) {
-  //     newPointsArray.push(derefPointsArray[i]);
-  //   }
-  // }
-  // initialId += 1;
-  // if (finalId < pointOppositeOfInitialPoint) {
-  //   newPointsArray = derefPointsArray.slice(finalId, initialId);
-  //   pointsArray.forEach((point) => {
-  //     newPointsArray.push({ x: point.left, y: point.top });
-  //   });
-  // } else {
-  //   newPointsArray = derefPointsArray.slice(0, initialId);
-  //   pointsArray.forEach((point) => {
-  //     newPointsArray.push({ x: point.left, y: point.top });
-  //   });
-  //   initialId = initialId + difference - 1;
-  //   for (let i = initialId; i < derefPointsArray.length; i += 1) {
-  //     newPointsArray.push(derefPointsArray[i]);
-  //   }
-  // }
 
-  // regenerate polygon array points
   polygon.set({ points: newPointsArray });
   clearAddPointsData();
 }
