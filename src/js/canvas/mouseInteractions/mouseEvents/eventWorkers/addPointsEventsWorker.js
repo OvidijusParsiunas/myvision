@@ -21,6 +21,7 @@ let activeFunction = null;
 let initialPoint = null;
 let pointsArray = [];
 let coordinatesOfLastMouseHover = null;
+let pointsToRemove = [];
 
 function isRightMouseButtonClicked(pointer) {
   if (coordinatesOfLastMouseHover.x !== pointer.x) {
@@ -142,27 +143,38 @@ function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) 
   let newPointsArray = [];
   if (finalId < initialId) {
     let oppositeArray = [];
-    for (let i = initialId; i > finalId - 1; i -= 1) {
+    let tempPointsToRemoveOpposite = [];
+    oppositeArray.push(derefPointsArray[initialId]);
+    for (let i = initialId - 1; i > finalId; i -= 1) {
       oppositeArray.push(derefPointsArray[i]);
+      tempPointsToRemoveOpposite.push(derefPointsArray[i]);
     }
+    oppositeArray.push(derefPointsArray[finalId]);
     const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
 
     let forwardArray = [];
-    for (let i = initialId; i < derefPointsArray.length; i += 1) {
+    let tempPointsToRemoveForward = [];
+    forwardArray.push(derefPointsArray[initialId]);
+    for (let i = initialId + 1; i < derefPointsArray.length; i += 1) {
       forwardArray.push(derefPointsArray[i]);
+      tempPointsToRemoveForward.push(derefPointsArray[i]);
     }
-    for (let i = 0; i < finalId + 1; i += 1) {
+    for (let i = 0; i < finalId; i += 1) {
       forwardArray.push(derefPointsArray[i]);
+      tempPointsToRemoveForward.push(derefPointsArray[i]);
     }
+    forwardArray.push(derefPointsArray[finalId]);
     const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
 
     if (forwardArrayDistance < oppositeArrayDistance) {
+      pointsToRemove = tempPointsToRemoveForward;
       initialId += 1;
       newPointsArray = derefPointsArray.slice(finalId, initialId);
       pointsArray.forEach((point) => {
         newPointsArray.push({ x: point.left, y: point.top });
       });
     } else {
+      pointsToRemove = tempPointsToRemoveOpposite;
       newPointsArray = derefPointsArray.slice(0, finalId + 1);
       for (let i = pointsArray.length - 1; i > -1; i -= 1) {
         const point = pointsArray[i];
@@ -174,23 +186,31 @@ function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) 
     }
   } else {
     let oppositeArray = [];
-    for (let i = finalId; i < derefPointsArray.length; i += 1) {
+    let tempPointsToRemoveOpposite = [];
+    oppositeArray.push(derefPointsArray[finalId]);
+    for (let i = finalId + 1; i < derefPointsArray.length; i += 1) {
       oppositeArray.push(derefPointsArray[i]);
+      tempPointsToRemoveOpposite.push(derefPointsArray[i])
     }
-    for (let i = 0; i < initialId + 1; i += 1) {
+    for (let i = 0; i < initialId; i += 1) {
       oppositeArray.push(derefPointsArray[i]);
+      tempPointsToRemoveOpposite.push(derefPointsArray[i])
     }
+    oppositeArray.push(derefPointsArray[initialId]);
 
     const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
 
     let forwardArray = [];
-    for (let i = initialId; i < finalId + 1; i += 1) {
+    let tempPointsToRemoveForward = [];
+    forwardArray.push(derefPointsArray[initialId]);
+    for (let i = initialId + 1; i < finalId; i += 1) {
       forwardArray.push(derefPointsArray[i]);
+      tempPointsToRemoveForward.push(derefPointsArray[i]);
     }
-
+    forwardArray.push(derefPointsArray[finalId]);
     const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
-
     if (forwardArrayDistance < oppositeArrayDistance) {
+      pointsToRemove = tempPointsToRemoveForward;
       initialId += 1;
       newPointsArray = derefPointsArray.slice(0, initialId);
       pointsArray.forEach((point) => {
@@ -200,6 +220,7 @@ function addNewPointsToExistingPoints(polygon, originalPointsArray, finalPoint) 
         newPointsArray.push(derefPointsArray[i]);
       }
     } else {
+      pointsToRemove = tempPointsToRemoveOpposite;
       newPointsArray = derefPointsArray.slice(initialId, finalId + 1);
       for (let i = pointsArray.length - 1; i > -1; i -= 1) {
         newPointsArray.push({ x: pointsArray[i].left, y: pointsArray[i].top });
