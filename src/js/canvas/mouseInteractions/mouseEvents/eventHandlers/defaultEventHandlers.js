@@ -4,8 +4,8 @@ import {
 } from '../eventWorkers/editPolygonEventsWorker';
 import { boundingBoxScalingEvents, boundingBoxMouseOutEvents } from '../eventWorkers/editBoundingBoxEventsWorker';
 
-function assignDefaultEvents(canvas, polygonId) {
-  setEditPolygonEventObjects(canvas, polygonId);
+function assignDefaultEvents(canvas, polygonId, addPoints) {
+  setEditPolygonEventObjects(canvas, polygonId, addPoints);
 
   canvas.on('mouse:down', (e) => {
     polygonMouseDownEvents(e);
