@@ -28,9 +28,7 @@ function assignSetEditablePolygonOnClickFunc() {
 
 function skipMouseUpEvent() {
   canvas.__eventListeners['mouse:down'] = [];
-  selectedPolygonId = null;
   canvas.on('mouse:down', (e) => {
-    console.log('activated');
     polygonMouseDownEvents(e);
   });
   assignSetEditablePolygonOnClickFunc();
@@ -126,6 +124,8 @@ function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
     selectedPolygonId = polygonIdObj;
   }
   if (afterAddPoints) {
+    selectedPolygonId = null;
+    newPolygonSelected = true;
     setEditablePolygonOnClick = skipMouseUpEvent;
   } else {
     setEditablePolygonOnClick = setEditablePolygonOnClickFunc;
