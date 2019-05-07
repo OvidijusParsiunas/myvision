@@ -1,3 +1,5 @@
+import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
+
 let resetCanvasEventsFunc = null;
 let canvas = null;
 
@@ -7,6 +9,7 @@ function setResetCanvasEventsToDefaultFunc(func, canvasObj) {
 }
 
 function resetCanvasEventsToDefault() {
+  removeEditedPolygonId();
   resetCanvasEventsFunc(canvas);
 }
 

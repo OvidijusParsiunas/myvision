@@ -2,8 +2,9 @@ import fabric from 'fabric';
 import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import {
-  removePolygonPoints, getPolygonEditingStatus, setEditablePolygon, getPolygonIdIfEditing,
-  getPolygonIfEditing,
+  removePolygonPoints, getPolygonEditingStatus,
+  setEditablePolygon, getPolygonIdIfEditing,
+  getPolygonIfEditing, resetPolygonSelectableArea,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import polygonProperties from '../../../objects/polygon/properties';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
@@ -122,6 +123,7 @@ function clearAddPointsData() {
   canvas.remove(activeLine);
   activeLine = null;
   removeEditingPolygonPoints();
+  resetPolygonSelectableArea();
   resetCanvasEventsToDefault();
 }
 

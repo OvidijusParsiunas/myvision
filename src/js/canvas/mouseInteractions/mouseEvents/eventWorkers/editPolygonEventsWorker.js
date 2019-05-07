@@ -124,7 +124,6 @@ function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
     selectedPolygonId = polygonIdObj;
   }
   if (afterAddPoints) {
-    selectedPolygonId = null;
     newPolygonSelected = true;
     setEditablePolygonOnClick = skipMouseUpEvent;
   } else {
