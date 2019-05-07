@@ -2,7 +2,7 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import setDefaultCursorMode from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
-  setDefaultState, getAlteringPolygonPointsState,
+  setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
   getDefaultState, getAddingPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
 
@@ -12,7 +12,7 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
     setDefaultCursorMode(canvas, getAlteringPolygonPointsState());
     assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
     if (getAlteringPolygonPointsState()) {
-      setDefaultState(false);
+      setAlteringPolygonPointsState(false);
     }
     setDefaultState(true);
   }
