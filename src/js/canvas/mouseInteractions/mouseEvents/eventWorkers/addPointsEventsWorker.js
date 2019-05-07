@@ -30,7 +30,9 @@ function isRightMouseButtonClicked(pointer) {
   }
   return false;
 }
-/* make sure to reuse this all */
+
+// adding does not work properly after rem
+// when adding new points trigger set error
 
 function initialMouseOverEventsPlaceHolderFunction() {}
 

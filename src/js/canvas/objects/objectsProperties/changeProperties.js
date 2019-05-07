@@ -8,12 +8,11 @@ function prepareObjectsForEditablePolygonPoints(object) {
 }
 
 function setObjectPropertiesToDefault(object) {
-  if (object.shapeName === 'bndBox') {
-    object.selectable = true;
-  } else {
+  if (object.shapeName !== 'bndBox') {
     object.lockMovementX = false;
     object.lockMovementY = false;
   }
+  object.selectable = true;
 }
 
 export { prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault };
