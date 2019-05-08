@@ -2,14 +2,13 @@ import fabric from 'fabric';
 import setAddPointsMode from '../../cursorModes/addPointsMode';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import {
-  removePolygonPoints, getPolygonEditingStatus, setEditablePolygon, getPolygonIdIfEditing,
-  getPolygonIfEditing, resetPolygonSelectableArea, cleanPolygonPointsArray,
+  removePolygonPoints, getPolygonEditingStatus, setEditablePolygon,
+  getPolygonIdIfEditing, getPolygonIfEditing, resetPolygonSelectableArea,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import polygonProperties from '../../../objects/polygon/properties';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { changePolygonPointsToAddImpl } from '../../../objects/polygon/alterPolygon/changePointsStyle';
 import { resetCanvasEventsToDefault } from '../resetCanvasUtils/resetCanvasEventsFacade';
-import { getRemovingPolygonPointsState, setRemovingPolygonPointsState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -31,7 +30,6 @@ function isRightMouseButtonClicked(pointer) {
   return false;
 }
 
-// adding does not work properly after rem
 // when adding new points trigger set error
 
 function initialMouseOverEventsPlaceHolderFunction() {}
@@ -130,7 +128,6 @@ function clearAddPointsData() {
 }
 
 function calculateTotalLineDistance(pointsArr) {
-  console.log(pointsArr);
   let totalDistance = 0;
   for (let i = 0; i < pointsArr.length - 1; i += 1) {
     const distance = Math.hypot(pointsArr[i + 1].x - pointsArr[i].x,
