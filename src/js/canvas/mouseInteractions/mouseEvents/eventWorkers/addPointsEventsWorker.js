@@ -130,6 +130,7 @@ function clearAddPointsData() {
 }
 
 function calculateTotalLineDistance(pointsArr) {
+  console.log(pointsArr);
   let totalDistance = 0;
   for (let i = 0; i < pointsArr.length - 1; i += 1) {
     const distance = Math.hypot(pointsArr[i + 1].x - pointsArr[i].x,

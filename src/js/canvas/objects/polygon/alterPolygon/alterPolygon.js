@@ -59,7 +59,7 @@ function changePolygonPointsToRemovable() {
 }
 
 function cleanPolygonPointsArray() {
-  cleanPolygonPointsArrayImpl(polygon);
+  polygonPoints = cleanPolygonPointsArrayImpl(polygon, polygonPoints);
 }
 
 function removePolygonPoints() {
@@ -102,6 +102,7 @@ function removePolygon() {
 }
 
 function removePolygonPoint(pointId) {
+  console.log(polygonPoints);
   removePolygonPointImpl(canvas, polygon, polygonPoints, pointId);
 }
 
