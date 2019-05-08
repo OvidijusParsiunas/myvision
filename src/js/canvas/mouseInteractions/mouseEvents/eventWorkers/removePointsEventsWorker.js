@@ -1,15 +1,14 @@
 import {
   setEditablePolygon, removePolygonPoint, removePolygonPoints, getPolygonEditingStatus,
-  getPolygonIdIfEditing,
+  getPolygonIdIfEditing, cleanPolygonPointsArray,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
-// variable not used
-let removingPoints = false;
 let canvas = null;
+let removedPolygonPoints = false;
 
 function setRemovablePointsEventsCanvas(canvasObj) {
   canvas = canvasObj;
@@ -17,6 +16,10 @@ function setRemovablePointsEventsCanvas(canvasObj) {
 }
 
 function prepareToEditPolygonPoints(event) {
+  if (removedPolygonPoints) {
+    cleanPolygonPointsArray();
+    removedPolygonPoints = false;
+  }
   removePolygonPoints();
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, true);
@@ -33,6 +36,7 @@ function pointMouseDownEvents(event) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'point') {
       removePolygonPoint(event.target.pointId);
+      removedPolygonPoints = true;
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         newPolygonSelected = true;
@@ -65,14 +69,6 @@ function pointMouseOutEvents(event) {
   }
 }
 
-function getRemovingPointsState() {
-  return removingPoints;
-}
-
-function setRemovingPointsStateToFalse() {
-  removingPoints = false;
-}
-
 function getSelectedPolygonIdForRemovingPoints() {
   return selectedPolygonId;
 }
@@ -80,6 +76,5 @@ function getSelectedPolygonIdForRemovingPoints() {
 export {
   pointMouseDownEvents, pointMouseOverEvents,
   pointMouseUpEvents, pointMouseOutEvents,
-  setRemovablePointsEventsCanvas, getRemovingPointsState,
-  setRemovingPointsStateToFalse, getSelectedPolygonIdForRemovingPoints,
+  setRemovablePointsEventsCanvas, getSelectedPolygonIdForRemovingPoints,
 };

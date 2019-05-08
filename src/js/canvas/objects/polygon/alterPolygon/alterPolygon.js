@@ -1,9 +1,9 @@
 import polygonProperties from '../properties';
-import removePolygonPointImpl from './removePoint';
 import sendPolygonPointsToFrontImpl from './stackPoints';
 import removePolygonPointsImpl from './removePoints';
 import removePolygonImpl from './removePolygon';
 import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint';
+import { removePolygonPointImpl, cleanPolygonPointsArrayImpl } from './removePoint';
 import {
   displayPolygonPointsWithStyleImpl,
   changeDrawingPolygonPointsToRemovableImpl,
@@ -56,6 +56,10 @@ function displayInitialAddPolygonPoints() {
 
 function changePolygonPointsToRemovable() {
   polygonPoints = changeDrawingPolygonPointsToRemovableImpl(canvas);
+}
+
+function cleanPolygonPointsArray() {
+  cleanPolygonPointsArrayImpl(polygon);
 }
 
 function removePolygonPoints() {
@@ -126,5 +130,5 @@ export {
   removePolygonPoint, getPolygonEditingStatus,
   displayRemovablePolygonPoints, displayInitialAddPolygonPoints,
   changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
-  getPolygonIfEditing,
+  getPolygonIfEditing, cleanPolygonPointsArray,
 };

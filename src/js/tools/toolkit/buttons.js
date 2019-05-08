@@ -5,14 +5,14 @@ import {
   uploadImageBtnClick, resetCanvasEventsToDefault,
 } from './buttonEvents/facade';
 import {
-  interruptCanvasEventsBeforeFunc, interruptCanvasEventsAfterFunc,
+  interruptCanvasEventsBeforeFunc, interruptCanvasEventsAfterFunc, doNothingIfCreatingNewPolygon,
   interruptCanvasEventsBeforeFuncWParams, doNothingIfLabellingInProgress,
 } from './buttonMiddleware/buttonMiddleware';
 
 function assignToolkitButtonEvents() {
   window.createNewBndBox = interruptCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = interruptCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
-  window.addPoints = doNothingIfLabellingInProgress.bind(this, addPointsBtnClick);
+  window.addPoints = doNothingIfCreatingNewPolygon.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
   window.downloadXML = interruptCanvasEventsBeforeFunc.bind(this, downloadXMLBtnClick);
   window.cancel = interruptCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);

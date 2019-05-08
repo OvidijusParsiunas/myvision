@@ -1,4 +1,5 @@
 import { isLabelling } from '../../labellerPopUp/labellingProcess';
+import { isDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
 import interruptAllCanvasEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 
 function interruptCanvasEventsBeforeFunc(func) {
@@ -22,6 +23,12 @@ function doNothingIfLabellingInProgress(func) {
   }
 }
 
+function doNothingIfCreatingNewPolygon(func) {
+  if (!isDrawingInProgress()) {
+    if (func) func();
+  }
+}
+
 function interruptAllCanvasEventsIfLabellingInProgress(func) {
   if (isLabelling()) {
     interruptAllCanvasEvents();
@@ -36,4 +43,5 @@ export {
   interruptCanvasEventsBeforeFuncWParams,
   interruptAllCanvasEventsIfLabellingInProgress,
   doNothingIfLabellingInProgress,
+  doNothingIfCreatingNewPolygon,
 };

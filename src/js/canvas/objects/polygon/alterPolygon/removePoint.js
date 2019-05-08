@@ -44,4 +44,15 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
   }
 }
 
-export { removePolygonPointImpl as default };
+function cleanPolygonPointsArrayImpl(polygon) {
+  const currentPointsArray = polygon.points;
+  const newPointsArray = [];
+  currentPointsArray.forEach((point) => {
+    if (Object.keys(point).length !== 0) {
+      newPointsArray.push(point);
+    }
+  });
+  polygon.set('points', newPointsArray);
+}
+
+export { removePolygonPointImpl, cleanPolygonPointsArrayImpl };
