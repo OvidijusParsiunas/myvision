@@ -30,7 +30,7 @@ function isRightMouseButtonClicked(pointer) {
   return false;
 }
 
-// when adding new points trigger set error
+// error on clicking remove then new polygon
 
 function initialMouseOverEventsPlaceHolderFunction() {}
 
