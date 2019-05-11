@@ -46,6 +46,7 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
 }
 
 function cleanPolygonPointsArrayImpl(polygon, polygonPointsArg) {
+  if (!polygon) return [];
   const directPolygonPoints = polygon.points;
   const newDirectPolygonPoints = [];
   const newPolygonPoints = [];

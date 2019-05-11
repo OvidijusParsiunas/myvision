@@ -31,6 +31,7 @@ function isRightMouseButtonClicked(pointer) {
 }
 
 // error on clicking remove then new polygon
+// when clicking on rectangle, doesn't stay on top of other polygons
 
 function initialMouseOverEventsPlaceHolderFunction() {}
 
