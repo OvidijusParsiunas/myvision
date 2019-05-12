@@ -26,7 +26,8 @@ function isRightMouseButtonClicked(pointer) {
 // cancel add points by the other buttons
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,
-//  the add points doesn't work properly when overlappinh
+//  the add points doesn't work properly when overlapping
+// when clicking add points multiple times after adding points, can't select polygon
 
 function mouseOverEvents(events) {
   addPointsMouseHover(events);

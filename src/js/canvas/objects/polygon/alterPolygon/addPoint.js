@@ -103,90 +103,49 @@ function calculateTotalLineDistance(pointsArr) {
   return totalDistance;
 }
 
-function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
-  // dereference
-  const derefPointsArray = originalPointsArray.slice();
-  let initialId = initialPoint.pointId;
-  const finalId = finalPoint.pointId;
-  const totalDistance = calculateTotalLineDistance(derefPointsArray);
-  console.log(totalDistance);
-  let rightPoint = null;
-  if ((initialId - 1) < 0) {
-    rightPoint = derefPointsArray[derefPointsArray.length - 1];
+function addNewPointsByTheirAddDirection(newPointsArray, firstPointId, lastPointId) {
+  if (firstPointId < lastPointId) {
+    pointsArray.forEach((point) => {
+      newPointsArray.push({ x: point.left, y: point.top });
+    });
   } else {
-    rightPoint = derefPointsArray[initialId - 1];
+    for (let i = pointsArray.length - 1; i > -1; i -= 1) {
+      newPointsArray.push({ x: pointsArray[i].left, y: pointsArray[i].top });
+    }
   }
-  const leftPoint = derefPointsArray[initialId + 1];
-  const originalPoint = derefPointsArray[initialId];
+}
 
-  const firstPoint = pointsArray[0];
-  const difference = Math.abs(initialId - finalId);
+function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
+  const derefPointsArray = originalPointsArray.slice();
   let newPointsArray = [];
-  if (finalId < initialId) {
-    let oppositeArray = [];
-    for (let i = initialId; i > finalId - 1; i -= 1) {
-      oppositeArray.push(derefPointsArray[i]);
-    }
-    const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
+  let startingIdOfNewArray = Math.min(initialPoint.pointId, finalPoint.pointId);
+  const endingIdIdOfNewArray = Math.max(initialPoint.pointId, finalPoint.pointId);
 
-    let forwardArray = [];
-    for (let i = initialId; i < derefPointsArray.length; i += 1) {
-      forwardArray.push(derefPointsArray[i]);
-    }
-    for (let i = 0; i < finalId + 1; i += 1) {
-      forwardArray.push(derefPointsArray[i]);
-    }
-    const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
+  const innerArray = [];
+  for (let i = startingIdOfNewArray; i < endingIdIdOfNewArray + 1; i += 1) {
+    innerArray.push(derefPointsArray[i]);
+  }
+  const innerArrayDistance = calculateTotalLineDistance(innerArray);
 
-    if (forwardArrayDistance < oppositeArrayDistance) {
-      initialId += 1;
-      newPointsArray = derefPointsArray.slice(finalId, initialId);
-      pointsArray.forEach((point) => {
-        newPointsArray.push({ x: point.left, y: point.top });
-      });
-    } else {
-      newPointsArray = derefPointsArray.slice(0, finalId + 1);
-      for (let i = pointsArray.length - 1; i > -1; i -= 1) {
-        const point = pointsArray[i];
-        newPointsArray.push({ x: point.left, y: point.top });
-      }
-      for (let i = initialId; i < derefPointsArray.length; i += 1) {
-        newPointsArray.push(derefPointsArray[i]);
-      }
+  const outerArray = [];
+  for (let i = endingIdIdOfNewArray; i < derefPointsArray.length; i += 1) {
+    outerArray.push(derefPointsArray[i]);
+  }
+  for (let i = 0; i < startingIdOfNewArray + 1; i += 1) {
+    outerArray.push(derefPointsArray[i]);
+  }
+  const outerArrayDistance = calculateTotalLineDistance(outerArray);
+
+  if (innerArrayDistance < outerArrayDistance) {
+    startingIdOfNewArray += 1;
+    newPointsArray = derefPointsArray.slice(0, startingIdOfNewArray);
+    addNewPointsByTheirAddDirection(newPointsArray, initialPoint.pointId, finalPoint.pointId);
+    for (let i = endingIdIdOfNewArray; i < derefPointsArray.length; i += 1) {
+      newPointsArray.push(derefPointsArray[i]);
     }
   } else {
-    let oppositeArray = [];
-    for (let i = finalId; i < derefPointsArray.length; i += 1) {
-      oppositeArray.push(derefPointsArray[i]);
-    }
-    for (let i = 0; i < initialId + 1; i += 1) {
-      oppositeArray.push(derefPointsArray[i]);
-    }
-
-    const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
-
-    let forwardArray = [];
-    for (let i = initialId; i < finalId + 1; i += 1) {
-      forwardArray.push(derefPointsArray[i]);
-    }
-
-    const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
-
-    if (forwardArrayDistance < oppositeArrayDistance) {
-      initialId += 1;
-      newPointsArray = derefPointsArray.slice(0, initialId);
-      pointsArray.forEach((point) => {
-        newPointsArray.push({ x: point.left, y: point.top });
-      });
-      for (let i = finalId; i < derefPointsArray.length; i += 1) {
-        newPointsArray.push(derefPointsArray[i]);
-      }
-    } else {
-      newPointsArray = derefPointsArray.slice(initialId, finalId + 1);
-      for (let i = pointsArray.length - 1; i > -1; i -= 1) {
-        newPointsArray.push({ x: pointsArray[i].left, y: pointsArray[i].top });
-      }
-    }
+    newPointsArray = derefPointsArray.slice(startingIdOfNewArray, endingIdIdOfNewArray + 1);
+    addNewPointsByTheirAddDirection(newPointsArray, finalPoint.pointId, initialPoint.pointId);
   }
 
   polygon.set({ points: newPointsArray });
