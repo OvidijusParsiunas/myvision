@@ -6,4 +6,19 @@ function setAddPointsMode(canvas, startingPoint) {
   canvas.hoverCursor = 'crosshair';
 }
 
-export { setAddPointsMode as default };
+function mouseHover(canvas, events) {
+  if (events.target) {
+    if (events.target.shapeName === 'point') {
+      canvas.hoverCursor = 'default';
+    } else if (events.target.shapeName === 'tempPoint') {
+      canvas.hoverCursor = 'move';
+    } else if (!events.target.selectable) {
+      canvas.hoverCursor = 'crosshair';
+    }
+  } else {
+    canvas.hoverCursor = 'crosshair';
+  }
+  canvas.renderAll();
+}
+
+export { setAddPointsMode, mouseHover };

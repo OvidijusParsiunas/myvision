@@ -2,6 +2,11 @@ import polygonProperties from '../properties';
 import sendPolygonPointsToFrontImpl from './stackPoints';
 import removePolygonPointsImpl from './removePoints';
 import removePolygonImpl from './removePolygon';
+import {
+  initializeAddNewPointsImpl, addFirstPointImpl,
+  addPointImpl, completePolygonImpl, drawLineImpl,
+  moveAddablePointImpl, addPointsMouseHoverImpl, resetAddPointPropertiesImpl,
+} from './addPoint';
 import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint';
 import { removePolygonPointImpl, cleanPolygonPointsArrayImpl } from './removePoint';
 import {
@@ -107,6 +112,39 @@ function removePolygonPoint(pointId) {
   removePolygonPointImpl(canvas, polygon, polygonPoints, pointId);
 }
 
+function initializeAddNewPoints(event) {
+  initializeAddNewPointsImpl(event, canvas);
+}
+
+function addFirstPoint(event) {
+  addFirstPointImpl(event);
+}
+
+function addPoint(pointer) {
+  addPointImpl(pointer);
+}
+
+function drawLineOnMouseMove(pointer) {
+  drawLineImpl(pointer);
+}
+
+function moveAddablePoint(event) {
+  moveAddablePointImpl(event);
+}
+
+function addPointsMouseHover(event) {
+  addPointsMouseHoverImpl(event);
+}
+
+function resetAddPointProperties() {
+  resetAddPointPropertiesImpl();
+}
+
+function completePolygon(finalPoint) {
+  completePolygonImpl(polygon, polygon.points, finalPoint);
+  resetPolygonSelectableArea();
+}
+
 function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, addingPoints) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
@@ -133,4 +171,7 @@ export {
   displayRemovablePolygonPoints, displayStartingAddPolygonPoints,
   changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
   getPolygonIfEditing, cleanPolygonPointsArray,
+  initializeAddNewPoints, addFirstPoint, addPoint,
+  completePolygon, drawLineOnMouseMove, moveAddablePoint,
+  addPointsMouseHover, resetAddPointProperties,
 };

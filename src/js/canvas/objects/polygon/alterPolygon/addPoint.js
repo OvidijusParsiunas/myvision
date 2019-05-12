@@ -1,61 +1,215 @@
-// let lineArray = [];
-//
-// function drawPolygon(event) {
-//   if (activeLine && activeLine.class === 'line') {
-//     const pointer = canvas.getPointer(event.e);
-//     activeLine.set({ x2: pointer.x, y2: pointer.y });
-//     const points = activeShape.get('points');
-//     points[pointArray.length] = {
-//       x: pointer.x,
-//       y: pointer.y,
-//     };
-//     activeShape.set({
-//       points,
-//     });
-//   }
-//   canvas.renderAll();
-// }
-//
-// function removeActiveLinesAndShape() {
-//   lineArray.forEach((line) => {
-//     canvas.remove(line);
-//   });
-//   canvas.remove(activeShape).remove(activeLine);
-// }
-//
-// function addPoint(event) {
-//   const pointer = canvas.getPointer(event.e);
-//   const point = new fabric.Circle(polygonProperties.newPoint(pointId, event, canvas));
-//   pointId += 1;
-//   if (pointArray.length === 0) {
-//     point.set(polygonProperties.firstPoint);
-//   }
-//   let points = [pointer.x, pointer.y, pointer.x, pointer.y];
-//   const line = new fabric.Line(points, polygonProperties.newLine);
-//   if (activeShape) {
-//     points = activeShape.get('points');
-//     points.push({
-//       x: pointer.x,
-//       y: pointer.y,
-//     });
-//     const polygon = new fabric.Polygon(points, polygonProperties.newTempPolygon);
-//     canvas.remove(activeShape);
-//     canvas.add(polygon);
-//     activeShape = polygon;
-//     canvas.renderAll();
-//   } else {
-//     const polyPoint = [{
-//       x: pointer.x,
-//       y: pointer.y,
-//     }];
-//     const polygon = new fabric.Polygon(polyPoint, polygonProperties.newTempPolygon);
-//     activeShape = polygon;
-//     canvas.add(polygon);
-//   }
-//   activeLine = line;
-//
-//   pointArray.push(point);
-//   lineArray.push(line);
-//   canvas.add(point);
-//   canvas.selection = false;
-// }
+import fabric from 'fabric';
+import polygonProperties from '../properties';
+import { setAddPointsMode, mouseHover } from '../../../mouseInteractions/cursorModes/addPointsMode';
+import { changePolygonPointsToAddImpl } from './changePointsStyle';
+
+let canvas = null;
+let activeLine = null;
+let lineArray = [];
+let tempPointIndex = 0;
+let activeMouseHoverFunction = null;
+let initialPoint = null;
+let pointsArray = [];
+
+function drawLineImpl(pointer) {
+  activeLine.set({ x2: pointer.x, y2: pointer.y });
+  canvas.renderAll();
+}
+
+function switchActiveFunction(newFunc) {
+  activeMouseHoverFunction = newFunc;
+}
+
+function moveAddablePointImpl(event) {
+  const xCenterPoint = event.target.getCenterPoint().x;
+  const yCenterPoint = event.target.getCenterPoint().y;
+  const { pointId } = event.target;
+  lineArray[pointId].set({ x2: xCenterPoint, y2: yCenterPoint });
+  if ((pointId + 1) !== tempPointIndex) {
+    lineArray[pointId + 1].set({ x1: xCenterPoint, y1: yCenterPoint });
+  } else {
+    activeLine.set({ x1: xCenterPoint, y1: yCenterPoint });
+  }
+}
+
+function createNewLine(...coordinates) {
+  activeLine = new fabric.Line(coordinates, polygonProperties.newLine);
+  canvas.add(activeLine);
+  canvas.renderAll();
+}
+
+function initializeAddNewPointsImpl(event, canvasObj) {
+  canvas = canvasObj;
+  setAddPointsMode(canvas, event.target);
+  const pointer = canvas.getPointer(event.e);
+  createNewLine(event.target.left, event.target.top, pointer.x, pointer.y);
+  initialPoint = event.target;
+}
+
+function addFirstPointImpl(event) {
+  changePolygonPointsToAddImpl(canvas);
+  switchActiveFunction(mouseHover);
+  const pointer = canvas.getPointer(event.e);
+  lineArray.push(activeLine);
+  createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
+  const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
+  canvas.add(point);
+  pointsArray.push(point);
+  tempPointIndex += 1;
+  canvas.bringToFront(initialPoint);
+}
+
+function addPointImpl(pointer) {
+  lineArray.push(activeLine);
+  createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
+  const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
+  canvas.add(point);
+  pointsArray.push(point);
+  tempPointIndex += 1;
+}
+
+function removeEditingPolygonPoints() {
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'point') {
+      canvas.remove(iteratedObj);
+    } else if (iteratedObj.shapeName === 'initialAddPoint') {
+      canvas.remove(iteratedObj);
+    }
+  });
+  canvas.renderAll();
+}
+
+function clearAddPointsData() {
+  pointsArray.forEach((point) => {
+    canvas.remove(point);
+  });
+  pointsArray = [];
+  lineArray.forEach((line) => {
+    canvas.remove(line);
+  });
+  lineArray = [];
+  canvas.remove(activeLine);
+  activeLine = null;
+  removeEditingPolygonPoints();
+}
+
+function calculateTotalLineDistance(pointsArr) {
+  let totalDistance = 0;
+  for (let i = 0; i < pointsArr.length - 1; i += 1) {
+    const distance = Math.hypot(pointsArr[i + 1].x - pointsArr[i].x,
+      pointsArr[i + 1].y - pointsArr[i].y);
+    totalDistance += distance;
+  }
+  return totalDistance;
+}
+
+function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
+  // dereference
+  const derefPointsArray = originalPointsArray.slice();
+  let initialId = initialPoint.pointId;
+  const finalId = finalPoint.pointId;
+  const totalDistance = calculateTotalLineDistance(derefPointsArray);
+  console.log(totalDistance);
+  let rightPoint = null;
+  if ((initialId - 1) < 0) {
+    rightPoint = derefPointsArray[derefPointsArray.length - 1];
+  } else {
+    rightPoint = derefPointsArray[initialId - 1];
+  }
+  const leftPoint = derefPointsArray[initialId + 1];
+  const originalPoint = derefPointsArray[initialId];
+
+  const firstPoint = pointsArray[0];
+  const difference = Math.abs(initialId - finalId);
+  let newPointsArray = [];
+  if (finalId < initialId) {
+    let oppositeArray = [];
+    for (let i = initialId; i > finalId - 1; i -= 1) {
+      oppositeArray.push(derefPointsArray[i]);
+    }
+    const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
+
+    let forwardArray = [];
+    for (let i = initialId; i < derefPointsArray.length; i += 1) {
+      forwardArray.push(derefPointsArray[i]);
+    }
+    for (let i = 0; i < finalId + 1; i += 1) {
+      forwardArray.push(derefPointsArray[i]);
+    }
+    const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
+
+    if (forwardArrayDistance < oppositeArrayDistance) {
+      initialId += 1;
+      newPointsArray = derefPointsArray.slice(finalId, initialId);
+      pointsArray.forEach((point) => {
+        newPointsArray.push({ x: point.left, y: point.top });
+      });
+    } else {
+      newPointsArray = derefPointsArray.slice(0, finalId + 1);
+      for (let i = pointsArray.length - 1; i > -1; i -= 1) {
+        const point = pointsArray[i];
+        newPointsArray.push({ x: point.left, y: point.top });
+      }
+      for (let i = initialId; i < derefPointsArray.length; i += 1) {
+        newPointsArray.push(derefPointsArray[i]);
+      }
+    }
+  } else {
+    let oppositeArray = [];
+    for (let i = finalId; i < derefPointsArray.length; i += 1) {
+      oppositeArray.push(derefPointsArray[i]);
+    }
+    for (let i = 0; i < initialId + 1; i += 1) {
+      oppositeArray.push(derefPointsArray[i]);
+    }
+
+    const oppositeArrayDistance = calculateTotalLineDistance(oppositeArray);
+
+    let forwardArray = [];
+    for (let i = initialId; i < finalId + 1; i += 1) {
+      forwardArray.push(derefPointsArray[i]);
+    }
+
+    const forwardArrayDistance = calculateTotalLineDistance(forwardArray);
+
+    if (forwardArrayDistance < oppositeArrayDistance) {
+      initialId += 1;
+      newPointsArray = derefPointsArray.slice(0, initialId);
+      pointsArray.forEach((point) => {
+        newPointsArray.push({ x: point.left, y: point.top });
+      });
+      for (let i = finalId; i < derefPointsArray.length; i += 1) {
+        newPointsArray.push(derefPointsArray[i]);
+      }
+    } else {
+      newPointsArray = derefPointsArray.slice(initialId, finalId + 1);
+      for (let i = pointsArray.length - 1; i > -1; i -= 1) {
+        newPointsArray.push({ x: pointsArray[i].left, y: pointsArray[i].top });
+      }
+    }
+  }
+
+  polygon.set({ points: newPointsArray });
+  clearAddPointsData();
+}
+
+function initialMouseOverEventsPlaceHolderFunction() {}
+
+function addPointsMouseHoverImpl(events) {
+  activeMouseHoverFunction(canvas, events);
+}
+
+function resetAddPointPropertiesImpl() {
+  activeMouseHoverFunction = initialMouseOverEventsPlaceHolderFunction;
+}
+
+export {
+  initializeAddNewPointsImpl,
+  addFirstPointImpl,
+  addPointImpl,
+  completePolygonImpl,
+  drawLineImpl,
+  moveAddablePointImpl,
+  addPointsMouseHoverImpl,
+  resetAddPointPropertiesImpl,
+};
