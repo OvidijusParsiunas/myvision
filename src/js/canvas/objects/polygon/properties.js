@@ -78,7 +78,7 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
   return returnObj;
 }
 
-function generateInitialAddPolygonPoint(pointId, pointCoordinates) {
+function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
   const returnObj = {
     radius: 4,
     fill: 'green',
@@ -164,11 +164,15 @@ function generateInitialAddPolygonPoint(pointId, pointCoordinates) {
     fill: 'white',
     radius: 3,
   };
+  polygonProperties.selectedStartingAddPoint = {
+    shapeName: 'initialAddPoint',
+    radius: 3.5,
+  };
   polygonProperties.newPoint = generateNewPoint;
   polygonProperties.changeRemovablePointToTemp = changeRemovablePointToTemp;
   polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;
   polygonProperties.removablePolygonPoint = generateRemovablePolygonPoint;
-  polygonProperties.initialAddPolygonPoint = generateInitialAddPolygonPoint;
+  polygonProperties.startingAddPolygonPoint = generatestartingAddPolygonPoint;
 }());
 
 

@@ -16,7 +16,7 @@ let canvas = null;
 let addingPoints = false;
 let activeLine = null;
 let lineArray = [];
-let initialMode = false;
+let startingMode = false;
 let tempPointIndex = 0;
 let activeFunction = null;
 let initialPoint = null;
@@ -30,8 +30,11 @@ function isRightMouseButtonClicked(pointer) {
   return false;
 }
 
-// error on clicking remove then new polygon
+// add points button should cancel draw new polygon
+// cancel add points by the other buttons
 // when clicking on rectangle, doesn't stay on top of other polygons
+// when selecting add points mode, and selecting a polygon then another,
+//  the add points doesn't work properly when overlappinh
 
 function initialMouseOverEventsPlaceHolderFunction() {}
 
@@ -239,10 +242,9 @@ function pointMouseDownEvents(event) {
     if (event.target) {
       enableActiveObjectsAppearInFront(canvas);
       if (event.target.shapeName === 'point') {
-        setAddPointsMode(canvas);
-        event.target.set({ shapeName: 'initialAddPoint', radius: 3.5 });
+        setAddPointsMode(canvas, event.target);
         addingPoints = true;
-        initialMode = true;
+        startingMode = true;
         const pointer = canvas.getPointer(event.e);
         createNewLine(event.target.left, event.target.top, pointer.x, pointer.y);
         initialPoint = event.target;
@@ -255,10 +257,10 @@ function pointMouseDownEvents(event) {
         preventActiveObjectsAppearInFront(canvas);
       }
     }
-  } else if (initialMode) {
+  } else if (startingMode) {
     if (!event.target || (event.target && (event.target.shapeName !== 'point' && event.target.shapeName !== 'initialAddPoint'))) {
       changePolygonPointsToAddImpl(canvas);
-      initialMode = false;
+      startingMode = false;
       switchActiveFunction(addingNewPointsFunction);
       const pointer = canvas.getPointer(event.e);
       lineArray.push(activeLine);

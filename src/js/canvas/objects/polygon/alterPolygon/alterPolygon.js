@@ -10,6 +10,8 @@ import {
   changeObjectsToPolygonPointsToDefaultImpl,
 } from './changePointsStyle';
 
+// this is the polygonInteractionsManager
+
 let canvas = null;
 let polygon = null;
 let polygonPoints = [];
@@ -48,9 +50,9 @@ function displayRemovablePolygonPoints() {
   );
 }
 
-function displayInitialAddPolygonPoints() {
+function displayStartingAddPolygonPoints() {
   displayPolygonPointsWithStyleImpl(
-    canvas, polygon, polygonPoints, polygonProperties.initialAddPolygonPoint,
+    canvas, polygon, polygonPoints, polygonProperties.startingAddPolygonPoint,
   );
 }
 
@@ -102,7 +104,6 @@ function removePolygon() {
 }
 
 function removePolygonPoint(pointId) {
-  console.log(polygonPoints);
   removePolygonPointImpl(canvas, polygon, polygonPoints, pointId);
 }
 
@@ -112,7 +113,7 @@ function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPoly
   polygon.bringForward();
   // edit this
   if (addingPoints) {
-    displayInitialAddPolygonPoints();
+    displayStartingAddPolygonPoints();
   } else if (!removablePoints) {
     displayPolygonPoints();
   } else if (!creatingPolygon) {
@@ -129,7 +130,7 @@ export {
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
-  displayRemovablePolygonPoints, displayInitialAddPolygonPoints,
+  displayRemovablePolygonPoints, displayStartingAddPolygonPoints,
   changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
   getPolygonIfEditing, cleanPolygonPointsArray,
 };

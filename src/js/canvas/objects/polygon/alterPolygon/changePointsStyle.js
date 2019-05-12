@@ -14,13 +14,14 @@ function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPoints, polyg
   });
 }
 
-function changePolygonPointsToWaitForAddingFirstPointImpl(canvas) {
+function changePolygonPointsToWaitForAddingFirstPointImpl(canvas, startingPoint) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.disabledButton);
     }
     iteratedObj.selectable = false;
   });
+  startingPoint.set(polygonProperties.selectedStartingAddPoint);
   canvas.renderAll();
 }
 
