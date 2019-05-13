@@ -22,6 +22,10 @@ function isRightMouseButtonClicked(pointer) {
   return false;
 }
 
+// a nice to have - when nothing selected and selecting remove or add points
+// highlight all of them differently to indicate that
+// they can all be potentially edited (ghost points)
+
 // cancel add points by the other buttons
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,

@@ -13,6 +13,7 @@ import {
   displayPolygonPointsWithStyleImpl,
   changeDrawingPolygonPointsToRemovableImpl,
   changeObjectsToPolygonPointsToDefaultImpl,
+  changeObjectsToPolygonPointsRemovaleImpl,
 } from './changePointsStyle';
 
 // this is the polygonInteractionsManager
@@ -29,6 +30,10 @@ function getPolygonIfEditing() {
 
 function getPolygonEditingStatus() {
   return editingPolygon;
+}
+
+function setPolygonEditingStatus(status) {
+  editingPolygon = status;
 }
 
 function getPolygonIdIfEditing() {
@@ -61,8 +66,12 @@ function displayStartingAddPolygonPoints() {
   );
 }
 
-function changePolygonPointsToRemovable() {
+function changeDrawingPolygonPointsToRemovable() {
   polygonPoints = changeDrawingPolygonPointsToRemovableImpl(canvas);
+}
+
+function changeExistingPolygonPointsToRemovable() {
+  polygonPoints = changeObjectsToPolygonPointsRemovaleImpl(canvas);
 }
 
 function cleanPolygonPointsArray() {
@@ -143,6 +152,7 @@ function resetAddPointProperties() {
 function completePolygon(finalPoint) {
   completePolygonImpl(polygon, polygon.points, finalPoint);
   resetPolygonSelectableArea();
+  setPolygonEditingStatus(false);
 }
 
 function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, addingPoints) {
@@ -157,7 +167,7 @@ function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPoly
   } else if (!creatingPolygon) {
     displayRemovablePolygonPoints();
   } else {
-    changePolygonPointsToRemovable();
+    changeDrawingPolygonPointsToRemovable();
   }
   editingPolygon = true;
 }
@@ -174,4 +184,5 @@ export {
   initializeAddNewPoints, addFirstPoint, addPoint,
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
   addPointsMouseHover, resetAddPointProperties,
+  changeExistingPolygonPointsToRemovable,
 };

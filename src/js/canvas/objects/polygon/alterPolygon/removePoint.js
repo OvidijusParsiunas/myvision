@@ -1,7 +1,4 @@
-let polygonPointsWithProps = [];
-
-function removePolygonPointImpl(canvas, polygon, polygonPointsArg, pointId) {
-  polygonPointsWithProps = polygonPointsArg;
+function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
   if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
     if (Object.keys(polygon.points[pointId]).length === 0) {
       /* when the last polygons are removed, the ones before it are moved
@@ -27,8 +24,8 @@ function removePolygonPointImpl(canvas, polygon, polygonPointsArg, pointId) {
     } else {
       polygon.points[pointId] = {};
     }
-    canvas.remove(polygonPointsWithProps[pointId]);
-    polygonPointsWithProps[pointId] = null;
+    canvas.remove(polygonPoints[pointId]);
+    polygonPoints[pointId] = null;
 
     polygon.numberOfNullPolygonPoints += 1;
     console.log(polygon.points.length - polygon.numberOfNullPolygonPoints);
@@ -48,8 +45,8 @@ function removePolygonPointImpl(canvas, polygon, polygonPointsArg, pointId) {
   }
 }
 
-function cleanPolygonPointsArrayImpl(polygon) {
-  if (!polygon || !polygonPointsWithProps.length) return [];
+function cleanPolygonPointsArrayImpl(polygon, polygonPoints) {
+  if (!polygon || !polygonPoints.length) return [];
   const directPolygonPoints = polygon.points;
   const newDirectPolygonPoints = [];
   const newPolygonPoints = [];
@@ -57,7 +54,7 @@ function cleanPolygonPointsArrayImpl(polygon) {
   for (let i = 0; i < directPolygonPoints.length; i += 1) {
     if (Object.keys(directPolygonPoints[i]).length !== 0) {
       newDirectPolygonPoints.push(directPolygonPoints[i]);
-      const pointWithProps = polygonPointsWithProps[i];
+      const pointWithProps = polygonPoints[i];
       pointWithProps.pointId = currentPointId;
       newPolygonPoints.push(pointWithProps);
       currentPointId += 1;

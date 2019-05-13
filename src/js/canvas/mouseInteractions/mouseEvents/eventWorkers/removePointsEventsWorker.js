@@ -1,6 +1,6 @@
 import {
   setEditablePolygon, removePolygonPoint, removePolygonPoints, getPolygonEditingStatus,
-  getPolygonIdIfEditing, cleanPolygonPointsArray,
+  getPolygonIdIfEditing, cleanPolygonPointsArray, changeExistingPolygonPointsToRemovable,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
@@ -11,6 +11,7 @@ let canvas = null;
 let removedPolygonPoints = false;
 
 function setRemovablePointsEventsCanvas(canvasObj) {
+  changeExistingPolygonPointsToRemovable();
   canvas = canvasObj;
   selectedPolygonId = getPolygonIdIfEditing();
 }

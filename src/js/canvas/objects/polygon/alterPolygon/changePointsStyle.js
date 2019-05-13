@@ -59,13 +59,18 @@ function changeObjectsToPolygonPointsToDefaultImpl(canvas) {
 }
 
 function changeObjectsToPolygonPointsRemovaleImpl(canvas) {
-  canvas.forEachObject((iteratedObj) => {
-    prepareObjectsForEditablePolygonPoints(iteratedObj);
-    if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.removablePoint);
-    }
-  });
-  canvas.renderAll();
+  const polygonPoints = [];
+  if (canvas) {
+    canvas.forEachObject((iteratedObj) => {
+      prepareObjectsForEditablePolygonPoints(iteratedObj);
+      if (iteratedObj.shapeName === 'point') {
+        iteratedObj.set(polygonProperties.removablePoint);
+        polygonPoints.push(iteratedObj);
+      }
+    });
+    canvas.renderAll();
+  }
+  return polygonPoints;
 }
 
 export {
