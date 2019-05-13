@@ -1,15 +1,15 @@
 import { isLabelling } from '../../labellerPopUp/labellingProcess';
 import {
-  interruptAllCanvasEventsNoPolygonPointRemoval, interruptAllCanvasEvents,
+  interruptCanvasEventsNoPolygonPointRemoval, interruptAllCanvasEvents,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 
-function interruptCanvasEventsBeforeFunc(func) {
+function interruptAllCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();
   if (func) func();
 }
 
 function interruptCanvasEventsNoPointRemovalBeforeFunc(func) {
-  interruptAllCanvasEventsNoPolygonPointRemoval();
+  interruptCanvasEventsNoPolygonPointRemoval();
   if (func) func();
 }
 
@@ -37,7 +37,7 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 }
 
 export {
-  interruptCanvasEventsBeforeFunc,
+  interruptAllCanvasEventsBeforeFunc,
   interruptCanvasEventsAfterFunc,
   doNothingIfLabellingInProgress,
   // rename

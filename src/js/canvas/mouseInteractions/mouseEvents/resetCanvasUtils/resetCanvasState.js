@@ -8,7 +8,7 @@ import {
   getAlteringPolygonPointsState, setAlteringPolygonPointsState, getRemovingPolygonPointsState,
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
-function interruptAllCanvasEventsNoPolygonPointRemoval() {
+function interruptCanvasEventsNoPolygonPointRemoval() {
   clearPolygonData();
   cancelLabellingProcess();
   removeEditedPolygonId();
@@ -23,7 +23,7 @@ function interruptAllCanvasEventsNoPolygonPointRemoval() {
 
 function interruptAllCanvasEvents() {
   removePolygonPoints();
-  interruptAllCanvasEventsNoPolygonPointRemoval();
+  interruptCanvasEventsNoPolygonPointRemoval();
 }
 
-export { interruptAllCanvasEventsNoPolygonPointRemoval, interruptAllCanvasEvents };
+export { interruptCanvasEventsNoPolygonPointRemoval, interruptAllCanvasEvents };
