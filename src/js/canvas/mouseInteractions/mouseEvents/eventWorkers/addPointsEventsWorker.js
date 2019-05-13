@@ -22,7 +22,6 @@ function isRightMouseButtonClicked(pointer) {
   return false;
 }
 
-// add points button should cancel draw new polygon
 // cancel add points by the other buttons
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,
