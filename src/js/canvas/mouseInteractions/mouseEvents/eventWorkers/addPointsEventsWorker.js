@@ -39,7 +39,6 @@ function setAddPointsEventsCanvas(canvasObj) {
 }
 
 function prepareToAddPolygonPoints(event) {
-  removePolygonPoints();
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, false, false, true);
   selectedPolygonId = event.target.id;
