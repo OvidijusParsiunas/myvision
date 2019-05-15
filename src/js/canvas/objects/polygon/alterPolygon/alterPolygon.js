@@ -45,7 +45,7 @@ function getPolygonIdIfEditing() {
 
 function sendPolygonPointsToFront() {
   sendPolygonPointsToFrontImpl(canvas, polygonPoints);
-  editingPolygon = true;
+  setPolygonEditingStatus(true);
 }
 
 function displayPolygonPoints() {
@@ -80,7 +80,7 @@ function cleanPolygonPointsArray() {
 
 function removePolygonPoints() {
   polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
-  editingPolygon = false;
+  setPolygonEditingStatus(false);
 }
 
 function changePolygonPointsPropertiesToDefault() {
@@ -89,7 +89,7 @@ function changePolygonPointsPropertiesToDefault() {
 
 function displayPolygonPointsAfterMove() {
   polygon = displayPolygonPointsAfterMoveImpl(canvas, polygon, polygonPoints);
-  editingPolygon = true;
+  setPolygonEditingStatus(true);
 }
 
 function setSelectedObjects(activeCanvasObj, activePolygonObject) {
@@ -169,7 +169,7 @@ function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPoly
   } else {
     changeDrawingPolygonPointsToRemovable();
   }
-  editingPolygon = true;
+  setPolygonEditingStatus(true);
 }
 
 export {

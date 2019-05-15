@@ -23,6 +23,8 @@ function isRightMouseButtonClicked(pointer) {
 }
 
 // a nice to have - when nothing selected and selecting remove or add points
+// make sure that everything that uses change returns polygon points and see
+// if they can be changed directly instead of searching the canvas
 // highlight all of them differently to indicate that
 // they can all be potentially edited (ghost points)
 
