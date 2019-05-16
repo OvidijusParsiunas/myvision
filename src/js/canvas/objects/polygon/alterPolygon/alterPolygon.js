@@ -3,9 +3,9 @@ import sendPolygonPointsToFrontImpl from './stackPoints';
 import removePolygonPointsImpl from './removePoints';
 import removePolygonImpl from './removePolygon';
 import {
-  initializeAddNewPointsImpl, addFirstPointImpl,
-  addPointImpl, completePolygonImpl, drawLineImpl,
-  moveAddablePointImpl, addPointsMouseHoverImpl, resetAddPointPropertiesImpl,
+  initializeAddNewPointsImpl, addFirstPointImpl, resetAddPointPropertiesImpl,
+  completePolygonImpl, drawLineImpl, clearAddPointsDataImpl,
+  moveAddablePointImpl, addPointsMouseHoverImpl, addPointImpl,
 } from './addPoint';
 import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint';
 import { removePolygonPointImpl, cleanPolygonPointsArrayImpl } from './removePoint';
@@ -149,6 +149,10 @@ function resetAddPointProperties() {
   resetAddPointPropertiesImpl();
 }
 
+function clearAddPointsData() {
+  clearAddPointsDataImpl();
+}
+
 function completePolygon(finalPoint) {
   completePolygonImpl(polygon, polygon.points, finalPoint);
   resetPolygonSelectableArea();
@@ -184,5 +188,5 @@ export {
   initializeAddNewPoints, addFirstPoint, addPoint,
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
   addPointsMouseHover, resetAddPointProperties,
-  changeExistingPolygonPointsToRemovable,
+  changeExistingPolygonPointsToRemovable, clearAddPointsData,
 };

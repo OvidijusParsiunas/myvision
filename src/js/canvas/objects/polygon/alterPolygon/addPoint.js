@@ -79,7 +79,7 @@ function removeEditingPolygonPoints() {
   canvas.renderAll();
 }
 
-function clearAddPointsData() {
+function clearAddPointsDataImpl() {
   pointsArray.forEach((point) => {
     canvas.remove(point);
   });
@@ -149,7 +149,7 @@ function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
   }
 
   polygon.set({ points: newPointsArray });
-  clearAddPointsData();
+  clearAddPointsDataImpl();
 }
 
 function initialMouseOverEventsPlaceHolderFunction() {}
@@ -171,4 +171,5 @@ export {
   moveAddablePointImpl,
   addPointsMouseHoverImpl,
   resetAddPointPropertiesImpl,
+  clearAddPointsDataImpl,
 };
