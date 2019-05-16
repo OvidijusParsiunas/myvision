@@ -28,6 +28,10 @@ function isRightMouseButtonClicked(pointer) {
 // highlight all of them differently to indicate that
 // they can all be potentially edited (ghost points)
 
+// disallow the creation of a new polygon with 1 point
+// keep polygon points when adding points and clicked the same button or remove button
+// when finished adding points, then add again and click inside a polygon, the initial point
+// turns green
 // cancel add points by the other buttons
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,
@@ -41,6 +45,8 @@ function mouseOverEvents(events) {
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;
   selectedPolygonId = getPolygonIdIfEditing();
+  addingPoints = false;
+  addFirstPointMode = false;
   resetAddPointProperties();
 }
 

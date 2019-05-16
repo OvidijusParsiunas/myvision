@@ -80,17 +80,19 @@ function removeEditingPolygonPoints() {
 }
 
 function clearAddPointsDataImpl() {
-  pointsArray.forEach((point) => {
-    canvas.remove(point);
-  });
-  pointsArray = [];
-  lineArray.forEach((line) => {
-    canvas.remove(line);
-  });
-  lineArray = [];
-  canvas.remove(activeLine);
-  activeLine = null;
-  removeEditingPolygonPoints();
+  if (activeLine) {
+    canvas.remove(activeLine);
+    pointsArray.forEach((point) => {
+      canvas.remove(point);
+    });
+    pointsArray = [];
+    lineArray.forEach((line) => {
+      canvas.remove(line);
+    });
+    lineArray = [];
+    activeLine = null;
+    removeEditingPolygonPoints();
+  }
 }
 
 function calculateTotalLineDistance(pointsArr) {
