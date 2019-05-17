@@ -79,6 +79,15 @@ function removeEditingPolygonPoints() {
   canvas.renderAll();
 }
 
+function resetEditingPolygonPoints() {
+  canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName === 'initialAddPoint') {
+      iteratedObj.shapeName = 'point';
+    }
+  });
+  canvas.renderAll();
+}
+
 function clearAddPointsDataImpl() {
   if (activeLine) {
     canvas.remove(activeLine);
@@ -92,6 +101,22 @@ function clearAddPointsDataImpl() {
     lineArray = [];
     activeLine = null;
     removeEditingPolygonPoints();
+  }
+}
+
+function resetAddPointsImpl() {
+  if (activeLine) {
+    canvas.remove(activeLine);
+    pointsArray.forEach((point) => {
+      canvas.remove(point);
+    });
+    pointsArray = [];
+    lineArray.forEach((line) => {
+      canvas.remove(line);
+    });
+    lineArray = [];
+    activeLine = null;
+    resetEditingPolygonPoints();
   }
 }
 
@@ -174,4 +199,5 @@ export {
   addPointsMouseHoverImpl,
   resetAddPointPropertiesImpl,
   clearAddPointsDataImpl,
+  resetAddPointsImpl,
 };
