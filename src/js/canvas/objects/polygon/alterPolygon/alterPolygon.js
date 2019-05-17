@@ -4,7 +4,7 @@ import removePolygonPointsImpl from './removePoints';
 import removePolygonImpl from './removePolygon';
 import {
   initializeAddNewPointsImpl, addFirstPointImpl, resetAddPointPropertiesImpl,
-  completePolygonImpl, drawLineImpl, clearAddPointsDataImpl,
+  completePolygonImpl, drawLineImpl, clearAllAddPointsDataImpl,
   moveAddablePointImpl, addPointsMouseHoverImpl, addPointImpl,
   resetAddPointsImpl,
 } from './addPoint';
@@ -150,8 +150,8 @@ function resetAddPointProperties() {
   resetAddPointPropertiesImpl();
 }
 
-function clearAddPointsData() {
-  clearAddPointsDataImpl();
+function clearAllAddPointsData() {
+  clearAllAddPointsDataImpl();
 }
 
 function resetAddPoints() {
@@ -193,6 +193,6 @@ export {
   initializeAddNewPoints, addFirstPoint, addPoint,
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
   addPointsMouseHover, resetAddPointProperties,
-  changeExistingPolygonPointsToRemovable, clearAddPointsData,
+  changeExistingPolygonPointsToRemovable, clearAllAddPointsData,
   resetAddPoints,
 };

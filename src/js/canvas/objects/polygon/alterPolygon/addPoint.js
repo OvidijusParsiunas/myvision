@@ -88,34 +88,34 @@ function resetEditingPolygonPoints() {
   canvas.renderAll();
 }
 
-function clearAddPointsDataImpl() {
+function clearTempPoints() {
+  canvas.remove(activeLine);
+  pointsArray.forEach((point) => {
+    canvas.remove(point);
+  });
+  pointsArray = [];
+}
+
+function clearLines() {
+  lineArray.forEach((line) => {
+    canvas.remove(line);
+  });
+  lineArray = [];
+  activeLine = null;
+}
+
+function clearAllAddPointsDataImpl() {
   if (activeLine) {
-    canvas.remove(activeLine);
-    pointsArray.forEach((point) => {
-      canvas.remove(point);
-    });
-    pointsArray = [];
-    lineArray.forEach((line) => {
-      canvas.remove(line);
-    });
-    lineArray = [];
-    activeLine = null;
+    clearTempPoints();
+    clearLines();
     removeEditingPolygonPoints();
   }
 }
 
 function resetAddPointsImpl() {
   if (activeLine) {
-    canvas.remove(activeLine);
-    pointsArray.forEach((point) => {
-      canvas.remove(point);
-    });
-    pointsArray = [];
-    lineArray.forEach((line) => {
-      canvas.remove(line);
-    });
-    lineArray = [];
-    activeLine = null;
+    clearTempPoints();
+    clearLines();
     resetEditingPolygonPoints();
   }
 }
@@ -176,7 +176,7 @@ function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
   }
 
   polygon.set({ points: newPointsArray });
-  clearAddPointsDataImpl();
+  clearAllAddPointsDataImpl();
 }
 
 function initialMouseOverEventsPlaceHolderFunction() {}
@@ -198,6 +198,6 @@ export {
   moveAddablePointImpl,
   addPointsMouseHoverImpl,
   resetAddPointPropertiesImpl,
-  clearAddPointsDataImpl,
+  clearAllAddPointsDataImpl,
   resetAddPointsImpl,
 };
