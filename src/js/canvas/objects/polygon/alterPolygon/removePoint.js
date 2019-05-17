@@ -24,11 +24,11 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
     } else {
       polygon.points[pointId] = {};
     }
+    console.log(polygonPoints);
     canvas.remove(polygonPoints[pointId]);
     polygonPoints[pointId] = null;
 
     polygon.numberOfNullPolygonPoints += 1;
-    console.log(polygon.points.length - polygon.numberOfNullPolygonPoints);
     if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
       // after all polygon points are removed from new polygon, completely remove -
       // depending on how we add new points

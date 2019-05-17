@@ -1,11 +1,11 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
-  setDefaultState, setAddingPolygonPointsState,
-  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  setAddingPolygonPointsState, getAlteringPolygonPointsState, getAddingPolygonPointsState,
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState, setDefaultState,
 } from '../facadeWorkersUtils/stateManager';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
-import { cleanPolygonPointsArray } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import { cleanPolygonPointsArray, resetAddPoints } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 // import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/
 // mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 
@@ -42,9 +42,15 @@ import { cleanPolygonPointsArray } from '../../../../canvas/objects/polygon/alte
 // }
 
 function initiateAddPolygonPointsEvents(canvas) {
-  if (getRemovingPolygonPointsState()) {
-    cleanPolygonPointsArray();
-    setRemovingPolygonPointsState(false);
+  if (getAlteringPolygonPointsState()) {
+    if (getRemovingPolygonPointsState()) {
+      cleanPolygonPointsArray();
+      setRemovingPolygonPointsState(false);
+    }
+    if (getAddingPolygonPointsState()) {
+      resetAddPoints();
+      setAddingPolygonPointsState(false);
+    }
   }
   purgeCanvasMouseEvents(canvas);
   assignAddPointsOnExistingPolygonEvents(canvas);

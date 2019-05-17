@@ -27,6 +27,8 @@ function isRightMouseButtonClicked(pointer) {
 // if they can be changed directly instead of searching the canvas
 // highlight all of them differently to indicate that
 // they can all be potentially edited (ghost points)
+// when click to remove points, remove, click add new polygon, click add points, adding replaces
+// longer distance
 
 // disallow the creation of a new polygon with 1 point
 // keep polygon points when adding points and clicked the same button or remove button
