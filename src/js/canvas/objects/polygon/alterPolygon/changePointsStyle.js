@@ -65,7 +65,7 @@ function changeObjectsToPolygonPointsRemovaleImpl(canvas) {
       prepareObjectsForEditablePolygonPoints(iteratedObj);
       if (iteratedObj.shapeName === 'point') {
         iteratedObj.set(polygonProperties.removablePoint);
-        polygonPoints.push(iteratedObj);
+        polygonPoints[iteratedObj.pointId] = iteratedObj;
       }
     });
     canvas.renderAll();

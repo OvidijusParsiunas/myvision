@@ -83,7 +83,6 @@ function resetEditingPolygonPoints() {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'initialAddPoint') {
       iteratedObj.shapeName = 'point';
-      canvas.sendToBack(iteratedObj);
     }
   });
   canvas.renderAll();
