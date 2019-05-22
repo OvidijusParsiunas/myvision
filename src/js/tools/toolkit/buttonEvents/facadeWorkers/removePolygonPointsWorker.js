@@ -59,7 +59,8 @@ function initiateRemovePolygonPointsEvents(canvas) {
         resetAddPoints();
       }
       setAddingPolygonPointsState(false);
-    } else if (!assignedEvents) {
+    }
+    if (!assignedEvents) {
       purgeCanvasMouseEvents(canvas);
       assignRemovePointsEvents(canvas);
     }
