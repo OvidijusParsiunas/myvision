@@ -12,7 +12,7 @@ import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseE
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import setDefaultCursorMode from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
-import { resetAddPoints } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import { resetAddPoints, isAddingPointsToPolygon } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 
 function setRemovePointsCursorMode(canvas) {
   const drawing = isDrawingInProgress();
@@ -23,12 +23,12 @@ function setRemovePointsCursorMode(canvas) {
   }
 }
 
-function assignRemovePointsEvents(canvas) {
+function assignRemovePointsEvents(canvas, interruptedAddPoints) {
   const drawing = isDrawingInProgress();
   if (drawing) {
     assignRemovePointsOnDrawPolygonEvents(canvas);
   } else if (!drawing) {
-    assignRemovePointsOnExistingPolygonEvents(canvas);
+    assignRemovePointsOnExistingPolygonEvents(canvas, interruptedAddPoints);
   }
 }
 
@@ -48,12 +48,21 @@ function discardRemovePointsEvents(canvas) {
 
 function initiateRemovePolygonPointsEvents(canvas) {
   if (!getRemovingPolygonPointsState()) {
+    let assignedEvents = false;
     if (getAddingPolygonPointsState()) {
-      resetAddPoints();
+      if (isAddingPointsToPolygon()) {
+        resetAddPoints();
+        purgeCanvasMouseEvents(canvas);
+        assignRemovePointsEvents(canvas, true);
+        assignedEvents = true;
+      } else {
+        resetAddPoints();
+      }
       setAddingPolygonPointsState(false);
+    } else if (!assignedEvents) {
+      purgeCanvasMouseEvents(canvas);
+      assignRemovePointsEvents(canvas);
     }
-    purgeCanvasMouseEvents(canvas);
-    assignRemovePointsEvents(canvas);
     setRemovePointsCursorMode(canvas);
     setDefaultState(false);
     setRemovingPolygonPointsState(true);

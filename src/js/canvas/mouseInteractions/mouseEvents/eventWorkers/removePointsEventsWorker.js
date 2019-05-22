@@ -9,11 +9,15 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let removedPolygonPoints = false;
+let interruptedAddPoints = false;
 
-function setRemovablePointsEventsCanvas(canvasObj) {
+function setRemovablePointsEventsCanvas(canvasObj, interruptedAddPointsArg) {
   changeExistingPolygonPointsToRemovable();
   canvas = canvasObj;
   selectedPolygonId = getPolygonIdIfEditing();
+  if (interruptedAddPointsArg) {
+    interruptedAddPoints = true;
+  }
 }
 
 function prepareToEditPolygonPoints(event) {
@@ -28,8 +32,12 @@ function prepareToEditPolygonPoints(event) {
 }
 
 function setPolygonNotEditableOnClick() {
-  removePolygonPoints();
-  selectedPolygonId = null;
+  if (!interruptedAddPoints) {
+    removePolygonPoints();
+    selectedPolygonId = null;
+  } else {
+    interruptedAddPoints = false;
+  }
 }
 
 function pointMouseDownEvents(event) {
@@ -55,6 +63,10 @@ function pointMouseOverEvents(event) {
 }
 
 function pointMouseUpEvents(event) {
+  console.log('if selected another and up on the same one, should remain');
+  // bug where creating two new polygons, selecting remove, selecting one and dragging it is allowed
+  // selecting first, and up on another should bring it to another
+  console.log('logic here to change if upon selecting, the same one is output')
   if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
     // subset can be reused
     prepareToEditPolygonPoints(event);

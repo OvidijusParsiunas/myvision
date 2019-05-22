@@ -189,6 +189,10 @@ function resetAddPointPropertiesImpl() {
   activeMouseHoverFunction = initialMouseOverEventsPlaceHolderFunction;
 }
 
+function isAddingPointsToPolygonImpl() {
+  return activeLine;
+}
+
 export {
   initializeAddNewPointsImpl,
   addFirstPointImpl,
@@ -198,6 +202,7 @@ export {
   moveAddablePointImpl,
   addPointsMouseHoverImpl,
   resetAddPointPropertiesImpl,
+  isAddingPointsToPolygonImpl,
   clearAllAddPointsDataImpl,
   resetAddPointsImpl,
 };
