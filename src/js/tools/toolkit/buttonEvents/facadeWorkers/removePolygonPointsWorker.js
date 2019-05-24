@@ -46,6 +46,7 @@ function discardRemovePointsEvents(canvas) {
   }
 }
 
+// split up to more readable
 function initiateRemovePolygonPointsEvents(canvas) {
   if (!getRemovingPolygonPointsState()) {
     let assignedEvents = false;

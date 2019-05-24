@@ -10,6 +10,8 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let removedPolygonPoints = false;
+let mouseDownClicked = false;
+let selectedNothing = true;
 
 function generateNewPointsIfInterruptedAddPoints(canvasObj, interruptedAddPoints) {
   if (interruptedAddPoints) {
@@ -54,26 +56,40 @@ function pointMouseDownEvents(event) {
       }
       preventActiveObjectsAppearInFront(canvas);
     }
+  } else {
+    selectedNothing = true;
   }
 }
 
 function pointMouseOverEvents(event) {
-  if (event.target && event.target.shapeName === 'point') {
-    event.target.stroke = 'red';
-    canvas.renderAll();
+  if (event.target) {
+    if (mouseDownClicked && event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+      mouseDownClicked = false;
+      prepareToEditPolygonPoints(event);
+    } else if (event.target.shapeName === 'point') {
+      event.target.stroke = 'red';
+      canvas.renderAll();
+    }
   }
+  mouseDownClicked = false;
 }
 
 function pointMouseUpEvents(event) {
   console.log('if selected another and up on the same one, should remain');
   // bug where creating two new polygons, selecting remove, selecting one and dragging it is allowed
-  // selecting first, and up on another should bring it to another
-  if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
-    // subset can be reused
-    prepareToEditPolygonPoints(event);
+  // selecting first, and up on another should bring points to that polygon
+  // clicking on remove point then mouse down on empty and up on polygon, and repeat again
+  if (event.target && event.target.shapeName === 'polygon') {
+    if (selectedNothing) {
+      prepareToEditPolygonPoints(event);
+    } else if (newPolygonSelected) {
+      mouseDownClicked = true;
+      newPolygonSelected = false;
+    }
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     setPolygonNotEditableOnClick();
   }
+  selectedNothing = false;
 }
 
 function pointMouseOutEvents(event) {
