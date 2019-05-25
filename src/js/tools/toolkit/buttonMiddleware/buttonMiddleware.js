@@ -8,6 +8,11 @@ function interruptAllCanvasEventsBeforeFunc(func) {
   if (func) func();
 }
 
+function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
+  interruptAllCanvasEvents();
+  funcs.forEach((func) => { func(); });
+}
+
 function interruptCanvasEventsNoPointRemovalBeforeFunc(func) {
   interruptCanvasEventsNoPolygonPointRemoval();
   if (func) func();
@@ -18,9 +23,10 @@ function interruptCanvasEventsAfterFunc(...funcs) {
   interruptAllCanvasEvents();
 }
 
-function interruptCanvasEventsBeforeFuncWParams(placeHolder, func, input) {
+function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) {
   interruptAllCanvasEvents();
-  if (func) func(input);
+  funcObj.resetCanvasEventsToDefault();
+  funcObj.uploadImageBtnClick(input);
 }
 
 function doNothingIfLabellingInProgress(func) {
@@ -37,11 +43,11 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 }
 
 export {
-  interruptAllCanvasEventsBeforeFunc,
-  interruptCanvasEventsAfterFunc,
   doNothingIfLabellingInProgress,
-  // rename
-  interruptCanvasEventsBeforeFuncWParams,
+  interruptCanvasEventsAfterFunc,
+  interruptAllCanvasEventsBeforeFunc,
+  interruptAllCanvasEventsBeforeFuncWInputs,
+  interruptAllCanvasEventsBeforeMultipleFunc,
   interruptCanvasEventsNoPointRemovalBeforeFunc,
   interruptAllCanvasEventsIfLabellingInProgress,
 };

@@ -1,6 +1,7 @@
 import polygonProperties from '../../objects/polygon/properties';
 
 // change - objectsProperties
+// follow pattern used in remove points
 function changeOjectPropertiesForChoosingInitialPoint(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'bndBox') {

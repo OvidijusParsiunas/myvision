@@ -6,8 +6,8 @@ import {
 } from './buttonEvents/facade';
 import {
   interruptAllCanvasEventsBeforeFunc, interruptCanvasEventsAfterFunc,
-  interruptCanvasEventsBeforeFuncWParams, doNothingIfLabellingInProgress,
-  interruptCanvasEventsNoPointRemovalBeforeFunc,
+  interruptAllCanvasEventsBeforeFuncWInputs, doNothingIfLabellingInProgress,
+  interruptCanvasEventsNoPointRemovalBeforeFunc, interruptAllCanvasEventsBeforeMultipleFunc,
 } from './buttonMiddleware/buttonMiddleware';
 
 function assignToolkitButtonEvents() {
@@ -15,9 +15,11 @@ function assignToolkitButtonEvents() {
   window.createNewPolygon = interruptAllCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
   window.addPoints = interruptCanvasEventsNoPointRemovalBeforeFunc.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
-  window.downloadXML = interruptAllCanvasEventsBeforeFunc.bind(this, downloadXMLBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
-  window.uploadImage = interruptCanvasEventsBeforeFuncWParams.bind(this, this, uploadImageBtnClick);
+  window.downloadXML = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
+    resetCanvasEventsToDefault, downloadXMLBtnClick);
+  window.uploadImage = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
+    { uploadImageBtnClick, resetCanvasEventsToDefault });
   window.removeShape = interruptCanvasEventsAfterFunc.bind(this,
     removeActiveShapeBtnClick, resetCanvasEventsToDefault);
 }

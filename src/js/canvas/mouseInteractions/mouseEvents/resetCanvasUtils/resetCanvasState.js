@@ -1,6 +1,6 @@
 import {
   changePolygonPointsPropertiesToDefault, removePolygonPoints,
-  cleanPolygonPointsArray, resetAddPoints,
+  cleanPolygonPointsArray, clearAllAddPointsData,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { clearPolygonData } from '../../../objects/polygon/polygon';
 import { cancelLabellingProcess } from '../../../../tools/labellerPopUp/buttonsEvents';
@@ -19,7 +19,7 @@ function interruptCanvasEventsNoPolygonPointRemoval() {
       cleanPolygonPointsArray();
     }
     if (getAddingPolygonPointsState()) {
-      resetAddPoints();
+      clearAllAddPointsData();
     }
     changePolygonPointsPropertiesToDefault();
     setAlteringPolygonPointsState(false);

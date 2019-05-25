@@ -71,6 +71,7 @@ function changeDrawingPolygonPointsToRemovable() {
   polygonPoints = changeDrawingPolygonPointsToRemovableImpl(canvas);
 }
 
+// change existing objects for removable points
 function changeExistingPolygonPointsToRemovable(canvasObj) {
   polygonPoints = changeObjectsToPolygonPointsRemovaleImpl(canvasObj);
 }

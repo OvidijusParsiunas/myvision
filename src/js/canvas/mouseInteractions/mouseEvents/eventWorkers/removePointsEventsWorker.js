@@ -69,7 +69,6 @@ function pointMouseOverEvents(event) {
 }
 
 function pointMouseUpEvents(event) {
-  // remove points button and left click on one then dragon on another, repeat and bug
   if (event.target && event.target.shapeName === 'polygon' && (selectedNothing || newPolygonSelected)) {
     // subset can be reused
     prepareToEditPolygonPoints(event);

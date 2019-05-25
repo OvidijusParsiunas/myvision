@@ -12,6 +12,7 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let addingPoints = false;
+let selectedNothing = false;
 let addFirstPointMode = false;
 let coordinatesOfLastMouseHover = null;
 
@@ -26,15 +27,16 @@ function isRightMouseButtonClicked(pointer) {
 // make sure that everything that uses change returns polygon points and see
 // if they can be changed directly instead of searching the canvas
 // highlight all of them differently to indicate that
-// they can all be potentially edited (ghost points)
+// they can all be potentially edited (when none are selected)
 // when click to remove points, remove, click add new polygon, click add points, adding replaces
 // longer distance
 
+// add polygon points, cancel, then add again and try to move the points
+// issue with download xml
+
 // disallow the creation of a new polygon with 1 point
-// keep polygon points when adding points and clicked the same button or remove button
 // when finished adding points, then add again and click inside a polygon, the initial point
 // turns green
-// cancel add points by the other buttons
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,
 //  the add points doesn't work properly when overlapping
@@ -88,6 +90,9 @@ function pointMouseDownEvents(event) {
         }
         preventActiveObjectsAppearInFront(canvas);
       }
+      selectedNothing = false;
+    } else {
+      selectedNothing = true;
     }
   } else if (addFirstPointMode) {
     if (!event.target || (event.target && (event.target.shapeName !== 'point' && event.target.shapeName !== 'initialAddPoint'))) {
@@ -108,8 +113,10 @@ function pointMouseDownEvents(event) {
 }
 
 function pointMouseUpEvents(event) {
-  if (event.target && event.target.shapeName === 'polygon' && newPolygonSelected) {
+  if (event.target && event.target.shapeName === 'polygon' && (newPolygonSelected || selectedNothing)) {
     prepareToAddPolygonPoints(event);
+    selectedNothing = false;
+    newPolygonSelected = false;
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     if (!addingPoints) {
       removePolygonPoints();
