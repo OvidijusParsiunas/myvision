@@ -83,10 +83,8 @@ function pointMouseDownEvents(event) {
         addingPoints = true;
         addFirstPointMode = true;
       } else {
-        if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
-          newPolygonSelected = true;
-        } else {
-          newPolygonSelected = false;
+        if (event.target.shapeName === 'polygon') {
+          newPolygonSelected = (event.target.id !== selectedPolygonId);
         }
         preventActiveObjectsAppearInFront(canvas);
       }

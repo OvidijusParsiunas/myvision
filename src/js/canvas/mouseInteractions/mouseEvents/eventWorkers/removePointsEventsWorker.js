@@ -17,7 +17,7 @@ function generateNewPointsIfInterruptedAddPoints(canvasObj, interruptedAddPoints
     removePolygonPoints();
     setEditablePolygon(canvasObj, getPolygonIfEditing(), true);
   } else {
-    changeExistingPolygonPointsToRemovable();
+    changeExistingPolygonPointsToRemovable(canvasObj);
   }
 }
 
@@ -69,7 +69,6 @@ function pointMouseOverEvents(event) {
 }
 
 function pointMouseUpEvents(event) {
-  // bug where creating two new polygons, selecting remove, selecting one and dragging it is allowed
   // remove points button and left click on one then dragon on another, repeat and bug
   if (event.target && event.target.shapeName === 'polygon' && (selectedNothing || newPolygonSelected)) {
     // subset can be reused
