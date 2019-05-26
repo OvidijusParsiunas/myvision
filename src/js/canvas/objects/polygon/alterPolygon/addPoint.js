@@ -94,6 +94,7 @@ function clearTempPoints() {
     canvas.remove(point);
   });
   pointsArray = [];
+  tempPointIndex = 0;
 }
 
 function clearLines() {

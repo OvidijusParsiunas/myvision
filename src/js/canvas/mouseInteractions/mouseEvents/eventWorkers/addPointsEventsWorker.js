@@ -31,7 +31,6 @@ function isRightMouseButtonClicked(pointer) {
 // when click to remove points, remove, click add new polygon, click add points, adding replaces
 // longer distance
 
-// add polygon points, cancel, then add again and try to move the points
 // issue with download xml
 
 // disallow the creation of a new polygon with 1 point
