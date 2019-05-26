@@ -21,4 +21,8 @@ function mouseHover(canvas, events) {
   canvas.renderAll();
 }
 
-export { setAddPointsMode, mouseHover };
+function setHoverCursorOnMouseOut(canvas, cursor) {
+  canvas.hoverCursor = cursor;
+}
+
+export { setAddPointsMode, mouseHover, setHoverCursorOnMouseOut };

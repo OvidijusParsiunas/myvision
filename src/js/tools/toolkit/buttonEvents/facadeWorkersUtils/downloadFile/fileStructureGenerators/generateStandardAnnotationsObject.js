@@ -15,6 +15,7 @@ function getImageDetails(canvas, fileStatus) {
   };
 }
 
+// this will need to be fixed when extracting graph details for a new xml file
 function getBoundingBoxCoordinates(canvas) {
   let shape = {};
   canvas.forEachObject((object) => {

@@ -38,6 +38,11 @@ function createNewLine(...coordinates) {
   canvas.renderAll();
 }
 
+function resetLineToNotStackImpl() {
+  canvas.bringToFront(initialPoint);
+  canvas.renderAll();
+}
+
 function initializeAddNewPointsImpl(event, canvasObj) {
   canvas = canvasObj;
   setAddPointsMode(canvas, event.target);
@@ -205,5 +210,6 @@ export {
   resetAddPointPropertiesImpl,
   isAddingPointsToPolygonImpl,
   clearAllAddPointsDataImpl,
+  resetLineToNotStackImpl,
   resetAddPointsImpl,
 };
