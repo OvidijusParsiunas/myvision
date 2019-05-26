@@ -3,7 +3,7 @@ import {
   removePolygonPoints, getPolygonEditingStatus, setEditablePolygon,
   getPolygonIdIfEditing, initializeAddNewPoints, addFirstPoint,
   addPoint, completePolygon, drawLineOnMouseMove, moveAddablePoint,
-  addPointsMouseHover, resetAddPointProperties, resetLineToNotStack,
+  addPointsMouseHover, resetAddPointProperties,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { resetCanvasEventsToDefault } from '../resetCanvasUtils/resetCanvasEventsFacade';
@@ -98,8 +98,6 @@ function pointMouseDownEvents(event) {
       if (!isRightMouseButtonClicked(pointer)) {
         addFirstPoint(event);
         addFirstPointMode = false;
-      } else {
-        resetLineToNotStack(event);
       }
     }
   } else if (event.target && event.target.shapeName === 'point') {

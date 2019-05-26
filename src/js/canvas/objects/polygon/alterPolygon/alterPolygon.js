@@ -6,7 +6,7 @@ import {
   initializeAddNewPointsImpl, addFirstPointImpl, resetAddPointPropertiesImpl,
   completePolygonImpl, drawLineImpl, clearAllAddPointsDataImpl,
   moveAddablePointImpl, addPointsMouseHoverImpl, addPointImpl,
-  resetAddPointsImpl, isAddingPointsToPolygonImpl, resetLineToNotStackImpl,
+  resetAddPointsImpl, isAddingPointsToPolygonImpl,
 } from './addPoint';
 import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint';
 import { removePolygonPointImpl, cleanPolygonPointsArrayImpl } from './removePoint';
@@ -139,10 +139,6 @@ function drawLineOnMouseMove(pointer) {
   drawLineImpl(pointer);
 }
 
-function resetLineToNotStack(event) {
-  resetLineToNotStackImpl(event);
-}
-
 function moveAddablePoint(event) {
   moveAddablePointImpl(event);
 }
@@ -203,5 +199,5 @@ export {
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
   addPointsMouseHover, resetAddPointProperties,
   changeExistingPolygonPointsToRemovable, clearAllAddPointsData,
-  resetAddPoints, isAddingPointsToPolygon, resetLineToNotStack,
+  resetAddPoints, isAddingPointsToPolygon,
 };

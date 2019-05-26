@@ -22,12 +22,10 @@ function initiateAddPolygonPointsEvents(canvas) {
     setDefaultState(false);
     setAddingPolygonPointsState(true);
   } else if (isAddingPointsToPolygon()) {
-    resetAddPoints();
     purgeCanvasMouseEvents(canvas);
     assignAddPointsOnExistingPolygonEvents(canvas);
+    resetAddPoints();
     setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
-    setDefaultState(false);
-    setAddingPolygonPointsState(true);
   } else {
     resetAddPoints();
     purgeCanvasMouseEvents(canvas);
