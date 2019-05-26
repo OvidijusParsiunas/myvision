@@ -15,11 +15,11 @@ function interruptCanvasEventsNoPolygonPointRemoval() {
   cancelLabellingProcess();
   removeEditedPolygonId();
   if (getAlteringPolygonPointsState()) {
-    if (getRemovingPolygonPointsState()) {
-      cleanPolygonPointsArray();
-    }
     if (getAddingPolygonPointsState()) {
       clearAllAddPointsData();
+    }
+    if (getRemovingPolygonPointsState()) {
+      cleanPolygonPointsArray();
     }
     changePolygonPointsPropertiesToDefault();
     setAlteringPolygonPointsState(false);
@@ -27,6 +27,9 @@ function interruptCanvasEventsNoPolygonPointRemoval() {
 }
 
 function interruptAllCanvasEvents() {
+  if (getRemovingPolygonPointsState()) {
+    cleanPolygonPointsArray();
+  }
   removePolygonPoints();
   interruptCanvasEventsNoPolygonPointRemoval();
 }

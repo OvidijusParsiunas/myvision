@@ -29,8 +29,8 @@ function isRightMouseButtonClicked(pointer) {
 // if they can be changed directly instead of searching the canvas
 // highlight all of them differently to indicate that
 // they can all be potentially edited (when none are selected)
-// when click to remove points, remove, click add new polygon, click add points, adding replaces
-// longer distance
+// highlight point when hovering to complete polygon after adding
+// when creating new polygon, do not have crosshair movable cursor on hovering initial point
 
 // disallow the creation of a new polygon with 1 point
 // when clicking on rectangle, doesn't stay on top of other polygons
