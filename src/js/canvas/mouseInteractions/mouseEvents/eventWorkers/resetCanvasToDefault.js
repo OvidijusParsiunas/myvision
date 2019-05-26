@@ -1,7 +1,7 @@
 import { resetCanvasEventsToDefault } from '../../../../tools/toolkit/buttonEvents/facade';
 
-function callRestCanvasEventsToDefault() {
+function callResetCanvasEventsToDefault() {
   resetCanvasEventsToDefault();
 }
 
-export { callRestCanvasEventsToDefault as default };
+export { callResetCanvasEventsToDefault as default };

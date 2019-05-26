@@ -7,13 +7,13 @@ import {
 import {
   interruptAllCanvasEventsBeforeFunc, interruptCanvasEventsAfterFunc,
   interruptAllCanvasEventsBeforeFuncWInputs, doNothingIfLabellingInProgress,
-  interruptCanvasEventsNoPointRemovalBeforeFunc, interruptAllCanvasEventsBeforeMultipleFunc,
+  doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
 } from './buttonMiddleware/buttonMiddleware';
 
 function assignToolkitButtonEvents() {
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = interruptAllCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
-  window.addPoints = interruptCanvasEventsNoPointRemovalBeforeFunc.bind(this, addPointsBtnClick);
+  window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
   window.downloadXML = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,

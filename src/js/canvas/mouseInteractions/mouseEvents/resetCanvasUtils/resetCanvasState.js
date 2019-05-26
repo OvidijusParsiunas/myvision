@@ -34,4 +34,10 @@ function interruptAllCanvasEvents() {
   interruptCanvasEventsNoPolygonPointRemoval();
 }
 
-export { interruptCanvasEventsNoPolygonPointRemoval, interruptAllCanvasEvents };
+function interruptCanvasToStartAddPoints() {
+  if (!getAddingPolygonPointsState()) {
+    interruptCanvasEventsNoPolygonPointRemoval();
+  }
+}
+
+export { interruptCanvasToStartAddPoints, interruptAllCanvasEvents };

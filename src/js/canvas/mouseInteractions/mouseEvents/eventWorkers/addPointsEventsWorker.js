@@ -32,6 +32,8 @@ function isRightMouseButtonClicked(pointer) {
 // highlight point when hovering to complete polygon after adding
 // when creating new polygon, do not have crosshair movable cursor on hovering initial point
 
+// creating new polygon, then remove certain points and hit create new again
+
 // disallow the creation of a new polygon with 1 point
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,
