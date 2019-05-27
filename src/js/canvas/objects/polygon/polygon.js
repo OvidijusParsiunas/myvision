@@ -130,7 +130,9 @@ function instantiatePolygon(event) {
   const pointer = canvas.getPointer(event.e);
   if (!isRightMouseButtonClicked(pointer)) {
     if (event.target && event.target.shapeName && event.target.shapeName === 'firstPoint') {
-      generatePolygon(pointer);
+      if (pointArray.length > 2) {
+        generatePolygon(pointer);
+      }
     } else if (polygonMode) {
       addPoint(pointer);
     }
