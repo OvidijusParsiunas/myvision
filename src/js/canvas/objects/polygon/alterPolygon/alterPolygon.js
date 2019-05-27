@@ -9,7 +9,7 @@ import {
   resetAddPointsImpl, isAddingPointsToPolygonImpl,
 } from './addPoint';
 import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint';
-import { removePolygonPointImpl, cleanPolygonPointsArrayImpl } from './removePoint';
+import { removePolygonPointImpl, getCleanPolygonPointsArrayImpl } from './removePoint';
 import {
   displayPolygonPointsWithStyleImpl,
   changeDrawingPolygonPointsToRemovableImpl,
@@ -77,7 +77,7 @@ function changeExistingPolygonPointsToRemovable(canvasObj) {
 }
 
 function cleanPolygonPointsArray() {
-  polygonPoints = cleanPolygonPointsArrayImpl(polygon, polygonPoints);
+  polygonPoints = getCleanPolygonPointsArrayImpl(polygon, polygonPoints);
 }
 
 function removePolygonPoints() {

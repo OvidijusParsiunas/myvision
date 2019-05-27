@@ -1,3 +1,6 @@
+import fabric from 'fabric';
+import polygonProperties from '../properties';
+
 function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
   if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
     if (Object.keys(polygon.points[pointId]).length === 0) {
@@ -45,24 +48,29 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
   }
 }
 
-function cleanPolygonPointsArrayImpl(polygon, polygonPoints) {
-  if (!polygon || !polygonPoints.length) return [];
+function polygonPointsToCanvasPointsArray(polygonPoints) {
+  const canvasPoints = [];
+  let pointId = 0;
+  polygonPoints.forEach((point) => {
+    const pointObj = new fabric.Circle(polygonProperties.removablePolygonPoint(pointId, point));
+    canvasPoints.push(pointObj);
+    pointId += 1;
+  });
+  return canvasPoints;
+}
+
+function getCleanPolygonPointsArrayImpl(polygon) {
+  if (!polygon) return [];
   const directPolygonPoints = polygon.points;
   const newDirectPolygonPoints = [];
-  const newPolygonPoints = [];
-  let currentPointId = 0;
   for (let i = 0; i < directPolygonPoints.length; i += 1) {
     if (Object.keys(directPolygonPoints[i]).length !== 0) {
       newDirectPolygonPoints.push(directPolygonPoints[i]);
-      const pointWithProps = polygonPoints[i];
-      pointWithProps.pointId = currentPointId;
-      newPolygonPoints.push(pointWithProps);
-      currentPointId += 1;
     }
   }
   polygon.set('points', newDirectPolygonPoints);
   polygon.numberOfNullPolygonPoints = 0;
-  return newPolygonPoints;
+  return polygonPointsToCanvasPointsArray(newDirectPolygonPoints);
 }
 
-export { removePolygonPointImpl, cleanPolygonPointsArrayImpl };
+export { removePolygonPointImpl, getCleanPolygonPointsArrayImpl };
