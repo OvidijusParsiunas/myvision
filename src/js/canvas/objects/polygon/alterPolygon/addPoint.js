@@ -145,6 +145,8 @@ function addNewPointsByTheirAddDirection(newPointsArray, firstPointId, lastPoint
 }
 
 function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
+  console.log(originalPointsArray);
+  console.log(polygon);
   const derefPointsArray = originalPointsArray.slice();
   let newPointsArray = [];
   let startingIdOfNewArray = Math.min(initialPoint.pointId, finalPoint.pointId);

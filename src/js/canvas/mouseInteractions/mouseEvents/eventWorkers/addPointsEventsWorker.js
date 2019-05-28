@@ -34,7 +34,6 @@ function isRightMouseButtonClicked(pointer) {
 
 // stacking issue where polygons are detected even when another one active
 
-// disallow the creation of a new polygon with 1 point
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,
 //  the add points doesn't work properly when overlapping

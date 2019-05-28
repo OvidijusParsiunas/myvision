@@ -68,6 +68,18 @@ function generatePolygon(pointer) {
   showLabelPopUp(pointer.x, pointer.y);
 }
 
+/* initial point should begin with one color and switch when there are 3
+ points to indicate that a new polygon can be created
+let points = [pointer.x, pointer.y, pointer.x, pointer.y];
+if (pointArray.length === 0) {
+  const polygon = new fabric.Polygon(points, polygonProperties.newTempPolygon);
+  canvas.add(polygon);
+}
+if (pointArray.length === 2) {
+  pointArray[0].set(polygonProperties.firstPoint);
+}
+*/
+
 function addPoint(pointer) {
   const point = new fabric.Circle(polygonProperties.newPoint(pointId, pointer));
   pointId += 1;

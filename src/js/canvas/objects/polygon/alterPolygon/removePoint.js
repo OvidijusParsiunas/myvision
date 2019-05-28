@@ -48,29 +48,54 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
   }
 }
 
-function polygonPointsToCanvasPointsArray(polygonPoints) {
-  const canvasPoints = [];
+function polygonPointsToObjects(polygonPoints, noNullPointsRef) {
   let pointId = 0;
-  polygonPoints.forEach((point) => {
-    const pointObj = new fabric.Circle(polygonProperties.removablePolygonPoint(pointId, point));
-    canvasPoints.push(pointObj);
+  polygonPoints.forEach(() => {
+    noNullPointsRef[pointId].pointId = pointId;
     pointId += 1;
   });
-  return canvasPoints;
+  return noNullPointsRef;
 }
 
-function getCleanPolygonPointsArrayImpl(polygon) {
+function getCleanPolygonPointsArrayImpl(polygon, pointsObjects) {
+  let noNullPointsRef = [];
+  pointsObjects.forEach((point) => {
+    if (point) noNullPointsRef.push(point);
+  });
   if (!polygon) return [];
-  const directPolygonPoints = polygon.points;
-  const newDirectPolygonPoints = [];
-  for (let i = 0; i < directPolygonPoints.length; i += 1) {
-    if (Object.keys(directPolygonPoints[i]).length !== 0) {
-      newDirectPolygonPoints.push(directPolygonPoints[i]);
+  const polygonPoints = polygon.points;
+  const noNullPolygonPoints = [];
+  for (let i = 0; i < polygonPoints.length; i += 1) {
+    if (Object.keys(polygonPoints[i]).length !== 0) {
+      noNullPolygonPoints.push(polygonPoints[i]);
     }
   }
-  polygon.set('points', newDirectPolygonPoints);
+  polygon.set('points', noNullPolygonPoints);
   polygon.numberOfNullPolygonPoints = 0;
-  return polygonPointsToCanvasPointsArray(newDirectPolygonPoints);
+  noNullPointsRef = polygonPointsToObjects(noNullPolygonPoints, noNullPointsRef);
+  return noNullPointsRef;
 }
 
+/* function getCleanPolygonPointsArrayImpl(polygon, pointObjects) {
+  const noNullPointObjects = [];
+  pointObjects.forEach((point) => {
+    if (point) noNullPointObjects.push(point);
+  });
+  pointObjects = [];
+  if (!polygon) return [];
+  const polygonPoints = polygon.points;
+  const noNullPolygonPoints = [];
+  for (let i = 0; i < polygonPoints.length; i += 1) {
+    if (Object.keys(polygonPoints[i]).length !== 0) {
+      noNullPolygonPoints.push(polygonPoints[i]);
+    }
+  }
+  polygon.set('points', noNullPolygonPoints);
+  polygon.numberOfNullPolygonPoints = 0;
+  for (let i = 0; i < noNullPointObjects.length; i += 1) {
+    noNullPointObjects[i].pointId = noNullPointObjects[i].pointId;
+  }
+  return noNullPointObjects;
+}
+*/
 export { removePolygonPointImpl, getCleanPolygonPointsArrayImpl };
