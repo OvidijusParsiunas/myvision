@@ -48,17 +48,17 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
   }
 }
 
-function polygonPointsToObjects(polygonPoints, noNullPointsRef) {
+function refreshPolygonPointIds(noNullPointsRef) {
   let pointId = 0;
-  polygonPoints.forEach(() => {
-    noNullPointsRef[pointId].pointId = pointId;
+  noNullPointsRef.forEach((point) => {
+    point.pointId = pointId;
     pointId += 1;
   });
   return noNullPointsRef;
 }
 
 function getCleanPolygonPointsArrayImpl(polygon, pointsObjects) {
-  let noNullPointsRef = [];
+  const noNullPointsRef = [];
   pointsObjects.forEach((point) => {
     if (point) noNullPointsRef.push(point);
   });
@@ -72,7 +72,7 @@ function getCleanPolygonPointsArrayImpl(polygon, pointsObjects) {
   }
   polygon.set('points', noNullPolygonPoints);
   polygon.numberOfNullPolygonPoints = 0;
-  noNullPointsRef = polygonPointsToObjects(noNullPolygonPoints, noNullPointsRef);
+  refreshPolygonPointIds(noNullPointsRef);
   return noNullPointsRef;
 }
 
