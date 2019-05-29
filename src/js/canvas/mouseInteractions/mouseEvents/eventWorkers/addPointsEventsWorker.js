@@ -32,8 +32,11 @@ function isRightMouseButtonClicked(pointer) {
 // highlight point when hovering to complete polygon after adding
 // when creating new polygon, do not have crosshair movable cursor on hovering initial point
 
-// stacking issue where polygons are detected even when another one active
+// Make sure this is properly needed by doing tests
+// when finished adding points, return to editable
+// when delete shape, keep the same mode
 
+// stacking issue where polygons are detected even when another one active
 // when clicking on rectangle, doesn't stay on top of other polygons
 // when selecting add points mode, and selecting a polygon then another,
 //  the add points doesn't work properly when overlapping
