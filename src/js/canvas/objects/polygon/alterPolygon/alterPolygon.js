@@ -165,6 +165,7 @@ function isAddingPointsToPolygon() {
 
 function completePolygon(finalPoint) {
   completePolygonImpl(polygon, polygon.points, finalPoint);
+  polygonPoints = [];
   resetPolygonSelectableArea();
   setPolygonEditingStatus(false);
 }

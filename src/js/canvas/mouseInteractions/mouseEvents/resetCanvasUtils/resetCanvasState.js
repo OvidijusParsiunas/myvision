@@ -19,6 +19,8 @@ function interruptCanvasEventsNoPolygonPointRemoval() {
       cleanPolygonPointsArray();
     }
     if (getAddingPolygonPointsState()) {
+      // check when exactly is this being called
+      // after removing and moving points add doesn't add new points to longest
       clearAllAddPointsData();
     }
     changePolygonPointsPropertiesToDefault();
