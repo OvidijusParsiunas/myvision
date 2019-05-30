@@ -5,9 +5,10 @@ import {
   uploadImageBtnClick, resetCanvasEventsToDefault,
 } from './buttonEvents/facade';
 import {
-  interruptAllCanvasEventsBeforeFunc, interruptCanvasEventsAfterFunc,
-  interruptAllCanvasEventsBeforeFuncWInputs, doNothingIfLabellingInProgress,
-  doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
+  interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
+  doNothingIfLabellingInProgress, interruptAllCanvasEventsBeforeMultipleFunc,
+  doNothingIfLabellingOrAddingNewPoints, interruptLabellingBeforeFunc,
+
 } from './buttonMiddleware/buttonMiddleware';
 
 function assignToolkitButtonEvents() {
@@ -20,8 +21,7 @@ function assignToolkitButtonEvents() {
     resetCanvasEventsToDefault, downloadXMLBtnClick);
   window.uploadImage = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
     { uploadImageBtnClick, resetCanvasEventsToDefault });
-  window.removeShape = interruptCanvasEventsAfterFunc.bind(this,
-    removeActiveShapeBtnClick, resetCanvasEventsToDefault);
+  window.removeShape = interruptLabellingBeforeFunc.bind(this, removeActiveShapeBtnClick);
 }
 
 export { assignToolkitButtonEvents as default };

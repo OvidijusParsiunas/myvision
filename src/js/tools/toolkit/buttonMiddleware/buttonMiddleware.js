@@ -1,6 +1,6 @@
 import { isLabelling } from '../../labellerPopUp/labellingProcess';
 import {
-  interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
+  interruptAllCanvasEvents, interruptCanvasToStartAddPoints, interruptLabelling,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
@@ -13,9 +13,9 @@ function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
   funcs.forEach((func) => { func(); });
 }
 
-function interruptCanvasEventsAfterFunc(...funcs) {
-  funcs.forEach((func) => { func(); });
-  interruptAllCanvasEvents();
+function interruptLabellingBeforeFunc(func) {
+  interruptLabelling();
+  if (func) func();
 }
 
 function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) {
@@ -45,8 +45,8 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 }
 
 export {
+  interruptLabellingBeforeFunc,
   doNothingIfLabellingInProgress,
-  interruptCanvasEventsAfterFunc,
   interruptAllCanvasEventsBeforeFunc,
   doNothingIfLabellingOrAddingNewPoints,
   interruptAllCanvasEventsBeforeFuncWInputs,

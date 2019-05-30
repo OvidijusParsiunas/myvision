@@ -1,5 +1,8 @@
-import { removePolygon, clearAllAddPointsData, isAddingPointsToPolygon } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { setAlteringPolygonPointsState } from '../facadeWorkersUtils/stateManager';
+import {
+  removePolygon, clearAllAddPointsData, isAddingPointsToPolygon, removePolygonPoints,
+} from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import { clearPolygonData } from '../../../../canvas/objects/polygon/polygon';
+import { removeEditedPolygonId } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 
 function initiateActiveShapeEvent(canvas) {
   if (isAddingPointsToPolygon()) {
@@ -10,7 +13,9 @@ function initiateActiveShapeEvent(canvas) {
   } else {
     removePolygon();
   }
-  setAlteringPolygonPointsState(false);
+  removePolygonPoints();
+  clearPolygonData();
+  removeEditedPolygonId();
 }
 
 export { initiateActiveShapeEvent as default };
