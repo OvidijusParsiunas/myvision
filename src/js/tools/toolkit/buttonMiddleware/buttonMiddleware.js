@@ -1,7 +1,8 @@
 import { isLabelling } from '../../labellerPopUp/labellingProcess';
 import {
-  interruptAllCanvasEvents, interruptCanvasToStartAddPoints, interruptLabelling,
+  interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
+import { isDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();
@@ -13,9 +14,13 @@ function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
   funcs.forEach((func) => { func(); });
 }
 
-function interruptLabellingBeforeFunc(func) {
-  interruptLabelling();
-  if (func) func();
+function interruptNewPolygonCreateWthFunc1OrExecFunc2(func1, func2) {
+  if (isDrawingInProgress() || isLabelling()) {
+    interruptAllCanvasEvents();
+    func1();
+  } else if (func2) {
+    func2();
+  }
 }
 
 function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) {
@@ -45,11 +50,11 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 }
 
 export {
-  interruptLabellingBeforeFunc,
   doNothingIfLabellingInProgress,
   interruptAllCanvasEventsBeforeFunc,
   doNothingIfLabellingOrAddingNewPoints,
   interruptAllCanvasEventsBeforeFuncWInputs,
   interruptAllCanvasEventsBeforeMultipleFunc,
+  interruptNewPolygonCreateWthFunc1OrExecFunc2,
   interruptAllCanvasEventsIfLabellingInProgress,
 };

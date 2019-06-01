@@ -12,8 +12,7 @@ import {
   setDefaultState, setRemovingPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
 
-function initiateActiveShapeEvent(canvas) {
-  // when removing point and finished removing all - auto move to add points mode
+function removeActiveShapeEvent(canvas) {
   if (isAddingPointsToPolygon()) {
     purgeCanvasMouseEvents(canvas);
     assignAddPointsOnExistingPolygonEvents(canvas);
@@ -38,4 +37,4 @@ function initiateActiveShapeEvent(canvas) {
   removeEditedPolygonId();
 }
 
-export { initiateActiveShapeEvent as default };
+export { removeActiveShapeEvent as default };

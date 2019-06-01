@@ -37,8 +37,4 @@ function interruptCanvasToStartAddPoints() {
   }
 }
 
-function interruptLabelling() {
-  cancelLabellingProcess();
-}
-
-export { interruptCanvasToStartAddPoints, interruptAllCanvasEvents, interruptLabelling };
+export { interruptCanvasToStartAddPoints, interruptAllCanvasEvents };

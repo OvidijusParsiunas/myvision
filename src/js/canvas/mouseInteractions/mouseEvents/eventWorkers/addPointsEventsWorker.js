@@ -34,7 +34,8 @@ function isRightMouseButtonClicked(pointer) {
 
 // Make sure this is properly needed by doing tests
 // when finished adding points, return to editable
-// when delete shape, keep the same mode
+
+// add remove delete buttons should light up when polygon is selected
 
 // stacking issue where polygons are detected even when another one active
 // when clicking on rectangle, doesn't stay on top of other polygons
