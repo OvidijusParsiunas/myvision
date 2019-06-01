@@ -2,6 +2,7 @@ import {
   instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon, movePoints, resumeDrawCanvasPolygon,
 } from '../../../objects/polygon/polygon';
 
+// should be moved to event worker
 function assignDrawPolygonEvents(canvas, resume) {
   if (!resume) {
     prepareCanvasForNewPolygon(canvas);

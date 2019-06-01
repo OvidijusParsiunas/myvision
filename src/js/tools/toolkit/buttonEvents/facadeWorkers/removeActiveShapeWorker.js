@@ -1,14 +1,19 @@
 import {
   removePolygon, clearAllAddPointsData, isAddingPointsToPolygon, removePolygonPoints,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { clearPolygonData } from '../../../../canvas/objects/polygon/polygon';
+import { clearPolygonData, isDrawingInProgress } from '../../../../canvas/objects/polygon/polygon';
 import { removeEditedPolygonId } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
-import { getAddingPolygonPointsState } from '../facadeWorkersUtils/stateManager';
+import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
+import {
+  getAddingPolygonPointsState, getRemovingPolygonPointsState,
+  setDefaultState, setRemovingPolygonPointsState,
+} from '../facadeWorkersUtils/stateManager';
 
 function initiateActiveShapeEvent(canvas) {
+  // when removing point and finished removing all - auto move to add points mode
   if (isAddingPointsToPolygon()) {
     purgeCanvasMouseEvents(canvas);
     assignAddPointsOnExistingPolygonEvents(canvas);
@@ -17,8 +22,14 @@ function initiateActiveShapeEvent(canvas) {
   } else if (getAddingPolygonPointsState()) {
     clearAllAddPointsData();
   }
-  if (canvas.getActiveObject()) {
+  if (isDrawingInProgress()) {
     canvas.remove(canvas.getActiveObject());
+    if (getRemovingPolygonPointsState()) {
+      purgeCanvasMouseEvents(canvas);
+      assignDrawPolygonEvents(canvas, true);
+      setDefaultState(false);
+      setRemovingPolygonPointsState(true);
+    }
   } else {
     removePolygon();
   }
