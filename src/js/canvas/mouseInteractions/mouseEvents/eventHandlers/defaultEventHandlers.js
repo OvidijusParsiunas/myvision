@@ -1,5 +1,5 @@
 import {
-  polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents,
+  polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents, setBoundingBoxScaled,
   polygonMouseOutEvents, pointMouseOverEvents, setEditPolygonEventObjects,
 } from '../eventWorkers/editPolygonEventsWorker';
 import { boundingBoxScalingEvents, boundingBoxMouseOutEvents } from '../eventWorkers/editBoundingBoxEventsWorker';
@@ -21,6 +21,7 @@ function assignDefaultEvents(canvas, polygonId, addPoints) {
 
   canvas.on('object:scaling', (e) => {
     boundingBoxScalingEvents(e);
+    setBoundingBoxScaled();
   });
 
   canvas.on('mouse:over', (e) => {

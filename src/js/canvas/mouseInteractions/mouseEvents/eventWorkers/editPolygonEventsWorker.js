@@ -12,6 +12,7 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let setEditablePolygonOnClick = null;
+let boundingBoxScaled = false;
 
 function setEditablePolygonOnClickFunc(event) {
   if (getPolygonEditingStatus()) {
@@ -32,6 +33,10 @@ function skipMouseUpEvent() {
     polygonMouseDownEvents(e);
   });
   assignSetEditablePolygonOnClickFunc();
+}
+
+function setBoundingBoxScaled() {
+  boundingBoxScaled = true;
 }
 
 function setEditablePolygonWhenPolygonMoved(event) {
@@ -62,6 +67,7 @@ function polygonMouseDownEvents(event) {
       newPolygonSelected = false;
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+        canvas.bringToFront(event.target);
         newPolygonSelected = true;
       } else {
         newPolygonSelected = false;
@@ -75,7 +81,10 @@ function polygonMouseDownEvents(event) {
 
 // look at this
 function polygonMouseUpEvents(event) {
-  if (polygonMoved) {
+  if (boundingBoxScaled) {
+    canvas.bringToFront(event.target);
+    boundingBoxScaled = false;
+  } else if (polygonMoved) {
     setEditablePolygonWhenPolygonMoved(event);
   } else if (newPolygonSelected) {
     setEditablePolygonOnClick(event);
@@ -135,5 +144,5 @@ export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeEditedPolygonId,
   polygonMouseOutEvents, pointMouseOverEvents,
-  setEditPolygonEventObjects,
+  setEditPolygonEventObjects, setBoundingBoxScaled,
 };
