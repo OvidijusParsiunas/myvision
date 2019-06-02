@@ -15,6 +15,7 @@ function discardAddPointsEvents(canvas) {
 }
 
 function initiateAddPolygonPointsEvents(canvas) {
+  canvas.discardActiveObject();
   if (!getAddingPolygonPointsState()) {
     purgeCanvasMouseEvents(canvas);
     assignAddPointsOnExistingPolygonEvents(canvas);

@@ -1,6 +1,7 @@
 import { uploadImage } from '../facadeWorkersUtils/uploadFile/uploadImage';
 
-function uploadImageFile(uploadData) {
+function uploadImageFile(canvas, uploadData) {
+  canvas.discardActiveObject();
   uploadImage(uploadData);
 }
 

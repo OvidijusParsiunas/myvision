@@ -8,19 +8,30 @@ import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInte
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import { getAddingPolygonPointsState } from '../facadeWorkersUtils/stateManager';
 
-function removeActiveShapeEvent(canvas) {
-  if (isAddingPointsToPolygon()) {
-    purgeCanvasMouseEvents(canvas);
-    assignAddPointsOnExistingPolygonEvents(canvas);
-    clearAllAddPointsData();
-    setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
-  } else if (getAddingPolygonPointsState()) {
-    clearAllAddPointsData();
+function removeBoundingBox(canvas) {
+  const activeObect = canvas.getActiveObject();
+  if (activeObect && activeObect.shapeName === 'bndBox') {
+    canvas.remove(activeObect);
+    return true;
   }
-  removePolygon();
-  removePolygonPoints();
-  clearPolygonData();
-  removeEditedPolygonId();
+  return false;
+}
+
+function removeActiveShapeEvent(canvas) {
+  if (!removeBoundingBox(canvas)) {
+    if (isAddingPointsToPolygon()) {
+      purgeCanvasMouseEvents(canvas);
+      assignAddPointsOnExistingPolygonEvents(canvas);
+      clearAllAddPointsData();
+      setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
+    } else if (getAddingPolygonPointsState()) {
+      clearAllAddPointsData();
+    }
+    removePolygon();
+    removePolygonPoints();
+    clearPolygonData();
+    removeEditedPolygonId();
+  }
 }
 
 export { removeActiveShapeEvent as default };

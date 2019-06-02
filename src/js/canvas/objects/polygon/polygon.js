@@ -7,7 +7,7 @@ import setDrawCursorMode from '../../mouseInteractions/cursorModes/drawMode';
 let canvas = null;
 let pointArray = [];
 let polygonMode = true;
-let activeShape = false;
+let activeShape = null;
 let pointId = 0;
 let coordinatesOfLastMouseHover = null;
 

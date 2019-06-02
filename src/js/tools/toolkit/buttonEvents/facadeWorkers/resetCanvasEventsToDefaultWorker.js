@@ -7,6 +7,7 @@ import {
 } from '../facadeWorkersUtils/stateManager';
 
 function initiateResetCanvasEventsToDefaultEvent(canvas) {
+  canvas.discardActiveObject();
   if (!getDefaultState()) {
     purgeCanvasMouseEvents(canvas);
     setDefaultCursorMode(canvas, getAlteringPolygonPointsState());

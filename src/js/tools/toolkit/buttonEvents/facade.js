@@ -42,7 +42,7 @@ function downloadXMLBtnClick() {
 }
 
 function uploadImageBtnClick(uploadData) {
-  uploadImageFile(uploadData);
+  uploadImageFile(canvas, uploadData);
 }
 
 export {
