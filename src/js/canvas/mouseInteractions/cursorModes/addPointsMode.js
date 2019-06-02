@@ -6,23 +6,24 @@ function setAddPointsMode(canvas, startingPoint) {
   canvas.hoverCursor = 'crosshair';
 }
 
-function mouseHover(canvas, events) {
-  if (events.target) {
-    if (events.target.shapeName === 'point') {
+function addingPointsMouseHoverMode(event, canvas) {
+  if (event.target) {
+    if (event.target.shapeName === 'point') {
       canvas.hoverCursor = 'default';
-    } else if (events.target.shapeName === 'tempPoint') {
+    } else if (event.target.shapeName === 'tempPoint') {
       canvas.hoverCursor = 'move';
-    } else if (!events.target.selectable) {
+    } else if (!event.target.selectable) {
       canvas.hoverCursor = 'crosshair';
     }
   } else {
     canvas.hoverCursor = 'crosshair';
   }
-  canvas.renderAll();
 }
 
 function setHoverCursorOnMouseOut(canvas, cursor) {
   canvas.hoverCursor = cursor;
 }
 
-export { setAddPointsMode, mouseHover, setHoverCursorOnMouseOut };
+export {
+  setAddPointsMode, addingPointsMouseHoverMode, setHoverCursorOnMouseOut,
+};

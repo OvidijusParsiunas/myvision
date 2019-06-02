@@ -1,13 +1,13 @@
 import fabric from 'fabric';
 import polygonProperties from '../properties';
-import { setAddPointsMode, mouseHover } from '../../../mouseInteractions/cursorModes/addPointsMode';
+import { setAddPointsMode, addingPointsMouseHoverMode, setHoverCursorOnMouseOut } from '../../../mouseInteractions/cursorModes/addPointsMode';
 import { changePolygonPointsToAddImpl } from './changePointsStyle';
 
 let canvas = null;
 let activeLine = null;
 let lineArray = [];
 let tempPointIndex = 0;
-let activeMouseHoverFunction = null;
+let activeMouseOverFunction = null;
 let initialPoint = null;
 let pointsArray = [];
 
@@ -16,8 +16,49 @@ function drawLineImpl(pointer) {
   canvas.renderAll();
 }
 
-function switchActiveFunction(newFunc) {
-  activeMouseHoverFunction = newFunc;
+function addPointsMouseOverImpl(event) {
+  activeMouseOverFunction(event, canvas);
+}
+
+function changePointsStyleOnMouseOverDefault(event) {
+  if (event.target && event.target.shapeName === 'point') {
+    event.target.stroke = 'blue';
+    canvas.renderAll();
+  }
+}
+
+function changePointsStyleOnMouseOverAdding(event) {
+  if (event.target && event.target.shapeName === 'point') {
+    event.target.stroke = 'green';
+  }
+}
+
+function changeCursorOnMouseOverAdding(event) {
+  addingPointsMouseHoverMode(event, canvas);
+  changePointsStyleOnMouseOverAdding(event);
+  canvas.renderAll();
+}
+
+function switchMouseOverFunction(newFunc) {
+  activeMouseOverFunction = newFunc;
+}
+
+function isAddingPointsToPolygonImpl() {
+  return activeLine;
+}
+
+function addPointsMouseOutImpl(event) {
+  if (!isAddingPointsToPolygonImpl()) {
+    if (event.target && event.target.shapeName === 'point') {
+      event.target.stroke = '#333333';
+      canvas.renderAll();
+    }
+  } else if (event.target && event.target.shapeName === 'tempPoint') {
+    setHoverCursorOnMouseOut(canvas, 'crosshair');
+  } else if (event.target && event.target.shapeName === 'point') {
+    event.target.stroke = '#333333';
+    canvas.renderAll();
+  }
 }
 
 function moveAddablePointImpl(event) {
@@ -39,6 +80,7 @@ function createNewLine(...coordinates) {
 }
 
 function initializeAddNewPointsImpl(event, canvasObj) {
+  event.target.stroke = '#333333';
   canvas = canvasObj;
   setAddPointsMode(canvas, event.target);
   const pointer = canvas.getPointer(event.e);
@@ -49,7 +91,7 @@ function initializeAddNewPointsImpl(event, canvasObj) {
 
 function addFirstPointImpl(event) {
   changePolygonPointsToAddImpl(canvas);
-  switchActiveFunction(mouseHover);
+  switchMouseOverFunction(changeCursorOnMouseOverAdding);
   const pointer = canvas.getPointer(event.e);
   lineArray.push(activeLine);
   createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
@@ -67,6 +109,11 @@ function addPointImpl(pointer) {
   canvas.add(point);
   pointsArray.push(point);
   tempPointIndex += 1;
+}
+
+function resetAddPointPropertiesImpl(canvasObj) {
+  canvas = canvasObj;
+  activeMouseOverFunction = changePointsStyleOnMouseOverDefault;
 }
 
 function removeEditingPolygonPoints() {
@@ -181,20 +228,6 @@ function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
   clearAllAddPointsDataImpl();
 }
 
-function initialMouseOverEventsPlaceHolderFunction() {}
-
-function addPointsMouseHoverImpl(events) {
-  activeMouseHoverFunction(canvas, events);
-}
-
-function resetAddPointPropertiesImpl() {
-  activeMouseHoverFunction = initialMouseOverEventsPlaceHolderFunction;
-}
-
-function isAddingPointsToPolygonImpl() {
-  return activeLine;
-}
-
 export {
   initializeAddNewPointsImpl,
   addFirstPointImpl,
@@ -202,9 +235,10 @@ export {
   completePolygonImpl,
   drawLineImpl,
   moveAddablePointImpl,
-  addPointsMouseHoverImpl,
+  addPointsMouseOverImpl,
   resetAddPointPropertiesImpl,
   isAddingPointsToPolygonImpl,
   clearAllAddPointsDataImpl,
+  addPointsMouseOutImpl,
   resetAddPointsImpl,
 };

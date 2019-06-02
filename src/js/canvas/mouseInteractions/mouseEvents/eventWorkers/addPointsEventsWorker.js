@@ -3,11 +3,10 @@ import {
   removePolygonPoints, getPolygonEditingStatus, setEditablePolygon,
   getPolygonIdIfEditing, initializeAddNewPoints, addFirstPoint,
   addPoint, completePolygon, drawLineOnMouseMove, moveAddablePoint,
-  addPointsMouseHover, resetAddPointProperties,
+  addPointsMouseOver, resetAddPointProperties, addPointsMouseOut,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { resetCanvasEventsToDefault } from '../resetCanvasUtils/resetCanvasEventsFacade';
-import { setHoverCursorOnMouseOut } from '../../cursorModes/addPointsMode';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -24,13 +23,9 @@ function isRightMouseButtonClicked(pointer) {
   return false;
 }
 
-// a nice to have - when nothing selected and selecting remove or add points
-// make sure that everything that uses change returns polygon points and see
-// if they can be changed directly instead of searching the canvas
 // highlight all of them differently to indicate that
 // they can all be potentially edited (when none are selected)
 
-// highlight points when hovering to add and complete polygon after adding
 // when creating new polygon, do not have crosshair movable cursor on hovering initial point
 
 // Make sure this is properly needed by doing tests
@@ -38,8 +33,8 @@ function isRightMouseButtonClicked(pointer) {
 
 // add is not a mode and should not light up
 
-function mouseOverEvents(events) {
-  addPointsMouseHover(events);
+function mouseOverEvents(event) {
+  addPointsMouseOver(event);
 }
 
 function setAddPointsEventsCanvas(canvasObj) {
@@ -47,7 +42,7 @@ function setAddPointsEventsCanvas(canvasObj) {
   selectedPolygonId = getPolygonIdIfEditing();
   addingPoints = false;
   addFirstPointMode = false;
-  resetAddPointProperties();
+  resetAddPointProperties(canvasObj);
 }
 
 function prepareToAddPolygonPoints(event) {
@@ -125,9 +120,7 @@ function pointMouseUpEvents(event) {
 }
 
 function mouseOutEvents(event) {
-  if (event.target && event.target.shapeName === 'tempPoint') {
-    setHoverCursorOnMouseOut(canvas, 'crosshair');
-  }
+  addPointsMouseOut(event);
 }
 
 function getSelectedPolygonIdForAddPoints() {
