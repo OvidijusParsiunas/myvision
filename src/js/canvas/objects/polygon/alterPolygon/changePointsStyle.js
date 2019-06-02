@@ -4,14 +4,16 @@ import {
   prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault,
 } from '../../objectsProperties/changeProperties';
 
-function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPoints, polygonPointsProps) {
+function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) {
   let pointId = 0;
+  const polygonPoints = [];
   polygon.get('points').forEach((point) => {
     const pointObj = new fabric.Circle(polygonPointsProps(pointId, point));
     canvas.add(pointObj);
     polygonPoints.push(pointObj);
     pointId += 1;
   });
+  return polygonPoints;
 }
 
 function changePolygonPointsToWaitForAddingFirstPointImpl(canvas, startingPoint) {

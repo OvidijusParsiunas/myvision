@@ -33,15 +33,12 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
 
     polygon.numberOfNullPolygonPoints += 1;
     if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
-      // after all polygon points are removed from new polygon, completely remove -
-      // depending on how we add new points
 
       // change cursor modes name convention
       // make invisible circle width a little bit bigger
       // make sure to test with thresholded performance
       // when finished creating polygon, have popup option to go back to editing
-      // have tick box for moving first point
-      // make sure the least amount of points when removing is same for drawing
+      // whe reduced to 3 points, turn them black
       console.log('need to signal restrictions');
     }
     canvas.renderAll();

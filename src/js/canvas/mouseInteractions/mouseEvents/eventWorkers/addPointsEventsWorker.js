@@ -29,15 +29,14 @@ function isRightMouseButtonClicked(pointer) {
 // if they can be changed directly instead of searching the canvas
 // highlight all of them differently to indicate that
 // they can all be potentially edited (when none are selected)
-// highlight point when hovering to complete polygon after adding
+
+// highlight points when hovering to add and complete polygon after adding
 // when creating new polygon, do not have crosshair movable cursor on hovering initial point
 
 // Make sure this is properly needed by doing tests
 // when finished adding points, return to editable
 
 // add is not a mode and should not light up
-
-// when clicking add points multiple times after adding points, can't select polygon
 
 function mouseOverEvents(events) {
   addPointsMouseHover(events);

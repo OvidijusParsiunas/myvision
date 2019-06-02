@@ -50,20 +50,20 @@ function sendPolygonPointsToFront() {
 }
 
 function displayPolygonPoints() {
-  displayPolygonPointsWithStyleImpl(
-    canvas, polygon, polygonPoints, polygonProperties.existingPolygonPoint,
+  polygonPoints = displayPolygonPointsWithStyleImpl(
+    canvas, polygon, polygonProperties.existingPolygonPoint,
   );
 }
 
 function displayRemovablePolygonPoints() {
-  displayPolygonPointsWithStyleImpl(
-    canvas, polygon, polygonPoints, polygonProperties.removablePolygonPoint,
+  polygonPoints = displayPolygonPointsWithStyleImpl(
+    canvas, polygon, polygonProperties.removablePolygonPoint,
   );
 }
 
 function displayStartingAddPolygonPoints() {
-  displayPolygonPointsWithStyleImpl(
-    canvas, polygon, polygonPoints, polygonProperties.startingAddPolygonPoint,
+  polygonPoints = displayPolygonPointsWithStyleImpl(
+    canvas, polygon, polygonProperties.startingAddPolygonPoint,
   );
 }
 
