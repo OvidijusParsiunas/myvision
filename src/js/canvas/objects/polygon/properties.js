@@ -16,6 +16,26 @@ function generateNewPoint(pointId, pointer) {
     shapeName: 'tempPoint',
     pointId,
     objectCaching: false,
+    hoverCursor: 'move',
+  };
+}
+
+function generateInvisiblePoint(pointer) {
+  return {
+    radius: 3.9,
+    fill: 'green',
+    stroke: '#333333',
+    left: pointer.x,
+    top: pointer.y,
+    selectable: true,
+    hasBorders: false,
+    hasControls: false,
+    originX: 'center',
+    originY: 'center',
+    shapeName: 'invisiblePoint',
+    objectCaching: false,
+    opacity: 0,
+    hoverCursor: 'default',
   };
 }
 
@@ -30,6 +50,7 @@ function changeRemovablePointToTemp(pointId) {
     pointId,
     lockMovementX: false,
     lockMovementY: false,
+    hoverCursor: 'move',
   };
 }
 
@@ -70,6 +91,7 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
     perPixelTargetFind: true,
     lockMovementX: true,
     lockMovementY: true,
+    hoverCursor: 'default',
   };
   if (pointCoordinates) {
     returnObj.left = pointCoordinates.x;
@@ -147,6 +169,7 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     shapeName: 'firstPoint',
     lockMovementX: true,
     lockMovementY: true,
+    hoverCursor: 'default',
   };
   polygonProperties.removablePoint = {
     fill: 'red',
@@ -169,6 +192,7 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     radius: 3.5,
   };
   polygonProperties.newPoint = generateNewPoint;
+  polygonProperties.invisiblePoint = generateInvisiblePoint;
   polygonProperties.changeRemovablePointToTemp = changeRemovablePointToTemp;
   polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;
   polygonProperties.removablePolygonPoint = generateRemovablePolygonPoint;

@@ -10,6 +10,7 @@ let polygonMode = true;
 let activeShape = null;
 let pointId = 0;
 let coordinatesOfLastMouseHover = null;
+let invisiblePoint = null;
 
 function isRightMouseButtonClicked(pointer) {
   if (activeShape && (coordinatesOfLastMouseHover.x !== pointer.x)) {
@@ -58,6 +59,9 @@ function generatePolygon(pointer) {
     });
     canvas.remove(point);
   });
+  canvas.remove(invisiblePoint);
+  invisiblePoint = null;
+
   removeActiveShape();
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon);
   canvas.add(polygon);
@@ -83,9 +87,6 @@ if (pointArray.length === 2) {
 function addPoint(pointer) {
   const point = new fabric.Circle(polygonProperties.newPoint(pointId, pointer));
   pointId += 1;
-  if (pointArray.length === 0) {
-    point.set(polygonProperties.firstPoint);
-  }
   let points = [pointer.x, pointer.y, pointer.x, pointer.y];
   if (activeShape) {
     points = activeShape.get('points');
@@ -107,9 +108,13 @@ function addPoint(pointer) {
     activeShape = polygon;
     canvas.add(polygon);
   }
-
-  pointArray.push(point);
   canvas.add(point);
+  if (pointArray.length === 0) {
+    invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(pointer));
+    canvas.add(invisiblePoint);
+    point.set(polygonProperties.firstPoint);
+  }
+  pointArray.push(point);
   canvas.selection = false;
 }
 
@@ -131,6 +136,8 @@ function clearPolygonData() {
     pointArray.forEach((point) => {
       canvas.remove(point);
     });
+    canvas.remove(invisiblePoint);
+    invisiblePoint = null;
     removeActiveShape();
     pointArray = [];
     activeShape = null;
@@ -138,10 +145,17 @@ function clearPolygonData() {
   }
 }
 
+function changeInitialPointColour(colour) {
+  pointArray[0].stroke = colour;
+}
+
 function instantiatePolygon(event) {
   const pointer = canvas.getPointer(event.e);
+  if (event && event.target) {
+    console.log(event.target.shapeName);
+  }
   if (!isRightMouseButtonClicked(pointer)) {
-    if (event.target && event.target.shapeName && event.target.shapeName === 'firstPoint') {
+    if (event.target && event.target.shapeName && event.target.shapeName === 'invisiblePoint') {
       if (pointArray.length > 2) {
         generatePolygon(pointer);
       }
@@ -174,7 +188,6 @@ function cleanPolygonFromEmptyPoints() {
   });
   canvas.renderAll();
 
-
   let currentPointId = 0;
   const tempPointArray = [];
   canvas.forEachObject((iteratedObj) => {
@@ -205,15 +218,25 @@ function cleanPolygonFromEmptyPoints() {
 
 function resumeDrawCanvasPolygon() {
   cleanPolygonFromEmptyPoints();
+  const position = { x: pointArray[0].left, y: pointArray[0].top };
+  invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
+  canvas.add(invisiblePoint);
+}
+
+function removeInvisiblePoint() {
+  canvas.remove(invisiblePoint);
+  invisiblePoint = null;
 }
 
 export {
-  instantiatePolygon,
-  drawPolygon,
-  prepareCanvasForNewPolygon,
-  resumeDrawCanvasPolygon,
-  clearPolygonData,
   movePoints,
+  drawPolygon,
   getTempPolygon,
+  clearPolygonData,
+  instantiatePolygon,
   isDrawingInProgress,
+  removeInvisiblePoint,
+  resumeDrawCanvasPolygon,
+  changeInitialPointColour,
+  prepareCanvasForNewPolygon,
 };

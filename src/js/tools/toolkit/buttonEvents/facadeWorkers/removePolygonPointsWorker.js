@@ -3,7 +3,7 @@ import {
   setDefaultState, getRemovingPolygonPointsState, setRemovingPolygonPointsState,
   getAddingPolygonPointsState, setAddingPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
-import { isDrawingInProgress } from '../../../../canvas/objects/polygon/polygon';
+import { isDrawingInProgress, removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
 import setRemovePointsOnDrawNewPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode';
 import assignRemovePointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/removePointsEventHandlers';
@@ -26,6 +26,7 @@ function setRemovePointsCursorMode(canvas) {
 function assignRemovePointsEvents(canvas, interruptedAddPoints) {
   const drawing = isDrawingInProgress();
   if (drawing) {
+    removeInvisiblePoint();
     assignRemovePointsOnDrawPolygonEvents(canvas);
   } else if (!drawing) {
     assignRemovePointsOnExistingPolygonEvents(canvas, interruptedAddPoints);
