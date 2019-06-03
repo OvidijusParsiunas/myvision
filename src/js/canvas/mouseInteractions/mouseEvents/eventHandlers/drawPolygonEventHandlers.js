@@ -23,13 +23,27 @@ function assignDrawPolygonEvents(canvas, resume) {
     drawPolygon(e);
   });
 
+  // export this logic
   canvas.on('mouse:over', (e) => {
+    // the change of mouse should be fixed by larger invis circle,
+    // call mouse out when to set to movable cursor
     if (e.target && e.target.selectable) {
-      canvas.hoverCursor = 'move';
+      if (e.target.shapeName === 'firstPoint') {
+        e.target.stroke = 'red';
+        canvas.hoverCursor = 'default';
+      } else {
+        canvas.hoverCursor = 'move';
+      }
     } else {
       canvas.hoverCursor = 'crosshair';
     }
+    canvas.renderAll();
+  });
+
+  canvas.on('mouse:out', (e) => {
+    if (e.target && e.target.shapeName === 'firstPoint') {
+      e.target.stroke = '#333333';
+    }
   });
 }
-
 export { assignDrawPolygonEvents as default };
