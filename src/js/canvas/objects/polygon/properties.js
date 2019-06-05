@@ -169,7 +169,6 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     shapeName: 'firstPoint',
     lockMovementX: true,
     lockMovementY: true,
-    hoverCursor: 'default',
   };
   polygonProperties.removablePoint = {
     fill: 'red',
@@ -178,10 +177,12 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
   polygonProperties.defaultPoint = {
     fill: 'blue',
     radius: 3.5,
+    hoverCursor: null,
   };
   polygonProperties.additionalPoint = {
     fill: 'green',
     radius: 4,
+    hoverCursor: 'default',
   };
   polygonProperties.disabledButton = {
     fill: 'white',

@@ -151,9 +151,6 @@ function changeInitialPointColour(colour) {
 
 function instantiatePolygon(event) {
   const pointer = canvas.getPointer(event.e);
-  if (event && event.target) {
-    console.log(event.target.shapeName);
-  }
   if (!isRightMouseButtonClicked(pointer)) {
     if (event.target && event.target.shapeName && event.target.shapeName === 'invisiblePoint') {
       if (pointArray.length > 2) {

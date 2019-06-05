@@ -26,7 +26,10 @@ function isRightMouseButtonClicked(pointer) {
 // highlight all of them differently to indicate that
 // they can all be potentially edited (when none are selected)
 
-// when creating new polygon, do not have crosshair movable cursor on hovering initial point
+// when polygon less than 3 points upon creation, the highlight should not light up
+// along with the remove point tasks
+// check if polyon remove initial point, resuming, then removing again still works ok
+// check if when creating polygon, the hitting remove, the points should be behind active shape
 
 // Make sure this is properly needed by doing tests
 // when finished adding points, return to editable

@@ -8,11 +8,7 @@ function setAddPointsMode(canvas, startingPoint) {
 
 function addingPointsMouseHoverMode(event, canvas) {
   if (event.target) {
-    if (event.target.shapeName === 'point') {
-      canvas.hoverCursor = 'default';
-    } else if (event.target.shapeName === 'tempPoint') {
-      canvas.hoverCursor = 'move';
-    } else if (!event.target.selectable) {
+    if (!event.target.selectable) {
       canvas.hoverCursor = 'crosshair';
     }
   } else {
