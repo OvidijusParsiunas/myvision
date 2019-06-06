@@ -9,4 +9,19 @@ function purgeCanvasMouseEvents(canvas) {
   }
 }
 
+// consider using this to reassign events
+
+/*
+canvas.on('object:moving', moveHandler);
+canvas.on('object:modified', modifiedHandler);
+canvas.on('custom:event', customEvtHandler);
+
+//or you register with key/value pairs
+canvas.on({
+    'object:moving' : moveHandler,
+    'object:modified' : modifiedHandler,
+    'custom:event' : customEvtHandler
+});
+*/
+
 export { purgeCanvasMouseEvents as default };

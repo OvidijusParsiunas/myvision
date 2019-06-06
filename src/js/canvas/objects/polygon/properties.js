@@ -22,7 +22,7 @@ function generateNewPoint(pointId, pointer) {
 
 function generateInvisiblePoint(pointer) {
   return {
-    radius: 3.9,
+    radius: 5,
     fill: 'green',
     stroke: '#333333',
     left: pointer.x,
@@ -34,7 +34,6 @@ function generateInvisiblePoint(pointer) {
     originY: 'center',
     shapeName: 'invisiblePoint',
     objectCaching: false,
-    opacity: 0,
     hoverCursor: 'default',
   };
 }

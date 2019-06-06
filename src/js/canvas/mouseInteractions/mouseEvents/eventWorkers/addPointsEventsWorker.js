@@ -30,6 +30,9 @@ function isRightMouseButtonClicked(pointer) {
 // along with the remove point tasks
 // check if polyon remove initial point, resuming, then removing again still works ok
 // check if when creating polygon, the hitting remove, the points should be behind active shape
+// change how how the hover events are handled on add point mouse mode
+
+// preserve layering
 
 // Make sure this is properly needed by doing tests
 // when finished adding points, return to editable

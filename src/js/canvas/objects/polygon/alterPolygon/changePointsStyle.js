@@ -44,6 +44,8 @@ function changePolygonPointsToAddImpl(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.additionalPoint);
+      const invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint({x: iteratedObj.left, y: iteratedObj.top}));
+      canvas.add(invisiblePoint);
     }
   });
   canvas.renderAll();
