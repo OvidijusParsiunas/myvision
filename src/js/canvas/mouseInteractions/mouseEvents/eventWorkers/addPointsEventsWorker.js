@@ -99,7 +99,7 @@ function pointMouseDownEvents(event) {
         addFirstPointMode = false;
       }
     }
-  } else if (event.target && event.target.shapeName === 'point') {
+  } else if (event.target && (event.target.shapeName === 'point' || event.target.shapeName === 'invisiblePoint')) {
     addingPoints = false;
     completePolygon(event.target);
     resetCanvasEventsToDefault();

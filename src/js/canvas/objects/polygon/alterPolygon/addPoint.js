@@ -55,7 +55,7 @@ function addPointsMouseOutImpl(event) {
     }
   } else if (event.target && event.target.shapeName === 'tempPoint') {
     setHoverCursorOnMouseOut(canvas, 'crosshair');
-  } else if (event.target && event.target.shapeName === 'point') {
+  } else if (event.target && (event.target.shapeName === 'point' || event.target.shapeName === 'invisiblePoint')) {
     event.target.stroke = '#333333';
     canvas.renderAll();
   }

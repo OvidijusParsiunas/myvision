@@ -11,6 +11,7 @@ function assignAddPointsOnExistingPolygonEvents(canvas) {
   });
 
   canvas.on('mouse:over', (e) => {
+    console.log(e.target.shapeName);
     mouseOverEvents(e);
   });
 
