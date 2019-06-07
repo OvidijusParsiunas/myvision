@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import polygonProperties from '../properties';
-import { setAddPointsMode, addingPointsMouseHoverMode, setHoverCursorOnMouseOut } from '../../../mouseInteractions/cursorModes/addPointsMode';
+import setAddPointsMode from '../../../mouseInteractions/cursorModes/addPointsMode';
 import { changePolygonPointsToAddImpl } from './changePointsStyle';
 
 let canvas = null;
@@ -33,12 +33,6 @@ function changePointsStyleOnMouseOverAdding(event) {
   }
 }
 
-function changeCursorOnMouseOverAdding(event) {
-  addingPointsMouseHoverMode(event, canvas);
-  changePointsStyleOnMouseOverAdding(event);
-  canvas.renderAll();
-}
-
 function switchMouseOverFunction(newFunc) {
   activeMouseOverFunction = newFunc;
 }
@@ -48,14 +42,7 @@ function isAddingPointsToPolygonImpl() {
 }
 
 function addPointsMouseOutImpl(event) {
-  if (!isAddingPointsToPolygonImpl()) {
-    if (event.target && event.target.shapeName === 'point') {
-      event.target.stroke = '#333333';
-      canvas.renderAll();
-    }
-  } else if (event.target && event.target.shapeName === 'tempPoint') {
-    setHoverCursorOnMouseOut(canvas, 'crosshair');
-  } else if (event.target && (event.target.shapeName === 'point' || event.target.shapeName === 'invisiblePoint')) {
+  if (event.target && event.target.shapeName === 'point') {
     event.target.stroke = '#333333';
     canvas.renderAll();
   }
@@ -91,7 +78,7 @@ function initializeAddNewPointsImpl(event, canvasObj) {
 
 function addFirstPointImpl(event) {
   changePolygonPointsToAddImpl(canvas);
-  switchMouseOverFunction(changeCursorOnMouseOverAdding);
+  switchMouseOverFunction(changePointsStyleOnMouseOverAdding);
   const pointer = canvas.getPointer(event.e);
   lineArray.push(activeLine);
   createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);

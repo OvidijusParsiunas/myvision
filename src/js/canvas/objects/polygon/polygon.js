@@ -110,7 +110,7 @@ function addPoint(pointer) {
   }
   canvas.add(point);
   if (pointArray.length === 0) {
-    invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(pointer, 'remove'));
+    invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(pointer));
     canvas.add(invisiblePoint);
     point.set(polygonProperties.firstPoint);
   }
@@ -216,7 +216,7 @@ function cleanPolygonFromEmptyPoints() {
 function resumeDrawCanvasPolygon() {
   cleanPolygonFromEmptyPoints();
   const position = { x: pointArray[0].left, y: pointArray[0].top };
-  invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position, 'remove'));
+  invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
   canvas.add(invisiblePoint);
 }
 

@@ -20,9 +20,10 @@ function generateNewPoint(pointId, pointer) {
   };
 }
 
-function generateInvisiblePoint(pointer, purpose) {
-  const returnObj = {
-    fill: 'red',
+function generateInvisiblePoint(pointer) {
+  return {
+    radius: 3.9,
+    fill: 'green',
     stroke: '#333333',
     left: pointer.x,
     top: pointer.y,
@@ -36,13 +37,6 @@ function generateInvisiblePoint(pointer, purpose) {
     opacity: 0,
     hoverCursor: 'default',
   };
-  if (purpose === 'remove') {
-    returnObj.radius = 3.9;
-  } else if (purpose === 'add') {
-    returnObj.radius = 2;
-    returnObj.opacity = 0;
-  }
-  return returnObj;
 }
 
 function changeRemovablePointToTemp(pointId) {
@@ -189,12 +183,6 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     fill: 'green',
     radius: 4,
     hoverCursor: 'default',
-  };
-  polygonProperties.additionalPoint2 = {
-    fill: 'green',
-    radius: 4,
-    hoverCursor: null,
-    strokeWidth: 1,
   };
   polygonProperties.disabledButton = {
     fill: 'white',

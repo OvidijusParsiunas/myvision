@@ -41,12 +41,9 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas) {
 }
 
 function changePolygonPointsToAddImpl(canvas) {
-  console.log('called');
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.additionalPoint2);
-      const invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint ({ x: iteratedObj.left, y: iteratedObj.top }, 'add'));
-      canvas.add(invisiblePoint);
+      iteratedObj.set(polygonProperties.additionalPoint);
     }
   });
   canvas.renderAll();
