@@ -26,10 +26,6 @@ function isRightMouseButtonClicked(pointer) {
 // highlight all of them differently to indicate that
 // they can all be potentially edited (when none are selected)
 
-// check if when creating polygon, the hitting remove, the points should be behind active shape
-
-// preserve layering
-
 // Make sure this is properly needed by doing tests
 // when finished adding points, return to editable
 

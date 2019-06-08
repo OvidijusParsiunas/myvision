@@ -28,17 +28,17 @@ function changePolygonPointsToWaitForAddingFirstPointImpl(canvas, startingPoint)
   canvas.renderAll();
 }
 
-function changeDrawingPolygonPointsToRemovableImpl(canvas) {
+function changeDrawingPolygonPointsToRemovableImpl(canvas, polygon) {
   let pointId = 0;
   const polygonPoints = [];
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
-      if (iteratedObj.shapeName === 'firstPoint') iteratedObj.bringForward();
       iteratedObj.set(polygonProperties.removablePolygonPoint(pointId));
       polygonPoints.push(iteratedObj);
       pointId += 1;
     }
   });
+  polygon.sendBackwards();
   return polygonPoints;
 }
 
