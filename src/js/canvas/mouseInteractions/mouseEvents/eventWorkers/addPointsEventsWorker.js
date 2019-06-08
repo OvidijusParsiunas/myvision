@@ -26,11 +26,7 @@ function isRightMouseButtonClicked(pointer) {
 // highlight all of them differently to indicate that
 // they can all be potentially edited (when none are selected)
 
-// when polygon less than 3 points upon creation, the highlight should not light up
-// along with the remove point tasks
-// check if polyon remove initial point, resuming, then removing again still works ok
 // check if when creating polygon, the hitting remove, the points should be behind active shape
-// change how how the hover events are handled on add point mouse mode
 
 // preserve layering
 

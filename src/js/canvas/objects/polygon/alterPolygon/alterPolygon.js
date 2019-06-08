@@ -197,7 +197,6 @@ export {
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
-  displayRemovablePolygonPoints, displayStartingAddPolygonPoints,
   changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
   getPolygonIfEditing, cleanPolygonPointsArray,
   initializeAddNewPoints, addFirstPoint, addPoint,

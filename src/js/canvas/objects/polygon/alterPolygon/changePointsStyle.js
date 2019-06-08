@@ -7,8 +7,9 @@ import {
 function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) {
   let pointId = 0;
   const polygonPoints = [];
+  const totalPointNumber = polygon.points.length;
   polygon.get('points').forEach((point) => {
-    const pointObj = new fabric.Circle(polygonPointsProps(pointId, point));
+    const pointObj = new fabric.Circle(polygonPointsProps(pointId, point, totalPointNumber));
     canvas.add(pointObj);
     polygonPoints.push(pointObj);
     pointId += 1;
@@ -19,7 +20,7 @@ function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) 
 function changePolygonPointsToWaitForAddingFirstPointImpl(canvas, startingPoint) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.disabledButton);
+      iteratedObj.set(polygonProperties.disabledAddPoint);
     }
     iteratedObj.selectable = false;
   });
@@ -70,8 +71,13 @@ function changeObjectsToPolygonPointsRemovaleImpl(canvas) {
         polygonPoints[iteratedObj.pointId] = iteratedObj;
       }
     });
-    canvas.renderAll();
   }
+  if (polygonPoints.length < 4) {
+    polygonPoints.forEach((point) => {
+      point.set(polygonProperties.disabledRemovePoint);
+    });
+  }
+  canvas.renderAll();
   return polygonPoints;
 }
 

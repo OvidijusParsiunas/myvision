@@ -32,13 +32,13 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
     polygonPoints[pointId] = null;
 
     polygon.numberOfNullPolygonPoints += 1;
-    if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
-
+    if (polygon.points.length - polygon.numberOfNullPolygonPoints === 3) {
+      polygonPoints.forEach((point) => {
+        if (point) point.set(polygonProperties.disabledRemovePoint);
+      });
       // change cursor modes name convention
-      // make invisible circle width a little bit bigger
       // make sure to test with thresholded performance
       // when finished creating polygon, have popup option to go back to editing
-      // whe reduced to 3 points, turn them black
       console.log('need to signal restrictions');
     }
     canvas.renderAll();

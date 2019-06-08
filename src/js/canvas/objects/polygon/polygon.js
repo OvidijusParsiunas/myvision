@@ -146,7 +146,9 @@ function clearPolygonData() {
 }
 
 function changeInitialPointColour(colour) {
-  pointArray[0].stroke = colour;
+  if (pointArray.length > 2) {
+    pointArray[0].stroke = colour;
+  }
 }
 
 function instantiatePolygon(event) {

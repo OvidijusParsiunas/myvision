@@ -74,7 +74,7 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
   };
 }
 
-function generateRemovablePolygonPoint(pointId, pointCoordinates) {
+function generateRemovablePolygonPoint(pointId, pointCoordinates, totalPointNumber) {
   const returnObj = {
     radius: 4,
     fill: 'red',
@@ -96,6 +96,10 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates) {
   if (pointCoordinates) {
     returnObj.left = pointCoordinates.x;
     returnObj.top = pointCoordinates.y;
+    if (totalPointNumber < 4) {
+      returnObj.fill = 'black';
+      returnObj.radius = 3.7;
+    }
   }
   return returnObj;
 }
@@ -184,9 +188,13 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     radius: 4,
     hoverCursor: 'default',
   };
-  polygonProperties.disabledButton = {
+  polygonProperties.disabledAddPoint = {
     fill: 'white',
     radius: 3,
+  };
+  polygonProperties.disabledRemovePoint = {
+    fill: 'black',
+    radius: 3.7,
   };
   polygonProperties.selectedStartingAddPoint = {
     shapeName: 'initialAddPoint',
