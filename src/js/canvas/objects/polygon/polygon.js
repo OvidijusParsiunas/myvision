@@ -115,6 +115,7 @@ function addPoint(pointer) {
     point.set(polygonProperties.firstPoint);
   }
   pointArray.push(point);
+  activeShape.sendToBack();
   canvas.selection = false;
 }
 

@@ -33,6 +33,7 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas) {
   const polygonPoints = [];
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'tempPoint' || iteratedObj.shapeName === 'firstPoint') {
+      if (iteratedObj.shapeName === 'firstPoint') iteratedObj.bringForward();
       iteratedObj.set(polygonProperties.removablePolygonPoint(pointId));
       polygonPoints.push(iteratedObj);
       pointId += 1;
