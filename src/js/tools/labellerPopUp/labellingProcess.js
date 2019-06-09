@@ -1,4 +1,4 @@
-import { resetObjectCursors } from '../../canvas/mouseInteractions/cursorModes/drawMode';
+import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 
 const labelKeyPairObj = {};
@@ -9,6 +9,7 @@ let canvas = null;
 let currentId = 0;
 
 function prepareLabelShape(shape, canvasObj) {
+  waitingForLabelCursorMode(canvasObj);
   targetShape = shape;
   canvas = canvasObj;
   labellingState = true;

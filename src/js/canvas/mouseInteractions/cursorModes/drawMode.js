@@ -30,4 +30,11 @@ function resetObjectCursors(canvas) {
   canvas.renderAll();
 }
 
-export { setDrawCursorMode, resetObjectCursors };
+function waitingForLabelCursorMode(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    iteratedObj.hoverCursor = 'default';
+  });
+  canvas.defaultCursor = 'default';
+}
+
+export { setDrawCursorMode, resetObjectCursors, waitingForLabelCursorMode };

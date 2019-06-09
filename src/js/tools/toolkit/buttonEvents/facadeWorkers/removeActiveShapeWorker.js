@@ -1,7 +1,7 @@
 import {
   removePolygon, clearAllAddPointsData, isAddingPointsToPolygon, removePolygonPoints,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { clearPolygonData } from '../../../../canvas/objects/polygon/polygon';
+import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
 import { removeEditedPolygonId } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
@@ -29,7 +29,7 @@ function removeActiveShapeEvent(canvas) {
     }
     removePolygon();
     removePolygonPoints();
-    clearPolygonData();
+    resetNewPolygonData();
     removeEditedPolygonId();
   }
 }

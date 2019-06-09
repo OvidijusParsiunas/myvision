@@ -2,7 +2,7 @@ import {
   changePolygonPointsPropertiesToDefault, removePolygonPoints,
   cleanPolygonPointsArray, clearAllAddPointsData,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { clearPolygonData } from '../../../objects/polygon/polygon';
+import { resetNewPolygonData } from '../../../objects/polygon/polygon';
 import { cancelLabellingProcess } from '../../../../tools/labellerPopUp/buttonsEvents';
 import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
 import {
@@ -11,7 +11,7 @@ import {
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 function interruptCanvasEventsNoPolygonPointRemoval() {
-  clearPolygonData();
+  resetNewPolygonData();
   cancelLabellingProcess();
   removeEditedPolygonId();
   if (getAlteringPolygonPointsState()) {

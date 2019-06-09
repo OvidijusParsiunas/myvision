@@ -145,10 +145,6 @@ function isDrawingInProgress() {
   return activeShape !== null;
 }
 
-function resetObjectCursorModes() {
-
-}
-
 function clearPolygonData() {
   if (pointArray[0]) {
     pointArray.forEach((point) => {
@@ -160,8 +156,12 @@ function clearPolygonData() {
     pointArray = [];
     activeShape = null;
     pointId = 0;
-    resetObjectCursors(canvas);
   }
+}
+
+function resetNewPolygonData() {
+  if (canvas) resetObjectCursors(canvas);
+  clearPolygonData();
 }
 
 function changeInitialPointColour(colour) {
@@ -250,8 +250,8 @@ export {
   movePoints,
   drawPolygon,
   getTempPolygon,
-  clearPolygonData,
   instantiatePolygon,
+  resetNewPolygonData,
   isDrawingInProgress,
   removeInvisiblePoint,
   resumeDrawCanvasPolygon,
