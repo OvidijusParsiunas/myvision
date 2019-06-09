@@ -4,6 +4,7 @@ import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import setDefaultCursorMode from '../../mouseInteractions/cursorModes/defaultMode';
 import setDrawCursorMode from '../../mouseInteractions/cursorModes/drawMode';
+import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -44,12 +45,24 @@ function drawBndBox(event) {
   canvas.renderAll();
 }
 
+function lockMovementIfAssertedByState(bndBox) {
+  if (!getMovableObjectsState()) {
+    const immovableObjectProps = {
+      lockMovementX: true,
+      lockMovementY: true,
+      hoverCursor: 'default',
+    };
+    bndBox.rect.set(immovableObjectProps);
+  }
+}
+
 function finishDrawingBndBox(event) {
   if (leftMouseBtnDown) {
     createNewBoundingBoxBtnClicked = false;
     leftMouseBtnDown = false;
     bndBoxProps.rect.setCoords();
     bndBoxProps.rect.set(bndBoxProperties.finalBndBoxProps);
+    lockMovementIfAssertedByState(bndBoxProps);
     setDefaultCursorMode(canvas);
     const pointer = canvas.getPointer(event.e);
     prepareLabelShape(bndBoxProps.rect, canvas);

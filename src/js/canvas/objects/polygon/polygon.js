@@ -1,8 +1,9 @@
 import fabric from 'fabric';
 import polygonProperties from './properties';
-import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
-import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import setDrawCursorMode from '../../mouseInteractions/cursorModes/drawMode';
+import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
+import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
+import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let pointArray = [];
@@ -50,6 +51,17 @@ function removeActiveShape() {
   activeShape = null;
 }
 
+function lockMovementIfAssertedByState(polygon) {
+  if (!getMovableObjectsState()) {
+    const immovableObjectProps = {
+      lockMovementX: true,
+      lockMovementY: true,
+      hoverCursor: 'default',
+    };
+    polygon.set(immovableObjectProps);
+  }
+}
+
 function generatePolygon(pointer) {
   const points = [];
   pointArray.forEach((point) => {
@@ -64,6 +76,7 @@ function generatePolygon(pointer) {
 
   removeActiveShape();
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon);
+  lockMovementIfAssertedByState(polygon);
   canvas.add(polygon);
 
   activeShape = null;

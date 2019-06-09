@@ -1,6 +1,7 @@
 let defaultState = false;
 let removingPolygonPointsState = false;
 let addingPolygonPointsState = false;
+let movableObjectsState = true;
 
 function getDefaultState() {
   return defaultState;
@@ -16,6 +17,10 @@ function getRemovingPolygonPointsState() {
 
 function getAddingPolygonPointsState() {
   return addingPolygonPointsState;
+}
+
+function getMovableObjectsState() {
+  return movableObjectsState;
 }
 
 function setDefaultState(state) {
@@ -35,13 +40,19 @@ function setAddingPolygonPointsState(state) {
   addingPolygonPointsState = state;
 }
 
+function setMovableObjectsState(state) {
+  movableObjectsState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
+  getMovableObjectsState,
+  setMovableObjectsState,
+  getAddingPolygonPointsState,
+  setAddingPolygonPointsState,
   getAlteringPolygonPointsState,
   setAlteringPolygonPointsState,
   getRemovingPolygonPointsState,
   setRemovingPolygonPointsState,
-  getAddingPolygonPointsState,
-  setAddingPolygonPointsState,
 };

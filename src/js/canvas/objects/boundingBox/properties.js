@@ -1,3 +1,7 @@
+/* import { getMovableObjectsState } from
+ '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+ should be done here */
+
 const bndBoxProperties = {};
 
 function getTempBndBoxProps(bndBoxProps, pointer) {

@@ -3,6 +3,7 @@ import {
   addPointsBtnClick, removeActiveShapeBtnClick,
   removePolygonPointBtnClick, downloadXMLBtnClick,
   uploadImageBtnClick, resetCanvasEventsToDefault,
+  movableObjectsBtnClick,
 } from './buttonEvents/facade';
 import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
@@ -23,6 +24,7 @@ function assignToolkitButtonEvents() {
     { uploadImageBtnClick, resetCanvasEventsToDefault });
   window.removeShape = interruptNewPolygonCreateWthFunc1OrExecFunc2.bind(this,
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
+  window.movableObjects = movableObjectsBtnClick;
 }
 
 export { assignToolkitButtonEvents as default };

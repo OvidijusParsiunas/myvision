@@ -6,6 +6,7 @@ import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvas
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
 import downloadXMLFile from './facadeWorkers/downloadAnnotationsFileWorker';
 import uploadImageFile from './facadeWorkers/uploadImageWorker';
+import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 
 let canvas = null;
 
@@ -45,6 +46,10 @@ function uploadImageBtnClick(uploadData) {
   uploadImageFile(canvas, uploadData);
 }
 
+function movableObjectsBtnClick() {
+  changeMovableObjectsState(canvas);
+}
+
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
@@ -52,6 +57,7 @@ export {
   resetCanvasEventsToDefault,
   removeActiveShapeBtnClick,
   removePolygonPointBtnClick,
+  movableObjectsBtnClick,
   downloadXMLBtnClick,
   uploadImageBtnClick,
   addPointsBtnClick,
