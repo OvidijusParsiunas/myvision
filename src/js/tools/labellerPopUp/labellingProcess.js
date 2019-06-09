@@ -1,3 +1,4 @@
+import { resetObjectCursors } from '../../canvas/mouseInteractions/cursorModes/drawMode';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 
 const labelKeyPairObj = {};
@@ -21,6 +22,7 @@ function removeTargetShape() {
 function createLabelShape() {
   const text = getLabelPopUpText();
   hideLabelPopUp();
+  resetObjectCursors(canvas);
   targetShape.set('id', currentId);
   currentId += 1;
   // const textShape = new fabric.Text(text, getLabelProps(targetShape));

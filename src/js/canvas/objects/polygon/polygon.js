@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import polygonProperties from './properties';
-import setDrawCursorMode from '../../mouseInteractions/cursorModes/drawMode';
+import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode';
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
@@ -145,6 +145,10 @@ function isDrawingInProgress() {
   return activeShape !== null;
 }
 
+function resetObjectCursorModes() {
+
+}
+
 function clearPolygonData() {
   if (pointArray[0]) {
     pointArray.forEach((point) => {
@@ -156,6 +160,7 @@ function clearPolygonData() {
     pointArray = [];
     activeShape = null;
     pointId = 0;
+    resetObjectCursors(canvas);
   }
 }
 
