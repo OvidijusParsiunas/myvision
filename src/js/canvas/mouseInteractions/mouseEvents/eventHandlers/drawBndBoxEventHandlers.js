@@ -1,21 +1,21 @@
 import {
-  prepareCanvasForNewBndBox, instantiateNewBndBox,
-  drawBndBox, finishDrawingBndBox,
+  prepareCanvasForNewBoundingBox, instantiateNewBoundingBox,
+  drawBoundingBox, finishDrawingBoundingBox,
 } from '../../../objects/boundingBox/boundingBox';
 
 function assignDrawBoundingBoxEvents(canvas) {
-  prepareCanvasForNewBndBox(canvas);
+  prepareCanvasForNewBoundingBox(canvas);
 
   canvas.on('mouse:down', () => {
-    instantiateNewBndBox();
+    instantiateNewBoundingBox();
   });
 
   canvas.on('mouse:move', (e) => {
-    drawBndBox(e);
+    drawBoundingBox(e);
   });
 
   canvas.on('mouse:up', (e) => {
-    finishDrawingBndBox(e);
+    finishDrawingBoundingBox(e);
   });
 }
 

@@ -2,14 +2,12 @@
  '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
  should be done here */
 
-const bndBoxProperties = {};
+const boundingBoxProps = {};
 
-function getTempBndBoxProps(bndBoxProps, pointer) {
+function getTempBoundingBoxProps(coordinates) {
   return {
-    left: bndBoxProps.origX,
-    top: bndBoxProps.origY,
-    width: pointer.x - bndBoxProps.origX,
-    height: pointer.y - bndBoxProps.origY,
+    left: coordinates.origX,
+    top: coordinates.origY,
     stroke: 'rgba(255,0,0)',
     strokeWidth: 2,
     fill: 'rgba(255,0,0,0)',
@@ -18,8 +16,8 @@ function getTempBndBoxProps(bndBoxProps, pointer) {
 }
 
 (function setProperties() {
-  bndBoxProperties.tempBndBoxProps = getTempBndBoxProps;
-  bndBoxProperties.finalBndBoxProps = {
+  boundingBoxProps.tempBoundingBoxProps = getTempBoundingBoxProps;
+  boundingBoxProps.finalBoundingBoxProps = {
     fill: 'rgba(255,0,0,0)',
     shapeName: 'bndBox',
     objectCaching: false,
@@ -27,4 +25,4 @@ function getTempBndBoxProps(bndBoxProps, pointer) {
   };
 }());
 
-export { bndBoxProperties as default };
+export { boundingBoxProps as default };

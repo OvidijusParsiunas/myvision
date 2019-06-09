@@ -1,27 +1,28 @@
 import fabric from 'fabric';
-import bndBoxProperties from './properties';
+import boundingBoxProperties from './properties';
 import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
-import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode';
+import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
 let leftMouseBtnDown = false;
-const bndBoxProps = {};
+const boundingBoxProps = {};
+let boundingBox = null;
 
-function instantiateNewBndBox() {
+function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked) {
     leftMouseBtnDown = true;
     const pointer = canvas.getPointer(canvas.e);
-    bndBoxProps.origX = pointer.x;
-    bndBoxProps.origY = pointer.y;
-    bndBoxProps.rect = new fabric.Rect(bndBoxProperties.tempBndBoxProps(bndBoxProps, pointer));
-    canvas.add(bndBoxProps.rect);
+    boundingBoxProps.origX = pointer.x;
+    boundingBoxProps.origY = pointer.y;
+    boundingBox = new fabric.Rect(boundingBoxProperties.tempBoundingBoxProps(boundingBoxProps));
+    canvas.add(boundingBox);
   }
 }
 
-function prepareCanvasForNewBndBox(canvasObj) {
+function prepareCanvasForNewBoundingBox(canvasObj) {
   canvas = canvasObj;
   if (canvas.backgroundImage) {
     createNewBoundingBoxBtnClicked = true;
@@ -30,48 +31,47 @@ function prepareCanvasForNewBndBox(canvasObj) {
   }
 }
 
-function drawBndBox(event) {
+function drawBoundingBox(event) {
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
-  if (bndBoxProps.origX > pointer.x) {
-    bndBoxProps.rect.set({ left: Math.abs(pointer.x) });
+  if (boundingBoxProps.origX > pointer.x) {
+    boundingBox.set({ left: Math.abs(pointer.x) });
   }
-  if (bndBoxProps.origY > pointer.y) {
-    bndBoxProps.rect.set({ top: Math.abs(pointer.y) });
+  if (boundingBoxProps.origY > pointer.y) {
+    boundingBox.set({ top: Math.abs(pointer.y) });
   }
-  bndBoxProps.rect.set({ width: Math.abs(bndBoxProps.origX - pointer.x) });
-  bndBoxProps.rect.set({ height: Math.abs(bndBoxProps.origY - pointer.y) });
+  boundingBox.set({ width: Math.abs(boundingBoxProps.origX - pointer.x) });
+  boundingBox.set({ height: Math.abs(boundingBoxProps.origY - pointer.y) });
   canvas.renderAll();
 }
 
-function lockMovementIfAssertedByState(bndBox) {
+function lockMovementIfAssertedByState(boundingBoxObj) {
   if (!getMovableObjectsState()) {
     const immovableObjectProps = {
       lockMovementX: true,
       lockMovementY: true,
       hoverCursor: 'default',
     };
-    bndBox.rect.set(immovableObjectProps);
+    boundingBoxObj.set(immovableObjectProps);
   }
 }
 
-function finishDrawingBndBox(event) {
+function finishDrawingBoundingBox(event) {
   if (leftMouseBtnDown) {
     createNewBoundingBoxBtnClicked = false;
     leftMouseBtnDown = false;
-    bndBoxProps.rect.setCoords();
-    bndBoxProps.rect.set(bndBoxProperties.finalBndBoxProps);
-    lockMovementIfAssertedByState(bndBoxProps);
-    resetObjectCursors(canvas);
+    boundingBox.setCoords();
+    boundingBox.set(boundingBoxProperties.finalBoundingBoxProps);
+    lockMovementIfAssertedByState(boundingBox);
     const pointer = canvas.getPointer(event.e);
-    prepareLabelShape(bndBoxProps.rect, canvas);
+    prepareLabelShape(boundingBox, canvas);
     showLabelPopUp(pointer.x, pointer.y);
   }
 }
 
 export {
-  prepareCanvasForNewBndBox,
-  instantiateNewBndBox,
-  drawBndBox,
-  finishDrawingBndBox,
+  prepareCanvasForNewBoundingBox,
+  instantiateNewBoundingBox,
+  drawBoundingBox,
+  finishDrawingBoundingBox,
 };
