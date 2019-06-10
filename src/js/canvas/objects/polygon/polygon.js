@@ -12,6 +12,7 @@ let activeShape = null;
 let pointId = 0;
 let coordinatesOfLastMouseHover = null;
 let invisiblePoint = null;
+let drawingFinished = false;
 
 function isRightMouseButtonClicked(pointer) {
   if (activeShape && (coordinatesOfLastMouseHover.x !== pointer.x)) {
@@ -81,6 +82,7 @@ function generatePolygon(pointer) {
 
   activeShape = null;
   polygonMode = false;
+  drawingFinished = true;
   prepareLabelShape(polygon, canvas);
   showLabelPopUp(pointer.x, pointer.y);
 }
@@ -141,8 +143,12 @@ function getTempPolygon() {
   return null;
 }
 
-function isDrawingInProgress() {
+function isPolygonDrawingInProgress() {
   return activeShape !== null;
+}
+
+function isPolygonDrawingFinished() {
+  return drawingFinished;
 }
 
 function clearPolygonData() {
@@ -156,6 +162,7 @@ function clearPolygonData() {
     pointArray = [];
     activeShape = null;
     pointId = 0;
+    drawingFinished = false;
   }
 }
 
@@ -186,7 +193,15 @@ function instantiatePolygon(event) {
 function prepareCanvasForNewPolygon(canvasObj) {
   canvas = canvasObj;
   polygonMode = true;
+  drawingFinished = false;
   canvas.discardActiveObject();
+  setDrawCursorMode(canvas);
+}
+
+function resetDrawPolygonMode() {
+  polygonMode = true;
+  drawingFinished = false;
+  clearPolygonData();
   setDrawCursorMode(canvas);
 }
 
@@ -234,7 +249,7 @@ function cleanPolygonFromEmptyPoints() {
   canvas.renderAll();
 }
 
-function resumeDrawCanvasPolygon() {
+function resumeDrawingAfterRemovePoints() {
   cleanPolygonFromEmptyPoints();
   const position = { x: pointArray[0].left, y: pointArray[0].top };
   invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
@@ -250,11 +265,13 @@ export {
   movePoints,
   drawPolygon,
   getTempPolygon,
+  isPolygonDrawingFinished,
   instantiatePolygon,
   resetNewPolygonData,
-  isDrawingInProgress,
+  isPolygonDrawingInProgress,
   removeInvisiblePoint,
-  resumeDrawCanvasPolygon,
+  resetDrawPolygonMode,
   changeInitialPointColour,
   prepareCanvasForNewPolygon,
+  resumeDrawingAfterRemovePoints,
 };

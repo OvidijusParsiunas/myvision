@@ -1,6 +1,6 @@
 import {
   instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon,
-  movePoints, resumeDrawCanvasPolygon, changeInitialPointColour,
+  movePoints, resumeDrawingAfterRemovePoints, changeInitialPointColour,
 } from '../../../objects/polygon/polygon';
 
 // should be moved to event worker
@@ -8,7 +8,7 @@ function assignDrawPolygonEvents(canvas, resume) {
   if (!resume) {
     prepareCanvasForNewPolygon(canvas);
   } else {
-    resumeDrawCanvasPolygon();
+    resumeDrawingAfterRemovePoints();
   }
   canvas.on('mouse:down', (e) => {
     if (!e.target || (e.target && e.target.shapeName !== 'tempPoint')) {

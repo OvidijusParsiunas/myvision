@@ -29,6 +29,9 @@ function isRightMouseButtonClicked(pointer) {
 // Make sure this is properly needed by doing tests
 // when finished adding points, return to editable
 
+// have speed mode, where drawing cursor remains and have edit mode
+// when polugon selected, only then can it be moved
+
 // add is not a mode and should not light up
 
 function mouseOverEvents(event) {

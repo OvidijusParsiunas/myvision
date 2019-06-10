@@ -3,7 +3,7 @@ import {
   addPointsBtnClick, removeActiveShapeBtnClick,
   removePolygonPointBtnClick, downloadXMLBtnClick,
   uploadImageBtnClick, resetCanvasEventsToDefault,
-  movableObjectsBtnClick,
+  movableObjectsBtnClick, continuousDrawingBtnClick,
 } from './buttonEvents/facade';
 import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
@@ -25,6 +25,7 @@ function assignToolkitButtonEvents() {
   window.removeShape = interruptNewPolygonCreateWthFunc1OrExecFunc2.bind(this,
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
   window.movableObjects = movableObjectsBtnClick;
+  window.continuousDrawing = continuousDrawingBtnClick;
 }
 
 export { assignToolkitButtonEvents as default };

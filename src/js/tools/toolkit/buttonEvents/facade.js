@@ -7,6 +7,7 @@ import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPoin
 import downloadXMLFile from './facadeWorkers/downloadAnnotationsFileWorker';
 import uploadImageFile from './facadeWorkers/uploadImageWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
+import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
 
 let canvas = null;
 
@@ -50,11 +51,16 @@ function movableObjectsBtnClick() {
   changeMovableObjectsState(canvas);
 }
 
+function continuousDrawingBtnClick() {
+  changeContinuousDrawingState();
+}
+
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
   createNewPolygonBtnClick,
   resetCanvasEventsToDefault,
+  continuousDrawingBtnClick,
   removeActiveShapeBtnClick,
   removePolygonPointBtnClick,
   movableObjectsBtnClick,

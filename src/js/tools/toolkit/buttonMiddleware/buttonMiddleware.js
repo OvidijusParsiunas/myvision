@@ -2,7 +2,7 @@ import { isLabelling } from '../../labellerPopUp/labellingProcess';
 import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
-import { isDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
+import { isPolygonDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();
@@ -15,7 +15,7 @@ function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
 }
 
 function interruptNewPolygonCreateWthFunc1OrExecFunc2(func1, func2) {
-  if (isDrawingInProgress() || isLabelling()) {
+  if (isPolygonDrawingInProgress() || isLabelling()) {
     interruptAllCanvasEvents();
     func1();
   } else if (func2) {

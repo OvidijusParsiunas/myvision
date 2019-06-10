@@ -2,6 +2,7 @@ let defaultState = false;
 let removingPolygonPointsState = false;
 let addingPolygonPointsState = false;
 let movableObjectsState = true;
+let continuousDrawingState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -21,6 +22,10 @@ function getAddingPolygonPointsState() {
 
 function getMovableObjectsState() {
   return movableObjectsState;
+}
+
+function getContinuousDrawingState() {
+  return continuousDrawingState;
 }
 
 function setDefaultState(state) {
@@ -44,9 +49,15 @@ function setMovableObjectsState(state) {
   movableObjectsState = state;
 }
 
+function setContinuousDrawingState(state) {
+  continuousDrawingState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
+  getContinuousDrawingState,
+  setContinuousDrawingState,
   getMovableObjectsState,
   setMovableObjectsState,
   getAddingPolygonPointsState,
