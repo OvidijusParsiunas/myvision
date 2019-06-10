@@ -22,6 +22,7 @@ function getTempBoundingBoxProps(coordinates) {
     shapeName: 'bndBox',
     objectCaching: false,
     selectable: false,
+    hasRotatingPoint: false,
   };
 }());
 
