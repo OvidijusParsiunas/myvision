@@ -30,7 +30,7 @@ function isRightMouseButtonClicked(pointer) {
 // when finished adding points, return to editable
 
 // have speed mode, where drawing cursor remains and have edit mode
-// when polugon selected, only then can it be moved
+// check bugs on the speed mode
 
 // add is not a mode and should not light up
 

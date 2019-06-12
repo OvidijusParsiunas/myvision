@@ -1,17 +1,16 @@
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 function setAllObjectsUneditable(canvas) {
+  console.log('called');
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.selectable = false;
     iteratedObj.hoverCursor = 'crosshair';
   });
 }
 
-function setDrawCursorMode(canvas, afterEditingPolygon) {
+function setDrawCursorMode(canvas) {
   canvas.discardActiveObject();
-  if (!afterEditingPolygon) {
-    setAllObjectsUneditable(canvas);
-  }
+  setAllObjectsUneditable(canvas);
   canvas.defaultCursor = 'crosshair';
   canvas.hoverCursor = 'crosshair';
   canvas.renderAll();

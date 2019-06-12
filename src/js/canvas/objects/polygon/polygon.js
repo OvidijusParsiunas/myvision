@@ -245,12 +245,11 @@ function cleanPolygonFromEmptyPoints() {
     points,
   });
   canvas.renderAll();
-  setDrawCursorMode(canvas, true);
-  canvas.renderAll();
 }
 
 function resumeDrawingAfterRemovePoints() {
   cleanPolygonFromEmptyPoints();
+  setDrawCursorMode(canvas, true);
   const position = { x: pointArray[0].left, y: pointArray[0].top };
   invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
   canvas.add(invisiblePoint);
