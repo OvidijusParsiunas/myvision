@@ -1,16 +1,31 @@
 import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/alterPolygon/alterPolygon';
+import { setObjectPropertiesToDefaultWhenReadyToDraw } from '../../objects/objectsProperties/changeProperties';
 
-function setDefaultCursorMode(canvas, alteringPolygonPoints) {
-  if (alteringPolygonPoints) {
-    changePolygonPointsPropertiesToDefault();
-  } else {
-    canvas.forEachObject((iteratedObj) => {
-      iteratedObj.selectable = true;
-    });
-  }
+function setDfaultCanvasCursors(canvas) {
   canvas.defaultCursor = 'default';
   canvas.hoverCursor = 'move';
   canvas.renderAll();
 }
 
-export { setDefaultCursorMode as default };
+function setDefaultCursorMode(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    iteratedObj.selectable = true;
+  });
+  setDfaultCanvasCursors(canvas);
+}
+
+function setDefaultCursorModeAfterAlteringPolygonPoints(canvas) {
+  changePolygonPointsPropertiesToDefault(canvas);
+  setDfaultCanvasCursors(canvas);
+}
+
+function setDefaultCursorModeWhenReadyToDrawShapes(canvas) {
+  setObjectPropertiesToDefaultWhenReadyToDraw(canvas);
+  setDfaultCanvasCursors(canvas);
+}
+
+export {
+  setDefaultCursorMode,
+  setDefaultCursorModeWhenReadyToDrawShapes,
+  setDefaultCursorModeAfterAlteringPolygonPoints,
+};

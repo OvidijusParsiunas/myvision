@@ -22,4 +22,23 @@ function setObjectPropertiesToDefault(object) {
   object.selectable = true;
 }
 
-export { prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault };
+function setObjectPropertiesToDefaultWhenReadyToDraw(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    if (getMovableObjectsState()) {
+      iteratedObj.lockMovementX = false;
+      iteratedObj.lockMovementY = false;
+      iteratedObj.hoverCursor = 'move';
+    } else {
+      iteratedObj.lockMovementX = true;
+      iteratedObj.lockMovementY = true;
+      iteratedObj.hoverCursor = 'default';
+    }
+    iteratedObj.selectable = true;
+  });
+}
+
+export {
+  setObjectPropertiesToDefault,
+  prepareObjectsForEditablePolygonPoints,
+  setObjectPropertiesToDefaultWhenReadyToDraw,
+};

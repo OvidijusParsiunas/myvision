@@ -52,7 +52,7 @@ function movableObjectsBtnClick() {
 }
 
 function continuousDrawingBtnClick() {
-  changeContinuousDrawingState();
+  changeContinuousDrawingState(canvas);
 }
 
 export {

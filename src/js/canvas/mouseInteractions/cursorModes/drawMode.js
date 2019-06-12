@@ -1,6 +1,6 @@
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
-function setAllObjectsUneditable(canvas) {
+function setAllObjectsToUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.selectable = false;
     iteratedObj.hoverCursor = 'crosshair';
@@ -9,7 +9,7 @@ function setAllObjectsUneditable(canvas) {
 
 function setDrawCursorMode(canvas) {
   canvas.discardActiveObject();
-  setAllObjectsUneditable(canvas);
+  setAllObjectsToUneditable(canvas);
   canvas.defaultCursor = 'crosshair';
   canvas.hoverCursor = 'crosshair';
   canvas.renderAll();

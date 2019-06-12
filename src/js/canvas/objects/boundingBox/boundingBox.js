@@ -34,7 +34,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
 }
 
 function clearBoundingBoxData() {
-  drawingFinished = true;
+  drawingFinished = false;
 }
 
 function resetDrawBoundingBoxMode() {
@@ -67,7 +67,6 @@ function lockMovementIfAssertedByState(boundingBoxObj) {
     boundingBoxObj.set(immovableObjectProps);
   }
 }
-
 
 function isBoundingBoxDrawingFinished() {
   return drawingFinished;

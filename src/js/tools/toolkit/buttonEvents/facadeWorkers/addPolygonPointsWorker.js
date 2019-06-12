@@ -2,13 +2,13 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import { setAddingPolygonPointsState, getAddingPolygonPointsState, setDefaultState } from '../facadeWorkersUtils/stateManager';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
-import setDefaultCursorMode from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
+import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { resetAddPoints, isAddingPointsToPolygon } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 
 function discardAddPointsEvents(canvas) {
-  setDefaultCursorMode(canvas, true);
+  setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
   const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
   assignDefaultEvents(canvas, currentlySelectedPolygonId);
   setDefaultState(true);
