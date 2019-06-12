@@ -3,6 +3,7 @@ import { resetCanvasEventsToDefault } from '../toolkit/buttonEvents/facade';
 import { hideLabelPopUp } from './style';
 import { getContinuousDrawingState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { isPolygonDrawingFinished, resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
+import { isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 
 function labelShape() {
   createLabelShape();
@@ -10,6 +11,8 @@ function labelShape() {
     resetCanvasEventsToDefault();
   } else if (isPolygonDrawingFinished()) {
     resetDrawPolygonMode();
+  } else if (isBoundingBoxDrawingFinished()) {
+    resetDrawBoundingBoxMode();
   }
 }
 

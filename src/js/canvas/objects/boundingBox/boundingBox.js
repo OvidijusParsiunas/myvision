@@ -10,6 +10,7 @@ let createNewBoundingBoxBtnClicked = false;
 let leftMouseBtnDown = false;
 const boundingBoxProps = {};
 let boundingBox = null;
+let drawingFinished = false;
 
 function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked) {
@@ -28,7 +29,18 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
     createNewBoundingBoxBtnClicked = true;
     setDrawCursorMode(canvas);
     canvas.discardActiveObject();
+    drawingFinished = false;
   }
+}
+
+function clearBoundingBoxData() {
+  drawingFinished = true;
+}
+
+function resetDrawBoundingBoxMode() {
+  setDrawCursorMode(canvas);
+  createNewBoundingBoxBtnClicked = true;
+  drawingFinished = false;
 }
 
 function drawBoundingBox(event) {
@@ -56,6 +68,11 @@ function lockMovementIfAssertedByState(boundingBoxObj) {
   }
 }
 
+
+function isBoundingBoxDrawingFinished() {
+  return drawingFinished;
+}
+
 function finishDrawingBoundingBox(event) {
   if (leftMouseBtnDown) {
     createNewBoundingBoxBtnClicked = false;
@@ -63,6 +80,7 @@ function finishDrawingBoundingBox(event) {
     boundingBox.setCoords();
     boundingBox.set(boundingBoxProperties.finalBoundingBoxProps);
     lockMovementIfAssertedByState(boundingBox);
+    drawingFinished = true;
     const pointer = canvas.getPointer(event.e);
     prepareLabelShape(boundingBox, canvas);
     showLabelPopUp(pointer.x, pointer.y);
@@ -70,8 +88,11 @@ function finishDrawingBoundingBox(event) {
 }
 
 export {
-  prepareCanvasForNewBoundingBox,
-  instantiateNewBoundingBox,
   drawBoundingBox,
+  clearBoundingBoxData,
+  resetDrawBoundingBoxMode,
   finishDrawingBoundingBox,
+  instantiateNewBoundingBox,
+  isBoundingBoxDrawingFinished,
+  prepareCanvasForNewBoundingBox,
 };

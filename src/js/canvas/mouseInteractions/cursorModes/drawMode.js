@@ -1,7 +1,6 @@
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 function setAllObjectsUneditable(canvas) {
-  console.log('called');
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.selectable = false;
     iteratedObj.hoverCursor = 'crosshair';

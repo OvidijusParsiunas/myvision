@@ -3,6 +3,7 @@ import {
   cleanPolygonPointsArray, clearAllAddPointsData,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { resetNewPolygonData } from '../../../objects/polygon/polygon';
+import { clearBoundingBoxData } from '../../../objects/boundingBox/boundingBox';
 import { cancelLabellingProcess } from '../../../../tools/labellerPopUp/buttonsEvents';
 import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
 import {
@@ -12,6 +13,7 @@ import {
 
 function interruptCanvasEventsNoPolygonPointRemoval() {
   resetNewPolygonData();
+  clearBoundingBoxData();
   cancelLabellingProcess();
   removeEditedPolygonId();
   if (getAlteringPolygonPointsState()) {

@@ -249,7 +249,7 @@ function cleanPolygonFromEmptyPoints() {
 
 function resumeDrawingAfterRemovePoints() {
   cleanPolygonFromEmptyPoints();
-  setDrawCursorMode(canvas, true);
+  setDrawCursorMode(canvas);
   const position = { x: pointArray[0].left, y: pointArray[0].top };
   invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
   canvas.add(invisiblePoint);
@@ -264,13 +264,13 @@ export {
   movePoints,
   drawPolygon,
   getTempPolygon,
-  isPolygonDrawingFinished,
   instantiatePolygon,
   resetNewPolygonData,
-  isPolygonDrawingInProgress,
   removeInvisiblePoint,
   resetDrawPolygonMode,
   changeInitialPointColour,
+  isPolygonDrawingFinished,
   prepareCanvasForNewPolygon,
+  isPolygonDrawingInProgress,
   resumeDrawingAfterRemovePoints,
 };
