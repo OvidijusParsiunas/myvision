@@ -154,7 +154,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return setRemovePointsOnDrawNewPolygonMode; });\nfunction setRemovePointsOnDrawNewPolygonMode(canvas) {\r\n  canvas.defaultCursor = 'default';\r\n  canvas.hoverCursor = 'default';\r\n  canvas.renderAll();\r\n  canvas.forEachObject((iteratedObj) => {\r\n    if (iteratedObj.shapeName === 'polygon') {\r\n      iteratedObj.hoverCursor = 'default';\r\n    }\r\n  });\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return setRemovePointsOnDrawNewPolygonMode; });\nfunction setRemovePointsOnDrawNewPolygonMode(canvas) {\r\n  canvas.defaultCursor = 'default';\r\n  canvas.hoverCursor = 'default';\r\n  canvas.renderAll();\r\n  canvas.forEachObject((iteratedObj) => {\r\n    if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {\r\n      iteratedObj.hoverCursor = 'default';\r\n    }\r\n  });\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode.js?");
 
 /***/ }),
 

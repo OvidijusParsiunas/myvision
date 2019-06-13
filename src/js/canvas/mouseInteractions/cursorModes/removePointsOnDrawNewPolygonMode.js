@@ -3,7 +3,7 @@ function setRemovePointsOnDrawNewPolygonMode(canvas) {
   canvas.hoverCursor = 'default';
   canvas.renderAll();
   canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName === 'polygon') {
+    if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {
       iteratedObj.hoverCursor = 'default';
     }
   });
