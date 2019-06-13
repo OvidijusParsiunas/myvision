@@ -37,6 +37,17 @@ function setObjectPropertiesToDefaultWhenReadyToDraw(canvas) {
   });
 }
 
+function setObjectPropertiesToMovable(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    if (getMovableObjectsState()) {
+      iteratedObj.hoverCursor = 'move';
+    } else {
+      iteratedObj.hoverCursor = 'default';
+    }
+    iteratedObj.selectable = true;
+  });
+}
+
 export {
   setObjectPropertiesToDefault,
   prepareObjectsForEditablePolygonPoints,

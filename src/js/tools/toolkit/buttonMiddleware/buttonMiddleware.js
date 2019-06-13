@@ -3,6 +3,7 @@ import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { isPolygonDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
+import { getContinuousDrawingState } from '../buttonEvents/facadeWorkersUtils/stateManager';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();
@@ -14,8 +15,8 @@ function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
   funcs.forEach((func) => { func(); });
 }
 
-function interruptNewPolygonCreateWthFunc1OrExecFunc2(func1, func2) {
-  if (isPolygonDrawingInProgress() || isLabelling()) {
+function interruptNewShapeDrawingWthFunc1OrExecFunc2(func1, func2) {
+  if ((isPolygonDrawingInProgress() || isLabelling()) && !getContinuousDrawingState()) {
     interruptAllCanvasEvents();
     func1();
   } else if (func2) {
@@ -55,6 +56,6 @@ export {
   doNothingIfLabellingOrAddingNewPoints,
   interruptAllCanvasEventsBeforeFuncWInputs,
   interruptAllCanvasEventsBeforeMultipleFunc,
-  interruptNewPolygonCreateWthFunc1OrExecFunc2,
+  interruptNewShapeDrawingWthFunc1OrExecFunc2,
   interruptAllCanvasEventsIfLabellingInProgress,
 };

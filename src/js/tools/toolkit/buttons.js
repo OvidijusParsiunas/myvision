@@ -7,7 +7,7 @@ import {
 } from './buttonEvents/facade';
 import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
-  doNothingIfLabellingInProgress, interruptNewPolygonCreateWthFunc1OrExecFunc2,
+  doNothingIfLabellingInProgress, interruptNewShapeDrawingWthFunc1OrExecFunc2,
   doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
 
 } from './buttonMiddleware/buttonMiddleware';
@@ -22,7 +22,7 @@ function assignToolkitButtonEvents() {
     resetCanvasEventsToDefault, downloadXMLBtnClick);
   window.uploadImage = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
     { uploadImageBtnClick, resetCanvasEventsToDefault });
-  window.removeShape = interruptNewPolygonCreateWthFunc1OrExecFunc2.bind(this,
+  window.removeShape = interruptNewShapeDrawingWthFunc1OrExecFunc2.bind(this,
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
   window.movableObjects = movableObjectsBtnClick;
   window.continuousDrawing = continuousDrawingBtnClick;

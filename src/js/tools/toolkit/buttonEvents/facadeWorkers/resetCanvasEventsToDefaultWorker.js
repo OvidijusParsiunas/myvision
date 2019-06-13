@@ -1,5 +1,8 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
+import {
+  setDefaultCursorModeAfterAlteringPolygonPoints,
+  setDefaultCursorMode, setDefaultCursorModeWhenReadyToDrawShapes,
+} from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
   setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
@@ -15,7 +18,10 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
     } else {
       setDefaultCursorMode(canvas);
     }
+    // wtf!
     setDefaultCursorMode(canvas, getAlteringPolygonPointsState());
+    // anyway
+    // setDefaultCursorModeWhenReadyToDrawShapes(canvas);
     assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
     if (getAlteringPolygonPointsState()) {
       setAlteringPolygonPointsState(false);
