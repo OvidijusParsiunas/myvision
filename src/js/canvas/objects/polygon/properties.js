@@ -153,7 +153,7 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     hasControls: false,
     evented: false,
     objectCaching: false,
-    numberOfNullPolygonPoints: -3,
+    numberOfNullPolygonPoints: 0,
   };
   polygonProperties.newLine = {
     strokeWidth: 1.1,

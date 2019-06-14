@@ -17,7 +17,7 @@ function generateNewPointsIfInterruptedAddPoints(canvasObj, interruptedAddPoints
     removePolygonPoints();
     setEditablePolygon(canvasObj, getPolygonIfEditing(), true);
   } else {
-    changeExistingPolygonPointsToRemovable(canvasObj);
+    changeExistingPolygonPointsToRemovable(canvasObj, getPolygonIdIfEditing());
   }
 }
 

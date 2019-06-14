@@ -35,6 +35,11 @@ function isRightMouseButtonClicked(pointer) {
 // for continuous drawing, thus it is all up to the UX
 // when delete shape in continuous mode, make sure that it remains in this mode
 
+// deselect continuous when added polygon or another shape and waiting to add another one
+
+// bug where drawing polygon, choosing to remove points, removing to null and hitting
+// remove points button again
+
 // add is not a mode and should not light up
 
 function mouseOverEvents(event) {

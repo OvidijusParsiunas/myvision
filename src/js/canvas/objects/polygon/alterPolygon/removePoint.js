@@ -37,7 +37,6 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
         if (point) point.set(polygonProperties.disabledRemovePoint);
       });
       // change cursor modes name convention
-      // make sure to test with thresholded performance
       // when finished creating polygon, have popup option to go back to editing
       console.log('need to signal restrictions');
     }

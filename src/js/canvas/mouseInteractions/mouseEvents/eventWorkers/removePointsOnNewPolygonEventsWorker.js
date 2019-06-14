@@ -20,7 +20,7 @@ function pointMouseDownEvents(event) {
 }
 
 function pointMouseOverEvents(event) {
-  if (event.target && event.target.shapeName === 'point') {
+  if (event.target && event.target.shapeName === 'point' && event.target.fill === 'red') {
     event.target.stroke = 'red';
     canvas.renderAll();
   }

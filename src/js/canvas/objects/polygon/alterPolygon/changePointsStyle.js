@@ -38,6 +38,11 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas, polygon) {
       pointId += 1;
     }
   });
+  if (polygonPoints.length < 4) {
+    polygonPoints.forEach((point) => {
+      point.set(polygonProperties.disabledRemovePoint);
+    });
+  }
   polygon.sendBackwards();
   return polygonPoints;
 }

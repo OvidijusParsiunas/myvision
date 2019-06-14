@@ -250,9 +250,11 @@ function cleanPolygonFromEmptyPoints() {
 function resumeDrawingAfterRemovePoints() {
   cleanPolygonFromEmptyPoints();
   setDrawCursorMode(canvas);
-  const position = { x: pointArray[0].left, y: pointArray[0].top };
-  invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
-  canvas.add(invisiblePoint);
+  if (pointArray.length !== 0) {
+    const position = { x: pointArray[0].left, y: pointArray[0].top };
+    invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
+    canvas.add(invisiblePoint);
+  }
 }
 
 function removeInvisiblePoint() {
