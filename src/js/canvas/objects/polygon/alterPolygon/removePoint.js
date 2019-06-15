@@ -1,4 +1,3 @@
-import fabric from 'fabric';
 import polygonProperties from '../properties';
 
 function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
@@ -27,7 +26,6 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
     } else {
       polygon.points[pointId] = {};
     }
-    console.log(polygonPoints);
     canvas.remove(polygonPoints[pointId]);
     polygonPoints[pointId] = null;
 
@@ -36,9 +34,6 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
       polygonPoints.forEach((point) => {
         if (point) point.set(polygonProperties.disabledRemovePoint);
       });
-      // change cursor modes name convention
-      // when finished creating polygon, have popup option to go back to editing
-      console.log('need to signal restrictions');
     }
     canvas.renderAll();
   }

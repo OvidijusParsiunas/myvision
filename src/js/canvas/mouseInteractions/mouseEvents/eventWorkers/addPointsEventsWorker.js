@@ -23,25 +23,6 @@ function isRightMouseButtonClicked(pointer) {
   return false;
 }
 
-// highlight all of them differently to indicate that
-// they can all be potentially edited (when none are selected)
-
-// Make sure this is properly needed by doing tests
-// when finished adding points, return to editable
-
-// have speed mode, where drawing cursor remains and have edit mod
-// created code to return from the continuous drawing mode to default,
-// however this may not be required if there will not be an explicit button
-// for continuous drawing, thus it is all up to the UX
-// when delete shape in continuous mode, make sure that it remains in this mode
-
-// deselect continuous when added polygon or another shape and waiting to add another one
-
-// bug where drawing polygon, choosing to remove points, removing to null and hitting
-// remove points button again
-
-// add is not a mode and should not light up
-
 function mouseOverEvents(event) {
   addPointsMouseOver(event);
 }
