@@ -2,8 +2,10 @@ import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/faca
 
 function setAllObjectsToUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {
-    iteratedObj.selectable = false;
-    iteratedObj.hoverCursor = 'crosshair';
+    if (iteratedObj.shapeName !== 'tempPoint' && iteratedObj.shapeName !== 'firstPoint') {
+      iteratedObj.selectable = false;
+      iteratedObj.hoverCursor = 'crosshair';
+    }
   });
 }
 

@@ -9,7 +9,10 @@ import { removeEditedPolygonId } from '../../../../canvas/mouseInteractions/mous
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
-import { getAddingPolygonPointsState, getContinuousDrawingState } from '../facadeWorkersUtils/stateManager';
+import {
+  getAddingPolygonPointsState, getContinuousDrawingState,
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+} from '../facadeWorkersUtils/stateManager';
 import { isLabelling, removeTargetShape } from '../../../labellerPopUp/labellingProcess';
 import { hideLabelPopUp } from '../../../labellerPopUp/style';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
@@ -36,6 +39,9 @@ function isCurrentlyDrawing(canvas) {
         resetDrawBoundingBoxMode();
       }
     } else if (isPolygonDrawingInProgress()) {
+      if (getRemovingPolygonPointsState()) {
+        setRemovingPolygonPointsState(false);
+      }
       purgeCanvasMouseEvents(canvas);
       assignDrawPolygonEvents(canvas);
     }

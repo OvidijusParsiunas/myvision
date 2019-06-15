@@ -249,6 +249,7 @@ function cleanPolygonFromEmptyPoints() {
 
 function resumeDrawingAfterRemovePoints() {
   cleanPolygonFromEmptyPoints();
+  activeShape.numberOfNullPolygonPoints = 0;
   setDrawCursorMode(canvas);
   if (pointArray.length !== 0) {
     const position = { x: pointArray[0].left, y: pointArray[0].top };
