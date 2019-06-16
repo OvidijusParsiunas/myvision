@@ -12,6 +12,7 @@ function getTempBoundingBoxProps(coordinates) {
     strokeWidth: 2,
     fill: 'rgba(255,0,0,0)',
     shapeName: 'bndBoxTemp',
+    objectCaching: false,
   };
 }
 
@@ -23,6 +24,7 @@ function getTempBoundingBoxProps(coordinates) {
     objectCaching: false,
     selectable: false,
     hasRotatingPoint: false,
+    perPixelTargetFind: false,
   };
 }());
 
