@@ -10,6 +10,7 @@ function setDfaultCanvasCursors(canvas) {
 function setDefaultCursorMode(canvas) {
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.selectable = true;
+    iteratedObj.hoverCursor = 'move';
   });
   setDfaultCanvasCursors(canvas);
 }
