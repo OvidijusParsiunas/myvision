@@ -77,6 +77,11 @@ function generatePolygon(pointer) {
 
   removeActiveShape();
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon);
+
+  // OPTIMIZE
+
+  // remove bounding boxes
+  polygon.perPixelTargetFind = false;
   lockMovementIfAssertedByState(polygon);
   canvas.add(polygon);
 

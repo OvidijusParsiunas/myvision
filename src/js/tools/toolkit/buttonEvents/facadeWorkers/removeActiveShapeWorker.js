@@ -21,12 +21,13 @@ function removeBoundingBox(canvas) {
   const activeObect = canvas.getActiveObject();
   if (activeObect && activeObect.shapeName === 'bndBox') {
     canvas.remove(activeObect);
+    clearBoundingBoxData();
     return true;
   }
   return false;
 }
 
-function isCurrentlyDrawing(canvas) {
+function removeIfContinuousDrawing(canvas) {
   if (getContinuousDrawingState()) {
     if (isLabelling()) {
       if (isPolygonDrawingFinished()) {
@@ -38,20 +39,23 @@ function isCurrentlyDrawing(canvas) {
         removeTargetShape();
         resetDrawBoundingBoxMode();
       }
-    } else if (isPolygonDrawingInProgress()) {
+      return true;
+    }
+    if (isPolygonDrawingInProgress()) {
       if (getRemovingPolygonPointsState()) {
         setRemovingPolygonPointsState(false);
       }
+      resetNewPolygonData();
       purgeCanvasMouseEvents(canvas);
       assignDrawPolygonEvents(canvas);
+      return true;
     }
-    return true;
   }
   return false;
 }
 
 function removeActiveShapeEvent(canvas) {
-  if (!isCurrentlyDrawing(canvas) || !removeBoundingBox(canvas)) {
+  if (!removeIfContinuousDrawing(canvas) && !removeBoundingBox(canvas)) {
     if (isAddingPointsToPolygon()) {
       purgeCanvasMouseEvents(canvas);
       assignAddPointsOnExistingPolygonEvents(canvas);
@@ -62,8 +66,6 @@ function removeActiveShapeEvent(canvas) {
     }
     removePolygon();
     removePolygonPoints();
-    resetNewPolygonData();
-    clearBoundingBoxData();
     removeEditedPolygonId();
   }
 }
