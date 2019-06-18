@@ -1,6 +1,9 @@
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
-function prepareObjectsForEditablePolygonPoints(object) {
+function prepareObjectsForEditablePolygonPoints(object, isDrawing) {
+  if (isDrawing) {
+    object.perPixelTargetFind = true;
+  }
   if (object.shapeName === 'bndBox') {
     object.selectable = false;
   } else {

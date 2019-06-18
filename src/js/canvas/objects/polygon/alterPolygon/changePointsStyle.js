@@ -3,6 +3,7 @@ import polygonProperties from '../properties';
 import {
   prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault,
 } from '../../objectsProperties/changeProperties';
+import { getDefaultState, getAddingPolygonPointsState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) {
   let pointId = 0;
@@ -68,10 +69,11 @@ function changeObjectsToPolygonPointsToDefaultImpl(canvas) {
 }
 
 function changeObjectsToPolygonPointsRemovaleImpl(canvas) {
+  const isDrawing = !(getDefaultState() || getAddingPolygonPointsState());
   const polygonPoints = [];
   if (canvas) {
     canvas.forEachObject((iteratedObj) => {
-      prepareObjectsForEditablePolygonPoints(iteratedObj);
+      prepareObjectsForEditablePolygonPoints(iteratedObj, isDrawing);
       if (iteratedObj.shapeName === 'point') {
         iteratedObj.set(polygonProperties.removablePoint);
         polygonPoints[iteratedObj.pointId] = iteratedObj;
