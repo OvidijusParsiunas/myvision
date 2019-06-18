@@ -24,11 +24,11 @@ function setRemovePointsCursorMode(canvas) {
 }
 
 function assignRemovePointsEvents(canvas, interruptedAddPoints) {
-  const drawing = isPolygonDrawingInProgress();
-  if (drawing) {
+  const isDrawingPolygon = isPolygonDrawingInProgress();
+  if (isDrawingPolygon) {
     removeInvisiblePoint();
     assignRemovePointsOnDrawPolygonEvents(canvas);
-  } else if (!drawing) {
+  } else if (!isDrawingPolygon) {
     assignRemovePointsOnExistingPolygonEvents(canvas, interruptedAddPoints);
   }
 }
