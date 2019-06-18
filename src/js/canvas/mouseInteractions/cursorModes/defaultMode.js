@@ -7,8 +7,13 @@ function setDfaultCanvasCursors(canvas) {
   canvas.renderAll();
 }
 
+// important to remember that this will reset perPixelTargetFind to true
+// only when the mode is being reset to default
 function setDefaultCursorMode(canvas) {
   canvas.forEachObject((iteratedObj) => {
+    if (iteratedObj.shapeName !== 'bndBox') {
+      iteratedObj.perPixelTargetFind = true;
+    }
     iteratedObj.selectable = true;
     iteratedObj.hoverCursor = 'move';
   });

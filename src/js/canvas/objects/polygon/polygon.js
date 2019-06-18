@@ -80,8 +80,7 @@ function generatePolygon(pointer) {
 
   // OPTIMIZE
 
-  // remove bounding boxes
-  polygon.perPixelTargetFind = false;
+  // find out why on add new polygon points, the cursor changes immediately after adding them
   lockMovementIfAssertedByState(polygon);
   canvas.add(polygon);
 

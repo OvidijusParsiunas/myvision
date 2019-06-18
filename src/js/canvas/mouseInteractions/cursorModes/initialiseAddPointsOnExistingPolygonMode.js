@@ -1,9 +1,13 @@
 import polygonProperties from '../../objects/polygon/properties';
+import { getDefaultState, getAddingPolygonPointsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 // change - objectsProperties
 // follow pattern used in remove points
-function changeOjectPropertiesForChoosingInitialPoint(canvas) {
+function changeOjectPropertiesForChoosingInitialPoint(canvas, isDrawing) {
   canvas.forEachObject((iteratedObj) => {
+    if (isDrawing) {
+      iteratedObj.perPixelTargetFind = true;
+    }
     if (iteratedObj.shapeName === 'bndBox') {
       iteratedObj.selectable = false;
     } else {
@@ -18,7 +22,8 @@ function changeOjectPropertiesForChoosingInitialPoint(canvas) {
 }
 
 function setInitialStageOfAddPointsOnExistingPolygonMode(canvas) {
-  changeOjectPropertiesForChoosingInitialPoint(canvas);
+  const isDrawing = !(getDefaultState() || getAddingPolygonPointsState());
+  changeOjectPropertiesForChoosingInitialPoint(canvas, isDrawing);
   canvas.defaultCursor = 'default';
   canvas.hoverCursor = 'default';
 }
