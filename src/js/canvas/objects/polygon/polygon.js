@@ -78,9 +78,8 @@ function generatePolygon(pointer) {
   removeActiveShape();
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon);
 
-  // OPTIMIZE
-
   // find out why on add new polygon points, the cursor changes immediately after adding them
+
   lockMovementIfAssertedByState(polygon);
   canvas.add(polygon);
 

@@ -15,10 +15,10 @@ import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseI
 import { resetAddPoints, isAddingPointsToPolygon, cleanPolygonPointsArray } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 
 function setRemovePointsCursorMode(canvas) {
-  const drawing = isPolygonDrawingInProgress();
-  if (drawing) {
+  const isDrawingPolygon = isPolygonDrawingInProgress();
+  if (isDrawingPolygon) {
     setRemovePointsOnDrawNewPolygonMode(canvas);
-  } else if (!drawing) {
+  } else if (!isDrawingPolygon) {
     setRemovePointsOnExistingPolygonMode(canvas);
   }
 }
@@ -35,8 +35,8 @@ function assignRemovePointsEvents(canvas, interruptedAddPoints) {
 
 function discardRemovePointsEvents(canvas) {
   // is this still drawing after manually removing all polygon points
-  const drawing = isPolygonDrawingInProgress();
-  if (drawing) {
+  const isDrawingPolygon = isPolygonDrawingInProgress();
+  if (isDrawingPolygon) {
     assignDrawPolygonEvents(canvas, true);
     setDefaultState(false);
   } else {
