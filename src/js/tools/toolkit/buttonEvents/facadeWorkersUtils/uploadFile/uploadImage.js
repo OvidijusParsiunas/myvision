@@ -8,6 +8,7 @@ function drawResizedImage(image, newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
   canvas.setHeight(newImageDimensions.height);
   fabric.Image.fromURL(image.src, (img) => {
+    console.log(img.width + ' ' + img.height);
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
       scaleX: canvas.width / img.width,
       scaleY: canvas.height / img.height,

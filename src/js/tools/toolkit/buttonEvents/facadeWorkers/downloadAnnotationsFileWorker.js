@@ -1,9 +1,9 @@
-import { downloadXML } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
+import { downloadJSON } from '../facadeWorkersUtils/downloadFile/fileTypes/JSON';
 
 function downloadXMLFile(canvas) {
   canvas.discardActiveObject();
   if (canvas.backgroundImage) {
-    downloadXML();
+    downloadJSON();
   }
 }
 

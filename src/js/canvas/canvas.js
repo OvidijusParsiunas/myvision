@@ -1,6 +1,6 @@
 import { assignCanvasMouseEvents } from '../tools/toolkit/buttonEvents/facade';
 import { assignCanvasForNewImageUpload } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/uploadFile/uploadImage';
-import { assignCanvasForDownloadingAnnotationsXML } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
+import { assignCanvasForDownloadingAnnotationsXML } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/downloadFile/fileTypes/JSON';
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonEvents/facadeWorkersUtils/resetCanvasEvents';
 import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas } from './utils/fabricUtils';
 
