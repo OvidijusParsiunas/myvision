@@ -38,14 +38,15 @@ function getPolygonPointsCoordinates(polygon) {
     all_points_y: [],
   };
   polygon.points.forEach((point) => {
-    coordinatesObj.all_points_x.push(point.x);
-    coordinatesObj.all_points_y.push(point.y);
+    coordinatesObj.all_points_x.push(point.x / fileStatus.scaleX);
+    coordinatesObj.all_points_y.push(point.y / fileStatus.scaleY);
   });
-  coordinatesObj.all_points_x.push(polygon.points[0].x);
-  coordinatesObj.all_points_y.push(polygon.points[0].y);
+  coordinatesObj.all_points_x.push(polygon.points[0].x / fileStatus.scaleX);
+  coordinatesObj.all_points_y.push(polygon.points[0].y / fileStatus.scaleY);
   return coordinatesObj;
 }
 
+// should they be rounded?
 function getShapeCoordinates() {
   let shapeIndex = 0;
   const shapesCoordinates = {};
@@ -65,10 +66,10 @@ function getShapeCoordinates() {
       shapesCoordinates[shapeIndex] = {
         shape_attributes: {
           name: 'rect',
-          x: object.left,
-          y: object.top,
-          width: object.width,
-          height: object.height,
+          x: object.left / fileStatus.scaleX,
+          y: object.top / fileStatus.scaleY,
+          width: object.width / fileStatus.scaleX,
+          height: object.height / fileStatus.scaleY,
         },
       };
       shapeIndex += 1;
