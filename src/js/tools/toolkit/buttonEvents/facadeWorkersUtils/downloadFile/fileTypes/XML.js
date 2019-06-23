@@ -61,6 +61,17 @@ function getShapeCoordinates() {
         region_attributes: {},
       };
       shapeIndex += 1;
+    } else if (object.shapeName === 'bndBox') {
+      shapesCoordinates[shapeIndex] = {
+        shape_attributes: {
+          name: 'rect',
+          x: object.left,
+          y: object.top,
+          width: object.width,
+          height: object.height,
+        },
+      };
+      shapeIndex += 1;
     }
   });
   return shapesCoordinates;
