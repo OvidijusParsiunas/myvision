@@ -78,6 +78,7 @@ function getShapeCoordinates() {
   return shapesCoordinates;
 }
 
+// find out later what is meant by size
 function getFinalCoordinatesObj() {
   const coordinatesObj = {
     fileref: '',
