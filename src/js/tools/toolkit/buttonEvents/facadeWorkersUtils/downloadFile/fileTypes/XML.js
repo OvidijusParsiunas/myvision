@@ -46,6 +46,21 @@ function getPolygonPointsCoordinates(polygon) {
   return coordinatesObj;
 }
 
+// TO-DO
+// start working on annotations
+// can edit annotations
+// start working on zoom
+// duplicate bounding box
+// hold multiple images
+// image list
+// upload multiple images
+// save dir
+// save all
+// choose different output formats for different models - YOLO/PascalVOC
+// hot keys
+// think about the UX
+// double check if can draw fine on huge file size images
+
 // should they be rounded?
 function getShapeCoordinates() {
   let shapeIndex = 0;
