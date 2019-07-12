@@ -38,7 +38,7 @@ function generateText(text) {
   const textShape = new fabric.Text(text, getTextProperties(targetShape));
   // setting bndbox group
   if (targetShape.shapeName === 'bndBox') {
-    const group = new fabric.Group([targetShape, textShape], { shapeName: 'boundingBox' });
+    const group = new fabric.Group([targetShape, textShape], { shapeName: targetShape.shapeName });
     canvas.add(group);
     // setting polygin group
   } else if (targetShape.shapeName === 'polygon') {
