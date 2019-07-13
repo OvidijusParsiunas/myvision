@@ -30,40 +30,14 @@ function getTextProperties(shape) {
   };
 }
 
-
 function generateLabelShapeGroup(text) {
   targetShape.set('id', currentId);
-  // generate text shape
   const textShape = new fabric.Text(text, getTextProperties(targetShape));
-  // setting bndbox group
-  if (targetShape.shapeName === 'bndBox') {
-    const group = new fabric.Group([targetShape, textShape], { shapeName: targetShape.shapeName });
-    canvas.add(group);
-    // setting polygin group
-  } else if (targetShape.shapeName === 'polygon') {
-    // const group = new fabric.Group([targetShape, textShape], polygonProperties.newPolygon);
-    // canvas.add(group);
-  }
-  currentId += 1;
+  const group = new fabric.Group([targetShape, textShape], { shapeName: targetShape.shapeName });
+  canvas.add(group);
   canvas.remove(targetShape);
+  currentId += 1;
 }
-
-// function generateText(text) {
-//   // generate text shape
-//   const textShape = new fabric.Text(text, getTextProperties(targetShape));
-//
-//   // setting bndbox group
-//   if (targetShape.shapeName === 'bndBoxTemp') {
-//     const group = new fabric.Group([textShape]);
-//     group.addWithUpdate(targetShape);
-//     canvas.add(group);
-//     // setting polygin group
-//   } else if (targetShape.shapeName === 'polygon') {
-//     // const group = new fabric.Group([targetShape, textShape], polygonProperties.newPolygon);
-//     // canvas.add(group);
-//   }
-//   // canvas.remove(targetShape);
-// }
 
 function createLabelShape() {
   const text = getLabelPopUpText();
