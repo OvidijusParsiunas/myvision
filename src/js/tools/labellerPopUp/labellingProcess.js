@@ -1,5 +1,6 @@
 import fabric from 'fabric';
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
+import { addLabel } from '../../canvas/objects/label/label';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 
 let labellingState = false;
@@ -33,9 +34,8 @@ function getTextProperties(shape) {
 function generateLabelShapeGroup(text) {
   targetShape.set('id', currentId);
   const textShape = new fabric.Text(text, getTextProperties(targetShape));
-  const group = new fabric.Group([targetShape, textShape], { shapeName: targetShape.shapeName });
-  canvas.add(group);
-  canvas.remove(targetShape);
+  canvas.add(textShape);
+  addLabel(textShape, currentId);
   currentId += 1;
 }
 

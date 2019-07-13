@@ -4,6 +4,7 @@ import {
 } from '../eventWorkers/editPolygonEventsWorker';
 import { boundingBoxScalingEvents, boundingBoxMouseOutEvents } from '../eventWorkers/editBoundingBoxEventsWorker';
 
+// not just for polygon
 function assignDefaultEvents(canvas, polygonId, addPoints) {
   setEditPolygonEventObjects(canvas, polygonId, addPoints);
 

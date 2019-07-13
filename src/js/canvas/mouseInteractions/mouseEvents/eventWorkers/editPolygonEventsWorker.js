@@ -5,6 +5,7 @@ import {
   sendPolygonPointsToFront, getPolygonEditingStatus,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
+import { getLabelById } from '../../../objects/label/label';
 
 let polygonMoved = false;
 let polygonPointMoved = false;
@@ -12,6 +13,7 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let setEditablePolygonOnClick = null;
+let labelObject = null;
 
 function setEditablePolygonOnClickFunc(event) {
   if (getPolygonEditingStatus()) {
@@ -20,6 +22,7 @@ function setEditablePolygonOnClickFunc(event) {
   }
   setEditablePolygon(canvas, event.target);
   selectedPolygonId = event.target.id;
+  getLabelById(event.target.id);
 }
 
 function assignSetEditablePolygonOnClickFunc() {
@@ -57,9 +60,13 @@ function setPolygonNotEditableOnClick() {
 function polygonMouseDownEvents(event) {
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
-    if (event.target.shapeName === 'bndBox' && getPolygonEditingStatus()) {
-      setPolygonNotEditableOnClick();
-      newPolygonSelected = false;
+    if (event.target.shapeName === 'bndBox') {
+      if (getPolygonEditingStatus()) {
+        setPolygonNotEditableOnClick();
+        newPolygonSelected = false;
+      } else {
+        labelObject = getLabelById(event.target.id);
+      }
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         newPolygonSelected = true;
@@ -91,6 +98,7 @@ function polygonMouseUpEvents(event) {
   }
 }
 
+// potentially refactor this by assigning individual move functions
 function polygonMoveEvents(event) {
   if (event.target) {
     if (event.target.shapeName === 'polygon') {
@@ -101,6 +109,9 @@ function polygonMoveEvents(event) {
     } else if (event.target.shapeName === 'point') {
       movePolygonPoint(event);
       polygonPointMoved = true;
+    } else if (event.target.shapeName === 'bndBox') {
+      labelObject.left = event.target.left;
+      labelObject.top = event.target.top;
     }
   }
 }
