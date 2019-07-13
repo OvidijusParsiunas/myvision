@@ -2,8 +2,6 @@ import fabric from 'fabric';
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 
-const labelKeyPairObj = {};
-
 let labellingState = false;
 let targetShape = null;
 let canvas = null;
@@ -33,7 +31,8 @@ function getTextProperties(shape) {
 }
 
 
-function generateText(text) {
+function generateLabelShapeGroup(text) {
+  targetShape.set('id', currentId);
   // generate text shape
   const textShape = new fabric.Text(text, getTextProperties(targetShape));
   // setting bndbox group
@@ -45,6 +44,7 @@ function generateText(text) {
     // const group = new fabric.Group([targetShape, textShape], polygonProperties.newPolygon);
     // canvas.add(group);
   }
+  currentId += 1;
   canvas.remove(targetShape);
 }
 
@@ -68,13 +68,8 @@ function generateText(text) {
 function createLabelShape() {
   const text = getLabelPopUpText();
   hideLabelPopUp();
-  generateText(text);
+  generateLabelShapeGroup(text);
   resetObjectCursors(canvas);
-  targetShape.set('id', currentId);
-  currentId += 1;
-  // const textShape = new fabric.Text(text, getLabelProps(targetShape));
-  labelKeyPairObj[targetShape[targetShape.id]] = text;
-  // the rectangle final properties should be set before passed in here
   labellingState = false;
 }
 
