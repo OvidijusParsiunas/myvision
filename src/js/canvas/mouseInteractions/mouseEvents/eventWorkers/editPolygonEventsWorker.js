@@ -57,11 +57,13 @@ function setPolygonNotEditableOnClick() {
   selectedPolygonId = null;
 }
 
+// reduce nested if statements in code
 function polygonMouseDownEvents(event) {
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
       if (getPolygonEditingStatus()) {
+        // should label object not also be assigned here too
         setPolygonNotEditableOnClick();
         newPolygonSelected = false;
       } else {
@@ -69,6 +71,7 @@ function polygonMouseDownEvents(event) {
       }
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+        labelObject = getLabelById(event.target.id);
         newPolygonSelected = true;
       } else {
         newPolygonSelected = false;
@@ -106,6 +109,8 @@ function polygonMoveEvents(event) {
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
+      labelObject.left = event.target.left;
+      labelObject.top = event.target.top;
       polygonMoved = true;
     } else if (shapeName === 'point') {
       movePolygonPoint(event);
