@@ -63,7 +63,7 @@ function polygonMouseDownEvents(event) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
       if (getPolygonEditingStatus()) {
-        // should label object not also be assigned here too
+        labelObject = getLabelById(event.target.id);
         setPolygonNotEditableOnClick();
         newPolygonSelected = false;
       } else {
