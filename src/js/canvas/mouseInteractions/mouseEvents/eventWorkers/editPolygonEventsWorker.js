@@ -101,15 +101,16 @@ function polygonMouseUpEvents(event) {
 // potentially refactor this by assigning individual move functions
 function polygonMoveEvents(event) {
   if (event.target) {
-    if (event.target.shapeName === 'polygon') {
+    const { shapeName } = event.target;
+    if (shapeName === 'polygon') {
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
       polygonMoved = true;
-    } else if (event.target.shapeName === 'point') {
+    } else if (shapeName === 'point') {
       movePolygonPoint(event);
       polygonPointMoved = true;
-    } else if (event.target.shapeName === 'bndBox') {
+    } else if (shapeName === 'bndBox') {
       labelObject.left = event.target.left;
       labelObject.top = event.target.top;
     }
