@@ -57,6 +57,8 @@ function setPolygonNotEditableOnClick() {
   selectedPolygonId = null;
 }
 
+// when in continuous drawing mode, cursor should turn to default when selecting shape
+
 // when unclicked continuous mode, move back to default mode
 // when finished adding or removing points in continuous mode, go back to drawing
 // the chosen shapes

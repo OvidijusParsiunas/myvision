@@ -1,17 +1,17 @@
 import { createLabelShape, removeTargetShape, isLabelling } from './labellingProcess';
 import { resetCanvasEventsToDefault } from '../toolkit/buttonEvents/facade';
 import { hideLabelPopUp } from './style';
-import { getContinuousDrawingState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
-import { isPolygonDrawingFinished, resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
-import { isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
+import { getContinuousDrawingState, getLastDrawingModeState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
+import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 
 function labelShape() {
   createLabelShape();
   if (!getContinuousDrawingState()) {
     resetCanvasEventsToDefault();
-  } else if (isPolygonDrawingFinished()) {
+  } else if (getLastDrawingModeState() === 'polygon') {
     resetDrawPolygonMode();
-  } else if (isBoundingBoxDrawingFinished()) {
+  } else if (getLastDrawingModeState() === 'boundingBox') {
     resetDrawBoundingBoxMode();
   }
 }

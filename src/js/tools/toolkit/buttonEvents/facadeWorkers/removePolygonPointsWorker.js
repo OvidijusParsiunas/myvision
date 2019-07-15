@@ -1,13 +1,15 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
-  getRemovingPolygonPointsState, setRemovingPolygonPointsState, getContinuousDrawingState,
-  setDefaultState, getAddingPolygonPointsState, setAddingPolygonPointsState,
+  getContinuousDrawingState, getAddingPolygonPointsState,
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  getLastDrawingModeState, setAddingPolygonPointsState, setDefaultState,
 } from '../facadeWorkersUtils/stateManager';
-import { isPolygonDrawingInProgress, removeInvisiblePoint, isPolygonDrawingFinished } from '../../../../canvas/objects/polygon/polygon';
+import { isPolygonDrawingInProgress, removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
 import setRemovePointsOnDrawNewPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode';
 import assignRemovePointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/removePointsEventHandlers';
 import assignRemovePointsOnDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/removePointsOnDrawPolygonEventHandlers';
+import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
@@ -45,8 +47,10 @@ function discardRemovePointsEvents(canvas) {
   } else if (getContinuousDrawingState()) {
     cleanPolygonPointsArray();
     removePolygonPoints();
-    if (!isPolygonDrawingFinished()) {
+    if (getLastDrawingModeState() === 'polygon') {
       assignDrawPolygonEvents(canvas);
+    } else if (getLastDrawingModeState() === 'boundingBox') {
+      assignDrawBoundingBoxEvents(canvas);
     }
   } else {
     cleanPolygonPointsArray();
