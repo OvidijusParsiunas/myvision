@@ -57,6 +57,13 @@ function setPolygonNotEditableOnClick() {
   selectedPolygonId = null;
 }
 
+// when unclicked continuous mode, move back to default mode
+// when finished adding or removing points in continuous mode, go back to drawing
+// the chosen shapes
+
+// no picture, finish drawing polygon, when clicked on new bounding box and then on the polygon,
+// the polygon's edges do not show up
+
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {
   if (event.target) {

@@ -1,9 +1,9 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
-  setDefaultState, getRemovingPolygonPointsState, setRemovingPolygonPointsState,
-  getAddingPolygonPointsState, setAddingPolygonPointsState,
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState, getContinuousDrawingState,
+  setDefaultState, getAddingPolygonPointsState, setAddingPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
-import { isPolygonDrawingInProgress, removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
+import { isPolygonDrawingInProgress, removeInvisiblePoint, isPolygonDrawingFinished } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
 import setRemovePointsOnDrawNewPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode';
 import assignRemovePointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/removePointsEventHandlers';
@@ -12,7 +12,10 @@ import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseE
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
-import { resetAddPoints, isAddingPointsToPolygon, cleanPolygonPointsArray } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import {
+  resetAddPoints, isAddingPointsToPolygon,
+  cleanPolygonPointsArray, removePolygonPoints,
+} from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 
 function setRemovePointsCursorMode(canvas) {
   const isDrawingPolygon = isPolygonDrawingInProgress();
@@ -39,6 +42,12 @@ function discardRemovePointsEvents(canvas) {
   if (isDrawingPolygon) {
     assignDrawPolygonEvents(canvas, true);
     setDefaultState(false);
+  } else if (getContinuousDrawingState()) {
+    cleanPolygonPointsArray();
+    removePolygonPoints();
+    if (!isPolygonDrawingFinished()) {
+      assignDrawPolygonEvents(canvas);
+    }
   } else {
     cleanPolygonPointsArray();
     setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
