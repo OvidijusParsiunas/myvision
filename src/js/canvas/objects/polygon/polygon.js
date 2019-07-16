@@ -3,7 +3,7 @@ import polygonProperties from './properties';
 import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode';
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
-import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { getMovableObjectsState, getAddingPolygonPointsState, setAddingPolygonPointsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let pointArray = [];
@@ -13,6 +13,7 @@ let pointId = 0;
 let coordinatesOfLastMouseHover = null;
 let invisiblePoint = null;
 let drawingFinished = false;
+let mouseUpClick = null;
 
 function isRightMouseButtonClicked(pointer) {
   if (activeShape && (coordinatesOfLastMouseHover.x !== pointer.x)) {
@@ -193,12 +194,38 @@ function instantiatePolygon(event) {
   }
 }
 
+function placeHolderFunc() {}
+
+function assignMouseUpClickFunc() {
+  mouseUpClick = placeHolderFunc;
+}
+
+function placeholderToAddMouseDownEvents() {
+  mouseUpClick();
+}
+
+function skipMouseUpEvent() {
+  canvas.__eventListeners['mouse:down'] = [];
+  canvas.on('mouse:down', (e) => {
+    if (!e.target || (e.target && e.target.shapeName !== 'tempPoint')) {
+      instantiatePolygon(e);
+    }
+  });
+  assignMouseUpClickFunc();
+}
+
 function prepareCanvasForNewPolygon(canvasObj) {
   canvas = canvasObj;
   polygonMode = true;
   drawingFinished = false;
   canvas.discardActiveObject();
   setDrawCursorMode(canvas);
+  if (getAddingPolygonPointsState()) {
+    setAddingPolygonPointsState(false);
+    mouseUpClick = skipMouseUpEvent;
+  } else {
+    mouseUpClick = placeHolderFunc;
+  }
 }
 
 function resetDrawPolygonMode() {
@@ -279,4 +306,5 @@ export {
   prepareCanvasForNewPolygon,
   isPolygonDrawingInProgress,
   resumeDrawingAfterRemovePoints,
+  placeholderToAddMouseDownEvents,
 };

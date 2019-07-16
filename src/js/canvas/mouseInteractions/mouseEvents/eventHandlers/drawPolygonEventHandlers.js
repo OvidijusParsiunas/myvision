@@ -1,6 +1,7 @@
 import {
-  instantiatePolygon, prepareCanvasForNewPolygon, drawPolygon,
-  movePoints, resumeDrawingAfterRemovePoints, changeInitialPointColour,
+  instantiatePolygon, prepareCanvasForNewPolygon,
+  drawPolygon, movePoints, resumeDrawingAfterRemovePoints,
+  placeholderToAddMouseDownEvents, changeInitialPointColour,
 } from '../../../objects/polygon/polygon';
 
 // should be moved to event worker
@@ -22,6 +23,10 @@ function assignDrawPolygonEvents(canvas, resume) {
 
   canvas.on('mouse:move', (e) => {
     drawPolygon(e);
+  });
+
+  canvas.on('mouse:up', () => {
+    placeholderToAddMouseDownEvents();
   });
 
   // export this logic
