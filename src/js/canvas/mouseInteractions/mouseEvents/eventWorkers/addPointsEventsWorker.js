@@ -6,7 +6,8 @@ import {
   addPointsMouseOver, resetAddPointProperties, addPointsMouseOut,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { resetCanvasEventsToDefault } from '../resetCanvasUtils/resetCanvasEventsFacade';
+import { resetCanvasEventsToDefault, setContinuousDrawingModeToLast } from '../resetCanvasUtils/resetCanvasEventsFacade';
+import { getContinuousDrawingState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -86,7 +87,12 @@ function pointMouseDownEvents(event) {
   } else if (event.target && event.target.shapeName === 'point') {
     addingPoints = false;
     completePolygon(event.target);
-    resetCanvasEventsToDefault();
+    if (getContinuousDrawingState()) {
+      removePolygonPoints();
+      setContinuousDrawingModeToLast();
+    } else {
+      resetCanvasEventsToDefault();
+    }
   } else if (!event.target
       || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
     const pointer = canvas.getPointer(event.e);

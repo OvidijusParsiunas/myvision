@@ -1,4 +1,6 @@
+import setDrawingMode from './setDrawingMode';
 import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
+import { getLastDrawingModeState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let resetCanvasEventsFunc = null;
 let canvas = null;
@@ -13,4 +15,12 @@ function resetCanvasEventsToDefault() {
   resetCanvasEventsFunc(canvas);
 }
 
-export { setResetCanvasEventsToDefaultFunc, resetCanvasEventsToDefault };
+function setContinuousDrawingModeToLast() {
+  setDrawingMode(getLastDrawingModeState(), canvas);
+}
+
+export {
+  setResetCanvasEventsToDefaultFunc,
+  resetCanvasEventsToDefault,
+  setContinuousDrawingModeToLast,
+};

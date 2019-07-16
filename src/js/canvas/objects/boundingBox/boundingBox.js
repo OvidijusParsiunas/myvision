@@ -3,7 +3,7 @@ import boundingBoxProperties from './properties';
 import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
-import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { getMovableObjectsState, getAddingPolygonPointsState, setAddingPolygonPointsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -11,6 +11,7 @@ let leftMouseBtnDown = false;
 const boundingBoxProps = {};
 let boundingBox = null;
 let drawingFinished = false;
+let finishDrawingBoundingBoxClick = null;
 
 function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked) {
@@ -20,16 +21,6 @@ function instantiateNewBoundingBox() {
     boundingBoxProps.origY = pointer.y;
     boundingBox = new fabric.Rect(boundingBoxProperties.tempBoundingBoxProps(boundingBoxProps));
     canvas.add(boundingBox);
-  }
-}
-
-function prepareCanvasForNewBoundingBox(canvasObj) {
-  canvas = canvasObj;
-  if (canvas.backgroundImage) {
-    createNewBoundingBoxBtnClicked = true;
-    setDrawCursorMode(canvas);
-    canvas.discardActiveObject();
-    drawingFinished = false;
   }
 }
 
@@ -72,7 +63,7 @@ function isBoundingBoxDrawingFinished() {
   return drawingFinished;
 }
 
-function finishDrawingBoundingBox(event) {
+function finishDrawingBoundingBoxFunc(event) {
   if (leftMouseBtnDown) {
     createNewBoundingBoxBtnClicked = false;
     leftMouseBtnDown = false;
@@ -83,6 +74,38 @@ function finishDrawingBoundingBox(event) {
     const pointer = canvas.getPointer(event.e);
     prepareLabelShape(boundingBox, canvas);
     showLabelPopUp(pointer.x, pointer.y);
+  }
+}
+
+function finishDrawingBoundingBox(event) {
+  finishDrawingBoundingBoxClick(event);
+}
+
+function assignSetEditablePolygonOnClickFunc() {
+  finishDrawingBoundingBoxClick = finishDrawingBoundingBoxFunc;
+}
+
+function skipMouseUpEvent() {
+  canvas.__eventListeners['mouse:down'] = [];
+  canvas.on('mouse:down', () => {
+    instantiateNewBoundingBox();
+  });
+  assignSetEditablePolygonOnClickFunc();
+}
+
+function prepareCanvasForNewBoundingBox(canvasObj) {
+  canvas = canvasObj;
+  if (canvas.backgroundImage) {
+    createNewBoundingBoxBtnClicked = true;
+    setDrawCursorMode(canvas);
+    canvas.discardActiveObject();
+    drawingFinished = false;
+  }
+  if (getAddingPolygonPointsState()) {
+    setAddingPolygonPointsState(false);
+    finishDrawingBoundingBoxClick = skipMouseUpEvent;
+  } else {
+    finishDrawingBoundingBoxClick = finishDrawingBoundingBoxFunc;
   }
 }
 

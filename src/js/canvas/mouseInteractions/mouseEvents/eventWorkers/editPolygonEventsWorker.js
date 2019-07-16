@@ -57,10 +57,15 @@ function setPolygonNotEditableOnClick() {
   selectedPolygonId = null;
 }
 
+// some shapes are not selectable in continuous mode after adding and various shapes present
 // when in continuous drawing mode, cursor should turn to default when selecting shape
 
+// when hitting continuous mode, check to see if a shape has been previously added
+
+// consider if after adding points, the green points should remain
+
 // when unclicked continuous mode, move back to default mode
-// when finished adding or removing points in continuous mode, go back to drawing
+// when finished adding points in continuous mode, go back to drawing
 // the chosen shapes
 
 // no picture, finish drawing polygon, when clicked on new bounding box and then on the polygon,

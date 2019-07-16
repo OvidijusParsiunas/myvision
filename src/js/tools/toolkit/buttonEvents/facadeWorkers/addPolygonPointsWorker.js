@@ -1,17 +1,31 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import { setAddingPolygonPointsState, getAddingPolygonPointsState, setDefaultState } from '../facadeWorkersUtils/stateManager';
+import {
+  setAddingPolygonPointsState, getAddingPolygonPointsState, setDefaultState,
+  getContinuousDrawingState, getLastDrawingModeState,
+} from '../facadeWorkersUtils/stateManager';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
-import { resetAddPoints, isAddingPointsToPolygon } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import { resetAddPoints, isAddingPointsToPolygon, removePolygonPoints } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
+import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 
 function discardAddPointsEvents(canvas) {
-  setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
-  const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
-  assignDefaultEvents(canvas, currentlySelectedPolygonId);
-  setDefaultState(true);
+  if (getContinuousDrawingState()) {
+    removePolygonPoints();
+    if (getLastDrawingModeState() === 'polygon') {
+      assignDrawPolygonEvents(canvas);
+    } else if (getLastDrawingModeState() === 'boundingBox') {
+      assignDrawBoundingBoxEvents(canvas);
+    }
+  } else {
+    setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
+    const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
+    assignDefaultEvents(canvas, currentlySelectedPolygonId);
+    setDefaultState(true);
+  }
 }
 
 function initiateAddPolygonPointsEvents(canvas) {
