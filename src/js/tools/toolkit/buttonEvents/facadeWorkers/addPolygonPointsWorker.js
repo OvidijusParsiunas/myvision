@@ -43,9 +43,9 @@ function initiateAddPolygonPointsEvents(canvas) {
     setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
   } else {
     resetAddPoints();
+    setAddingPolygonPointsState(false);
     purgeCanvasMouseEvents(canvas);
     discardAddPointsEvents(canvas);
-    setAddingPolygonPointsState(false);
   }
 }
 

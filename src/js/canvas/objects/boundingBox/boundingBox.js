@@ -101,10 +101,10 @@ function skipMouseUpEvent() {
 function prepareCanvasForNewBoundingBox(canvasObj) {
   canvas = canvasObj;
   createNewBoundingBoxBtnClicked = true;
+  drawingFinished = false;
   setDrawCursorMode(canvas);
   setReadyToDrawShapeState(true);
   canvas.discardActiveObject();
-  drawingFinished = false;
   if (getAddingPolygonPointsState()) {
     setAddingPolygonPointsState(false);
     finishDrawingBoundingBoxClick = skipMouseUpEvent;
