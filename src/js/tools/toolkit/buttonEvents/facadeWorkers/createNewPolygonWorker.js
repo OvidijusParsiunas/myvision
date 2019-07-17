@@ -3,7 +3,6 @@ import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseE
 import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
-  setReadyToDrawShapeState,
 } from '../facadeWorkersUtils/stateManager';
 
 function initiateCreateNewPolygonEvents(canvas) {
@@ -12,7 +11,6 @@ function initiateCreateNewPolygonEvents(canvas) {
   setDefaultState(false);
   setAlteringPolygonPointsState(false);
   setLastDrawingModeState('polygon');
-  setReadyToDrawShapeState(true);
   setHasDrawnShapeState(false);
 }
 

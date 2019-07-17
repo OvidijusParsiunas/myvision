@@ -224,6 +224,7 @@ function prepareCanvasForNewPolygon(canvasObj) {
   drawingFinished = false;
   canvas.discardActiveObject();
   setDrawCursorMode(canvas);
+  setReadyToDrawShapeState(true);
   if (getAddingPolygonPointsState()) {
     setAddingPolygonPointsState(false);
     mouseUpClick = skipMouseUpEvent;

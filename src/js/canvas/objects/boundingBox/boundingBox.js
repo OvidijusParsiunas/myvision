@@ -103,6 +103,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
   if (canvas.backgroundImage) {
     createNewBoundingBoxBtnClicked = true;
     setDrawCursorMode(canvas);
+    setReadyToDrawShapeState(true);
     canvas.discardActiveObject();
     drawingFinished = false;
   }

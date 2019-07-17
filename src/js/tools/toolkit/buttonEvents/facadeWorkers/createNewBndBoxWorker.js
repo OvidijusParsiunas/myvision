@@ -3,7 +3,6 @@ import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mo
 import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
-  setReadyToDrawShapeState,
 } from '../facadeWorkersUtils/stateManager';
 
 function initiateCreateNewBndBoxEvents(canvas) {
@@ -12,7 +11,6 @@ function initiateCreateNewBndBoxEvents(canvas) {
   setDefaultState(false);
   setAlteringPolygonPointsState(false);
   setLastDrawingModeState('boundingBox');
-  setReadyToDrawShapeState(true);
   setHasDrawnShapeState(false);
 }
 
