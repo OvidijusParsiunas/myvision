@@ -3,7 +3,10 @@ import polygonProperties from './properties';
 import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode';
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
-import { getMovableObjectsState, getAddingPolygonPointsState, setAddingPolygonPointsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import {
+  getMovableObjectsState, getAddingPolygonPointsState,
+  setAddingPolygonPointsState, setReadyToDrawShapeState,
+} from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let pointArray = [];
@@ -184,6 +187,7 @@ function changeInitialPointColour(colour) {
 function instantiatePolygon(event) {
   const pointer = canvas.getPointer(event.e);
   if (!isRightMouseButtonClicked(pointer)) {
+    setReadyToDrawShapeState(false);
     if (event.target && event.target.shapeName && event.target.shapeName === 'invisiblePoint') {
       if (pointArray.length > 2) {
         generatePolygon(pointer);
@@ -230,6 +234,7 @@ function prepareCanvasForNewPolygon(canvasObj) {
 
 function resetDrawPolygonMode() {
   polygonMode = true;
+  setReadyToDrawShapeState(true);
   drawingFinished = false;
   clearPolygonData();
   setDrawCursorMode(canvas);

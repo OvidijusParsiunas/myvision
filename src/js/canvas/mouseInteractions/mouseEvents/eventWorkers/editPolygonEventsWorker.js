@@ -58,18 +58,16 @@ function setPolygonNotEditableOnClick() {
 }
 
 // some shapes are not selectable in continuous mode after adding and various shapes present
-// when in continuous drawing mode, cursor should turn to default when selecting shape
-
-// when hitting continuous mode, check to see if a shape has been previously added
-
-// consider if after adding points, the green points should remain
-
-// when unclicked continuous mode, move back to default mode
-// when finished adding points in continuous mode, go back to drawing
-// the chosen shapes
 
 // no picture, finish drawing polygon, when clicked on new bounding box and then on the polygon,
 // the polygon's edges do not show up
+
+// consider if after adding points, the green points should remain
+// consider if delete shape should be a mode, check if remove object should cause
+// readyToDrawShapeState to be false, the gist is, highlight button when in continuous
+// mode and other modes, I think the default mode should be used to switch off draw
+// when hitting continuous mode, check to see if a shape has been previously added - will be
+// eliminated by explicit highlighting on draw mode buttons
 
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {

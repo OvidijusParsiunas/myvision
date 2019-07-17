@@ -1,6 +1,10 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
-import { setDefaultState, setAlteringPolygonPointsState, setLastDrawingModeState } from '../facadeWorkersUtils/stateManager';
+import {
+  setDefaultState, setAlteringPolygonPointsState,
+  setLastDrawingModeState, setHasDrawnShapeState,
+  setReadyToDrawShapeState,
+} from '../facadeWorkersUtils/stateManager';
 
 function initiateCreateNewPolygonEvents(canvas) {
   purgeCanvasMouseEvents(canvas);
@@ -8,6 +12,8 @@ function initiateCreateNewPolygonEvents(canvas) {
   setDefaultState(false);
   setAlteringPolygonPointsState(false);
   setLastDrawingModeState('polygon');
+  setReadyToDrawShapeState(true);
+  setHasDrawnShapeState(false);
 }
 
 export { initiateCreateNewPolygonEvents as default };

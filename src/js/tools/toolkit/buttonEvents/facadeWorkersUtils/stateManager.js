@@ -4,6 +4,8 @@ let addingPolygonPointsState = false;
 let movableObjectsState = true;
 let continuousDrawingState = false;
 let lastDrawingModeState = null;
+let readyToDrawShapeState = false;
+let hasDrawnShapeState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -31,6 +33,14 @@ function getContinuousDrawingState() {
 
 function getLastDrawingModeState() {
   return lastDrawingModeState;
+}
+
+function getReadyToDrawShapeState() {
+  return readyToDrawShapeState;
+}
+
+function getHasDrawnShapeState() {
+  return hasDrawnShapeState;
 }
 
 function setDefaultState(state) {
@@ -61,13 +71,26 @@ function setContinuousDrawingState(state) {
 function setLastDrawingModeState(state) {
   lastDrawingModeState = state;
 }
+
+function setReadyToDrawShapeState(state) {
+  readyToDrawShapeState = state;
+}
+
+function setHasDrawnShapeState(state) {
+  hasDrawnShapeState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
+  getHasDrawnShapeState,
+  setHasDrawnShapeState,
   getMovableObjectsState,
   setMovableObjectsState,
   getLastDrawingModeState,
   setLastDrawingModeState,
+  getReadyToDrawShapeState,
+  setReadyToDrawShapeState,
   getContinuousDrawingState,
   setContinuousDrawingState,
   getAddingPolygonPointsState,

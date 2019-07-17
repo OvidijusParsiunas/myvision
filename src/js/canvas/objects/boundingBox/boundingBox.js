@@ -3,7 +3,10 @@ import boundingBoxProperties from './properties';
 import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
-import { getMovableObjectsState, getAddingPolygonPointsState, setAddingPolygonPointsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import {
+  getMovableObjectsState, getAddingPolygonPointsState,
+  setAddingPolygonPointsState, setReadyToDrawShapeState,
+} from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -29,6 +32,7 @@ function clearBoundingBoxData() {
 }
 
 function resetDrawBoundingBoxMode() {
+  setReadyToDrawShapeState(true);
   setDrawCursorMode(canvas);
   createNewBoundingBoxBtnClicked = true;
   drawingFinished = false;
@@ -71,8 +75,9 @@ function finishDrawingBoundingBoxFunc(event) {
     boundingBox.set(boundingBoxProperties.finalBoundingBoxProps);
     lockMovementIfAssertedByState(boundingBox);
     drawingFinished = true;
-    const pointer = canvas.getPointer(event.e);
+    setReadyToDrawShapeState(false);
     prepareLabelShape(boundingBox, canvas);
+    const pointer = canvas.getPointer(event.e);
     showLabelPopUp(pointer.x, pointer.y);
   }
 }
