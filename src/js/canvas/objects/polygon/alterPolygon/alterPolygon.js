@@ -85,9 +85,10 @@ function removePolygonPoints() {
   setPolygonEditingStatus(false);
 }
 
-function changePolygonPointsPropertiesToDefault() {
+function changePolygonPointsPropertiesToDefault(canvasObj) {
   // naming convention?
-  changeObjectsToPolygonPointsToDefaultImpl(canvas);
+  canvas = canvasObj === null ? canvas : canvasObj;
+  changeObjectsToPolygonPointsToDefaultImpl(canvasObj);
 }
 
 function displayPolygonPointsAfterMove() {

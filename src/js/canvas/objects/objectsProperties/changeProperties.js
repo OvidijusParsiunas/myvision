@@ -18,6 +18,7 @@ function setObjectPropertiesToDefault(object) {
       object.lockMovementX = false;
       object.lockMovementY = false;
     }
+    object.hoverCursor = 'move';
   } else if (object.shapeName !== 'bndBox' && object.shapeName !== 'polygon') {
     object.lockMovementX = false;
     object.lockMovementY = false;
