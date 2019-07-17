@@ -6,12 +6,14 @@ import {
 } from '../facadeWorkersUtils/stateManager';
 
 function initiateCreateNewBndBoxEvents(canvas) {
-  purgeCanvasMouseEvents(canvas);
-  assignDrawBoundingBoxEvents(canvas);
-  setDefaultState(false);
-  setAlteringPolygonPointsState(false);
-  setLastDrawingModeState('boundingBox');
-  setHasDrawnShapeState(false);
+  if (canvas.backgroundImage) {
+    purgeCanvasMouseEvents(canvas);
+    assignDrawBoundingBoxEvents(canvas);
+    setDefaultState(false);
+    setAlteringPolygonPointsState(false);
+    setLastDrawingModeState('boundingBox');
+    setHasDrawnShapeState(false);
+  }
 }
 
 export { initiateCreateNewBndBoxEvents as default };

@@ -57,8 +57,6 @@ function setPolygonNotEditableOnClick() {
   selectedPolygonId = null;
 }
 
-// some shapes are not selectable in continuous mode after adding and various shapes present
-
 // no picture, finish drawing polygon, when clicked on new bounding box and then on the polygon,
 // the polygon's edges do not show up
 
