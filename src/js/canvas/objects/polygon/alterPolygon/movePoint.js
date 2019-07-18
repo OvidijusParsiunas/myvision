@@ -21,13 +21,15 @@ function resetPolygonSelectableAreaImpl(canvas, polygon) {
   canvas.renderAll();
 }
 
-function movePolygonPointImpl(event, polygon) {
+function movePolygonPointImpl(event, polygon, labelObject) {
   const { left } = event.target;
   const { top } = event.target;
   const polygonPoint = event.target;
   polygon.points[polygonPoint.pointId] = {
     x: left, y: top,
   };
+  labelObject.left = left - 5;
+  labelObject.top = top - 12;
 }
 
 export {

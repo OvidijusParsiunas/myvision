@@ -1,6 +1,34 @@
+import { getLabelById } from '../../label/label';
 import polygonProperties from '../properties';
 
-function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
+function realignLabelToLowestPointLocation(polygon) {
+  let lowestPointIndex = 0;
+  while (Object.keys(polygon.points[lowestPointIndex]).length === 0) {
+    lowestPointIndex += 1;
+  }
+  const labelObject = getLabelById(polygon.id);
+  labelObject.left = polygon.points[lowestPointIndex].x - 5;
+  labelObject.top = polygon.points[lowestPointIndex].y - 12;
+}
+
+function checkIfLowestPoint(polygon, pointId) {
+  for (let i = 0; i < pointId; i += 1) {
+    if (Object.keys(polygon.points[i]).length !== 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function ifExistingPolygonIsLowestPoint(existingPolygon, polygon, pointId) {
+  if (existingPolygon) {
+    return checkIfLowestPoint(polygon, pointId);
+  }
+  return false;
+}
+
+function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId, existingPolygon) {
+  const realignLabel = ifExistingPolygonIsLowestPoint(existingPolygon, polygon, pointId);
   if (polygon.points.length - polygon.numberOfNullPolygonPoints > 3) {
     if (Object.keys(polygon.points[pointId]).length === 0) {
       /* when the last polygons are removed, the ones before it are moved
@@ -34,6 +62,9 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId) {
       polygonPoints.forEach((point) => {
         if (point) point.set(polygonProperties.disabledRemovePoint);
       });
+    }
+    if (realignLabel) {
+      realignLabelToLowestPointLocation(polygon);
     }
     canvas.renderAll();
   }

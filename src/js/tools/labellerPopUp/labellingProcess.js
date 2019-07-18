@@ -20,21 +20,33 @@ function removeTargetShape() {
   labellingState = false;
 }
 
-function getTextProperties(shape) {
+function findInitialLabelLocation(shape) {
+  const locationObj = {};
+  if (shape.shapeName === 'bndBox') {
+    locationObj.left = shape.left + 2;
+    locationObj.top = shape.top;
+  } else if (shape.shapeName === 'polygon') {
+    locationObj.left = shape.points[0].x - 10;
+    locationObj.top = shape.points[0].y - 12;
+  }
+  return locationObj;
+}
+
+function getTextProperties(location) {
   return {
     fontSize: 10,
     fill: 'yellow',
-    left: shape.left,
-    top: shape.top,
-    width: shape.width,
-    height: shape.height,
+    left: location.left,
+    top: location.top,
   };
 }
 
 function generateLabelShapeGroup(text) {
   targetShape.set('id', currentId);
-  const textShape = new fabric.Text(text, getTextProperties(targetShape));
+  const initialLocation = findInitialLabelLocation(targetShape);
+  const textShape = new fabric.Text(text, getTextProperties(initialLocation));
   canvas.add(textShape);
+  canvas.bringToFront(textShape);
   addLabel(textShape, currentId);
   currentId += 1;
 }

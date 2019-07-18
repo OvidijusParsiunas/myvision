@@ -111,8 +111,8 @@ function resetPolygonSelectableArea() {
   resetPolygonSelectableAreaImpl(canvas, polygon);
 }
 
-function movePolygonPoint(event) {
-  movePolygonPointImpl(event, polygon);
+function movePolygonPoint(event, labelObject) {
+  movePolygonPointImpl(event, polygon, labelObject);
 }
 
 function removePolygon() {
@@ -121,8 +121,8 @@ function removePolygon() {
   }
 }
 
-function removePolygonPoint(pointId) {
-  removePolygonPointImpl(canvas, polygon, polygonPoints, pointId);
+function removePolygonPoint(pointId, existingPolygon) {
+  removePolygonPointImpl(canvas, polygon, polygonPoints, pointId, existingPolygon);
 }
 
 function initializeAddNewPoints(event) {

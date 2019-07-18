@@ -7,13 +7,14 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getLabelById } from '../../../objects/label/label';
 
+let canvas = null;
 let polygonMoved = false;
+let labelObject = null;
 let polygonPointMoved = false;
 let selectedPolygonId = null;
 let newPolygonSelected = false;
-let canvas = null;
 let setEditablePolygonOnClick = null;
-let labelObject = null;
+const labelOffsetToPolyTopLeftCorner = {};
 
 function setEditablePolygonOnClickFunc(event) {
   if (getPolygonEditingStatus()) {
@@ -70,6 +71,8 @@ function polygonMouseDownEvents(event) {
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         labelObject = getLabelById(event.target.id);
+        labelOffsetToPolyTopLeftCorner.left = event.target.left - event.target.points[0].x + 10;
+        labelOffsetToPolyTopLeftCorner.top = event.target.top - event.target.points[0].y + 12;
         newPolygonSelected = true;
       } else {
         newPolygonSelected = false;
@@ -107,11 +110,11 @@ function polygonMoveEvents(event) {
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
-      labelObject.left = event.target.left;
-      labelObject.top = event.target.top;
+      labelObject.left = event.target.left - labelOffsetToPolyTopLeftCorner.left;
+      labelObject.top = event.target.top - labelOffsetToPolyTopLeftCorner.top;
       polygonMoved = true;
     } else if (shapeName === 'point') {
-      movePolygonPoint(event);
+      movePolygonPoint(event, labelObject);
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
       labelObject.left = event.target.left;
@@ -149,9 +152,26 @@ function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
   }
 }
 
+function boundingBoxScalingEvents(event) {
+  if (event.target.shapeName === 'bndBox') {
+    const boundingBox = event.target;
+    boundingBox.width *= boundingBox.scaleX;
+    boundingBox.height *= boundingBox.scaleY;
+    boundingBox.scaleX = 1;
+    boundingBox.scaleY = 1;
+    labelObject.left = event.target.left;
+    labelObject.top = event.target.top;
+  }
+}
+
+function boundingBoxMouseOutEvents(event) {
+  event.target.set('fill', 'rgba(255,0,0,0');
+}
+
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeEditedPolygonId,
   polygonMouseOutEvents, pointMouseOverEvents,
-  setEditPolygonEventObjects,
+  setEditPolygonEventObjects, boundingBoxScalingEvents,
+  boundingBoxMouseOutEvents,
 };

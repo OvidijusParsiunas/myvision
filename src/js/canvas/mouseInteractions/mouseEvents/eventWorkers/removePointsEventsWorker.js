@@ -47,7 +47,8 @@ function pointMouseDownEvents(event) {
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'point') {
-      removePolygonPoint(event.target.pointId);
+      console.log(event.target.pointId);
+      removePolygonPoint(event.target.pointId, true);
       removedPolygonPoints = true;
     } else {
       if (event.target.shapeName === 'polygon') {
