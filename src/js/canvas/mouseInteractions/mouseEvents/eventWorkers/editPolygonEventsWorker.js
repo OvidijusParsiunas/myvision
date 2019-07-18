@@ -63,12 +63,10 @@ function polygonMouseDownEvents(event) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
       if (getPolygonEditingStatus()) {
-        labelObject = getLabelById(event.target.id);
         setPolygonNotEditableOnClick();
         newPolygonSelected = false;
-      } else {
-        labelObject = getLabelById(event.target.id);
       }
+      labelObject = getLabelById(event.target.id);
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         labelObject = getLabelById(event.target.id);
