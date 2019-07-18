@@ -61,6 +61,14 @@ function getPolygonPointsCoordinates(polygon) {
 // think about the UX
 // double check if can draw fine on huge file size images
 
+
+// consider if after adding points, the green points should remain
+// consider if delete shape should be a mode, check if remove object should cause
+// readyToDrawShapeState to be false, the gist is, highlight button when in continuous
+// mode and other modes, I think the default mode should be used to switch off draw
+// when hitting continuous mode, check to see if a shape has been previously added - will be
+// eliminated by explicit highlighting on draw mode buttons
+
 // should they be rounded?
 function getShapeCoordinates() {
   let shapeIndex = 0;
