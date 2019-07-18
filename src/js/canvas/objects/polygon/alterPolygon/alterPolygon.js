@@ -125,7 +125,8 @@ function removePolygonPoint(pointId, existingPolygon) {
   removePolygonPointImpl(canvas, polygon, polygonPoints, pointId, existingPolygon);
 }
 
-function initializeAddNewPoints(event) {
+function initializeAddNewPoints(event, canvasObj) {
+  canvas = !canvas ? canvasObj : canvas;
   initializeAddNewPointsImpl(event, canvas);
 }
 

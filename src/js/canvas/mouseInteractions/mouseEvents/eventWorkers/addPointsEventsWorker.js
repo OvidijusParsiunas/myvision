@@ -63,7 +63,7 @@ function pointMouseDownEvents(event) {
     if (event.target) {
       enableActiveObjectsAppearInFront(canvas);
       if (event.target.shapeName === 'point') {
-        initializeAddNewPoints(event);
+        initializeAddNewPoints(event, canvas);
         addingPoints = true;
         addFirstPointMode = true;
       } else {
