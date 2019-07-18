@@ -2,6 +2,7 @@ import fabric from 'fabric';
 import polygonProperties from '../properties';
 import setAddPointsMode from '../../../mouseInteractions/cursorModes/addPointsMode';
 import { changePolygonPointsToAddImpl } from './changePointsStyle';
+import { getLabelById } from '../../label/label';
 
 let canvas = null;
 let activeLine = null;
@@ -178,6 +179,12 @@ function addNewPointsByTheirAddDirection(newPointsArray, firstPointId, lastPoint
   }
 }
 
+function realignLabel(polygon) {
+  const labelShape = getLabelById(polygon.id);
+  labelShape.left = polygon.points[0].x - 5;
+  labelShape.top = polygon.points[0].y - 14;
+}
+
 function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
   const derefPointsArray = originalPointsArray.slice();
   let newPointsArray = [];
@@ -213,6 +220,7 @@ function completePolygonImpl(polygon, originalPointsArray, finalPoint) {
 
   polygon.set({ points: newPointsArray });
   clearAllAddPointsDataImpl();
+  realignLabel(polygon);
 }
 
 export {
