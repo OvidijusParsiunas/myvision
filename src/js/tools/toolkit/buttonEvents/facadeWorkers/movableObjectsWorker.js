@@ -21,6 +21,10 @@ function changeMovableObjectsState(canvas) {
       });
       setMovableObjectsState(true);
     }
+  } else if (getMovableObjectsState()) {
+    setMovableObjectsState(false);
+  } else {
+    setMovableObjectsState(true);
   }
 }
 
