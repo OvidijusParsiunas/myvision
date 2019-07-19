@@ -6,6 +6,7 @@ import {
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getLabelById } from '../../../objects/label/label';
+import { setRemovingPointsAfterCancelDrawState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let polygonMoved = false;
@@ -57,6 +58,11 @@ function setPolygonNotEditableOnClick() {
   removePolygonPoints();
   selectedPolygonId = null;
 }
+
+// fix issue where hover would change the colour of the label text
+// label should be in front but not clickable
+// smart system where label would readjust upon mouse up if it's edges are outside of canvas
+// stop shapes from being able to move outside of canvas
 
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {
@@ -129,7 +135,7 @@ function polygonMouseOutEvents(event) {
 }
 
 function pointMouseOverEvents(event) {
-  if (event.target && event.target.shapeName !== 'point') {
+  if (event.target && event.target.shapeName !== 'point' && event.target.shapeName !== 'label') {
     event.target.set('fill', 'rgba(255,0,0,0.2)');
     canvas.renderAll();
   }
@@ -140,6 +146,7 @@ function removeEditedPolygonId() {
 }
 
 function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
+  console.log('called');
   canvas = canvasObj;
   if (polygonIdObj) {
     selectedPolygonId = polygonIdObj;
@@ -150,6 +157,7 @@ function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
   } else {
     setEditablePolygonOnClick = setEditablePolygonOnClickFunc;
   }
+  setRemovingPointsAfterCancelDrawState(false);
 }
 
 function boundingBoxScalingEvents(event) {

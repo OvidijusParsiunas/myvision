@@ -38,6 +38,7 @@ function getTextProperties(location) {
     fill: 'yellow',
     left: location.left,
     top: location.top,
+    shapeName: 'label',
   };
 }
 

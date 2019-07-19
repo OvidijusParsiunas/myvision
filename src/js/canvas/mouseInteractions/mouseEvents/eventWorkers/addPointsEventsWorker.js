@@ -7,7 +7,9 @@ import {
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { resetCanvasEventsToDefault, setContinuousDrawingModeToLast } from '../resetCanvasUtils/resetCanvasEventsFacade';
-import { getContinuousDrawingState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import {
+  getContinuousDrawingState, getCancelledReadyToDrawState, getRemovingPointsAfterCancelDrawState,
+} from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -87,7 +89,8 @@ function pointMouseDownEvents(event) {
   } else if (event.target && event.target.shapeName === 'point') {
     addingPoints = false;
     completePolygon(event.target);
-    if (getContinuousDrawingState()) {
+    if (getContinuousDrawingState()
+    && (getCancelledReadyToDrawState() || getRemovingPointsAfterCancelDrawState())) {
       removePolygonPoints();
       setContinuousDrawingModeToLast();
     } else {

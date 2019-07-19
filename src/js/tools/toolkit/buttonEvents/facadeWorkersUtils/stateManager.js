@@ -6,6 +6,8 @@ let continuousDrawingState = false;
 let lastDrawingModeState = null;
 let readyToDrawShapeState = false;
 let hasDrawnShapeState = false;
+let cancelledReadyToDrawState = null;
+let removingPointsAfterCancelDrawState = null;
 
 function getDefaultState() {
   return defaultState;
@@ -41,6 +43,14 @@ function getReadyToDrawShapeState() {
 
 function getHasDrawnShapeState() {
   return hasDrawnShapeState;
+}
+
+function getCancelledReadyToDrawState() {
+  return cancelledReadyToDrawState;
+}
+
+function getRemovingPointsAfterCancelDrawState() {
+  return removingPointsAfterCancelDrawState;
 }
 
 function setDefaultState(state) {
@@ -80,6 +90,14 @@ function setHasDrawnShapeState(state) {
   hasDrawnShapeState = state;
 }
 
+function setCancelledReadyToDrawState(state) {
+  cancelledReadyToDrawState = state;
+}
+
+function setRemovingPointsAfterCancelDrawState(state) {
+  removingPointsAfterCancelDrawState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -95,8 +113,12 @@ export {
   setContinuousDrawingState,
   getAddingPolygonPointsState,
   setAddingPolygonPointsState,
+  getCancelledReadyToDrawState,
+  setCancelledReadyToDrawState,
   getAlteringPolygonPointsState,
   setAlteringPolygonPointsState,
   getRemovingPolygonPointsState,
   setRemovingPolygonPointsState,
+  getRemovingPointsAfterCancelDrawState,
+  setRemovingPointsAfterCancelDrawState,
 };

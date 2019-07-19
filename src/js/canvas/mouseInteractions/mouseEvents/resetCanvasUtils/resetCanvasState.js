@@ -7,8 +7,9 @@ import { clearBoundingBoxData } from '../../../objects/boundingBox/boundingBox';
 import { cancelLabellingProcess } from '../../../../tools/labellerPopUp/buttonsEvents';
 import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
 import {
-  getAlteringPolygonPointsState, setAlteringPolygonPointsState, setReadyToDrawShapeState,
-  getRemovingPolygonPointsState, getAddingPolygonPointsState,
+  getAddingPolygonPointsState, getRemovingPolygonPointsState, getAlteringPolygonPointsState,
+  setAlteringPolygonPointsState, setReadyToDrawShapeState, setCancelledReadyToDrawState,
+  getReadyToDrawShapeState,
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 function interruptCanvasEventsNoPolygonPointRemoval() {
@@ -16,6 +17,11 @@ function interruptCanvasEventsNoPolygonPointRemoval() {
   clearBoundingBoxData();
   cancelLabellingProcess();
   removeEditedPolygonId();
+  if (getReadyToDrawShapeState()) {
+    setCancelledReadyToDrawState(true);
+  } else {
+    setCancelledReadyToDrawState(false);
+  }
   setReadyToDrawShapeState(false);
   if (getAlteringPolygonPointsState()) {
     if (getRemovingPolygonPointsState()) {

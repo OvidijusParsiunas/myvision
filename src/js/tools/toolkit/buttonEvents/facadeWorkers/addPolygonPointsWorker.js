@@ -1,7 +1,8 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
   setAddingPolygonPointsState, getAddingPolygonPointsState, setDefaultState,
-  getContinuousDrawingState, getLastDrawingModeState,
+  getContinuousDrawingState, getLastDrawingModeState, getCancelledReadyToDrawState,
+  getRemovingPointsAfterCancelDrawState,
 } from '../facadeWorkersUtils/stateManager';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
@@ -13,7 +14,8 @@ import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseE
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 
 function discardAddPointsEvents(canvas) {
-  if (getContinuousDrawingState()) {
+  if (getContinuousDrawingState()
+  && (getCancelledReadyToDrawState() || getRemovingPointsAfterCancelDrawState())) {
     removePolygonPoints();
     if (getLastDrawingModeState() === 'polygon') {
       assignDrawPolygonEvents(canvas);

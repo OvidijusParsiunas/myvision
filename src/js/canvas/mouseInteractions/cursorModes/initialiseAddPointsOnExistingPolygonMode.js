@@ -17,6 +17,7 @@ function changeOjectPropertiesForChoosingInitialPoint(canvas, isDrawing) {
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.additionalPoint);
     }
+    iteratedObj.hoverCursor = 'default';
   });
   canvas.renderAll();
 }
