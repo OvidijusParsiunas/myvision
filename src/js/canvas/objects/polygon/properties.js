@@ -71,6 +71,7 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
     objectCaching: false,
     pointId,
     perPixelTargetFind: true,
+    hoverCursor: 'move',
   };
 }
 
@@ -181,7 +182,7 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
   polygonProperties.defaultPoint = {
     fill: 'blue',
     radius: 3.5,
-    hoverCursor: null,
+    hoverCursor: 'move',
   };
   polygonProperties.additionalPoint = {
     fill: 'green',
