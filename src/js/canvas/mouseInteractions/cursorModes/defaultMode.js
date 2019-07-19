@@ -2,7 +2,7 @@ import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/al
 import { setObjectPropertiesToDefaultWhenReadyToDraw } from '../../objects/objectsProperties/changeProperties';
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
-function setDfaultCanvasCursors(canvas) {
+function setDefaultCanvasCursors(canvas) {
   canvas.defaultCursor = 'default';
   if (getMovableObjectsState()) {
     canvas.hoverCursor = 'move';
@@ -26,17 +26,17 @@ function setDefaultCursorMode(canvas) {
       iteratedObj.hoverCursor = 'default';
     }
   });
-  setDfaultCanvasCursors(canvas);
+  setDefaultCanvasCursors(canvas);
 }
 
 function setDefaultCursorModeAfterAlteringPolygonPoints(canvas) {
   changePolygonPointsPropertiesToDefault(canvas);
-  setDfaultCanvasCursors(canvas);
+  setDefaultCanvasCursors(canvas);
 }
 
 function setDefaultCursorModeWhenReadyToDrawShapes(canvas) {
   setObjectPropertiesToDefaultWhenReadyToDraw(canvas);
-  setDfaultCanvasCursors(canvas);
+  setDefaultCanvasCursors(canvas);
 }
 
 export {
