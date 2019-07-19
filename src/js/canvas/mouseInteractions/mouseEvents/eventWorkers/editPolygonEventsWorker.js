@@ -146,7 +146,6 @@ function removeEditedPolygonId() {
 }
 
 function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
-  console.log('called');
   canvas = canvasObj;
   if (polygonIdObj) {
     selectedPolygonId = polygonIdObj;
