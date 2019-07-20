@@ -80,15 +80,14 @@ function cleanPolygonPointsArray() {
   polygonPoints = getCleanPolygonPointsArrayImpl(polygon, polygonPoints);
 }
 
-function removePolygonPoints(canvasObj) {
-  canvas = !canvas ? canvasObj : canvas;
+function removePolygonPoints() {
   polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
   setPolygonEditingStatus(false);
 }
 
 function changePolygonPointsPropertiesToDefault(canvasObj) {
   // naming convention?
-  canvas = canvasObj === null ? canvas : canvasObj;
+  canvas = !canvasObj ? canvas : canvasObj;
   changeObjectsToPolygonPointsToDefaultImpl(canvasObj);
 }
 
@@ -126,8 +125,7 @@ function removePolygonPoint(pointId, existingPolygon) {
   removePolygonPointImpl(canvas, polygon, polygonPoints, pointId, existingPolygon);
 }
 
-function initializeAddNewPoints(event, canvasObj) {
-  canvas = !canvas ? canvasObj : canvas;
+function initializeAddNewPoints(event) {
   initializeAddNewPointsImpl(event, canvas);
 }
 
