@@ -80,7 +80,8 @@ function cleanPolygonPointsArray() {
   polygonPoints = getCleanPolygonPointsArrayImpl(polygon, polygonPoints);
 }
 
-function removePolygonPoints() {
+function removePolygonPoints(canvasObj) {
+  canvas = !canvas ? canvasObj : canvas;
   polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
   setPolygonEditingStatus(false);
 }

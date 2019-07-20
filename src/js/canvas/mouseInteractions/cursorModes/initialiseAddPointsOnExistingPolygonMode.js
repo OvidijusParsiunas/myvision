@@ -6,7 +6,9 @@ import { getDefaultState, getAddingPolygonPointsState } from '../../../tools/too
 function changeOjectPropertiesForChoosingInitialPoint(canvas, isDrawing) {
   canvas.forEachObject((iteratedObj) => {
     if (isDrawing) {
-      iteratedObj.perPixelTargetFind = true;
+      if (iteratedObj.shapeName !== 'bndBox') {
+        iteratedObj.perPixelTargetFind = true;
+      }
     }
     if (iteratedObj.shapeName === 'bndBox') {
       iteratedObj.selectable = false;

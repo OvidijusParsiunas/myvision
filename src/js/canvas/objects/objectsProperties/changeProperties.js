@@ -2,7 +2,9 @@ import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/faca
 
 function prepareObjectsForEditablePolygonPoints(object, isDrawing) {
   if (isDrawing) {
-    object.perPixelTargetFind = true;
+    if (object.shapeName !== 'bndBox') {
+      object.perPixelTargetFind = true;
+    }
   }
   if (object.shapeName === 'bndBox') {
     object.selectable = false;
@@ -13,15 +15,14 @@ function prepareObjectsForEditablePolygonPoints(object, isDrawing) {
 }
 
 function setObjectPropertiesToDefault(object) {
-  if (getMovableObjectsState()) {
-    if (object.shapeName !== 'bndBox') {
-      object.lockMovementX = false;
-      object.lockMovementY = false;
-    }
-    object.hoverCursor = 'move';
-  } else if (object.shapeName !== 'bndBox' && object.shapeName !== 'polygon') {
+  if (getMovableObjectsState() || (object.shapeName !== 'bndBox' && object.shapeName !== 'polygon')) {
     object.lockMovementX = false;
     object.lockMovementY = false;
+    object.hoverCursor = 'move';
+  } else if (object.shapeName === 'bndBox') {
+    object.hoverCursor = 'default';
+    object.lockMovementX = true;
+    object.lockMovementY = true;
   }
   object.selectable = true;
 }

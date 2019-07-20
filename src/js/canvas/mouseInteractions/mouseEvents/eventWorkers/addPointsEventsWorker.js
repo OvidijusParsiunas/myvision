@@ -39,7 +39,7 @@ function setAddPointsEventsCanvas(canvasObj) {
 }
 
 function prepareToAddPolygonPoints(event) {
-  removePolygonPoints();
+  removePolygonPoints(canvas);
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, false, false, true);
   selectedPolygonId = event.target.id;
@@ -112,7 +112,7 @@ function pointMouseUpEvents(event) {
     newPolygonSelected = false;
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     if (!addingPoints) {
-      removePolygonPoints();
+      removePolygonPoints(canvas);
       selectedPolygonId = null;
     }
   }
