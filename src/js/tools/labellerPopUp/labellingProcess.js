@@ -26,8 +26,12 @@ function findInitialLabelLocation(shape) {
     locationObj.left = shape.left + 2;
     locationObj.top = shape.top;
   } else if (shape.shapeName === 'polygon') {
-    locationObj.left = shape.points[0].x - 10;
-    locationObj.top = shape.points[0].y - 12;
+    const left = shape.points[0].x - 10;
+    const top = shape.points[0].y - 12;
+    locationObj.left = left;
+    locationObj.top = top;
+    shape.labelOffsetLeft = shape.left - left;
+    shape.labelOffsetTop = shape.top - top;
   }
   return locationObj;
 }
@@ -43,7 +47,7 @@ function getTextProperties(location) {
 }
 
 function generateLabelShapeGroup(text) {
-  targetShape.set('id', currentId);
+  targetShape.set({ id: currentId, labelPointId: 0 });
   const initialLocation = findInitialLabelLocation(targetShape);
   const textShape = new fabric.Text(text, getTextProperties(initialLocation));
   canvas.add(textShape);

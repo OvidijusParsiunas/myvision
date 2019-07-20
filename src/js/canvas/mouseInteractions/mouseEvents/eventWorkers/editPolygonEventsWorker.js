@@ -15,6 +15,7 @@ let polygonPointMoved = false;
 let selectedPolygonId = null;
 let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
+let selectedPolygonLabelPointId = null;
 const labelOffsetToPolyTopLeftCorner = {};
 
 function setEditablePolygonOnClickFunc(event) {
@@ -77,8 +78,7 @@ function polygonMouseDownEvents(event) {
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         labelObject = getLabelById(event.target.id);
-        labelOffsetToPolyTopLeftCorner.left = event.target.left - event.target.points[0].x + 10;
-        labelOffsetToPolyTopLeftCorner.top = event.target.top - event.target.points[0].y + 12;
+        selectedPolygonLabelPointId = event.target.labelPointId;
         newPolygonSelected = true;
       } else {
         newPolygonSelected = false;
@@ -116,11 +116,15 @@ function polygonMoveEvents(event) {
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
-      labelObject.left = event.target.left - labelOffsetToPolyTopLeftCorner.left;
-      labelObject.top = event.target.top - labelOffsetToPolyTopLeftCorner.top;
+      labelObject.left = event.target.left - event.target.labelOffsetLeft;
+      labelObject.top = event.target.top - event.target.labelOffsetTop;
       polygonMoved = true;
     } else if (shapeName === 'point') {
-      movePolygonPoint(event, labelObject);
+      if (event.target.pointId === selectedPolygonLabelPointId) {
+        movePolygonPoint(event, labelObject);
+      } else {
+        movePolygonPoint(event);
+      }
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
       labelObject.left = event.target.left;

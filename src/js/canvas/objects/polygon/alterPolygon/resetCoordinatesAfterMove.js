@@ -4,12 +4,24 @@ let currentPolygon = null;
 let polygonPoints = [];
 let canvas = null;
 let polygonProperties = null;
+let labelPointId = null;
 
 function setObjets(polygonObj, polygonPointsArray, canvasObj, polygonPropertiesObj) {
   currentPolygon = polygonObj;
   polygonPoints = polygonPointsArray;
   canvas = canvasObj;
   polygonProperties = polygonPropertiesObj;
+  ({ labelPointId } = polygonObj);
+}
+
+function generateLabelOffsetCoordinates(polygon) {
+  const labelOffsetProperties = {};
+  labelOffsetProperties.labelPointId = labelPointId;
+  labelOffsetProperties.labelOffsetLeft = polygon.left
+  - (polygon.points[labelPointId].x - 10);
+  labelOffsetProperties.labelOffsetTop = polygon.top
+  - (polygon.points[labelPointId].y - 12);
+  return labelOffsetProperties;
 }
 
 function generateNewPolygon() {
@@ -68,6 +80,7 @@ function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, pol
   currentPolygon = newPolygon;
   currentPolygon.set('points', polygonPointsCoordinates);
   movePolygonToNewPosition(currentPolygon, canvas);
+  currentPolygon.set(generateLabelOffsetCoordinates(currentPolygon));
   return currentPolygon;
 }
 

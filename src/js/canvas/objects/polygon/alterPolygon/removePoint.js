@@ -9,6 +9,7 @@ function realignLabelToLowestPointLocation(polygon) {
   const labelObject = getLabelById(polygon.id);
   labelObject.left = polygon.points[lowestPointIndex].x - 5;
   labelObject.top = polygon.points[lowestPointIndex].y - 12;
+  polygon.set({ labelPointId: lowestPointIndex });
 }
 
 function checkIfLowestPoint(polygon, pointId) {

@@ -18,6 +18,10 @@ function resetPolygonSelectableAreaImpl(canvas, polygon) {
     },
   });
   polygon.setCoords();
+  polygon.labelOffsetLeft = polygon.left
+  - (polygon.points[polygon.labelPointId].x - 10);
+  polygon.labelOffsetTop = polygon.top
+  - (polygon.points[polygon.labelPointId].y - 12);
   canvas.renderAll();
 }
 
@@ -28,8 +32,10 @@ function movePolygonPointImpl(event, polygon, labelObject) {
   polygon.points[polygonPoint.pointId] = {
     x: left, y: top,
   };
-  labelObject.left = left - 5;
-  labelObject.top = top - 12;
+  if (labelObject) {
+    labelObject.left = left - 5;
+    labelObject.top = top - 12;
+  }
 }
 
 export {
