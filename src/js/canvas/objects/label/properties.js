@@ -7,6 +7,11 @@ function getLabelProps(coordinates) {
     left: coordinates.left,
     top: coordinates.top,
     shapeName: 'label',
+    hasControls: false,
+    selectable: false,
+    hasBorders: false,
+    objectCaching: false,
+    evented: false,
   };
 }
 

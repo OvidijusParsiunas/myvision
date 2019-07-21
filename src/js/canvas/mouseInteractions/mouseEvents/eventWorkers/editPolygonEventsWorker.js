@@ -24,7 +24,6 @@ function setEditablePolygonOnClickFunc(event) {
   }
   setEditablePolygon(canvas, event.target);
   selectedPolygonId = event.target.id;
-  getLabelById(event.target.id);
 }
 
 function assignSetEditablePolygonOnClickFunc() {
@@ -59,8 +58,6 @@ function setPolygonNotEditableOnClick() {
   selectedPolygonId = null;
 }
 
-// fix issue where hover would change the colour of the label text
-// label should be in front but not clickable
 // smart system where label would readjust upon mouse up if it's edges are outside of canvas
 // stop shapes from being able to move outside of canvas
 
@@ -95,9 +92,11 @@ function polygonMouseUpEvents(event) {
     canvas.bringToFront(event.target);
   } else if (polygonMoved) {
     setEditablePolygonWhenPolygonMoved(event);
+    canvas.bringToFront(labelObject);
   } else if (newPolygonSelected) {
     canvas.bringToFront(event.target);
     setEditablePolygonOnClick(event);
+    canvas.bringToFront(labelObject);
   } else if (polygonPointMoved) {
     resetPolygonSelectableAreaAfterPointMoved();
   } else if (event.target && event.target.shapeName === 'polygon') {
