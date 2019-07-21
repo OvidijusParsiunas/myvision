@@ -22,6 +22,8 @@ function changePolygonPointsToWaitForAddingFirstPointImpl(canvas, startingPoint)
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.disabledAddPoint);
+    } else if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {
+      iteratedObj.hoverCursor = 'crosshair';
     }
     iteratedObj.selectable = false;
   });
