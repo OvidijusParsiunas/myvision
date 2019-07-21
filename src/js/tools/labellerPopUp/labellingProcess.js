@@ -1,6 +1,7 @@
 import fabric from 'fabric';
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
-import { addLabel } from '../../canvas/objects/label/label';
+import { addLabel, setPolygonLabelOffsetProps } from '../../canvas/objects/label/label';
+import labelProperies from '../../canvas/objects/label/properties';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 
 let labellingState = false;
@@ -26,30 +27,19 @@ function findInitialLabelLocation(shape) {
     locationObj.left = shape.left + 2;
     locationObj.top = shape.top;
   } else if (shape.shapeName === 'polygon') {
-    const left = shape.points[0].x - 10;
-    const top = shape.points[0].y - 12;
+    const left = shape.points[0].x - labelProperies.offsetCoordinates.left;
+    const top = shape.points[0].y - labelProperies.offsetCoordinates.top;
     locationObj.left = left;
     locationObj.top = top;
-    shape.labelOffsetLeft = shape.left - left;
-    shape.labelOffsetTop = shape.top - top;
+    setPolygonLabelOffsetProps(shape, shape.points[0], 0);
   }
   return locationObj;
 }
 
-function getTextProperties(location) {
-  return {
-    fontSize: 10,
-    fill: 'yellow',
-    left: location.left,
-    top: location.top,
-    shapeName: 'label',
-  };
-}
-
 function generateLabelShapeGroup(text) {
-  targetShape.set({ id: currentId, labelPointId: 0 });
+  targetShape.set('id', currentId);
   const initialLocation = findInitialLabelLocation(targetShape);
-  const textShape = new fabric.Text(text, getTextProperties(initialLocation));
+  const textShape = new fabric.Text(text, labelProperies.getLabelProps(initialLocation));
   canvas.add(textShape);
   canvas.bringToFront(textShape);
   addLabel(textShape, currentId);

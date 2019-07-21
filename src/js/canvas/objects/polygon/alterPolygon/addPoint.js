@@ -1,5 +1,6 @@
 import fabric from 'fabric';
 import polygonProperties from '../properties';
+import labelProperties from '../../label/properties';
 import setAddPointsMode from '../../../mouseInteractions/cursorModes/addPointsMode';
 import { changePolygonPointsToAddImpl } from './changePointsStyle';
 import { getLabelById } from '../../label/label';
@@ -181,8 +182,8 @@ function addNewPointsByTheirAddDirection(newPointsArray, firstPointId, lastPoint
 
 function realignLabel(polygon) {
   const labelShape = getLabelById(polygon.id);
-  labelShape.left = polygon.points[0].x - 5;
-  labelShape.top = polygon.points[0].y - 14;
+  labelShape.left = polygon.points[0].x - labelProperties.offsetCoordinates.left;
+  labelShape.top = polygon.points[0].y - labelProperties.offsetCoordinates.top;
 }
 
 function completePolygonImpl(polygon, originalPointsArray, finalPoint) {

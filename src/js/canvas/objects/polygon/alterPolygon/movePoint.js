@@ -1,9 +1,13 @@
 import polygonProperties from '../properties';
+import { setPolygonLabelOffsetProps } from '../../label/label';
 import generatePolygonAfterMove from './resetCoordinatesAfterMove';
+import labelProperies from '../../label/properties';
 
 function displayPolygonPointsAfterMoveImpl(canvasObj, polygonObj, polygonPoints) {
   return generatePolygonAfterMove(polygonObj, polygonPoints, canvasObj, polygonProperties);
 }
+
+// removing, moving point then moving shape, problems here
 
 function resetPolygonSelectableAreaImpl(canvas, polygon) {
   const newPosition = polygon._calcDimensions();
@@ -18,10 +22,7 @@ function resetPolygonSelectableAreaImpl(canvas, polygon) {
     },
   });
   polygon.setCoords();
-  polygon.labelOffsetLeft = polygon.left
-  - (polygon.points[polygon.labelPointId].x - 10);
-  polygon.labelOffsetTop = polygon.top
-  - (polygon.points[polygon.labelPointId].y - 12);
+  setPolygonLabelOffsetProps(polygon, polygon.points[0], 0);
   canvas.renderAll();
 }
 
@@ -33,8 +34,8 @@ function movePolygonPointImpl(event, polygon, labelObject) {
     x: left, y: top,
   };
   if (labelObject) {
-    labelObject.left = left - 5;
-    labelObject.top = top - 12;
+    labelObject.left = left - labelProperies.offsetCoordinates.left;
+    labelObject.top = top - labelProperies.offsetCoordinates.top;
   }
 }
 

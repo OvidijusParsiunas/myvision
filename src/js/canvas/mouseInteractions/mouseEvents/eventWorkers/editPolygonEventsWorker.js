@@ -16,7 +16,6 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
 let selectedPolygonLabelPointId = null;
-const labelOffsetToPolyTopLeftCorner = {};
 
 function setEditablePolygonOnClickFunc(event) {
   if (getPolygonEditingStatus()) {
@@ -149,10 +148,11 @@ function removeEditedPolygonId() {
   selectedPolygonId = null;
 }
 
-function setEditPolygonEventObjects(canvasObj, polygonIdObj, afterAddPoints) {
+function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   canvas = canvasObj;
-  if (polygonIdObj) {
-    selectedPolygonId = polygonIdObj;
+  if (polygonObjId) {
+    selectedPolygonId = polygonObjId;
+    labelObject = getLabelById(polygonObjId);
   }
   if (afterAddPoints) {
     newPolygonSelected = true;

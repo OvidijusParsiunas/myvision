@@ -1,12 +1,20 @@
-function getLabelProps(targetShape) {
+const labelProperties = {};
+
+function getLabelProps(coordinates) {
   return {
     fontSize: 10,
     fill: 'yellow',
-    left: targetShape.left,
-    top: targetShape.top,
-    width: targetShape.width,
-    height: targetShape.height,
+    left: coordinates.left,
+    top: coordinates.top,
+    shapeName: 'label',
   };
 }
 
-export { getLabelProps as default };
+(function setProperties() {
+  labelProperties.offsetCoordinates = {
+    left: '10',
+    top: '12',
+  };
+  labelProperties.getLabelProps = getLabelProps;
+}());
+export { labelProperties as default };
