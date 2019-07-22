@@ -1,5 +1,6 @@
 import labelProperies from './properties';
 
+// be careful about this as we will need to look into doing this for multiple
 const labelObjects = {};
 
 function addLabel(labelObj, id) {
@@ -10,6 +11,11 @@ function getLabelById(id) {
   return labelObjects[id];
 }
 
+function removeLabel(id, canvas) {
+  canvas.remove(labelObjects[id]);
+  delete labelObjects[id];
+}
+
 function setPolygonLabelOffsetProps(polygon, point) {
   polygon.labelOffsetLeft = polygon.left
     - (point.x - labelProperies.offsetCoordinates.left);
@@ -17,4 +23,14 @@ function setPolygonLabelOffsetProps(polygon, point) {
     - (point.y - labelProperies.offsetCoordinates.top);
 }
 
-export { getLabelById, addLabel, setPolygonLabelOffsetProps };
+function setLabelsVisibility(state, canvas) {
+  Object.keys(labelObjects).forEach((label) => {
+    labelObjects[label].visible = state;
+  });
+  canvas.renderAll();
+}
+
+export {
+  getLabelById, addLabel, removeLabel,
+  setPolygonLabelOffsetProps, setLabelsVisibility,
+};

@@ -8,6 +8,7 @@ import downloadXMLFile from './facadeWorkers/downloadAnnotationsFileWorker';
 import uploadImageFile from './facadeWorkers/uploadImageWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
+import toggleLabelsVisibility from './facadeWorkers/toggleLabelsWorker';
 
 let canvas = null;
 
@@ -55,6 +56,10 @@ function continuousDrawingBtnClick() {
   changeContinuousDrawingState(canvas);
 }
 
+function toggleLabelsBtnClick() {
+  toggleLabelsVisibility(canvas);
+}
+
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
@@ -64,6 +69,7 @@ export {
   removeActiveShapeBtnClick,
   removePolygonPointBtnClick,
   movableObjectsBtnClick,
+  toggleLabelsBtnClick,
   downloadXMLBtnClick,
   uploadImageBtnClick,
   addPointsBtnClick,

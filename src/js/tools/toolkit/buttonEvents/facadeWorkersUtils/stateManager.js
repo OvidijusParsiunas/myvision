@@ -8,6 +8,7 @@ let readyToDrawShapeState = false;
 let hasDrawnShapeState = false;
 let cancelledReadyToDrawState = null;
 let removingPointsAfterCancelDrawState = null;
+let labelsVisibilityState = true;
 
 function getDefaultState() {
   return defaultState;
@@ -51,6 +52,10 @@ function getCancelledReadyToDrawState() {
 
 function getRemovingPointsAfterCancelDrawState() {
   return removingPointsAfterCancelDrawState;
+}
+
+function getLabelsVisibilityState() {
+  return labelsVisibilityState;
 }
 
 function setDefaultState(state) {
@@ -98,6 +103,10 @@ function setRemovingPointsAfterCancelDrawState(state) {
   removingPointsAfterCancelDrawState = state;
 }
 
+function setLabelsVisibilityState(state) {
+  labelsVisibilityState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -109,6 +118,8 @@ export {
   setLastDrawingModeState,
   getReadyToDrawShapeState,
   setReadyToDrawShapeState,
+  getLabelsVisibilityState,
+  setLabelsVisibilityState,
   getContinuousDrawingState,
   setContinuousDrawingState,
   getAddingPolygonPointsState,

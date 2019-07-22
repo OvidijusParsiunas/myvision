@@ -4,12 +4,12 @@ import {
   removePolygonPointBtnClick, downloadXMLBtnClick,
   uploadImageBtnClick, resetCanvasEventsToDefault,
   movableObjectsBtnClick, continuousDrawingBtnClick,
+  toggleLabelsBtnClick,
 } from './buttonEvents/facade';
 import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
   doNothingIfLabellingInProgress, interruptNewShapeDrawingWthFunc1OrExecFunc2,
   doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
-
 } from './buttonMiddleware/buttonMiddleware';
 
 function assignToolkitButtonEvents() {
@@ -26,6 +26,7 @@ function assignToolkitButtonEvents() {
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
   window.movableObjects = movableObjectsBtnClick;
   window.continuousDrawing = continuousDrawingBtnClick;
+  window.toggleLabels = toggleLabelsBtnClick;
 }
 
 export { assignToolkitButtonEvents as default };
