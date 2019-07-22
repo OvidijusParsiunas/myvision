@@ -23,7 +23,7 @@ function setPolygonLabelOffsetProps(polygon, point) {
     - (point.y - labelProperies.offsetCoordinates.top);
 }
 
-function setLabelsVisibility(state, canvas) {
+function setLabelsVisibilityProperty(state, canvas) {
   Object.keys(labelObjects).forEach((label) => {
     labelObjects[label].visible = state;
   });
@@ -31,6 +31,6 @@ function setLabelsVisibility(state, canvas) {
 }
 
 export {
-  getLabelById, addLabel, removeLabel,
-  setPolygonLabelOffsetProps, setLabelsVisibility,
+  setPolygonLabelOffsetProps, getLabelById, addLabel,
+  setLabelsVisibilityProperty, removeLabel,
 };

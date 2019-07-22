@@ -1,12 +1,12 @@
 import { getLabelsVisibilityState, setLabelsVisibilityState } from '../facadeWorkersUtils/stateManager';
-import { setLabelsVisibility } from '../../../../canvas/objects/label/label';
+import { setLabelsVisibilityProperty } from '../../../../canvas/objects/label/label';
 
 function toggleLabelsVisibility(canvas) {
   if (getLabelsVisibilityState()) {
-    setLabelsVisibility(false, canvas);
+    setLabelsVisibilityProperty(false, canvas);
     setLabelsVisibilityState(false);
   } else {
-    setLabelsVisibility(true, canvas);
+    setLabelsVisibilityProperty(true, canvas);
     setLabelsVisibilityState(true);
   }
 }

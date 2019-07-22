@@ -8,7 +8,7 @@ import downloadXMLFile from './facadeWorkers/downloadAnnotationsFileWorker';
 import uploadImageFile from './facadeWorkers/uploadImageWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
-import toggleLabelsVisibility from './facadeWorkers/toggleLabelsWorker';
+import toggleLabelsVisibility from './facadeWorkers/toggleLabelsVisibilityWorker';
 
 let canvas = null;
 
@@ -56,7 +56,7 @@ function continuousDrawingBtnClick() {
   changeContinuousDrawingState(canvas);
 }
 
-function toggleLabelsBtnClick() {
+function toggleLabelsVisibilityBtnClick() {
   toggleLabelsVisibility(canvas);
 }
 
@@ -69,7 +69,7 @@ export {
   removeActiveShapeBtnClick,
   removePolygonPointBtnClick,
   movableObjectsBtnClick,
-  toggleLabelsBtnClick,
+  toggleLabelsVisibilityBtnClick,
   downloadXMLBtnClick,
   uploadImageBtnClick,
   addPointsBtnClick,
