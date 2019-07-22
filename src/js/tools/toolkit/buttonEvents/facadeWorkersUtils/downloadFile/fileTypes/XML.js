@@ -69,6 +69,10 @@ function getPolygonPointsCoordinates(polygon) {
 // eliminated by explicit highlighting on draw mode buttons
 // consider if downloadXML shouldn't default everything
 
+// be careful when checking if id is null, as using standard assertion can make 0 equate to a null
+// if (polygonObjId) {} BAD
+// if (polygonObjId !== 'undefined') {} GOOD
+
 // should they be rounded?
 function getShapeCoordinates() {
   let shapeIndex = 0;

@@ -147,7 +147,7 @@ function removeEditedPolygonId() {
 
 function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   canvas = canvasObj;
-  if (polygonObjId) {
+  if (polygonObjId !== 'undefined') {
     selectedPolygonId = polygonObjId;
     labelObject = getLabelById(polygonObjId);
   }
