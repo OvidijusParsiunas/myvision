@@ -15,7 +15,6 @@ let polygonPointMoved = false;
 let selectedPolygonId = null;
 let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
-let selectedPolygonLabelPointId = null;
 
 function setEditablePolygonOnClickFunc(event) {
   if (getPolygonEditingStatus()) {
@@ -74,7 +73,6 @@ function polygonMouseDownEvents(event) {
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         labelObject = getLabelById(event.target.id);
-        selectedPolygonLabelPointId = event.target.labelPointId;
         newPolygonSelected = true;
       } else {
         newPolygonSelected = false;
@@ -118,7 +116,7 @@ function polygonMoveEvents(event) {
       labelObject.top = event.target.top - event.target.labelOffsetTop;
       polygonMoved = true;
     } else if (shapeName === 'point') {
-      if (event.target.pointId === selectedPolygonLabelPointId) {
+      if (event.target.pointId === 0) {
         movePolygonPoint(event, labelObject);
       } else {
         movePolygonPoint(event);

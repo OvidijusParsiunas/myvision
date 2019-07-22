@@ -20,9 +20,9 @@ function setObjectPropertiesToDefault(object) {
     object.lockMovementY = false;
     object.hoverCursor = 'move';
   } else if (object.shapeName === 'bndBox') {
-    object.hoverCursor = 'default';
     object.lockMovementX = true;
     object.lockMovementY = true;
+    object.hoverCursor = 'default';
   }
   object.selectable = true;
 }

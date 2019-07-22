@@ -22,7 +22,7 @@ function resetPolygonSelectableAreaImpl(canvas, polygon) {
     },
   });
   polygon.setCoords();
-  setPolygonLabelOffsetProps(polygon, polygon.points[0], 0);
+  setPolygonLabelOffsetProps(polygon, polygon.points[0]);
   canvas.renderAll();
 }
 

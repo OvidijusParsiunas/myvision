@@ -31,7 +31,7 @@ function findInitialLabelLocation(shape) {
     const top = shape.points[0].y - labelProperies.offsetCoordinates.top;
     locationObj.left = left;
     locationObj.top = top;
-    setPolygonLabelOffsetProps(shape, shape.points[0], 0);
+    setPolygonLabelOffsetProps(shape, shape.points[0]);
   }
   return locationObj;
 }

@@ -88,7 +88,7 @@ function removePolygonPoints() {
 function changePolygonPointsPropertiesToDefault(canvasObj) {
   // naming convention?
   canvas = !canvasObj ? canvas : canvasObj;
-  changeObjectsToPolygonPointsToDefaultImpl(canvasObj);
+  changeObjectsToPolygonPointsToDefaultImpl(canvas);
 }
 
 function displayPolygonPointsAfterMove() {

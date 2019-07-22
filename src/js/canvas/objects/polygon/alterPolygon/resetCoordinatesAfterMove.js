@@ -69,7 +69,7 @@ function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, pol
   currentPolygon = newPolygon;
   currentPolygon.set('points', polygonPointsCoordinates);
   movePolygonToNewPosition(currentPolygon, canvas);
-  setPolygonLabelOffsetProps(currentPolygon, currentPolygon.points[0], 0);
+  setPolygonLabelOffsetProps(currentPolygon, currentPolygon.points[0]);
   return currentPolygon;
 }
 

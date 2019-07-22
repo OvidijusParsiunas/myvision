@@ -10,12 +10,11 @@ function getLabelById(id) {
   return labelObjects[id];
 }
 
-function setPolygonLabelOffsetProps(polygon, point, labelPointId) {
+function setPolygonLabelOffsetProps(polygon, point) {
   polygon.labelOffsetLeft = polygon.left
     - (point.x - labelProperies.offsetCoordinates.left);
   polygon.labelOffsetTop = polygon.top
     - (point.y - labelProperies.offsetCoordinates.top);
-  polygon.labelPointId = labelPointId;
 }
 
 export { getLabelById, addLabel, setPolygonLabelOffsetProps };

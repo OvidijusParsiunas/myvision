@@ -1,5 +1,6 @@
 import { getLabelById, setPolygonLabelOffsetProps } from '../../label/label';
 import polygonProperties from '../properties';
+import labelProperties from '../../label/properties';
 
 function realignLabelToLowestPointLocation(polygon) {
   let lowestPointIndex = 0;
@@ -7,9 +8,9 @@ function realignLabelToLowestPointLocation(polygon) {
     lowestPointIndex += 1;
   }
   const labelObject = getLabelById(polygon.id);
-  labelObject.left = polygon.points[lowestPointIndex].x - 10;
-  labelObject.top = polygon.points[lowestPointIndex].y - 12;
-  setPolygonLabelOffsetProps(polygon, polygon.points[lowestPointIndex], lowestPointIndex);
+  labelObject.left = polygon.points[lowestPointIndex].x - labelProperties.offsetCoordinates.left;
+  labelObject.top = polygon.points[lowestPointIndex].y - labelProperties.offsetCoordinates.top;
+  setPolygonLabelOffsetProps(polygon, polygon.points[lowestPointIndex]);
 }
 
 function checkIfLowestPoint(polygon, pointId) {
