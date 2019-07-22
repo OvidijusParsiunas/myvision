@@ -1,10 +1,12 @@
 import labelProperies from './properties';
+import { addLabelToList } from '../../../tools/labelList/labelList';
 
 // be careful about this as we will need to look into doing this for multiple
 const labelObjects = {};
 
 function addLabel(labelObj, id) {
   labelObjects[id] = labelObj;
+  addLabelToList(labelObj.text);
 }
 
 function getLabelById(id) {
