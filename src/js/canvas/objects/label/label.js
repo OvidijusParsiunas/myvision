@@ -6,7 +6,7 @@ const labelObjects = {};
 
 function addLabel(labelObj, id) {
   labelObjects[id] = labelObj;
-  addLabelToList(labelObj.text);
+  addLabelToList(labelObj.text, id);
 }
 
 function getLabelById(id) {

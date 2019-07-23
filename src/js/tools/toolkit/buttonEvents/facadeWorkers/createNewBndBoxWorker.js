@@ -6,6 +6,8 @@ import {
 } from '../facadeWorkersUtils/stateManager';
 
 function initiateCreateNewBndBoxEvents(canvas) {
+  // cancel drawing polygon
+  // or hold on since polygons will not be drawin with no canvas
   if (canvas.backgroundImage) {
     purgeCanvasMouseEvents(canvas);
     assignDrawBoundingBoxEvents(canvas);
