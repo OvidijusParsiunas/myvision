@@ -4,6 +4,7 @@ import { assignCanvasForDownloadingAnnotationsXML } from '../tools/toolkit/butto
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonEvents/facadeWorkersUtils/resetCanvasEvents';
 import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas } from './utils/fabricUtils';
 import { assignCanvasForLabelManipulation } from './objects/label/label';
+import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allShapes';
 
 function constructCanvas() {
   const canvas = createNewCanvas();
@@ -12,6 +13,7 @@ function constructCanvas() {
   assignCanvasForNewImageUpload(canvas);
   assignCanvasForDownloadingAnnotationsXML(canvas);
   assignResetCanvasEventsFuncToMouseEvents(canvas);
+  assignCanvasForShapeFillManipulation(canvas);
   assignCanvasForLabelManipulation(canvas);
 }
 

@@ -4,6 +4,7 @@ import { addLabelRef, setPolygonLabelOffsetProps } from '../../canvas/objects/la
 import labelProperies from '../../canvas/objects/label/properties';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 import { addLabelToList } from '../labelList/labelList';
+import { addShapeRef } from '../../canvas/objects/allShapes/allShapes';
 
 let labellingState = false;
 let targetShape = null;
@@ -43,6 +44,7 @@ function generateLabelShapeGroup(text) {
   const textShape = new fabric.Text(text, labelProperies.getLabelProps(initialLocation));
   canvas.add(textShape);
   canvas.bringToFront(textShape);
+  addShapeRef(targetShape, currentId);
   addLabelRef(textShape, currentId);
   addLabelToList(textShape.text, currentId);
   currentId += 1;

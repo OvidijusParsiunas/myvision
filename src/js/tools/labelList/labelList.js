@@ -1,4 +1,5 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
+import { highlightShapeFill, defaultShapeFill } from '../../canvas/objects/allShapes/allShapes';
 
 let labelListElement = null;
 let isLabelSelected = false;
@@ -26,9 +27,13 @@ function initialiseLabelListFunctionality() {
 //   labelListElement.appendChild(labelElement);
 // }
 
+// .labelListObj:hover {
+//   background-color: blue;
+// }
+
 function createLabelElementMarkup(labelText, id) {
   return `
-  <div>
+  <div onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" class="labelListObj">
   <button id="${id}" class="MetroBtn dropbtn" onClick="editLabel(id);">Edit</button>
     <div id="labelText${id}" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">
@@ -44,6 +49,13 @@ window.changeObjectLabelText = (innerHTML) => {
   changeObjectLabelText(activeLabelId, innerHTML);
 };
 
+window.highlightShapeFill = (id) => {
+  highlightShapeFill(id);
+};
+
+window.defaultShapeFill = (id) => {
+  defaultShapeFill(id);
+};
 // use this approach only if you want to vary the colours per label,
 // otherwise use the style sheet method
 
