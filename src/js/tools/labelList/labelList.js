@@ -116,8 +116,20 @@ function initialiseParentElement() {
 
 function addLabelToList(labelText, id) {
   const labelElement = initialiseParentElement();
+  labelElement.id = id;
   labelElement.innerHTML = createLabelElementMarkup(labelText, id);
   labelListElement.appendChild(labelElement);
 }
 
-export { initialiseLabelListFunctionality, addLabelToList };
+function removeLabelFromList(id) {
+  let index = 0;
+  while (index !== labelListElement.childNodes.length - 1) {
+    if (parseInt(labelListElement.childNodes[index + 1].id, 10) === id) {
+      labelListElement.childNodes[index + 1].remove();
+      break;
+    }
+    index += 1;
+  }
+}
+
+export { initialiseLabelListFunctionality, addLabelToList, removeLabelFromList };

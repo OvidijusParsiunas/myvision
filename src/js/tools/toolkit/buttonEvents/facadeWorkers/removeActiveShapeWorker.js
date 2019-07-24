@@ -17,12 +17,14 @@ import { isLabelling, removeTargetShape } from '../../../labellerPopUp/labelling
 import { hideLabelPopUp } from '../../../labellerPopUp/style';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { removeLabel } from '../../../../canvas/objects/label/label';
+import { removeLabelFromList } from '../../../labelList/labelList';
 
 function removeBoundingBox(canvas) {
-  const activeObect = canvas.getActiveObject();
-  if (activeObect && activeObect.shapeName === 'bndBox') {
-    canvas.remove(activeObect);
-    removeLabel(activeObect.id, canvas);
+  const activeObject = canvas.getActiveObject();
+  if (activeObject && activeObject.shapeName === 'bndBox') {
+    canvas.remove(activeObject);
+    removeLabel(activeObject.id, canvas);
+    removeLabelFromList(activeObject.id);
     clearBoundingBoxData();
     return true;
   }
