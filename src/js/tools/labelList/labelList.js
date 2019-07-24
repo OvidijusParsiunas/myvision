@@ -1,7 +1,12 @@
+import { changeObjectLabelText } from '../../canvas/objects/label/label';
+
 let labelListElement = null;
 let isLabelSelected = false;
 let activeDropdownElements = null;
 let activeLabelTextElement = null;
+let activeLabelId = null;
+
+// insert logic to edit actual label in real-time
 
 function findLabelListElement() {
   labelListElement = document.getElementById('labelList');
@@ -24,8 +29,8 @@ function initialiseLabelListFunctionality() {
 function createLabelElementMarkup(labelText, id) {
   return `
   <div>
-  <button id="${id}" class="MetroBtn dropbtn" onClick="editLabel(this.id);">Edit</button>
-    <div id="labelText${id}" contentEditable="false">${labelText}</div>
+  <button id="${id}" class="MetroBtn dropbtn" onClick="editLabel(id);">Edit</button>
+    <div id="labelText${id}" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">
         <a class="labelDropdownOption">Label 1</a>
         <a class="labelDropdownOption">Label 2</a>
@@ -34,6 +39,10 @@ function createLabelElementMarkup(labelText, id) {
   </div>
   `;
 }
+
+window.changeObjectLabelText = (innerHTML) => {
+  changeObjectLabelText(activeLabelId, innerHTML);
+};
 
 // use this approach only if you want to vary the colours per label,
 // otherwise use the style sheet method
@@ -72,6 +81,7 @@ function setEndOfContenteditable(contentEditableElement) {
 
 window.editLabel = (id) => {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
+  activeLabelId = id;
   activeLabelTextElement.contentEditable = true;
   // element.focus();
   setEndOfContenteditable(activeLabelTextElement);
@@ -79,10 +89,6 @@ window.editLabel = (id) => {
   activeDropdownElements[0].classList.toggle('show');
   isLabelSelected = true;
 };
-
-function print(textToPrint) {
-  activeLabelTextElement.innerHTML = textToPrint;
-}
 
 function removeLabelDropDownContent() {
   if (activeDropdownElements[0].classList.contains('show')) {
@@ -94,7 +100,9 @@ function removeLabelDropDownContent() {
 window.onmousedown = (event) => {
   if (isLabelSelected) {
     if (event.target.matches('.labelDropdownOption')) {
-      print(event.target.text);
+      const newText = event.target.text;
+      activeLabelTextElement.innerHTML = newText;
+      changeObjectLabelText(activeLabelId, newText);
       removeLabelDropDownContent();
     } else if (!event.target.matches('.dropbtn')) {
       removeLabelDropDownContent();

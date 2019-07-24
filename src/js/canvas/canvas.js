@@ -3,6 +3,7 @@ import { assignCanvasForNewImageUpload } from '../tools/toolkit/buttonEvents/fac
 import { assignCanvasForDownloadingAnnotationsXML } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonEvents/facadeWorkersUtils/resetCanvasEvents';
 import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas } from './utils/fabricUtils';
+import { assignCanvasForLabelManipulation } from './objects/label/label';
 
 function constructCanvas() {
   const canvas = createNewCanvas();
@@ -11,6 +12,7 @@ function constructCanvas() {
   assignCanvasForNewImageUpload(canvas);
   assignCanvasForDownloadingAnnotationsXML(canvas);
   assignResetCanvasEventsFuncToMouseEvents(canvas);
+  assignCanvasForLabelManipulation(canvas);
 }
 
 export { constructCanvas as default };

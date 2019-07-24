@@ -1,8 +1,9 @@
 import fabric from 'fabric';
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
-import { addLabel, setPolygonLabelOffsetProps } from '../../canvas/objects/label/label';
+import { addLabelRef, setPolygonLabelOffsetProps } from '../../canvas/objects/label/label';
 import labelProperies from '../../canvas/objects/label/properties';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
+import { addLabelToList } from '../labelList/labelList';
 
 let labellingState = false;
 let targetShape = null;
@@ -42,7 +43,8 @@ function generateLabelShapeGroup(text) {
   const textShape = new fabric.Text(text, labelProperies.getLabelProps(initialLocation));
   canvas.add(textShape);
   canvas.bringToFront(textShape);
-  addLabel(textShape, currentId);
+  addLabelRef(textShape, currentId);
+  addLabelToList(textShape.text, currentId);
   currentId += 1;
 }
 
