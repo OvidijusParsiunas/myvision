@@ -2,6 +2,7 @@ import { changeObjectLabelText } from '../../canvas/objects/label/label';
 import { highlightShapeFill, defaultShapeFill } from '../../canvas/objects/allShapes/allShapes';
 import { setEditingLabelId } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
+
 let labelListElement = null;
 let isLabelSelected = false;
 let activeDropdownElements = null;
@@ -114,6 +115,7 @@ function editLabel(id) {
 window.editLabel = (id) => {
   const parsedId = id.substring(10, id.length);
   if (parsedId !== activeLabelId) {
+    window.cancel();
     editLabel(parsedId);
     labelHasBeenDeselected = false;
   } else if (deselectedEditing) {
