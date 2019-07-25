@@ -9,6 +9,7 @@ let hasDrawnShapeState = false;
 let cancelledReadyToDrawState = null;
 let removingPointsAfterCancelDrawState = null;
 let labelsVisibilityState = true;
+let editingLabelId = null;
 
 function getDefaultState() {
   return defaultState;
@@ -56,6 +57,10 @@ function getRemovingPointsAfterCancelDrawState() {
 
 function getLabelsVisibilityState() {
   return labelsVisibilityState;
+}
+
+function getEditingLabelId() {
+  return editingLabelId;
 }
 
 function setDefaultState(state) {
@@ -107,9 +112,15 @@ function setLabelsVisibilityState(state) {
   labelsVisibilityState = state;
 }
 
+function setEditingLabelId(state) {
+  editingLabelId = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
+  getEditingLabelId,
+  setEditingLabelId,
   getHasDrawnShapeState,
   setHasDrawnShapeState,
   getMovableObjectsState,

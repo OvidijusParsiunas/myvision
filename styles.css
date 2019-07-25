@@ -40,3 +40,5 @@ a:hover {
 }
 
 .show {display: block;}
+
+.labelText { white-space: pre-wrap; }

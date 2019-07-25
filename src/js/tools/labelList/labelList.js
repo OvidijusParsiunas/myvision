@@ -1,12 +1,14 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
 import { highlightShapeFill, defaultShapeFill } from '../../canvas/objects/allShapes/allShapes';
+import { setEditingLabelId } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let labelListElement = null;
 let isLabelSelected = false;
 let activeDropdownElements = null;
 let activeLabelTextElement = null;
 let activeLabelId = null;
-
+let deselectedEditing = false;
+let labelHasBeenDeselected = false;
 // insert logic to edit actual label in real-time
 
 function findLabelListElement() {
@@ -34,10 +36,10 @@ function initialiseLabelListFunctionality() {
 function createLabelElementMarkup(labelText, id) {
   return `
   <div onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" class="labelListObj">
-  <button id="${id}" class="MetroBtn dropbtn" onClick="editLabel(id);">Edit</button>
-    <div id="labelText${id}" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
+    <button id="editButton${id}" class="MetroBtn dropbtn" onClick="editLabel(id);">Edit</button>
+    <div id="labelText${id}" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">
-        <a class="labelDropdownOption">Label 1</a>
+        <a onClick="randomFunc()" class="labelDropdownOption">Label 1</a>
         <a class="labelDropdownOption">Label 2</a>
         <a class="labelDropdownOption">Label 3</a>
       </div>
@@ -56,6 +58,12 @@ window.highlightShapeFill = (id) => {
 window.defaultShapeFill = (id) => {
   defaultShapeFill(id);
 };
+
+// cannot do delete shape on label edit unless we switch the currently selected
+// shape to the edited one - for all modes
+// can at least remove selected (switch default)
+// when starting to type, remove dropdown
+
 // use this approach only if you want to vary the colours per label,
 // otherwise use the style sheet method
 
@@ -91,15 +99,32 @@ function setEndOfContenteditable(contentEditableElement) {
   }
 }
 
-window.editLabel = (id) => {
+function editLabel(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelId = id;
+  setEditingLabelId(activeLabelId);
   activeLabelTextElement.contentEditable = true;
   // element.focus();
   setEndOfContenteditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   activeDropdownElements[0].classList.toggle('show');
   isLabelSelected = true;
+}
+
+window.editLabel = (id) => {
+  const parsedId = id.substring(10, id.length);
+  if (parsedId !== activeLabelId) {
+    editLabel(parsedId);
+    labelHasBeenDeselected = false;
+  } else if (deselectedEditing) {
+    activeDropdownElements[0].classList.toggle('show');
+    setEditingLabelId(null);
+    deselectedEditing = false;
+    labelHasBeenDeselected = true;
+  } else if (!deselectedEditing) {
+    editLabel(parsedId);
+    labelHasBeenDeselected = false;
+  }
 };
 
 function removeLabelDropDownContent() {
@@ -116,8 +141,28 @@ window.onmousedown = (event) => {
       activeLabelTextElement.innerHTML = newText;
       changeObjectLabelText(activeLabelId, newText);
       removeLabelDropDownContent();
-    } else if (!event.target.matches('.dropbtn')) {
+      setEditingLabelId(null);
+      activeLabelTextElement.contentEditable = false;
+      deselectedEditing = false;
+      // decide if this is necessary
+      //    window.setTimeout(function ()
+      // {
+      //   activeLabelTextElement.focus();
+      //   setEndOfContenteditable(activeLabelTextElement);
+      // }, 0);
+    } else if (event.target.id === `labelText${activeLabelId}`) {
+      // do nothing
+    } else if (event.target.id === `editButton${activeLabelId}`) {
+      if (!labelHasBeenDeselected) {
+        deselectedEditing = true;
+        activeLabelTextElement.contentEditable = false;
+        setEditingLabelId(null);
+      }
+    } else {
+      deselectedEditing = false;
       removeLabelDropDownContent();
+      activeLabelTextElement.contentEditable = false;
+      setEditingLabelId(null);
     }
   }
 };
