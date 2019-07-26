@@ -115,41 +115,41 @@ function editLabel(id) {
   isLabelSelected = true;
 }
 
+function selectShape() {
+  const eventShape = {};
+  eventShape.target = activeShape;
+  polygonMouseDownEvents(eventShape);
+  polygonMouseUpEvents(eventShape);
+  if (activeShape.shapeName === 'bndBox') {
+    programaticallySelectBoundingBox(activeShape);
+  }
+}
+
+function deselectShape() {
+  polygonMouseDownEvents({});
+  polygonMouseUpEvents({});
+  if (activeShape.shapeName === 'bndBox') {
+    programaticallyDeselectBoundingBox();
+  }
+}
+
+function initiateEditing(id) {
+  window.cancel();
+  selectShape(id);
+  editLabel(id);
+  labelHasBeenDeselected = false;
+}
+
 window.editLabel = (id) => {
   const parsedId = id.substring(10, id.length);
   if (parsedId !== activeLabelId) {
-    window.cancel();
     activeShape = getShapeById(parsedId);
-    const eventShape = {};
-    eventShape.target = activeShape;
-    polygonMouseDownEvents(eventShape);
-    polygonMouseUpEvents(eventShape);
-    if (activeShape.shapeName === 'bndBox') {
-      programaticallySelectBoundingBox(activeShape);
-    }
-    editLabel(parsedId);
-    labelHasBeenDeselected = false;
+    initiateEditing(parsedId);
   } else if (deselectedEditing) {
-    polygonMouseDownEvents({});
-    polygonMouseUpEvents({});
-    if (activeShape.shapeName === 'bndBox') {
-      programaticallyDeselectBoundingBox();
-    }
-    activeDropdownElements[0].classList.toggle('show');
-    setEditingLabelId(null);
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
-    window.cancel();
-    const eventShape = {};
-    eventShape.target = activeShape;
-    polygonMouseDownEvents(eventShape);
-    polygonMouseUpEvents(eventShape);
-    if (activeShape.shapeName === 'bndBox') {
-      programaticallySelectBoundingBox(activeShape);
-    }
-    editLabel(parsedId);
-    labelHasBeenDeselected = false;
+    initiateEditing(parsedId);
   }
 };
 
@@ -160,58 +160,50 @@ function removeLabelDropDownContent() {
   isLabelSelected = false;
 }
 
+function stopEditing() {
+  deselectedEditing = false;
+  removeLabelDropDownContent();
+  activeLabelTextElement.contentEditable = false;
+  setEditingLabelId(null);
+}
+
+function editButtonDeselected() {
+  deselectedEditing = true;
+  removeLabelDropDownContent();
+  activeLabelTextElement.contentEditable = false;
+  setEditingLabelId(null);
+  deselectShape();
+}
+
 window.onmousedown = (event) => {
   if (isLabelSelected) {
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.text;
       activeLabelTextElement.innerHTML = newText;
       changeObjectLabelText(activeLabelId, newText);
-      removeLabelDropDownContent();
-      setEditingLabelId(null);
-      activeLabelTextElement.contentEditable = false;
-      deselectedEditing = false;
-      polygonMouseDownEvents({});
-      polygonMouseUpEvents({});
-      if (activeShape.shapeName === 'bndBox') {
-        programaticallyDeselectBoundingBox();
-      }
-      // decide if this is necessary
-      //    window.setTimeout(function ()
-      // {
-      //   activeLabelTextElement.focus();
-      //   setEndOfContenteditable(activeLabelTextElement);
-      // }, 0);
+      stopEditing();
+      deselectShape();
     } else if (event.target.id === `labelText${activeLabelId}`) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
-        deselectedEditing = true;
-        activeLabelTextElement.contentEditable = false;
-        setEditingLabelId(null);
+        editButtonDeselected();
       }
-    } else if (event.target.nodeName === 'CANVAS') {
-      deselectedEditing = false;
-      removeLabelDropDownContent();
-      activeLabelTextElement.contentEditable = false;
-      setEditingLabelId(null);
-    } else if (event.target.id === 'toolsButton') {
-      deselectedEditing = false;
-      removeLabelDropDownContent();
-      activeLabelTextElement.contentEditable = false;
-      setEditingLabelId(null);
+    } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton') {
+      stopEditing();
     } else {
-      deselectedEditing = false;
-      removeLabelDropDownContent();
-      activeLabelTextElement.contentEditable = false;
-      setEditingLabelId(null);
-      polygonMouseDownEvents({});
-      polygonMouseUpEvents({});
-      if (activeShape.shapeName === 'bndBox') {
-        programaticallyDeselectBoundingBox();
-      }
+      stopEditing();
+      deselectShape();
     }
   }
 };
+
+// decide if this is necessary
+//    window.setTimeout(function ()
+// {
+//   activeLabelTextElement.focus();
+//   setEndOfContenteditable(activeLabelTextElement);
+// }, 0);
 
 function initialiseParentElement() {
   return document.createElement('id');

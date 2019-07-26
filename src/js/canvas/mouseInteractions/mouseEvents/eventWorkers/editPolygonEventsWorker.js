@@ -18,12 +18,10 @@ let setEditablePolygonOnClick = null;
 
 function programaticallySelectBoundingBox(boundingBoxObj) {
   canvas.setActiveObject(boundingBoxObj);
-  console.log('active');
 }
 
 function programaticallyDeselectBoundingBox() {
   canvas.discardActiveObject();
-  console.log('not active');
   canvas.renderAll();
 }
 
