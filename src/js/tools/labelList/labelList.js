@@ -1,7 +1,7 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
-import { highlightShapeFill, defaultShapeFill } from '../../canvas/objects/allShapes/allShapes';
+import { highlightShapeFill, defaultShapeFill, getShapeById } from '../../canvas/objects/allShapes/allShapes';
 import { setEditingLabelId } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
-
+import { polygonMouseDownEvents, polygonMouseUpEvents } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 
 let labelListElement = null;
 let isLabelSelected = false;
@@ -10,6 +10,7 @@ let activeLabelTextElement = null;
 let activeLabelId = null;
 let deselectedEditing = false;
 let labelHasBeenDeselected = false;
+let activeShape = null;
 // insert logic to edit actual label in real-time
 
 function findLabelListElement() {
@@ -62,7 +63,6 @@ window.defaultShapeFill = (id) => {
 
 // cannot do delete shape on label edit unless we switch the currently selected
 // shape to the edited one - for all modes
-// can at least remove selected (switch default)
 // when starting to type, remove dropdown
 
 // use this approach only if you want to vary the colours per label,
@@ -116,14 +116,32 @@ window.editLabel = (id) => {
   const parsedId = id.substring(10, id.length);
   if (parsedId !== activeLabelId) {
     window.cancel();
+    activeShape = getShapeById(parsedId);
+    const eventShape = {};
+    eventShape.target = activeShape;
+    if (eventShape.target.shapeName === 'polygon') {
+      polygonMouseDownEvents(eventShape);
+      polygonMouseUpEvents(eventShape);
+    }
     editLabel(parsedId);
     labelHasBeenDeselected = false;
   } else if (deselectedEditing) {
+    if (activeShape.shapeName === 'polygon') {
+      polygonMouseDownEvents({});
+      polygonMouseUpEvents({});
+    }
     activeDropdownElements[0].classList.toggle('show');
     setEditingLabelId(null);
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
+    window.cancel();
+    const eventShape = {};
+    eventShape.target = activeShape;
+    if (eventShape.target.shapeName === 'polygon') {
+      polygonMouseDownEvents(eventShape);
+      polygonMouseUpEvents(eventShape);
+    }
     editLabel(parsedId);
     labelHasBeenDeselected = false;
   }
@@ -146,6 +164,8 @@ window.onmousedown = (event) => {
       setEditingLabelId(null);
       activeLabelTextElement.contentEditable = false;
       deselectedEditing = false;
+      polygonMouseDownEvents({});
+      polygonMouseUpEvents({});
       // decide if this is necessary
       //    window.setTimeout(function ()
       // {
@@ -160,11 +180,23 @@ window.onmousedown = (event) => {
         activeLabelTextElement.contentEditable = false;
         setEditingLabelId(null);
       }
+    } else if (event.target.nodeName === 'CANVAS') {
+      deselectedEditing = false;
+      removeLabelDropDownContent();
+      activeLabelTextElement.contentEditable = false;
+      setEditingLabelId(null);
+    } else if (event.target.id === 'toolsButton') {
+      deselectedEditing = false;
+      removeLabelDropDownContent();
+      activeLabelTextElement.contentEditable = false;
+      setEditingLabelId(null);
     } else {
       deselectedEditing = false;
       removeLabelDropDownContent();
       activeLabelTextElement.contentEditable = false;
       setEditingLabelId(null);
+      polygonMouseDownEvents({});
+      polygonMouseUpEvents({});
     }
   }
 };
