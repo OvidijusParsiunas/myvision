@@ -16,6 +16,7 @@ function getTempBoundingBoxProps(coordinates) {
   };
 }
 
+// http://fabricjs.com/controls-customization
 (function setProperties() {
   boundingBoxProps.tempBoundingBoxProps = getTempBoundingBoxProps;
   boundingBoxProps.finalBoundingBoxProps = {
@@ -25,6 +26,7 @@ function getTempBoundingBoxProps(coordinates) {
     selectable: false,
     hasRotatingPoint: false,
     perPixelTargetFind: false,
+    cornerSize: 8,
   };
 }());
 
