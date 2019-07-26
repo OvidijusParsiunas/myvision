@@ -26,11 +26,11 @@ function removeTargetShape() {
 function findInitialLabelLocation(shape) {
   const locationObj = {};
   if (shape.shapeName === 'bndBox') {
-    locationObj.left = shape.left + 2;
+    locationObj.left = shape.left + labelProperies.boundingBoxOffsetProperties.left;
     locationObj.top = shape.top;
   } else if (shape.shapeName === 'polygon') {
-    const left = shape.points[0].x - labelProperies.offsetCoordinates.left;
-    const top = shape.points[0].y - labelProperies.offsetCoordinates.top;
+    const left = shape.points[0].x - labelProperies.pointOffsetProperties.left;
+    const top = shape.points[0].y - labelProperies.pointOffsetProperties.top;
     locationObj.left = left;
     locationObj.top = top;
     setPolygonLabelOffsetProps(shape, shape.points[0]);

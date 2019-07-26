@@ -16,9 +16,12 @@ function getLabelProps(coordinates) {
 }
 
 (function setProperties() {
-  labelProperties.offsetCoordinates = {
-    left: '10',
-    top: '12',
+  labelProperties.pointOffsetProperties = {
+    left: 10,
+    top: 12,
+  };
+  labelProperties.boundingBoxOffsetProperties = {
+    left: 2,
   };
   labelProperties.getLabelProps = getLabelProps;
 }());

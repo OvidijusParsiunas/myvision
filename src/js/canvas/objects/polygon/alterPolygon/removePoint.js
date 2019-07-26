@@ -8,8 +8,8 @@ function realignLabelToLowestPointLocation(polygon) {
     lowestPointIndex += 1;
   }
   const labelObject = getLabelById(polygon.id);
-  labelObject.left = polygon.points[lowestPointIndex].x - labelProperties.offsetCoordinates.left;
-  labelObject.top = polygon.points[lowestPointIndex].y - labelProperties.offsetCoordinates.top;
+  labelObject.left = polygon.points[lowestPointIndex].x - labelProperties.pointOffsetProperties.left;
+  labelObject.top = polygon.points[lowestPointIndex].y - labelProperties.pointOffsetProperties.top;
   setPolygonLabelOffsetProps(polygon, polygon.points[lowestPointIndex]);
 }
 

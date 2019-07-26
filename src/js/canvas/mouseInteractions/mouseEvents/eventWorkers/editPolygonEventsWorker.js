@@ -6,6 +6,7 @@ import {
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getLabelById } from '../../../objects/label/label';
+import labelProperies from '../../../objects/label/properties';
 import { setRemovingPointsAfterCancelDrawState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
@@ -79,6 +80,7 @@ function polygonMouseDownEvents(event) {
         newPolygonSelected = false;
       }
       labelObject = getLabelById(event.target.id);
+      preventActiveObjectsAppearInFront(canvas);
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
         labelObject = getLabelById(event.target.id);
@@ -97,6 +99,7 @@ function polygonMouseDownEvents(event) {
 function polygonMouseUpEvents(event) {
   if (event.target && event.target.shapeName === 'bndBox') {
     canvas.bringToFront(event.target);
+    canvas.bringToFront(labelObject);
   } else if (polygonMoved) {
     setEditablePolygonWhenPolygonMoved(event);
     canvas.bringToFront(labelObject);
@@ -132,7 +135,7 @@ function polygonMoveEvents(event) {
       }
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
-      labelObject.left = event.target.left;
+      labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties.left;
       labelObject.top = event.target.top;
     }
   }

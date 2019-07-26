@@ -34,8 +34,8 @@ function movePolygonPointImpl(event, polygon, labelObject) {
     x: left, y: top,
   };
   if (labelObject) {
-    labelObject.left = left - labelProperies.offsetCoordinates.left;
-    labelObject.top = top - labelProperies.offsetCoordinates.top;
+    labelObject.left = left - labelProperies.pointOffsetProperties.left;
+    labelObject.top = top - labelProperies.pointOffsetProperties.top;
   }
 }
 
