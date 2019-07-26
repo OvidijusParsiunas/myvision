@@ -1,7 +1,10 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
 import { highlightShapeFill, defaultShapeFill, getShapeById } from '../../canvas/objects/allShapes/allShapes';
 import { setEditingLabelId } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
-import { polygonMouseDownEvents, polygonMouseUpEvents } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
+import {
+  polygonMouseDownEvents, polygonMouseUpEvents,
+  programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
+} from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 
 let labelListElement = null;
 let isLabelSelected = false;
@@ -119,16 +122,18 @@ window.editLabel = (id) => {
     activeShape = getShapeById(parsedId);
     const eventShape = {};
     eventShape.target = activeShape;
-    if (eventShape.target.shapeName === 'polygon') {
-      polygonMouseDownEvents(eventShape);
-      polygonMouseUpEvents(eventShape);
+    polygonMouseDownEvents(eventShape);
+    polygonMouseUpEvents(eventShape);
+    if (activeShape.shapeName === 'bndBox') {
+      programaticallySelectBoundingBox(activeShape);
     }
     editLabel(parsedId);
     labelHasBeenDeselected = false;
   } else if (deselectedEditing) {
-    if (activeShape.shapeName === 'polygon') {
-      polygonMouseDownEvents({});
-      polygonMouseUpEvents({});
+    polygonMouseDownEvents({});
+    polygonMouseUpEvents({});
+    if (activeShape.shapeName === 'bndBox') {
+      programaticallyDeselectBoundingBox();
     }
     activeDropdownElements[0].classList.toggle('show');
     setEditingLabelId(null);
@@ -138,9 +143,10 @@ window.editLabel = (id) => {
     window.cancel();
     const eventShape = {};
     eventShape.target = activeShape;
-    if (eventShape.target.shapeName === 'polygon') {
-      polygonMouseDownEvents(eventShape);
-      polygonMouseUpEvents(eventShape);
+    polygonMouseDownEvents(eventShape);
+    polygonMouseUpEvents(eventShape);
+    if (activeShape.shapeName === 'bndBox') {
+      programaticallySelectBoundingBox(activeShape);
     }
     editLabel(parsedId);
     labelHasBeenDeselected = false;
@@ -166,6 +172,9 @@ window.onmousedown = (event) => {
       deselectedEditing = false;
       polygonMouseDownEvents({});
       polygonMouseUpEvents({});
+      if (activeShape.shapeName === 'bndBox') {
+        programaticallyDeselectBoundingBox();
+      }
       // decide if this is necessary
       //    window.setTimeout(function ()
       // {
@@ -197,6 +206,9 @@ window.onmousedown = (event) => {
       setEditingLabelId(null);
       polygonMouseDownEvents({});
       polygonMouseUpEvents({});
+      if (activeShape.shapeName === 'bndBox') {
+        programaticallyDeselectBoundingBox();
+      }
     }
   }
 };

@@ -16,6 +16,17 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
 
+function programaticallySelectBoundingBox(boundingBoxObj) {
+  canvas.setActiveObject(boundingBoxObj);
+  console.log('active');
+}
+
+function programaticallyDeselectBoundingBox() {
+  canvas.discardActiveObject();
+  console.log('not active');
+  canvas.renderAll();
+}
+
 function setEditablePolygonOnClickFunc(event) {
   if (getPolygonEditingStatus()) {
     // selecting another polygon without moving the first one
@@ -181,5 +192,6 @@ export {
   polygonMoveEvents, removeEditedPolygonId,
   polygonMouseOutEvents, pointMouseOverEvents,
   setEditPolygonEventObjects, boundingBoxScalingEvents,
-  boundingBoxMouseOutEvents,
+  boundingBoxMouseOutEvents, programaticallySelectBoundingBox,
+  programaticallyDeselectBoundingBox,
 };
