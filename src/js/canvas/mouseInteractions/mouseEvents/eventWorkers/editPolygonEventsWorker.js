@@ -132,6 +132,7 @@ function polygonMouseUpEvents(event) {
   } else if (polygonPointMoved) {
     resetPolygonSelectableAreaAfterPointMoved();
   } else if (event.target && event.target.shapeName === 'polygon') {
+    highlightLabelInTheList(event.target.id);
     sendPolygonPointsToFront();
   } else if (!event.target && getPolygonEditingStatus()) {
     removeHighlightOfListLabel();

@@ -5,7 +5,7 @@ import {
   polygonMouseDownEvents, polygonMouseUpEvents,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
-import { setLabelListElementForHighlights } from './highlightLabelList';
+import { setLabelListElementForHighlights, preventHighlightingOnEditClick, allowHighlighting } from './highlightLabelList';
 
 let labelListElement = null;
 let isLabelSelected = false;
@@ -143,6 +143,7 @@ function initiateEditing(id) {
 }
 
 window.editLabel = (id) => {
+  preventHighlightingOnEditClick();
   const parsedId = id.substring(10, id.length);
   if (parsedId !== activeLabelId) {
     activeShape = getShapeById(parsedId);
@@ -179,6 +180,7 @@ function editButtonDeselected() {
 
 window.onmousedown = (event) => {
   if (isLabelSelected) {
+    allowHighlighting();
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.text;
       activeLabelTextElement.innerHTML = newText;

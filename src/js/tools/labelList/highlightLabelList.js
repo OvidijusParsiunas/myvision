@@ -1,5 +1,6 @@
 let labelListElement = null;
 let currentlyHighlightedElement = null;
+let preventHighlighting = false;
 
 function setLabelListElementForHighlights(labelListElementRef) {
   labelListElement = labelListElementRef;
@@ -14,9 +15,24 @@ function removeHighlightOfListLabel() {
 }
 
 function highlightLabelInTheList(id) {
-  removeHighlightOfListLabel();
-  [currentlyHighlightedElement] = labelListElement.getElementsByClassName(`label${id}`);
-  currentlyHighlightedElement.style.backgroundColor = 'red';
+  if (!preventHighlighting) {
+    removeHighlightOfListLabel();
+    [currentlyHighlightedElement] = labelListElement.getElementsByClassName(`label${id}`);
+    currentlyHighlightedElement.style.backgroundColor = 'red';
+  }
 }
 
-export { setLabelListElementForHighlights, highlightLabelInTheList, removeHighlightOfListLabel };
+function preventHighlightingOnEditClick() {
+  removeHighlightOfListLabel();
+  preventHighlighting = true;
+}
+
+function allowHighlighting() {
+  preventHighlighting = false;
+}
+
+export {
+  setLabelListElementForHighlights, highlightLabelInTheList,
+  removeHighlightOfListLabel, preventHighlightingOnEditClick,
+  allowHighlighting,
+};
