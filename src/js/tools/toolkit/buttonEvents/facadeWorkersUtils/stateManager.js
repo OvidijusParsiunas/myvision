@@ -10,6 +10,7 @@ let cancelledReadyToDrawState = null;
 let removingPointsAfterCancelDrawState = null;
 let labelsVisibilityState = true;
 let editingLabelId = null;
+let lastPolygonActionWasMoveState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -61,6 +62,10 @@ function getLabelsVisibilityState() {
 
 function getEditingLabelId() {
   return editingLabelId;
+}
+
+function getLastPolygonActionWasMoveState() {
+  return lastPolygonActionWasMoveState;
 }
 
 function setDefaultState(state) {
@@ -116,6 +121,10 @@ function setEditingLabelId(state) {
   editingLabelId = state;
 }
 
+function setLastPolygonActionWasMoveState(state) {
+  lastPolygonActionWasMoveState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -141,6 +150,8 @@ export {
   setAlteringPolygonPointsState,
   getRemovingPolygonPointsState,
   setRemovingPolygonPointsState,
+  getLastPolygonActionWasMoveState,
+  setLastPolygonActionWasMoveState,
   getRemovingPointsAfterCancelDrawState,
   setRemovingPointsAfterCancelDrawState,
 };

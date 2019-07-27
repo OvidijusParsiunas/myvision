@@ -16,6 +16,7 @@ import {
   changeObjectsToPolygonPointsToDefaultImpl,
   changeObjectsToPolygonPointsRemovaleImpl,
 } from './changePointsStyle';
+import { getEditingLabelId, getLastPolygonActionWasMoveState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 // this is the polygonInteractionsManager
 
@@ -23,6 +24,7 @@ let canvas = null;
 let polygon = null;
 let polygonPoints = [];
 let editingPolygon = false;
+let preventNewPolygonInitialisation = false;
 
 // temporary
 function getPolygonIfEditing() {
@@ -50,9 +52,14 @@ function sendPolygonPointsToFront() {
 }
 
 function displayPolygonPoints() {
-  polygonPoints = displayPolygonPointsWithStyleImpl(
-    canvas, polygon, polygonProperties.existingPolygonPoint,
-  );
+  if (!preventNewPolygonInitialisation) {
+    polygonPoints = displayPolygonPointsWithStyleImpl(
+      canvas, polygon, polygonProperties.existingPolygonPoint,
+    );
+  } else {
+    preventNewPolygonInitialisation = false;
+    sendPolygonPointsToFront();
+  }
 }
 
 function displayRemovablePolygonPoints() {
@@ -81,7 +88,16 @@ function cleanPolygonPointsArray() {
 }
 
 function removePolygonPoints() {
-  polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
+  console.log('called');
+  if (getLastPolygonActionWasMoveState()) {
+    if (!getEditingLabelId()) {
+      polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
+    } else {
+      preventNewPolygonInitialisation = true;
+    }
+  } else {
+    polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
+  }
   setPolygonEditingStatus(false);
 }
 

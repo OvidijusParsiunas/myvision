@@ -3,7 +3,7 @@ function sendPolygonPointsToFrontImpl(canvas, polygonPoints) {
   canvas.discardActiveObject();
   polygonPoints.forEach((point) => {
     if (point) {
-      point.bringForward();
+      canvas.bringToFront(point);
     }
   });
 }

@@ -7,7 +7,7 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
-import { setRemovingPointsAfterCancelDrawState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
 
 let canvas = null;
@@ -113,6 +113,7 @@ function polygonMouseDownEvents(event) {
 
 // look at this
 function polygonMouseUpEvents(event) {
+  setLastPolygonActionWasMoveState(false);
   if (event.target && event.target.shapeName === 'bndBox') {
     canvas.bringToFront(event.target);
     canvas.bringToFront(labelObject);
@@ -120,6 +121,7 @@ function polygonMouseUpEvents(event) {
     highlightLabelInTheList(event.target.id);
     setEditablePolygonWhenPolygonMoved(event);
     canvas.bringToFront(labelObject);
+    setLastPolygonActionWasMoveState(true);
   } else if (newPolygonSelected) {
     if (finishedAddingNewPoints) {
       finishedAddingNewPoints = false;

@@ -1,9 +1,9 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
   getContinuousDrawingState, getAddingPolygonPointsState, setReadyToDrawShapeState,
-  getLastDrawingModeState, setAddingPolygonPointsState, setDefaultState,
+  getLastDrawingModeState, setAddingPolygonPointsState,
   getRemovingPolygonPointsState, setRemovingPointsAfterCancelDrawState,
-  getReadyToDrawShapeState, setCancelledReadyToDrawState,
+  getReadyToDrawShapeState, setCancelledReadyToDrawState, setDefaultState,
   getCancelledReadyToDrawState, setRemovingPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
 import { isPolygonDrawingInProgress, removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';

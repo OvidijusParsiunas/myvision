@@ -108,7 +108,6 @@ function setEndOfContenteditable(contentEditableElement) {
 function editLabel(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelId = id;
-  setEditingLabelId(activeLabelId);
   activeLabelTextElement.contentEditable = true;
   // element.focus();
   setEndOfContenteditable(activeLabelTextElement);
@@ -137,6 +136,7 @@ function deselectShape() {
 
 function initiateEditing(id) {
   window.cancel();
+  activeShape = getShapeById(id);
   selectShape(id);
   editLabel(id);
   labelHasBeenDeselected = false;
@@ -146,12 +146,13 @@ window.editLabel = (id) => {
   preventHighlightingOnEditClick();
   const parsedId = id.substring(10, id.length);
   if (parsedId !== activeLabelId) {
-    activeShape = getShapeById(parsedId);
     initiateEditing(parsedId);
+    setEditingLabelId(parsedId);
   } else if (deselectedEditing) {
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
+    setEditingLabelId(parsedId);
     initiateEditing(parsedId);
   }
 };
