@@ -31,6 +31,13 @@ function clearBoundingBoxData() {
   drawingFinished = false;
 }
 
+function deselectBoundingBox() {
+  if (canvas) {
+    canvas.discardActiveObject();
+    canvas.renderAll();
+  }
+}
+
 function resetDrawBoundingBoxMode() {
   setReadyToDrawShapeState(true);
   setDrawCursorMode(canvas);
@@ -115,6 +122,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
 
 export {
   drawBoundingBox,
+  deselectBoundingBox,
   clearBoundingBoxData,
   resetDrawBoundingBoxMode,
   finishDrawingBoundingBox,

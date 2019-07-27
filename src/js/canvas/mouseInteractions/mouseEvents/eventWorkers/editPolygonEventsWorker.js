@@ -8,14 +8,17 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
 import { setRemovingPointsAfterCancelDrawState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
 
 let canvas = null;
 let polygonMoved = false;
 let labelObject = null;
 let polygonPointMoved = false;
-let selectedPolygonId = null;
+let selectedShapeId = null;
 let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
+let finishedAddingNewPoints = false;
+let lastShapeSelectedIsBoundingBox = false;
 
 function programaticallySelectBoundingBox(boundingBoxObj) {
   canvas.setActiveObject(boundingBoxObj);
@@ -32,7 +35,7 @@ function setEditablePolygonOnClickFunc(event) {
     removePolygonPoints();
   }
   setEditablePolygon(canvas, event.target);
-  selectedPolygonId = event.target.id;
+  selectedShapeId = event.target.id;
 }
 
 function assignSetEditablePolygonOnClickFunc() {
@@ -50,7 +53,7 @@ function skipMouseUpEvent() {
 function setEditablePolygonWhenPolygonMoved(event) {
   if (newPolygonSelected) {
     setEditablePolygonAfterMoving(canvas, event.target);
-    selectedPolygonId = event.target.id;
+    selectedShapeId = event.target.id;
   } else {
     displayPolygonPointsAfterMove();
   }
@@ -64,25 +67,38 @@ function resetPolygonSelectableAreaAfterPointMoved() {
 
 function setPolygonNotEditableOnClick() {
   removePolygonPoints();
-  selectedPolygonId = null;
+  selectedShapeId = null;
 }
 
 // smart system where label would readjust upon mouse up if it's edges are outside of canvas
 // stop shapes from being able to move outside of canvas
+
+// label in the list should be highlighted upon selecting shape
+// use different colours for different labels
+// investigate the potential of having a rightclick menu to manipulate shapes
+// in add or remove points modes, send all objects to the front
 
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
+      removeHighlightOfListLabel();
+      highlightLabelInTheList(event.target.id);
       if (getPolygonEditingStatus()) {
         setPolygonNotEditableOnClick();
         newPolygonSelected = false;
       }
+      selectedShapeId = event.target.id;
       labelObject = getLabelById(event.target.id);
+      lastShapeSelectedIsBoundingBox = true;
       preventActiveObjectsAppearInFront(canvas);
     } else {
-      if (event.target.shapeName === 'polygon' && event.target.id !== selectedPolygonId) {
+      if (event.target.shapeName === 'polygon' && event.target.id !== selectedShapeId) {
+        if (lastShapeSelectedIsBoundingBox) {
+          removeHighlightOfListLabel();
+          lastShapeSelectedIsBoundingBox = false;
+        }
         labelObject = getLabelById(event.target.id);
         newPolygonSelected = true;
       } else {
@@ -101,9 +117,15 @@ function polygonMouseUpEvents(event) {
     canvas.bringToFront(event.target);
     canvas.bringToFront(labelObject);
   } else if (polygonMoved) {
+    highlightLabelInTheList(event.target.id);
     setEditablePolygonWhenPolygonMoved(event);
     canvas.bringToFront(labelObject);
   } else if (newPolygonSelected) {
+    if (finishedAddingNewPoints) {
+      finishedAddingNewPoints = false;
+    } else {
+      highlightLabelInTheList(event.target.id);
+    }
     canvas.bringToFront(event.target);
     setEditablePolygonOnClick(event);
     canvas.bringToFront(labelObject);
@@ -112,7 +134,10 @@ function polygonMouseUpEvents(event) {
   } else if (event.target && event.target.shapeName === 'polygon') {
     sendPolygonPointsToFront();
   } else if (!event.target && getPolygonEditingStatus()) {
+    removeHighlightOfListLabel();
     setPolygonNotEditableOnClick();
+  } else if (selectedShapeId != null) {
+    removeHighlightOfListLabel();
   }
 }
 
@@ -154,17 +179,21 @@ function pointMouseOverEvents(event) {
 }
 
 function removeEditedPolygonId() {
-  selectedPolygonId = null;
+  selectedShapeId = null;
 }
 
 function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   canvas = canvasObj;
-  if (polygonObjId !== 'undefined') {
-    selectedPolygonId = polygonObjId;
-    labelObject = getLabelById(polygonObjId);
+  if (polygonObjId !== 'undefined' && polygonObjId !== null) {
+    selectedShapeId = polygonObjId;
+    labelObject = getLabelById(selectedShapeId);
+    highlightLabelInTheList(selectedShapeId);
   }
   if (afterAddPoints) {
+    selectedShapeId = null;
     newPolygonSelected = true;
+    finishedAddingNewPoints = true;
+    lastShapeSelectedIsBoundingBox = false;
     setEditablePolygonOnClick = skipMouseUpEvent;
   } else {
     setEditablePolygonOnClick = setEditablePolygonOnClickFunc;

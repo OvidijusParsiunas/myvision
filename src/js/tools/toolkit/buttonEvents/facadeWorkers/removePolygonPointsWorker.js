@@ -20,6 +20,7 @@ import {
   resetAddPoints, isAddingPointsToPolygon,
   cleanPolygonPointsArray, removePolygonPoints,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import { removeHighlightOfListLabel } from '../../../labelList/highlightLabelList';
 
 function setRemovePointsCursorMode(canvas) {
   const isDrawingPolygon = isPolygonDrawingInProgress();
@@ -66,6 +67,7 @@ function discardRemovePointsEvents(canvas) {
 // split up to more readable
 function initiateRemovePolygonPointsEvents(canvas) {
   canvas.discardActiveObject();
+  removeHighlightOfListLabel();
   if (!getRemovingPolygonPointsState()) {
     let assignedEvents = false;
     if (getAddingPolygonPointsState()) {

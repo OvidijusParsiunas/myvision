@@ -5,6 +5,7 @@ import {
   polygonMouseDownEvents, polygonMouseUpEvents,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
+import { setLabelListElementForHighlights } from './highlightLabelList';
 
 let labelListElement = null;
 let isLabelSelected = false;
@@ -22,6 +23,7 @@ function findLabelListElement() {
 
 function initialiseLabelListFunctionality() {
   findLabelListElement();
+  setLabelListElementForHighlights(labelListElement);
 }
 
 // function initialiseNewElement() {
@@ -40,7 +42,7 @@ function initialiseLabelListFunctionality() {
 
 function createLabelElementMarkup(labelText, id) {
   return `
-  <div onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" class="labelListObj">
+  <div onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" class="labelListObj label${id}">
     <button id="editButton${id}" class="MetroBtn dropbtn" onClick="editLabel(id);">Edit</button>
     <div id="labelText${id}" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">

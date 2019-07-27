@@ -42,3 +42,7 @@ a:hover {
 .show {display: block;}
 
 .labelText { white-space: pre-wrap; }
+
+.labelListObj {
+  max-width: 100px;
+}
