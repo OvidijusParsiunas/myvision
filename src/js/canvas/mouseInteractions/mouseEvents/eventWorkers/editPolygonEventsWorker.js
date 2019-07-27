@@ -8,7 +8,7 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
 import { setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
-import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
+import { highlightLabelInTheList, removeHighlightOfListLabel, allowHighlighting } from '../../../../tools/labelList/highlightLabelList';
 
 let canvas = null;
 let polygonMoved = false;
@@ -73,7 +73,10 @@ function setPolygonNotEditableOnClick() {
 // smart system where label would readjust upon mouse up if it's edges are outside of canvas
 // stop shapes from being able to move outside of canvas
 
-// label in the list should be highlighted upon selecting shape
+// clicking on the label in the list without edit button should still select the right shape
+// after editing, maybe the object should remain in edit mode and the label selected (red)
+// maybe the dropdown shouldn't stop the editing
+
 // use different colours for different labels
 // investigate the potential of having a rightclick menu to manipulate shapes
 // in add or remove points modes, send all objects to the front
@@ -84,6 +87,7 @@ function polygonMouseDownEvents(event) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
       removeHighlightOfListLabel();
+      allowHighlighting();
       highlightLabelInTheList(event.target.id);
       if (getPolygonEditingStatus()) {
         setPolygonNotEditableOnClick();
@@ -211,7 +215,7 @@ function boundingBoxScalingEvents(event) {
     boundingBox.height *= boundingBox.scaleY;
     boundingBox.scaleX = 1;
     boundingBox.scaleY = 1;
-    labelObject.left = event.target.left;
+    labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties.left;
     labelObject.top = event.target.top;
   }
 }
@@ -220,11 +224,15 @@ function boundingBoxMouseOutEvents(event) {
   event.target.set('fill', 'rgba(255,0,0,0');
 }
 
+function getLastSelectedShapeId() {
+  return selectedShapeId;
+}
+
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeEditedPolygonId,
   polygonMouseOutEvents, pointMouseOverEvents,
   setEditPolygonEventObjects, boundingBoxScalingEvents,
   boundingBoxMouseOutEvents, programaticallySelectBoundingBox,
-  programaticallyDeselectBoundingBox,
+  programaticallyDeselectBoundingBox, getLastSelectedShapeId,
 };

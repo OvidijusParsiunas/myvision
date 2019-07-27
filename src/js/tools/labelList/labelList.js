@@ -1,8 +1,8 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
 import { highlightShapeFill, defaultShapeFill, getShapeById } from '../../canvas/objects/allShapes/allShapes';
-import { setEditingLabelId } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { setEditingLabelId, setNewShapeSelectedViaLabelListState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import {
-  polygonMouseDownEvents, polygonMouseUpEvents,
+  polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import { setLabelListElementForHighlights, preventHighlightingOnEditClick, allowHighlighting } from './highlightLabelList';
@@ -135,6 +135,14 @@ function deselectShape() {
 }
 
 function initiateEditing(id) {
+  preventHighlightingOnEditClick();
+  const trulyParsedId = parseInt(id, 10);
+  if (trulyParsedId !== getLastSelectedShapeId()) {
+    setNewShapeSelectedViaLabelListState(true);
+  } else {
+    setNewShapeSelectedViaLabelListState(false);
+  }
+  setEditingLabelId(id);
   window.cancel();
   activeShape = getShapeById(id);
   selectShape(id);
@@ -143,16 +151,14 @@ function initiateEditing(id) {
 }
 
 window.editLabel = (id) => {
-  preventHighlightingOnEditClick();
   const parsedId = id.substring(10, id.length);
   if (parsedId !== activeLabelId) {
     initiateEditing(parsedId);
-    setEditingLabelId(parsedId);
   } else if (deselectedEditing) {
+    allowHighlighting();
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
-    setEditingLabelId(parsedId);
     initiateEditing(parsedId);
   }
 };

@@ -16,7 +16,10 @@ import {
   changeObjectsToPolygonPointsToDefaultImpl,
   changeObjectsToPolygonPointsRemovaleImpl,
 } from './changePointsStyle';
-import { getEditingLabelId, getLastPolygonActionWasMoveState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import {
+  getEditingLabelId, getLastPolygonActionWasMoveState,
+  getNewShapeSelectedViaLabelListState, setNewShapeSelectedViaLabelListState,
+} from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 // this is the polygonInteractionsManager
 
@@ -88,9 +91,8 @@ function cleanPolygonPointsArray() {
 }
 
 function removePolygonPoints() {
-  console.log('called');
   if (getLastPolygonActionWasMoveState()) {
-    if (!getEditingLabelId()) {
+    if (!getEditingLabelId() || getNewShapeSelectedViaLabelListState()) {
       polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
     } else {
       preventNewPolygonInitialisation = true;
@@ -98,6 +100,7 @@ function removePolygonPoints() {
   } else {
     polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
   }
+  setNewShapeSelectedViaLabelListState(false);
   setPolygonEditingStatus(false);
 }
 

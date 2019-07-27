@@ -11,6 +11,7 @@ let removingPointsAfterCancelDrawState = null;
 let labelsVisibilityState = true;
 let editingLabelId = null;
 let lastPolygonActionWasMoveState = false;
+let newShapeSelectedViaLabelListState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -66,6 +67,10 @@ function getEditingLabelId() {
 
 function getLastPolygonActionWasMoveState() {
   return lastPolygonActionWasMoveState;
+}
+
+function getNewShapeSelectedViaLabelListState() {
+  return newShapeSelectedViaLabelListState;
 }
 
 function setDefaultState(state) {
@@ -125,6 +130,10 @@ function setLastPolygonActionWasMoveState(state) {
   lastPolygonActionWasMoveState = state;
 }
 
+function setNewShapeSelectedViaLabelListState(state) {
+  newShapeSelectedViaLabelListState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -152,6 +161,8 @@ export {
   setRemovingPolygonPointsState,
   getLastPolygonActionWasMoveState,
   setLastPolygonActionWasMoveState,
+  getNewShapeSelectedViaLabelListState,
+  setNewShapeSelectedViaLabelListState,
   getRemovingPointsAfterCancelDrawState,
   setRemovingPointsAfterCancelDrawState,
 };
