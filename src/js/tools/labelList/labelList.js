@@ -105,7 +105,7 @@ function setEndOfContenteditable(contentEditableElement) {
   }
 }
 
-function editLabel(id) {
+function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelId = id;
   activeLabelTextElement.contentEditable = true;
@@ -136,8 +136,7 @@ function deselectShape() {
 
 function initiateEditing(id) {
   preventHighlightingOnEditClick();
-  const trulyParsedId = parseInt(id, 10);
-  if (trulyParsedId !== getLastSelectedShapeId()) {
+  if (id !== getLastSelectedShapeId()) {
     setNewShapeSelectedViaLabelListState(true);
   } else {
     setNewShapeSelectedViaLabelListState(false);
@@ -146,20 +145,26 @@ function initiateEditing(id) {
   window.cancel();
   activeShape = getShapeById(id);
   selectShape(id);
-  editLabel(id);
+  initLabelEditing(id);
   labelHasBeenDeselected = false;
 }
 
-window.editLabel = (id) => {
-  const parsedId = id.substring(10, id.length);
-  if (parsedId !== activeLabelId) {
-    initiateEditing(parsedId);
+function parseLabelIdFromFromButtonId(id) {
+  const getSubstring = id.substring(10, id.length);
+  const parsedId = parseInt(getSubstring, 10);
+  return parsedId;
+}
+
+window.editLabel = (buttonId) => {
+  const labelId = parseLabelIdFromFromButtonId(buttonId);
+  if (labelId !== activeLabelId) {
+    initiateEditing(labelId);
   } else if (deselectedEditing) {
     allowHighlighting();
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
-    initiateEditing(parsedId);
+    initiateEditing(labelId);
   }
 };
 
