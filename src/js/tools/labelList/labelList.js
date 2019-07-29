@@ -18,6 +18,8 @@ let activeLabelId = null;
 let deselectedEditing = false;
 let labelHasBeenDeselected = false;
 let activeShape = null;
+let activeLabelElementId = null;
+
 // insert logic to edit actual label in real-time
 
 function findLabelListElement() {
@@ -45,7 +47,7 @@ function initialiseLabelListFunctionality() {
 
 function createLabelElementMarkup(labelText, id) {
   return `
-  <div onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
+  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
     <button id="editButton${id}" class="MetroBtn dropbtn" onClick="editLabelBtnClick(id);">Edit</button>
     <div id="labelText${id}" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">
@@ -164,6 +166,7 @@ function initiateEditing(id) {
   selectShape(id);
   initLabelEditing(id);
   labelHasBeenDeselected = false;
+  activeLabelElementId = `labelId${id}`;
 }
 
 function parseLabelIdFromFromButtonId(id) {
@@ -224,7 +227,7 @@ window.onmousedown = (event) => {
       if (!labelHasBeenDeselected) {
         editButtonDeselected();
       }
-    } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton') {
+    } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
       stopEditing();
     } else {
       stopEditing();
