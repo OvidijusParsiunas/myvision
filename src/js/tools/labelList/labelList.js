@@ -9,7 +9,6 @@ import {
   removeHighlightOfListLabel, setLabelListElementForHighlights, highlightLabelInTheList,
 } from './highlightLabelList';
 
-let selectedLabelId = null;
 let labelListElement = null;
 let isLabelSelected = false;
 let activeDropdownElements = null;
@@ -145,13 +144,9 @@ window.labelBtnClick = (id) => {
   if (!getDefaultState()) {
     window.cancel();
   }
-  if (id !== selectedLabelId) {
-    removeHighlightOfListLabel();
-    highlightLabelInTheList(id);
-    selectedLabelId = id;
-    activeShape = getShapeById(id);
-    selectShape();
-  }
+  highlightLabelInTheList(id);
+  activeShape = getShapeById(id);
+  selectShape();
 };
 
 function initiateEditing(id) {
@@ -197,7 +192,6 @@ function removeLabelDropDownContent() {
 function stopEditing() {
   activeShape = false;
   deselectedEditing = false;
-  selectedLabelId = null;
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
