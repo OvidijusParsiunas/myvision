@@ -8,7 +8,7 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
 import { setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
-import { highlightLabelInTheList, removeHighlightOfListLabel, allowHighlighting } from '../../../../tools/labelList/highlightLabelList';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
 
 let canvas = null;
 let polygonMoved = false;
@@ -73,9 +73,13 @@ function setPolygonNotEditableOnClick() {
 // smart system where label would readjust upon mouse up if it's edges are outside of canvas
 // stop shapes from being able to move outside of canvas
 
-// clicking on the label in the list without edit button should still select the right shape
 // after editing, maybe the object should remain in edit mode and the label selected (red)
 // maybe the dropdown shouldn't stop the editing
+
+// upon selecting-dragging a polygon does not remove the active label of the previous shape on list
+// whereas rectangle is immediate, only way this can be mediated is by removing rectangle controls
+// on moving it in order to have delay the label change too, or you can display polygon points
+// on mouse down click and upon moving the polygon
 
 // use different colours for different labels
 // investigate the potential of having a rightclick menu to manipulate shapes
@@ -87,7 +91,6 @@ function polygonMouseDownEvents(event) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
       removeHighlightOfListLabel();
-      allowHighlighting();
       highlightLabelInTheList(event.target.id);
       if (getPolygonEditingStatus()) {
         setPolygonNotEditableOnClick();

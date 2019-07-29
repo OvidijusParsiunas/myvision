@@ -1,12 +1,15 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
 import { highlightShapeFill, defaultShapeFill, getShapeById } from '../../canvas/objects/allShapes/allShapes';
-import { setEditingLabelId, setNewShapeSelectedViaLabelListState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { setEditingLabelId, setNewShapeSelectedViaLabelListState, getDefaultState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
-import { setLabelListElementForHighlights, preventHighlightingOnEditClick, allowHighlighting } from './highlightLabelList';
+import {
+  removeHighlightOfListLabel, setLabelListElementForHighlights, highlightLabelInTheList,
+} from './highlightLabelList';
 
+let selectedLabelId = null;
 let labelListElement = null;
 let isLabelSelected = false;
 let activeDropdownElements = null;
@@ -42,8 +45,8 @@ function initialiseLabelListFunctionality() {
 
 function createLabelElementMarkup(labelText, id) {
   return `
-  <div onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" class="labelListObj label${id}">
-    <button id="editButton${id}" class="MetroBtn dropbtn" onClick="editLabel(id);">Edit</button>
+  <div onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
+    <button id="editButton${id}" class="MetroBtn dropbtn" onClick="editLabelBtnClick(id);">Edit</button>
     <div id="labelText${id}" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">
         <a onClick="randomFunc()" class="labelDropdownOption">Label 1</a>
@@ -107,6 +110,7 @@ function setEndOfContenteditable(contentEditableElement) {
 
 function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
+  activeLabelTextElement.style.backgroundColor = 'white';
   activeLabelId = id;
   activeLabelTextElement.contentEditable = true;
   // element.focus();
@@ -127,6 +131,7 @@ function selectShape() {
 }
 
 function deselectShape() {
+  removeHighlightOfListLabel();
   polygonMouseDownEvents({});
   polygonMouseUpEvents({});
   if (activeShape.shapeName === 'bndBox') {
@@ -134,8 +139,20 @@ function deselectShape() {
   }
 }
 
+window.labelBtnClick = (id) => {
+  if (!getDefaultState()) {
+    window.cancel();
+  }
+  if (id !== selectedLabelId) {
+    removeHighlightOfListLabel();
+    highlightLabelInTheList(id);
+    selectedLabelId = id;
+    activeShape = getShapeById(id);
+    selectShape();
+  }
+};
+
 function initiateEditing(id) {
-  preventHighlightingOnEditClick();
   if (id !== getLastSelectedShapeId()) {
     setNewShapeSelectedViaLabelListState(true);
   } else {
@@ -155,12 +172,11 @@ function parseLabelIdFromFromButtonId(id) {
   return parsedId;
 }
 
-window.editLabel = (buttonId) => {
+window.editLabelBtnClick = (buttonId) => {
   const labelId = parseLabelIdFromFromButtonId(buttonId);
   if (labelId !== activeLabelId) {
     initiateEditing(labelId);
   } else if (deselectedEditing) {
-    allowHighlighting();
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
@@ -176,9 +192,12 @@ function removeLabelDropDownContent() {
 }
 
 function stopEditing() {
+  activeShape = false;
   deselectedEditing = false;
+  selectedLabelId = null;
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
+  activeLabelTextElement.style.backgroundColor = null;
   setEditingLabelId(null);
 }
 
@@ -186,13 +205,13 @@ function editButtonDeselected() {
   deselectedEditing = true;
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
+  activeLabelTextElement.style.backgroundColor = null;
   setEditingLabelId(null);
   deselectShape();
 }
 
 window.onmousedown = (event) => {
   if (isLabelSelected) {
-    allowHighlighting();
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.text;
       activeLabelTextElement.innerHTML = newText;
