@@ -46,7 +46,7 @@ function initialiseLabelListFunctionality() {
 
 function createLabelElementMarkup(labelText, id) {
   return `
-  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
+  <div id="labelId${id}" ondblclick="editLabelBtnClick('editButton${id}')" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
     <button id="editButton${id}" class="MetroBtn dropbtn" onClick="editLabelBtnClick(id);">Edit</button>
     <div id="labelText${id}" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">

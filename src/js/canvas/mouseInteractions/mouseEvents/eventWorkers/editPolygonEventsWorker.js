@@ -76,6 +76,7 @@ function setPolygonNotEditableOnClick() {
 // after editing, maybe the object should remain in edit mode and the label selected (red)
 // maybe the dropdown shouldn't stop the editing
 // double click selects the label text for editing (triggers edit)
+// change cursor to be default when hover over label text in list
 
 // upon selecting-dragging a polygon does not remove the active label of the previous shape on list
 // whereas rectangle is immediate, only way this can be mediated is by removing rectangle controls
