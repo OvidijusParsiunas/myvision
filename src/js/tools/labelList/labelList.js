@@ -47,15 +47,15 @@ function initialiseLabelListFunctionality() {
 function createLabelElementMarkup(labelText, id) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
-    <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="display:inline">
+    <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
     </div>
-    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="display:inline">${labelText}</div>
-      <div class="dropdown-content labelDropdown${id}">
-        <a class="labelDropdownOption">Label 1</a>
-        <a class="labelDropdownOption">Label 2</a>
-        <a class="labelDropdownOption">Labe</a>
-      </div>
+    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="margin-left:12px; user-select: none">${labelText}</div>
+    <div class="dropdown-content labelDropdown${id}">
+      <a class="labelDropdownOption">Label 1</a>
+      <a class="labelDropdownOption">Label 2</a>
+      <a class="labelDropdownOption">Labe</a>
+    </div>
   </div>
   `;
 }
@@ -113,10 +113,9 @@ function setEndOfContenteditable(contentEditableElement) {
 
 function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
-  activeLabelTextElement.style.backgroundColor = 'white';
-  activeLabelId = id;
   activeLabelTextElement.contentEditable = true;
-  // element.focus();
+  activeLabelId = id;
+  activeLabelTextElement.style.backgroundColor = 'white';
   setEndOfContenteditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   activeDropdownElements[0].classList.toggle('show');
