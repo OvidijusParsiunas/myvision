@@ -92,7 +92,7 @@ function cleanPolygonPointsArray() {
 
 function removePolygonPoints() {
   if (getLastPolygonActionWasMoveState()) {
-    if (!getEditingLabelId() || getNewShapeSelectedViaLabelListState()) {
+    if (getEditingLabelId() === null || getNewShapeSelectedViaLabelListState()) {
       polygonPoints = removePolygonPointsImpl(canvas, polygonPoints);
     } else {
       preventNewPolygonInitialisation = true;

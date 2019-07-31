@@ -8,6 +8,10 @@
   padding-top: 20px;
 }
 
+#title:hover {
+  cursor: default;
+}
+
 #labelList button {
   display: block;
 }
@@ -42,6 +46,8 @@ a:hover {
 .show {display: block;}
 
 .labelText { white-space: pre-wrap; }
+
+.labelText:focus {outline:0;}
 
 .labelListObj {
   max-width: 100px;

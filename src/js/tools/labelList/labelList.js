@@ -46,13 +46,15 @@ function initialiseLabelListFunctionality() {
 
 function createLabelElementMarkup(labelText, id) {
   return `
-  <div id="labelId${id}" ondblclick="editLabelBtnClick('editButton${id}')" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
-    <button id="editButton${id}" class="MetroBtn dropbtn" onClick="editLabelBtnClick(id);">Edit</button>
-    <div id="labelText${id}" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)">${labelText}</div>
+  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
+    <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="display:inline">
+      <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
+    </div>
+    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="display:inline">${labelText}</div>
       <div class="dropdown-content labelDropdown${id}">
-        <a onClick="randomFunc()" class="labelDropdownOption">Label 1</a>
+        <a class="labelDropdownOption">Label 1</a>
         <a class="labelDropdownOption">Label 2</a>
-        <a class="labelDropdownOption">Label 3</a>
+        <a class="labelDropdownOption">Labe</a>
       </div>
   </div>
   `;
@@ -164,22 +166,23 @@ function initiateEditing(id) {
   activeLabelElementId = `labelId${id}`;
 }
 
-function parseLabelIdFromFromButtonId(id) {
-  const getSubstring = id.substring(10, id.length);
-  const parsedId = parseInt(getSubstring, 10);
-  return parsedId;
-}
-
-window.editLabelBtnClick = (buttonId) => {
-  const labelId = parseLabelIdFromFromButtonId(buttonId);
-  if (labelId !== activeLabelId) {
-    initiateEditing(labelId);
+function editLabel(id) {
+  if (id !== activeLabelId) {
+    initiateEditing(id);
   } else if (deselectedEditing) {
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
-    initiateEditing(labelId);
+    initiateEditing(id);
   }
+}
+
+window.labelDblClicked = (id) => {
+  initLabelEditing(id);
+};
+
+window.editLabelBtnClick = (id) => {
+  editLabel(id);
 };
 
 function removeLabelDropDownContent() {
@@ -199,22 +202,30 @@ function stopEditing() {
 }
 
 function editButtonDeselected() {
-  deselectedEditing = true;
   removeLabelDropDownContent();
+  deselectedEditing = true;
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
   setEditingLabelId(null);
-  deselectShape();
+}
+
+function refocusOnLabelListTextAfterDropdown() {
+  window.setTimeout(() => {
+    activeLabelTextElement.focus();
+    setEndOfContenteditable(activeLabelTextElement);
+  }, 0);
 }
 
 window.onmousedown = (event) => {
+  // should be is editing
   if (isLabelSelected) {
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.text;
       activeLabelTextElement.innerHTML = newText;
       changeObjectLabelText(activeLabelId, newText);
-      stopEditing();
-      deselectShape();
+      // fix here as after moving polygon, points stay
+      removeLabelDropDownContent();
+      refocusOnLabelListTextAfterDropdown();
     } else if (event.target.id === `labelText${activeLabelId}`) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {

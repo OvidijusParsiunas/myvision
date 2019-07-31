@@ -16,7 +16,7 @@ function removeHighlightOfListLabel() {
 function highlightLabelInTheList(id) {
   removeHighlightOfListLabel();
   [currentlyHighlightedElement] = labelListElement.getElementsByClassName(`label${id}`);
-  currentlyHighlightedElement.style.backgroundColor = 'grey';
+  currentlyHighlightedElement.style.backgroundColor = '#ededed';
 }
 
 export { setLabelListElementForHighlights, highlightLabelInTheList, removeHighlightOfListLabel };

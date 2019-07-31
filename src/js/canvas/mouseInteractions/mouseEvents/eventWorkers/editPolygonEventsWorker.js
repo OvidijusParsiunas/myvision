@@ -75,8 +75,11 @@ function setPolygonNotEditableOnClick() {
 
 // after editing, maybe the object should remain in edit mode and the label selected (red)
 // maybe the dropdown shouldn't stop the editing
-// double click selects the label text for editing (triggers edit)
-// change cursor to be default when hover over label text in list
+// change the length of labelText to be longer so it can be clicked easily
+// configure blue border around the button text
+// after moving polygon, hitting edit/remove then editing, the polygon points are refreshed
+// after moving polygon, click edit, unedit then edit again will refresh points
+// dropdown button beside the lalbel list text when editing?
 
 // upon selecting-dragging a polygon does not remove the active label of the previous shape on list
 // whereas rectangle is immediate, only way this can be mediated is by removing rectangle controls
