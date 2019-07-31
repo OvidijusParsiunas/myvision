@@ -50,7 +50,7 @@ function createLabelElementMarkup(labelText, id) {
     <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
     </div>
-    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="margin-left:12px; user-select: none">${labelText}</div>
+    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="margin-left:12px; user-select: none; border: 1px solid transparent; overflow: hidden; text-overflow: clip; white-space: nowrap;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}">
       <a class="labelDropdownOption">Label 1</a>
       <a class="labelDropdownOption">Label 2</a>
@@ -116,6 +116,7 @@ function initLabelEditing(id) {
   activeLabelTextElement.contentEditable = true;
   activeLabelId = id;
   activeLabelTextElement.style.backgroundColor = 'white';
+  activeLabelTextElement.style.border = '1px solid black';
   setEndOfContenteditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   activeDropdownElements[0].classList.toggle('show');
@@ -197,6 +198,7 @@ function stopEditing() {
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
+  activeLabelTextElement.style.borderColor = 'transparent';
   setEditingLabelId(null);
 }
 
@@ -205,6 +207,7 @@ function editButtonDeselected() {
   deselectedEditing = true;
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
+  activeLabelTextElement.style.borderColor = 'transparent';
   setEditingLabelId(null);
 }
 

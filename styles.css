@@ -16,6 +16,11 @@
   display: block;
 }
 
+/* #labelList {
+  overflow-x: auto;
+  width: 100px;
+} */
+
 .dropdown {
   position: relative;
   display: inline-block;

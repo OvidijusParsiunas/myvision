@@ -75,7 +75,6 @@ function setPolygonNotEditableOnClick() {
 
 // after editing, maybe the object should remain in edit mode and the label selected (red)
 // maybe the dropdown shouldn't stop the editing
-// change the length of labelText to be longer so it can be clicked easily
 // configure blue border around the button text
 // after moving polygon, hitting edit/remove then editing, the polygon points are refreshed
 // after moving polygon, click edit, unedit then edit again will refresh points
