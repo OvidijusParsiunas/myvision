@@ -7,7 +7,7 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
-import { setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState, getRemovingPointsAfterCancelDrawState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
 
 let canvas = null;
@@ -73,11 +73,13 @@ function setPolygonNotEditableOnClick() {
 // smart system where label would readjust upon mouse up if it's edges are outside of canvas
 // stop shapes from being able to move outside of canvas
 
+// investigate remain selected after dropdown click
 // after editing, maybe the object should remain in edit mode and the label selected (red)
 // maybe the dropdown shouldn't stop the editing
-// configure blue border around the button text
 // after moving polygon, hitting edit/remove then editing, the polygon points are refreshed
-// after moving polygon, click edit, unedit then edit again will refresh points
+
+// consider how would label overflow work when finished styling the full layout
+// as it should have the parent div scrollable and the dropdown scrollable
 // dropdown button beside the lalbel list text when editing?
 
 // upon selecting-dragging a polygon does not remove the active label of the previous shape on list
@@ -120,11 +122,14 @@ function polygonMouseDownEvents(event) {
   } else {
     newPolygonSelected = false;
   }
+  if ((newPolygonSelected || lastShapeSelectedIsBoundingBox)
+    && getRemovingPointsAfterCancelDrawState()) {
+    setRemovingPointsAfterCancelDrawState(false);
+  }
 }
 
 // look at this
 function polygonMouseUpEvents(event) {
-  setLastPolygonActionWasMoveState(false);
   if (event.target && event.target.shapeName === 'bndBox') {
     canvas.bringToFront(event.target);
     canvas.bringToFront(labelObject);
