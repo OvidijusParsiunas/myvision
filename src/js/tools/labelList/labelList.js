@@ -11,8 +11,7 @@ import {
 import {
   removeHighlightOfListLabel, setLabelListElementForHighlights, highlightLabelInTheList,
 } from './highlightLabelList';
-import { reset } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasStateAfterAddPoints';
-
+import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 
 let labelListElement = null;
 let isLabelSelected = false;
@@ -23,16 +22,18 @@ let deselectedEditing = false;
 let labelHasBeenDeselected = false;
 let activeShape = null;
 let activeLabelElementId = null;
+let tableElement = null;
 
 // insert logic to edit actual label in real-time
 
 function findLabelListElement() {
   labelListElement = document.getElementById('labelList');
+  tableElement = document.getElementById('tableList');
 }
 
 function initialiseLabelListFunctionality() {
   findLabelListElement();
-  setLabelListElementForHighlights(labelListElement);
+  setLabelListElementForHighlights(tableElement);
 }
 
 // function initialiseNewElement() {
@@ -52,12 +53,15 @@ function initialiseLabelListFunctionality() {
 function createLabelElementMarkup(labelText, id) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
+    <div id="sampleButton" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
+      <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
+    </div>
     <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
     </div>
-    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="margin-left:12px; user-select: none; border: 1px solid transparent; overflow: hidden; text-overflow: clip; white-space: nowrap;">${labelText}</div>
-    <div class="dropdown-content labelDropdown${id}">
-      <a class="labelDropdownOption">Label 1</a>
+    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
+      <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
       <a class="labelDropdownOption">Label 2</a>
       <a class="labelDropdownOption">Labe</a>
     </div>
@@ -120,8 +124,6 @@ function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelTextElement.contentEditable = true;
   activeLabelId = id;
-  activeLabelTextElement.style.backgroundColor = 'white';
-  activeLabelTextElement.style.border = '1px solid black';
   setEndOfContenteditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   activeDropdownElements[0].classList.toggle('show');
@@ -165,7 +167,7 @@ function initiateEditing(id) {
   setEditingLabelId(id);
   if (getAddingPolygonPointsState()) {
     // check if selected a different polygon to what was added, create state?
-    reset(id);
+    resetCanvasToDefaultAfterAddPoints(id);
   } else {
     window.cancel();
   }
@@ -192,7 +194,10 @@ window.labelDblClicked = (id) => {
 };
 
 window.editLabelBtnClick = (id) => {
+  const labelButton = document.getElementById('sampleButton');
+  labelButton.style.display = 'none';
   editLabel(id);
+  activeLabelTextElement.style.marginRight = '14px';
 };
 
 function removeLabelDropDownContent() {
@@ -246,9 +251,6 @@ window.onmousedown = (event) => {
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
       stopEditing();
-    } else {
-      stopEditing();
-      deselectShape();
     }
   }
 };
@@ -268,7 +270,9 @@ function addLabelToList(labelText, id) {
   const labelElement = initialiseParentElement();
   labelElement.id = id;
   labelElement.innerHTML = createLabelElementMarkup(labelText, id);
-  labelListElement.appendChild(labelElement);
+  const newRow = tableElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
 }
 
 function removeLabelFromList(id) {

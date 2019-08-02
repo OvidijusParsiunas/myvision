@@ -14,15 +14,15 @@ function discardAddPointsEvents(id) {
   setDefaultState(true);
 }
 
-function reset(id) {
+function resetCanvasToDefaultAfterAddPoints(id) {
   resetAddPoints();
   setAddingPolygonPointsState(false);
   purgeCanvasMouseEvents(canvas);
   discardAddPointsEvents(id);
 }
 
-function setCanvas(canvasObj) {
+function assignCanvasForResettingToDefaultAfterAddPoints(canvasObj) {
   canvas = canvasObj;
 }
 
-export { reset, setCanvas };
+export { resetCanvasToDefaultAfterAddPoints, assignCanvasForResettingToDefaultAfterAddPoints };

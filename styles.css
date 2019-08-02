@@ -1,7 +1,7 @@
 #canvas-wrapper {
   position: absolute;
   top: 50px;
-  left: 100px;
+  left: 150px;
 }
 
 #title {
@@ -16,10 +16,11 @@
   display: block;
 }
 
-/* #labelList {
+#labelList {
   overflow-x: auto;
-  width: 100px;
-} */
+  width: 150px;
+  scrollbar-width: thin;
+}
 
 .dropdown {
   position: relative;
@@ -55,5 +56,27 @@ a:hover {
 .labelText:focus {outline:0;}
 
 .labelListObj {
-  max-width: 100px;
+}
+
+#tableList {
+  display: block;
+  overflow-x: auto;
+  width: 150px;
+}
+
+table {
+  border-spacing: 0;
+}
+
+td {
+  padding: 0;
+  width: inherit;
+}
+
+tr {
+  width: inherit;
+}
+
+tbody {
+  width: inherit;
 }
