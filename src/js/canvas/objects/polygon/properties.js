@@ -176,8 +176,9 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     lockMovementY: true,
   };
   polygonProperties.removablePoint = {
-    fill: 'red',
     radius: 4,
+    fill: 'red',
+    selectable: true,
   };
   polygonProperties.defaultPoint = {
     fill: 'blue',
