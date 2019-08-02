@@ -13,7 +13,7 @@ import {
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
 
-function interruptCanvasEventsNoPolygonPointRemoval() {
+function interruptCanvasEventsWithoutRemovingExistingPoints() {
   removeHighlightOfListLabel();
   resetNewPolygonData();
   clearBoundingBoxData();
@@ -40,12 +40,12 @@ function interruptCanvasEventsNoPolygonPointRemoval() {
 function interruptAllCanvasEvents() {
   removePolygonPoints();
   deselectBoundingBox();
-  interruptCanvasEventsNoPolygonPointRemoval();
+  interruptCanvasEventsWithoutRemovingExistingPoints();
 }
 
 function interruptCanvasToStartAddPoints() {
   if (!getAddingPolygonPointsState()) {
-    interruptCanvasEventsNoPolygonPointRemoval();
+    interruptCanvasEventsWithoutRemovingExistingPoints();
   }
 }
 

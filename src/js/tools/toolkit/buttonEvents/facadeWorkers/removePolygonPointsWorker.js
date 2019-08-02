@@ -17,8 +17,7 @@ import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvent
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import {
-  resetAddPoints, isAddingPointsToPolygon,
-  cleanPolygonPointsArray, removePolygonPoints,
+  resetAddPoints, cleanPolygonPointsArray, removePolygonPoints,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import { removeHighlightOfListLabel } from '../../../labelList/highlightLabelList';
 
@@ -31,13 +30,13 @@ function setRemovePointsCursorMode(canvas) {
   }
 }
 
-function assignRemovePointsEvents(canvas, interruptedAddPoints) {
+function assignRemovePointsEvents(canvas) {
   const isDrawingPolygon = isPolygonDrawingInProgress();
   if (isDrawingPolygon) {
     removeInvisiblePoint();
     assignRemovePointsOnDrawPolygonEvents(canvas);
   } else if (!isDrawingPolygon) {
-    assignRemovePointsOnExistingPolygonEvents(canvas, interruptedAddPoints);
+    assignRemovePointsOnExistingPolygonEvents(canvas);
   }
 }
 
@@ -69,22 +68,12 @@ function initiateRemovePolygonPointsEvents(canvas) {
   canvas.discardActiveObject();
   removeHighlightOfListLabel();
   if (!getRemovingPolygonPointsState()) {
-    let assignedEvents = false;
     if (getAddingPolygonPointsState()) {
-      if (isAddingPointsToPolygon()) {
-        resetAddPoints();
-        purgeCanvasMouseEvents(canvas);
-        assignRemovePointsEvents(canvas, true);
-        assignedEvents = true;
-      } else {
-        resetAddPoints();
-      }
       setAddingPolygonPointsState(false);
+      resetAddPoints();
     }
-    if (!assignedEvents) {
-      purgeCanvasMouseEvents(canvas);
-      assignRemovePointsEvents(canvas);
-    }
+    purgeCanvasMouseEvents(canvas);
+    assignRemovePointsEvents(canvas);
     setRemovePointsCursorMode(canvas);
     if (getReadyToDrawShapeState()) {
       setCancelledReadyToDrawState(true);

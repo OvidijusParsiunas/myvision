@@ -7,7 +7,10 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
-import { setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState, getRemovingPointsAfterCancelDrawState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import {
+  setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
+  getRemovingPointsAfterCancelDrawState,
+} from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
 
 let canvas = null;
@@ -203,6 +206,9 @@ function removeEditedPolygonId() {
 
 function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   canvas = canvasObj;
+  // selected add then remove -> remve will null it
+  // selected remove then add -> add will null it
+  // selected
   if (polygonObjId !== 'undefined' && polygonObjId !== null) {
     selectedShapeId = polygonObjId;
     labelObject = getLabelById(selectedShapeId);

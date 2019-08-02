@@ -1,6 +1,9 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
 import { highlightShapeFill, defaultShapeFill, getShapeById } from '../../canvas/objects/allShapes/allShapes';
-import { setEditingLabelId, setNewShapeSelectedViaLabelListState, getDefaultState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import {
+  setEditingLabelId, setNewShapeSelectedViaLabelListState,
+  getDefaultState, getAddingPolygonPointsState,
+} from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
@@ -8,6 +11,8 @@ import {
 import {
   removeHighlightOfListLabel, setLabelListElementForHighlights, highlightLabelInTheList,
 } from './highlightLabelList';
+import { reset } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasStateAfterAddPoints';
+
 
 let labelListElement = null;
 let isLabelSelected = false;
@@ -158,7 +163,12 @@ function initiateEditing(id) {
     setNewShapeSelectedViaLabelListState(false);
   }
   setEditingLabelId(id);
-  window.cancel();
+  if (getAddingPolygonPointsState()) {
+    // check if selected a different polygon to what was added, create state?
+    reset(id);
+  } else {
+    window.cancel();
+  }
   activeShape = getShapeById(id);
   selectShape(id);
   initLabelEditing(id);

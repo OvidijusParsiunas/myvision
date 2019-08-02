@@ -4,8 +4,8 @@ import {
   setRemovablePointsEventsCanvas,
 } from '../eventWorkers/removePointsEventsWorker';
 
-function assignRemovePointsOnExistingPolygonEvents(canvas, interruptedAddPoints) {
-  setRemovablePointsEventsCanvas(canvas, interruptedAddPoints);
+function assignRemovePointsOnExistingPolygonEvents(canvas) {
+  setRemovablePointsEventsCanvas(canvas);
 
   canvas.on('mouse:down', (e) => {
     pointMouseDownEvents(e);

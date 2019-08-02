@@ -5,6 +5,7 @@ import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonEve
 import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas } from './utils/fabricUtils';
 import { assignCanvasForLabelManipulation } from './objects/label/label';
 import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allShapes';
+import { setCanvas } from './mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasStateAfterAddPoints';
 
 function constructCanvas() {
   const canvas = createNewCanvas();
@@ -15,6 +16,7 @@ function constructCanvas() {
   assignResetCanvasEventsFuncToMouseEvents(canvas);
   assignCanvasForShapeFillManipulation(canvas);
   assignCanvasForLabelManipulation(canvas);
+  setCanvas(canvas);
 }
 
 export { constructCanvas as default };
