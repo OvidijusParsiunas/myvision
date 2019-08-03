@@ -51,7 +51,7 @@ a:hover {
 
 .show {display: block;}
 
-.labelText { white-space: pre-wrap; }
+.labelText { white-space: pre; }
 
 .labelText:focus {outline:0;}
 

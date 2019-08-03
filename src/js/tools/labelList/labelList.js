@@ -24,7 +24,9 @@ let activeShape = null;
 let activeLabelElementId = null;
 let tableElement = null;
 
-// insert logic to edit actual label in real-time
+// polygon movable objects bug where after selecting to draw new polygon, clicking movable objects
+// then default, the polygons remain movable
+// background of the label in the list should be removed when clicking edit button
 
 function findLabelListElement() {
   labelListElement = document.getElementById('labelList');
@@ -53,8 +55,8 @@ function initialiseLabelListFunctionality() {
 function createLabelElementMarkup(labelText, id) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
-    <div id="sampleButton" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
-      <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
+    <div id="visibilityButton${id}" style="float:left; user-select: none; padding-right: 5px">
+      <img src="visibility-button.svg" style="width:10px" alt="visibility">
     </div>
     <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
@@ -99,7 +101,18 @@ window.defaultShapeFill = (id) => {
 // <a onmouseover="onEnter(this)" onmouseleave="onLeave(this)"
 // class="labelDropdownOption">Label 1</a>
 
-function setEndOfContenteditable(contentEditableElement) {
+function scrollHorizontallyToAppropriateWidth(contentEditableElement) {
+  let myCanvas = document.createElement('canvas');
+  const context = myCanvas.getContext('2d');
+  context.font = '16pt Times New Roman';
+  const metrics = context.measureText(contentEditableElement.innerHTML);
+  if (metrics.width > 150) {
+    tableElement.scrollLeft = metrics.width - 150;
+  }
+  myCanvas = null;
+}
+
+function setEndOfContentEditable(contentEditableElement) {
   let range;
   if (document.createRange) { // Firefox, Chrome, Opera, Safari, IE 9+
     range = document.createRange();
@@ -118,13 +131,17 @@ function setEndOfContenteditable(contentEditableElement) {
     // make it the visible selection
     range.select();
   }
+  scrollHorizontallyToAppropriateWidth(contentEditableElement);
 }
 
 function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelTextElement.contentEditable = true;
+  activeLabelTextElement.style.backgroundColor = 'white';
+  activeLabelTextElement.style.paddingRight = '18px';
+  activeLabelTextElement.style.marginRight = '';
   activeLabelId = id;
-  setEndOfContenteditable(activeLabelTextElement);
+  setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   activeDropdownElements[0].classList.toggle('show');
   isLabelSelected = true;
@@ -194,10 +211,13 @@ window.labelDblClicked = (id) => {
 };
 
 window.editLabelBtnClick = (id) => {
-  const labelButton = document.getElementById('sampleButton');
-  labelButton.style.display = 'none';
+  // remove visibility button when editing
+  // const visibilityButton = document.getElementById(`visibilityButton${id}`);
+  // visibilityButton.style.display = 'none';
+  // const labelButton = document.getElementById(`editButton${id}`);
+  // labelButton.style.marginLeft = '4px';
+  // labelButton.style.marginRight = '2px'
   editLabel(id);
-  activeLabelTextElement.style.marginRight = '14px';
 };
 
 function removeLabelDropDownContent() {
@@ -214,6 +234,8 @@ function stopEditing() {
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
   activeLabelTextElement.style.borderColor = 'transparent';
+  activeLabelTextElement.style.paddingRight = '';
+  activeLabelTextElement.style.marginRight = '28px';
   setEditingLabelId(null);
 }
 
@@ -223,13 +245,15 @@ function editButtonDeselected() {
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
   activeLabelTextElement.style.borderColor = 'transparent';
+  activeLabelTextElement.style.paddingRight = '';
+  activeLabelTextElement.style.marginRight = '28px';
   setEditingLabelId(null);
 }
 
 function refocusOnLabelListTextAfterDropdown() {
   window.setTimeout(() => {
     activeLabelTextElement.focus();
-    setEndOfContenteditable(activeLabelTextElement);
+    setEndOfContentEditable(activeLabelTextElement);
   }, 0);
 }
 
@@ -251,6 +275,9 @@ window.onmousedown = (event) => {
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
       stopEditing();
+    } else {
+      stopEditing();
+      deselectShape();
     }
   }
 };
@@ -259,7 +286,7 @@ window.onmousedown = (event) => {
 //    window.setTimeout(function ()
 // {
 //   activeLabelTextElement.focus();
-//   setEndOfContenteditable(activeLabelTextElement);
+//   setEndOfContentEditable(activeLabelTextElement);
 // }, 0);
 
 function initialiseParentElement() {
