@@ -59,7 +59,7 @@ function createLabelElementMarkup(labelText, id) {
     <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
     </div>
-    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; margin-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
       <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
       <a class="labelDropdownOption">Label 2</a>
