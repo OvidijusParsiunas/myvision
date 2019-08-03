@@ -27,6 +27,9 @@ let tableElement = null;
 // polygon movable objects bug where after selecting to draw new polygon, clicking movable objects
 // then default, the polygons remain movable
 // background of the label in the list should be removed when clicking edit button
+// finish editing funcitonality as the isLabelSelected is false upon clicking dropdown
+// dropdown button
+// upon inserting new shape, scroll to it's label length name
 
 function findLabelListElement() {
   labelListElement = document.getElementById('labelList');
@@ -70,6 +73,15 @@ function createLabelElementMarkup(labelText, id) {
   </div>
   `;
 }
+
+// These will need to replace edit button to enable dropdown
+// <div id="visibilityButton${id}" style="float:left; user-select: none; padding-right: 5px">
+//   <img src="drop-down-arrow.svg" style="width:12px" alt="visibility">
+// </div>
+//
+// <div id="visibilityButton${id}" style="float:left; user-select: none; padding-right: 5px">
+//   <img src="down-arrow.svg" style="width:12px; margin-top: 4px" alt="visibility">
+// </div>
 
 window.changeObjectLabelText = (innerHTML) => {
   changeObjectLabelText(activeLabelId, innerHTML);
@@ -140,8 +152,9 @@ function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelTextElement.contentEditable = true;
   activeLabelTextElement.style.backgroundColor = 'white';
-  activeLabelTextElement.style.paddingRight = '18px';
+  activeLabelTextElement.style.paddingRight = '32px';
   activeLabelTextElement.style.marginRight = '';
+  activeLabelTextElement.style.borderColor = '#a39f9e';
   activeLabelId = id;
   setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
