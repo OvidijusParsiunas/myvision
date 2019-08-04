@@ -65,7 +65,7 @@ function createLabelElementMarkup(labelText, id) {
     <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
     </div>
-    <div id="labelText${id}" onkeydown="labelTextKeyDown(event)"  ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; margin-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" onkeydown="labelTextKeyDown(event)"  ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; padding-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
       <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
       <a class="labelDropdownOption">Label 2</a>
@@ -144,9 +144,8 @@ function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelTextElement.contentEditable = true;
   activeLabelTextElement.style.backgroundColor = 'white';
-  activeLabelTextElement.style.paddingRight = '32px';
-  activeLabelTextElement.style.marginRight = '';
   activeLabelTextElement.style.borderColor = '#a39f9e';
+  // give space for the texxt from the left border when editing
   activeLabelTextElement.style.paddingLeft = '2px';
   activeEditLabelButton = document.getElementById(`editButton${id}`);
   activeEditLabelButton.style.paddingRight = '3px';
@@ -244,12 +243,8 @@ function stopEditing() {
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
   activeLabelTextElement.style.borderColor = 'transparent';
-  activeLabelTextElement.style.paddingRight = '';
   activeLabelTextElement.style.paddingLeft = '';
   activeEditLabelButton.style.paddingRight = '5px';
-  if (activeLabelTextElement.scrollWidth > 122) {
-    activeLabelTextElement.style.marginRight = '28px';
-  }
   setEditingLabelId(null);
 }
 
@@ -259,12 +254,8 @@ function editButtonDeselected() {
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
   activeLabelTextElement.style.borderColor = 'transparent';
-  activeLabelTextElement.style.paddingRight = '';
   activeLabelTextElement.style.paddingLeft = '';
   activeEditLabelButton.style.paddingRight = '5px';
-  if (activeLabelTextElement.scrollWidth > 125) {
-    activeLabelTextElement.style.marginRight = '28px';
-  }
   setEditingLabelId(null);
 }
 
