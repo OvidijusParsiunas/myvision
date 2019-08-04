@@ -29,7 +29,6 @@ let tableElement = null;
 // background of the label in the list should be removed when clicking edit button
 // finish editing funcitonality as the isLabelSelected is false upon clicking dropdown
 // dropdown button
-// upon inserting new shape, scroll to it's
 
 function findLabelListElement() {
   tableElement = document.getElementById('tableList');
@@ -66,8 +65,8 @@ function createLabelElementMarkup(labelText, id) {
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)"  ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; padding-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
       <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
-      <a class="labelDropdownOption">Label 2</a>
-      <a class="labelDropdownOption">Labe</a>
+      <a class="labelDropdownOption">ggggggggggggggg</a>
+      <a class="labelDropdownOption">wwwwwwwwww</a>
     </div>
   </div>
   `;
@@ -108,7 +107,7 @@ function scrollHorizontallyToAppropriateWidth(contentEditableElement) {
   const context = myCanvas.getContext('2d');
   context.font = '16pt Times New Roman';
   const metrics = context.measureText(contentEditableElement.innerHTML);
-  if (metrics.width > 150) {
+  if (metrics.width > 160) {
     tableElement.scrollLeft = metrics.width - 150;
   } else {
     tableElement.scrollLeft = 0;
@@ -280,6 +279,15 @@ window.onmousedown = (event) => {
       // fix here as after moving polygon, points stay
       removeLabelDropDownContent();
       stopEditing();
+      const myCanvas = document.createElement('canvas');
+      const context = myCanvas.getContext('2d');
+      context.font = '16pt Times New Roman';
+      const metrics = context.measureText(newText);
+      if (metrics.width > 160) {
+        tableElement.scrollLeft = metrics.width - 160;
+      } else {
+        tableElement.scrollLeft = 0;
+      }
     } else if (event.target.id === `labelText${activeLabelId}`) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
@@ -313,12 +321,14 @@ function addLabelToList(labelText, id) {
   const newRow = tableElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
+  // scroll to left on new shape insert in order to see available funcitonality
+  tableElement.scrollLeft = 0;
 }
 
 function removeLabelFromList(id) {
   let index = 0;
   const tableList = tableElement.childNodes[1].childNodes;
-  while (index !== tableElement.childNodes.length - 1) {
+  while (index !== tableList.length) {
     if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
       tableList[index].remove();
       break;
