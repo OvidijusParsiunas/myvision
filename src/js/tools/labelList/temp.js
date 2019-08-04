@@ -1,3 +1,6 @@
+// THE MAIN UX GOES DOWN TO THE FACT THAT WHETHER CLICK ON DROPDOWN LIST SHOULD PERSIST EDITING
+// IF NOT, THEN NO POINT FOR INTRODUCTION OF DOWN ARROW, HOWEVER IF CONTINUING EDING THEN HAVE IT
+
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
 import { highlightShapeFill, defaultShapeFill, getShapeById } from '../../canvas/objects/allShapes/allShapes';
 import {
@@ -22,7 +25,6 @@ let deselectedEditing = false;
 let labelHasBeenDeselected = false;
 let activeShape = null;
 let activeLabelElementId = null;
-let activeEditLabelButton = null;
 let tableElement = null;
 
 // polygon movable objects bug where after selecting to draw new polygon, clicking movable objects
@@ -30,7 +32,7 @@ let tableElement = null;
 // background of the label in the list should be removed when clicking edit button
 // finish editing funcitonality as the isLabelSelected is false upon clicking dropdown
 // dropdown button
-// upon inserting new shape, scroll to it's
+// upon inserting new shape, scroll to it's label length name
 
 function findLabelListElement() {
   labelListElement = document.getElementById('labelList');
@@ -65,6 +67,9 @@ function createLabelElementMarkup(labelText, id) {
     <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
     </div>
+    <div id="dropdownButton${id}" style="float:left; user-select: none; padding-right: 5px; display: none">
+      <img src="down-arrow.svg" style="width:12px; margin-top: 4px" alt="visibility">
+    </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)"  ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; margin-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
       <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
@@ -74,6 +79,15 @@ function createLabelElementMarkup(labelText, id) {
   </div>
   `;
 }
+
+// These will need to replace edit button to enable dropdown
+// <div id="visibilityButton${id}" style="float:left; user-select: none; padding-right: 5px">
+//   <img src="drop-down-arrow.svg" style="width:12px" alt="visibility">
+// </div>
+//
+// <div id="visibilityButton${id}" style="float:left; user-select: none; padding-right: 5px">
+//   <img src="down-arrow.svg" style="width:12px; margin-top: 4px" alt="visibility">
+// </div>
 
 window.changeObjectLabelText = (innerHTML) => {
   changeObjectLabelText(activeLabelId, innerHTML);
@@ -147,9 +161,6 @@ function initLabelEditing(id) {
   activeLabelTextElement.style.paddingRight = '32px';
   activeLabelTextElement.style.marginRight = '';
   activeLabelTextElement.style.borderColor = '#a39f9e';
-  activeLabelTextElement.style.paddingLeft = '2px';
-  activeEditLabelButton = document.getElementById(`editButton${id}`);
-  activeEditLabelButton.style.paddingRight = '3px';
   activeLabelId = id;
   setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
@@ -222,8 +233,10 @@ window.labelDblClicked = (id) => {
 
 window.editLabelBtnClick = (id) => {
   // remove visibility button when editing
-  // const visibilityButton = document.getElementById(`visibilityButton${id}`);
-  // visibilityButton.style.display = 'none';
+  const visibilityButton = document.getElementById(`visibilityButton${id}`);
+  visibilityButton.style.display = 'none';
+  const labelButton = document.getElementById(`dropdownButton${id}`);
+  labelButton.style.display = 'block';
   // const labelButton = document.getElementById(`editButton${id}`);
   // labelButton.style.marginLeft = '4px';
   // labelButton.style.marginRight = '2px'
@@ -245,11 +258,7 @@ function stopEditing() {
   activeLabelTextElement.style.backgroundColor = null;
   activeLabelTextElement.style.borderColor = 'transparent';
   activeLabelTextElement.style.paddingRight = '';
-  activeLabelTextElement.style.paddingLeft = '';
-  activeEditLabelButton.style.paddingRight = '5px';
-  if (activeLabelTextElement.scrollWidth > 122) {
-    activeLabelTextElement.style.marginRight = '28px';
-  }
+  activeLabelTextElement.style.marginRight = '28px';
   setEditingLabelId(null);
 }
 
@@ -260,11 +269,7 @@ function editButtonDeselected() {
   activeLabelTextElement.style.backgroundColor = null;
   activeLabelTextElement.style.borderColor = 'transparent';
   activeLabelTextElement.style.paddingRight = '';
-  activeLabelTextElement.style.paddingLeft = '';
-  activeEditLabelButton.style.paddingRight = '5px';
-  if (activeLabelTextElement.scrollWidth > 125) {
-    activeLabelTextElement.style.marginRight = '28px';
-  }
+  activeLabelTextElement.style.marginRight = '28px';
   setEditingLabelId(null);
 }
 
@@ -290,7 +295,7 @@ window.onmousedown = (event) => {
       changeObjectLabelText(activeLabelId, newText);
       // fix here as after moving polygon, points stay
       removeLabelDropDownContent();
-      stopEditing();
+      refocusOnLabelListTextAfterDropdown();
     } else if (event.target.id === `labelText${activeLabelId}`) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
