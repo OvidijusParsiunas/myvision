@@ -13,7 +13,6 @@ import {
 } from './highlightLabelList';
 import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 
-let labelListElement = null;
 let isLabelSelected = false;
 let activeDropdownElements = null;
 let activeLabelTextElement = null;
@@ -33,7 +32,6 @@ let tableElement = null;
 // upon inserting new shape, scroll to it's
 
 function findLabelListElement() {
-  labelListElement = document.getElementById('labelList');
   tableElement = document.getElementById('tableList');
 }
 
@@ -249,8 +247,8 @@ function stopEditing() {
 }
 
 function editButtonDeselected() {
-  removeLabelDropDownContent();
   deselectedEditing = true;
+  removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
   activeLabelTextElement.style.borderColor = 'transparent';
@@ -319,13 +317,15 @@ function addLabelToList(labelText, id) {
 
 function removeLabelFromList(id) {
   let index = 0;
-  while (index !== labelListElement.childNodes.length - 1) {
-    if (parseInt(labelListElement.childNodes[index + 1].id, 10) === id) {
-      labelListElement.childNodes[index + 1].remove();
+  const tableList = tableElement.childNodes[1].childNodes;
+  while (index !== tableElement.childNodes.length - 1) {
+    if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
+      tableList[index].remove();
       break;
     }
     index += 1;
   }
+  // tableElement.deleteRow(0);
 }
 
 export { initialiseLabelListFunctionality, addLabelToList, removeLabelFromList };
