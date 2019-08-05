@@ -63,7 +63,7 @@ function createLabelElementMarkup(labelText, id) {
       <img src="edit.svg" style="width:9px" alt="edit">
       <img src="editHighlight.svg" style="width:9px; display: none" alt="edit">
     </div>
-    <div id="labelText${id}" onkeydown="labelTextKeyDown(event)"  ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; padding-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
       <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
       <a class="labelDropdownOption">ggggggggggggggg</a>
@@ -83,8 +83,28 @@ window.mouseLeaveOnLabelEdit = (elements) => {
   elements.childNodes[3].style.display = 'none';
 };
 
-window.changeObjectLabelText = (innerHTML) => {
-  changeObjectLabelText(activeLabelId, innerHTML);
+function preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent) {
+  let finalText = '';
+  if (inputEvent.inputType === 'insertFromPaste') {
+    const noReturnCharactersText = element.innerHTML.replace(/(\r\n|\n|\r)/gm, '');
+    element.innerHTML = noReturnCharactersText;
+    finalText = noReturnCharactersText;
+  } else {
+    const temp = element.innerHTML;
+    element.innerHTML = '';
+    element.innerHTML = temp;
+    finalText = temp;
+  }
+  setEndOfContentEditable(activeLabelTextElement);
+  changeObjectLabelText(activeLabelId, finalText);
+}
+
+window.changeObjectLabelText = (innerHTML, element, inputEvent) => {
+  if (element.offsetHeight > 30) {
+    preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent);
+  } else {
+    changeObjectLabelText(activeLabelId, innerHTML);
+  }
 };
 
 window.highlightShapeFill = (id) => {
