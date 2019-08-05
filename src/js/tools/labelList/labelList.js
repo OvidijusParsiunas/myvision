@@ -27,8 +27,7 @@ let tableElement = null;
 // polygon movable objects bug where after selecting to draw new polygon, clicking movable objects
 // then default, the polygons remain movable
 // background of the label in the list should be removed when clicking edit button
-// finish editing funcitonality as the isLabelSelected is false upon clicking dropdown
-// dropdown button
+// prevent bug where upon typing then dragging text somewhere else creates a new line
 
 function findLabelListElement() {
   tableElement = document.getElementById('tableList');
@@ -56,11 +55,13 @@ function initialiseLabelListFunctionality() {
 function createLabelElementMarkup(labelText, id) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
-    <div id="visibilityButton${id}" style="float:left; user-select: none; padding-right: 5px">
+    <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
+      <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
     </div>
-    <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
-      <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
+    <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
+      <img src="edit.svg" style="width:9px" alt="edit">
+      <img src="editHighlight.svg" style="width:9px; display: none" alt="edit">
     </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)"  ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML)" style="user-select: none; padding-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
@@ -71,6 +72,16 @@ function createLabelElementMarkup(labelText, id) {
   </div>
   `;
 }
+
+window.mouseEnterOnLabelEdit = (elements) => {
+  elements.childNodes[1].style.display = 'none';
+  elements.childNodes[3].style.display = '';
+};
+
+window.mouseLeaveOnLabelEdit = (elements) => {
+  elements.childNodes[1].style.display = '';
+  elements.childNodes[3].style.display = 'none';
+};
 
 window.changeObjectLabelText = (innerHTML) => {
   changeObjectLabelText(activeLabelId, innerHTML);
@@ -102,11 +113,11 @@ window.defaultShapeFill = (id) => {
 // <a onmouseover="onEnter(this)" onmouseleave="onLeave(this)"
 // class="labelDropdownOption">Label 1</a>
 
-function scrollHorizontallyToAppropriateWidth(contentEditableElement) {
+function scrollHorizontallyToAppropriateWidth(text) {
   let myCanvas = document.createElement('canvas');
   const context = myCanvas.getContext('2d');
   context.font = '16pt Times New Roman';
-  const metrics = context.measureText(contentEditableElement.innerHTML);
+  const metrics = context.measureText(text);
   if (metrics.width > 160) {
     tableElement.scrollLeft = metrics.width - 150;
   } else {
@@ -134,7 +145,7 @@ function setEndOfContentEditable(contentEditableElement) {
     // make it the visible selection
     range.select();
   }
-  scrollHorizontallyToAppropriateWidth(contentEditableElement);
+  scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML);
 }
 
 function initLabelEditing(id) {
@@ -233,9 +244,8 @@ function removeLabelDropDownContent() {
   isLabelSelected = false;
 }
 
-function stopEditing() {
-  activeShape = false;
-  deselectedEditing = false;
+function resetLabel() {
+  deselectedEditing = true;
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
@@ -245,15 +255,9 @@ function stopEditing() {
   setEditingLabelId(null);
 }
 
-function editButtonDeselected() {
-  deselectedEditing = true;
-  removeLabelDropDownContent();
-  activeLabelTextElement.contentEditable = false;
-  activeLabelTextElement.style.backgroundColor = null;
-  activeLabelTextElement.style.borderColor = 'transparent';
-  activeLabelTextElement.style.paddingLeft = '';
-  activeEditLabelButton.style.paddingRight = '5px';
-  setEditingLabelId(null);
+function stopEditing() {
+  activeShape = false;
+  resetLabel();
 }
 
 function refocusOnLabelListTextAfterDropdown() {
@@ -279,20 +283,12 @@ window.onmousedown = (event) => {
       // fix here as after moving polygon, points stay
       removeLabelDropDownContent();
       stopEditing();
-      const myCanvas = document.createElement('canvas');
-      const context = myCanvas.getContext('2d');
-      context.font = '16pt Times New Roman';
-      const metrics = context.measureText(newText);
-      if (metrics.width > 160) {
-        tableElement.scrollLeft = metrics.width - 160;
-      } else {
-        tableElement.scrollLeft = 0;
-      }
+      scrollHorizontallyToAppropriateWidth(newText);
     } else if (event.target.id === `labelText${activeLabelId}`) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
-        editButtonDeselected();
+        resetLabel();
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
       stopEditing();
