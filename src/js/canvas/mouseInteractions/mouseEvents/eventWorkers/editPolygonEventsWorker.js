@@ -76,6 +76,8 @@ function setPolygonNotEditableOnClick() {
 // smart system where label would readjust upon mouse up if it's edges are outside of canvas
 // stop shapes from being able to move outside of canvas
 
+// validation for label (not empty string etc.)
+
 // investigate remain selected after dropdown click
 // after editing, maybe the object should remain in edit mode and the label selected (red)
 // maybe the dropdown shouldn't stop the editing
@@ -86,13 +88,15 @@ function setPolygonNotEditableOnClick() {
 // dropdown button beside the lalbel list text when editing?
 
 // upon selecting-dragging a polygon does not remove the active label of the previous shape on list
-// whereas rectangle is immediate, only way this can be mediated is by removing rectangle controls
+// whereas rectangle is immediate, only way this can be mitigated is by removing rectangle controls
 // on moving it in order to have delay the label change too, or you can display polygon points
 // on mouse down click and upon moving the polygon
 
 // use different colours for different labels
 // investigate the potential of having a rightclick menu to manipulate shapes
 // in add or remove points modes, send all objects to the front
+
+// think about adding a screen wide scrosshair and show coordinates to the user
 
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {

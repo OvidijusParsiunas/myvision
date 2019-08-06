@@ -27,7 +27,9 @@ let tableElement = null;
 // polygon movable objects bug where after selecting to draw new polygon, clicking movable objects
 // then default, the polygons remain movable
 // background of the label in the list should be removed when clicking edit button
-// prevent bug where upon typing then dragging text somewhere else creates a new line
+// edit label once, then hit edit button - which does not work
+
+// when assigning a label for a shape, make sure there are no return breaks or spaces on the edges
 
 function findLabelListElement() {
   tableElement = document.getElementById('tableList');
@@ -257,6 +259,12 @@ window.editLabelBtnClick = (id) => {
   editLabel(id);
 };
 
+function trimLabelText() {
+  const trimmedText = activeLabelTextElement.innerHTML.trim();
+  activeLabelTextElement.innerHTML = trimmedText;
+  changeObjectLabelText(activeLabelId, trimmedText);
+}
+
 function removeLabelDropDownContent() {
   if (activeDropdownElements[0].classList.contains('show')) {
     activeDropdownElements[0].classList.remove('show');
@@ -264,8 +272,9 @@ function removeLabelDropDownContent() {
   isLabelSelected = false;
 }
 
-function resetLabel() {
+function resetLabelElement() {
   deselectedEditing = true;
+  trimLabelText();
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
@@ -277,7 +286,7 @@ function resetLabel() {
 
 function stopEditing() {
   activeShape = false;
-  resetLabel();
+  resetLabelElement();
 }
 
 function refocusOnLabelListTextAfterDropdown() {
@@ -308,7 +317,7 @@ window.onmousedown = (event) => {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
-        resetLabel();
+        resetLabelElement();
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
       stopEditing();
