@@ -29,6 +29,7 @@ let tableElement = null;
 // background of the label in the list should be removed when clicking edit button
 // edit label once, then hit edit button - which does not work
 
+// New shape popup
 // when assigning a label for a shape, make sure there are no return breaks or spaces on the edges
 
 function findLabelListElement() {
