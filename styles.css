@@ -62,8 +62,8 @@ a:hover {
   display: block;
   overflow-x: auto;
   width: 150px;
-  height: 40vh; 
   overflow-y: auto;
+  height: 40vh; 
 }
 
 table {

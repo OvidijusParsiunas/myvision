@@ -63,8 +63,8 @@ function createLabelElementMarkup(labelText, id) {
       <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
     </div>
     <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
-      <img src="edit.svg" style="width:9px" alt="edit">
-      <img src="editHighlight.svg" style="width:9px; display: none" alt="edit">
+      <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
+      <img id="editButton${id}" src="editHighlight.svg" style="width:9px; display: none" alt="edit">
     </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
@@ -274,7 +274,6 @@ function removeLabelDropDownContent() {
 }
 
 function resetLabelElement() {
-  deselectedEditing = true;
   trimLabelText();
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
@@ -318,6 +317,7 @@ window.onmousedown = (event) => {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
+        deselectedEditing = true;
         resetLabelElement();
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
