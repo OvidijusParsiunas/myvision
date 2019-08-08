@@ -1,7 +1,7 @@
 #canvas-wrapper {
   position: absolute;
   top: 50px;
-  left: 160px;
+  left: 162px;
 }
 
 #title {
@@ -61,7 +61,7 @@ a:hover {
 #tableList {
   display: block;
   overflow-x: auto;
-  width: 152px;
+  width: 153px;
   overflow-y: auto;
   height: 40vh;
 }
