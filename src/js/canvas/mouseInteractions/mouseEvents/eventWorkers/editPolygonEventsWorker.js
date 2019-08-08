@@ -78,15 +78,6 @@ function setPolygonNotEditableOnClick() {
 
 // validation for label (not empty string etc.)
 
-// investigate remain selected after dropdown click
-// after editing, maybe the object should remain in edit mode and the label selected (red)
-// maybe the dropdown shouldn't stop the editing
-// after moving polygon, hitting edit/remove then editing, the polygon points are refreshed
-
-// consider how would label overflow work when finished styling the full layout
-// as it should have the parent div scrollable and the dropdown scrollable
-// dropdown button beside the lalbel list text when editing?
-
 // upon selecting-dragging a polygon does not remove the active label of the previous shape on list
 // whereas rectangle is immediate, only way this can be mitigated is by removing rectangle controls
 // on moving it in order to have delay the label change too, or you can display polygon points

@@ -27,7 +27,6 @@ let tableElement = null;
 // polygon movable objects bug where after selecting to draw new polygon, clicking movable objects
 // then default, the polygons remain movable
 // background of the label in the list should be removed when clicking edit button
-// edit label once, then hit edit button - which does not work
 
 // New shape popup
 // when assigning a label for a shape, make sure there are no return breaks or spaces on the edges
@@ -58,14 +57,16 @@ function initialiseLabelListFunctionality() {
 function createLabelElementMarkup(labelText, id) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
-    <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" style="float:left; user-select: none; padding-right: 5px">
+    <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
       <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
     </div>
-    <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
+    <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
-      <img id="editButton${id}" src="editHighlight.svg" style="width:9px; display: none" alt="edit">
-    </div>
+      <img id="editButton${id}" src="edit-highlighted.svg" style="width:9px; display: none" alt="edit">
+      <img id="editButton${id}" src="done-tick.svg" style="width:9px; display: none" alt="edit">
+      <img id="editButton${id}" src="done-tick-highlighted.svg" style="width:9px; display: none" alt="edit">
+  </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 28px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
       <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
@@ -76,14 +77,72 @@ function createLabelElementMarkup(labelText, id) {
   `;
 }
 
-window.mouseEnterOnLabelEdit = (elements) => {
-  elements.childNodes[1].style.display = 'none';
-  elements.childNodes[3].style.display = '';
+function highlightDefaultIcon(element) {
+  element.childNodes[1].style.display = 'none';
+  element.childNodes[3].style.display = '';
+}
+
+function dimDefaultIcon(element) {
+  element.childNodes[1].style.display = '';
+  element.childNodes[3].style.display = 'none';
+}
+
+function highlightActiveIcon(element) {
+  element.childNodes[5].style.display = 'none';
+  element.childNodes[7].style.display = '';
+}
+
+function dimActiveIcon(element) {
+  element.childNodes[5].style.display = '';
+  element.childNodes[7].style.display = 'none';
+}
+
+function switchToDefaultIcon() {
+  activeEditLabelButton.childNodes[1].style.display = '';
+  activeEditLabelButton.childNodes[5].style.display = 'none';
+}
+
+function switchToActiveIcon(element) {
+  element.childNodes[1].style.display = 'none';
+  element.childNodes[5].style.display = '';
+}
+
+function switchToHighlightedActiveIcon(element) {
+  element.childNodes[3].style.display = 'none';
+  element.childNodes[7].style.display = '';
+}
+
+function switchToHighlightedDefaultIcon() {
+  activeEditLabelButton.childNodes[3].style.display = '';
+  activeEditLabelButton.childNodes[7].style.display = 'none';
+}
+
+window.mouseEnterOnVisibility = (element) => {
+  highlightDefaultIcon(element);
 };
 
-window.mouseLeaveOnLabelEdit = (elements) => {
-  elements.childNodes[1].style.display = '';
-  elements.childNodes[3].style.display = 'none';
+window.mouseLeaveOnVisibility = (element) => {
+  dimDefaultIcon(element);
+};
+
+window.mouseEnterOnLabelEdit = (element) => {
+  if (!isLabelSelected) {
+    highlightDefaultIcon(element);
+  } else if (activeEditLabelButton.id !== element.id) {
+    highlightDefaultIcon(element);
+  } else {
+    highlightActiveIcon(element);
+  }
+};
+
+window.mouseLeaveOnLabelEdit = (element) => {
+  if (!isLabelSelected) {
+    dimDefaultIcon(element);
+  } else if (activeEditLabelButton.id !== element.id) {
+    dimDefaultIcon(element);
+  } else {
+    dimActiveIcon(element);
+  }
 };
 
 function preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent) {
@@ -235,29 +294,33 @@ function initiateEditing(id) {
   activeLabelElementId = `labelId${id}`;
 }
 
-function editLabel(id) {
+function editLabel(id, element) {
   if (id !== activeLabelId) {
     initiateEditing(id);
+    switchToHighlightedActiveIcon(element);
   } else if (deselectedEditing) {
     deselectedEditing = false;
     labelHasBeenDeselected = true;
   } else if (!deselectedEditing) {
     initiateEditing(id);
+    switchToHighlightedActiveIcon(element);
   }
 }
 
 window.labelDblClicked = (id) => {
   initLabelEditing(id);
+  const editElement = document.getElementById(`editButton${id}`);
+  switchToActiveIcon(editElement);
 };
 
-window.editLabelBtnClick = (id) => {
+window.editLabelBtnClick = (id, element) => {
   // remove visibility button when editing
   // const visibilityButton = document.getElementById(`visibilityButton${id}`);
   // visibilityButton.style.display = 'none';
   // const labelButton = document.getElementById(`editButton${id}`);
   // labelButton.style.marginLeft = '4px';
   // labelButton.style.marginRight = '2px'
-  editLabel(id);
+  editLabel(id, element);
 };
 
 function trimLabelText() {
@@ -286,6 +349,7 @@ function resetLabelElement() {
 
 function stopEditing() {
   activeShape = false;
+  switchToDefaultIcon();
   resetLabelElement();
 }
 
@@ -318,6 +382,7 @@ window.onmousedown = (event) => {
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
         deselectedEditing = true;
+        switchToHighlightedDefaultIcon();
         resetLabelElement();
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
