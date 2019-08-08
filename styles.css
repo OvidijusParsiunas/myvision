@@ -61,9 +61,9 @@ a:hover {
 #tableList {
   display: block;
   overflow-x: auto;
-  width: 150px;
+  width: 152px;
   overflow-y: auto;
-  height: 40vh; 
+  height: 40vh;
 }
 
 table {
