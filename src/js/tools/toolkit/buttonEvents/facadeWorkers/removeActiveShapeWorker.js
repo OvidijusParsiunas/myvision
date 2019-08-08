@@ -1,6 +1,6 @@
 import {
   removePolygon, clearAllAddPointsData, isAddingPointsToPolygon,
-  removePolygonPoints, getPolygonIfEditing,
+  removePolygonPoints, getPolygonIdIfEditing,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
   resetNewPolygonData, isPolygonDrawingInProgress, isPolygonDrawingFinished, resetDrawPolygonMode,
@@ -70,7 +70,7 @@ function removeActiveShapeEvent(canvas) {
     } else if (getAddingPolygonPointsState()) {
       clearAllAddPointsData();
     }
-    removeLabelFromList(getPolygonIfEditing().id);
+    removeLabelFromList(getPolygonIdIfEditing());
     removePolygon();
     removePolygonPoints();
     removeEditedPolygonId();

@@ -29,11 +29,6 @@ let polygonPoints = [];
 let editingPolygon = false;
 let preventNewPolygonInitialisation = false;
 
-// temporary
-function getPolygonIfEditing() {
-  return polygon;
-}
-
 function getPolygonEditingStatus() {
   return editingPolygon;
 }
@@ -218,11 +213,10 @@ export {
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
   removePolygonPoint, getPolygonEditingStatus,
-  changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
-  getPolygonIfEditing, cleanPolygonPointsArray,
   initializeAddNewPoints, addFirstPoint, addPoint,
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
-  addPointsMouseOver, resetAddPointProperties,
-  changeExistingPolygonPointsToRemovable, clearAllAddPointsData,
   resetAddPoints, isAddingPointsToPolygon, addPointsMouseOut,
+  changeExistingPolygonPointsToRemovable, clearAllAddPointsData,
+  changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
+  addPointsMouseOver, resetAddPointProperties, cleanPolygonPointsArray,
 };

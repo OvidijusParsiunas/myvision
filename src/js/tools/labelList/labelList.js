@@ -417,14 +417,16 @@ function addLabelToList(labelText, id) {
 }
 
 function removeLabelFromList(id) {
-  let index = 0;
-  const tableList = tableElement.childNodes[1].childNodes;
-  while (index !== tableList.length) {
-    if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
-      tableList[index].remove();
-      break;
+  if (id != null) {
+    let index = 0;
+    const tableList = tableElement.childNodes[1].childNodes;
+    while (index !== tableList.length) {
+      if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
+        tableList[index].remove();
+        break;
+      }
+      index += 1;
     }
-    index += 1;
   }
   // tableElement.deleteRow(0);
 }
