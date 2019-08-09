@@ -24,9 +24,7 @@ let activeLabelElementId = null;
 let activeEditLabelButton = null;
 let tableElement = null;
 
-// polygon movable objects bug where after selecting to draw new polygon, clicking movable objects
-// then default, the polygons remain movable
-// background of the label in the list should be removed when clicking edit button
+// make sure that dropdown options are fully selectable with horizontal scroll
 
 // New shape popup
 // when assigning a label for a shape, make sure there are no return breaks or spaces on the edges
@@ -377,7 +375,7 @@ window.onmousedown = (event) => {
       removeLabelDropDownContent();
       stopEditing();
       scrollHorizontallyToAppropriateWidth(newText);
-    } else if (event.target.id === `labelText${activeLabelId}`) {
+    } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
