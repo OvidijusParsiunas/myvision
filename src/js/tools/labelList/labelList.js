@@ -12,6 +12,7 @@ import {
   removeHighlightOfListLabel, setLabelListElementForHighlights, highlightLabelInTheList,
 } from './highlightLabelList';
 import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
+import { addToLabelOptions, sendLabelOptionToFront, getLabelOptions } from './labelOptions';
 
 let isLabelSelected = false;
 let activeDropdownElements = null;
@@ -23,6 +24,7 @@ let activeShape = null;
 let activeLabelElementId = null;
 let activeEditLabelButton = null;
 let tableElement = null;
+let isLabelChanged = false;
 
 // make sure that dropdown options are fully selectable with horizontal scroll
 
@@ -67,9 +69,6 @@ function createLabelElementMarkup(labelText, id) {
   </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto;">
-      <a class="labelDropdownOption">Labelasdasgusgyasdaasdadugs1style="width:100px;"</a>
-      <a class="labelDropdownOption">ggggggggggggggg</a>
-      <a class="labelDropdownOption">wwwwwwwwww</a>
     </div>
   </div>
   `;
@@ -165,6 +164,7 @@ window.changeObjectLabelText = (innerHTML, element, inputEvent) => {
   } else {
     changeObjectLabelText(activeLabelId, innerHTML);
   }
+  isLabelChanged = true;
 };
 
 window.highlightShapeFill = (id) => {
@@ -343,6 +343,7 @@ function resetLabelElement() {
   activeLabelTextElement.style.paddingLeft = '';
   activeEditLabelButton.style.paddingRight = '5px';
   setEditingLabelId(null);
+  isLabelChanged = false;
 }
 
 function stopEditing() {
@@ -364,6 +365,20 @@ window.labelTextKeyDown = (event) => {
   }
 };
 
+function addNewLabelToLabelOptions(text) {
+  if (isLabelChanged) {
+    addToLabelOptions(text);
+    repopulateDropdown();
+  }
+}
+
+function moveSelectedLabelToFrontOfLabelOptions(id) {
+  if (id !== 0) {
+    sendLabelOptionToFront(id);
+    repopulateDropdown();
+  }
+}
+
 window.onmousedown = (event) => {
   // should be is editing
   if (isLabelSelected) {
@@ -374,6 +389,7 @@ window.onmousedown = (event) => {
       // fix here as after moving polygon, points stay
       removeLabelDropDownContent();
       stopEditing();
+      moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12));
       scrollHorizontallyToAppropriateWidth(newText);
     } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')) {
       // do nothing
@@ -381,16 +397,37 @@ window.onmousedown = (event) => {
       if (!labelHasBeenDeselected) {
         deselectedEditing = true;
         switchToHighlightedDefaultIcon();
+        addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
         resetLabelElement();
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
+      addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
       stopEditing();
     } else {
+      addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
       stopEditing();
       deselectShape();
     }
   }
 };
+
+function createNewDropdown() {
+  const labelDropdownOptions = getLabelOptions();
+  let dropdown = '';
+  for (let i = 0; i < labelDropdownOptions.length; i += 1) {
+    const dropdownElement = `<a id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</a>\n`;
+    dropdown += dropdownElement;
+  }
+  return dropdown;
+}
+
+function repopulateDropdown() {
+  const dropdown = createNewDropdown();
+  const dropdownParentElements = document.getElementsByClassName('dropdown-content');
+  for (let i = 0; i < dropdownParentElements.length; i += 1) {
+    dropdownParentElements[i].innerHTML = dropdown;
+  }
+}
 
 // decide if this is necessary
 //    window.setTimeout(function ()
