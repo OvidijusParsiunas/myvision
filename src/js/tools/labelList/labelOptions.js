@@ -27,18 +27,6 @@ function addToLabelOptions(text) {
   }
 }
 
-// function updateArray(elementId) {
-//  let movableObject = dropdownOptions[elementId];
-//   let lowerValue = dropdownOptions[0];
-//    for (let i = 1; i <= elementId; i += 1) {
-//     let tempValue = dropdownOptions[i];
-//     dropdownOptions[i] = lowerValue;
-//     lowerValue = tempValue;
-//    }
-//   dropdownOptions[0] = movableObject;
-//   alert(dropdownOptions);
-// }
-
 function getLabelOptions() {
   return labelOptions;
 }

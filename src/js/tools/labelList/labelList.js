@@ -54,7 +54,26 @@ function initialiseLabelListFunctionality() {
 //   background-color: blue;
 // }
 
+function createNewDropdown() {
+  const labelDropdownOptions = getLabelOptions();
+  let dropdown = '';
+  for (let i = 0; i < labelDropdownOptions.length; i += 1) {
+    const dropdownElement = `<a id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</a>\n`;
+    dropdown += dropdownElement;
+  }
+  return dropdown;
+}
+
+function repopulateDropdown() {
+  const dropdown = createNewDropdown();
+  const dropdownParentElements = document.getElementsByClassName('dropdown-content');
+  for (let i = 0; i < dropdownParentElements.length; i += 1) {
+    dropdownParentElements[i].innerHTML = dropdown;
+  }
+}
+
 function createLabelElementMarkup(labelText, id) {
+  const dropdownOptions = createNewDropdown();
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
     <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" style="float:left; user-select: none; padding-right: 5px">
@@ -69,6 +88,7 @@ function createLabelElementMarkup(labelText, id) {
   </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
     <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto; max-height: 168px">
+      ${dropdownOptions}
     </div>
   </div>
   `;
@@ -410,24 +430,6 @@ window.onmousedown = (event) => {
     }
   }
 };
-
-function createNewDropdown() {
-  const labelDropdownOptions = getLabelOptions();
-  let dropdown = '';
-  for (let i = 0; i < labelDropdownOptions.length; i += 1) {
-    const dropdownElement = `<a id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</a>\n`;
-    dropdown += dropdownElement;
-  }
-  return dropdown;
-}
-
-function repopulateDropdown() {
-  const dropdown = createNewDropdown();
-  const dropdownParentElements = document.getElementsByClassName('dropdown-content');
-  for (let i = 0; i < dropdownParentElements.length; i += 1) {
-    dropdownParentElements[i].innerHTML = dropdown;
-  }
-}
 
 // decide if this is necessary
 //    window.setTimeout(function ()
