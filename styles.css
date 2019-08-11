@@ -40,12 +40,15 @@
 
 .dropdown-content div {
   color: black;
-  padding: 12px 16px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-decoration: none;
 }
 
 .dropdown-content div:hover {
   cursor: default;
-  background-color: blue;
+  background-color: grey;
 }
 
 .show {display: block;}

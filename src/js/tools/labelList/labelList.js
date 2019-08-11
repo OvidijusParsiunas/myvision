@@ -62,11 +62,12 @@ function initialiseLabelListFunctionality() {
 
 function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
-  let dropdown = '';
+  let dropdown = '<tbody><tr><td>';
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
     const dropdownElement = `<div id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</div>\n`;
     dropdown += dropdownElement;
   }
+  dropdown += '</td></tr></tbody>';
   return dropdown;
 }
 
@@ -417,7 +418,7 @@ window.onmousedown = (event) => {
   // should be is editing
   if (isLabelSelected) {
     if (event.target.matches('.labelDropdownOption')) {
-      const newText = event.target.text;
+      const newText = event.target.innerHTML;
       activeLabelTextElement.innerHTML = newText;
       changeObjectLabelText(activeLabelId, newText);
       // fix here as after moving polygon, points stay
