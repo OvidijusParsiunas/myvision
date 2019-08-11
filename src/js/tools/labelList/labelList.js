@@ -26,6 +26,12 @@ let activeEditLabelButton = null;
 let tableElement = null;
 let isLabelChanged = false;
 
+// push dropdown of text to left when vertical overflow
+// account for user clicking enter when editing label
+// move to left on finishing label edit (no matter the text width)
+
+// get default font style in browser and compute dimensions accordingly
+
 // make sure that dropdown options are fully selectable with horizontal scroll
 
 // New shape popup
@@ -58,12 +64,13 @@ function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
   let dropdown = '';
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
-    const dropdownElement = `<a id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</a>\n`;
+    const dropdownElement = `<div id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</div>\n`;
     dropdown += dropdownElement;
   }
   return dropdown;
 }
 
+// USE TABLE
 function repopulateDropdown() {
   const dropdown = createNewDropdown();
   const dropdownParentElements = document.getElementsByClassName('dropdown-content');
@@ -87,8 +94,15 @@ function createLabelElementMarkup(labelText, id) {
       <img id="editButton${id}" src="done-tick-highlighted.svg" style="width:9px; display: none" alt="edit">
   </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
-    <div class="dropdown-content labelDropdown${id}" style="width: 100px; overflow-x: auto; max-height: 168px">
-      ${dropdownOptions}
+      <table class="dropdown-content labelDropdown${id}">
+        <tbody>
+          <tr>
+            <td>
+              ${dropdownOptions}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   `;
