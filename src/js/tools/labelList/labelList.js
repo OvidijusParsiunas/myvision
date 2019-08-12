@@ -71,7 +71,6 @@ function createNewDropdown() {
   return dropdown;
 }
 
-// USE TABLE
 function repopulateDropdown() {
   const dropdown = createNewDropdown();
   const dropdownParentElements = document.getElementsByClassName('dropdown-content');
@@ -108,6 +107,15 @@ function createLabelElementMarkup(labelText, id) {
   </div>
   `;
 }
+
+// <td>
+// <div class="labelDropdownOption">asdasdasdasdas</div>
+// <div class="labelDropdownOption">asdasdasdasdasas</div>
+// <div class="labelDropdownOption">asasas</div>
+// <div class="labelDropdownOption">asasasasasas</div>
+// <div class="labelDropdownOption">asdasdasdasdas</div>
+// <div class="labelDropdownOption">asdasdasdasdas</div>
+// </td>
 
 function highlightDefaultIcon(element) {
   element.childNodes[1].style.display = 'none';
@@ -276,6 +284,11 @@ function initLabelEditing(id) {
   setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   activeDropdownElements[0].classList.toggle('show');
+  // change this to match wider div
+  // const labelDropdownOptions = getLabelOptions();
+  // if (labelDropdownOptions.length > 5) {
+  //   activeDropdownElements[0].style = 'width: 150px';
+  // }
   isLabelSelected = true;
 }
 

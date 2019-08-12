@@ -32,7 +32,8 @@
   position: absolute;
   background-color: #f1f1f1;
   width: 160px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   max-height: 168px;
@@ -40,9 +41,10 @@
 
 .dropdown-content div {
   color: black;
-  padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   text-decoration: none;
 }
 
