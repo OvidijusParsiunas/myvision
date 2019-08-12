@@ -26,7 +26,6 @@ let activeEditLabelButton = null;
 let tableElement = null;
 let isLabelChanged = false;
 
-// account for user clicking enter when editing label
 // move to left on finishing label edit (no matter the text width)
 
 // get default font style in browser and compute dimensions accordingly
@@ -387,6 +386,7 @@ function resetLabelElement() {
   activeLabelTextElement.style.borderColor = 'transparent';
   activeLabelTextElement.style.paddingLeft = '';
   activeEditLabelButton.style.paddingRight = '5px';
+  tableElement.scrollLeft = 0;
   setEditingLabelId(null);
   isLabelChanged = false;
 }
@@ -436,7 +436,6 @@ window.onmousedown = (event) => {
       removeLabelDropDownContent();
       stopEditing();
       moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12));
-      scrollHorizontallyToAppropriateWidth(newText);
     } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
