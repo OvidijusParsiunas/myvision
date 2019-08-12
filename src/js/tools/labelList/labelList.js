@@ -26,13 +26,10 @@ let activeEditLabelButton = null;
 let tableElement = null;
 let isLabelChanged = false;
 
-// push dropdown of text to left when vertical overflow
 // account for user clicking enter when editing label
 // move to left on finishing label edit (no matter the text width)
 
 // get default font style in browser and compute dimensions accordingly
-
-// make sure that dropdown options are fully selectable with horizontal scroll
 
 // New shape popup
 // when assigning a label for a shape, make sure there are no return breaks or spaces on the edges
@@ -407,18 +404,19 @@ function refocusOnLabelListTextAfterDropdown() {
   }, 0);
 }
 
-window.labelTextKeyDown = (event) => {
-  if (event.key === 'Enter') {
-    stopEditing();
-  }
-};
-
 function addNewLabelToLabelOptions(text) {
   if (isLabelChanged) {
     addToLabelOptions(text);
     repopulateDropdown();
   }
 }
+
+window.labelTextKeyDown = (event) => {
+  if (event.key === 'Enter') {
+    addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
+    stopEditing();
+  }
+};
 
 function moveSelectedLabelToFrontOfLabelOptions(id) {
   if (id !== 0) {
