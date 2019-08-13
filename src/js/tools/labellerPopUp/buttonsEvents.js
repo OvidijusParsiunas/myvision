@@ -5,6 +5,8 @@ import { getContinuousDrawingState, getLastDrawingModeState, setHasDrawnShapeSta
 import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 
+let textInputElement = null;
+
 function labelShape() {
   createLabelShape();
   setHasDrawnShapeState(true);
@@ -24,4 +26,15 @@ function cancelLabellingProcess() {
   }
 }
 
-export { labelShape, cancelLabellingProcess };
+function prepareLabelPopupTextInput() {
+  textInputElement = document.getElementById('label-popup-input');
+}
+
+function selectLabelOption(text) {
+  textInputElement.value = text;
+}
+
+export {
+  labelShape, cancelLabellingProcess,
+  prepareLabelPopupTextInput, selectLabelOption,
+};

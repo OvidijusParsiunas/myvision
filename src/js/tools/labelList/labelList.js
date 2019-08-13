@@ -26,8 +26,6 @@ let activeEditLabelButton = null;
 let tableElement = null;
 let isLabelChanged = false;
 
-// move to left on finishing label edit (no matter the text width)
-
 // get default font style in browser and compute dimensions accordingly
 
 // New shape popup
@@ -78,7 +76,7 @@ function repopulateDropdown() {
 function createLabelElementMarkup(labelText, id) {
   const dropdownOptions = createNewDropdown();
   return `
-  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="labelListObj label${id}">
+  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id}">
     <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
       <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">

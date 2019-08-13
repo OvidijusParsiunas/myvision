@@ -4,6 +4,12 @@
   left: 162px;
 }
 
+#label-popup-input {
+  width: 153px;
+  border: thin ridge grey;
+  margin: 5px 5px 5px 5px;
+}
+
 #title {
   padding-top: 20px;
 }
@@ -30,10 +36,11 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: white;
   width: 160px;
   overflow-y: auto;
   overflow-x: auto;
+  border: thin solid grey;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   max-height: 168px;
@@ -59,9 +66,21 @@
 
 .labelText:focus {outline:0;}
 
-.labelListObj {
+#popup-label-options {
+  display: block;
+  overflow-x: auto;
+  width: 154px;
+  overflow-y: auto;
+  max-height: 15vh;
+  border: thin ridge grey;
 }
 
+#popup-label-options div:hover {
+  cursor: default;
+  background-color: grey;
+}
+
+/* shouldn't that be 160? */
 #tableList {
   display: block;
   overflow-x: auto;

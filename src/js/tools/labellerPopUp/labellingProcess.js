@@ -4,12 +4,14 @@ import { addLabelRef, setPolygonLabelOffsetProps } from '../../canvas/objects/la
 import labelProperies from '../../canvas/objects/label/properties';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 import { addLabelToList } from '../labelList/labelList';
+import { addToLabelOptions, getLabelOptions } from '../labelList/labelOptions';
 import { addShapeRef } from '../../canvas/objects/allShapes/allShapes';
 
 let labellingState = false;
 let targetShape = null;
 let canvas = null;
 let currentId = 0;
+let labelOptionsElement = null;
 
 function prepareLabelShape(shape, canvasObj) {
   waitingForLabelCursorMode(canvasObj);
@@ -46,8 +48,31 @@ function generateLabelShapeGroup(text) {
   canvas.bringToFront(textShape);
   addShapeRef(targetShape, currentId);
   addLabelRef(textShape, currentId);
+  addToLabelOptions(textShape.text);
   addLabelToList(textShape.text, currentId);
   currentId += 1;
+}
+
+function initialiseParentElement() {
+  return document.createElement('div');
+}
+
+function addLabelToLists(labelText) {
+  const labelElement = initialiseParentElement();
+  labelElement.innerHTML = `<div class="labelDropdownOption" onClick="selectLabelOption(innerHTML)">${labelText}</div>`;
+  const newRow = labelOptionsElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+}
+
+function purgeOptionsFromLabelElement() {
+  labelOptionsElement = document.getElementById('popup-label-options');
+  labelOptionsElement.innerHTML = '';
+}
+
+function resetLabelOptions() {
+  purgeOptionsFromLabelElement();
+  getLabelOptions().forEach((label) => { addLabelToLists(label.text); });
 }
 
 function createLabelShape() {
@@ -55,6 +80,7 @@ function createLabelShape() {
   hideLabelPopUp();
   generateLabelShapeGroup(text);
   resetObjectCursors(canvas);
+  resetLabelOptions();
   labellingState = false;
 }
 
