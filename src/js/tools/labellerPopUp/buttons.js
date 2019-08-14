@@ -1,9 +1,11 @@
 import { labelShape, selectLabelOption, prepareLabelPopupTextInput } from './buttonsEvents';
+import { initialiseLabelPopupOptionsList } from './style';
 
-function assignLabellerPopUpButtonEvents() {
+function initialiseLabellerPopUp() {
   prepareLabelPopupTextInput();
+  initialiseLabelPopupOptionsList();
   window.labelShape = labelShape;
   window.selectLabelOption = selectLabelOption;
 }
 
-export { assignLabellerPopUpButtonEvents as default };
+export { initialiseLabellerPopUp as default };

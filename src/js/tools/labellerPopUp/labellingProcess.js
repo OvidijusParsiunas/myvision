@@ -67,7 +67,6 @@ function addLabelToLists(labelText) {
 
 function purgeOptionsFromLabelElement() {
   labelOptionsElement = document.getElementById('popup-label-options');
-  labelOptionsElement.style.display = 'block';
   labelOptionsElement.innerHTML = '';
 }
 

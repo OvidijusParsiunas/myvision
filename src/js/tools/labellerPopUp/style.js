@@ -19,22 +19,15 @@ function deleteAndAddLastRowToRefreshDiv() {
   if (labelOptions.length !== 0) {
     labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
     labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
-    if (labelOptions.length === 4) {
+    if (labelOptions.length === 6) {
       addLabelToList('temp horizontal');
     }
     window.setTimeout(() => {
       addLabelToList(labelOptions[labelOptions.length - 1].text);
-      if (labelOptions.length === 4) {
-        labellerPopupLabelOptionsElement.deleteRow(3);
+      if (labelOptions.length === 6) {
+        labellerPopupLabelOptionsElement.deleteRow(5);
       }
     }, 0);
-  } else {
-    labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
-    addLabelToList('dog');
-    addLabelToList('cat');
-    addLabelToList('chicken');
-    addLabelToList('dolphin');
-    addLabelToList('panda');
   }
 }
 
@@ -58,4 +51,14 @@ function hideLabelPopUp() {
   document.getElementById('labelNamePopUp').style.display = 'none';
 }
 
-export { showLabelPopUp, getLabelPopUpText, hideLabelPopUp };
+function initialiseLabelPopupOptionsList() {
+  labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
+  getLabelOptions().forEach((option) => {
+    addLabelToList(option.text);
+  });
+}
+
+export {
+  showLabelPopUp, getLabelPopUpText,
+  hideLabelPopUp, initialiseLabelPopupOptionsList,
+};
