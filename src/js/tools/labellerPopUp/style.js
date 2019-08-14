@@ -28,6 +28,13 @@ function deleteAndAddLastRowToRefreshDiv() {
         labellerPopupLabelOptionsElement.deleteRow(3);
       }
     }, 0);
+  } else {
+    labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
+    addLabelToList('dog');
+    addLabelToList('cat');
+    addLabelToList('chicken');
+    addLabelToList('dolphin');
+    addLabelToList('panda');
   }
 }
 
@@ -38,9 +45,9 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   const canvasX = canvasWrapperCoordinates.left;
   labelNamePopUp.style.top = `${yCoordinate + canvasY}px`;
   labelNamePopUp.style.left = `${xCoordinate + canvasX}px`;
-  labelNamePopUp.style.display = 'block';
   getLabelOptions();
   deleteAndAddLastRowToRefreshDiv();
+  labelNamePopUp.style.display = 'block';
 }
 
 function getLabelPopUpText() {

@@ -69,10 +69,13 @@
 #popup-label-options {
   display: block;
   overflow-x: auto;
-  width: 154px;
+  width: 153px;
   overflow-y: auto;
-  max-height: 15vh;
   border: thin ridge grey;
+  height: 93px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-left: 5px;
 }
 
 #popup-label-options div:hover {
