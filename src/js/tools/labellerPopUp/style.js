@@ -18,12 +18,14 @@ function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
+    labellerPopupLabelOptionsElement.style.height = '125px';
+  } else if (labelOptions.length === 7) {
     addLabelToList('temp horizontal');
   }
   window.setTimeout(() => {
     addLabelToList(labelOptions[labelOptions.length - 1].text);
-    if (labelOptions.length === 6) {
-      labellerPopupLabelOptionsElement.deleteRow(5);
+    if (labelOptions.length === 7) {
+      labellerPopupLabelOptionsElement.deleteRow(6);
     }
   }, 0);
 }

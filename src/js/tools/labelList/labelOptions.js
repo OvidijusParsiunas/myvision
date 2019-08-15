@@ -10,7 +10,7 @@ const labelOptions = defaultLabelOptions;
 
 let limitLabelOptions = true;
 let numberOfRemovedOptions = 0;
-const maxLabelOptions = 5;
+const maxLabelOptions = 6;
 
 function terminateLimitIfUsingDefault(id) {
   const selectedOption = labelOptions[id];

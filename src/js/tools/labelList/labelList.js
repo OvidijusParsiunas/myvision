@@ -264,16 +264,18 @@ function setEndOfContentEditable(contentEditableElement) {
   scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML);
 }
 
-function deleteAndAddLastRowToRefreshDiv(labellerPopupLabelOptionsElement) {
+function deleteAndAddLastRowToRefreshDiv(dropdownLabelsElement) {
   const labelOptions = getLabelOptions();
-  labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
+  dropdownLabelsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
-    addLabelToDropdown('temp horizontal', labellerPopupLabelOptionsElement);
+    labelOptionsElement.style.height = '125px';
+  } else if (labelOptions.length === 7) {
+    addLabelToDropdown('temp horizontal', dropdownLabelsElement);
   }
   window.setTimeout(() => {
-    addLabelToDropdown(labelOptions[labelOptions.length - 1].text, labellerPopupLabelOptionsElement, labelOptions.length - 1);
-    if (labelOptions.length === 6) {
-      labellerPopupLabelOptionsElement.deleteRow(5);
+    addLabelToDropdown(labelOptions[labelOptions.length - 1].text, dropdownLabelsElement, labelOptions.length - 1);
+    if (labelOptions.length === 7) {
+      dropdownLabelsElement.deleteRow(6);
     }
   }, 0);
 }
@@ -461,7 +463,6 @@ window.labelTextKeyDown = (event) => {
 };
 
 function moveSelectedLabelToFrontOfLabelOptions(id) {
-  console.log(id);
   if (id !== 0) {
     sendLabelOptionToFront(id);
     repopulateDropdown();
