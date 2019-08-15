@@ -29,7 +29,6 @@ let labelOptionsElement = null;
 
 // refactor label popup label options element manipulation code
 // make sure the font in popup label options element manipulation code is same
-// fix padding
 // fix where the dropdown vertical scroll appears
 // make sure to refactor the dropdown code to match the popup code
 // make sure popup & dropdown layouts match
@@ -64,12 +63,12 @@ function initialiseLabelListFunctionality() {
 
 function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
-  let dropdown = '<tbody><tr><td>';
+  let dropdown = '<tbody>';
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
-    const dropdownElement = `<div id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</div>\n`;
+    const dropdownElement = `<tr><td><div id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
     dropdown += dropdownElement;
   }
-  dropdown += '</td></tr></tbody>';
+  dropdown += '</tbody>';
   return dropdown;
 }
 
@@ -265,6 +264,20 @@ function setEndOfContentEditable(contentEditableElement) {
   scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML);
 }
 
+function deleteAndAddLastRowToRefreshDiv(labellerPopupLabelOptionsElement) {
+  const labelOptions = getLabelOptions();
+  labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
+  if (labelOptions.length === 6) {
+    addLabelToDropdown('temp horizontal', labellerPopupLabelOptionsElement);
+  }
+  window.setTimeout(() => {
+    addLabelToDropdown(labelOptions[labelOptions.length - 1].text, labellerPopupLabelOptionsElement, labelOptions.length - 1);
+    if (labelOptions.length === 6) {
+      labellerPopupLabelOptionsElement.deleteRow(5);
+    }
+  }, 0);
+}
+
 function initLabelEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelTextElement.contentEditable = true;
@@ -280,6 +293,7 @@ function initLabelEditing(id) {
   activeDropdownElements[0].classList.toggle('show');
   activeDropdownElements[0].scrollTop = 0;
   activeDropdownElements[0].scrollLeft = 0;
+  deleteAndAddLastRowToRefreshDiv(activeDropdownElements[0]);
   // change this to match wider div
   // const labelDropdownOptions = getLabelOptions();
   // if (labelDropdownOptions.length > 5) {
@@ -401,6 +415,14 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
+function addLabelToDropdown(labelText, tempEle, id) {
+  const labelElement = initialiseParentElement();
+  labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}">${labelText}</div>`;
+  const newRow = tempEle.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+}
+
 function addLabelToLists(labelText) {
   const labelElement = initialiseParentElement();
   labelElement.innerHTML = `<div class="labelDropdownOption" onClick="selectLabelOption(innerHTML)">${labelText}</div>`;
@@ -439,6 +461,7 @@ window.labelTextKeyDown = (event) => {
 };
 
 function moveSelectedLabelToFrontOfLabelOptions(id) {
+  console.log(id);
   if (id !== 0) {
     sendLabelOptionToFront(id);
     repopulateDropdown();
