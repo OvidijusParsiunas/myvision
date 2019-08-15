@@ -16,19 +16,21 @@ function addLabelToList(labelText) {
 
 function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
-  if (labelOptions.length !== 0) {
-    labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
-    labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
-    if (labelOptions.length === 6) {
-      addLabelToList('temp horizontal');
-    }
-    window.setTimeout(() => {
-      addLabelToList(labelOptions[labelOptions.length - 1].text);
-      if (labelOptions.length === 6) {
-        labellerPopupLabelOptionsElement.deleteRow(5);
-      }
-    }, 0);
+  labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
+  if (labelOptions.length === 6) {
+    addLabelToList('temp horizontal');
   }
+  window.setTimeout(() => {
+    addLabelToList(labelOptions[labelOptions.length - 1].text);
+    if (labelOptions.length === 6) {
+      labellerPopupLabelOptionsElement.deleteRow(5);
+    }
+  }, 0);
+}
+
+function resetLabelOptionsListScroll() {
+  labellerPopupLabelOptionsElement.scrollTop = 0;
+  labellerPopupLabelOptionsElement.scrollLeft = 0;
 }
 
 function showLabelPopUp(xCoordinate, yCoordinate) {
@@ -41,6 +43,7 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   getLabelOptions();
   deleteAndAddLastRowToRefreshDiv();
   labelNamePopUp.style.display = 'block';
+  resetLabelOptionsListScroll();
 }
 
 function getLabelPopUpText() {

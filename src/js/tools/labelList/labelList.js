@@ -25,6 +25,14 @@ let activeLabelElementId = null;
 let activeEditLabelButton = null;
 let tableElement = null;
 let isLabelChanged = false;
+let labelOptionsElement = null;
+
+// refactor label popup label options element manipulation code
+// make sure the font in popup label options element manipulation code is same
+// fix padding
+// fix where the dropdown vertical scroll appears
+// make sure to refactor the dropdown code to match the popup code
+// make sure popup & dropdown layouts match
 
 // get default font style in browser and compute dimensions accordingly
 
@@ -74,7 +82,6 @@ function repopulateDropdown() {
 }
 
 function createLabelElementMarkup(labelText, id) {
-  const dropdownOptions = createNewDropdown();
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id}">
     <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" style="float:left; user-select: none; padding-right: 5px">
@@ -89,13 +96,6 @@ function createLabelElementMarkup(labelText, id) {
   </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
-        <tbody>
-          <tr>
-            <td>
-              ${dropdownOptions}
-            </td>
-          </tr>
-        </tbody>
       </table>
     </div>
   </div>
@@ -278,6 +278,8 @@ function initLabelEditing(id) {
   setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   activeDropdownElements[0].classList.toggle('show');
+  activeDropdownElements[0].scrollTop = 0;
+  activeDropdownElements[0].scrollLeft = 0;
   // change this to match wider div
   // const labelDropdownOptions = getLabelOptions();
   // if (labelDropdownOptions.length > 5) {
@@ -395,17 +397,37 @@ function stopEditing() {
   resetLabelElement();
 }
 
-function refocusOnLabelListTextAfterDropdown() {
-  window.setTimeout(() => {
-    activeLabelTextElement.focus();
-    setEndOfContentEditable(activeLabelTextElement);
-  }, 0);
+function initialiseParentElement() {
+  return document.createElement('div');
+}
+
+function addLabelToLists(labelText) {
+  const labelElement = initialiseParentElement();
+  labelElement.innerHTML = `<div class="labelDropdownOption" onClick="selectLabelOption(innerHTML)">${labelText}</div>`;
+  const newRow = labelOptionsElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+}
+
+function purgeOptionsFromLabelElement() {
+  labelOptionsElement = document.getElementById('popup-label-options');
+  labelOptionsElement.innerHTML = '';
+}
+
+function resetLabelOptions() {
+  purgeOptionsFromLabelElement();
+  getLabelOptions().forEach((label) => { addLabelToLists(label.text); });
+}
+
+function updateLabellerPopupOptionsList() {
+  resetLabelOptions();
 }
 
 function addNewLabelToLabelOptions(text) {
   if (isLabelChanged) {
     addToLabelOptions(text);
     repopulateDropdown();
+    updateLabellerPopupOptionsList();
   }
 }
 
@@ -420,6 +442,7 @@ function moveSelectedLabelToFrontOfLabelOptions(id) {
   if (id !== 0) {
     sendLabelOptionToFront(id);
     repopulateDropdown();
+    updateLabellerPopupOptionsList();
   }
 }
 
@@ -461,10 +484,6 @@ window.onmousedown = (event) => {
 //   setEndOfContentEditable(activeLabelTextElement);
 // }, 0);
 
-function initialiseParentElement() {
-  return document.createElement('id');
-}
-
 function addLabelToList(labelText, id) {
   const labelElement = initialiseParentElement();
   labelElement.id = id;
@@ -474,6 +493,7 @@ function addLabelToList(labelText, id) {
   cell.appendChild(labelElement);
   // scroll to left on new shape insert in order to see available funcitonality
   tableElement.scrollLeft = 0;
+  repopulateDropdown();
 }
 
 function removeLabelFromList(id) {
@@ -491,4 +511,7 @@ function removeLabelFromList(id) {
   // tableElement.deleteRow(0);
 }
 
-export { initialiseLabelListFunctionality, addLabelToList, removeLabelFromList };
+export {
+  initialiseLabelListFunctionality, addLabelToList,
+  removeLabelFromList, moveSelectedLabelToFrontOfLabelOptions,
+};
