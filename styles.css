@@ -78,9 +78,20 @@
   margin-left: 5px;
 }
 
+#popup-label-options div {
+  padding-left: 1px;
+}
+
 #popup-label-options div:hover {
   cursor: default;
   background-color: grey;
+}
+
+#popup-submit-button {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 4px;
+  margin-top: 5px;
 }
 
 /* shouldn't that be 160? */
