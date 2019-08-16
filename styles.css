@@ -5,9 +5,14 @@
 }
 
 #label-popup-input {
-  width: 153px;
+  width: 150px;
   border: thin ridge grey;
   margin: 5px 5px 5px 5px;
+  font-family: sans-serif;
+  font-size: 15px;
+  padding-top: 2px;
+  padding-left: 2px;
+  padding-right: 1px;
 }
 
 #title {
@@ -60,6 +65,15 @@
   padding-left: 5px;
   padding-right: 2px;
   text-decoration: none;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+#labelPopupTitle {
+  font-family: Arial;
+  font-size: 15px;
+  padding-left: 5px;
+  padding-top: 3px;
 }
 
 #popup-label-options .labelDropdownOption {
@@ -78,17 +92,22 @@
 
 .show {display: block;}
 
-.labelText { white-space: pre; }
+.labelText {
+  white-space: pre;
+  font-family: Arial;
+  font-size: 15px;
+}
 
 .labelText:focus {outline:0;}
 
 #popup-label-options {
+  margin-top: 3px;
   display: block;
   overflow-x: auto;
   width: 153px;
   overflow-y: auto;
   border: thin ridge grey;
-  height: 104px;
+  height: 97px;
   padding-top: 2px;
   padding-bottom: 2px;
   margin-left: 5px;
