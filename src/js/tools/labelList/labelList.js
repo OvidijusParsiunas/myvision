@@ -43,6 +43,8 @@ let labelOptionsElement = null;
 // New shape popup
 // when assigning a label for a shape, make sure there are no return breaks or spaces on the edges
 
+// escape should close the popup - more on hotkeys
+
 function findLabelListElement() {
   tableElement = document.getElementById('tableList');
 }

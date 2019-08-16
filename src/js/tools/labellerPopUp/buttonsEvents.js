@@ -34,6 +34,12 @@ function selectLabelOption(text) {
   textInputElement.value = text;
 }
 
+window.popupInputKeyDown = (event) => {
+  if (event.key === 'Enter') {
+    labelShape();
+  }
+};
+
 export {
   labelShape, cancelLabellingProcess,
   prepareLabelPopupTextInput, selectLabelOption,
