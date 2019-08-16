@@ -33,6 +33,11 @@ let labelOptionsElement = null;
 // make sure to refactor the dropdown code to match the popup code
 // make sure popup & dropdown layouts match
 
+// dynamic labeller popup positioning
+// enter to hit submit
+// doublick click to hit submit
+// consider narrowing down the dropdown to make it more appropriate
+
 // get default font style in browser and compute dimensions accordingly
 
 // New shape popup
