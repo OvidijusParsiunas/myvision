@@ -42,8 +42,13 @@ function findLabelListElement() {
   tableElement = document.getElementById('tableList');
 }
 
+function findPopupElement() {
+  labelOptionsElement = document.getElementById('popup-label-options');
+}
+
 function initialiseLabelListFunctionality() {
   findLabelListElement();
+  findPopupElement();
   setLabelListElementForHighlights(tableElement);
 }
 
@@ -268,7 +273,7 @@ function deleteAndAddLastRowToRefreshDiv(dropdownLabelsElement) {
   const labelOptions = getLabelOptions();
   dropdownLabelsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
-    labelOptionsElement.style.height = '125px';
+    labelOptionsElement.style.height = '116px';
   } else if (labelOptions.length === 7) {
     addLabelToDropdown('temp horizontal', dropdownLabelsElement);
   }
@@ -434,7 +439,6 @@ function addLabelToLists(labelText) {
 }
 
 function purgeOptionsFromLabelElement() {
-  labelOptionsElement = document.getElementById('popup-label-options');
   labelOptionsElement.innerHTML = '';
 }
 

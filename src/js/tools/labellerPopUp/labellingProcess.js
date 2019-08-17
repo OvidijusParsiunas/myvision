@@ -75,8 +75,13 @@ function resetLabelOptions() {
   getLabelOptions().forEach((label) => { addLabelToLists(label.text); });
 }
 
+function getTrimmedLabelText() {
+  const rawText = getLabelPopUpText();
+  return rawText.trim();
+}
+
 function createLabelShape() {
-  const text = getLabelPopUpText();
+  const text = getTrimmedLabelText();
   hideLabelPopUp();
   generateLabelShapeGroup(text);
   resetObjectCursors(canvas);
