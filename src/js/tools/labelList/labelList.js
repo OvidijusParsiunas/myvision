@@ -28,12 +28,7 @@ let isLabelChanged = false;
 let labelOptionsElement = null;
 
 // refactor label popup label options element manipulation code
-// make sure the font in popup label options element manipulation code is same
-// fix where the dropdown vertical scroll appears
-// make sure to refactor the dropdown code to match the popup code
-// make sure popup & dropdown layouts match
 
-// dynamic labeller popup positioning
 // consider narrowing down the dropdown to make it more appropriate
 
 // get default font style in browser and compute dimensions accordingly
@@ -87,7 +82,7 @@ function repopulateDropdown() {
 
 function createLabelElementMarkup(labelText, id) {
   return `
-  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id}">
+  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem">
     <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
       <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">

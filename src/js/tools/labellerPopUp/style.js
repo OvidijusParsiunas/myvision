@@ -35,6 +35,29 @@ function resetLabelOptionsListScroll() {
   labellerPopupLabelOptionsElement.scrollLeft = 0;
 }
 
+function hasScrollbar() {
+  // For most browsers
+  if (typeof window.innerWidth === 'number') {
+    return window.innerWidth > document.documentElement.clientWidth;
+  }
+  const rootElem = document.documentElement || document.body;
+  let overflowStyle = null;
+  if (typeof rootElem.currentStyle !== 'undefined') {
+    overflowStyle = rootElem.currentStyle.overflow;
+  }
+  overflowStyle = overflowStyle || window.getComputedStyle(rootElem, '').overflow;
+  let overflowYStyle = null;
+  if (typeof rootElem.currentStyle !== 'undefined') {
+    overflowYStyle = rootElem.currentStyle.overflowY;
+  }
+  overflowYStyle = overflowYStyle || window.getComputedStyle(rootElem, '').overflowY;
+  const contentOverflows = rootElem.scrollHeight > rootElem.clientHeight;
+  const overflowShown = /^(visible|auto)$/.test(overflowStyle) || /^(visible|auto)$/.test(overflowYStyle);
+  const alwaysShowScroll = overflowStyle === 'scroll' || overflowYStyle === 'scroll';
+
+  return (contentOverflows && overflowShown) || (alwaysShowScroll);
+}
+
 function showLabelPopUp(xCoordinate, yCoordinate) {
   const labelNamePopUp = document.getElementById('labelNamePopUp');
   const canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
@@ -46,6 +69,10 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   deleteAndAddLastRowToRefreshDiv();
   labelNamePopUp.style.display = 'block';
   resetLabelOptionsListScroll();
+  if (hasScrollbar()) {
+    labelNamePopUp.style.top = '';
+    labelNamePopUp.style.bottom = '5px';
+  }
 }
 
 function getLabelPopUpText() {

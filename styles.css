@@ -138,6 +138,10 @@
   height: 40vh;
 }
 
+.labelListItem {
+  padding-bottom: 1px;
+}
+
 table {
   border-spacing: 0;
 }
