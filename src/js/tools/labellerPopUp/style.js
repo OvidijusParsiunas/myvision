@@ -72,6 +72,8 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   if (hasScrollbar()) {
     labelNamePopUp.style.top = '';
     labelNamePopUp.style.bottom = '5px';
+  } else {
+    labelNamePopUp.style.bottom = '';
   }
 }
 
