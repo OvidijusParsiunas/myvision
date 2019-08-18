@@ -50,6 +50,7 @@ function generateLabelShapeGroup(text) {
   canvas.bringToFront(textShape);
   addToLabelOptions(textShape.text);
   const shapeColor = getLabelColor(textShape.text);
+  targetShape.set('fill', shapeColor.default);
   addShapeRef(targetShape, shapeColor, currentId);
   addLabelRef(textShape, currentId);
   addLabelToList(textShape.text, currentId);

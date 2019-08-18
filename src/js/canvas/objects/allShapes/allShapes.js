@@ -13,6 +13,12 @@ function getShapeColorById(id) {
   return shapes[id].color;
 }
 
+function changeShapeColorById(id, color) {
+  shapes[id].color = color;
+  shapes[id].shapeRef.set('fill', color.default);
+  canvas.renderAll();
+}
+
 function highlightShapeFill(id) {
   const highlightColor = shapes[id].color.highlight;
   shapes[id].shapeRef.set('fill', highlightColor);
@@ -35,6 +41,6 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 }
 
 export {
-  addShapeRef, getShapeById, getShapeColorById, removeShape,
+  addShapeRef, getShapeById, getShapeColorById, changeShapeColorById, removeShape,
   highlightShapeFill, defaultShapeFill, assignCanvasForShapeFillManipulation,
 };

@@ -1,5 +1,7 @@
 import { changeObjectLabelText } from '../../canvas/objects/label/label';
-import { highlightShapeFill, defaultShapeFill, getShapeById } from '../../canvas/objects/allShapes/allShapes';
+import {
+  highlightShapeFill, defaultShapeFill, getShapeById, changeShapeColorById,
+} from '../../canvas/objects/allShapes/allShapes';
 import {
   setEditingLabelId, setNewShapeSelectedViaLabelListState,
   getDefaultState, getAddingPolygonPointsState,
@@ -12,7 +14,9 @@ import {
   removeHighlightOfListLabel, setLabelListElementForHighlights, highlightLabelInTheList,
 } from './highlightLabelList';
 import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
-import { addToLabelOptions, sendLabelOptionToFront, getLabelOptions } from './labelOptions';
+import {
+  addToLabelOptions, sendLabelOptionToFront, getLabelOptions, getLabelColor,
+} from './labelOptions';
 
 let isLabelSelected = false;
 let activeDropdownElements = null;
@@ -451,6 +455,8 @@ function updateLabellerPopupOptionsList() {
 function addNewLabelToLabelOptions(text) {
   if (isLabelChanged) {
     addToLabelOptions(text);
+    const newLabelColor = getLabelColor(text);
+    changeShapeColorById(activeLabelId, newLabelColor);
     repopulateDropdown();
     updateLabellerPopupOptionsList();
   }
@@ -463,9 +469,11 @@ window.labelTextKeyDown = (event) => {
   }
 };
 
-function moveSelectedLabelToFrontOfLabelOptions(id) {
+function moveSelectedLabelToFrontOfLabelOptions(id, text) {
   if (id !== 0) {
     sendLabelOptionToFront(id);
+    const newLabelColor = getLabelColor(text);
+    changeShapeColorById(activeLabelId, newLabelColor);
     repopulateDropdown();
     updateLabellerPopupOptionsList();
   }
@@ -481,7 +489,7 @@ window.onmousedown = (event) => {
       // fix here as after moving polygon, points stay
       removeLabelDropDownContent();
       stopEditing();
-      moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12));
+      moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
     } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
