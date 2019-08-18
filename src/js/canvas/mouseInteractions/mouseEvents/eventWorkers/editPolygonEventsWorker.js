@@ -12,6 +12,7 @@ import {
   getRemovingPointsAfterCancelDrawState,
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
+import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
 
 let canvas = null;
 let polygonMoved = false;
@@ -184,14 +185,13 @@ function polygonMoveEvents(event) {
 }
 
 // set styling
-function polygonMouseOutEvents(event) {
-  event.target.set('fill', 'rgba(255,0,0,0.01)');
+function shapeMouseOutEvents(event) {
+  defaultShapeFill(event.target.id);
 }
 
-function pointMouseOverEvents(event) {
+function shapeMouseOverEvents(event) {
   if (event.target && event.target.shapeName !== 'point' && event.target.shapeName !== 'label') {
-    event.target.set('fill', 'rgba(255,0,0,0.2)');
-    canvas.renderAll();
+    highlightShapeFill(event.target.id);
   }
 }
 
@@ -233,10 +233,6 @@ function boundingBoxScalingEvents(event) {
   }
 }
 
-function boundingBoxMouseOutEvents(event) {
-  event.target.set('fill', 'rgba(255,0,0,0');
-}
-
 function getLastSelectedShapeId() {
   return selectedShapeId;
 }
@@ -244,8 +240,8 @@ function getLastSelectedShapeId() {
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeEditedPolygonId,
-  polygonMouseOutEvents, pointMouseOverEvents,
+  shapeMouseOutEvents, shapeMouseOverEvents,
   setEditPolygonEventObjects, boundingBoxScalingEvents,
-  boundingBoxMouseOutEvents, programaticallySelectBoundingBox,
+  programaticallySelectBoundingBox,
   programaticallyDeselectBoundingBox, getLastSelectedShapeId,
 };

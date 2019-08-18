@@ -4,7 +4,7 @@ import { addLabelRef, setPolygonLabelOffsetProps } from '../../canvas/objects/la
 import labelProperies from '../../canvas/objects/label/properties';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 import { addLabelToList } from '../labelList/labelList';
-import { addToLabelOptions, getLabelOptions } from '../labelList/labelOptions';
+import { addToLabelOptions, getLabelOptions, getLabelColor } from '../labelList/labelOptions';
 import { addShapeRef } from '../../canvas/objects/allShapes/allShapes';
 
 let labellingState = false;
@@ -40,15 +40,18 @@ function findInitialLabelLocation(shape) {
   return locationObj;
 }
 
+// reference to shape id// reference to dropdown id
+// highlight dropdown/popup/shape
 function generateLabelShapeGroup(text) {
   targetShape.set('id', currentId);
   const initialLocation = findInitialLabelLocation(targetShape);
   const textShape = new fabric.Text(text, labelProperies.getLabelProps(initialLocation));
   canvas.add(textShape);
   canvas.bringToFront(textShape);
-  addShapeRef(targetShape, currentId);
-  addLabelRef(textShape, currentId);
   addToLabelOptions(textShape.text);
+  const shapeColor = getLabelColor(textShape.text);
+  addShapeRef(targetShape, shapeColor, currentId);
+  addLabelRef(textShape, currentId);
   addLabelToList(textShape.text, currentId);
   currentId += 1;
 }

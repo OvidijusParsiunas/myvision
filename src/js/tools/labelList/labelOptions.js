@@ -1,9 +1,9 @@
 const defaultLabelOptions = [
-  { text: 'dog' },
-  { text: 'cat' },
-  { text: 'chicken' },
-  { text: 'dolphin' },
-  { text: 'panda' },
+  { text: 'dog', color: { highlight: 'red', default: 'yellow' } },
+  { text: 'cat', color: { highlight: 'black', default: 'grey' } },
+  { text: 'chicken', color: { highlight: 'blue', default: 'purple' } },
+  { text: 'dolphin', color: 'yellow' },
+  { text: 'panda', color: 'purple' },
 ];
 
 const labelOptions = defaultLabelOptions;
@@ -35,6 +35,10 @@ function sendLabelOptionToFront(id) {
   labelOptions[0] = firstObjectRef;
 }
 
+function generateLabelColor() {
+  return { default: 'blue', highlight: 'green' };
+}
+
 function addToLabelOptions(text) {
   let foundAtIndex;
   for (let i = 0; i < labelOptions.length; i += 1) {
@@ -46,7 +50,8 @@ function addToLabelOptions(text) {
   if (foundAtIndex !== undefined) {
     sendLabelOptionToFront(foundAtIndex);
   } else {
-    labelOptions.unshift({ text });
+    const color = generateLabelColor();
+    labelOptions.unshift({ text, color });
     if (limitLabelOptions && (labelOptions.length > maxLabelOptions)) {
       labelOptions.pop();
       numberOfRemovedOptions += 1;
@@ -61,4 +66,16 @@ function getLabelOptions() {
   return labelOptions;
 }
 
-export { addToLabelOptions, getLabelOptions, sendLabelOptionToFront };
+function getLabelColor(text) {
+  for (let i = 0; i < labelOptions.length; i += 1) {
+    if (labelOptions[i].text === text) {
+      return labelOptions[i].color;
+    }
+  }
+  return { highlight: 'rgba(255,0,0,0.2)', default: 'rgba(255,0,0,0.01)' };
+}
+
+export {
+  addToLabelOptions, getLabelOptions,
+  sendLabelOptionToFront, getLabelColor,
+};

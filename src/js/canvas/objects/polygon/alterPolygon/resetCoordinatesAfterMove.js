@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 import { setPolygonLabelOffsetProps } from '../../label/label';
-import { removeShape, addShapeRef } from '../../allShapes/allShapes';
+import { removeShape, addShapeRef, getShapeColorById } from '../../allShapes/allShapes';
 
 let currentPolygon = null;
 let polygonPoints = [];
@@ -66,8 +66,9 @@ function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, pol
   canvas.add(newPolygon);
   const movedPoints = calculateMovedPointsCoordinates();
   const polygonPointsCoordinates = generateNewPoints(movedPoints);
+  const currentPolygonColor = getShapeColorById(currentPolygon.id);
   removeShape(currentPolygon.id);
-  addShapeRef(newPolygon, newPolygon.id);
+  addShapeRef(newPolygon, currentPolygonColor, newPolygon.id);
   currentPolygon = newPolygon;
   currentPolygon.set('points', polygonPointsCoordinates);
   movePolygonToNewPosition(currentPolygon, canvas);

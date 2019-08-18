@@ -1,27 +1,33 @@
-const shapeObjects = {};
+const shapes = {};
 let canvas = null;
 
-function addShapeRef(shapeObj, id) {
-  shapeObjects[id] = shapeObj;
+function addShapeRef(shapeObj, shapeColor, id) {
+  shapes[id] = { shapeRef: shapeObj, color: shapeColor };
 }
 
 function getShapeById(id) {
-  return shapeObjects[id];
+  return shapes[id].shapeRef;
+}
+
+function getShapeColorById(id) {
+  return shapes[id].color;
 }
 
 function highlightShapeFill(id) {
-  shapeObjects[id].set('fill', 'rgba(255,0,0,0.2)');
+  const highlightColor = shapes[id].color.highlight;
+  shapes[id].shapeRef.set('fill', highlightColor);
   canvas.renderAll();
 }
 
 function defaultShapeFill(id) {
-  shapeObjects[id].set('fill', 'rgba(255,0,0,0.01)');
+  const defaultColor = shapes[id].color.default;
+  shapes[id].shapeRef.set('fill', defaultColor);
   canvas.renderAll();
 }
 
 function removeShape(id) {
-  canvas.remove(shapeObjects[id]);
-  delete shapeObjects[id];
+  canvas.remove(shapes[id].shapeRef);
+  delete shapes[id];
 }
 
 function assignCanvasForShapeFillManipulation(canvasObj) {
@@ -29,6 +35,6 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 }
 
 export {
-  addShapeRef, getShapeById, highlightShapeFill, removeShape,
-  defaultShapeFill, assignCanvasForShapeFillManipulation,
+  addShapeRef, getShapeById, getShapeColorById, removeShape,
+  highlightShapeFill, defaultShapeFill, assignCanvasForShapeFillManipulation,
 };

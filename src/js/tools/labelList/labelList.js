@@ -32,10 +32,7 @@ let labelOptionsElement = null;
 // consider narrowing down the dropdown to make it more appropriate
 
 // get default font style in browser and compute dimensions accordingly
-
-// New shape popup
-// when assigning a label for a shape, make sure there are no return breaks or spaces on the edges
-
+// make sure to consider label name validations
 // escape should close the popup - more on hotkeys
 
 function findLabelListElement() {

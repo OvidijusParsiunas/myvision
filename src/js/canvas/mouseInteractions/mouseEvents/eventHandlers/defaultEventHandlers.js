@@ -1,7 +1,7 @@
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents,
-  polygonMouseOutEvents, pointMouseOverEvents, setEditPolygonEventObjects,
-  boundingBoxScalingEvents, boundingBoxMouseOutEvents,
+  shapeMouseOutEvents, shapeMouseOverEvents, setEditPolygonEventObjects,
+  boundingBoxScalingEvents,
 } from '../eventWorkers/editPolygonEventsWorker';
 
 // not just for polygon
@@ -25,18 +25,13 @@ function assignDefaultEvents(canvas, polygonId, afterAddPoints) {
   });
 
   canvas.on('mouse:over', (e) => {
-    pointMouseOverEvents(e);
+    shapeMouseOverEvents(e);
   });
 
   // edit this
   canvas.on('mouse:out', (e) => {
     if (e.target && e.target.shapeName !== 'point') {
-      if (e.target.shapeName === 'bndBox') {
-        boundingBoxMouseOutEvents(e);
-      } else if (e.target.shapeName === 'polygon') {
-        polygonMouseOutEvents(e);
-      }
-      canvas.renderAll();
+      shapeMouseOutEvents(e);
     }
   });
 }
