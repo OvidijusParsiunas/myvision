@@ -40,8 +40,6 @@ function findInitialLabelLocation(shape) {
   return locationObj;
 }
 
-// reference to shape id// reference to dropdown id
-// highlight dropdown/popup/shape
 function generateLabelShapeGroup(text) {
   targetShape.set('id', currentId);
   const initialLocation = findInitialLabelLocation(targetShape);

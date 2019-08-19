@@ -19,6 +19,7 @@ function getShapeColorById(id) {
 function changeShapeColorById(id, color) {
   shapes[id].color = color;
   shapes[id].shapeRef.set('fill', color.default);
+  shapes[id].shapeRef.set('stroke', color.stroke);
   canvas.renderAll();
 }
 
