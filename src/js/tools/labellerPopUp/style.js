@@ -58,6 +58,14 @@ function hasScrollbar() {
   return (contentOverflows && overflowShown) || (alwaysShowScroll);
 }
 
+function getLabelPopUp() {
+  return document.getElementById('label-popup-input');
+}
+
+function getLabelPopUpText() {
+  return document.getElementById('label-popup-input').value;
+}
+
 function showLabelPopUp(xCoordinate, yCoordinate) {
   const labelNamePopUp = document.getElementById('labelNamePopUp');
   const canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
@@ -75,10 +83,9 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   } else {
     labelNamePopUp.style.bottom = '';
   }
-}
-
-function getLabelPopUpText() {
-  return document.getElementById('label-popup-input').value;
+  window.setTimeout(() => {
+    getLabelPopUp().select();
+  }, 0);
 }
 
 function hideLabelPopUp() {
