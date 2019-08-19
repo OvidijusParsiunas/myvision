@@ -132,8 +132,8 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
 
 (function setProperties() {
   polygonProperties.newPolygon = {
-    stroke: 'rgba(255,0,0)',
-    strokeWidth: 1.75,
+    stroke: 'hsla(186, 8%, 50%, 1)',
+    strokeWidth: 1,
     fill: 'rgba(237, 237, 237, 0.01)',
     perPixelTargetFind: true,
     hasBorders: false,

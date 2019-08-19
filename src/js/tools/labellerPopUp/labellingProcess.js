@@ -5,7 +5,7 @@ import labelProperies from '../../canvas/objects/label/properties';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
 import { addLabelToList } from '../labelList/labelList';
 import { addToLabelOptions, getLabelOptions, getLabelColor } from '../labelList/labelOptions';
-import { addShapeRef } from '../../canvas/objects/allShapes/allShapes';
+import { addShape } from '../../canvas/objects/allShapes/allShapes';
 
 let labellingState = false;
 let targetShape = null;
@@ -50,8 +50,7 @@ function generateLabelShapeGroup(text) {
   canvas.bringToFront(textShape);
   addToLabelOptions(textShape.text);
   const shapeColor = getLabelColor(textShape.text);
-  targetShape.set('fill', shapeColor.default);
-  addShapeRef(targetShape, shapeColor, currentId);
+  addShape(targetShape, shapeColor, currentId);
   addLabelRef(textShape, currentId);
   addLabelToList(textShape.text, currentId);
   currentId += 1;

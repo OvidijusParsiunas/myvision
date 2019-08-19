@@ -8,7 +8,7 @@ function getTempBoundingBoxProps(coordinates) {
   return {
     left: coordinates.origX,
     top: coordinates.origY,
-    stroke: 'rgba(255,0,0)',
+    stroke: 'hsla(112, 57%, 50%, 1)',
     strokeWidth: 2,
     fill: 'rgba(255,0,0,0)',
     shapeName: 'bndBoxTemp',
@@ -20,7 +20,6 @@ function getTempBoundingBoxProps(coordinates) {
 (function setProperties() {
   boundingBoxProps.tempBoundingBoxProps = getTempBoundingBoxProps;
   boundingBoxProps.finalBoundingBoxProps = {
-    fill: 'rgba(255,0,0,0)',
     shapeName: 'bndBox',
     objectCaching: false,
     selectable: false,

@@ -1,5 +1,5 @@
 const defaultLabelOptions = [
-  { text: 'dog', color: { highlight: 'red', default: 'yellow' } },
+  { text: 'dog', color: { highlight: 'red', default: 'hsl(130, 100%, 50%)' } },
   { text: 'cat', color: { highlight: 'black', default: 'grey' } },
   { text: 'chicken', color: { highlight: 'blue', default: 'purple' } },
   { text: 'dolphin', color: 'yellow' },
@@ -35,8 +35,27 @@ function sendLabelOptionToFront(id) {
   labelOptions[0] = firstObjectRef;
 }
 
-function generateLabelColor() {
-  return { default: 'blue', highlight: 'green' };
+function randomLightnessValue() {
+  return Math.floor(Math.random() * (80 - 50) + 50);
+}
+
+function randomSaturationValue() {
+  return Math.floor(Math.random() * (100 - 70) + 70);
+}
+
+function randomHueValue() {
+  return Math.floor(Math.random() * (320 - 0) + 0);
+}
+
+function generateRandomHSLColor() {
+  // Returns an array of 3 values for rgb
+  const hue = randomHueValue();
+  const saturation = randomSaturationValue();
+  const lightness = randomLightnessValue();
+  const defaultFill = `hsl(${hue},${saturation}%,${lightness}%,0.01)`;
+  const highlightFill = `hsl(${hue},${saturation}%,${lightness}%,0.3)`;
+  const strokeFill = `hsl(${hue},${saturation}%,${lightness}%)`;
+  return { default: defaultFill, highlight: highlightFill, stroke: strokeFill };
 }
 
 function addToLabelOptions(text) {
@@ -50,7 +69,7 @@ function addToLabelOptions(text) {
   if (foundAtIndex !== undefined) {
     sendLabelOptionToFront(foundAtIndex);
   } else {
-    const color = generateLabelColor();
+    const color = generateRandomHSLColor();
     labelOptions.unshift({ text, color });
     if (limitLabelOptions && (labelOptions.length > maxLabelOptions)) {
       labelOptions.pop();
@@ -72,7 +91,7 @@ function getLabelColor(text) {
       return labelOptions[i].color;
     }
   }
-  return { highlight: 'rgba(255,0,0,0.2)', default: 'rgba(255,0,0,0.01)' };
+  return { highlight: 'hsl(0, 100%, 50%, 0.2)', default: 'hsl(0, 100%, 50%, 0.01)' };
 }
 
 export {
