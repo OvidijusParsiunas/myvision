@@ -1,3 +1,6 @@
+let latestHueColorValueChosenRandomly = false;
+let latestHueColorValue = 0;
+
 const defaultLabelOptions = [
   { text: 'dog', color: { highlight: 'red', default: 'hsl(130, 100%, 50%)' } },
   { text: 'cat', color: { highlight: 'black', default: 'grey' } },
@@ -36,7 +39,7 @@ function sendLabelOptionToFront(id) {
 }
 
 function randomLightnessValue() {
-  return Math.floor(Math.random() * (80 - 50) + 50);
+  return Math.floor(Math.random() * (70 - 40) + 40);
 }
 
 function randomSaturationValue() {
@@ -44,9 +47,11 @@ function randomSaturationValue() {
 }
 
 function randomHueValue() {
-  return Math.floor(Math.random() * (320 - 0) + 0);
+  return Math.floor(Math.random() * (360 - 0) + 0);
 }
 
+// list of label shades
+// reorder on startup
 function generateRandomHSLColor() {
   // Returns an array of 3 values for rgb
   const hue = randomHueValue();
@@ -55,7 +60,13 @@ function generateRandomHSLColor() {
   const defaultFill = `hsl(${hue},${saturation}%,${lightness}%,0.01)`;
   const highlightFill = `hsl(${hue},${saturation}%,${lightness}%,0.3)`;
   const strokeFill = `hsl(${hue},${saturation}%,${lightness}%)`;
-  return { default: defaultFill, highlight: highlightFill, stroke: strokeFill };
+  const labelOptionFill = `hsl(${hue},${saturation}%,${lightness}%, 0.2)`;
+  return {
+    default: defaultFill,
+    highlight: highlightFill,
+    stroke: strokeFill,
+    label: labelOptionFill,
+  };
 }
 
 function addToLabelOptions(text) {

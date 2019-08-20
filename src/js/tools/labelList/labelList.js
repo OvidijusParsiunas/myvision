@@ -86,9 +86,9 @@ function repopulateDropdown() {
   }
 }
 
-function createLabelElementMarkup(labelText, id) {
+function createLabelElementMarkup(labelText, id, backgroundColor) {
   return `
-  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem">
+  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
     <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
       <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
@@ -517,10 +517,10 @@ window.onmousedown = (event) => {
 //   setEndOfContentEditable(activeLabelTextElement);
 // }, 0);
 
-function addLabelToList(labelText, id) {
+function addLabelToList(labelText, id, labelColor) {
   const labelElement = initialiseParentElement();
   labelElement.id = id;
-  labelElement.innerHTML = createLabelElementMarkup(labelText, id);
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor);
   const newRow = tableElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);

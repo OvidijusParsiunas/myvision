@@ -50,7 +50,7 @@ function generateLabelShapeGroup(text) {
   const shapeColor = getLabelColor(textShape.text);
   addShape(targetShape, shapeColor, currentId);
   addLabelRef(textShape, currentId);
-  addLabelToList(textShape.text, currentId);
+  addLabelToList(textShape.text, currentId, shapeColor.label);
   currentId += 1;
 }
 
