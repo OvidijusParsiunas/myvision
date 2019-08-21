@@ -1,5 +1,24 @@
-let latestHueColorValueChosenRandomly = false;
-let latestHueColorValue = 0;
+let defaultShapeColorIndex = 0;
+
+const defaultShapeColors = [
+  'hsl(0, 100%, 48%',
+  'hsl(321, 94%, 34%',
+  'hsl(175,75%,51%',
+  'hsl(241,86%,49%',
+  'hsl(64,99%,40%',
+  'hsl(45,77%,53%',
+  'hsl(106, 85%, 49%',
+  'hsl(355, 80%, 56%',
+  'hsl(154, 98%, 54%',
+  'hsl(182, 46%, 60%',
+  'hsl(7, 93%, 41%',
+  'hsl(220, 65%, 39%',
+  'hsl(121, 60%, 39%',
+  'hsl(230, 65%, 39%',
+  'hsl(21, 65%, 33%',
+  'hsl(82, 100%, 33%',
+  'hsl(294, 100%, 37%',
+];
 
 const defaultLabelOptions = [
   { text: 'dog', color: { highlight: 'red', default: 'hsl(130, 100%, 50%)' } },
@@ -14,6 +33,12 @@ const labelOptions = defaultLabelOptions;
 let limitLabelOptions = true;
 let numberOfRemovedOptions = 0;
 const maxLabelOptions = 6;
+
+function getNewShapeColor() {
+  const palletteColor = defaultShapeColors[defaultShapeColorIndex];
+  defaultShapeColorIndex += 1;
+  return palletteColor;
+}
 
 function terminateLimitIfUsingDefault(id) {
   const selectedOption = labelOptions[id];
@@ -38,6 +63,7 @@ function sendLabelOptionToFront(id) {
   labelOptions[0] = firstObjectRef;
 }
 
+
 function randomLightnessValue() {
   return Math.floor(Math.random() * (70 - 40) + 40);
 }
@@ -50,23 +76,41 @@ function randomHueValue() {
   return Math.floor(Math.random() * (360 - 0) + 0);
 }
 
-// list of label shades
-// reorder on startup
-function generateRandomHSLColor() {
-  // Returns an array of 3 values for rgb
-  const hue = randomHueValue();
-  const saturation = randomSaturationValue();
-  const lightness = randomLightnessValue();
-  const defaultFill = `hsl(${hue},${saturation}%,${lightness}%,0.01)`;
-  const highlightFill = `hsl(${hue},${saturation}%,${lightness}%,0.3)`;
-  const strokeFill = `hsl(${hue},${saturation}%,${lightness}%)`;
-  const labelOptionFill = `hsl(${hue},${saturation}%,${lightness}%, 0.2)`;
+function getDefaultShapeColor() {
+  const rawHslColor = getNewShapeColor();
+  const defaultFill = `${rawHslColor},0.01)`;
+  const highlightFill = `${rawHslColor},0.3)`;
+  const strokeFill = `${rawHslColor})`;
+  const labelOptionFill = `${rawHslColor},0.28)`;
   return {
     default: defaultFill,
     highlight: highlightFill,
     stroke: strokeFill,
     label: labelOptionFill,
   };
+}
+
+function getRandomlyGeneratedShapeColor() {
+  const hue = randomHueValue();
+  const saturation = randomSaturationValue();
+  const lightness = randomLightnessValue();
+  const defaultFill = `hsl(${hue},${saturation}%,${lightness}%,0.01)`;
+  const highlightFill = `hsl(${hue},${saturation}%,${lightness}%,0.3)`;
+  const strokeFill = `hsl(${hue},${saturation}%,${lightness}%)`;
+  const labelOptionFill = `hsl(${hue},${saturation}%,${lightness}%, 0.28)`;
+  return {
+    default: defaultFill,
+    highlight: highlightFill,
+    stroke: strokeFill,
+    label: labelOptionFill,
+  };
+}
+
+function generateRandomHSLColor() {
+  if (defaultShapeColorIndex < 17) {
+    return getDefaultShapeColor();
+  }
+  return getRandomlyGeneratedShapeColor();
 }
 
 function addToLabelOptions(text) {
@@ -105,7 +149,13 @@ function getLabelColor(text) {
   return { highlight: 'hsl(0, 100%, 50%, 0.2)', default: 'hsl(0, 100%, 50%, 0.01)' };
 }
 
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
+shuffle(defaultShapeColors);
+
 export {
-  addToLabelOptions, getLabelOptions,
-  sendLabelOptionToFront, getLabelColor,
+  addToLabelOptions, sendLabelOptionToFront,
+  getLabelOptions, getNewShapeColor, getLabelColor,
 };

@@ -1,5 +1,6 @@
 let labelListElement = null;
 let currentlyHighlightedElement = null;
+let highlightedElementOriginalColor = null;
 
 function setLabelListElementForHighlights(labelListElementRef) {
   labelListElement = labelListElementRef;
@@ -7,7 +8,7 @@ function setLabelListElementForHighlights(labelListElementRef) {
 
 function removeHighlightOfListLabel() {
   if (currentlyHighlightedElement !== null) {
-    currentlyHighlightedElement.style.backgroundColor = null;
+    currentlyHighlightedElement.style.backgroundColor = highlightedElementOriginalColor;
   } else {
     currentlyHighlightedElement = null;
   }
@@ -16,7 +17,16 @@ function removeHighlightOfListLabel() {
 function highlightLabelInTheList(id) {
   removeHighlightOfListLabel();
   [currentlyHighlightedElement] = labelListElement.getElementsByClassName(`label${id}`);
-  currentlyHighlightedElement.style.backgroundColor = '#ededed';
+  highlightedElementOriginalColor = currentlyHighlightedElement.style.backgroundColor;
+  const highlightColor = `${highlightedElementOriginalColor.substring(0, highlightedElementOriginalColor.length - 5)} 0.6)`;
+  currentlyHighlightedElement.style.backgroundColor = highlightColor;
 }
 
-export { setLabelListElementForHighlights, highlightLabelInTheList, removeHighlightOfListLabel };
+function changeLabelColor(color) {
+  highlightedElementOriginalColor = color;
+}
+
+export {
+  setLabelListElementForHighlights, changeLabelColor,
+  highlightLabelInTheList, removeHighlightOfListLabel,
+};

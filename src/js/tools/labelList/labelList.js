@@ -11,7 +11,8 @@ import {
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import {
-  removeHighlightOfListLabel, setLabelListElementForHighlights, highlightLabelInTheList,
+  setLabelListElementForHighlights, changeLabelColor,
+  removeHighlightOfListLabel, highlightLabelInTheList,
 } from './highlightLabelList';
 import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 import {
@@ -457,6 +458,7 @@ function addNewLabelToLabelOptions(text) {
     addToLabelOptions(text);
     const newLabelColor = getLabelColor(text);
     changeShapeColorById(activeLabelId, newLabelColor);
+    changeLabelColor(newLabelColor.label);
     repopulateDropdown();
     updateLabellerPopupOptionsList();
   }
@@ -474,6 +476,7 @@ function moveSelectedLabelToFrontOfLabelOptions(id, text) {
     sendLabelOptionToFront(id);
     const newLabelColor = getLabelColor(text);
     changeShapeColorById(activeLabelId, newLabelColor);
+    changeLabelColor(newLabelColor.label);
     repopulateDropdown();
     updateLabellerPopupOptionsList();
   }
