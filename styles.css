@@ -55,7 +55,6 @@
 
 .dropdown-content div:hover {
   cursor: default;
-  background-color: grey;
 }
 
 .labelDropdownOption {

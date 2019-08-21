@@ -6,9 +6,9 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
-function addLabelToList(labelText) {
+function addLabelToList(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
   const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
@@ -23,7 +23,8 @@ function deleteAndAddLastRowToRefreshDiv() {
     addLabelToList('temp horizontal');
   }
   window.setTimeout(() => {
-    addLabelToList(labelOptions[labelOptions.length - 1].text);
+    const label = labelOptions[labelOptions.length - 1];
+    addLabelToList(label.text, label.color.label);
     if (labelOptions.length === 7) {
       labellerPopupLabelOptionsElement.deleteRow(6);
     }
@@ -95,7 +96,7 @@ function hideLabelPopUp() {
 function initialiseLabelPopupOptionsList() {
   labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
   getLabelOptions().forEach((option) => {
-    addLabelToList(option.text);
+    addLabelToList(option.text, option.color.label);
   });
 }
 

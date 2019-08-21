@@ -58,9 +58,9 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
-function addLabelToLists(labelText) {
+function addLabelToLists(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
   const newRow = labelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
@@ -73,7 +73,7 @@ function purgeOptionsFromLabelElement() {
 
 function resetLabelOptions() {
   purgeOptionsFromLabelElement();
-  getLabelOptions().forEach((label) => { addLabelToLists(label.text); });
+  getLabelOptions().forEach((label) => { addLabelToLists(label.text, label.color.label); });
 }
 
 function getTrimmedLabelText() {
