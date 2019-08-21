@@ -21,11 +21,11 @@ const defaultShapeColors = [
 ];
 
 const defaultLabelOptions = [
-  { text: 'dog', color: { highlight: 'red', default: 'hsl(130, 100%, 50%)' } },
-  { text: 'cat', color: { highlight: 'black', default: 'grey' } },
-  { text: 'chicken', color: { highlight: 'blue', default: 'purple' } },
-  { text: 'dolphin', color: 'yellow' },
-  { text: 'panda', color: 'purple' },
+  { text: 'dog', default: true, color: { highlight: 'red', default: 'hsl(130, 100%, 50%)' } },
+  { text: 'cat', default: true, color: { highlight: 'black', default: 'grey' } },
+  { text: 'chicken', default: true, color: { highlight: 'blue', default: 'purple' } },
+  { text: 'dolphin', default: true, color: 'yellow' },
+  { text: 'panda', default: true, color: 'purple' },
 ];
 
 const labelOptions = defaultLabelOptions;
@@ -41,16 +41,18 @@ function getNewShapeColor() {
 }
 
 function terminateLimitIfUsingDefault(id) {
-  const selectedOption = labelOptions[id];
-  let contains = false;
-  for (let i = 0; i < labelOptions.length; i += 1) {
-    if (selectedOption.text === labelOptions[i].text) {
-      contains = true;
-      break;
+  if (limitLabelOptions) {
+    const selectedOption = labelOptions[id];
+    let contains = false;
+    for (let i = 0; i < labelOptions.length; i += 1) {
+      if (selectedOption.text === labelOptions[i].text && labelOptions[i].default === true) {
+        contains = true;
+        break;
+      }
     }
-  }
-  if (contains) {
-    limitLabelOptions = false;
+    if (contains) {
+      limitLabelOptions = false;
+    }
   }
 }
 

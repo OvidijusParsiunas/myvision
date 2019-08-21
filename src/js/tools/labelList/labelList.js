@@ -80,7 +80,6 @@ function createNewDropdown() {
 }
 
 window.hoverLabelOption = (element, color) => {
-  console.log(color);
   element.style.backgroundColor = color;
 };
 
