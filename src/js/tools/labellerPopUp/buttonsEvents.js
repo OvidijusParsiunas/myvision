@@ -6,6 +6,7 @@ import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 
 let textInputElement = null;
+let currentlySelectedLabelOption = null;
 
 function labelShape() {
   createLabelShape();
@@ -30,7 +31,13 @@ function prepareLabelPopupTextInput() {
   textInputElement = document.getElementById('label-popup-input');
 }
 
-function selectLabelOption(text) {
+function selectLabelOption(text, element) {
+  if (currentlySelectedLabelOption) {
+    currentlySelectedLabelOption.id = '';
+    currentlySelectedLabelOption.style.background = '';
+  }
+  element.id = 'used';
+  currentlySelectedLabelOption = element;
   textInputElement.value = text;
 }
 

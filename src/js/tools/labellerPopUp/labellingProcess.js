@@ -60,7 +60,7 @@ function initialiseParentElement() {
 
 function addLabelToLists(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
   const newRow = labelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);

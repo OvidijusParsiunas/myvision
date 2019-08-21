@@ -84,7 +84,9 @@ window.hoverLabelOption = (element, color) => {
 };
 
 window.labelOptionMouseOut = (element) => {
-  element.style.backgroundColor = '';
+  if (element.id !== 'used') {
+    element.style.backgroundColor = '';
+  }
 };
 
 function repopulateDropdown() {
