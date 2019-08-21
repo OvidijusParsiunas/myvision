@@ -97,7 +97,7 @@ function getRandomlyGeneratedShapeColor() {
   const defaultFill = `hsl(${hue},${saturation}%,${lightness}%,0.01)`;
   const highlightFill = `hsl(${hue},${saturation}%,${lightness}%,0.3)`;
   const strokeFill = `hsl(${hue},${saturation}%,${lightness}%)`;
-  const labelOptionFill = `hsl(${hue},${saturation}%,${lightness}%, 0.28)`;
+  const labelOptionFill = `hsl(${hue},${saturation}%,${lightness}%, 0.25)`;
   return {
     default: defaultFill,
     highlight: highlightFill,

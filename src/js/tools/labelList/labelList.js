@@ -72,12 +72,21 @@ function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
   let dropdown = '<tbody>';
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
-    const dropdownElement = `<tr><td><div id="labelOption${i}" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
+    const dropdownElement = `<tr><td><div id="labelOption${i}" onMouseEnter="hoverLabelOption(this, '${labelDropdownOptions[i].color.label}')" onMouseLeave="labelOptionMouseOut(this)" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
     dropdown += dropdownElement;
   }
   dropdown += '</tbody>';
   return dropdown;
 }
+
+window.hoverLabelOption = (element, color) => {
+  console.log(color);
+  element.style.backgroundColor = color;
+};
+
+window.labelOptionMouseOut = (element) => {
+  element.style.backgroundColor = '';
+};
 
 function repopulateDropdown() {
   const dropdown = createNewDropdown();
@@ -280,7 +289,9 @@ function deleteAndAddLastRowToRefreshDiv(dropdownLabelsElement) {
     addLabelToDropdown('temp horizontal', dropdownLabelsElement);
   }
   window.setTimeout(() => {
-    addLabelToDropdown(labelOptions[labelOptions.length - 1].text, dropdownLabelsElement, labelOptions.length - 1);
+    const lastLabel = labelOptions[labelOptions.length - 1];
+    addLabelToDropdown(lastLabel.text, dropdownLabelsElement,
+      labelOptions.length - 1, lastLabel.color.label);
     if (labelOptions.length === 7) {
       dropdownLabelsElement.deleteRow(6);
     }
@@ -424,9 +435,9 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
-function addLabelToDropdown(labelText, tempEle, id) {
+function addLabelToDropdown(labelText, tempEle, id, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
   const newRow = tempEle.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);

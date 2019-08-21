@@ -24,6 +24,7 @@ function highlightLabelInTheList(id) {
 
 function changeLabelColor(color) {
   highlightedElementOriginalColor = color;
+  currentlyHighlightedElement.style.backgroundColor = color;
 }
 
 export {
