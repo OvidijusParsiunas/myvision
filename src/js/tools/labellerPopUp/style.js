@@ -1,6 +1,7 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 
 let labellerPopupLabelOptionsElement = null;
+let baseDiv = null;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -67,7 +68,14 @@ function getLabelPopUpText() {
   return document.getElementById('label-popup-input').value;
 }
 
+function dimWindow() {
+  baseDiv = document.getElementById('base-div');
+  baseDiv.style.position = 'absolute';
+  baseDiv.style.backgroundColor = 'rgba(0,0,0,0.2)';
+}
+
 function showLabelPopUp(xCoordinate, yCoordinate) {
+  dimWindow();
   const labelNamePopUp = document.getElementById('labelNamePopUp');
   const canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
   const canvasY = canvasWrapperCoordinates.top;
@@ -90,7 +98,16 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   }, 0);
 }
 
+function lightUpWindow() {
+  baseDiv = document.getElementById('base-div');
+  baseDiv.style.backgroundColor = 'rgba(0,0,0,0)';
+  window.setTimeout(() => {
+    baseDiv.style.position = '';
+  }, 500);
+}
+
 function hideLabelPopUp() {
+  lightUpWindow();
   document.getElementById('labelNamePopUp').style.display = 'none';
 }
 

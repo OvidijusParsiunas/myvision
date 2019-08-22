@@ -136,6 +136,25 @@
   height: 40vh;
 }
 
+#base-div {
+  width: 98%;
+  height: 98%;
+  pointer-events: none;
+  background-color: '';
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  transition-timing-function: linear;
+  -webkit-transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-property: background-color;
+  -moz-transition-duration: 0.5s;
+  -moz-transition-timing-function: linear;
+  -o-transition-property: background-color;
+  -o-transition-duration: 0.5s;
+  -o-transition-timing-function: linear;
+}
+
 .labelListItem {
   padding-bottom: 1px;
 }
