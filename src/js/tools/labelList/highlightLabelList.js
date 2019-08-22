@@ -20,6 +20,7 @@ function highlightLabelInTheList(id) {
   highlightedElementOriginalColor = currentlyHighlightedElement.style.backgroundColor;
   const highlightColor = `${highlightedElementOriginalColor.substring(0, highlightedElementOriginalColor.length - 5)} 0.6)`;
   currentlyHighlightedElement.style.backgroundColor = highlightColor;
+  currentlyHighlightedElement.scrollIntoView();
 }
 
 function changeLabelColor(color) {

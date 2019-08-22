@@ -139,6 +139,7 @@
 #base-div {
   width: 98%;
   height: 98%;
+  z-index: 1;
   pointer-events: none;
   background-color: '';
   transition-property: background-color;

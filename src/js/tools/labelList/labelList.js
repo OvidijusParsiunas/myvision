@@ -1,6 +1,7 @@
-import { changeObjectLabelText } from '../../canvas/objects/label/label';
+import { changeObjectLabelText, setLabelVisibilityById } from '../../canvas/objects/label/label';
 import {
-  highlightShapeFill, defaultShapeFill, getShapeById, changeShapeColorById,
+  highlightShapeFill, defaultShapeFill, getShapeById,
+  changeShapeColorById, setShapeVisibilityById,
 } from '../../canvas/objects/allShapes/allShapes';
 import {
   setEditingLabelId, setNewShapeSelectedViaLabelListState,
@@ -20,6 +21,7 @@ import {
 } from './labelOptions';
 
 let isLabelSelected = false;
+let isVisibilitySelected = false;
 let activeDropdownElements = null;
 let activeLabelTextElement = null;
 let activeLabelId = null;
@@ -35,6 +37,7 @@ let labelOptionsElement = null;
 // refactor label popup label options element manipulation code
 
 // consider narrowing down the dropdown to make it more appropriate
+// should be able to select labels in add/remove point modes
 
 // get default font style in browser and compute dimensions accordingly
 // make sure to consider label name validations
@@ -100,7 +103,7 @@ function repopulateDropdown() {
 function createLabelElementMarkup(labelText, id, backgroundColor) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
-    <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" style="float:left; user-select: none; padding-right: 5px">
+    <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" onClick="visibilityBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
       <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
     </div>
@@ -348,7 +351,9 @@ window.labelBtnClick = (id) => {
   }
   highlightLabelInTheList(id);
   activeShape = getShapeById(id);
-  selectShape();
+  if (!isVisibilitySelected) {
+    selectShape();
+  }
 };
 
 function initiateEditing(id) {
@@ -383,6 +388,12 @@ function editLabel(id, element) {
     switchToHighlightedActiveIcon(element);
   }
 }
+
+window.visibilityBtnClick = (id) => {
+  setShapeVisibilityById(id, false);
+  setLabelVisibilityById(id, false);
+  isVisibilitySelected = true;
+};
 
 window.labelDblClicked = (id) => {
   initLabelEditing(id);

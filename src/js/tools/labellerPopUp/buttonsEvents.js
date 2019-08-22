@@ -61,6 +61,7 @@ window.popupInputKeyDown = (event) => {
           currentlySelectedLabelOption = popupLabelOptionsList[i].childNodes[0].childNodes[0].childNodes[0];
           currentlySelectedLabelOption.style.backgroundColor = getLabelOptions()[i].color.label;
           currentlySelectedLabelOption.id = 'used';
+          currentlySelectedLabelOption.scrollIntoView();
           break;
         }
       }

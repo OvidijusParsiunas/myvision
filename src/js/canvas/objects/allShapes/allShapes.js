@@ -2,7 +2,7 @@ const shapes = {};
 let canvas = null;
 
 function addShape(shapeObj, shapeColor, id) {
-  shapes[id] = { shapeRef: shapeObj, color: shapeColor };
+  shapes[id] = { shapeRef: shapeObj, color: shapeColor, visibility: true };
   shapes[id].shapeRef.set('fill', shapeColor.default);
   shapes[id].shapeRef.set('stroke', shapeColor.stroke);
   shapes[id].shapeRef.set('strokeWidth', 1.75);
@@ -14,6 +14,10 @@ function getShapeById(id) {
 
 function getShapeColorById(id) {
   return shapes[id].color;
+}
+
+function setShapeVisibilityById(id, state) {
+  shapes[id].shapeRef.visible = state;
 }
 
 function changeShapeColorById(id, color) {
@@ -45,6 +49,7 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 }
 
 export {
-  addShape, getShapeById, getShapeColorById, changeShapeColorById, removeShape,
-  highlightShapeFill, defaultShapeFill, assignCanvasForShapeFillManipulation,
+  getShapeById, getShapeColorById, changeShapeColorById,
+  addShape, removeShape, highlightShapeFill, defaultShapeFill,
+  setShapeVisibilityById, assignCanvasForShapeFillManipulation,
 };

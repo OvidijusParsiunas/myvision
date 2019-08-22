@@ -71,7 +71,7 @@ function getLabelPopUpText() {
 function dimWindow() {
   baseDiv = document.getElementById('base-div');
   baseDiv.style.position = 'absolute';
-  baseDiv.style.backgroundColor = 'rgba(0,0,0,0.2)';
+  baseDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
 }
 
 function showLabelPopUp(xCoordinate, yCoordinate) {
