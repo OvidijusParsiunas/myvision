@@ -86,6 +86,7 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   }
   window.setTimeout(() => {
     getLabelPopUp().select();
+    window.popupInputKeyDown({ key: 'stub' });
   }, 0);
 }
 
