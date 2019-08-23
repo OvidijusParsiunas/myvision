@@ -1,14 +1,15 @@
-import { changeObjectLabelText, setLabelVisibilityById } from '../../canvas/objects/label/label';
+import { changeObjectLabelText, changeLabelVisibilityById } from '../../canvas/objects/label/label';
 import {
-  highlightShapeFill, defaultShapeFill, getShapeById,
-  changeShapeColorById, setShapeVisibilityById,
+  highlightShapeFill, defaultShapeFill, changeShapeColorById,
+  getShapeById, changeShapeVisibilityById, getShapeVisibilityById,
 } from '../../canvas/objects/allShapes/allShapes';
+import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
   setEditingLabelId, setNewShapeSelectedViaLabelListState,
   getDefaultState, getAddingPolygonPointsState,
 } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import {
-  polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId,
+  polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import {
@@ -352,7 +353,20 @@ window.labelBtnClick = (id) => {
   highlightLabelInTheList(id);
   activeShape = getShapeById(id);
   if (!isVisibilitySelected) {
-    selectShape();
+    if (getShapeVisibilityById(id)) {
+      selectShape();
+    } else if (activeShape.shapeName === 'bndBox') {
+      programaticallyDeselectBoundingBox();
+    } else {
+      removePolygonPoints();
+      removeEditedPolygonId();
+    }
+  } else {
+    removePolygonPoints();
+    if (activeShape.shapeName === 'bndBox') {
+      programaticallyDeselectBoundingBox();
+    }
+    isVisibilitySelected = false;
   }
 };
 
@@ -390,8 +404,8 @@ function editLabel(id, element) {
 }
 
 window.visibilityBtnClick = (id) => {
-  setShapeVisibilityById(id, false);
-  setLabelVisibilityById(id, false);
+  changeShapeVisibilityById(id);
+  changeLabelVisibilityById(id);
   isVisibilitySelected = true;
 };
 
@@ -553,6 +567,7 @@ function addLabelToList(labelText, id, labelColor) {
   // scroll to left on new shape insert in order to see available funcitonality
   tableElement.scrollLeft = 0;
   repopulateDropdown();
+  cell.scrollIntoView();
 }
 
 function removeLabelFromList(id) {

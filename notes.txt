@@ -17,3 +17,5 @@ change cursor modes name convention
 when finished creating polygon, have popup option to go back to editing
 
 should alert the user when unsaved changes before leaving
+
+polyfill for scrollIntoViewIfNeeded for all browsers (only chrome right now)

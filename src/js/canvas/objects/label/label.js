@@ -29,8 +29,8 @@ function changeObjectLabelText(id, text) {
   canvas.renderAll();
 }
 
-function setLabelVisibilityById(id, state) {
-  labelObjects[id].visible = state;
+function changeLabelVisibilityById(id) {
+  labelObjects[id].visible = !labelObjects[id].visible;
   canvas.renderAll();
 }
 
@@ -48,5 +48,5 @@ function assignCanvasForLabelManipulation(canvasObj) {
 export {
   setPolygonLabelOffsetProps, getLabelById, addLabelRef,
   setAllLabelsVisibilityProperty, removeLabel, changeObjectLabelText,
-  assignCanvasForLabelManipulation, setLabelVisibilityById,
+  assignCanvasForLabelManipulation, changeLabelVisibilityById,
 };

@@ -16,8 +16,12 @@ function getShapeColorById(id) {
   return shapes[id].color;
 }
 
-function setShapeVisibilityById(id, state) {
-  shapes[id].shapeRef.visible = state;
+function changeShapeVisibilityById(id) {
+  shapes[id].shapeRef.visible = !shapes[id].shapeRef.visible;
+}
+
+function getShapeVisibilityById(id) {
+  return shapes[id].shapeRef.visible;
 }
 
 function changeShapeColorById(id, color) {
@@ -51,5 +55,6 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 export {
   getShapeById, getShapeColorById, changeShapeColorById,
   addShape, removeShape, highlightShapeFill, defaultShapeFill,
-  setShapeVisibilityById, assignCanvasForShapeFillManipulation,
+  changeShapeVisibilityById, assignCanvasForShapeFillManipulation,
+  getShapeVisibilityById,
 };
