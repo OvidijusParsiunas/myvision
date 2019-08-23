@@ -10,7 +10,7 @@ import {
 } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
-  programaticallySelectBoundingBox, programaticallyDeselectBoundingBox,
+  programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import {
   setLabelListElementForHighlights, changeLabelColor,
@@ -105,9 +105,11 @@ function repopulateDropdown() {
 function createLabelElementMarkup(labelText, id, backgroundColor) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
-    <div id="visibilityButton${id}" onMouseEnter="mouseEnterOnVisibility(this)" onMouseLeave="mouseLeaveOnVisibility(this)" onClick="visibilityBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
+    <div id="default" onMouseEnter="mouseEnterOnVisibility(id, this)" onMouseLeave="mouseLeaveOnVisibility(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
       <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
+      <img src="invisible-button.svg" style="width:10px; display: none" alt="visibility">
+      <img src="invisible-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
     </div>
     <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
@@ -172,12 +174,25 @@ function switchToHighlightedDefaultIcon() {
   activeEditLabelButton.childNodes[7].style.display = 'none';
 }
 
-window.mouseEnterOnVisibility = (element) => {
-  highlightDefaultIcon(element);
+function switchToHighlightedDefaultVisibilityIcon(element) {
+  element.childNodes[3].style.display = '';
+  element.childNodes[7].style.display = 'none';
+}
+
+window.mouseEnterOnVisibility = (id, element) => {
+  if (id === 'default') {
+    highlightDefaultIcon(element);
+  } else {
+    highlightActiveIcon(element);
+  }
 };
 
-window.mouseLeaveOnVisibility = (element) => {
-  dimDefaultIcon(element);
+window.mouseLeaveOnVisibility = (id, element) => {
+  if (id === 'default') {
+    dimDefaultIcon(element);
+  } else {
+    dimActiveIcon(element);
+  }
 };
 
 window.mouseEnterOnLabelEdit = (element) => {
@@ -361,6 +376,7 @@ window.labelBtnClick = (id) => {
     } else {
       removePolygonPoints();
       removeEditedPolygonId();
+      setShapeToInvisible();
     }
   } else {
     if (isVisibilityRestored) {
@@ -368,6 +384,7 @@ window.labelBtnClick = (id) => {
     } else {
       removePolygonPoints();
       removeEditedPolygonId();
+      setShapeToInvisible();
       if (activeShape.shapeName === 'bndBox') {
         programaticallyDeselectBoundingBox();
       }
@@ -409,10 +426,17 @@ function editLabel(id, element) {
   }
 }
 
-window.visibilityBtnClick = (id) => {
+window.visibilityBtnClick = (id, element) => {
   changeShapeVisibilityById(id);
   isVisibilityRestored = changeLabelVisibilityById(id);
   isVisibilitySelected = true;
+  if (element.id === 'default') {
+    element.id = 'highlighted';
+    switchToHighlightedActiveIcon(element);
+  } else {
+    element.id = 'default';
+    switchToHighlightedDefaultVisibilityIcon(element);
+  }
 };
 
 window.labelDblClicked = (id) => {

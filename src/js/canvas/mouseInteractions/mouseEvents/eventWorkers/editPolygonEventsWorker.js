@@ -19,6 +19,7 @@ let polygonMoved = false;
 let labelObject = null;
 let polygonPointMoved = false;
 let selectedShapeId = null;
+let shapeSetToInvisible = false;
 let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
 let finishedAddingNewPoints = false;
@@ -154,8 +155,9 @@ function polygonMouseUpEvents(event) {
   } else if (!event.target && getPolygonEditingStatus()) {
     removeHighlightOfListLabel();
     setPolygonNotEditableOnClick();
-  } else if (selectedShapeId != null) {
+  } else if (selectedShapeId != null || shapeSetToInvisible) {
     removeHighlightOfListLabel();
+    shapeSetToInvisible = false;
   }
 }
 
@@ -197,6 +199,11 @@ function shapeMouseOverEvents(event) {
 
 function removeEditedPolygonId() {
   selectedShapeId = null;
+}
+
+function setShapeToInvisible() {
+  selectedShapeId = null;
+  shapeSetToInvisible = true;
 }
 
 function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
@@ -242,6 +249,6 @@ export {
   polygonMoveEvents, removeEditedPolygonId,
   shapeMouseOutEvents, shapeMouseOverEvents,
   setEditPolygonEventObjects, boundingBoxScalingEvents,
-  programaticallySelectBoundingBox,
+  programaticallySelectBoundingBox, setShapeToInvisible,
   programaticallyDeselectBoundingBox, getLastSelectedShapeId,
 };
