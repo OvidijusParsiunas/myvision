@@ -23,6 +23,7 @@ import {
 
 let isLabelSelected = false;
 let isVisibilitySelected = false;
+let isVisibilityRestored = false;
 let activeDropdownElements = null;
 let activeLabelTextElement = null;
 let activeLabelId = null;
@@ -362,9 +363,14 @@ window.labelBtnClick = (id) => {
       removeEditedPolygonId();
     }
   } else {
-    removePolygonPoints();
-    if (activeShape.shapeName === 'bndBox') {
-      programaticallyDeselectBoundingBox();
+    if (isVisibilityRestored) {
+      selectShape();
+    } else {
+      removePolygonPoints();
+      removeEditedPolygonId();
+      if (activeShape.shapeName === 'bndBox') {
+        programaticallyDeselectBoundingBox();
+      }
     }
     isVisibilitySelected = false;
   }
@@ -405,7 +411,7 @@ function editLabel(id, element) {
 
 window.visibilityBtnClick = (id) => {
   changeShapeVisibilityById(id);
-  changeLabelVisibilityById(id);
+  isVisibilityRestored = changeLabelVisibilityById(id);
   isVisibilitySelected = true;
 };
 

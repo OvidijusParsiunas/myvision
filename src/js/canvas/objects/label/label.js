@@ -32,6 +32,7 @@ function changeObjectLabelText(id, text) {
 function changeLabelVisibilityById(id) {
   labelObjects[id].visible = !labelObjects[id].visible;
   canvas.renderAll();
+  return labelObjects[id].visible;
 }
 
 function setAllLabelsVisibilityProperty(state) {
