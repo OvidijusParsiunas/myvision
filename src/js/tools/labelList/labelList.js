@@ -35,6 +35,8 @@ let activeEditLabelButton = null;
 let tableElement = null;
 let isLabelChanged = false;
 let labelOptionsElement = null;
+let lastSelectedLabelOption = null;
+let availableListOptions = [];
 
 // refactor label popup label options element manipulation code
 
@@ -409,6 +411,7 @@ function initiateEditing(id) {
   activeShape = getShapeById(id);
   selectShape(id);
   initLabelEditing(id);
+  availableListOptions = getLabelOptions();
   labelHasBeenDeselected = false;
   activeLabelElementId = `labelId${id}`;
 }
@@ -536,6 +539,32 @@ window.labelTextKeyDown = (event) => {
     addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
     stopEditing();
   }
+  window.setTimeout(() => {
+    if (lastSelectedLabelOption) {
+      lastSelectedLabelOption.style.backgroundColor = '';
+      lastSelectedLabelOption.id = '';
+    }
+    let found = false;
+    for (let i = 0; i < availableListOptions.length - 1; i += 1) {
+      if (availableListOptions[i].text === activeLabelTextElement.innerHTML) {
+        lastSelectedLabelOption = activeDropdownElements[0].childNodes[0].childNodes[i * 2].childNodes[0].childNodes[0];
+        lastSelectedLabelOption.style.backgroundColor = availableListOptions[i].color.label;
+        found = true;
+        lastSelectedLabelOption.id = 'used';
+        lastSelectedLabelOption.scrollIntoViewIfNeeded();
+        break;
+      }
+    }
+    if (!found) {
+      const lastLabelOptionIndex = availableListOptions.length - 1;
+      if (availableListOptions[lastLabelOptionIndex].text === activeLabelTextElement.innerHTML) {
+        lastSelectedLabelOption = activeDropdownElements[0].childNodes[0].childNodes[lastLabelOptionIndex * 2].childNodes[0].childNodes[0];
+        lastSelectedLabelOption.style.backgroundColor = availableListOptions[lastLabelOptionIndex].color.label;
+        lastSelectedLabelOption.id = 'used';
+        lastSelectedLabelOption.scrollIntoViewIfNeeded();
+      }
+    }
+  }, 0);
 };
 
 function moveSelectedLabelToFrontOfLabelOptions(id, text) {
