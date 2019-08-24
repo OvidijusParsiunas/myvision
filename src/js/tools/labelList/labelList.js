@@ -105,17 +105,17 @@ function repopulateDropdown() {
 function createLabelElementMarkup(labelText, id, backgroundColor) {
   return `
   <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
-    <div id="default" onMouseEnter="mouseEnterOnVisibility(id, this)" onMouseLeave="mouseLeaveOnVisibility(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px">
-      <img src="visibility-button.svg" style="width:10px" alt="visibility">
-      <img src="visibility-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
-      <img src="invisible-button.svg" style="width:10px; display: none" alt="visibility">
-      <img src="invisible-button-highlighted.svg" style="width:10px; display: none" alt="visibility">
+    <div id="default" onMouseEnter="mouseEnterOnVisibility(id, this)" onMouseLeave="mouseLeaveOnVisibility(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px;">
+      <img src="visibility-button.svg" style="width:10px; padding-left: 1px" alt="visibility">
+      <img src="visibility-button-highlighted.svg" style="width:12px; display: none; padding-top: 3px" alt="visibility">
+      <img src="invisible-button.svg" style="width:10px; display: none; padding-left: 1px" alt="visibility">
+      <img src="invisible-button-highlighted.svg" style="width:12px; padding-top: 3px; display: none" alt="visibility">
     </div>
-    <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px">
-      <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
-      <img id="editButton${id}" src="edit-highlighted.svg" style="width:9px; display: none" alt="edit">
+    <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px">
+      <img id="editButton${id}" src="edit.svg" style="width:9px; padding-left: 1px" alt="edit">
+      <img id="editButton${id}" src="edit-highlighted.svg" style="width:11px; display: none; padding-top: 4px" alt="edit">
       <img id="editButton${id}" src="done-tick.svg" style="width:9px; display: none" alt="edit">
-      <img id="editButton${id}" src="done-tick-highlighted.svg" style="width:9px; display: none" alt="edit">
+      <img id="editButton${id}" src="done-tick-highlighted.svg" style="width:10px; display: none" alt="edit">
   </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
