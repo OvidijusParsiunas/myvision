@@ -33,6 +33,7 @@ let activeShape = null;
 let activeLabelElementId = null;
 let activeEditLabelButton = null;
 let tableElement = null;
+let currentTableElementScrollPosition = 0;
 let isLabelChanged = false;
 let labelOptionsElement = null;
 let lastSelectedLabelOption = null;
@@ -85,6 +86,15 @@ function createNewDropdown() {
   dropdown += '</tbody>';
   return dropdown;
 }
+
+window.onScrolling = () => {
+  if (currentTableElementScrollPosition !== tableElement.scrollTop) {
+    if (activeDropdownElements && activeDropdownElements[0].classList.contains('show')) {
+      addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
+      stopEditing();
+    }
+  }
+};
 
 window.hoverLabelOption = (element, color) => {
   element.style.backgroundColor = color;
@@ -337,12 +347,16 @@ function initLabelEditing(id) {
   activeDropdownElements[0].scrollTop = 0;
   activeDropdownElements[0].scrollLeft = 0;
   deleteAndAddLastRowToRefreshDiv(activeDropdownElements[0]);
+  const div1 = document.getElementById(`labelId${id}`).getBoundingClientRect();
+  const dropDownOffset = div1.height + div1.top - 1;
+  activeDropdownElements[0].style.top = `${dropDownOffset}px`;
   // change this to match wider div
   // const labelDropdownOptions = getLabelOptions();
   // if (labelDropdownOptions.length > 5) {
   //   activeDropdownElements[0].style = 'width: 150px';
   // }
   availableListOptions = getLabelOptions();
+  currentTableElementScrollPosition = tableElement.scrollTop;
   isLabelSelected = true;
 }
 
