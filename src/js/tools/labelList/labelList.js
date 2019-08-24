@@ -342,6 +342,7 @@ function initLabelEditing(id) {
   // if (labelDropdownOptions.length > 5) {
   //   activeDropdownElements[0].style = 'width: 150px';
   // }
+  availableListOptions = getLabelOptions();
   isLabelSelected = true;
 }
 
@@ -411,7 +412,6 @@ function initiateEditing(id) {
   activeShape = getShapeById(id);
   selectShape(id);
   initLabelEditing(id);
-  availableListOptions = getLabelOptions();
   labelHasBeenDeselected = false;
   activeLabelElementId = `labelId${id}`;
 }
@@ -504,7 +504,7 @@ function addLabelToDropdown(labelText, tempEle, id, color) {
 
 function addLabelToLists(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" onClick="selectLabelOption(innerHTML)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
   const newRow = labelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
@@ -559,7 +559,7 @@ window.labelTextKeyDown = (event) => {
       const lastLabelOptionIndex = availableListOptions.length - 1;
       if (availableListOptions[lastLabelOptionIndex].text === activeLabelTextElement.innerHTML) {
         lastSelectedLabelOption = activeDropdownElements[0].childNodes[0].childNodes[lastLabelOptionIndex * 2].childNodes[0].childNodes[0];
-        lastSelectedLabelOption.style.backgroundColor = availableListOptions[lastLabelOptionIndex].color.label;
+        selectedLabelOption.style.backgroundColor = availableListOptions[lastLabelOptionIndex].color.label;
         lastSelectedLabelOption.id = 'used';
         lastSelectedLabelOption.scrollIntoViewIfNeeded();
       }
