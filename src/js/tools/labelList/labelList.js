@@ -37,6 +37,7 @@ let currentTableElementScrollPosition = 0;
 let isLabelChanged = false;
 let labelOptionsElement = null;
 let lastSelectedLabelOption = null;
+let originalLabelText = null;
 let availableListOptions = [];
 
 // refactor label popup label options element manipulation code
@@ -355,8 +356,10 @@ function initLabelEditing(id) {
   // if (labelDropdownOptions.length > 5) {
   //   activeDropdownElements[0].style = 'width: 150px';
   // }
+  originalLabelText = activeLabelTextElement.innerHTML;
   availableListOptions = getLabelOptions();
   currentTableElementScrollPosition = tableElement.scrollTop;
+
   isLabelSelected = true;
 }
 
@@ -539,12 +542,16 @@ function updateLabellerPopupOptionsList() {
 
 function addNewLabelToLabelOptions(text) {
   if (isLabelChanged) {
-    addToLabelOptions(text);
-    const newLabelColor = getLabelColor(text);
-    changeShapeColorById(activeLabelId, newLabelColor);
-    changeLabelColor(newLabelColor.label);
-    repopulateDropdown();
-    updateLabellerPopupOptionsList();
+    if (text === '') {
+      activeLabelTextElement.innerHTML = originalLabelText;
+    } else {
+      addToLabelOptions(text);
+      const newLabelColor = getLabelColor(text);
+      changeShapeColorById(activeLabelId, newLabelColor);
+      changeLabelColor(newLabelColor.label);
+      repopulateDropdown();
+      updateLabellerPopupOptionsList();
+    }
   }
 }
 

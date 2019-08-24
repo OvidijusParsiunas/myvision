@@ -211,7 +211,7 @@ function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   // selected add then remove -> remve will null it
   // selected remove then add -> add will null it
   // selected
-  if (polygonObjId !== 'undefined' && polygonObjId !== null) {
+  if (polygonObjId !== undefined && polygonObjId !== null) {
     selectedShapeId = polygonObjId;
     labelObject = getLabelById(selectedShapeId);
     highlightLabelInTheList(selectedShapeId);
