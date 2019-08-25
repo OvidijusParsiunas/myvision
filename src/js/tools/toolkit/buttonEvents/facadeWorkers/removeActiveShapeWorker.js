@@ -18,7 +18,7 @@ import { isLabelling, removeTargetShape } from '../../../labellerPopUp/labelling
 import { hideLabelPopUp } from '../../../labellerPopUp/style';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { removeLabel } from '../../../../canvas/objects/label/label';
-import { removeLabelFromList } from '../../../labelList/labelList';
+import { removeLabelFromListOnShapeDelete } from '../../../labelList/labelList';
 import { removeShape } from '../../../../canvas/objects/allShapes/allShapes';
 
 function removeBoundingBox(canvas) {
@@ -26,7 +26,7 @@ function removeBoundingBox(canvas) {
   if (activeObject && activeObject.shapeName === 'bndBox') {
     removeShape(activeObject.id);
     removeLabel(activeObject.id, canvas);
-    removeLabelFromList(activeObject.id);
+    removeLabelFromListOnShapeDelete(activeObject.id);
     clearBoundingBoxData();
     return true;
   }
@@ -70,7 +70,7 @@ function removeActiveShapeEvent(canvas) {
     } else if (getAddingPolygonPointsState()) {
       clearAllAddPointsData();
     }
-    removeLabelFromList(getPolygonIdIfEditing());
+    removeLabelFromListOnShapeDelete(getPolygonIdIfEditing());
     removePolygon();
     removePolygonPoints();
     removeEditedPolygonId();

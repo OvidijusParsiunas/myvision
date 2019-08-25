@@ -64,7 +64,7 @@ function createLabelElementMarkup(labelText, id) {
     <div id="visibilityButton${id}" style="float:left; user-select: none; padding-right: 5px">
       <img src="visibility-button.svg" style="width:10px" alt="visibility">
     </div>
-    <div id="editButton${id}" onClick="editLabelBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
+    <div id="editButton${id}" onClick="labelEditBtnClick(${id})" style="float:left; user-select: none; padding-right: 5px">
       <img id="editButton${id}" src="edit.svg" style="width:9px" alt="edit">
     </div>
     <div id="dropdownButton${id}" style="float:left; user-select: none; padding-right: 5px; display: none">
@@ -231,7 +231,7 @@ window.labelDblClicked = (id) => {
   initLabelEditing(id);
 };
 
-window.editLabelBtnClick = (id) => {
+window.labelEditBtnClick = (id) => {
   // remove visibility button when editing
   const visibilityButton = document.getElementById(`visibilityButton${id}`);
   visibilityButton.style.display = 'none';

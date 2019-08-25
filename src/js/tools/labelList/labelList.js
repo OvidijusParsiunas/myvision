@@ -20,8 +20,13 @@ import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractio
 import {
   addToLabelOptions, sendLabelOptionToFront, getLabelOptions, getLabelColor,
 } from './labelOptions';
+import {
+  dimActiveIcon, dimDefaultIcon, switchToActiveIcon, switchToDefaultIcon,
+  highlightActiveIcon, highlightDefaultIcon, switchToHighlightedActiveIcon,
+  switchToHighlightedDefaultIcon, switchToHighlightedDefaultVisibilityIcon,
+} from './iconHighlightUtils';
 
-let isLabelSelected = false;
+let isEditing = false;
 let isVisibilitySelected = false;
 let isVisibilityRestored = false;
 let activeDropdownElements = null;
@@ -68,7 +73,7 @@ function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
   let dropdown = '<tbody>';
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
-    const dropdownElement = `<tr><td><div id="labelOption${i}" onMouseEnter="hoverLabelOption(this, '${labelDropdownOptions[i].color.label}')" onMouseLeave="labelOptionMouseOut(this)" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
+    const dropdownElement = `<tr><td><div id="labelOption${i}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${labelDropdownOptions[i].color.label}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
     dropdown += dropdownElement;
   }
   dropdown += '</tbody>';
@@ -85,20 +90,20 @@ function repopulateDropdown() {
 
 function createLabelElementMarkup(labelText, id, backgroundColor) {
   return `
-  <div id="labelId${id}" onMouseEnter="highlightShapeFill(${id})" onMouseLeave="defaultShapeFill(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
-    <div id="default" onMouseEnter="mouseEnterOnVisibility(id, this)" onMouseLeave="mouseLeaveOnVisibility(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px;">
+  <div id="labelId${id}" onMouseEnter="mouseEnterLabel(${id})" onMouseLeave="mouseLeaveLabel(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
+    <div id="default" onMouseEnter="mouseEnterVisibilityBtn(id, this)" onMouseLeave="mouseLeaveVisibilityBtn(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px;">
       <img src="visibility-button.svg" style="width:10px; padding-left: 1px" alt="visibility">
       <img src="visibility-button-highlighted.svg" style="width:12px; display: none; padding-top: 3px" alt="visibility">
       <img src="invisible-button.svg" style="width:10px; display: none; padding-left: 1px" alt="visibility">
       <img src="invisible-button-highlighted.svg" style="width:12px; padding-top: 3px; display: none" alt="visibility">
     </div>
-    <div id="editButton${id}" onMouseEnter="mouseEnterOnLabelEdit(this)" onMouseLeave="mouseLeaveOnLabelEdit(this)" onClick="editLabelBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px">
+    <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px">
       <img id="editButton${id}" src="edit.svg" style="width:9px; padding-left: 1px" alt="edit">
       <img id="editButton${id}" src="edit-highlighted.svg" style="width:11px; display: none; padding-top: 4px" alt="edit">
       <img id="editButton${id}" src="done-tick.svg" style="width:9px; display: none" alt="edit">
       <img id="editButton${id}" src="done-tick-highlighted.svg" style="width:10px; display: none" alt="edit">
   </div>
-    <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeObjectLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
     </div>
@@ -106,49 +111,34 @@ function createLabelElementMarkup(labelText, id, backgroundColor) {
   `;
 }
 
-function highlightDefaultIcon(element) {
-  element.childNodes[1].style.display = 'none';
-  element.childNodes[3].style.display = '';
+function initialiseParentElement() {
+  return document.createElement('div');
 }
 
-function dimDefaultIcon(element) {
-  element.childNodes[1].style.display = '';
-  element.childNodes[3].style.display = 'none';
+function addNewLabelToListFromPopUp(labelText, id, labelColor) {
+  const labelElement = initialiseParentElement();
+  labelElement.id = id;
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor);
+  const newRow = labelListElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+  labelListElement.scrollLeft = 0;
+  repopulateDropdown();
+  cell.scrollIntoView();
 }
 
-function highlightActiveIcon(element) {
-  element.childNodes[5].style.display = 'none';
-  element.childNodes[7].style.display = '';
-}
-
-function dimActiveIcon(element) {
-  element.childNodes[5].style.display = '';
-  element.childNodes[7].style.display = 'none';
-}
-
-function switchToDefaultIcon() {
-  activeEditLabelButton.childNodes[1].style.display = '';
-  activeEditLabelButton.childNodes[5].style.display = 'none';
-}
-
-function switchToActiveIcon(element) {
-  element.childNodes[1].style.display = 'none';
-  element.childNodes[5].style.display = '';
-}
-
-function switchToHighlightedActiveIcon(element) {
-  element.childNodes[3].style.display = 'none';
-  element.childNodes[7].style.display = '';
-}
-
-function switchToHighlightedDefaultIcon() {
-  activeEditLabelButton.childNodes[3].style.display = '';
-  activeEditLabelButton.childNodes[7].style.display = 'none';
-}
-
-function switchToHighlightedDefaultVisibilityIcon(element) {
-  element.childNodes[3].style.display = '';
-  element.childNodes[7].style.display = 'none';
+function removeLabelFromListOnShapeDelete(id) {
+  if (id != null) {
+    let index = 0;
+    const tableList = labelListElement.childNodes[1].childNodes;
+    while (index !== tableList.length) {
+      if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
+        tableList[index].remove();
+        break;
+      }
+      index += 1;
+    }
+  }
 }
 
 function scrollHorizontallyToAppropriateWidth(text) {
@@ -203,6 +193,35 @@ function preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent) {
   changeObjectLabelText(activeLabelId, finalText);
 }
 
+function addLabelToDropdown(labelText, dropdownLabelsElem, id, color) {
+  const labelElement = initialiseParentElement();
+  labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  const newRow = dropdownLabelsElem.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+}
+
+// potentially move to another file
+function addLabelToPopupLabelOptions(labelText, color) {
+  const labelElement = initialiseParentElement();
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  const newRow = popuplabelOptionsElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+}
+
+function highlightSelectedLabelOptionOnEditInit() {
+  window.labelTextKeyDown({ key: 'stub' });
+}
+
+function positionDropDownCorrectlyOnScreen() {
+  if (activeLabelTextElement) {
+    const dropdownElementPosition = activeLabelTextElement.getBoundingClientRect();
+    const dropDownOffset = dropdownElementPosition.height + dropdownElementPosition.top;
+    activeDropdownElements[0].style.top = `${dropDownOffset}px`;
+  }
+}
+
 function deleteAndAddLastRowToRefreshDropdownDiv(dropdownLabelsElement) {
   const labelOptions = getLabelOptions();
   dropdownLabelsElement.deleteRow(labelOptions.length - 1);
@@ -218,6 +237,7 @@ function deleteAndAddLastRowToRefreshDropdownDiv(dropdownLabelsElement) {
     if (labelOptions.length === 7) {
       dropdownLabelsElement.deleteRow(6);
     }
+    highlightSelectedLabelOptionOnEditInit();
   }, 0);
 }
 
@@ -226,7 +246,6 @@ function prepareLabelDivForEditing(id) {
   activeLabelTextElement.contentEditable = true;
   activeLabelTextElement.style.backgroundColor = 'white';
   activeLabelTextElement.style.borderColor = '#a39f9e';
-  // give space for the texxt from the left border when editing
   activeLabelTextElement.style.paddingLeft = '2px';
   activeEditLabelButton = document.getElementById(`editButton${id}`);
   activeEditLabelButton.style.paddingRight = '3px';
@@ -236,12 +255,6 @@ function prepareLabelDivForEditing(id) {
   activeDropdownElements[0].classList.toggle('show');
   activeDropdownElements[0].scrollTop = 0;
   activeDropdownElements[0].scrollLeft = 0;
-}
-
-function positionDropDownCorrectlyOnScreen() {
-  const dropdownElementPosition = activeLabelTextElement.getBoundingClientRect();
-  const dropDownOffset = dropdownElementPosition.height + dropdownElementPosition.top;
-  activeDropdownElements[0].style.top = `${dropDownOffset}px`;
 }
 
 function initLabelEditing(id) {
@@ -257,8 +270,8 @@ function initLabelEditing(id) {
   availableListOptions = getLabelOptions();
   currentTableElementScrollPosition = labelListElement.scrollTop;
   labelListELementHorizontalScrollPresent = labelListElement.scrollWidth
-  > labelListElement.clientWidth;
-  isLabelSelected = true;
+    > labelListElement.clientWidth;
+  isEditing = true;
 }
 
 function selectShape() {
@@ -280,7 +293,7 @@ function deselectShape() {
   }
 }
 
-function initiateEditing(id) {
+function selectShapeBeforeLabelEdit(id) {
   if (id !== getLastSelectedShapeId()) {
     setNewShapeSelectedViaLabelListState(true);
   } else {
@@ -288,7 +301,6 @@ function initiateEditing(id) {
   }
   setEditingLabelId(id);
   if (getAddingPolygonPointsState()) {
-    // check if selected a different polygon to what was added, create state?
     resetCanvasToDefaultAfterAddPoints(id);
   } else {
     window.cancel();
@@ -298,19 +310,6 @@ function initiateEditing(id) {
   initLabelEditing(id);
   labelHasBeenDeselected = false;
   activeLabelElementId = `labelId${id}`;
-}
-
-function editLabel(id, element) {
-  if (id !== activeLabelId) {
-    initiateEditing(id);
-    switchToHighlightedActiveIcon(element);
-  } else if (deselectedEditing) {
-    deselectedEditing = false;
-    labelHasBeenDeselected = true;
-  } else if (!deselectedEditing) {
-    initiateEditing(id);
-    switchToHighlightedActiveIcon(element);
-  }
 }
 
 function trimLabelText() {
@@ -323,7 +322,7 @@ function removeLabelDropDownContent() {
   if (activeDropdownElements[0].classList.contains('show')) {
     activeDropdownElements[0].classList.remove('show');
   }
-  isLabelSelected = false;
+  isEditing = false;
 }
 
 function resetLabelElement() {
@@ -339,43 +338,30 @@ function resetLabelElement() {
   isLabelChanged = false;
 }
 
-function stopEditing() {
-  activeShape = false;
-  switchToDefaultIcon();
-  resetLabelElement();
-}
-
-function initialiseParentElement() {
-  return document.createElement('div');
-}
-
-function addLabelToDropdown(labelText, dropdownLabelsElem, id, color) {
-  const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
-  const newRow = dropdownLabelsElem.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(labelElement);
-}
-
-function addLabelToLists(labelText, color) {
-  const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
-  const newRow = popuplabelOptionsElement.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(labelElement);
-}
-
 function purgeOptionsFromLabelElement() {
   popuplabelOptionsElement.innerHTML = '';
 }
 
 function resetLabelOptions() {
   purgeOptionsFromLabelElement();
-  getLabelOptions().forEach((label) => { addLabelToLists(label.text, label.color.label); });
+  getLabelOptions().forEach((label) => {
+    addLabelToPopupLabelOptions(label.text, label.color.label);
+  });
 }
 
 function updateLabellerPopupOptionsList() {
   resetLabelOptions();
+}
+
+function moveSelectedLabelToFrontOfLabelOptions(id, text) {
+  if (id !== 0) {
+    sendLabelOptionToFront(id);
+    const newLabelColor = getLabelColor(text);
+    changeShapeColorById(activeLabelId, newLabelColor);
+    changeLabelColor(newLabelColor.label);
+    repopulateDropdown();
+    updateLabellerPopupOptionsList();
+  }
 }
 
 function addNewLabelToLabelOptions(text) {
@@ -393,6 +379,32 @@ function addNewLabelToLabelOptions(text) {
   }
 }
 
+function stopEditing() {
+  activeShape = false;
+  switchToDefaultIcon(activeEditLabelButton);
+  resetLabelElement();
+}
+
+function highlightDropdownLabelOption(labelOptionsIndex, divIndex) {
+  const [currentlyAvailableDropdownElements] = activeDropdownElements[0].childNodes;
+  const labelParenElement = currentlyAvailableDropdownElements.childNodes[divIndex];
+  [lastSelectedLabelOption] = labelParenElement.childNodes[0].childNodes;
+  const labelColor = availableListOptions[labelOptionsIndex].color.label;
+  lastSelectedLabelOption.style.backgroundColor = labelColor;
+  lastSelectedLabelOption.scrollIntoViewIfNeeded();
+}
+
+function wasHorizontalScrollCreated() {
+  if (!labelListELementHorizontalScrollPresent
+    && labelListElement.scrollWidth > labelListElement.clientWidth) {
+    currentTableElementScrollPosition = labelListElement.scrollTop;
+    labelListELementHorizontalScrollPresent = true;
+    positionDropDownCorrectlyOnScreen();
+    return true;
+  }
+  return false;
+}
+
 window.labelTextKeyDown = (event) => {
   if (event.key === 'Enter') {
     addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
@@ -401,41 +413,22 @@ window.labelTextKeyDown = (event) => {
   window.setTimeout(() => {
     if (lastSelectedLabelOption) {
       lastSelectedLabelOption.style.backgroundColor = '';
-      lastSelectedLabelOption.id = '';
     }
     let found = false;
     for (let i = 0; i < availableListOptions.length - 1; i += 1) {
       if (availableListOptions[i].text === activeLabelTextElement.innerHTML) {
-        lastSelectedLabelOption = activeDropdownElements[0].childNodes[0].childNodes[i * 2].childNodes[0].childNodes[0];
-        lastSelectedLabelOption.style.backgroundColor = availableListOptions[i].color.label;
-        found = true;
-        lastSelectedLabelOption.id = 'used';
-        lastSelectedLabelOption.scrollIntoViewIfNeeded();
-        break;
+        found = highlightDropdownLabelOption(i, i * 2);
+        if (found) break;
       }
     }
     if (!found) {
       const lastLabelOptionIndex = availableListOptions.length - 1;
       if (availableListOptions[lastLabelOptionIndex].text === activeLabelTextElement.innerHTML) {
-        lastSelectedLabelOption = activeDropdownElements[0].childNodes[0].childNodes[lastLabelOptionIndex * 2].childNodes[0].childNodes[0];
-        selectedLabelOption.style.backgroundColor = availableListOptions[lastLabelOptionIndex].color.label;
-        lastSelectedLabelOption.id = 'used';
-        lastSelectedLabelOption.scrollIntoViewIfNeeded();
+        highlightDropdownLabelOption(lastLabelOptionIndex, lastLabelOptionIndex * 2 + 1);
       }
     }
   }, 0);
 };
-
-function moveSelectedLabelToFrontOfLabelOptions(id, text) {
-  if (id !== 0) {
-    sendLabelOptionToFront(id);
-    const newLabelColor = getLabelColor(text);
-    changeShapeColorById(activeLabelId, newLabelColor);
-    changeLabelColor(newLabelColor.label);
-    repopulateDropdown();
-    updateLabellerPopupOptionsList();
-  }
-}
 
 window.labelBtnClick = (id) => {
   if (!getDefaultState()) {
@@ -469,13 +462,11 @@ window.labelBtnClick = (id) => {
 };
 
 window.onmousedown = (event) => {
-  // should be is editing
-  if (isLabelSelected) {
+  if (isEditing) {
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.innerHTML;
       activeLabelTextElement.innerHTML = newText;
       changeObjectLabelText(activeLabelId, newText);
-      // fix here as after moving polygon, points stay
       removeLabelDropDownContent();
       stopEditing();
       moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
@@ -484,7 +475,7 @@ window.onmousedown = (event) => {
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
         deselectedEditing = true;
-        switchToHighlightedDefaultIcon();
+        switchToHighlightedDefaultIcon(activeEditLabelButton);
         addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
         resetLabelElement();
       }
@@ -499,43 +490,6 @@ window.onmousedown = (event) => {
   }
 };
 
-function addLabelToList(labelText, id, labelColor) {
-  const labelElement = initialiseParentElement();
-  labelElement.id = id;
-  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor);
-  const newRow = labelListElement.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(labelElement);
-  labelListElement.scrollLeft = 0;
-  repopulateDropdown();
-  cell.scrollIntoView();
-}
-
-function removeLabelFromList(id) {
-  if (id != null) {
-    let index = 0;
-    const tableList = labelListElement.childNodes[1].childNodes;
-    while (index !== tableList.length) {
-      if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
-        tableList[index].remove();
-        break;
-      }
-      index += 1;
-    }
-  }
-}
-
-function wasHorizontalScrollCreated() {
-  if (!labelListELementHorizontalScrollPresent
-    && labelListElement.scrollWidth > labelListElement.clientWidth) {
-    currentTableElementScrollPosition = labelListElement.scrollTop;
-    labelListELementHorizontalScrollPresent = true;
-    positionDropDownCorrectlyOnScreen();
-    return true;
-  }
-  return false;
-}
-
 window.onScrolling = () => {
   if (currentTableElementScrollPosition !== labelListElement.scrollTop) {
     if (!wasHorizontalScrollCreated()) {
@@ -547,17 +501,17 @@ window.onScrolling = () => {
   }
 };
 
-window.hoverLabelOption = (element, color) => {
+window.mouseEnterLabelDropdownOption = (element, color) => {
   element.style.backgroundColor = color;
 };
 
-window.labelOptionMouseOut = (element) => {
+window.mouseLeaveLabelDropdownOption = (element) => {
   if (element.id !== 'used') {
     element.style.backgroundColor = '';
   }
 };
 
-window.mouseEnterOnVisibility = (id, element) => {
+window.mouseEnterVisibilityBtn = (id, element) => {
   if (id === 'default') {
     highlightDefaultIcon(element);
   } else {
@@ -565,39 +519,12 @@ window.mouseEnterOnVisibility = (id, element) => {
   }
 };
 
-window.mouseLeaveOnVisibility = (id, element) => {
+window.mouseLeaveVisibilityBtn = (id, element) => {
   if (id === 'default') {
     dimDefaultIcon(element);
   } else {
     dimActiveIcon(element);
   }
-};
-
-window.mouseEnterOnLabelEdit = (element) => {
-  if (!isLabelSelected) {
-    highlightDefaultIcon(element);
-  } else if (activeEditLabelButton.id !== element.id) {
-    highlightDefaultIcon(element);
-  } else {
-    highlightActiveIcon(element);
-  }
-};
-
-window.changeObjectLabelText = (innerHTML, element, inputEvent) => {
-  if (element.offsetHeight > 30) {
-    preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent);
-  } else {
-    changeObjectLabelText(activeLabelId, innerHTML);
-  }
-  isLabelChanged = true;
-};
-
-window.highlightShapeFill = (id) => {
-  highlightShapeFill(id);
-};
-
-window.defaultShapeFill = (id) => {
-  defaultShapeFill(id);
 };
 
 window.visibilityBtnClick = (id, element) => {
@@ -613,18 +540,18 @@ window.visibilityBtnClick = (id, element) => {
   }
 };
 
-window.labelDblClicked = (id) => {
-  initLabelEditing(id);
-  const editElement = document.getElementById(`editButton${id}`);
-  switchToActiveIcon(editElement);
+window.mouseEnterLabelEditBtn = (element) => {
+  if (!isEditing) {
+    highlightDefaultIcon(element);
+  } else if (activeEditLabelButton.id !== element.id) {
+    highlightDefaultIcon(element);
+  } else {
+    highlightActiveIcon(element);
+  }
 };
 
-window.editLabelBtnClick = (id, element) => {
-  editLabel(id, element);
-};
-
-window.mouseLeaveOnLabelEdit = (element) => {
-  if (!isLabelSelected) {
+window.mouseLeaveLabelEditBtn = (element) => {
+  if (!isEditing) {
     dimDefaultIcon(element);
   } else if (activeEditLabelButton.id !== element.id) {
     dimDefaultIcon(element);
@@ -633,7 +560,43 @@ window.mouseLeaveOnLabelEdit = (element) => {
   }
 };
 
+window.labelEditBtnClick = (id, element) => {
+  if (id !== activeLabelId) {
+    selectShapeBeforeLabelEdit(id);
+    switchToHighlightedActiveIcon(element);
+  } else if (deselectedEditing) {
+    deselectedEditing = false;
+    labelHasBeenDeselected = true;
+  } else if (!deselectedEditing) {
+    selectShapeBeforeLabelEdit(id);
+    switchToHighlightedActiveIcon(element);
+  }
+};
+
+window.changeLabelText = (innerHTML, element, inputEvent) => {
+  if (element.offsetHeight > 30) {
+    preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent);
+  } else {
+    changeObjectLabelText(activeLabelId, innerHTML);
+  }
+  isLabelChanged = true;
+};
+
+window.labelDblClicked = (id) => {
+  initLabelEditing(id);
+  const editElement = document.getElementById(`editButton${id}`);
+  switchToActiveIcon(editElement);
+};
+
+window.mouseEnterLabel = (id) => {
+  highlightShapeFill(id);
+};
+
+window.mouseLeaveLabel = (id) => {
+  defaultShapeFill(id);
+};
+
 export {
-  initialiseLabelListFunctionality, addLabelToList,
-  removeLabelFromList, moveSelectedLabelToFrontOfLabelOptions,
+  initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
+  removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
 };

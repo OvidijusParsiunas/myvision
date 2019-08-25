@@ -9,7 +9,7 @@ function initialiseParentElement() {
 
 function addLabelToList(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
   const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
@@ -74,6 +74,10 @@ function dimWindow() {
   baseDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
 }
 
+function highlightInitialLabelOptionOnInit() {
+  window.popupInputKeyDown({ key: 'stub' });
+}
+
 function showLabelPopUp(xCoordinate, yCoordinate) {
   dimWindow();
   const labelNamePopUp = document.getElementById('labelNamePopUp');
@@ -94,7 +98,7 @@ function showLabelPopUp(xCoordinate, yCoordinate) {
   }
   window.setTimeout(() => {
     getLabelPopUp().select();
-    window.popupInputKeyDown({ key: 'stub' });
+    highlightInitialLabelOptionOnInit();
   }, 0);
 }
 

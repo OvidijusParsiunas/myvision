@@ -3,7 +3,7 @@ import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mous
 import { addLabelRef, setPolygonLabelOffsetProps } from '../../canvas/objects/label/label';
 import labelProperies from '../../canvas/objects/label/properties';
 import { getLabelPopUpText, hideLabelPopUp } from './style';
-import { addLabelToList } from '../labelList/labelList';
+import { addNewLabelToListFromPopUp } from '../labelList/labelList';
 import { addToLabelOptions, getLabelOptions, getLabelColor } from '../labelList/labelOptions';
 import { addShape } from '../../canvas/objects/allShapes/allShapes';
 
@@ -50,7 +50,7 @@ function generateLabelShapeGroup(text) {
   const shapeColor = getLabelColor(textShape.text);
   addShape(targetShape, shapeColor, currentId);
   addLabelRef(textShape, currentId);
-  addLabelToList(textShape.text, currentId, shapeColor.label);
+  addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
   currentId += 1;
 }
 
@@ -60,7 +60,7 @@ function initialiseParentElement() {
 
 function addLabelToLists(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="hoverLabelOption(this, '${color}')" onMouseLeave="labelOptionMouseOut(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
   const newRow = labelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
