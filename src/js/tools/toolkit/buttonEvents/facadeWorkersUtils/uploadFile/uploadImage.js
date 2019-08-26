@@ -15,6 +15,8 @@ function drawResizedImage(image, newImageDimensions) {
       scaleY: fileStatus.scaleY,
     });
   });
+  fileStatus.width = newImageDimensions.width;
+  fileStatus.height = newImageDimensions.height;
 }
 
 function drawOriginalImage(image) {
@@ -23,6 +25,11 @@ function drawOriginalImage(image) {
   canvas.setBackgroundColor({ source: image.src }, () => {
     canvas.renderAll();
   });
+  fabric.Image.fromURL(image.src, (img) => {
+    canvas.setBackgroundImage(img);
+  });
+  fileStatus.width = image.width;
+  fileStatus.height = image.height;
 }
 
 function drawImageOnCanvas(image, newImageDimensions) {
@@ -49,6 +56,12 @@ function resizeWhenImageExceedsMaxWidth(image) {
   return newImageDimensions;
 }
 
+function setCanvasWrapperMaximumDimensions() {
+  const canvasWrapper = document.getElementById('canvas-wrapper');
+  canvasWrapper.style.maxWidth = `${canvasProperties.maximumCanvasWidth}px`;
+  canvasWrapper.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
+}
+
 function onImageLoad() {
   fileStatus.uploaded = true;
   const image = this;
@@ -64,6 +77,7 @@ function onImageLoad() {
   } else {
     drawImageOnCanvas(image);
   }
+  setCanvasWrapperMaximumDimensions();
 }
 
 function onFileLoad(e) {
@@ -83,7 +97,7 @@ function uploadImage(uploadData) {
 
 function setCanvasProperties() {
   canvasProperties.maximumCanvasHeight = window.innerHeight - 54;
-  canvasProperties.maximumCanvasWidth = window.innerWidth - 110;
+  canvasProperties.maximumCanvasWidth = window.innerWidth - 200;
 }
 
 function assignCanvasForNewImageUpload(newCanvas) {
@@ -91,4 +105,10 @@ function assignCanvasForNewImageUpload(newCanvas) {
   setCanvasProperties();
 }
 
-export { fileStatus, uploadImage, assignCanvasForNewImageUpload };
+function getCanvasProperties() {
+  return fileStatus;
+}
+
+export {
+  fileStatus, uploadImage, assignCanvasForNewImageUpload, getCanvasProperties,
+};

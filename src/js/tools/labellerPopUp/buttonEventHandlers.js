@@ -11,6 +11,11 @@ let popupLabelOptions = null;
 let popupLabelOptionsIndex = 1;
 let currentlySelectedLabelOption = null;
 
+function prepareLabelPopupElements() {
+  textInputElement = document.getElementById('label-popup-input');
+  popupLabelOptions = document.getElementById('popup-label-options');
+}
+
 function labelShape() {
   popupLabelOptionsIndex = 0;
   createLabelShape();
@@ -31,11 +36,6 @@ function cancelLabellingProcess() {
   }
 }
 
-function prepareLabelPopupTextInput() {
-  textInputElement = document.getElementById('label-popup-input');
-  popupLabelOptions = document.getElementById('popup-label-options');
-}
-
 function selectLabelOption(text, element) {
   if (currentlySelectedLabelOption) {
     currentlySelectedLabelOption.id = '';
@@ -46,7 +46,7 @@ function selectLabelOption(text, element) {
   textInputElement.value = text;
 }
 
-window.popupInputKeyDown = (event) => {
+function inputKeyDown(event) {
   if (event.key === 'Enter') {
     labelShape();
   } else {
@@ -69,9 +69,9 @@ window.popupInputKeyDown = (event) => {
       }
     }, 0);
   }
-};
+}
 
 export {
-  labelShape, cancelLabellingProcess,
-  prepareLabelPopupTextInput, selectLabelOption,
+  labelShape, cancelLabellingProcess, inputKeyDown,
+  selectLabelOption, prepareLabelPopupElements,
 };

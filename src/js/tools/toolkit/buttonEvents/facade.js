@@ -9,6 +9,7 @@ import uploadImageFile from './facadeWorkers/uploadImageWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
 import toggleLabelsVisibility from './facadeWorkers/toggleLabelsVisibilityWorker';
+import zoomCanvas from './facadeWorkers/zoomWorker';
 
 let canvas = null;
 
@@ -60,6 +61,10 @@ function toggleLabelsVisibilityBtnClick() {
   toggleLabelsVisibility(canvas);
 }
 
+function zoomBtnClick(activity) {
+  zoomCanvas(canvas, activity);
+}
+
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
@@ -73,4 +78,5 @@ export {
   downloadXMLBtnClick,
   uploadImageBtnClick,
   addPointsBtnClick,
+  zoomBtnClick,
 };

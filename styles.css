@@ -1,4 +1,5 @@
 #canvas-wrapper {
+  overflow: auto;
   position: absolute;
   top: 50px;
   left: 162px;
