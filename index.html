@@ -13,29 +13,27 @@
   <div id="canvas-wrapper">
     <canvas id="c" style="border:1px solid #ccc;"></canvas>
   </div>
-  <button id="toolsButton" onclick="createNewBndBox()">New Bounding Box</button>
-  <button id="toolsButton" onclick="createNewPolygon()">New Polygon</button>
-  <button id="toolsButton" onclick="addPoints()">Add points</button>
-  <button id="toolsButton" onclick="removePoint()">Remove Point</button>
-  <button id="toolsButton" onclick="removeShape()">Delete Shape</button>
-  <input id="toolsButton" type='file' onchange="uploadImage(this);" />
-  <button id="toolsButton" onclick="movableObjects()">Movable Objects</button>
-  <button id="toolsButton" onclick="continuousDrawing()">Continuous Drawing</button>
-  <button id="toolsButton" onclick="downloadXML()">DownloadXML</button>
-  <button id="toolsButton" onclick="cancel()">Cancel</button>
-  <button id="toolsButton" onclick="toggleLabelsVisibility()">Toggle label visibility</button>
-  <div id="labelNamePopUp" style="position: absolute; background-color: white; border-width: 1px; border-style: solid; border-color: grey; z-index: 2" hidden>
-    <div id="labelPopupTitle">Label name:</div>
+  <button id="tools-button" onclick="createNewBndBox()">New Bounding Box</button>
+  <button id="tools-button" onclick="createNewPolygon()">New Polygon</button>
+  <button id="tools-button" onclick="addPoints()">Add points</button>
+  <button id="tools-button" onclick="removePoint()">Remove Point</button>
+  <button id="tools-button" onclick="removeShape()">Delete Shape</button>
+  <input id="tools-button" type='file' onchange="uploadImage(this);" />
+  <button id="tools-button" onclick="movableObjects()">Movable Objects</button>
+  <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
+  <button id="tools-button" onclick="downloadXML()">DownloadXML</button>
+  <button id="tools-button" onclick="cancel()">Cancel</button>
+  <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button>
+  <div id="popup-label-parent" hidden>
+    <div id="popup-label-title">Label name:</div>
     <input type="text" id="label-popup-input" name="labelName" onkeydown="popupInputKeyDown(event, this)" value="asduhiadhaudiadhiuaahadauiadas">
     <table id="popup-label-options">
     </table>
     <button id="popup-submit-button" onclick="labelShape()">Submit</button>
   </div>
-  <div id="title">
+  <div id="label-list-title">
     <div>Labels:</div>
-    <div class="btn-group" id="labelList">
-    </div>
-    <table id="tableList" onscroll="onScrolling()">
+    <table id="label-list" onscroll="onScrolling()">
     </table>
   </div>
 <script src="dist/bundle.js" type="text/javascript"></script>

@@ -15,7 +15,7 @@ import {
 import {
   setLabelListElementForHighlights, changeLabelColor,
   removeHighlightOfListLabel, highlightLabelInTheList,
-} from './highlightLabelList';
+} from './labelListHighlightUtils';
 import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 import {
   addToLabelOptions, sendLabelOptionToFront, getLabelOptions, getLabelColor,
@@ -25,6 +25,7 @@ import {
   highlightActiveIcon, highlightDefaultIcon, switchToHighlightedActiveIcon,
   switchToHighlightedDefaultIcon, switchToHighlightedDefaultVisibilityIcon,
 } from './iconHighlightUtils';
+import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 
 let isEditing = false;
 let isVisibilitySelected = false;
@@ -56,7 +57,7 @@ let labelListELementHorizontalScrollPresent = false;
 // escape should close the popup - more on hotkeys
 
 function findLabelListElement() {
-  labelListElement = document.getElementById('tableList');
+  labelListElement = document.getElementById('label-list');
 }
 
 function findPopupElement() {
@@ -92,16 +93,16 @@ function createLabelElementMarkup(labelText, id, backgroundColor) {
   return `
   <div id="labelId${id}" onMouseEnter="mouseEnterLabel(${id})" onMouseLeave="mouseLeaveLabel(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
     <div id="default" onMouseEnter="mouseEnterVisibilityBtn(id, this)" onMouseLeave="mouseLeaveVisibilityBtn(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px;">
-      <img src="visibility-button.svg" style="width:10px; padding-left: 1px" alt="visibility">
-      <img src="visibility-button-highlighted.svg" style="width:12px; display: none; padding-top: 3px" alt="visibility">
-      <img src="invisible-button.svg" style="width:10px; display: none; padding-left: 1px" alt="visibility">
-      <img src="invisible-button-highlighted.svg" style="width:12px; padding-top: 3px; display: none" alt="visibility">
+      <img class="defaultVisibilityIcon" src="visibility-button.svg" alt="visibility">
+      <img class="highlightedVisibilityIcon" src="visibility-button-highlighted.svg" style="display: none" alt="visibility">
+      <img class="defaultVisibilityIcon" src="invisible-button.svg" style="display: none" alt="visibility">
+      <img class="highlightedVisibilityIcon" src="invisible-button-highlighted.svg" style="display: none" alt="visibility">
     </div>
     <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px">
-      <img id="editButton${id}" src="edit.svg" style="width:9px; padding-left: 1px" alt="edit">
-      <img id="editButton${id}" src="edit-highlighted.svg" style="width:11px; display: none; padding-top: 4px" alt="edit">
-      <img id="editButton${id}" src="done-tick.svg" style="width:9px; display: none" alt="edit">
-      <img id="editButton${id}" src="done-tick-highlighted.svg" style="width:10px; display: none" alt="edit">
+      <img class="defaultLabelEditIcon" id="editButton${id}" src="edit.svg" style="padding-left: 1px" alt="edit">
+      <img class="highlightedLabelEditIcon" id="editButton${id}" src="edit-highlighted.svg" style="display: none" alt="edit">
+      <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
+      <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
   </div>
     <div id="labelText${id}" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
@@ -197,15 +198,6 @@ function addLabelToDropdown(labelText, dropdownLabelsElem, id, color) {
   const labelElement = initialiseParentElement();
   labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
   const newRow = dropdownLabelsElem.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(labelElement);
-}
-
-// potentially move to another file
-function addLabelToPopupLabelOptions(labelText, color) {
-  const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
-  const newRow = popuplabelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
 }
@@ -338,21 +330,6 @@ function resetLabelElement() {
   isLabelChanged = false;
 }
 
-function purgeOptionsFromLabelElement() {
-  popuplabelOptionsElement.innerHTML = '';
-}
-
-function resetLabelOptions() {
-  purgeOptionsFromLabelElement();
-  getLabelOptions().forEach((label) => {
-    addLabelToPopupLabelOptions(label.text, label.color.label);
-  });
-}
-
-function updateLabellerPopupOptionsList() {
-  resetLabelOptions();
-}
-
 function moveSelectedLabelToFrontOfLabelOptions(id, text) {
   if (id !== 0) {
     sendLabelOptionToFront(id);
@@ -360,7 +337,7 @@ function moveSelectedLabelToFrontOfLabelOptions(id, text) {
     changeShapeColorById(activeLabelId, newLabelColor);
     changeLabelColor(newLabelColor.label);
     repopulateDropdown();
-    updateLabellerPopupOptionsList();
+    resetPopUpLabelOptions();
   }
 }
 
@@ -374,7 +351,7 @@ function addNewLabelToLabelOptions(text) {
       changeShapeColorById(activeLabelId, newLabelColor);
       changeLabelColor(newLabelColor.label);
       repopulateDropdown();
-      updateLabellerPopupOptionsList();
+      resetPopUpLabelOptions();
     }
   }
 }
@@ -479,7 +456,7 @@ window.onmousedown = (event) => {
         addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
         resetLabelElement();
       }
-    } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'toolsButton' || event.target.id === activeLabelElementId) {
+    } else if (event.target.nodeName === 'CANVAS' || event.target.id === 'tools-button' || event.target.id === activeLabelElementId) {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
       stopEditing();
     } else {

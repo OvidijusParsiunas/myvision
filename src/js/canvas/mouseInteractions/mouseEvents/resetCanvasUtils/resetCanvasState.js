@@ -11,7 +11,7 @@ import {
   setAlteringPolygonPointsState, setReadyToDrawShapeState, setCancelledReadyToDrawState,
   getReadyToDrawShapeState,
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
-import { removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
+import { removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 
 function interruptCanvasEventsWithoutRemovingExistingPoints() {
   removeHighlightOfListLabel();

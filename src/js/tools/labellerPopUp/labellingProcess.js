@@ -2,16 +2,15 @@ import fabric from 'fabric';
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
 import { addLabelRef, setPolygonLabelOffsetProps } from '../../canvas/objects/label/label';
 import labelProperies from '../../canvas/objects/label/properties';
-import { getLabelPopUpText, hideLabelPopUp } from './style';
+import { getLabelPopUpText, hideLabelPopUp, resetPopUpLabelOptions } from './style';
 import { addNewLabelToListFromPopUp } from '../labelList/labelList';
-import { addToLabelOptions, getLabelOptions, getLabelColor } from '../labelList/labelOptions';
+import { addToLabelOptions, getLabelColor } from '../labelList/labelOptions';
 import { addShape } from '../../canvas/objects/allShapes/allShapes';
 
 let labellingState = false;
 let targetShape = null;
 let canvas = null;
 let currentId = 0;
-let labelOptionsElement = null;
 
 function prepareLabelShape(shape, canvasObj) {
   waitingForLabelCursorMode(canvasObj);
@@ -54,28 +53,6 @@ function generateLabelShapeGroup(text) {
   currentId += 1;
 }
 
-function initialiseParentElement() {
-  return document.createElement('div');
-}
-
-function addLabelToLists(labelText, color) {
-  const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
-  const newRow = labelOptionsElement.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(labelElement);
-}
-
-function purgeOptionsFromLabelElement() {
-  labelOptionsElement = document.getElementById('popup-label-options');
-  labelOptionsElement.innerHTML = '';
-}
-
-function resetLabelOptions() {
-  purgeOptionsFromLabelElement();
-  getLabelOptions().forEach((label) => { addLabelToLists(label.text, label.color.label); });
-}
-
 function getTrimmedLabelText() {
   const rawText = getLabelPopUpText();
   return rawText.trim();
@@ -86,7 +63,7 @@ function createLabelShape() {
   hideLabelPopUp();
   generateLabelShapeGroup(text);
   resetObjectCursors(canvas);
-  resetLabelOptions();
+  resetPopUpLabelOptions();
   labellingState = false;
 }
 

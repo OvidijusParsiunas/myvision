@@ -19,7 +19,7 @@ import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseI
 import {
   resetAddPoints, cleanPolygonPointsArray, removePolygonPoints,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { removeHighlightOfListLabel } from '../../../labelList/highlightLabelList';
+import { removeHighlightOfListLabel } from '../../../labelList/labelListHighlightUtils';
 
 function setRemovePointsCursorMode(canvas) {
   const isDrawingPolygon = isPolygonDrawingInProgress();

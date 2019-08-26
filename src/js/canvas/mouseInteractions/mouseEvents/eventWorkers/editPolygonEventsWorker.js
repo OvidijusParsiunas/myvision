@@ -11,7 +11,7 @@ import {
   setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
   getRemovingPointsAfterCancelDrawState,
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
-import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/highlightLabelList';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
 
 let canvas = null;

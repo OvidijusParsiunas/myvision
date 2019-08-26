@@ -1,5 +1,6 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 
+let popupLabelParentElement = null;
 let labellerPopupLabelOptionsElement = null;
 let baseDiv = null;
 
@@ -15,6 +16,7 @@ function addLabelToList(labelText, color) {
   cell.appendChild(labelElement);
 }
 
+// should be in label list
 function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
@@ -68,38 +70,14 @@ function getLabelPopUpText() {
   return document.getElementById('label-popup-input').value;
 }
 
-function dimWindow() {
-  baseDiv = document.getElementById('base-div');
-  baseDiv.style.position = 'absolute';
-  baseDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
-}
-
 function highlightInitialLabelOptionOnInit() {
   window.popupInputKeyDown({ key: 'stub' });
 }
 
-function showLabelPopUp(xCoordinate, yCoordinate) {
-  dimWindow();
-  const labelNamePopUp = document.getElementById('labelNamePopUp');
-  const canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
-  const canvasY = canvasWrapperCoordinates.top;
-  const canvasX = canvasWrapperCoordinates.left;
-  labelNamePopUp.style.top = `${yCoordinate + canvasY}px`;
-  labelNamePopUp.style.left = `${xCoordinate + canvasX}px`;
-  getLabelOptions();
-  deleteAndAddLastRowToRefreshDiv();
-  labelNamePopUp.style.display = 'block';
-  resetLabelOptionsListScroll();
-  if (hasScrollbar()) {
-    labelNamePopUp.style.top = '';
-    labelNamePopUp.style.bottom = '5px';
-  } else {
-    labelNamePopUp.style.bottom = '';
-  }
-  window.setTimeout(() => {
-    getLabelPopUp().select();
-    highlightInitialLabelOptionOnInit();
-  }, 0);
+function dimWindow() {
+  baseDiv = document.getElementById('base-div');
+  baseDiv.style.position = 'absolute';
+  baseDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
 }
 
 function lightUpWindow() {
@@ -112,7 +90,31 @@ function lightUpWindow() {
 
 function hideLabelPopUp() {
   lightUpWindow();
-  document.getElementById('labelNamePopUp').style.display = 'none';
+  popupLabelParentElement.style.display = 'none';
+}
+
+function showLabelPopUp(xCoordinate, yCoordinate) {
+  dimWindow();
+  popupLabelParentElement = document.getElementById('popup-label-parent');
+  const canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
+  const canvasY = canvasWrapperCoordinates.top;
+  const canvasX = canvasWrapperCoordinates.left;
+  popupLabelParentElement.style.top = `${yCoordinate + canvasY}px`;
+  popupLabelParentElement.style.left = `${xCoordinate + canvasX}px`;
+  getLabelOptions();
+  deleteAndAddLastRowToRefreshDiv();
+  popupLabelParentElement.style.display = 'block';
+  resetLabelOptionsListScroll();
+  if (hasScrollbar()) {
+    popupLabelParentElement.style.top = '';
+    popupLabelParentElement.style.bottom = '5px';
+  } else {
+    popupLabelParentElement.style.bottom = '';
+  }
+  window.setTimeout(() => {
+    getLabelPopUp().select();
+    highlightInitialLabelOptionOnInit();
+  }, 0);
 }
 
 function initialiseLabelPopupOptionsList() {
@@ -122,7 +124,26 @@ function initialiseLabelPopupOptionsList() {
   });
 }
 
+function addLabelToPopupLabelOptions(labelText, color) {
+  const labelElement = initialiseParentElement();
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+}
+
+function purgeOptionsFromLabelElement() {
+  labellerPopupLabelOptionsElement.innerHTML = '';
+}
+
+function resetPopUpLabelOptions() {
+  purgeOptionsFromLabelElement();
+  getLabelOptions().forEach((label) => {
+    addLabelToPopupLabelOptions(label.text, label.color.label);
+  });
+}
+
 export {
-  showLabelPopUp, getLabelPopUpText,
-  hideLabelPopUp, initialiseLabelPopupOptionsList,
+  showLabelPopUp, getLabelPopUpText, hideLabelPopUp,
+  initialiseLabelPopupOptionsList, resetPopUpLabelOptions,
 };
