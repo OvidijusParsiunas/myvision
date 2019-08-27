@@ -1,5 +1,4 @@
 #canvas-wrapper {
-  overflow: auto;
   position: absolute;
   top: 50px;
   left: 162px;
@@ -175,6 +174,19 @@
 
 .labelListItem {
   padding-bottom: 1px;
+}
+
+#zoom-overflow {
+  overflow: scroll;
+  max-width: 800px;
+  max-height: 300px;
+  width: 1900px;
+  height: 500px;
+  position: absolute;
+}
+
+#stub {
+  margin-left: 2000px;
 }
 
 table {

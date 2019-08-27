@@ -1,17 +1,19 @@
 import { getCanvasProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
 
 let currentZoom = 1;
+let canvas = null;
+let canvasProperties = null;
 
-function zoomCanvas(canvas, action) {
-  const canvasProperties = getCanvasProperties();
+function zoomCanvas(canvasObj, action) {
+  canvas = canvasObj;
+  canvasProperties = getCanvasProperties();
   if (action === 'in') {
     currentZoom += 1;
-    canvas.setDimensions({
-      width: canvasProperties.width * currentZoom,
-      height: canvasProperties.height * currentZoom,
-    });
     canvas.setZoom(currentZoom);
   }
 }
+
+window.changeCanvasOnScroll = () => {
+};
 
 export { zoomCanvas as default };
