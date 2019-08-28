@@ -10,11 +10,11 @@
 <body>
   <div id="base-div">
   </div>
-  <div id="zoom-overflow">
-    <div id="canvas-wrapper" onScroll="changeCanvasOnScroll()">
-      <canvas id="c" style="border:1px solid #ccc;"></canvas>
-    </div>
+  <div id="zoom-overflow" onMouseDown="zoomOverflowPrepareToScroll()" onMouseUp="zoomOverflowStopScrolling()" onScroll="zoomOverflowScroll()">
     <div id="stub">asdasd</div>
+  </div>
+  <div id="canvas-wrapper">
+    <canvas id="c" style="border:1px solid #ccc;"></canvas>
   </div>
   <button id="tools-button" onclick="createNewBndBox()">New Bounding Box</button>
   <button id="tools-button" onclick="createNewPolygon()">New Polygon</button>
