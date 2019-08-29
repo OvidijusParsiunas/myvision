@@ -5,7 +5,7 @@
   z-index: 1;
 }
 
-#label-popup-input {
+#popup-label-input {
   width: 150px;
   border: thin ridge grey;
   margin: 5px 5px 5px 5px;
@@ -65,9 +65,8 @@
 }
 
 #popup-label-options .labelDropdownOption {
-  padding-top: 1px;
-  padding-bottom: 1px;
   padding-left: 2px;
+  padding-top: 3px;
   user-select: none;
   text-decoration: none;
 }

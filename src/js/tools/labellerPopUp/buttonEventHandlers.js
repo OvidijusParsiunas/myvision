@@ -12,7 +12,7 @@ let popupLabelOptionsIndex = 1;
 let currentlySelectedLabelOption = null;
 
 function prepareLabelPopupElements() {
-  textInputElement = document.getElementById('label-popup-input');
+  textInputElement = document.getElementById('popup-label-input');
   popupLabelOptions = document.getElementById('popup-label-options');
 }
 

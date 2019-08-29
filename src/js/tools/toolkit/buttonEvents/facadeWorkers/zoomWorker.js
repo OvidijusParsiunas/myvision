@@ -5,6 +5,8 @@ let canvas = null;
 let canvasProperties = null;
 const initialPosition = {};
 
+// problem where a label option in popup is double clicked and on second click the color disappears
+
 function zoomCanvas(canvasObj, action) {
   canvas = canvasObj;
   canvasProperties = getCanvasProperties();

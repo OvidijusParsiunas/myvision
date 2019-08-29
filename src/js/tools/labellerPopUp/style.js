@@ -63,11 +63,11 @@ function hasScrollbar() {
 }
 
 function getLabelPopUp() {
-  return document.getElementById('label-popup-input');
+  return document.getElementById('popup-label-input');
 }
 
 function getLabelPopUpText() {
-  return document.getElementById('label-popup-input').value;
+  return document.getElementById('popup-label-input').value;
 }
 
 function highlightInitialLabelOptionOnInit() {
