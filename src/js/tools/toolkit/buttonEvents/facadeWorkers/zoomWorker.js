@@ -28,6 +28,9 @@ function zoomCanvas(canvasObj, action) {
   if (action === 'in') {
     currentZoom += 0.2;
     canvas.setZoom(currentZoom);
+  } else if (action === 'out') {
+    currentZoom -= 0.2;
+    canvas.setZoom(currentZoom);
   }
   setNewCanvasDimensions();
 }
