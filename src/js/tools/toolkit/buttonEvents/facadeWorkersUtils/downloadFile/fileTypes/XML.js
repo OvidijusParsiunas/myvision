@@ -1,12 +1,13 @@
-import { fileStatus } from '../../uploadFile/uploadImage';
+import { getImageProperties } from '../../uploadFile/uploadImage';
 import convertJSONToXML from '../fileTypeConverters/JSONtoXML';
 import buildAnnotationsObject from '../fileStructureGenerators/generateStandardAnnotationsObject';
 
 let canvas = null;
+let fileProperties = null;
 
 function getFileName() {
   const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
-  return `${regexToFindFirstWordBeforeFullStop.exec(fileStatus.name)[0]}.json`;
+  return `${regexToFindFirstWordBeforeFullStop.exec(fileProperties.name)[0]}.json`;
 }
 
 function generateTempDownloadableElement(xml) {
@@ -21,11 +22,12 @@ function generateTempDownloadableElement(xml) {
 }
 
 function generateXML() {
-  const downloadableObject = buildAnnotationsObject(canvas, fileStatus);
+  const downloadableObject = buildAnnotationsObject(canvas, fileProperties);
   return convertJSONToXML(downloadableObject);
 }
 
 function downloadXML() {
+  fileProperties = getImageProperties();
   const xml = generateXML();
   const downloadableElement = generateTempDownloadableElement(xml);
   downloadableElement.click();
@@ -38,11 +40,11 @@ function getPolygonPointsCoordinates(polygon) {
     all_points_y: [],
   };
   polygon.points.forEach((point) => {
-    coordinatesObj.all_points_x.push(point.x / fileStatus.scaleX);
-    coordinatesObj.all_points_y.push(point.y / fileStatus.scaleY);
+    coordinatesObj.all_points_x.push(point.x / fileProperties.scaleX);
+    coordinatesObj.all_points_y.push(point.y / fileProperties.scaleY);
   });
-  coordinatesObj.all_points_x.push(polygon.points[0].x / fileStatus.scaleX);
-  coordinatesObj.all_points_y.push(polygon.points[0].y / fileStatus.scaleY);
+  coordinatesObj.all_points_x.push(polygon.points[0].x / fileProperties.scaleX);
+  coordinatesObj.all_points_y.push(polygon.points[0].y / fileProperties.scaleY);
   return coordinatesObj;
 }
 
@@ -93,10 +95,10 @@ function getShapeCoordinates() {
       shapesCoordinates[shapeIndex] = {
         shape_attributes: {
           name: 'rect',
-          x: object.left / fileStatus.scaleX,
-          y: object.top / fileStatus.scaleY,
-          width: object.width / fileStatus.scaleX,
-          height: object.height / fileStatus.scaleY,
+          x: object.left / fileProperties.scaleX,
+          y: object.top / fileProperties.scaleY,
+          width: object.width / fileProperties.scaleX,
+          height: object.height / fileProperties.scaleY,
         },
       };
       shapeIndex += 1;
@@ -110,18 +112,19 @@ function getFinalCoordinatesObj() {
   const coordinatesObj = {
     fileref: '',
     size: 76744,
-    filename: fileStatus.name,
+    filename: fileProperties.name,
     base64_img_data: '',
     file_attributes: {},
   };
   coordinatesObj.regions = getShapeCoordinates();
   const finalObject = {};
-  finalObject[fileStatus.name] = coordinatesObj;
+  finalObject[fileProperties.name] = coordinatesObj;
   return finalObject;
 }
 
 
 function downloadJSON() {
+  fileProperties = getImageProperties();
   const downloadableElement = generateTempDownloadableElement(
     JSON.stringify(getFinalCoordinatesObj()),
   );

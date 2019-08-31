@@ -1,25 +1,40 @@
-import { getCanvasProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
+import { getCanvasProperties, getImageProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
 
 let currentZoom = 1;
 let canvas = null;
 let canvasProperties = null;
-const initialPosition = {};
+let imageProperties = null;
 
-// problem where a label option in popup is double clicked and on second click the color disappears
+function setNewCanvasDimensions() {
+  let newWidth = imageProperties.width * currentZoom;
+  let newHeight = imageProperties.height * currentZoom;
+  if (canvasProperties.maximumCanvasHeight < newHeight) {
+    newHeight = canvasProperties.maximumCanvasHeight;
+  }
+  if (canvasProperties.maximumCanvasWidth < newWidth) {
+    newWidth = canvasProperties.maximumCanvasWidth;
+  }
+  const finalImageDimensions = {
+    width: newWidth,
+    height: newHeight,
+  };
+  canvas.setDimensions(finalImageDimensions);
+}
 
 function zoomCanvas(canvasObj, action) {
   canvas = canvasObj;
   canvasProperties = getCanvasProperties();
+  imageProperties = getImageProperties();
   if (action === 'in') {
-    currentZoom += 1;
+    currentZoom += 0.2;
     canvas.setZoom(currentZoom);
   }
+  setNewCanvasDimensions();
 }
 
-window.zoomOverflowScroll = () => {
-  canvas.viewportTransform[4] -= 10;
+window.zoomOverflowScroll = (element) => {
+  canvas.viewportTransform[4] = -element.scrollLeft;
   canvas.requestRenderAll();
-  console.log(canvas.viewportTransform[4]);
 };
 
 window.zoomOverflowPrepareToScroll = () => {

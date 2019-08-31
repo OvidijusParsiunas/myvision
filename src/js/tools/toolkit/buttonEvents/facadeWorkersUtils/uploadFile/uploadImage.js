@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 
-const fileStatus = { uploaded: false, name: null };
+let fileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
 
@@ -106,9 +106,18 @@ function assignCanvasForNewImageUpload(newCanvas) {
 }
 
 function getCanvasProperties() {
+  return canvasProperties;
+}
+
+function getImageProperties() {
   return fileStatus;
 }
 
+function setImageProperties(newFileStatus) {
+  fileStatus = newFileStatus;
+}
+
 export {
-  fileStatus, uploadImage, assignCanvasForNewImageUpload, getCanvasProperties,
+  uploadImage, getImageProperties, setImageProperties,
+  assignCanvasForNewImageUpload, getCanvasProperties,
 };
