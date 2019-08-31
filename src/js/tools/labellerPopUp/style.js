@@ -10,9 +10,11 @@ function initialiseParentElement() {
 
 function addLabelToList(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
   const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
+  cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
+  cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell);
   cell.appendChild(labelElement);
 }
 
@@ -21,7 +23,7 @@ function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
-    labellerPopupLabelOptionsElement.style.height = '120px';
+    labellerPopupLabelOptionsElement.style.height = '112px';
   } else if (labelOptions.length === 7) {
     addLabelToList('temp horizontal');
   }
@@ -126,9 +128,11 @@ function initialiseLabelPopupOptionsList() {
 
 function addLabelToPopupLabelOptions(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
   const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
+  cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
+  cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell);
   cell.appendChild(labelElement);
 }
 

@@ -59,8 +59,7 @@ function inputKeyDown(event) {
       for (let i = 0; i < popupLabelOptionsList.length; i += 1) {
         if (popupLabelOptionsList[i].childNodes[0].childNodes[0].childNodes[0].innerHTML
             === textInputElement.value) {
-          const labelParenElement = popupLabelOptionsList[i].childNodes[0].childNodes[0];
-          [currentlySelectedLabelOption] = labelParenElement.childNodes;
+          [currentlySelectedLabelOption] = popupLabelOptionsList[i].childNodes;
           currentlySelectedLabelOption.style.backgroundColor = getLabelOptions()[i].color.label;
           currentlySelectedLabelOption.id = 'used';
           currentlySelectedLabelOption.scrollIntoViewIfNeeded();
