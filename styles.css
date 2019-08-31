@@ -13,7 +13,6 @@
   font-size: 15px;
   padding-top: 2px;
   padding-left: 2px;
-  padding-right: 1px;
 }
 
 #label-list-title {
@@ -48,8 +47,6 @@
 
 .labelDropdownOption {
   color: black;
-  padding-top: 1px;
-  padding-bottom: 1px;
   padding-left: 5px;
   text-decoration: none;
   font-family: sans-serif;
@@ -64,9 +61,12 @@
 }
 
 #popup-label-options .labelDropdownOption {
+  border-style: hidden;
   padding-left: 2px;
   user-select: none;
   text-decoration: none;
+  padding-top: 1px;
+  padding-bottom: 2px;
 }
 
 .dropdown-content .labelDropdownOption {
@@ -74,6 +74,8 @@
   padding-bottom: 2px;
   padding-left: 5px;
   text-decoration: none;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
 .show {display: block;}
@@ -121,14 +123,15 @@
 }
 
 #popup-label-options {
-  padding-top: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
   margin-top: 3px;
   display: block;
   overflow-x: auto;
   width: 153px;
   overflow-y: auto;
   border: thin ridge grey;
-  height: 97px;
+  height: 100px;
   margin-left: 5px;
 }
 

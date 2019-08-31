@@ -21,7 +21,7 @@ function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
-    labellerPopupLabelOptionsElement.style.height = '116px';
+    labellerPopupLabelOptionsElement.style.height = '120px';
   } else if (labelOptions.length === 7) {
     addLabelToList('temp horizontal');
   }
