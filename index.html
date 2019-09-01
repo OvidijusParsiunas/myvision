@@ -10,6 +10,9 @@
 <body>
   <div id="base-div">
   </div>
+  <div id="zoom-overflow" onMouseDown="zoomOverflowPrepareToScroll()" onMouseUp="zoomOverflowStopScrolling()" onScroll="zoomOverflowScroll(this)">
+    <div id="stub">.</div>
+  </div>
   <div id="canvas-wrapper">
     <canvas id="c" style="border:1px solid #ccc;"></canvas>
   </div>

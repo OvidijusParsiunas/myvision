@@ -179,17 +179,16 @@
 }
 
 #zoom-overflow {
-  overflow: scroll;
-  top: 40px;
-  max-width: 800px;
-  max-height: 300px;
-  width: 1900px;
-  height: 500px;
+  overflow: auto;
+  top: 50px;
+  left: 162px;
   position: absolute;
 }
 
 #stub {
-  margin-left: 2000px;
+  color: rgb(0,0,0,0);
+  user-select: none;
+  pointer-events: none;
 }
 
 table {
