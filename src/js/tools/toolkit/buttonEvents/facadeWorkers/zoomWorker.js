@@ -24,6 +24,7 @@ function getScrollWidth() {
 }
 
 // option to always highlight
+// bug where the popup doesn't appear on the correct place after zooming
 
 function setNewCanvasDimensions() {
   const scrollWidth = getScrollWidth();
@@ -57,9 +58,19 @@ function setNewCanvasDimensions() {
       stubElement.style.marginLeft = `${originalWidth - 2}px`;
       if (newWidth + scrollWidth > canvasProperties.maximumCanvasWidth) {
         zoomOverflowElement.style.maxWidth = `${newWidth + 1}px`;
-        newHeight -= scrollWidth;
         newWidth -= scrollWidth;
       }
+    }
+  } else if (widthOverflowed) {
+    zoomOverflowElement.style.maxWidth = `${newWidth + 1}px`;
+    stubElement.style.marginTop = `${originalHeight - scrollWidth + 1}px`;
+    stubElement.style.marginLeft = `${originalWidth - 2}px`;
+    // there could be an instance where the newHeight may not initially exceed
+    // maximum canvas height, but after exceeding maxcanvas width, it might
+    if (newHeight + scrollWidth > canvasProperties.maximumCanvasHeight) {
+      // give it a scrollbar
+      zoomOverflowElement.style.maxHeight = `${newHeight + 1}px`;
+      newHeight -= scrollWidth;
     }
   }
   const finalImageDimensions = {
