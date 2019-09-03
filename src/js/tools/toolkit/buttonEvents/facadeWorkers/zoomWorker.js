@@ -72,6 +72,11 @@ function setNewCanvasDimensions() {
       zoomOverflowElement.style.maxHeight = `${newHeight + 1}px`;
       newHeight -= scrollWidth;
     }
+  } else {
+    zoomOverflowElement.style.maxWidth = 'none';
+    zoomOverflowElement.style.maxHeight = 'none';
+    stubElement.style.marginTop = '0px';
+    stubElement.style.marginLeft = '0px';
   }
   const finalImageDimensions = {
     width: newWidth,
