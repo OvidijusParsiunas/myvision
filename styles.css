@@ -1,7 +1,4 @@
 #canvas-wrapper {
-  top: 50px;
-  left: 162px;
-  z-index: 1;
 }
 
 #popup-label-input {
@@ -183,9 +180,7 @@
 
 #zoom-overflow {
   overflow: auto;
-  top: 50px;
-  left: 162px;
-  position: absolute;
+  z-index: 1;
 }
 
 #stub {
