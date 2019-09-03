@@ -13,8 +13,12 @@
   <div id="zoom-overflow" onMouseDown="zoomOverflowPrepareToScroll()" onMouseUp="zoomOverflowStopScrolling()" onScroll="zoomOverflowScroll(this)">
     <div id="stub">.</div>
   </div>
-  <div id="canvas-wrapper">
-    <canvas id="c" style="border:1px solid #ccc;"></canvas>
+  <div style="position: absolute; top: 50px; left: 162px; display: table; z-index: 1; background-color: #fafafa; height: 90%; width: 88%; text-align: center;">
+    <div id="canvas-wrapper" style="vertical-align: middle; display: table-cell;">
+      <div style="display: inline-block;">
+        <canvas id="c" style=""></canvas>
+      </div>
+    </div>
   </div>
   <button id="tools-button" onclick="createNewBndBox()">New Bounding Box</button>
   <button id="tools-button" onclick="createNewPolygon()">New Polygon</button>
@@ -40,6 +44,7 @@
     <div>Labels:</div>
     <table id="label-list" onscroll="onScrolling()">
     </table>
+  </div>
   </div>
 <script src="dist/bundle.js" type="text/javascript"></script>
 </body>

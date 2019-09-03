@@ -1,5 +1,4 @@
 #canvas-wrapper {
-  position: absolute;
   top: 50px;
   left: 162px;
   z-index: 1;
@@ -14,6 +13,10 @@
   padding-top: 2px;
   padding-left: 2px;
   padding-right: 1px;
+}
+
+#c {
+  left: 1000px;
 }
 
 #label-list-title {
