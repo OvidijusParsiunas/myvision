@@ -24,6 +24,7 @@ function getScrollWidth() {
 }
 
 // option to always highlight
+// react when the user resizes the screen
 // bug where the popup doesn't appear on the correct place after zooming or non zooming
 
 function setNewCanvasDimensions() {

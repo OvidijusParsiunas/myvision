@@ -96,8 +96,8 @@ function uploadImage(uploadData) {
 }
 
 function setCanvasProperties() {
-  canvasProperties.maximumCanvasHeight = window.innerHeight - 54;
-  canvasProperties.maximumCanvasWidth = window.innerWidth - 200;
+  canvasProperties.maximumCanvasHeight = window.innerHeight - 50;
+  canvasProperties.maximumCanvasWidth = window.innerWidth - 162;
 }
 
 function assignCanvasForNewImageUpload(newCanvas) {

@@ -160,7 +160,7 @@
 }
 
 #zoom-overflow-wrapper-parent {
-  height: calc(100% - 50px);
+  height: calc(100% - 100px);
   width: calc(100% - 162px);
 }
 
