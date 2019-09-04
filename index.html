@@ -10,16 +10,16 @@
 <body>
   <div id="base-div">
   </div>
-  <div style="position: absolute; top: 50px; left: 162px; display: table; text-align: center; height: 90%; width: 88%; z-index: 1">
+  <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 50px; left: 162px; display: table; text-align: center; z-index: 1">
     <div style="vertical-align: middle; display: table-cell;">
-      <div style="display: inline-block;">
+      <div id="zoom-overflow-wrapper" style="display: inline-block;">
         <div id="zoom-overflow" onMouseDown="zoomOverflowPrepareToScroll()" onMouseUp="zoomOverflowStopScrolling()" onScroll="zoomOverflowScroll(this)">
           <div id="stub">.</div>
         </div>
       </div>
     </div>
   </div>
-  <div style="position: absolute; top: 50px; left: 162px; display: table; background-color: #fafafa; height: 90%; width: 88%; text-align: center;">
+  <div id="canvas-wrapper-parent" style="position: absolute; top: 50px; left: 162px; display: table; background-color: green; text-align: center;">
     <div id="canvas-wrapper" style="vertical-align: middle; display: table-cell; position: relative">
       <div style="display: inline-block; position: relative; z-index: 2">
         <canvas id="c" style=""></canvas>

@@ -154,6 +154,16 @@
   height: 40vh;
 }
 
+#canvas-wrapper-parent {
+  height: calc(100% - 50px);
+  width: calc(100% - 162px);
+}
+
+#zoom-overflow-wrapper-parent {
+  height: calc(100% - 50px);
+  width: calc(100% - 162px);
+}
+
 #base-div {
   width: 98%;
   height: 98%;
