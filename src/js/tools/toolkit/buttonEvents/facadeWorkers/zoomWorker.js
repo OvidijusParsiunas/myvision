@@ -25,6 +25,7 @@ function getScrollWidth() {
 
 // option to always highlight
 // react when the user resizes the screen
+// need to click twice on polygon for points to be above label
 // bug where the popup doesn't appear on the correct place after zooming or non zooming
 
 function setNewCanvasDimensions() {
@@ -51,8 +52,8 @@ function setNewCanvasDimensions() {
     if (widthOverflowed) {
       zoomOverflowElement.style.maxWidth = `${newWidth + 1}px`;
       zoomOverflowElement.style.maxHeight = `${newHeight - 1}px`;
-      stubElement.style.marginTop = `${originalHeight - scrollWidth - 1}px`;
-      stubElement.style.marginLeft = `${originalWidth - 2}px`;
+      stubElement.style.marginTop = `${originalHeight - scrollWidth}px`;
+      stubElement.style.marginLeft = `${originalWidth}px`;
       zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth - 2}px`;
       zoomOverflowWrapperElement.style.marginTop = '0px';
       newHeight -= scrollWidth + 1;
@@ -66,8 +67,6 @@ function setNewCanvasDimensions() {
       zoomOverflowElement.style.maxHeight = `${newHeight}px`;
       stubElement.style.marginTop = `${originalHeight - scrollWidth - 1}px`;
       stubElement.style.marginLeft = `${originalWidth - 1}px`;
-      console.log('a ' + newWidth);
-      console.log('b ' + (scrollWidth / 2 - 1));
       zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth / 2 - 1}px`;
       if (newWidth + (scrollWidth * 2) > canvasProperties.maximumCanvasWidth) {
         console.log('width called');
@@ -86,21 +85,40 @@ function setNewCanvasDimensions() {
     zoomOverflowWrapperElement.style.marginTop = `${(scrollWidth) / 2}px`;
     // there could be an instance where the newHeight may not initially exceed
     // maximum canvas height, but after exceeding maxcanvas width, it might
-    console.log(newHeight);
-    console.log(scrollWidth);
-    console.log(canvasProperties.maximumCanvasHeight);
     const canvasWrapperParentElement = document.getElementById('canvas-wrapper-parent');
+    const auxZoomOverflowElement = document.getElementById('aux-zoom-overflow');
     console.log(canvasWrapperParentElement.style.height);
     if (newHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
       // give it a scrollbar
       console.log('called 5');
-      zoomOverflowElement.style.maxHeight = `${newHeight}px`;
-      zoomOverflowWrapperElement.style.marginTop = `${(scrollWidth / 2) - 2}px`;
-      const overflowHeight = ((newHeight + (scrollWidth)) - canvasProperties.maximumCanvasHeight);
-      zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth - 2}px`;
-      const totalSubtractHeight = overflowHeight * 2;
-      newHeight -= (scrollWidth);
-      newWidth -= scrollWidth;
+      // zoomOverflowWrapperElement.style.left = `calc(50% - ${scrollWidth / 2}px)`;
+      canvasElement.style.top = `calc(50% - ${(scrollWidth / 2)}px)`;
+      zoomOverflowWrapperElement.style.left = `calc(50% - ${scrollWidth / 2}px)`;
+      zoomOverflowWrapperElement.style.marginTop = '0px';
+      zoomOverflowWrapperElement.style.marginLeft = `${(scrollWidth / 2)}px`;
+      stubElement.style.marginLeft = `${originalWidth - 20}px`;
+      if (newHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight) {
+        console.log('hmm');
+        stubElement.style.marginLeft = `${originalWidth - 2}px`;
+        zoomOverflowElement.style.maxWidth = `${newWidth + 1}px`;
+        const horizontalScrollOverlap = (newHeight + scrollWidth) - canvasProperties.maximumCanvasHeight;
+        stubElement.style.height = '13px';
+        zoomOverflowElement.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
+        console.log(stubElement.style.marginTop);
+        console.log(zoomOverflowElement.style.maxHeight);
+        zoomOverflowWrapperElement.style.marginLeft = '0px';
+        zoomOverflowWrapperElement.style.marginTop = '0px';
+        newHeight -= horizontalScrollOverlap;
+        newWidth -= scrollWidth;
+        canvasElement.style.top = `calc(50% - ${(scrollWidth / 2)}px)`;
+        canvasElement.style.left = `calc(50% - ${scrollWidth / 2}px)`;
+        zoomOverflowWrapperElement.style.left = `calc(50% - ${scrollWidth / 2}px)`;
+        zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth / 2 - 1}px`;
+      }
+      // zoomOverflowWrapperElement.style.marginTop = `${(scrollWidth / 2) - 2}px`;
+      // const overflowHeight = ((newHeight + (scrollWidth)) - canvasProperties.maximumCanvasHeight);
+      // zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth - 2}px`;
+      // const totalSubtractHeight = overflowHeight * 2;
     }
   } else {
     zoomOverflowWrapperElement.style.marginTop = '0px';
