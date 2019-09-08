@@ -50,14 +50,16 @@ function setNewCanvasDimensions() {
   const canvasElement = document.getElementById('canvas-wrapper-inner');
   if (heightOverflowed) {
     if (widthOverflowed) {
+      stubElement.style.width = '';
       zoomOverflowWrapperElement.style.width = '';
+      zoomOverflowElement.style.maxWidth = '';
       zoomOverflowElement.style.width = `${newWidth}px`;
       zoomOverflowElement.style.maxHeight = `${newHeight - 1}px`;
       stubElement.style.marginTop = `${originalHeight - scrollWidth - 1}px`;
-      stubElement.style.marginLeft = `${originalWidth - 5}px`;
+      stubElement.style.marginLeft = `${originalWidth - 3}px`;
       zoomOverflowWrapperElement.style.marginTop = '0px';
       newHeight -= scrollWidth;
-      newWidth -= scrollWidth;
+      newWidth -= (scrollWidth + 1);
       canvasElement.style.top = `calc(50% - ${(scrollWidth / 2)}px)`;
       canvasElement.style.left = `calc(50% - ${scrollWidth / 2 + 1}px)`;
       zoomOverflowWrapperElement.style.left = `calc(50% - ${scrollWidth / 2}px)`;
