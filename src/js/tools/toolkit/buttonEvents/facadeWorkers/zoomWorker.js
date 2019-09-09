@@ -54,10 +54,9 @@ function setNewCanvasDimensions() {
       zoomOverflowWrapperElement.style.width = '';
       zoomOverflowElement.style.maxWidth = '';
       zoomOverflowElement.style.width = `${newWidth + 1}px`;
-      console.log(newWidth);
       zoomOverflowElement.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
-      stubElement.style.marginTop = `${originalHeight - scrollWidth - 1}px`;
-      stubElement.style.marginLeft = `${originalWidth - 2}px`;
+      stubElement.style.marginTop = `${Math.round(originalHeight) - scrollWidth - 1}px`;
+      stubElement.style.marginLeft = `${Math.round(originalWidth) - 2}px`;
       zoomOverflowWrapperElement.style.marginTop = '0px';
       newHeight -= scrollWidth;
       newWidth -= (scrollWidth + 1);
@@ -97,17 +96,13 @@ function setNewCanvasDimensions() {
           zoomOverflowWrapperElement.style.width = '';
           zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth - 1}px`;
         }
-        // zoomOverflowElement.style.maxWidth = `${newWidth + 1}px`;
-        // zoomOverflowWrapperElement.style.marginTop = '0px';
-        // newWidth -= scrollWidth;
-        // newHeight -= scrollWidth;
       }
     }
   } else if (widthOverflowed) {
     zoomOverflowElement.style.maxWidth = `${newWidth - 1}px`;
     stubElement.style.marginTop = `${originalHeight - scrollWidth}px`;
     stubElement.style.marginLeft = `${originalWidth - 4}px`;
-    zoomOverflowWrapperElement.style.marginTop = `${(scrollWidth) / 2}px`;
+    zoomOverflowWrapperElement.style.marginTop = `${Math.round(scrollWidth / 2) - 1}px`;
     // there could be an instance where the newHeight may not initially exceed
     // maximum canvas height, but after exceeding maxcanvas width, it might
     const canvasWrapperParentElement = document.getElementById('canvas-wrapper-parent');
