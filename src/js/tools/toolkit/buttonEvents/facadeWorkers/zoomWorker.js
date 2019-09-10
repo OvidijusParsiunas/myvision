@@ -54,12 +54,13 @@ function setNewCanvasDimensions() {
       zoomOverflowWrapperElement.style.width = '';
       zoomOverflowElement.style.maxWidth = '';
       zoomOverflowElement.style.width = `${newWidth + 1}px`;
-      zoomOverflowElement.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
-      stubElement.style.marginTop = `${Math.round(originalHeight) - scrollWidth - 1}px`;
-      stubElement.style.marginLeft = `${Math.round(originalWidth) - 2}px`;
+      zoomOverflowElement.style.maxHeight = `${newHeight - 1}px`;
+      // decide whether we should use - 1 or not depending on the browsers it works on
+      stubElement.style.marginTop = `${Math.round(originalHeight) - scrollWidth - 2}px`;
+      stubElement.style.marginLeft = `${Math.round(originalWidth) - 3}px`;
       zoomOverflowWrapperElement.style.marginTop = '0px';
-      newHeight -= scrollWidth;
-      newWidth -= (scrollWidth + 1);
+      newHeight -= (scrollWidth + 1);
+      newWidth -= (scrollWidth);
       canvasElement.style.top = `calc(50% - ${(scrollWidth / 2)}px)`;
       canvasElement.style.left = `calc(50% - ${Math.round(scrollWidth / 2) + 1}px)`;
       zoomOverflowWrapperElement.style.left = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
@@ -105,15 +106,14 @@ function setNewCanvasDimensions() {
     zoomOverflowWrapperElement.style.marginTop = `${Math.round(scrollWidth / 2) - 1}px`;
     // there could be an instance where the newHeight may not initially exceed
     // maximum canvas height, but after exceeding maxcanvas width, it might
-    const canvasWrapperParentElement = document.getElementById('canvas-wrapper-parent');
-    console.log(canvasWrapperParentElement.style.height);
     if (newHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
       console.log('base 1 overlap');
-      canvasElement.style.top = `calc(50% - ${(scrollWidth / 2)}px)`;
+      canvasElement.style.top = `calc(50% - ${Math.round((scrollWidth / 2)) - 1}px)`;
       zoomOverflowWrapperElement.style.left = `calc(50% - ${scrollWidth / 2}px)`;
-      zoomOverflowWrapperElement.style.marginTop = '0px';
+      zoomOverflowWrapperElement.style.marginTop = '';
       zoomOverflowWrapperElement.style.marginLeft = `${(scrollWidth / 2)}px`;
-      stubElement.style.marginLeft = `${originalWidth - 20}px`;
+      stubElement.style.marginLeft = '';
+      stubElement.style.width = `${originalWidth}px`;
       if (newHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight) {
         console.log('base 2 overlap');
         stubElement.style.marginLeft = `${originalWidth - 2}px`;
