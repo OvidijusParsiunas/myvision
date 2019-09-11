@@ -16,11 +16,11 @@
   left: 1000px;
 }
 
-#label-list-title {
+.side-bar {
   padding-top: 20px;
 }
 
-#label-list-title:hover {
+.side-bar:hover {
   cursor: default;
 }
 
@@ -146,7 +146,7 @@
   margin-top: 5px;
 }
 
-#label-list {
+.side-bar-list {
   display: block;
   overflow-x: auto;
   width: 153px;

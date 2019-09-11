@@ -14,7 +14,6 @@ function drawResizedImage(image, newImageDimensions) {
       scaleX: fileStatus.scaleX,
       scaleY: fileStatus.scaleY,
     });
-    canvas.renderAll();
   });
   fileStatus.width = newImageDimensions.width;
   fileStatus.height = newImageDimensions.height;
