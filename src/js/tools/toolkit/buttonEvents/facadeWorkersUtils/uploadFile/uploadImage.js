@@ -14,6 +14,7 @@ function drawResizedImage(image, newImageDimensions) {
       scaleX: fileStatus.scaleX,
       scaleY: fileStatus.scaleY,
     });
+    canvas.renderAll();
   });
   fileStatus.width = newImageDimensions.width;
   fileStatus.height = newImageDimensions.height;
@@ -22,11 +23,8 @@ function drawResizedImage(image, newImageDimensions) {
 function drawOriginalImage(image) {
   canvas.setWidth(image.width);
   canvas.setHeight(image.height);
-  canvas.setBackgroundColor({ source: image.src }, () => {
-    canvas.renderAll();
-  });
   fabric.Image.fromURL(image.src, (img) => {
-    canvas.setBackgroundImage(img);
+    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
   });
   fileStatus.width = image.width;
   fileStatus.height = image.height;

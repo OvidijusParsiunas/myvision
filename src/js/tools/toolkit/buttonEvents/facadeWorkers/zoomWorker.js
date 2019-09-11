@@ -122,7 +122,6 @@ function setNewCanvasDimensions() {
         stubElement.style.height = `${scrollWidth}px`;
         zoomOverflowElement.style.maxWidth = `${newWidth + 1}px`;
         zoomOverflowElement.style.maxHeight = `${Math.round(canvasProperties.maximumCanvasHeight) - 1}px`;
-        // (originalWidth + scrollWidth - canvasProperties.maximumCanvasWidth + 1)
         const horizontalScrollOverlap = (Math.round(newHeight) + scrollWidth) - canvasProperties.maximumCanvasHeight + 1;
         newHeight -= horizontalScrollOverlap;
         newWidth -= (scrollWidth);
@@ -130,18 +129,6 @@ function setNewCanvasDimensions() {
         canvasElement.style.left = `calc(50% - ${scrollWidth / 2 + 1}px)`;
         zoomOverflowWrapperElement.style.left = `calc(50% - ${Math.round(scrollWidth / 2) - 1}px)`;
         zoomOverflowWrapperElement.style.marginLeft = `${Math.round(scrollWidth / 2) - 2}px`;
-        // stubElement.style.width = `${Math.round(originalWidth) + 2}px`;
-        // zoomOverflowElement.style.maxWidth = '';
-        // zoomOverflowElement.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
-        // zoomOverflowElement.style.width = `${canvasProperties.maximumCanvasWidth + 1}px`;
-        // newHeight -= scrollWidth;
-        // const verticalScrollOverlap = (originalWidth + scrollWidth - canvasProperties.maximumCanvasWidth + 1);
-        // newWidth -= verticalScrollOverlap;
-        // canvasElement.style.top = `calc(50% - ${(scrollWidth / 2)}px)`;
-        // canvasElement.style.left = `calc(50% - ${Math.round(scrollWidth / 2) + 1}px)`;
-        // zoomOverflowWrapperElement.style.left = `calc(50% - ${scrollWidth}px)`;
-        // zoomOverflowWrapperElement.style.width = '';
-        // zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth - 1}px`;
       }
     }
   } else {
