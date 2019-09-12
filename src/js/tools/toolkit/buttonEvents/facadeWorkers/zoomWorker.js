@@ -40,31 +40,27 @@ function reduceCanvasDimensionsBy(width, height) {
 }
 
 function setCanvasElementProperties(left, top) {
-  console.log('1');
-  canvasElement.style.left = left;
-  canvasElement.style.top = top;
+  if (left) canvasElement.style.left = left;
+  if (top) canvasElement.style.top = top;
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
-  console.log('2');
   zoomOverflowElement.style.width = width;
   zoomOverflowElement.style.maxWidth = maxWidth;
   zoomOverflowElement.style.maxHeight = maxHeight;
 }
 
-function setZoomOverFlowWrapperElementProperties(width, height, marginLeft, marginTop) {
-  console.log('3');
+function setZoomOverFlowWrapperElementProperties(width, height, left, marginLeft, marginTop) {
   zoomOverflowWrapperElement.style.width = width;
   zoomOverflowWrapperElement.style.height = height;
   zoomOverflowWrapperElement.style.marginLeft = marginLeft;
   zoomOverflowWrapperElement.style.marginTop = marginTop;
+  if (left) zoomOverflowWrapperElement.style.left = left;
 }
 
-function setStubElementProperties(width, height, left, marginLeft, marginTop) {
-  console.log('4');
+function setStubElementProperties(width, height, marginLeft, marginTop) {
   stubElement.style.width = width;
   stubElement.style.height = height;
-  stubElement.style.left = left;
   stubElement.style.marginLeft = marginLeft;
   stubElement.style.marginTop = marginTop;
 }
