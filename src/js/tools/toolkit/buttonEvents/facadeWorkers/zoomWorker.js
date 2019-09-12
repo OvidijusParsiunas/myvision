@@ -4,6 +4,9 @@ let currentZoom = 1;
 let canvas = null;
 let canvasProperties = null;
 let imageProperties = null;
+let stubElement;
+let zoomOverflowWrapperElement;
+let canvasElement;
 
 function displayZoomMetrics() {
   //
@@ -28,7 +31,21 @@ function getScrollWidth() {
 // need to click twice on polygon for points to be above label
 // bug where the popup doesn't appear on the correct place after zooming or non zooming
 
+function setStubElementProperties(width, height, marginLeft, marginTop) {
+  stubElement.style.width = width;
+  stubElement.style.height = height;
+  stubElement.style.marginLeft = marginLeft;
+  stubElement.style.marginTop = marginTop;
+}
+
+function loadCanvasElements() {
+  stubElement = document.getElementById('stub');
+  zoomOverflowWrapperElement = document.getElementById('zoom-overflow-wrapper');
+  canvasElement = document.getElementById('canvas-wrapper-inner');
+}
+
 function setNewCanvasDimensions() {
+  loadCanvasElements();
   const scrollWidth = getScrollWidth();
   const zoomOverflowElement = document.getElementById('zoom-overflow');
   let heightOverflowed = false;
@@ -45,19 +62,17 @@ function setNewCanvasDimensions() {
     newWidth = canvasProperties.maximumCanvasWidth;
     widthOverflowed = true;
   }
-  const stubElement = document.getElementById('stub');
-  const zoomOverflowWrapperElement = document.getElementById('zoom-overflow-wrapper');
-  const canvasElement = document.getElementById('canvas-wrapper-inner');
   if (heightOverflowed) {
     if (widthOverflowed) {
       stubElement.style.width = '';
+      const stubMarginLeft = `${Math.round(originalWidth) - 2}px`;
+      const stubMarginTop = `${Math.round(originalHeight) - scrollWidth - (currentZoom - 2)}px`;
+      setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
       zoomOverflowWrapperElement.style.width = '';
       zoomOverflowElement.style.maxWidth = '';
       zoomOverflowElement.style.width = `${newWidth + 1}px`;
       zoomOverflowElement.style.maxHeight = `${newHeight - 1}px`;
       // decide whether we should use - 1 or not depending on the browsers it works on
-      stubElement.style.marginTop = `${Math.round(originalHeight) - scrollWidth - (currentZoom - 2)}px`;
-      stubElement.style.marginLeft = `${Math.round(originalWidth) - 2}px`;
       zoomOverflowWrapperElement.style.marginTop = '0px';
       newHeight -= (scrollWidth + 1);
       newWidth -= (scrollWidth);
@@ -69,8 +84,9 @@ function setNewCanvasDimensions() {
     } else {
       zoomOverflowElement.style.maxHeight = `${newHeight}px`;
       zoomOverflowElement.style.width = `${originalWidth - 1}px`;
-      stubElement.style.marginTop = `${originalHeight - scrollWidth - 1}px`;
       zoomOverflowWrapperElement.style.marginLeft = `${scrollWidth + 1}px`;
+      const stubMarginTop = `${originalHeight - scrollWidth - 1}px`;
+      setStubElementProperties('', '', '', stubMarginTop);
       console.log(scrollWidth);
       if (Math.round(newWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
         console.log('width called');
@@ -84,7 +100,8 @@ function setNewCanvasDimensions() {
         if (Math.round(newWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth) {
           // refactor this and put it at a higher level
           console.log('called second bound');
-          stubElement.style.width = `${Math.round(originalWidth) + 2}px`;
+          const stubWidth = `${Math.round(originalWidth) + 2}px`;
+          setStubElementProperties(stubWidth, '', '', stubMarginTop);
           zoomOverflowElement.style.maxWidth = '';
           zoomOverflowElement.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
           zoomOverflowElement.style.width = `${canvasProperties.maximumCanvasWidth + 1}px`;
@@ -101,8 +118,9 @@ function setNewCanvasDimensions() {
     }
   } else if (widthOverflowed) {
     zoomOverflowElement.style.maxWidth = `${newWidth - 1}px`;
-    stubElement.style.marginTop = `${originalHeight - scrollWidth}px`;
-    stubElement.style.marginLeft = `${originalWidth - 4}px`;
+    let stubMarginLeft = `${originalWidth - 4}px`;
+    let stubMarginTop = `${originalHeight - scrollWidth}px`;
+    setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
     zoomOverflowWrapperElement.style.marginTop = `${Math.round(scrollWidth / 2) - 1}px`;
     // there could be an instance where the newHeight may not initially exceed
     // maximum canvas height, but after exceeding maxcanvas width, it might
@@ -112,14 +130,14 @@ function setNewCanvasDimensions() {
       zoomOverflowWrapperElement.style.left = `calc(50% - ${scrollWidth / 2}px)`;
       zoomOverflowWrapperElement.style.marginTop = '';
       zoomOverflowWrapperElement.style.marginLeft = `${(scrollWidth / 2)}px`;
-      stubElement.style.marginLeft = '';
-      stubElement.style.width = `${originalWidth}px`;
+      const stubWidth = `${originalWidth}px`;
+      setStubElementProperties(stubWidth, '', '', stubMarginTop);
       if (newHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 2) {
         console.log('base 2 overlap');
-        stubElement.style.marginTop = `${Math.round(originalHeight) - scrollWidth - (currentZoom - 1)}px`;
-        stubElement.style.marginLeft = `${Math.round(originalWidth) - 2}px`;
-        stubElement.style.width = '';
-        stubElement.style.height = `${scrollWidth}px`;
+        const stubHeight = `${scrollWidth}px`;
+        stubMarginLeft = `${Math.round(originalWidth) - 2}px`;
+        stubMarginTop = `${Math.round(originalHeight) - scrollWidth - (currentZoom - 1)}px`;
+        setStubElementProperties('', stubHeight, stubMarginLeft, stubMarginTop);
         zoomOverflowElement.style.maxWidth = `${newWidth + 1}px`;
         zoomOverflowElement.style.maxHeight = `${Math.round(canvasProperties.maximumCanvasHeight) - 1}px`;
         const horizontalScrollOverlap = (Math.round(newHeight) + scrollWidth) - canvasProperties.maximumCanvasHeight + 1;
@@ -136,8 +154,7 @@ function setNewCanvasDimensions() {
     zoomOverflowWrapperElement.style.marginLeft = '0px';
     zoomOverflowElement.style.maxWidth = 'none';
     zoomOverflowElement.style.maxHeight = 'none';
-    stubElement.style.marginTop = '0px';
-    stubElement.style.marginLeft = '0px';
+    setStubElementProperties('', '', '', '');
   }
   const finalImageDimensions = {
     width: newWidth,
