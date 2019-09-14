@@ -10,29 +10,91 @@ let zoomOverflowElement;
 let canvasElement;
 let newCanvasWidth;
 let newCanvasHeight;
-let resizeObjects = true;
+let canReduceShapeSizes = true;
+let canIncreaseShapeSizes = false;
+let timesZoomedWithNoShapeReduction = 0;
+let timesZoomedWithNoShapeIncrease = 0;
+const reduceShapeSizeRatios = {};
+const increaseShapeSizeRatios = {
+  polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104,
+};
 
-function resizeCanvasObjects() {
-  if (resizeObjects) {
-    canvas.forEachObject((iteratedObj) => {
-      if (iteratedObj.shapeName === 'polygon') {
-        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * 0.104;
-      } else if (iteratedObj.shapeName === 'point') {
-        iteratedObj.radius -= iteratedObj.radius * 0.1;
-        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * 0.1;
-      } else if (iteratedObj.shapeName === 'label') {
-        iteratedObj.fontSize -= iteratedObj.fontSize * 0.08;
-        if (iteratedObj.attachedShape === 'polygon') {
-          iteratedObj.top += 0.2;
+function zoomInObjects() {
+  if (canReduceShapeSizes) {
+    if (timesZoomedWithNoShapeIncrease === 0) {
+      canvas.forEachObject((iteratedObj) => {
+        switch (iteratedObj.shapeName) {
+          case 'polygon':
+            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
+            break;
+          case 'point':
+            iteratedObj.radius -= iteratedObj.radius * increaseShapeSizeRatios.point;
+            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.point;
+            break;
+          case 'label':
+            iteratedObj.fontSize -= iteratedObj.fontSize * increaseShapeSizeRatios.label;
+            if (iteratedObj.attachedShape === 'polygon') {
+              iteratedObj.top += 0.2;
+            }
+            if (iteratedObj.fontSize < 3.2) {
+              canReduceShapeSizes = false;
+            }
+            break;
+          case 'bndBox':
+            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.bndBox;
+            break;
+          default:
+            break;
         }
-        if (iteratedObj.fontSize < 3.2) {
-          resizeObjects = false;
+      });
+      canvas.renderAll();
+      canIncreaseShapeSizes = true;
+    } else {
+      timesZoomedWithNoShapeIncrease -= 1;
+    }
+  } else {
+    timesZoomedWithNoShapeReduction += 1;
+  }
+}
+
+function zoomOutObjects() {
+  if (canIncreaseShapeSizes) {
+    if (timesZoomedWithNoShapeReduction === 0) {
+      canvas.forEachObject((iteratedObj) => {
+        switch (iteratedObj.shapeName) {
+          case 'polygon':
+            if (iteratedObj.strokeWidth > 1.7499) {
+              canIncreaseShapeSizes = false;
+              timesZoomedWithNoShapeIncrease += 1;
+              break;
+            }
+            iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
+            console.log(iteratedObj.strokeWidth);
+            break;
+          case 'point':
+            iteratedObj.radius *= reduceShapeSizeRatios.point;
+            iteratedObj.strokeWidth *= reduceShapeSizeRatios.point;
+            break;
+          case 'label':
+            iteratedObj.fontSize *= reduceShapeSizeRatios.label;
+            if (iteratedObj.attachedShape === 'polygon') {
+              iteratedObj.top -= 0.2;
+            }
+            break;
+          case 'bndBox':
+            iteratedObj.strokeWidth *= reduceShapeSizeRatios.bndBox;
+            break;
+          default:
+            break;
         }
-      } else if (iteratedObj.shapeName === 'bndBox') {
-        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * 0.115;
-      }
-    });
-    canvas.renderAll();
+      });
+      canvas.renderAll();
+      canReduceShapeSizes = true;
+    } else {
+      timesZoomedWithNoShapeReduction -= 1;
+    }
+  } else {
+    timesZoomedWithNoShapeIncrease += 1;
   }
 }
 
@@ -59,6 +121,7 @@ function getScrollWidth() {
 // need to click twice on polygon for points to be above label
 // bug where the popup doesn't appear on the correct place after zooming or non zooming
 // upon moving a polygon, then zooming, the points seem to be in wrong place
+// scroll when zoomed in using scroll wheel
 
 function reduceCanvasDimensionsBy(width, height) {
   newCanvasWidth -= width;
@@ -259,19 +322,29 @@ function setNewCanvasDimensions() {
   canvas.setDimensions(finalImageDimensions);
 }
 
+function calculateReduceShapeSizeFactor() {
+  Object.keys(increaseShapeSizeRatios).forEach((key) => {
+    const ratioToOriginalShapeSize = (1 / increaseShapeSizeRatios[key]);
+    const originalShapeSizeToReducedShape = ratioToOriginalShapeSize - 1;
+    reduceShapeSizeRatios[key] = ratioToOriginalShapeSize / originalShapeSizeToReducedShape;
+  });
+}
+
 function zoomCanvas(canvasObj, action) {
   canvas = canvasObj;
   canvasProperties = getCanvasProperties();
   imageProperties = getImageProperties();
+  calculateReduceShapeSizeFactor();
   if (action === 'in') {
     currentZoom += 0.2;
     canvas.setZoom(currentZoom);
+    zoomInObjects();
   } else if (action === 'out') {
     currentZoom -= 0.2;
     canvas.setZoom(currentZoom);
+    zoomOutObjects();
   }
   setNewCanvasDimensions();
-  resizeCanvasObjects();
 }
 
 window.zoomOverflowScroll = (element) => {
