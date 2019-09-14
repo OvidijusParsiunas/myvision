@@ -26,6 +26,7 @@ function getTempBoundingBoxProps(coordinates) {
     hasRotatingPoint: false,
     perPixelTargetFind: false,
     cornerSize: 8,
+    strokeWidth: 1.75,
   };
 }());
 

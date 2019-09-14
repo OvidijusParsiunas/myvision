@@ -42,7 +42,8 @@ function findInitialLabelLocation(shape) {
 function generateLabelShapeGroup(text) {
   targetShape.set('id', currentId);
   const initialLocation = findInitialLabelLocation(targetShape);
-  const textShape = new fabric.Text(text, labelProperies.getLabelProps(initialLocation));
+  const textShape = new fabric.Text(text,
+    labelProperies.getLabelProps(initialLocation, targetShape.shapeName));
   canvas.add(textShape);
   canvas.bringToFront(textShape);
   addToLabelOptions(textShape.text);

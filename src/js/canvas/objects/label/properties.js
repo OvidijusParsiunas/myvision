@@ -1,12 +1,13 @@
 const labelProperties = {};
 
-function getLabelProps(coordinates) {
+function getLabelProps(coordinates, attachedShape) {
   return {
     fontSize: 10,
     fill: 'yellow',
     left: coordinates.left,
     top: coordinates.top,
     shapeName: 'label',
+    attachedShape,
     hasControls: false,
     selectable: false,
     hasBorders: false,
