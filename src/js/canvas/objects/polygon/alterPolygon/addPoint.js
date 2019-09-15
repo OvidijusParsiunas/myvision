@@ -63,7 +63,7 @@ function moveAddablePointImpl(event) {
 }
 
 function createNewLine(...coordinates) {
-  activeLine = new fabric.Line(coordinates, polygonProperties.newLine);
+  activeLine = new fabric.Line(coordinates, polygonProperties.newLine());
   canvas.add(activeLine);
   canvas.renderAll();
 }
@@ -182,8 +182,8 @@ function addNewPointsByTheirAddDirection(newPointsArray, firstPointId, lastPoint
 
 function realignLabel(polygon) {
   const labelShape = getLabelById(polygon.id);
-  labelShape.left = polygon.points[0].x - labelProperties.pointOffsetProperties.left;
-  labelShape.top = polygon.points[0].y - labelProperties.pointOffsetProperties.top;
+  labelShape.left = polygon.points[0].x - labelProperties.pointOffsetProperties().left;
+  labelShape.top = polygon.points[0].y - labelProperties.pointOffsetProperties().top;
 }
 
 function completePolygonImpl(polygon, originalPointsArray, finalPoint) {

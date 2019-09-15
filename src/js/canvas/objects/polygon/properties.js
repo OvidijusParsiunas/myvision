@@ -1,11 +1,35 @@
 const polygonProperties = {};
 
+let pointStrokedWidth = 0.5;
+let augmentPolygonPointRadius = 4;
+let defaultPointRadius = 3.5;
+let invisiblePointRadius = 3.9;
+let disabledNewPointRadius = 3.7;
+let disabledAddPointRadius = 3;
+let disabledRemovePointRadius = 3.7;
+let newPolygonStrokeWidth = 1.75;
+let tempPolygonStrokeWidth = 0.8;
+let newLineStrokeWidth = 1.1;
+
+function setZoomInProperties(pointRatio, polygonRatio) {
+  defaultPointRadius -= defaultPointRadius * pointRatio;
+  pointStrokedWidth -= pointStrokedWidth * pointRatio;
+  augmentPolygonPointRadius -= augmentPolygonPointRadius * pointRatio;
+  invisiblePointRadius -= invisiblePointRadius * pointRatio;
+  disabledNewPointRadius -= disabledNewPointRadius * pointRatio;
+  disabledAddPointRadius -= disabledAddPointRadius * pointRatio;
+  disabledRemovePointRadius -= disabledRemovePointRadius * pointRatio;
+  newPolygonStrokeWidth -= newPolygonStrokeWidth * polygonRatio;
+  tempPolygonStrokeWidth -= tempPolygonStrokeWidth * polygonRatio;
+  newLineStrokeWidth -= newLineStrokeWidth * polygonRatio;
+}
+
 function generateNewPoint(pointId, pointer) {
   return {
-    radius: 3.5,
+    radius: defaultPointRadius,
     fill: '#ffffff',
     stroke: '#333333',
-    strokeWidth: 0.5,
+    strokeWidth: pointStrokedWidth,
     left: pointer.x,
     top: pointer.y,
     selectable: true,
@@ -22,7 +46,7 @@ function generateNewPoint(pointId, pointer) {
 
 function generateInvisiblePoint(pointer) {
   return {
-    radius: 3.9,
+    radius: invisiblePointRadius,
     fill: 'green',
     stroke: '#333333',
     left: pointer.x,
@@ -41,10 +65,10 @@ function generateInvisiblePoint(pointer) {
 
 function changeRemovablePointToTemp(pointId) {
   return {
-    radius: 3.5,
+    radius: defaultPointRadius,
     fill: '#ffffff',
     stroke: '#333333',
-    strokeWidth: 0.5,
+    strokeWidth: pointStrokedWidth,
     selectable: true,
     shapeName: 'tempPoint',
     pointId,
@@ -56,10 +80,10 @@ function changeRemovablePointToTemp(pointId) {
 
 function generateExistingPolygonPoint(pointId, pointCoordinates) {
   return {
-    radius: 3.5,
+    radius: defaultPointRadius,
     fill: 'blue',
     stroke: '#333333',
-    strokeWidth: 0.5,
+    strokeWidth: pointStrokedWidth,
     left: pointCoordinates.x,
     top: pointCoordinates.y,
     selectable: true,
@@ -77,10 +101,10 @@ function generateExistingPolygonPoint(pointId, pointCoordinates) {
 
 function generateRemovablePolygonPoint(pointId, pointCoordinates, totalPointNumber) {
   const returnObj = {
-    radius: 4,
+    radius: augmentPolygonPointRadius,
     fill: 'red',
     stroke: '#333333',
-    strokeWidth: 0.5,
+    strokeWidth: pointStrokedWidth,
     selectable: true,
     hasBorders: false,
     hasControls: false,
@@ -99,7 +123,7 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates, totalPointNumb
     returnObj.top = pointCoordinates.y;
     if (totalPointNumber < 4) {
       returnObj.fill = 'black';
-      returnObj.radius = 3.7;
+      returnObj.radius = disabledNewPointRadius;
     }
   }
   return returnObj;
@@ -107,10 +131,10 @@ function generateRemovablePolygonPoint(pointId, pointCoordinates, totalPointNumb
 
 function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
   const returnObj = {
-    radius: 4,
+    radius: augmentPolygonPointRadius,
     fill: 'green',
     stroke: '#333333',
-    strokeWidth: 0.5,
+    strokeWidth: pointStrokedWidth,
     selectable: true,
     hasBorders: false,
     hasControls: false,
@@ -130,10 +154,10 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
   return returnObj;
 }
 
-(function setProperties() {
-  polygonProperties.newPolygon = {
+function generateNewPolygon() {
+  return {
     stroke: 'hsla(186, 8%, 50%, 1)',
-    strokeWidth: 1.75,
+    strokeWidth: newPolygonStrokeWidth,
     fill: 'rgba(237, 237, 237, 0.01)',
     perPixelTargetFind: true,
     hasBorders: false,
@@ -144,9 +168,12 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     objectCaching: false,
     numberOfNullPolygonPoints: 0,
   };
-  polygonProperties.newTempPolygon = {
+}
+
+function generateNewTempPolygon() {
+  return {
     stroke: '#333333',
-    strokeWidth: 0.8,
+    strokeWidth: tempPolygonStrokeWidth,
     fill: '#cccccc',
     opacity: 0.3,
     selectable: false,
@@ -156,8 +183,11 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     objectCaching: false,
     numberOfNullPolygonPoints: 0,
   };
-  polygonProperties.newLine = {
-    strokeWidth: 1.1,
+}
+
+function generateNewLine() {
+  return {
+    strokeWidth: newLineStrokeWidth,
     fill: '#999999',
     stroke: '#999999',
     class: 'line',
@@ -169,46 +199,80 @@ function generatestartingAddPolygonPoint(pointId, pointCoordinates) {
     evented: false,
     objectCaching: false,
   };
-  polygonProperties.firstPoint = {
+}
+
+function generateNewFirstPoint() {
+  return {
     fill: 'red',
     shapeName: 'firstPoint',
     lockMovementX: true,
     lockMovementY: true,
   };
-  polygonProperties.removablePoint = {
-    radius: 4,
+}
+
+function generateRemovablePoint() {
+  return {
+    radius: augmentPolygonPointRadius,
     fill: 'red',
     selectable: true,
   };
-  polygonProperties.defaultPoint = {
+}
+
+function generateDefaultPoint() {
+  return {
     fill: 'blue',
-    radius: 3.5,
+    radius: defaultPointRadius,
     hoverCursor: 'move',
   };
-  polygonProperties.additionalPoint = {
+}
+
+function generateAdditionalPoint() {
+  return {
     fill: 'green',
-    radius: 4,
+    radius: augmentPolygonPointRadius,
     hoverCursor: 'default',
   };
-  polygonProperties.disabledAddPoint = {
+}
+
+function generateDisabledAddPoint() {
+  return {
     fill: 'white',
-    radius: 3,
+    radius: disabledAddPointRadius,
   };
-  polygonProperties.disabledRemovePoint = {
+}
+
+function generateDisabledRemovePoint() {
+  return {
     fill: 'black',
-    radius: 3.7,
+    radius: disabledRemovePointRadius,
   };
-  polygonProperties.selectedStartingAddPoint = {
+}
+
+function generateSelectedStartingAddPoint() {
+  return {
     shapeName: 'initialAddPoint',
-    radius: 3.5,
+    radius: defaultPointRadius,
   };
+}
+
+(function setProperties() {
+  polygonProperties.newPolygon = generateNewPolygon;
+  polygonProperties.newTempPolygon = generateNewTempPolygon;
+  polygonProperties.newLine = generateNewLine;
+  polygonProperties.firstPoint = generateNewFirstPoint;
+  polygonProperties.removablePoint = generateRemovablePoint;
+  polygonProperties.defaultPoint = generateDefaultPoint;
+  polygonProperties.additionalPoint = generateAdditionalPoint;
+  polygonProperties.disabledAddPoint = generateDisabledAddPoint;
+  polygonProperties.disabledRemovePoint = generateDisabledRemovePoint;
+  polygonProperties.selectedStartingAddPoint = generateSelectedStartingAddPoint;
   polygonProperties.newPoint = generateNewPoint;
   polygonProperties.invisiblePoint = generateInvisiblePoint;
   polygonProperties.changeRemovablePointToTemp = changeRemovablePointToTemp;
   polygonProperties.existingPolygonPoint = generateExistingPolygonPoint;
   polygonProperties.removablePolygonPoint = generateRemovablePolygonPoint;
   polygonProperties.startingAddPolygonPoint = generatestartingAddPolygonPoint;
+  polygonProperties.setZoomInProperties = setZoomInProperties;
 }());
-
 
 export { polygonProperties as default };

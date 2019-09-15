@@ -1,8 +1,14 @@
 const labelProperties = {};
 
+let fontSize = 10;
+
+function setZoomInProperties(fontRatio) {
+  fontSize -= fontSize * fontRatio;
+}
+
 function getLabelProps(coordinates, attachedShape) {
   return {
-    fontSize: 10,
+    fontSize,
     fill: 'yellow',
     left: coordinates.left,
     top: coordinates.top,
@@ -16,14 +22,24 @@ function getLabelProps(coordinates, attachedShape) {
   };
 }
 
-(function setProperties() {
-  labelProperties.pointOffsetProperties = {
+function generatePolygonOffsetProperties() {
+  return {
     left: 10,
     top: 12,
   };
-  labelProperties.boundingBoxOffsetProperties = {
+}
+
+function generateBoundingBoxOffsetProperties() {
+  return {
     left: 2,
   };
+}
+
+(function setProperties() {
+  labelProperties.pointOffsetProperties = generatePolygonOffsetProperties;
+  labelProperties.boundingBoxOffsetProperties = generateBoundingBoxOffsetProperties;
   labelProperties.getLabelProps = getLabelProps;
+  labelProperties.setZoomInProperties = setZoomInProperties;
 }());
+
 export { labelProperties as default };

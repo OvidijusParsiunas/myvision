@@ -19,9 +19,9 @@ function removeLabel(id) {
 
 function setPolygonLabelOffsetProps(polygon, point) {
   polygon.labelOffsetLeft = polygon.left
-    - (point.x - labelProperies.pointOffsetProperties.left);
+    - (point.x - labelProperies.pointOffsetProperties().left);
   polygon.labelOffsetTop = polygon.top
-    - (point.y - labelProperies.pointOffsetProperties.top);
+    - (point.y - labelProperies.pointOffsetProperties().top);
 }
 
 function changeObjectLabelText(id, text) {

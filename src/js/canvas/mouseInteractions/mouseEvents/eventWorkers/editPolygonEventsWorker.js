@@ -180,7 +180,7 @@ function polygonMoveEvents(event) {
       }
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
-      labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties.left;
+      labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = event.target.top;
     }
   }
@@ -235,7 +235,7 @@ function boundingBoxScalingEvents(event) {
     boundingBox.height *= boundingBox.scaleY;
     boundingBox.scaleX = 1;
     boundingBox.scaleY = 1;
-    labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties.left;
+    labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
     labelObject.top = event.target.top;
   }
 }

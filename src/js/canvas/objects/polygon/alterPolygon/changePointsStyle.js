@@ -21,13 +21,13 @@ function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) 
 function changePolygonPointsToWaitForAddingFirstPointImpl(canvas, startingPoint) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.disabledAddPoint);
+      iteratedObj.set(polygonProperties.disabledAddPoint());
     } else if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {
       iteratedObj.hoverCursor = 'crosshair';
     }
     iteratedObj.selectable = false;
   });
-  startingPoint.set(polygonProperties.selectedStartingAddPoint);
+  startingPoint.set(polygonProperties.selectedStartingAddPoint());
   canvas.renderAll();
 }
 
@@ -43,7 +43,7 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas, polygon) {
   });
   if (polygonPoints.length < 4) {
     polygonPoints.forEach((point) => {
-      point.set(polygonProperties.disabledRemovePoint);
+      point.set(polygonProperties.disabledRemovePoint());
     });
   }
   polygon.sendBackwards();
@@ -53,7 +53,7 @@ function changeDrawingPolygonPointsToRemovableImpl(canvas, polygon) {
 function changePolygonPointsToAddImpl(canvas) {
   canvas.forEachObject((iteratedObj) => {
     if (iteratedObj.shapeName === 'point') {
-      iteratedObj.set(polygonProperties.additionalPoint);
+      iteratedObj.set(polygonProperties.additionalPoint());
     }
   });
   canvas.renderAll();
@@ -64,7 +64,7 @@ function changeObjectsToPolygonPointsToDefaultImpl(canvas) {
     canvas.forEachObject((iteratedObj) => {
       setObjectPropertiesToDefault(iteratedObj);
       if (iteratedObj.shapeName === 'point') {
-        iteratedObj.set(polygonProperties.defaultPoint);
+        iteratedObj.set(polygonProperties.defaultPoint());
       }
     });
   }
@@ -77,14 +77,14 @@ function changeObjectsToPolygonPointsRemovaleImpl(canvas) {
     canvas.forEachObject((iteratedObj) => {
       prepareObjectsForEditablePolygonPoints(iteratedObj, isDrawing);
       if (iteratedObj.shapeName === 'point') {
-        iteratedObj.set(polygonProperties.removablePoint);
+        iteratedObj.set(polygonProperties.removablePoint());
         polygonPoints[iteratedObj.pointId] = iteratedObj;
       }
     });
   }
   if (polygonPoints.length < 4) {
     polygonPoints.forEach((point) => {
-      point.set(polygonProperties.disabledRemovePoint);
+      point.set(polygonProperties.disabledRemovePoint());
     });
   }
   canvas.renderAll();

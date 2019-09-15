@@ -80,8 +80,8 @@ function generatePolygon(pointer) {
   invisiblePoint = null;
 
   removeActiveShape();
-  const polygon = new fabric.Polygon(points, polygonProperties.newPolygon);
-
+  const polygon = new fabric.Polygon(points, polygonProperties.newPolygon());
+  console.log(polygon);
   // find out why on add new polygon points, the cursor changes immediately after adding them
 
   lockMovementIfAssertedByState(polygon);
@@ -116,7 +116,7 @@ function addPoint(pointer) {
       x: pointer.x,
       y: pointer.y,
     });
-    const polygon = new fabric.Polygon(points, polygonProperties.newTempPolygon);
+    const polygon = new fabric.Polygon(points, polygonProperties.newTempPolygon());
     canvas.remove(activeShape);
     canvas.add(polygon);
     activeShape = polygon;
@@ -126,7 +126,7 @@ function addPoint(pointer) {
       x: pointer.x,
       y: pointer.y,
     }];
-    const polygon = new fabric.Polygon(polyPoint, polygonProperties.newTempPolygon);
+    const polygon = new fabric.Polygon(polyPoint, polygonProperties.newTempPolygon());
     activeShape = polygon;
     canvas.add(polygon);
   }
@@ -134,7 +134,7 @@ function addPoint(pointer) {
   if (pointArray.length === 0) {
     invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(pointer));
     canvas.add(invisiblePoint);
-    point.set(polygonProperties.firstPoint);
+    point.set(polygonProperties.firstPoint());
   }
   pointArray.push(point);
   activeShape.sendToBack();
@@ -263,7 +263,7 @@ function cleanPolygonFromEmptyPoints() {
     if (iteratedObj.shapeName === 'point') {
       iteratedObj.set(polygonProperties.changeRemovablePointToTemp(currentPointId));
       if (currentPointId === 0) {
-        iteratedObj.set(polygonProperties.firstPoint);
+        iteratedObj.set(polygonProperties.firstPoint());
       }
       currentPointId += 1;
       tempPointArray.push(iteratedObj);

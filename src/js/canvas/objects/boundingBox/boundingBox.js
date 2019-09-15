@@ -79,7 +79,7 @@ function finishDrawingBoundingBoxFunc(event) {
     createNewBoundingBoxBtnClicked = false;
     leftMouseBtnDown = false;
     boundingBox.setCoords();
-    boundingBox.set(boundingBoxProperties.finalBoundingBoxProps);
+    boundingBox.set(boundingBoxProperties.finalBoundingBoxProps());
     lockMovementIfAssertedByState(boundingBox);
     drawingFinished = true;
     setReadyToDrawShapeState(false);

@@ -1,4 +1,8 @@
 import { getCanvasProperties, getImageProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
+import { setZoomState } from '../facadeWorkersUtils/stateManager';
+import polygonProperties from '../../../../canvas/objects/polygon/properties';
+import labelProperties from '../../../../canvas/objects/label/properties';
+import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 
 let currentZoom = 1;
 let canvas = null;
@@ -19,9 +23,18 @@ const increaseShapeSizeRatios = {
   polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104,
 };
 
+function calculateNewShapeSizeRatios() {
+  polygonProperties.setZoomInProperties(
+    increaseShapeSizeRatios.point, increaseShapeSizeRatios.polygon,
+  );
+  labelProperties.setZoomInProperties(increaseShapeSizeRatios.label);
+  boundingBoxProps.setZoomInProperties(increaseShapeSizeRatios.bndBox);
+}
+
 function zoomInObjects() {
   if (canReduceShapeSizes) {
     if (timesZoomedWithNoShapeIncrease === 0) {
+      calculateNewShapeSizeRatios();
       canvas.forEachObject((iteratedObj) => {
         switch (iteratedObj.shapeName) {
           case 'polygon':
@@ -69,7 +82,6 @@ function zoomOutObjects() {
               break;
             }
             iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
-            console.log(iteratedObj.strokeWidth);
             break;
           case 'point':
             iteratedObj.radius *= reduceShapeSizeRatios.point;
@@ -165,6 +177,7 @@ function setAllElementPropertiesToDefault() {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
   setZoomOverFlowWrapperElementProperties('', '', '', '', '');
+  setCanvasElementProperties('', '');
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth) {
@@ -287,33 +300,33 @@ function setNewCanvasDimensions() {
   if (heightOverflowed) {
     if (widthOverflowed) {
       fullOverflowOfWidthAndHeight(originalWidth, originalHeight, scrollWidth);
-      console.log('horizontal and vertical overlap');
+      // console.log('horizontal and vertical overlap');
     } else {
       heightOverflowDefault(originalWidth, originalHeight, scrollWidth);
-      console.log('vertical overlap default');
+      // console.log('vertical overlap default');
       if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
         heightOverflowWithDoubleVerticalScrollBarOverlap(originalWidth, scrollWidth);
-        console.log('vertical double scrollbar overlap');
+        // console.log('vertical double scrollbar overlap');
         if (Math.round(newCanvasWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth - 2) {
           heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
-          console.log('vertical single scrollbar overlap');
+          // console.log('vertical single scrollbar overlap');
         }
       }
     }
   } else if (widthOverflowed) {
     widthOverflowDefault(originalWidth, originalHeight, scrollWidth);
-    console.log('horizontal overlap default');
+    // console.log('horizontal overlap default');
     if (newCanvasHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
       widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
-      console.log('horizontal double scrollbar overlap');
+      // console.log('horizontal double scrollbar overlap');
       if (newCanvasHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 3) {
         widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
-        console.log('horizontal single scrollbar overlap');
+        // console.log('horizontal single scrollbar overlap');
       }
     }
   } else {
     setAllElementPropertiesToDefault();
-    console.log('set to default');
+    // console.log('set to default');
   }
   const finalImageDimensions = {
     width: newCanvasWidth,
@@ -334,7 +347,7 @@ function zoomCanvas(canvasObj, action) {
   canvas = canvasObj;
   canvasProperties = getCanvasProperties();
   imageProperties = getImageProperties();
-  //calculateReduceShapeSizeFactor();
+  calculateReduceShapeSizeFactor();
   if (action === 'in') {
     currentZoom += 0.2;
     canvas.setZoom(currentZoom);
@@ -342,9 +355,10 @@ function zoomCanvas(canvasObj, action) {
   } else if (action === 'out') {
     currentZoom -= 0.2;
     canvas.setZoom(currentZoom);
-    //zoomOutObjects();
+    zoomOutObjects();
   }
   setNewCanvasDimensions();
+  setZoomState(currentZoom);
 }
 
 window.zoomOverflowScroll = (element) => {

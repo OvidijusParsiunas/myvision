@@ -8,8 +8,10 @@ function realignLabelToLowestPointLocation(polygon) {
     lowestPointIndex += 1;
   }
   const labelObject = getLabelById(polygon.id);
-  labelObject.left = polygon.points[lowestPointIndex].x - labelProperties.pointOffsetProperties.left;
-  labelObject.top = polygon.points[lowestPointIndex].y - labelProperties.pointOffsetProperties.top;
+  labelObject.left = polygon.points[lowestPointIndex].x
+    - labelProperties.pointOffsetProperties().left;
+  labelObject.top = polygon.points[lowestPointIndex].y
+    - labelProperties.pointOffsetProperties().top;
   setPolygonLabelOffsetProps(polygon, polygon.points[lowestPointIndex]);
 }
 
@@ -62,7 +64,7 @@ function removePolygonPointImpl(canvas, polygon, polygonPoints, pointId, existin
     polygon.numberOfNullPolygonPoints += 1;
     if (polygon.points.length - polygon.numberOfNullPolygonPoints === 3) {
       polygonPoints.forEach((point) => {
-        if (point) point.set(polygonProperties.disabledRemovePoint);
+        if (point) point.set(polygonProperties.disabledRemovePoint());
       });
     }
     if (realignLabel) {
