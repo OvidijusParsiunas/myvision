@@ -1,5 +1,6 @@
 import { getCanvasProperties, getImageProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
 import { setZoomState } from '../facadeWorkersUtils/stateManager';
+import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
@@ -16,12 +17,21 @@ let newCanvasWidth;
 let newCanvasHeight;
 let canReduceShapeSizes = true;
 let canIncreaseShapeSizes = false;
+let movedPolygonPathOffsetReduced = false;
 let timesZoomedWithNoShapeReduction = 0;
 let timesZoomedWithNoShapeIncrease = 0;
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
   polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104,
 };
+
+function updateShapesPropertiesForZoomOut() {
+  polygonProperties.setZoomOutProperties(
+    reduceShapeSizeRatios.point, reduceShapeSizeRatios.polygon,
+  );
+  labelProperties.setZoomOutProperties(increaseShapeSizeRatios.label);
+  boundingBoxProps.setZoomOutProperties(increaseShapeSizeRatios.bndBox);
+}
 
 function calculateNewShapeSizeRatios() {
   polygonProperties.setZoomInProperties(
@@ -31,26 +41,40 @@ function calculateNewShapeSizeRatios() {
   boundingBoxProps.setZoomInProperties(increaseShapeSizeRatios.bndBox);
 }
 
+function checkIfChangeShapeSizeOnZoomIn() {
+  if (currentZoom > 3.9) {
+    canReduceShapeSizes = false;
+    timesZoomedWithNoShapeReduction += 1;
+    return false;
+  }
+  return true;
+}
+
 function zoomInObjects() {
   if (canReduceShapeSizes) {
     if (timesZoomedWithNoShapeIncrease === 0) {
+      if (!checkIfChangeShapeSizeOnZoomIn()) return;
       calculateNewShapeSizeRatios();
       canvas.forEachObject((iteratedObj) => {
         switch (iteratedObj.shapeName) {
           case 'polygon':
+          case 'tempPolygon':
             iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
             break;
           case 'point':
+          case 'invisiblePoint':
+          case 'firstPoint':
+          case 'tempPoint':
+          case 'initialAddPoint':
             iteratedObj.radius -= iteratedObj.radius * increaseShapeSizeRatios.point;
             iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.point;
+            iteratedObj.left -= 0.05;
+            iteratedObj.top -= 0.05;
             break;
           case 'label':
             iteratedObj.fontSize -= iteratedObj.fontSize * increaseShapeSizeRatios.label;
             if (iteratedObj.attachedShape === 'polygon') {
-              iteratedObj.top += 0.2;
-            }
-            if (iteratedObj.fontSize < 3.2) {
-              canReduceShapeSizes = false;
+              iteratedObj.top += 0.4;
             }
             break;
           case 'bndBox':
@@ -70,22 +94,35 @@ function zoomInObjects() {
   }
 }
 
+function checkIfChangeShapeSizeOnZoomout() {
+  if (currentZoom < 1) {
+    canIncreaseShapeSizes = false;
+    timesZoomedWithNoShapeIncrease += 1;
+    return false;
+  }
+  return true;
+}
+
 function zoomOutObjects() {
   if (canIncreaseShapeSizes) {
     if (timesZoomedWithNoShapeReduction === 0) {
+      if (!checkIfChangeShapeSizeOnZoomout()) return;
+      updateShapesPropertiesForZoomOut();
       canvas.forEachObject((iteratedObj) => {
         switch (iteratedObj.shapeName) {
           case 'polygon':
-            if (iteratedObj.strokeWidth > 1.7499) {
-              canIncreaseShapeSizes = false;
-              timesZoomedWithNoShapeIncrease += 1;
-              break;
-            }
+          case 'tempPolygon':
             iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
             break;
           case 'point':
+          case 'invisiblePoint':
+          case 'firstPoint':
+          case 'tempPoint':
+          case 'initialAddPoint':
             iteratedObj.radius *= reduceShapeSizeRatios.point;
             iteratedObj.strokeWidth *= reduceShapeSizeRatios.point;
+            iteratedObj.left += 0.05;
+            iteratedObj.top += 0.05;
             break;
           case 'label':
             iteratedObj.fontSize *= reduceShapeSizeRatios.label;
@@ -343,6 +380,20 @@ function calculateReduceShapeSizeFactor() {
   });
 }
 
+function reduceMovePolygonPathOffset() {
+  if (currentZoom > 2 && !movedPolygonPathOffsetReduced) {
+    changeMovePolygonPathOffset(0.6);
+    movedPolygonPathOffsetReduced = true;
+  }
+}
+
+function increaseMovePolygonPathOffset() {
+  if (currentZoom <= 2 && movedPolygonPathOffsetReduced) {
+    changeMovePolygonPathOffset(0);
+    movedPolygonPathOffsetReduced = false;
+  }
+}
+
 function zoomCanvas(canvasObj, action) {
   canvas = canvasObj;
   canvasProperties = getCanvasProperties();
@@ -352,10 +403,12 @@ function zoomCanvas(canvasObj, action) {
     currentZoom += 0.2;
     canvas.setZoom(currentZoom);
     zoomInObjects();
+    reduceMovePolygonPathOffset();
   } else if (action === 'out') {
     currentZoom -= 0.2;
     canvas.setZoom(currentZoom);
     zoomOutObjects();
+    increaseMovePolygonPathOffset();
   }
   setNewCanvasDimensions();
   setZoomState(currentZoom);

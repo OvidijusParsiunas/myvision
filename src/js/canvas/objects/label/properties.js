@@ -1,13 +1,21 @@
 const labelProperties = {};
 
 let fontSize = 10;
+let polygonLabelTop = 0;
+let polygonOffsetTop = 0;
 
 function setZoomInProperties(fontRatio) {
   fontSize -= fontSize * fontRatio;
+  polygonLabelTop += 0.4;
+}
+
+function setZoomOutProperties(fontRatio) {
+  fontSize *= fontRatio;
+  polygonLabelTop -= 0.4;
 }
 
 function getLabelProps(coordinates, attachedShape) {
-  return {
+  const returnObj = {
     fontSize,
     fill: 'yellow',
     left: coordinates.left,
@@ -20,12 +28,16 @@ function getLabelProps(coordinates, attachedShape) {
     objectCaching: false,
     evented: false,
   };
+  if (attachedShape === 'polygon') {
+    returnObj.top += polygonLabelTop;
+  }
+  return returnObj;
 }
 
 function generatePolygonOffsetProperties() {
   return {
     left: 10,
-    top: 12,
+    top: 12 - polygonLabelTop,
   };
 }
 
@@ -40,6 +52,7 @@ function generateBoundingBoxOffsetProperties() {
   labelProperties.boundingBoxOffsetProperties = generateBoundingBoxOffsetProperties;
   labelProperties.getLabelProps = getLabelProps;
   labelProperties.setZoomInProperties = setZoomInProperties;
+  labelProperties.setZoomOutProperties = setZoomOutProperties;
 }());
 
 export { labelProperties as default };

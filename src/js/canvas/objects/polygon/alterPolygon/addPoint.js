@@ -62,6 +62,13 @@ function moveAddablePointImpl(event) {
   }
 }
 
+function createNewestLine() {
+  const newLines = new fabric.Line([33.22742701968771, 261.16666412353516, 63.22742701968771, 281.16666412353516],
+    polygonProperties.newLine());
+  canvas.add(newLines);
+  canvas.renderAll();
+}
+
 function createNewLine(...coordinates) {
   activeLine = new fabric.Line(coordinates, polygonProperties.newLine());
   canvas.add(activeLine);
@@ -98,6 +105,7 @@ function addPointImpl(pointer) {
   canvas.add(point);
   pointsArray.push(point);
   tempPointIndex += 1;
+  createNewestLine();
 }
 
 function resetAddPointPropertiesImpl(canvasObj) {

@@ -1,5 +1,9 @@
 const polygonProperties = {};
 
+// make sure that the add points line gets updated correctly
+// fix properites for other points
+// polygon moves after moving point
+
 let pointStrokedWidth = 0.5;
 let augmentPolygonPointRadius = 4;
 let defaultPointRadius = 3.5;
@@ -22,6 +26,19 @@ function setZoomInProperties(pointRatio, polygonRatio) {
   newPolygonStrokeWidth -= newPolygonStrokeWidth * polygonRatio;
   tempPolygonStrokeWidth -= tempPolygonStrokeWidth * polygonRatio;
   newLineStrokeWidth -= newLineStrokeWidth * polygonRatio;
+}
+
+function setZoomOutProperties(pointRatio, polygonRatio) {
+  pointStrokedWidth *= pointRatio;
+  augmentPolygonPointRadius *= polygonRatio;
+  defaultPointRadius *= pointRatio;
+  invisiblePointRadius *= pointRatio;
+  disabledNewPointRadius *= pointRatio;
+  disabledAddPointRadius *= pointRatio;
+  disabledRemovePointRadius *= pointRatio;
+  newPolygonStrokeWidth *= polygonRatio;
+  tempPolygonStrokeWidth *= polygonRatio;
+  newLineStrokeWidth *= polygonRatio;
 }
 
 function generateNewPoint(pointId, pointer) {
@@ -182,6 +199,7 @@ function generateNewTempPolygon() {
     evented: false,
     objectCaching: false,
     numberOfNullPolygonPoints: 0,
+    shapeName: 'tempPolygon',
   };
 }
 
@@ -198,6 +216,7 @@ function generateNewLine() {
     hasControls: false,
     evented: false,
     objectCaching: false,
+    shapeName: 'addPointsLine',
   };
 }
 
@@ -273,6 +292,7 @@ function generateSelectedStartingAddPoint() {
   polygonProperties.removablePolygonPoint = generateRemovablePolygonPoint;
   polygonProperties.startingAddPolygonPoint = generatestartingAddPolygonPoint;
   polygonProperties.setZoomInProperties = setZoomInProperties;
+  polygonProperties.setZoomOutProperties = setZoomOutProperties;
 }());
 
 export { polygonProperties as default };

@@ -6,6 +6,7 @@ let currentPolygon = null;
 let polygonPoints = [];
 let canvas = null;
 let polygonProperties = null;
+let movePolygonPointOffsetReduction = 0;
 
 function setObjets(polygonObj, polygonPointsArray, canvasObj, polygonPropertiesObj) {
   currentPolygon = polygonObj;
@@ -52,8 +53,8 @@ function movePolygonToNewPosition() {
     height: newPosition.height,
     width: newPosition.width,
     pathOffset: {
-      x: newPosition.left + newPosition.width / 2,
-      y: newPosition.top + newPosition.height / 2,
+      x: newPosition.left + newPosition.width / 2 - movePolygonPointOffsetReduction,
+      y: newPosition.top + newPosition.height / 2 - movePolygonPointOffsetReduction,
     },
   });
   currentPolygon.setCoords();
@@ -76,4 +77,8 @@ function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, pol
   return currentPolygon;
 }
 
-export { generatePolygonAfterMove as default };
+function changeMovePolygonPathOffset(newOffsetReduction) {
+  movePolygonPointOffsetReduction = newOffsetReduction;
+}
+
+export { generatePolygonAfterMove, changeMovePolygonPathOffset };

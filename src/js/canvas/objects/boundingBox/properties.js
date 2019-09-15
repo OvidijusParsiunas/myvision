@@ -12,6 +12,11 @@ function setZoomInProperties(boundingBoxRatio) {
   finalBoundingBoxStrokeWidth -= finalBoundingBoxStrokeWidth * boundingBoxRatio;
 }
 
+function setZoomOutProperties(boundingBoxRatio) {
+  tempBoundingBoxStrokeWidth *= boundingBoxRatio;
+  finalBoundingBoxStrokeWidth *= boundingBoxRatio;
+}
+
 function getTempBoundingBoxProps(coordinates) {
   return {
     left: coordinates.origX,
@@ -41,6 +46,7 @@ function getFinalBoundingBoxProps() {
   boundingBoxProps.tempBoundingBoxProps = getTempBoundingBoxProps;
   boundingBoxProps.finalBoundingBoxProps = getFinalBoundingBoxProps;
   boundingBoxProps.setZoomInProperties = setZoomInProperties;
+  boundingBoxProps.setZoomOutProperties = setZoomOutProperties;
 }());
 
 export { boundingBoxProps as default };
