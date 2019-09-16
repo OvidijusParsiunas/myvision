@@ -29,8 +29,8 @@ function updateShapesPropertiesForZoomOut() {
   polygonProperties.setZoomOutProperties(
     reduceShapeSizeRatios.point, reduceShapeSizeRatios.polygon,
   );
-  labelProperties.setZoomOutProperties(increaseShapeSizeRatios.label);
-  boundingBoxProps.setZoomOutProperties(increaseShapeSizeRatios.bndBox);
+  labelProperties.setZoomOutProperties(reduceShapeSizeRatios.label);
+  boundingBoxProps.setZoomOutProperties(reduceShapeSizeRatios.bndBox);
 }
 
 function calculateNewShapeSizeRatios() {
@@ -59,6 +59,7 @@ function zoomInObjects() {
         switch (iteratedObj.shapeName) {
           case 'polygon':
           case 'tempPolygon':
+          case 'addPointsLine':
             iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
             break;
           case 'point':
@@ -112,6 +113,7 @@ function zoomOutObjects() {
         switch (iteratedObj.shapeName) {
           case 'polygon':
           case 'tempPolygon':
+          case 'addPointsLine':
             iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
             break;
           case 'point':
@@ -417,7 +419,10 @@ function zoomCanvas(canvasObj, action) {
 window.zoomOverflowScroll = (element) => {
   canvas.viewportTransform[4] = -element.scrollLeft;
   canvas.viewportTransform[5] = -element.scrollTop;
-  canvas.requestRenderAll();
+  canvas.forEachObject((iteratedObj) => {
+    iteratedObj.setCoords();
+  });
+  canvas.renderAll();
 };
 
 window.zoomOverflowPrepareToScroll = () => {
