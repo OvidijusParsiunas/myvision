@@ -25,6 +25,8 @@ const increaseShapeSizeRatios = {
   polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104,
 };
 
+// explore zoomToPoint
+
 function updateShapesPropertiesForZoomOut() {
   polygonProperties.setZoomOutProperties(
     reduceShapeSizeRatios.point, reduceShapeSizeRatios.polygon,
@@ -58,6 +60,10 @@ function zoomInObjects() {
       canvas.forEachObject((iteratedObj) => {
         switch (iteratedObj.shapeName) {
           case 'polygon':
+            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
+            iteratedObj.labelOffsetTop = iteratedObj.top
+            - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top);
+            break;
           case 'tempPolygon':
           case 'addPointsLine':
             iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
@@ -75,7 +81,7 @@ function zoomInObjects() {
           case 'label':
             iteratedObj.fontSize -= iteratedObj.fontSize * increaseShapeSizeRatios.label;
             if (iteratedObj.attachedShape === 'polygon') {
-              iteratedObj.top += 0.4;
+              iteratedObj.top += 0.5;
             }
             break;
           case 'bndBox':

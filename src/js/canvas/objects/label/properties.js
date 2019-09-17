@@ -2,16 +2,19 @@ const labelProperties = {};
 
 let fontSize = 10;
 let polygonLabelTop = 0;
+let polygonOffsetLeft = 0;
 let polygonOffsetTop = 0;
 
 function setZoomInProperties(fontRatio) {
   fontSize -= fontSize * fontRatio;
   polygonLabelTop += 0.4;
+  polygonOffsetLeft -= polygonOffsetLeft * fontRatio;
+  polygonOffsetTop -= polygonOffsetTop * fontRatio;
 }
 
 function setZoomOutProperties(fontRatio) {
   fontSize *= fontRatio;
-  polygonLabelTop -= 0.4;
+  polygonLabelTop -= 0.5;
 }
 
 function getLabelProps(coordinates, attachedShape) {
@@ -28,9 +31,6 @@ function getLabelProps(coordinates, attachedShape) {
     objectCaching: false,
     evented: false,
   };
-  if (attachedShape === 'polygon') {
-    returnObj.top += polygonLabelTop;
-  }
   return returnObj;
 }
 

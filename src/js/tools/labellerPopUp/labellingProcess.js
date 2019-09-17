@@ -44,6 +44,7 @@ function generateLabelShapeGroup(text) {
   const initialLocation = findInitialLabelLocation(targetShape);
   const textShape = new fabric.Text(text,
     labelProperties.getLabelProps(initialLocation, targetShape.shapeName));
+    // initial location is too low
   canvas.add(textShape);
   canvas.bringToFront(textShape);
   addToLabelOptions(textShape.text);
