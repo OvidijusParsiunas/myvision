@@ -108,7 +108,6 @@ function polygonMouseDownEvents(event) {
       preventActiveObjectsAppearInFront(canvas);
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedShapeId) {
-        console.log(event.target);
         if (lastShapeSelectedIsBoundingBox) {
           removeHighlightOfListLabel();
           lastShapeSelectedIsBoundingBox = false;

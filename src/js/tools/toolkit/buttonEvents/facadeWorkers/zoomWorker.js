@@ -75,8 +75,6 @@ function zoomInObjects() {
           case 'initialAddPoint':
             iteratedObj.radius -= iteratedObj.radius * increaseShapeSizeRatios.point;
             iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.point;
-            iteratedObj.left -= 0.05;
-            iteratedObj.top -= 0.05;
             break;
           case 'label':
             iteratedObj.fontSize -= iteratedObj.fontSize * increaseShapeSizeRatios.label;
@@ -118,6 +116,10 @@ function zoomOutObjects() {
       canvas.forEachObject((iteratedObj) => {
         switch (iteratedObj.shapeName) {
           case 'polygon':
+            iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
+            iteratedObj.labelOffsetTop = iteratedObj.top
+            - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top);
+            break;
           case 'tempPolygon':
           case 'addPointsLine':
             iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
@@ -178,7 +180,8 @@ function getScrollWidth() {
 // need to click twice on polygon for points to be above label
 // bug where the popup doesn't appear on the correct place after zooming or non zooming
 // upon moving a polygon, then zooming, the points seem to be in wrong place
-// scroll when zoomed in using scroll wheel
+// scroll when zoomed in using scroll
+// click to finish editing the polygon
 
 function reduceCanvasDimensionsBy(width, height) {
   newCanvasWidth -= width;
@@ -380,6 +383,13 @@ function setNewCanvasDimensions() {
   canvas.setDimensions(finalImageDimensions);
 }
 
+function resetObjectsCoordinates() {
+  canvas.forEachObject((iteratedObj) => {
+    iteratedObj.setCoords();
+  });
+  canvas.renderAll();
+}
+
 function calculateReduceShapeSizeFactor() {
   Object.keys(increaseShapeSizeRatios).forEach((key) => {
     const ratioToOriginalShapeSize = (1 / increaseShapeSizeRatios[key]);
@@ -420,15 +430,13 @@ function zoomCanvas(canvasObj, action) {
   }
   setNewCanvasDimensions();
   setZoomState(currentZoom);
+  resetObjectsCoordinates();
 }
 
 window.zoomOverflowScroll = (element) => {
   canvas.viewportTransform[4] = -element.scrollLeft;
   canvas.viewportTransform[5] = -element.scrollTop;
-  canvas.forEachObject((iteratedObj) => {
-    iteratedObj.setCoords();
-  });
-  canvas.renderAll();
+  resetObjectsCoordinates();
 };
 
 window.zoomOverflowPrepareToScroll = () => {

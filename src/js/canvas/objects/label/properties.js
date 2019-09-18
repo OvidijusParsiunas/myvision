@@ -7,7 +7,7 @@ let polygonOffsetTop = 0;
 
 function setZoomInProperties(fontRatio) {
   fontSize -= fontSize * fontRatio;
-  polygonLabelTop += 0.4;
+  polygonLabelTop += 0.5;
   polygonOffsetLeft -= polygonOffsetLeft * fontRatio;
   polygonOffsetTop -= polygonOffsetTop * fontRatio;
 }

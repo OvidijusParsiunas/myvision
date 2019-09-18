@@ -10,6 +10,7 @@ function displayPolygonPointsAfterMoveImpl(canvasObj, polygonObj, polygonPoints)
 // removing, moving point then moving shape, problems here
 
 function resetPolygonSelectableAreaImpl(canvas, polygon) {
+  // find out why after moving, the polygon moves
   const newPosition = polygon._calcDimensions();
   polygon.set({
     left: newPosition.left,
