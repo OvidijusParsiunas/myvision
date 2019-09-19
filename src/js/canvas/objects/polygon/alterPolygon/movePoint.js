@@ -22,16 +22,15 @@ function resetPolygonSelectableAreaImpl(canvas, polygon) {
   };
   if (polygon.polygonMoved) {
     const polygonPadding = polygonProperties.getPolygonAlignmentAfterPointMove();
-    console.log(polygonPadding);
     newPolygonProperties.left = newPosition.left + polygonPadding;
     newPolygonProperties.top = newPosition.top + polygonPadding;
   } else {
     newPolygonProperties.left = newPosition.left;
     newPolygonProperties.top = newPosition.top;
   }
-  polygon.set({
+  polygon.set(
     newPolygonProperties,
-  });
+  );
   polygon.setCoords();
   setPolygonLabelOffsetProps(polygon, polygon.points[0]);
   canvas.renderAll();
