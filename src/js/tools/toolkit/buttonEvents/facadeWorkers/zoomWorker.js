@@ -143,7 +143,7 @@ function zoomOutObjects() {
           case 'label':
             iteratedObj.fontSize *= reduceShapeSizeRatios.label;
             if (iteratedObj.attachedShape === 'polygon') {
-              iteratedObj.top -= 0.2;
+              iteratedObj.top -= 0.5;
             }
             break;
           case 'bndBox':

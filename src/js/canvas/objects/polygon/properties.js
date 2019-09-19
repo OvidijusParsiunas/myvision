@@ -27,7 +27,7 @@ function setZoomInProperties(pointRatio, polygonRatio) {
   newPolygonStrokeWidth -= newPolygonStrokeWidth * polygonRatio;
   tempPolygonStrokeWidth -= tempPolygonStrokeWidth * polygonRatio;
   newLineStrokeWidth -= newLineStrokeWidth * polygonRatio;
-  polygonPadding += 0.04;
+  polygonPadding += 0.05;
 }
 
 function setZoomOutProperties(pointRatio, polygonRatio) {
@@ -41,7 +41,7 @@ function setZoomOutProperties(pointRatio, polygonRatio) {
   newPolygonStrokeWidth *= polygonRatio;
   tempPolygonStrokeWidth *= polygonRatio;
   newLineStrokeWidth *= polygonRatio;
-  polygonPadding -= 0.04;
+  polygonPadding -= 0.05;
 }
 
 function generateNewPoint(pointId, pointer) {

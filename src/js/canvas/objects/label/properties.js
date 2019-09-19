@@ -2,14 +2,10 @@ const labelProperties = {};
 
 let fontSize = 10;
 let polygonLabelTop = 0;
-let polygonOffsetLeft = 0;
-let polygonOffsetTop = 0;
 
 function setZoomInProperties(fontRatio) {
   fontSize -= fontSize * fontRatio;
   polygonLabelTop += 0.5;
-  polygonOffsetLeft -= polygonOffsetLeft * fontRatio;
-  polygonOffsetTop -= polygonOffsetTop * fontRatio;
 }
 
 function setZoomOutProperties(fontRatio) {
