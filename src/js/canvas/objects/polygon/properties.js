@@ -14,6 +14,7 @@ let disabledRemovePointRadius = 3.7;
 let newPolygonStrokeWidth = 1.75;
 let tempPolygonStrokeWidth = 0.8;
 let newLineStrokeWidth = 1.1;
+let polygonPadding = 0;
 
 function setZoomInProperties(pointRatio, polygonRatio) {
   defaultPointRadius -= defaultPointRadius * pointRatio;
@@ -26,6 +27,7 @@ function setZoomInProperties(pointRatio, polygonRatio) {
   newPolygonStrokeWidth -= newPolygonStrokeWidth * polygonRatio;
   tempPolygonStrokeWidth -= tempPolygonStrokeWidth * polygonRatio;
   newLineStrokeWidth -= newLineStrokeWidth * polygonRatio;
+  polygonPadding += 0.04;
 }
 
 function setZoomOutProperties(pointRatio, polygonRatio) {
@@ -39,6 +41,7 @@ function setZoomOutProperties(pointRatio, polygonRatio) {
   newPolygonStrokeWidth *= polygonRatio;
   tempPolygonStrokeWidth *= polygonRatio;
   newLineStrokeWidth *= polygonRatio;
+  polygonPadding -= 0.04;
 }
 
 function generateNewPoint(pointId, pointer) {
@@ -274,6 +277,10 @@ function generateSelectedStartingAddPoint() {
   };
 }
 
+function getPolygonAlignmentAfterPointMove() {
+  return polygonPadding;
+}
+
 (function setProperties() {
   polygonProperties.newPolygon = generateNewPolygon;
   polygonProperties.newTempPolygon = generateNewTempPolygon;
@@ -293,6 +300,7 @@ function generateSelectedStartingAddPoint() {
   polygonProperties.startingAddPolygonPoint = generatestartingAddPolygonPoint;
   polygonProperties.setZoomInProperties = setZoomInProperties;
   polygonProperties.setZoomOutProperties = setZoomOutProperties;
+  polygonProperties.getPolygonAlignmentAfterPointMove = getPolygonAlignmentAfterPointMove;
 }());
 
 export { polygonProperties as default };

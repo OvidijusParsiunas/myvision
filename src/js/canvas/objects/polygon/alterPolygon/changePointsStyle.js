@@ -11,7 +11,7 @@ function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) 
   const totalPointNumber = polygon.points.length;
   polygon.get('points').forEach((point) => {
     const pointObj = new fabric.Circle(polygonPointsProps(pointId, point, totalPointNumber));
-    if (polygon.hasBeenMoved) {
+    if (polygon.polygonMoved) {
       pointObj.left += 1;
       pointObj.top += 1;
     }

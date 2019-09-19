@@ -37,6 +37,7 @@ function generateNewPoints(movedPoints) {
   const movedPointsCoordinates = [];
   movedPoints.forEach((p) => {
     const point = new fabric.Circle(polygonProperties.existingPolygonPoint(pointId, p, true));
+    point.set('polygonMoved', true);
     canvas.add(point);
     polygonPoints.push(point);
     movedPointsCoordinates.push({ x: point.left - 1, y: point.top - 1 });
@@ -70,8 +71,8 @@ function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, pol
   const currentPolygonColor = getShapeColorById(currentPolygon.id);
   removeShape(currentPolygon.id);
   addShape(newPolygon, currentPolygonColor, newPolygon.id);
-  newPolygon.set('hasBeenMoved', true);
   currentPolygon = newPolygon;
+  currentPolygon.set('polygonMoved', true);
   currentPolygon.set('points', polygonPointsCoordinates);
   movePolygonToNewPosition(currentPolygon, canvas);
   setPolygonLabelOffsetProps(currentPolygon, currentPolygon.points[0]);

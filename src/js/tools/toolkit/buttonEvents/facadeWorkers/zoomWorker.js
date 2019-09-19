@@ -75,6 +75,10 @@ function zoomInObjects() {
           case 'initialAddPoint':
             iteratedObj.radius -= iteratedObj.radius * increaseShapeSizeRatios.point;
             iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.point;
+            if (iteratedObj.polygonMoved) {
+              iteratedObj.left -= 0.05;
+              iteratedObj.top -= 0.05;
+            }
             break;
           case 'label':
             iteratedObj.fontSize -= iteratedObj.fontSize * increaseShapeSizeRatios.label;
@@ -131,8 +135,10 @@ function zoomOutObjects() {
           case 'initialAddPoint':
             iteratedObj.radius *= reduceShapeSizeRatios.point;
             iteratedObj.strokeWidth *= reduceShapeSizeRatios.point;
-            iteratedObj.left += 0.05;
-            iteratedObj.top += 0.05;
+            if (iteratedObj.polygonMoved) {
+              iteratedObj.left += 0.05;
+              iteratedObj.top += 0.05;
+            }
             break;
           case 'label':
             iteratedObj.fontSize *= reduceShapeSizeRatios.label;
