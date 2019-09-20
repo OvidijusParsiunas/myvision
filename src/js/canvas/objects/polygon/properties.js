@@ -1,9 +1,5 @@
 const polygonProperties = {};
 
-// make sure that the add points line gets updated correctly
-// fix properites for other points
-// polygon moves after moving point
-
 let pointStrokedWidth = 0.5;
 let augmentPolygonPointRadius = 4;
 let defaultPointRadius = 3.5;

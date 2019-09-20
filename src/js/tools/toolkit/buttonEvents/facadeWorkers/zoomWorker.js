@@ -1,9 +1,9 @@
 import { getCanvasProperties, getImageProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
-import { setZoomState } from '../facadeWorkersUtils/stateManager';
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
+import { setPopUpCoordinatesOnZoom } from '../../../labellerPopUp/style';
 
 let currentZoom = 1;
 let canvas = null;
@@ -22,7 +22,7 @@ let timesZoomedWithNoShapeReduction = 0;
 let timesZoomedWithNoShapeIncrease = 0;
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
-  polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104,
+  polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104, popup: 0.1,
 };
 
 // explore zoomToPoint
@@ -41,6 +41,7 @@ function calculateNewShapeSizeRatios() {
   );
   labelProperties.setZoomInProperties(increaseShapeSizeRatios.label);
   boundingBoxProps.setZoomInProperties(increaseShapeSizeRatios.bndBox);
+  setPopUpCoordinatesOnZoom(increaseShapeSizeRatios.popup);
 }
 
 function checkIfChangeShapeSizeOnZoomIn() {
@@ -435,7 +436,6 @@ function zoomCanvas(canvasObj, action) {
     increaseMovePolygonPathOffset();
   }
   setNewCanvasDimensions();
-  setZoomState(currentZoom);
   resetObjectsCoordinates();
 }
 

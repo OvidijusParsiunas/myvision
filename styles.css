@@ -16,11 +16,11 @@
   left: 1000px;
 }
 
-.side-bar {
+#side-bar {
   padding-top: 20px;
 }
 
-.side-bar:hover {
+#side-bar:hover {
   cursor: default;
 }
 
