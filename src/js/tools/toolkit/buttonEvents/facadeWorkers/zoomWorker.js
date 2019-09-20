@@ -3,7 +3,6 @@ import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
-import { setPopUpCoordinatesOnZoom } from '../../../labellerPopUp/style';
 
 let currentZoom = 1;
 let canvas = null;
@@ -41,7 +40,6 @@ function calculateNewShapeSizeRatios() {
   );
   labelProperties.setZoomInProperties(increaseShapeSizeRatios.label);
   boundingBoxProps.setZoomInProperties(increaseShapeSizeRatios.bndBox);
-  setPopUpCoordinatesOnZoom(increaseShapeSizeRatios.popup);
 }
 
 function checkIfChangeShapeSizeOnZoomIn() {

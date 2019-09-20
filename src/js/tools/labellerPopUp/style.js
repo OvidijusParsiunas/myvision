@@ -3,11 +3,7 @@ import { getLabelOptions } from '../labelList/labelOptions';
 let popupLabelParentElement = null;
 let labellerPopupLabelOptionsElement = null;
 let baseDiv = null;
-let popupScale = 0;
-
-function setPopUpCoordinatesOnZoom() {
-  popupScale += popupScale * 0.2;
-}
+let mouseProperties = {};
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -100,18 +96,11 @@ function hideLabelPopUp() {
   popupLabelParentElement.style.display = 'none';
 }
 
-function showLabelPopUp(xCoordinate, yCoordinate) {
+function showLabelPopUp() {
   dimWindow();
   popupLabelParentElement = document.getElementById('popup-label-parent');
-  const canvasWrapperCoordinates = document.getElementById('canvas-wrapper').getBoundingClientRect();
-  const canvasWrapperInnerElement = document.getElementById('canvas-wrapper-inner');
-  const canvasY = canvasWrapperCoordinates.top;
-  const canvasX = canvasWrapperCoordinates.left;
-  const zoomOverflowWrapperParentElement = document.getElementById('zoom-overflow-wrapper-parent');
-  const canvasPaddingHeight = (zoomOverflowWrapperParentElement.offsetHeight - canvasWrapperInnerElement.offsetHeight) / 2;
-  const canvasPaddingWidth = (zoomOverflowWrapperParentElement.offsetWidth - canvasWrapperInnerElement.offsetWidth) / 2;
-  popupLabelParentElement.style.top = `${yCoordinate + canvasY + canvasPaddingHeight}px`;
-  popupLabelParentElement.style.left = `${xCoordinate + canvasX + canvasPaddingWidth}px`;
+  popupLabelParentElement.style.top = `${mouseProperties.clientY}px`;
+  popupLabelParentElement.style.left = `${mouseProperties.clientX}px`;
   getLabelOptions();
   deleteAndAddLastRowToRefreshDiv();
   popupLabelParentElement.style.display = 'block';
@@ -156,8 +145,11 @@ function resetPopUpLabelOptions() {
   });
 }
 
+window.updateMouseProperties = (event) => {
+  mouseProperties = event;
+};
+
 export {
   showLabelPopUp, getLabelPopUpText, hideLabelPopUp,
   initialiseLabelPopupOptionsList, resetPopUpLabelOptions,
-  setPopUpCoordinatesOnZoom,
 };
