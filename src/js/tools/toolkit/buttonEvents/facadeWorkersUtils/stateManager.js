@@ -12,6 +12,7 @@ let labelsVisibilityState = true;
 let editingLabelId = null;
 let lastPolygonActionWasMoveState = false;
 let newShapeSelectedViaLabelListState = false;
+let currentZoomState = 1;
 
 function getDefaultState() {
   return defaultState;
@@ -71,6 +72,10 @@ function getLastPolygonActionWasMoveState() {
 
 function getNewShapeSelectedViaLabelListState() {
   return newShapeSelectedViaLabelListState;
+}
+
+function getCurrentZoomState() {
+  return currentZoomState;
 }
 
 function setDefaultState(state) {
@@ -134,11 +139,17 @@ function setNewShapeSelectedViaLabelListState(state) {
   newShapeSelectedViaLabelListState = state;
 }
 
+function setCurrentZoomState(state) {
+  currentZoomState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
   getEditingLabelId,
   setEditingLabelId,
+  getCurrentZoomState,
+  setCurrentZoomState,
   getHasDrawnShapeState,
   setHasDrawnShapeState,
   getMovableObjectsState,

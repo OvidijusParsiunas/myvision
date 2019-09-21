@@ -9,7 +9,7 @@ import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
 import {
   setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
-  getRemovingPointsAfterCancelDrawState,
+  getRemovingPointsAfterCancelDrawState, getCurrentZoomState,
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
@@ -24,6 +24,7 @@ let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
 let finishedAddingNewPoints = false;
 let lastShapeSelectedIsBoundingBox = false;
+let mouseIsDown = false;
 
 function programaticallySelectBoundingBox(boundingBoxObj) {
   canvas.setActiveObject(boundingBoxObj);
@@ -93,6 +94,7 @@ function setPolygonNotEditableOnClick() {
 
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {
+  mouseIsDown = true;
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
@@ -130,6 +132,7 @@ function polygonMouseDownEvents(event) {
 
 // look at this
 function polygonMouseUpEvents(event) {
+  mouseIsDown = false;
   if (event.target && event.target.shapeName === 'bndBox') {
     canvas.bringToFront(event.target);
     canvas.bringToFront(labelObject);
@@ -161,6 +164,8 @@ function polygonMouseUpEvents(event) {
   }
 }
 
+
+let selectedPoint = null;
 // potentially refactor this by assigning individual move functions
 function polygonMoveEvents(event) {
   if (event.target) {
@@ -178,6 +183,8 @@ function polygonMoveEvents(event) {
       } else {
         movePolygonPoint(event);
       }
+      resetPolygonSelectableAreaAfterPointMoved();
+      selectedPoint = event.target;
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
       labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
@@ -244,6 +251,48 @@ function getLastSelectedShapeId() {
   return selectedShapeId;
 }
 
+let scrollDifference = 0;
+let times = 0;
+
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+
+  // must put it in the document, otherwise sizes will be 0
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth * 2;
+}
+
+function shapeScrollEvents(event) {
+  if (mouseIsDown) {
+    if (event.target.shapeName === 'point') {
+      const zoomOverflowElement = document.getElementById('zoom-overflow');
+      const stubElement = document.getElementById('stub');
+      const stubHeight = parseInt(stubElement.style.marginTop.substring(0, stubElement.style.marginTop.length - 2), 10);
+      console.log(stubHeight);
+      console.log(zoomOverflowElement.offsetHeight);
+      console.log(zoomOverflowElement.scrollTop);
+      console.log(event.e.deltaY);
+      if (zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight + event.e.deltaY > stubHeight + getScrollWidth()) {
+        console.log('called');
+      }
+      const yCoordinateDifference = event.target.top - event.transform.lastY;
+      if (times < 1) {
+        times += 1;
+        scrollDifference = yCoordinateDifference;
+      }
+      event.target.left = canvas.getPointer(event.e).x + (event.e.deltaX / getCurrentZoomState());
+      event.target.top = canvas.getPointer(event.e).y + (event.e.deltaY / getCurrentZoomState());
+      polygonMoveEvents(event);
+    }
+  }
+}
+
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeEditedPolygonId,
@@ -251,4 +300,5 @@ export {
   setEditPolygonEventObjects, boundingBoxScalingEvents,
   programaticallySelectBoundingBox, setShapeToInvisible,
   programaticallyDeselectBoundingBox, getLastSelectedShapeId,
+  shapeScrollEvents,
 };

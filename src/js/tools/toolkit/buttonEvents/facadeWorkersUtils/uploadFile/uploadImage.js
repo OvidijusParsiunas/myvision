@@ -3,6 +3,7 @@ import fabric from 'fabric';
 let fileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
+let currentImage = null;
 
 function drawResizedImage(image, newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
@@ -62,6 +63,7 @@ function setCanvasWrapperMaximumDimensions() {
 function onImageLoad() {
   fileStatus.uploaded = true;
   const image = this;
+  currentImage = image;
   if (canvasProperties.maximumCanvasHeight < image.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight(image);
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
@@ -114,7 +116,24 @@ function setImageProperties(newFileStatus) {
   fileStatus = newFileStatus;
 }
 
+function resizeCanvas() {
+  setCanvasProperties();
+  if (canvasProperties.maximumCanvasHeight < currentImage.height) {
+    let newImageDimensions = resizeWhenImageExceedsMaxHeight(currentImage);
+    if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
+      newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
+    }
+    drawImageOnCanvas(currentImage, newImageDimensions);
+  } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
+    const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
+    drawImageOnCanvas(currentImage, newImageDimensions);
+  } else {
+    drawImageOnCanvas(currentImage);
+  }
+  setCanvasWrapperMaximumDimensions();
+}
+
 export {
   uploadImage, getImageProperties, setImageProperties,
-  assignCanvasForNewImageUpload, getCanvasProperties,
+  assignCanvasForNewImageUpload, getCanvasProperties, resizeCanvas,
 };

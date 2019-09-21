@@ -1,7 +1,7 @@
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents,
   shapeMouseOutEvents, shapeMouseOverEvents, setEditPolygonEventObjects,
-  boundingBoxScalingEvents,
+  boundingBoxScalingEvents, shapeScrollEvents,
 } from '../eventWorkers/editPolygonEventsWorker';
 
 // not just for polygon
@@ -26,6 +26,10 @@ function assignDefaultEvents(canvas, polygonId, afterAddPoints) {
 
   canvas.on('mouse:over', (e) => {
     shapeMouseOverEvents(e);
+  });
+
+  canvas.on('mouse:wheel', (e) => {
+    shapeScrollEvents(e);
   });
 
   // edit this

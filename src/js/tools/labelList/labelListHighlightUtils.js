@@ -20,7 +20,8 @@ function highlightLabelInTheList(id) {
   highlightedElementOriginalColor = currentlyHighlightedElement.style.backgroundColor;
   const highlightColor = `${highlightedElementOriginalColor.substring(0, highlightedElementOriginalColor.length - 5)} 0.6)`;
   currentlyHighlightedElement.style.backgroundColor = highlightColor;
-  currentlyHighlightedElement.scrollIntoViewIfNeeded();
+  // check why it doesn't work in firefox
+  // currentlyHighlightedElement.scrollIntoViewIfNeeded();
 }
 
 function changeLabelColor(color) {

@@ -1,8 +1,9 @@
-import { getCanvasProperties, getImageProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
+import { getCanvasProperties, getImageProperties, resizeCanvas } from '../facadeWorkersUtils/uploadFile/uploadImage';
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
+import { setCurrentZoomState } from '../facadeWorkersUtils/stateManager';
 
 let currentZoom = 1;
 let canvas = null;
@@ -195,7 +196,7 @@ function reduceCanvasDimensionsBy(width, height) {
 
 function setCanvasElementProperties(left, top) {
   canvasElement.style.left = left || '50%';
-  canvasElement.style.top = top || '';
+  canvasElement.style.top = top || '50%';
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
@@ -435,6 +436,7 @@ function zoomCanvas(canvasObj, action) {
   }
   setNewCanvasDimensions();
   resetObjectsCoordinates();
+  setCurrentZoomState(currentZoom);
 }
 
 window.zoomOverflowScroll = (element) => {
@@ -446,7 +448,27 @@ window.zoomOverflowScroll = (element) => {
 window.zoomOverflowPrepareToScroll = () => {
 };
 
+let mouseDown = null;
+
+window.scrollingSomething = (event) => {
+  zoomOverflowElement.scrollTop += event.deltaY;
+  zoomOverflowElement.scrollTop += event.deltaX;
+};
+
+window.mouseDown = () => {
+  mouseDown = true;
+};
+
+window.mouseUp = () => {
+  mouseDown = false;
+};
+
 window.zoomOverflowStopScrolling = () => {
+};
+
+window.windowResize = () => {
+  resizeCanvas();
+  zoomCanvas(canvas);
 };
 
 export { zoomCanvas as default };
