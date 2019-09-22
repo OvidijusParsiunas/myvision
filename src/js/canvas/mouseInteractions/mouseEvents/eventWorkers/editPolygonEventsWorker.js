@@ -9,7 +9,7 @@ import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
 import {
   setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
-  getRemovingPointsAfterCancelDrawState, getCurrentZoomState,
+  getRemovingPointsAfterCancelDrawState, getCurrentZoomState, getDoubleScrollCanvasState,
 } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
@@ -271,24 +271,32 @@ function getScrollWidth() {
 function shapeScrollEvents(event) {
   if (mouseIsDown) {
     if (event.target.shapeName === 'point') {
-      const zoomOverflowElement = document.getElementById('zoom-overflow');
-      const stubElement = document.getElementById('stub');
-      const stubHeight = parseInt(stubElement.style.marginTop.substring(0, stubElement.style.marginTop.length - 2), 10);
-      console.log(stubHeight);
-      console.log(zoomOverflowElement.offsetHeight);
-      console.log(zoomOverflowElement.scrollTop);
-      console.log(event.e.deltaY);
-      if (zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight + event.e.deltaY > stubHeight + getScrollWidth()) {
-        console.log('called');
+      const currentZoom = getCurrentZoomState();
+      if (currentZoom > 1.00001) {
+        const stubElement = document.getElementById('stub');
+        const stubMarginTop = stubElement.style.marginTop;
+        const stubHeightSubstring = stubMarginTop.substring(0, stubMarginTop.length - 2);
+        const stubHeight = parseInt(stubHeightSubstring, 10);
+        const zoomOverflowElement = document.getElementById('zoom-overflow');
+        const currentBotLocation = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
+        const futureBotLocation = currentBotLocation + event.e.deltaY;
+        const scrollWidth = getDoubleScrollCanvasState() ? getScrollWidth() : getScrollWidth() / 2;
+        if (zoomOverflowElement.scrollTop + event.e.deltaY < 0) {
+          const currentScrollTopOffset = zoomOverflowElement.scrollTop / getCurrentZoomState();
+          event.target.top = canvas.getPointer(event.e).y - currentScrollTopOffset;
+        } else if (futureBotLocation > stubHeight + scrollWidth) {
+          const canvasHeight = stubHeight + scrollWidth;
+          const canvasBottom = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
+          const result = canvasHeight - canvasBottom;
+          event.target.top = canvas.getPointer(event.e).y + (result / getCurrentZoomState());
+        } else {
+          const currentHorizontalScrollDelta = event.e.deltaX / getCurrentZoomState();
+          const currentVerticalScrollDelta = event.e.deltaY / getCurrentZoomState();
+          event.target.left = canvas.getPointer(event.e).x + currentHorizontalScrollDelta;
+          event.target.top = canvas.getPointer(event.e).y + currentVerticalScrollDelta;
+        }
+        polygonMoveEvents(event);
       }
-      const yCoordinateDifference = event.target.top - event.transform.lastY;
-      if (times < 1) {
-        times += 1;
-        scrollDifference = yCoordinateDifference;
-      }
-      event.target.left = canvas.getPointer(event.e).x + (event.e.deltaX / getCurrentZoomState());
-      event.target.top = canvas.getPointer(event.e).y + (event.e.deltaY / getCurrentZoomState());
-      polygonMoveEvents(event);
     }
   }
 }

@@ -3,7 +3,7 @@ import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
-import { setCurrentZoomState } from '../facadeWorkersUtils/stateManager';
+import { setCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
 
 let currentZoom = 1;
 let canvas = null;
@@ -353,9 +353,11 @@ function setNewCanvasDimensions() {
   }
   if (heightOverflowed) {
     if (widthOverflowed) {
+      setDoubleScrollCanvasState(true);
       fullOverflowOfWidthAndHeight(originalWidth, originalHeight, scrollWidth);
       // console.log('horizontal and vertical overlap');
     } else {
+      setDoubleScrollCanvasState(false);
       heightOverflowDefault(originalWidth, originalHeight, scrollWidth);
       // console.log('vertical overlap default');
       if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
@@ -368,6 +370,7 @@ function setNewCanvasDimensions() {
       }
     }
   } else if (widthOverflowed) {
+    setDoubleScrollCanvasState(false);
     widthOverflowDefault(originalWidth, originalHeight, scrollWidth);
     // console.log('horizontal overlap default');
     if (newCanvasHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
@@ -379,6 +382,7 @@ function setNewCanvasDimensions() {
       }
     }
   } else {
+    setDoubleScrollCanvasState(false);
     setAllElementPropertiesToDefault();
     // console.log('set to default');
   }

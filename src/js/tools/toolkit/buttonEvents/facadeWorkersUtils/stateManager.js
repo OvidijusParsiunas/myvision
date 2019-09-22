@@ -13,6 +13,7 @@ let editingLabelId = null;
 let lastPolygonActionWasMoveState = false;
 let newShapeSelectedViaLabelListState = false;
 let currentZoomState = 1;
+let doubleScrollCanvasState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -76,6 +77,10 @@ function getNewShapeSelectedViaLabelListState() {
 
 function getCurrentZoomState() {
   return currentZoomState;
+}
+
+function getDoubleScrollCanvasState() {
+  return doubleScrollCanvasState;
 }
 
 function setDefaultState(state) {
@@ -143,6 +148,10 @@ function setCurrentZoomState(state) {
   currentZoomState = state;
 }
 
+function setDoubleScrollCanvasState(state) {
+  doubleScrollCanvasState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -162,6 +171,8 @@ export {
   setLabelsVisibilityState,
   getContinuousDrawingState,
   setContinuousDrawingState,
+  getDoubleScrollCanvasState,
+  setDoubleScrollCanvasState,
   getAddingPolygonPointsState,
   setAddingPolygonPointsState,
   getCancelledReadyToDrawState,
