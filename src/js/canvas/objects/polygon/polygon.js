@@ -4,8 +4,8 @@ import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/c
 import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
 import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
 import {
-  getMovableObjectsState, getAddingPolygonPointsState,
-  setAddingPolygonPointsState, setReadyToDrawShapeState,
+  getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
+  setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
 } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
@@ -17,6 +17,7 @@ let coordinatesOfLastMouseHover = null;
 let invisiblePoint = null;
 let drawingFinished = false;
 let mouseUpClick = null;
+let mouseIsDownOnTempPoint = false;
 
 function isRightMouseButtonClicked(pointer) {
   if (activeShape && (coordinatesOfLastMouseHover.x !== pointer.x)) {
@@ -35,20 +36,40 @@ function movePoints(event) {
   }
 }
 
+let movedOverflowScroll = false;
+
+
 function drawPolygon(event) {
   if (activeShape) {
-    const pointer = canvas.getPointer(event.e);
-    coordinatesOfLastMouseHover = pointer;
-    const points = activeShape.get('points');
-    points[pointArray.length] = {
-      x: pointer.x,
-      y: pointer.y,
-    };
-    activeShape.set({
-      points,
-    });
+    if (!movedOverflowScroll) {
+      const pointer = canvas.getPointer(event.e);
+      coordinatesOfLastMouseHover = pointer;
+      const points = activeShape.get('points');
+      points[pointArray.length] = {
+        x: pointer.x,
+        y: pointer.y,
+      };
+      activeShape.set({
+        points,
+      });
+      canvas.renderAll();
+    } else {
+      const points = activeShape.get('points');
+      points[pointArray.length] = {
+        x: canvas.getPointer(event.e).x,
+        y: canvas.getPointer(event.e).y,
+      };
+      activeShape.set({
+        points,
+      });
+      const polygon = new fabric.Polygon(activeShape.get('points'), polygonProperties.newTempPolygon());
+      removeActiveShape();
+      activeShape = polygon;
+      canvas.add(polygon);
+      polygon.sendToBack();
+      movedOverflowScroll = false;
+    }
   }
-  canvas.renderAll();
 }
 
 function removeActiveShape() {
@@ -187,9 +208,15 @@ function instantiatePolygon(event) {
   const pointer = canvas.getPointer(event.e);
   if (!isRightMouseButtonClicked(pointer)) {
     setReadyToDrawShapeState(false);
-    if (event.target && event.target.shapeName && event.target.shapeName === 'invisiblePoint') {
-      if (pointArray.length > 2) {
-        generatePolygon(pointer);
+    if (event.target && event.target.shapeName) {
+      if (event.target.shapeName === 'invisiblePoint') {
+        if (pointArray.length > 2) {
+          generatePolygon(pointer);
+        }
+      } else if (event.target.shapeName === 'tempPoint') {
+        mouseIsDownOnTempPoint = true;
+      } else if (polygonMode) {
+        addPoint(pointer);
       }
     } else if (polygonMode) {
       addPoint(pointer);
@@ -204,6 +231,7 @@ function assignMouseUpClickFunc() {
 }
 
 function placeholderToAddMouseDownEvents() {
+  mouseIsDownOnTempPoint = false;
   mouseUpClick();
 }
 
@@ -298,10 +326,120 @@ function removeInvisiblePoint() {
   invisiblePoint = null;
 }
 
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+
+  // must put it in the document, otherwise sizes will be 0
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth * 2;
+}
+
+function topOverflowScroll(event, zoomOverflowElement) {
+  const currentScrollTopOffset = zoomOverflowElement.scrollTop / getCurrentZoomState();
+  const newPositionTop = canvas.getPointer(event.e).y - currentScrollTopOffset;
+  if (mouseIsDownOnTempPoint) {
+    if (event.target.shapeName === 'tempPoint') {
+      event.target.top = newPositionTop;
+      activeShape.points[event.target.pointId].y = event.target.top;
+    }
+  }
+  const points = activeShape.get('points');
+  points[pointArray.length].y = newPositionTop;
+  activeShape.set({
+    points,
+  });
+}
+
+function bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidth) {
+  const canvasHeight = stubHeight + scrollWidth;
+  const canvasBottom = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
+  const result = canvasHeight - canvasBottom;
+  const newPositionTop = canvas.getPointer(event.e).y + (result / getCurrentZoomState());
+  if (mouseIsDownOnTempPoint) {
+    if (event.target.shapeName === 'tempPoint') {
+      event.target.top = newPositionTop;
+      activeShape.points[event.target.pointId].y = newPositionTop;
+    }
+  }
+  const points = activeShape.get('points');
+  points[pointArray.length] = {
+    x: canvas.getPointer(event.e).x,
+    y: newPositionTop,
+  };
+  activeShape.set({
+    points,
+  });
+}
+
+function defaultScroll(event) {
+  const currentVerticalScrollDelta = event.e.deltaY / getCurrentZoomState();
+  const newPositionTop = canvas.getPointer(event.e).y + currentVerticalScrollDelta;
+  const currentHorizontalScrollDelta = event.e.deltaX / getCurrentZoomState();
+  if (mouseIsDownOnTempPoint) {
+    if (event.target.shapeName === 'tempPoint') {
+      event.target.left = canvas.getPointer(event.e).x + currentHorizontalScrollDelta;
+      event.target.top = newPositionTop;
+      activeShape.points[event.target.pointId] = {
+        x: event.target.left, y: event.target.top,
+      };
+    }
+  }
+  const points = activeShape.get('points');
+  points[pointArray.length] = {
+    x: canvas.getPointer(event.e).x + currentHorizontalScrollDelta,
+    y: newPositionTop,
+  };
+  activeShape.set({
+    points,
+  });
+}
+
+function shapeScrollEvents(event) {
+  const currentZoom = getCurrentZoomState();
+  if (currentZoom > 1.00001) {
+    if (activeShape || (mouseIsDownOnTempPoint && event.target.shapeName === 'tempPoint')) {
+      const stubElement = document.getElementById('stub');
+      const stubMarginTop = stubElement.style.marginTop;
+      const stubHeightSubstring = stubMarginTop.substring(0, stubMarginTop.length - 2);
+      const stubHeight = parseInt(stubHeightSubstring, 10);
+      const zoomOverflowElement = document.getElementById('zoom-overflow');
+      const currentBotLocation = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
+      const futureBotLocation = currentBotLocation + event.e.deltaY;
+      const scrollWidth = getDoubleScrollCanvasState() ? getScrollWidth() : getScrollWidth() / 2;
+      if (zoomOverflowElement.scrollTop + event.e.deltaY < 0) {
+        topOverflowScroll(event, zoomOverflowElement);
+      } else if (futureBotLocation > stubHeight + scrollWidth) {
+        bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidth);
+      } else {
+        defaultScroll(event);
+      }
+      const polygon = new fabric.Polygon(activeShape.get('points'), polygonProperties.newTempPolygon());
+      removeActiveShape();
+      activeShape = polygon;
+      canvas.add(polygon);
+      polygon.sendToBack();
+    }
+  }
+}
+
+function moveDrawCrosshair() {
+  if (activeShape) {
+    movedOverflowScroll = true;
+  }
+}
+
 export {
   movePoints,
   drawPolygon,
   getTempPolygon,
+  moveDrawCrosshair,
+  shapeScrollEvents,
   instantiatePolygon,
   resetNewPolygonData,
   removeInvisiblePoint,

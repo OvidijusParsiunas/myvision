@@ -4,6 +4,7 @@ import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import { setCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
+import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
 
 let currentZoom = 1;
 let canvas = null;
@@ -443,9 +444,16 @@ function zoomCanvas(canvasObj, action) {
   setCurrentZoomState(currentZoom);
 }
 
+let scrollWheelUsed = false;
+
 window.zoomOverflowScroll = (element) => {
   canvas.viewportTransform[4] = -element.scrollLeft;
   canvas.viewportTransform[5] = -element.scrollTop;
+  if (!scrollWheelUsed) {
+    moveDrawCrosshair(element);
+  } else {
+    scrollWheelUsed = false;
+  }
   resetObjectsCoordinates();
 };
 
@@ -457,6 +465,7 @@ let mouseDown = null;
 window.scrollingSomething = (event) => {
   zoomOverflowElement.scrollTop += event.deltaY;
   zoomOverflowElement.scrollTop += event.deltaX;
+  scrollWheelUsed = true;
 };
 
 window.mouseDown = () => {

@@ -2,6 +2,7 @@ import {
   instantiatePolygon, prepareCanvasForNewPolygon,
   drawPolygon, movePoints, resumeDrawingAfterRemovePoints,
   placeholderToAddMouseDownEvents, changeInitialPointColour,
+  shapeScrollEvents,
 } from '../../../objects/polygon/polygon';
 
 // should be moved to event worker
@@ -12,9 +13,7 @@ function assignDrawPolygonEvents(canvas, resume) {
     resumeDrawingAfterRemovePoints();
   }
   canvas.on('mouse:down', (e) => {
-    if (!e.target || (e.target && e.target.shapeName !== 'tempPoint')) {
-      instantiatePolygon(e);
-    }
+    instantiatePolygon(e);
   });
 
   canvas.on('object:moving', (e) => {
@@ -27,6 +26,10 @@ function assignDrawPolygonEvents(canvas, resume) {
 
   canvas.on('mouse:up', () => {
     placeholderToAddMouseDownEvents();
+  });
+
+  canvas.on('mouse:wheel', (e) => {
+    shapeScrollEvents(e);
   });
 
   // export this logic
