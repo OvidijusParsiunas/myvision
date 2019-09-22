@@ -268,7 +268,7 @@ function getScrollWidth() {
 function topOverflowScroll(event, zoomOverflowElement) {
   const currentScrollTopOffset = zoomOverflowElement.scrollTop / getCurrentZoomState();
   const newPositionTop = canvas.getPointer(event.e).y - currentScrollTopOffset;
-  if (event.target.shapeName === 'polygon') {
+  if (event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
     event.target.top = newPositionTop - event.transform.offsetY;
   } else if (event.target.shapeName === 'point') {
     event.target.top = newPositionTop;
@@ -280,7 +280,7 @@ function bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidt
   const canvasBottom = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
   const result = canvasHeight - canvasBottom;
   const newPositionTop = canvas.getPointer(event.e).y + (result / getCurrentZoomState());
-  if (event.target.shapeName === 'polygon') {
+  if (event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
     event.target.top = newPositionTop - event.transform.offsetY;
   } else if (event.target.shapeName === 'point') {
     event.target.top = newPositionTop;
@@ -290,7 +290,7 @@ function bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidt
 function defaultScroll(event) {
   const currentVerticalScrollDelta = event.e.deltaY / getCurrentZoomState();
   const newPositionTop = canvas.getPointer(event.e).y + currentVerticalScrollDelta;
-  if (event.target.shapeName === 'polygon') {
+  if (event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
     event.target.top = newPositionTop - event.transform.offsetY;
   } else if (event.target.shapeName === 'point') {
     const currentHorizontalScrollDelta = event.e.deltaX / getCurrentZoomState();
@@ -301,7 +301,7 @@ function defaultScroll(event) {
 
 function shapeScrollEvents(event) {
   if (mouseIsDown) {
-    if (event.target.shapeName === 'point' || event.target.shapeName === 'polygon') {
+    if (event.target.shapeName === 'point' || event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
       const currentZoom = getCurrentZoomState();
       if (currentZoom > 1.00001) {
         const stubElement = document.getElementById('stub');
