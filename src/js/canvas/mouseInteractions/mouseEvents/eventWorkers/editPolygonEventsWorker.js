@@ -251,9 +251,6 @@ function getLastSelectedShapeId() {
   return selectedShapeId;
 }
 
-let scrollDifference = 0;
-let times = 0;
-
 function getScrollWidth() {
   // create a div with the scroll
   const div = document.createElement('div');
@@ -268,9 +265,43 @@ function getScrollWidth() {
   return scrollWidth * 2;
 }
 
+function topOverflowScroll(event, zoomOverflowElement) {
+  const currentScrollTopOffset = zoomOverflowElement.scrollTop / getCurrentZoomState();
+  const newPositionTop = canvas.getPointer(event.e).y - currentScrollTopOffset;
+  if (event.target.shapeName === 'polygon') {
+    event.target.top = newPositionTop - event.transform.offsetY;
+  } else if (event.target.shapeName === 'point') {
+    event.target.top = newPositionTop;
+  }
+}
+
+function bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidth) {
+  const canvasHeight = stubHeight + scrollWidth;
+  const canvasBottom = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
+  const result = canvasHeight - canvasBottom;
+  const newPositionTop = canvas.getPointer(event.e).y + (result / getCurrentZoomState());
+  if (event.target.shapeName === 'polygon') {
+    event.target.top = newPositionTop - event.transform.offsetY;
+  } else if (event.target.shapeName === 'point') {
+    event.target.top = newPositionTop;
+  }
+}
+
+function defaultScroll(event) {
+  const currentVerticalScrollDelta = event.e.deltaY / getCurrentZoomState();
+  const newPositionTop = canvas.getPointer(event.e).y + currentVerticalScrollDelta;
+  if (event.target.shapeName === 'polygon') {
+    event.target.top = newPositionTop - event.transform.offsetY;
+  } else if (event.target.shapeName === 'point') {
+    const currentHorizontalScrollDelta = event.e.deltaX / getCurrentZoomState();
+    event.target.left = canvas.getPointer(event.e).x + currentHorizontalScrollDelta;
+    event.target.top = newPositionTop;
+  }
+}
+
 function shapeScrollEvents(event) {
   if (mouseIsDown) {
-    if (event.target.shapeName === 'point') {
+    if (event.target.shapeName === 'point' || event.target.shapeName === 'polygon') {
       const currentZoom = getCurrentZoomState();
       if (currentZoom > 1.00001) {
         const stubElement = document.getElementById('stub');
@@ -282,18 +313,11 @@ function shapeScrollEvents(event) {
         const futureBotLocation = currentBotLocation + event.e.deltaY;
         const scrollWidth = getDoubleScrollCanvasState() ? getScrollWidth() : getScrollWidth() / 2;
         if (zoomOverflowElement.scrollTop + event.e.deltaY < 0) {
-          const currentScrollTopOffset = zoomOverflowElement.scrollTop / getCurrentZoomState();
-          event.target.top = canvas.getPointer(event.e).y - currentScrollTopOffset;
+          topOverflowScroll(event, zoomOverflowElement);
         } else if (futureBotLocation > stubHeight + scrollWidth) {
-          const canvasHeight = stubHeight + scrollWidth;
-          const canvasBottom = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
-          const result = canvasHeight - canvasBottom;
-          event.target.top = canvas.getPointer(event.e).y + (result / getCurrentZoomState());
+          bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidth);
         } else {
-          const currentHorizontalScrollDelta = event.e.deltaX / getCurrentZoomState();
-          const currentVerticalScrollDelta = event.e.deltaY / getCurrentZoomState();
-          event.target.left = canvas.getPointer(event.e).x + currentHorizontalScrollDelta;
-          event.target.top = canvas.getPointer(event.e).y + currentVerticalScrollDelta;
+          defaultScroll(event);
         }
         polygonMoveEvents(event);
       }
