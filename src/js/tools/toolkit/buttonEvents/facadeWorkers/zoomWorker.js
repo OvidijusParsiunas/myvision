@@ -285,8 +285,8 @@ function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHei
   const zoomOverflowWrapperMarginLeft = `${scrollWidth - 1}px`;
   const stubWidth = `${Math.round(originalWidth) + 2}px`;
   const stubMarginTop = `${originalHeight - scrollWidth - 1}px`;
-  const canvasLeft = `calc(50% - ${(scrollWidth / 2)}px)`;
-  const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2) + 1}px)`;
+  const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
+  const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
   const verticalScrollOverlap = originalWidth + scrollWidth
     - canvasProperties.maximumCanvasWidth + 1;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
@@ -296,15 +296,18 @@ function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHei
   reduceCanvasDimensionsBy(verticalScrollOverlap, scrollWidth);
 }
 
-function heightOverflowWithDoubleVerticalScrollBarOverlap(originalWidth, scrollWidth) {
+function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth) {
+  const zoomOverflowWidth = `${originalWidth - 1}px`;
+  const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${scrollWidth / 2}px)`;
   const zoomOverflowWrapperWidth = `${originalWidth - 1}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth}px`;
   const canvasLeft = `calc(50% - ${(scrollWidth / 2) + 1}px)`;
-  setZoomOverFlowElementProperties('', '', '');
+  const stubMarginTop = `${originalHeight - scrollWidth - 1}px`;
+  setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties(zoomOverflowWrapperWidth, '', zoomOverflowWrapperLeft,
     zoomOverflowWrapperMarginLeft, '');
-  setStubElementProperties('', '', '', '');
+  setStubElementProperties('', '', '', stubMarginTop);
   setCanvasElementProperties(canvasLeft, '');
 }
 
@@ -327,7 +330,7 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight, scrollWidth
   const stubMarginLeft = `${Math.round(originalWidth) - 1}px`;
   const stubMarginTop = `${Math.round(originalHeight) - scrollWidth - (currentZoom - 1)}px`;
   const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
-  const canvasTop = `calc(50% - ${(scrollWidth / 2)}px)`;
+  const canvasTop = `calc(50% - ${scrollWidth / 2}px)`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
@@ -362,9 +365,10 @@ function setNewCanvasDimensions() {
       heightOverflowDefault(originalWidth, originalHeight, scrollWidth);
       // console.log('vertical overlap default');
       if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
-        heightOverflowWithDoubleVerticalScrollBarOverlap(originalWidth, scrollWidth);
+        heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
         // console.log('vertical double scrollbar overlap');
-        if (Math.round(newCanvasWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth - 2) {
+        if (Math.round(newCanvasWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth) {
+          setDoubleScrollCanvasState(true);
           heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
           // console.log('vertical single scrollbar overlap');
         }
@@ -378,6 +382,7 @@ function setNewCanvasDimensions() {
       widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
       // console.log('horizontal double scrollbar overlap');
       if (newCanvasHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 3) {
+        setDoubleScrollCanvasState(true);
         widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
         // console.log('horizontal single scrollbar overlap');
       }
@@ -480,8 +485,8 @@ window.zoomOverflowStopScrolling = () => {
 };
 
 window.windowResize = () => {
-  resizeCanvas();
-  zoomCanvas(canvas);
+  // resizeCanvas();
+  // zoomCanvas(canvas);
 };
 
 export { zoomCanvas as default };
