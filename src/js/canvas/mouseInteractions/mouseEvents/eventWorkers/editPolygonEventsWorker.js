@@ -262,10 +262,36 @@ function getScrollWidth() {
   return scrollWidth * 2;
 }
 
+function boundingBoxScalingWhenScrolling(event, newPositionTop) {
+  if (event.transform.corner === 'mb') {
+    if (event.target.top < newPositionTop) {
+      event.target.set({ top: event.target.top });
+    }
+    event.target.set({ height: Math.abs(event.target.top - newPositionTop) });
+  } else if (event.transform.corner === 'mt') {
+    if (event.target.top > newPositionTop) {
+      const newHeight = Math.abs(event.target.top - newPositionTop + event.target.height);
+      event.target.set({ height: newHeight });
+      event.target.set({ top: newPositionTop });
+    } else if (newPositionTop < event.target.top + event.target.height) {
+      const newHeight = Math.abs(event.target.height - (newPositionTop - event.target.top));
+      event.target.set({ height: newHeight });
+      event.target.set({ top: newPositionTop });
+    }
+  }
+}
+
 function topOverflowScroll(event, zoomOverflowElement) {
   const currentScrollTopOffset = zoomOverflowElement.scrollTop / getCurrentZoomState();
   const newPositionTop = canvas.getPointer(event.e).y - currentScrollTopOffset;
-  if (event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
+  if (event.target.shapeName === 'bndBox') {
+    if (event.transform.action === 'scaleY') {
+      boundingBoxScalingWhenScrolling(event, newPositionTop);
+    } else {
+      event.target.top = newPositionTop - event.transform.offsetY;
+    }
+  } else
+  if (event.target.shapeName === 'polygon') {
     event.target.top = newPositionTop - event.transform.offsetY;
   } else if (event.target.shapeName === 'point') {
     event.target.top = newPositionTop;
@@ -277,7 +303,13 @@ function bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidt
   const canvasBottom = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
   const result = canvasHeight - canvasBottom;
   const newPositionTop = canvas.getPointer(event.e).y + (result / getCurrentZoomState());
-  if (event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
+  if (event.target.shapeName === 'bndBox') {
+    if (event.transform.action === 'scaleY') {
+      boundingBoxScalingWhenScrolling(event, newPositionTop);
+    } else {
+      event.target.top = newPositionTop - event.transform.offsetY;
+    }
+  } else if (event.target.shapeName === 'polygon') {
     event.target.top = newPositionTop - event.transform.offsetY;
   } else if (event.target.shapeName === 'point') {
     event.target.top = newPositionTop;
@@ -287,7 +319,13 @@ function bottomOverflowScroll(event, zoomOverflowElement, stubHeight, scrollWidt
 function defaultScroll(event) {
   const currentVerticalScrollDelta = event.e.deltaY / getCurrentZoomState();
   const newPositionTop = canvas.getPointer(event.e).y + currentVerticalScrollDelta;
-  if (event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
+  if (event.target.shapeName === 'bndBox') {
+    if (event.transform.action === 'scaleY') {
+      boundingBoxScalingWhenScrolling(event, newPositionTop);
+    } else {
+      event.target.top = newPositionTop - event.transform.offsetY;
+    }
+  } else if (event.target.shapeName === 'polygon') {
     event.target.top = newPositionTop - event.transform.offsetY;
   } else if (event.target.shapeName === 'point') {
     const currentHorizontalScrollDelta = event.e.deltaX / getCurrentZoomState();
@@ -296,9 +334,6 @@ function defaultScroll(event) {
   }
 }
 
-// didn't go for scrolling when resizing bounding box, because when holding lower corner
-// and scrolling up above it, the lower corner doesn't change to upper corner, causing the rectangle
-// to move the bottom corner to the top corner
 function shapeScrollEvents(event) {
   if (mouseIsDown) {
     if (event.target.shapeName === 'point' || event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
