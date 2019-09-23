@@ -1,6 +1,6 @@
 import {
   pointMouseDownEvents, setAddPointsEventsCanvas, pointMouseUpEvents,
-  mouseMove, mouseOverEvents, moveAddPoints, mouseOutEvents,
+  mouseMove, mouseOverEvents, moveAddPoints, mouseOutEvents, shapeScrollEvents,
 } from '../eventWorkers/addPointsEventsWorker';
 
 function assignAddPointsOnExistingPolygonEvents(canvas) {
@@ -28,6 +28,10 @@ function assignAddPointsOnExistingPolygonEvents(canvas) {
 
   canvas.on('mouse:out', (e) => {
     mouseOutEvents(e);
+  });
+
+  canvas.on('mouse:wheel', (e) => {
+    shapeScrollEvents(e);
   });
 }
 

@@ -296,6 +296,9 @@ function defaultScroll(event) {
   }
 }
 
+// didn't go for scrolling when resizing bounding box, because when holding lower corner
+// and scrolling up above it, the lower corner doesn't change to upper corner, causing the rectangle
+// to move the bottom corner to the top corner
 function shapeScrollEvents(event) {
   if (mouseIsDown) {
     if (event.target.shapeName === 'point' || event.target.shapeName === 'polygon' || event.target.shapeName === 'bndBox') {
@@ -321,6 +324,8 @@ function shapeScrollEvents(event) {
     }
   }
 }
+
+// fix screen size bug
 
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
