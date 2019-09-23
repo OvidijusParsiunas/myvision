@@ -164,8 +164,6 @@ function polygonMouseUpEvents(event) {
   }
 }
 
-
-let selectedPoint = null;
 // potentially refactor this by assigning individual move functions
 function polygonMoveEvents(event) {
   if (event.target) {
@@ -184,7 +182,6 @@ function polygonMoveEvents(event) {
         movePolygonPoint(event);
       }
       resetPolygonSelectableAreaAfterPointMoved();
-      selectedPoint = event.target;
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
       labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;

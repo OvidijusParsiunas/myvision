@@ -38,6 +38,27 @@ function movePoints(event) {
 
 let movedOverflowScroll = false;
 
+function removeActiveShape() {
+  canvas.remove(activeShape);
+  activeShape = null;
+}
+
+function repositionCrosshair(event) {
+  const points = activeShape.get('points');
+  const pointer = canvas.getPointer(event.e);
+  points[pointArray.length] = {
+    x: pointer.x,
+    y: pointer.y,
+  };
+  activeShape.set({
+    points,
+  });
+  const polygon = new fabric.Polygon(activeShape.get('points'), polygonProperties.newTempPolygon());
+  removeActiveShape();
+  activeShape = polygon;
+  canvas.add(polygon);
+  polygon.sendToBack();
+}
 
 function drawPolygon(event) {
   if (activeShape) {
@@ -54,27 +75,10 @@ function drawPolygon(event) {
       });
       canvas.renderAll();
     } else {
-      const points = activeShape.get('points');
-      points[pointArray.length] = {
-        x: canvas.getPointer(event.e).x,
-        y: canvas.getPointer(event.e).y,
-      };
-      activeShape.set({
-        points,
-      });
-      const polygon = new fabric.Polygon(activeShape.get('points'), polygonProperties.newTempPolygon());
-      removeActiveShape();
-      activeShape = polygon;
-      canvas.add(polygon);
-      polygon.sendToBack();
+      repositionCrosshair(event);
       movedOverflowScroll = false;
     }
   }
-}
-
-function removeActiveShape() {
-  canvas.remove(activeShape);
-  activeShape = null;
 }
 
 function lockMovementIfAssertedByState(polygon) {

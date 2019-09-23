@@ -1,6 +1,6 @@
 import {
   prepareCanvasForNewBoundingBox, instantiateNewBoundingBox,
-  drawBoundingBox, finishDrawingBoundingBox,
+  drawBoundingBox, finishDrawingBoundingBox, shapeScrollEvents,
 } from '../../../objects/boundingBox/boundingBox';
 
 function assignDrawBoundingBoxEvents(canvas) {
@@ -16,6 +16,10 @@ function assignDrawBoundingBoxEvents(canvas) {
 
   canvas.on('mouse:up', (e) => {
     finishDrawingBoundingBox(e);
+  });
+
+  canvas.on('mouse:wheel', (e) => {
+    shapeScrollEvents(e);
   });
 }
 
