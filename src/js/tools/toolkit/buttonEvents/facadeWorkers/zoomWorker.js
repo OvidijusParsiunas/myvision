@@ -484,9 +484,19 @@ window.mouseUp = () => {
 window.zoomOverflowStopScrolling = () => {
 };
 
-window.windowResize = () => {
-  // resizeCanvas();
-  // zoomCanvas(canvas);
-};
+
+// function resizeAllObjects() {
+//   canvas.forEachObject((object) => {
+//     console.log(object);
+//   });
+// }
+//
+// let lastFileStatus = null;
+//
+// window.windowResize = () => {
+//   newFileStatus = resizeCanvas();
+//   resizeAllObjects();
+//   // zoomCanvas(canvas);
+// };
 
 export { zoomCanvas as default };

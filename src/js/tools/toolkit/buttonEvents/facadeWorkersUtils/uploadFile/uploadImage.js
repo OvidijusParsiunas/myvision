@@ -1,6 +1,7 @@
 import fabric from 'fabric';
 
-let fileStatus = { uploaded: false, name: null };
+let initialFileStatus = {};
+const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
 let currentImage = null;
@@ -9,15 +10,15 @@ function drawResizedImage(image, newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
   canvas.setHeight(newImageDimensions.height);
   fabric.Image.fromURL(image.src, (img) => {
-    fileStatus.scaleX = canvas.width / img.width;
-    fileStatus.scaleY = canvas.height / img.height;
+    newFileStatus.scaleX = canvas.width / img.width;
+    newFileStatus.scaleY = canvas.height / img.height;
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-      scaleX: fileStatus.scaleX,
-      scaleY: fileStatus.scaleY,
+      scaleX: newFileStatus.scaleX,
+      scaleY: newFileStatus.scaleY,
     });
   });
-  fileStatus.width = newImageDimensions.width;
-  fileStatus.height = newImageDimensions.height;
+  newFileStatus.width = newImageDimensions.width;
+  newFileStatus.height = newImageDimensions.height;
 }
 
 function drawOriginalImage(image) {
@@ -26,8 +27,8 @@ function drawOriginalImage(image) {
   fabric.Image.fromURL(image.src, (img) => {
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
   });
-  fileStatus.width = image.width;
-  fileStatus.height = image.height;
+  newFileStatus.width = image.width;
+  newFileStatus.height = image.height;
 }
 
 function drawImageOnCanvas(image, newImageDimensions) {
@@ -61,7 +62,7 @@ function setCanvasWrapperMaximumDimensions() {
 }
 
 function onImageLoad() {
-  fileStatus.uploaded = true;
+  newFileStatus.uploaded = true;
   const image = this;
   currentImage = image;
   if (canvasProperties.maximumCanvasHeight < image.height) {
@@ -77,6 +78,8 @@ function onImageLoad() {
     drawImageOnCanvas(image);
   }
   setCanvasWrapperMaximumDimensions();
+  initialFileStatus.width = newFileStatus.width;
+  initialFileStatus.height = newFileStatus.height;
 }
 
 function onFileLoad(e) {
@@ -88,7 +91,7 @@ function onFileLoad(e) {
 function uploadImage(uploadData) {
   if (uploadData.files && uploadData.files[0]) {
     const reader = new FileReader();
-    fileStatus.name = uploadData.files[0].name;
+    newFileStatus.name = uploadData.files[0].name;
     reader.onload = onFileLoad;
     reader.readAsDataURL(uploadData.files[0]);
   }
@@ -109,11 +112,16 @@ function getCanvasProperties() {
 }
 
 function getImageProperties() {
-  return fileStatus;
+  return newFileStatus;
 }
 
-function setImageProperties(newFileStatus) {
-  fileStatus = newFileStatus;
+function calculateNewFileSizeRatio() {
+  const newFileSizeRatio = {};
+  newFileSizeRatio.width = newFileStatus.width / initialFileStatus.width;
+  newFileSizeRatio.height = newFileStatus.height / initialFileStatus.height;
+  initialFileStatus.width = newFileStatus.width;
+  initialFileStatus.height = newFileStatus.height;
+  return newFileSizeRatio;
 }
 
 function resizeCanvas() {
@@ -131,9 +139,10 @@ function resizeCanvas() {
     drawImageOnCanvas(currentImage);
   }
   setCanvasWrapperMaximumDimensions();
+  return calculateNewFileSizeRatio();
 }
 
 export {
-  uploadImage, getImageProperties, setImageProperties,
-  assignCanvasForNewImageUpload, getCanvasProperties, resizeCanvas,
+  uploadImage, getImageProperties, resizeCanvas,
+  assignCanvasForNewImageUpload, getCanvasProperties,
 };

@@ -6,6 +6,7 @@ import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas } from './utils
 import { assignCanvasForLabelManipulation } from './objects/label/label';
 import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allShapes';
 import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
+import assignCanvasForResizeWindowResize from '../tools/toolkit/buttonEvents/facadeWorkersUtils/windowResize';
 
 function constructCanvas() {
   const canvas = createNewCanvas();
@@ -17,6 +18,7 @@ function constructCanvas() {
   assignCanvasForShapeFillManipulation(canvas);
   assignCanvasForLabelManipulation(canvas);
   assignCanvasForResettingToDefaultAfterAddPoints(canvas);
+  assignCanvasForResizeWindowResize(canvas);
 }
 
 export { constructCanvas as default };

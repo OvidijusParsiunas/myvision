@@ -360,8 +360,6 @@ function shapeScrollEvents(event) {
   }
 }
 
-// fix screen size bug
-
 export {
   polygonMouseDownEvents, polygonMouseUpEvents,
   polygonMoveEvents, removeEditedPolygonId,
