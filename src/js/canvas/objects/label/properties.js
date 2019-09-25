@@ -2,6 +2,8 @@ const labelProperties = {};
 
 let fontSize = 10;
 let polygonLabelTop = 0;
+let polygonOffsetLeft = 10;
+let polygonOffsetTop = 12;
 
 function setZoomInProperties(fontRatio) {
   fontSize -= fontSize * fontRatio;
@@ -32,9 +34,14 @@ function getLabelProps(coordinates, attachedShape) {
 
 function generatePolygonOffsetProperties() {
   return {
-    left: 10,
-    top: 12 - polygonLabelTop,
+    left: polygonOffsetLeft,
+    top: polygonOffsetTop - polygonLabelTop,
   };
+}
+
+function updatePolygonOffsetProperties(newOffsetRatio) {
+  polygonOffsetLeft *= newOffsetRatio.width;
+  polygonOffsetTop *= newOffsetRatio.height;
 }
 
 function generateBoundingBoxOffsetProperties() {
@@ -49,6 +56,7 @@ function generateBoundingBoxOffsetProperties() {
   labelProperties.getLabelProps = getLabelProps;
   labelProperties.setZoomInProperties = setZoomInProperties;
   labelProperties.setZoomOutProperties = setZoomOutProperties;
+  labelProperties.updatePolygonOffsetProperties = updatePolygonOffsetProperties;
 }());
 
 export { labelProperties as default };
