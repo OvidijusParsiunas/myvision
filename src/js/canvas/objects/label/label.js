@@ -17,13 +17,11 @@ function removeLabel(id) {
   delete labelObjects[id];
 }
 
-function setPolygonLabelOffsetProps(polygon, point, scaleRatio) {
-  const ratio = scaleRatio || { width: 1, height: 1 };
-  console.log(ratio);
-  polygon.labelOffsetLeft = (polygon.left
-    - (point.x - labelProperies.pointOffsetProperties().left)) * ratio.width;
-  polygon.labelOffsetTop = (polygon.top
-    - (point.y - labelProperies.pointOffsetProperties().top)) * ratio.height;
+function setPolygonLabelOffsetProps(polygon, point) {
+  polygon.labelOffsetLeft = polygon.left
+    - (point.x - labelProperies.pointOffsetProperties().left);
+  polygon.labelOffsetTop = polygon.top
+    - (point.y - labelProperies.pointOffsetProperties().top);
 }
 
 function changeObjectLabelText(id, text) {
