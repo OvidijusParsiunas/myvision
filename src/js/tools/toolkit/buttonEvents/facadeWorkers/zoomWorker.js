@@ -429,6 +429,12 @@ function increaseMovePolygonPathOffset() {
   }
 }
 
+function resizeAll() {
+  setNewCanvasDimensions();
+  resetObjectsCoordinates();
+  setCurrentZoomState(currentZoom);
+}
+
 function zoomCanvas(canvasObj, action, windowResize) {
   if (windowResize) {
     canvasProperties = getCanvasProperties();
@@ -444,7 +450,8 @@ function zoomCanvas(canvasObj, action, windowResize) {
       canvas.setZoom(currentZoom);
       zoomInObjects();
       reduceMovePolygonPathOffset();
-    } else if (action === 'out') {
+      resizeAll();
+    } else if (action === 'out' && currentZoom !== 1) {
       currentZoom -= 0.2;
       canvas.setZoom(currentZoom);
       zoomOutObjects();
@@ -454,10 +461,8 @@ function zoomCanvas(canvasObj, action, windowResize) {
         labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
         resizeAllObjects(canvas, newFileSizeRatio);
       }
+      resizeAll();
     }
-    setNewCanvasDimensions();
-    resetObjectsCoordinates();
-    setCurrentZoomState(currentZoom);
   }
 }
 

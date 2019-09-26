@@ -11,8 +11,6 @@ window.windowResize = () => {
     resizeCanvas();
     zoomCanvas(canvas, null, true);
   } else {
-    // fix here, when zoom in, stretch out, then zoom out to original
-    // solution - set to original dimensions in zoom worker
     const newFileSizeRatio = resizeCanvasAndImage();
     labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
     resizeAllObjects(canvas, newFileSizeRatio);
