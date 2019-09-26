@@ -1,7 +1,8 @@
-import { getCanvasProperties, getImageProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
+import { getCanvasProperties, getImageProperties, resizeCanvasAndImage } from '../facadeWorkersUtils/uploadFile/uploadImage';
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
+import { resizeAllObjects } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import { setCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
 import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
@@ -448,6 +449,11 @@ function zoomCanvas(canvasObj, action, windowResize) {
       canvas.setZoom(currentZoom);
       zoomOutObjects();
       increaseMovePolygonPathOffset();
+      if (currentZoom === 1) {
+        const newFileSizeRatio = resizeCanvasAndImage();
+        labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
+        resizeAllObjects(canvas, newFileSizeRatio);
+      }
     }
     setNewCanvasDimensions();
     resetObjectsCoordinates();

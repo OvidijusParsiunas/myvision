@@ -1,4 +1,5 @@
 import { getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { setPolygonLabelOffsetProps } from '../label/label';
 
 function prepareObjectsForEditablePolygonPoints(object, isDrawing) {
   if (isDrawing) {
@@ -48,9 +49,75 @@ function setObjectsHoverCursorToDefault(canvas) {
   });
 }
 
+function resetPolygonSelectableArea(currentPolygon) {
+  const newPosition = currentPolygon._calcDimensions();
+  currentPolygon.set({
+    left: newPosition.left,
+    top: newPosition.top,
+    height: newPosition.height,
+    width: newPosition.width,
+    pathOffset: {
+      x: newPosition.left + newPosition.width / 2,
+      y: newPosition.top + newPosition.height / 2,
+    },
+  });
+  currentPolygon.setCoords();
+}
+
+function resizeAllObjects(canvas, newFileSizeRatio) {
+  canvas.forEachObject((object) => {
+    switch (object.shapeName) {
+      case 'polygon':
+        object.points.forEach((point) => {
+          point.x *= newFileSizeRatio.width;
+          point.y *= newFileSizeRatio.height;
+        });
+        resetPolygonSelectableArea(object, newFileSizeRatio);
+        setPolygonLabelOffsetProps(object, object.points[0]);
+        break;
+      case 'tempPolygon':
+        object.points.forEach((point) => {
+          point.x *= newFileSizeRatio.width;
+          point.y *= newFileSizeRatio.height;
+        });
+        break;
+      case 'point':
+      case 'invisiblePoint':
+      case 'firstPoint':
+      case 'tempPoint':
+      case 'initialAddPoint':
+      case 'label':
+        object.top *= newFileSizeRatio.height;
+        object.left *= newFileSizeRatio.width;
+        break;
+      case 'addPointsLine':
+        object.top *= newFileSizeRatio.height;
+        object.left *= newFileSizeRatio.width;
+        object.height *= newFileSizeRatio.height;
+        object.width *= newFileSizeRatio.width;
+        object.x1 *= newFileSizeRatio.width;
+        object.x2 *= newFileSizeRatio.width;
+        object.y1 *= newFileSizeRatio.height;
+        object.y2 *= newFileSizeRatio.height;
+        break;
+      case 'bndBox':
+        object.height *= newFileSizeRatio.height;
+        object.width *= newFileSizeRatio.width;
+        object.top *= newFileSizeRatio.height;
+        object.left *= newFileSizeRatio.width;
+        break;
+      default:
+        break;
+    }
+    object.setCoords();
+  });
+  canvas.renderAll();
+}
+
 export {
   setObjectPropertiesToDefault,
   setObjectsHoverCursorToDefault,
   prepareObjectsForEditablePolygonPoints,
   setObjectPropertiesToDefaultWhenReadyToDraw,
+  resizeAllObjects,
 };
