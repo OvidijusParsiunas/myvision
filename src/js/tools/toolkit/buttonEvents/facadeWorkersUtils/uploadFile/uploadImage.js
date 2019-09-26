@@ -124,7 +124,7 @@ function calculateNewFileSizeRatio() {
   return newFileSizeRatio;
 }
 
-function resizeCanvas() {
+function resizeCanvasAndImage() {
   setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight(currentImage);
@@ -142,7 +142,27 @@ function resizeCanvas() {
   return calculateNewFileSizeRatio();
 }
 
+function resizeCanvas() {
+  setCanvasProperties();
+  if (canvasProperties.maximumCanvasHeight < currentImage.height) {
+    let newImageDimensions = resizeWhenImageExceedsMaxHeight(currentImage);
+    if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
+      newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
+    }
+    canvas.setWidth(newImageDimensions.width);
+    canvas.setHeight(newImageDimensions.height);
+  } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
+    const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
+    canvas.setWidth(newImageDimensions.width);
+    canvas.setHeight(newImageDimensions.height);
+  } else {
+    canvas.setWidth(currentImage.width);
+    canvas.setHeight(currentImage.height);
+  }
+  setCanvasWrapperMaximumDimensions();
+}
+
 export {
-  uploadImage, getImageProperties, resizeCanvas,
+  uploadImage, getImageProperties, resizeCanvasAndImage, resizeCanvas,
   assignCanvasForNewImageUpload, getCanvasProperties,
 };

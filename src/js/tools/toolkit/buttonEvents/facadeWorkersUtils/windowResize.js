@@ -1,11 +1,11 @@
-import { resizeCanvas } from './uploadFile/uploadImage';
+import { resizeCanvasAndImage, resizeCanvas } from './uploadFile/uploadImage';
 import { setPolygonLabelOffsetProps } from '../../../../canvas/objects/label/label';
 import labelProperies from '../../../../canvas/objects/label/properties';
-// import { getDefaultState } from './stateManager';
-// import { resetCanvasEventsToDefault } from '../facade';
-// import { interruptAllCanvasEvents } from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
+import zoomCanvas from '../facadeWorkers/zoomWorker';
+import { getCurrentZoomState } from './stateManager';
 
 let canvas = null;
+let stubElement = null;
 
 function resetPolygonSelectableArea(currentPolygon) {
   const newPosition = currentPolygon._calcDimensions();
@@ -73,21 +73,27 @@ function resizeAllObjects(newFileSizeRatio) {
 }
 
 window.windowResize = () => {
-  // if (getDefaultState()) {
-  //   console.log('deselect');
-  // } else {
-  //   console.log('called');
-  //   interruptAllCanvasEvents();
-  //   resetCanvasEventsToDefault();
-  // }
-  const newFileSizeRatio = resizeCanvas();
-  labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
-  resizeAllObjects(newFileSizeRatio);
-  // zoomCanvas(canvas);
+  if (getCurrentZoomState() > 1) {
+    resizeCanvas();
+    zoomCanvas(canvas, null, true);
+  } else {
+    // fix here, when zoom in, stretch out, then zoom out to original
+    const newFileSizeRatio = resizeCanvasAndImage();
+    labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
+    resizeAllObjects(newFileSizeRatio);
+  }
 };
 
-function assignCanvasForResizeWindowResize(canvasObj) {
-  canvas = canvasObj;
+function assignElementReferences() {
+  stubElement = document.getElementById('stub');
+  // zoomOverflowElement = document.getElementById('zoom-overflow');
+  // zoomOverflowWrapperElement = document.getElementById('zoom-overflow-wrapper');
+  // canvasElement = document.getElementById('canvas-wrapper-inner');
 }
 
-export { assignCanvasForResizeWindowResize as default };
+function assignCanvasForResizeWhenWindowResize(canvasObj) {
+  canvas = canvasObj;
+  assignElementReferences();
+}
+
+export { assignCanvasForResizeWhenWindowResize as default };

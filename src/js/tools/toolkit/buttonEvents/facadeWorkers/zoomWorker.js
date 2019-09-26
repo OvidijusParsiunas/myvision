@@ -1,4 +1,4 @@
-import { getCanvasProperties, getImageProperties, resizeCanvas } from '../facadeWorkersUtils/uploadFile/uploadImage';
+import { getCanvasProperties, getImageProperties } from '../facadeWorkersUtils/uploadFile/uploadImage';
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
@@ -359,38 +359,38 @@ function setNewCanvasDimensions() {
     if (widthOverflowed) {
       setDoubleScrollCanvasState(true);
       fullOverflowOfWidthAndHeight(originalWidth, originalHeight, scrollWidth);
-      // console.log('horizontal and vertical overlap');
+      console.log('horizontal and vertical overlap');
     } else {
       setDoubleScrollCanvasState(false);
       heightOverflowDefault(originalWidth, originalHeight, scrollWidth);
-      // console.log('vertical overlap default');
+      console.log('vertical overlap default');
       if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
         heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
-        // console.log('vertical double scrollbar overlap');
+        console.log('vertical double scrollbar overlap');
         if (Math.round(newCanvasWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth) {
           setDoubleScrollCanvasState(true);
           heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
-          // console.log('vertical single scrollbar overlap');
+          console.log('vertical single scrollbar overlap');
         }
       }
     }
   } else if (widthOverflowed) {
     setDoubleScrollCanvasState(false);
     widthOverflowDefault(originalWidth, originalHeight, scrollWidth);
-    // console.log('horizontal overlap default');
+    console.log('horizontal overlap default');
     if (newCanvasHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
       widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
-      // console.log('horizontal double scrollbar overlap');
+      console.log('horizontal double scrollbar overlap');
       if (newCanvasHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 3) {
         setDoubleScrollCanvasState(true);
         widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight, scrollWidth);
-        // console.log('horizontal single scrollbar overlap');
+        console.log('horizontal single scrollbar overlap');
       }
     }
   } else {
     setDoubleScrollCanvasState(false);
     setAllElementPropertiesToDefault();
-    // console.log('set to default');
+    console.log('set to default');
   }
   const finalImageDimensions = {
     width: newCanvasWidth,
@@ -428,25 +428,31 @@ function increaseMovePolygonPathOffset() {
   }
 }
 
-function zoomCanvas(canvasObj, action) {
-  canvas = canvasObj;
-  canvasProperties = getCanvasProperties();
-  imageProperties = getImageProperties();
-  calculateReduceShapeSizeFactor();
-  if (action === 'in') {
-    currentZoom += 0.2;
-    canvas.setZoom(currentZoom);
-    zoomInObjects();
-    reduceMovePolygonPathOffset();
-  } else if (action === 'out') {
-    currentZoom -= 0.2;
-    canvas.setZoom(currentZoom);
-    zoomOutObjects();
-    increaseMovePolygonPathOffset();
+function zoomCanvas(canvasObj, action, windowResize) {
+  if (windowResize) {
+    canvasProperties = getCanvasProperties();
+    imageProperties = getImageProperties();
+    setNewCanvasDimensions();
+  } else {
+    canvas = canvasObj;
+    canvasProperties = getCanvasProperties();
+    imageProperties = getImageProperties();
+    calculateReduceShapeSizeFactor();
+    if (action === 'in') {
+      currentZoom += 0.2;
+      canvas.setZoom(currentZoom);
+      zoomInObjects();
+      reduceMovePolygonPathOffset();
+    } else if (action === 'out') {
+      currentZoom -= 0.2;
+      canvas.setZoom(currentZoom);
+      zoomOutObjects();
+      increaseMovePolygonPathOffset();
+    }
+    setNewCanvasDimensions();
+    resetObjectsCoordinates();
+    setCurrentZoomState(currentZoom);
   }
-  setNewCanvasDimensions();
-  resetObjectsCoordinates();
-  setCurrentZoomState(currentZoom);
 }
 
 let scrollWheelUsed = false;
@@ -494,7 +500,7 @@ window.zoomOverflowStopScrolling = () => {
 // let lastFileStatus = null;
 //
 // window.windowResize = () => {
-//   newFileStatus = resizeCanvas();
+//   newFileStatus = resizeCanvasAndImage();
 //   resizeAllObjects();
 //   // zoomCanvas(canvas);
 // };
