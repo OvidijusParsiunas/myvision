@@ -9,7 +9,7 @@ import uploadImageFile from './facadeWorkers/uploadImageWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
 import toggleLabelsVisibility from './facadeWorkers/toggleLabelsVisibilityWorker';
-import zoomCanvas from './facadeWorkers/zoomWorker';
+import { zoomCanvas } from './facadeWorkers/zoomWorker';
 
 let canvas = null;
 

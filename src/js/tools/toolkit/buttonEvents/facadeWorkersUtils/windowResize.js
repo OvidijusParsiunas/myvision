@@ -1,7 +1,7 @@
 import { resizeCanvasAndImage, resizeCanvas } from './uploadFile/uploadImage';
 import { resizeAllObjects } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../../../canvas/objects/label/properties';
-import zoomCanvas from '../facadeWorkers/zoomWorker';
+import { zoomCanvas } from '../facadeWorkers/zoomWorker';
 import { getCurrentZoomState } from './stateManager';
 
 let canvas = null;
