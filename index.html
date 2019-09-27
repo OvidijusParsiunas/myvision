@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <div id="canvas-wrapper-parent" onmousemove="updateMouseProperties(event)" onwheel="initiateZoomOverflowScroll(event)" style="position: absolute; top: 50px; left: 162px; display: table; background-color: lightgrey; text-align: center;">
+  <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" onwheel="initiateZoomOverflowScroll(event)" style="position: absolute; top: 50px; left: 162px; display: table; background-color: lightgrey; text-align: center;">
     <div id="canvas-wrapper" style="vertical-align: middle; display: table-cell; position: relative; overflow: auto">
       <div id="canvas-wrapper-inner" style="z-index: 2; position: absolute; left: 50%; transform: translate(-50%, -50%);">
           <canvas id="c" style=""></canvas>
@@ -44,7 +44,7 @@
   <button id="tools-button" onclick="zoom('out')">Zoom Out</button>
   <div id="popup-label-parent" hidden>
     <div id="popup-label-title">Label name:</div>
-    <input type="text" id="popup-label-input" name="labelName" onkeydown="popupInputKeyDown(event, this)" value="asduhiadhaudiadhiuaahadauiadas">
+    <input type="text" id="popup-label-input" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="asduhiadhaudiadhiuaahadauiadas">
     <table id="popup-label-options">
     </table>
     <button id="popup-submit-button" onclick="labelShape()">Submit</button>
