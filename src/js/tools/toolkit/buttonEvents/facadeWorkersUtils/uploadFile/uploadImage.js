@@ -31,9 +31,9 @@ function drawOriginalImage(image) {
   newFileStatus.height = image.height;
 }
 
-function drawImageOnCanvas(image, newImageDimensions) {
+function drawImageOnCanvas(image, newImageDimensions, resize) {
   if (newImageDimensions) {
-    drawResizedImage(image, newImageDimensions);
+    drawResizedImage(image, newImageDimensions, resize);
   } else {
     drawOriginalImage(image);
   }
@@ -131,10 +131,10 @@ function resizeCanvasAndImage() {
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }
-    drawImageOnCanvas(currentImage, newImageDimensions);
+    drawImageOnCanvas(currentImage, newImageDimensions, true);
   } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
     const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
-    drawImageOnCanvas(currentImage, newImageDimensions);
+    drawImageOnCanvas(currentImage, newImageDimensions, true);
   } else {
     drawImageOnCanvas(currentImage);
   }

@@ -64,7 +64,7 @@ function resetPolygonSelectableArea(currentPolygon) {
   currentPolygon.setCoords();
 }
 
-function resizeAllObjects(canvas, newFileSizeRatio) {
+function resizeAllObjects(newFileSizeRatio, canvas) {
   canvas.forEachObject((object) => {
     switch (object.shapeName) {
       case 'polygon':

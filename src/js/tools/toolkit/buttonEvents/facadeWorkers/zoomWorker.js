@@ -114,6 +114,48 @@ function checkIfChangeShapeSizeOnZoomout() {
   return true;
 }
 
+let timesZoomedIn = 0;
+
+function setObjectsToDefault() {
+  canvas.forEachObject((iteratedObj) => {
+    switch (iteratedObj.shapeName) {
+      case 'polygon':
+        iteratedObj.strokeWidth = (iteratedObj.strokeWidth * timesZoomedIn) * reduceShapeSizeRatios.polygon;
+        iteratedObj.labelOffsetTop = (iteratedObj.top
+        - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top) * timesZoomedIn);
+        break;
+      case 'tempPolygon':
+      case 'addPointsLine':
+        iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
+        break;
+      case 'point':
+      case 'invisiblePoint':
+      case 'firstPoint':
+      case 'tempPoint':
+      case 'initialAddPoint':
+        iteratedObj.radius *= reduceShapeSizeRatios.point;
+        iteratedObj.strokeWidth *= reduceShapeSizeRatios.point;
+        if (iteratedObj.polygonMoved) {
+          iteratedObj.left += 0.05;
+          iteratedObj.top += 0.05;
+        }
+        break;
+      case 'label':
+        iteratedObj.fontSize *= reduceShapeSizeRatios.label;
+        if (iteratedObj.attachedShape === 'polygon') {
+          iteratedObj.top -= 0.5;
+        }
+        break;
+      case 'bndBox':
+        iteratedObj.strokeWidth *= reduceShapeSizeRatios.bndBox;
+        break;
+      default:
+        break;
+    }
+  });
+  canvas.renderAll();
+}
+
 function zoomOutObjects() {
   if (canIncreaseShapeSizes) {
     if (timesZoomedWithNoShapeReduction === 0) {
@@ -339,23 +381,8 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight, scrollWidth
   reduceCanvasDimensionsBy(scrollWidth + 2, scrollWidth + 1);
 }
 
-function setNewCanvasDimensions() {
-  loadCanvasElements();
-  const scrollWidth = getScrollWidth();
-  let heightOverflowed = false;
-  let widthOverflowed = false;
-  newCanvasWidth = imageProperties.width * currentZoom;
-  const originalWidth = newCanvasWidth;
-  newCanvasHeight = imageProperties.height * currentZoom;
-  const originalHeight = newCanvasHeight;
-  if (canvasProperties.maximumCanvasHeight < newCanvasHeight) {
-    newCanvasHeight = canvasProperties.maximumCanvasHeight;
-    heightOverflowed = true;
-  }
-  if (canvasProperties.maximumCanvasWidth < newCanvasWidth) {
-    newCanvasWidth = canvasProperties.maximumCanvasWidth;
-    widthOverflowed = true;
-  }
+function changeElementProperties(heightOverflowed, widthOverflowed, originalWidth,
+  originalHeight, scrollWidth) {
   if (heightOverflowed) {
     if (widthOverflowed) {
       setDoubleScrollCanvasState(true);
@@ -400,6 +427,30 @@ function setNewCanvasDimensions() {
   canvas.setDimensions(finalImageDimensions);
 }
 
+function setNewCanvasDimensions(changeElements) {
+  loadCanvasElements();
+  const scrollWidth = getScrollWidth();
+  let heightOverflowed = false;
+  let widthOverflowed = false;
+  newCanvasWidth = imageProperties.width * currentZoom;
+  const originalWidth = newCanvasWidth;
+  newCanvasHeight = imageProperties.height * currentZoom;
+  const originalHeight = newCanvasHeight;
+  if (canvasProperties.maximumCanvasHeight < newCanvasHeight) {
+    newCanvasHeight = canvasProperties.maximumCanvasHeight;
+    heightOverflowed = true;
+  }
+  if (canvasProperties.maximumCanvasWidth < newCanvasWidth) {
+    newCanvasWidth = canvasProperties.maximumCanvasWidth;
+    widthOverflowed = true;
+  }
+  if (changeElements) {
+    changeElementProperties(heightOverflowed, widthOverflowed, originalWidth,
+      originalHeight, scrollWidth);
+  }
+  return !widthOverflowed && !heightOverflowed;
+}
+
 function resetObjectsCoordinates() {
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.setCoords();
@@ -429,39 +480,70 @@ function increaseMovePolygonPathOffset() {
   }
 }
 
-function resizeAll() {
-  setNewCanvasDimensions();
+function finaliseState() {
+  setNewCanvasDimensions(true);
   resetObjectsCoordinates();
   setCurrentZoomState(currentZoom);
 }
 
+function resetCanvasToDefault() {
+  currentZoom = 1;
+  setTimeout(() => {
+    canvas.setZoom(currentZoom);
+  }, 0);
+  while (timesZoomedIn !== 0) {
+    timesZoomedIn -= 1;
+    zoomOutObjects();
+    increaseMovePolygonPathOffset();
+  }
+  const newFileSizeRatio = resizeCanvasAndImage();
+  labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
+  resizeAllObjects(newFileSizeRatio, canvas);
+  timesZoomedWithNoShapeIncrease = 0;
+  timesZoomedWithNoShapeReduction = 0;
+  movedPolygonPathOffsetReduced = false;
+  timesZoomedWithNoShapeReduction = 0;
+  timesZoomedWithNoShapeIncrease = 0;
+}
+
+// refactor this
 function zoomCanvas(canvasObj, action, windowResize) {
   if (windowResize) {
     canvasProperties = getCanvasProperties();
     imageProperties = getImageProperties();
-    setNewCanvasDimensions();
+    setNewCanvasDimensions(true);
   } else {
     canvas = canvasObj;
     canvasProperties = getCanvasProperties();
     imageProperties = getImageProperties();
     calculateReduceShapeSizeFactor();
     if (action === 'in') {
+      timesZoomedIn += 1;
       currentZoom += 0.2;
       canvas.setZoom(currentZoom);
       zoomInObjects();
       reduceMovePolygonPathOffset();
-      resizeAll();
+      finaliseState();
     } else if (action === 'out' && currentZoom !== 1) {
-      currentZoom -= 0.2;
-      canvas.setZoom(currentZoom);
-      zoomOutObjects();
-      increaseMovePolygonPathOffset();
-      if (currentZoom === 1) {
-        const newFileSizeRatio = resizeCanvasAndImage();
-        labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
-        resizeAllObjects(canvas, newFileSizeRatio);
+      if (!stubElement.style.marginTop) {
+        resetCanvasToDefault();
+      } else {
+        timesZoomedIn -= 1;
+        currentZoom -= 0.2;
+        zoomOutObjects();
+        increaseMovePolygonPathOffset();
+        if (currentZoom === 1) {
+          const newFileSizeRatio = resizeCanvasAndImage();
+          labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
+          resizeAllObjects(newFileSizeRatio, canvas);
+          setTimeout(() => {
+            canvas.setZoom(currentZoom);
+          }, 0);
+        } else if (setNewCanvasDimensions()) {
+          resetCanvasToDefault();
+        }
       }
-      resizeAll();
+      finaliseState();
     }
   }
 }
@@ -482,38 +564,13 @@ window.zoomOverflowScroll = (element) => {
 window.zoomOverflowPrepareToScroll = () => {
 };
 
-let mouseDown = null;
-
 window.scrollingSomething = (event) => {
   zoomOverflowElement.scrollTop += event.deltaY;
   zoomOverflowElement.scrollTop += event.deltaX;
   scrollWheelUsed = true;
 };
 
-window.mouseDown = () => {
-  mouseDown = true;
-};
-
-window.mouseUp = () => {
-  mouseDown = false;
-};
-
 window.zoomOverflowStopScrolling = () => {
 };
-
-
-// function resizeAllObjects() {
-//   canvas.forEachObject((object) => {
-//     console.log(object);
-//   });
-// }
-//
-// let lastFileStatus = null;
-//
-// window.windowResize = () => {
-//   newFileStatus = resizeCanvasAndImage();
-//   resizeAllObjects();
-//   // zoomCanvas(canvas);
-// };
 
 export { zoomCanvas as default };

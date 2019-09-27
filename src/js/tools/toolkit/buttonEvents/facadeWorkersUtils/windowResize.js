@@ -13,7 +13,7 @@ window.windowResize = () => {
   } else {
     const newFileSizeRatio = resizeCanvasAndImage();
     labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
-    resizeAllObjects(canvas, newFileSizeRatio);
+    resizeAllObjects(newFileSizeRatio, canvas);
   }
 };
 
