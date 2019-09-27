@@ -1,6 +1,6 @@
 import fabric from 'fabric';
 
-let initialFileStatus = {};
+const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;

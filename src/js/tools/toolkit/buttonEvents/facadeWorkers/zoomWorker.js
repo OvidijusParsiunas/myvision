@@ -4,10 +4,10 @@ import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import { resizeAllObjects } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
-import { setCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
+import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
 import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
 
-let currentZoom = 1;
+let currentZoom = null;
 let canvas = null;
 let canvasProperties = null;
 let imageProperties = null;
@@ -509,6 +509,7 @@ function loadCanvasElements() {
 function initialiseZoomVariables(canvasObj) {
   canvas = canvasObj;
   scrollWidth = getScrollWidth();
+  currentZoom = getCurrentZoomState();
   loadCanvasElements();
 }
 
