@@ -1,4 +1,4 @@
-import { getImageProperties } from '../../uploadFile/uploadImage';
+import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import convertJSONToXML from '../fileTypeConverters/JSONtoXML';
 import buildAnnotationsObject from '../fileStructureGenerators/generateStandardAnnotationsObject';
 

@@ -27,7 +27,7 @@ import {
 } from './iconHighlightUtils';
 import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 
-let isEditing = false;
+let isEditingLabel = false;
 let isVisibilitySelected = false;
 let isVisibilityRestored = false;
 let activeDropdownElements = null;
@@ -88,6 +88,8 @@ function repopulateDropdown() {
     dropdownParentElements[i].innerHTML = dropdown;
   }
 }
+
+// change to label list item click
 
 function createLabelElementMarkup(labelText, id, backgroundColor) {
   return `
@@ -263,7 +265,7 @@ function initLabelEditing(id) {
   currentTableElementScrollPosition = labelListElement.scrollTop;
   labelListELementHorizontalScrollPresent = labelListElement.scrollWidth
     > labelListElement.clientWidth;
-  isEditing = true;
+  isEditingLabel = true;
 }
 
 function selectShape() {
@@ -314,7 +316,7 @@ function removeLabelDropDownContent() {
   if (activeDropdownElements[0].classList.contains('show')) {
     activeDropdownElements[0].classList.remove('show');
   }
-  isEditing = false;
+  isEditingLabel = false;
 }
 
 function resetLabelElement() {
@@ -439,7 +441,7 @@ window.labelBtnClick = (id) => {
 };
 
 window.onmousedown = (event) => {
-  if (isEditing) {
+  if (isEditingLabel) {
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.innerHTML;
       activeLabelTextElement.innerHTML = newText;
@@ -467,7 +469,7 @@ window.onmousedown = (event) => {
   }
 };
 
-window.onScrolling = () => {
+window.labelListScroll = () => {
   if (currentTableElementScrollPosition !== labelListElement.scrollTop) {
     if (!wasHorizontalScrollCreated()) {
       if (activeDropdownElements && activeDropdownElements[0].classList.contains('show')) {
@@ -518,7 +520,7 @@ window.visibilityBtnClick = (id, element) => {
 };
 
 window.mouseEnterLabelEditBtn = (element) => {
-  if (!isEditing) {
+  if (!isEditingLabel) {
     highlightDefaultIcon(element);
   } else if (activeEditLabelButton.id !== element.id) {
     highlightDefaultIcon(element);
@@ -528,7 +530,7 @@ window.mouseEnterLabelEditBtn = (element) => {
 };
 
 window.mouseLeaveLabelEditBtn = (element) => {
-  if (!isEditing) {
+  if (!isEditingLabel) {
     dimDefaultIcon(element);
   } else if (activeEditLabelButton.id !== element.id) {
     dimDefaultIcon(element);

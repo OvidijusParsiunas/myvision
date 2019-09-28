@@ -1,4 +1,4 @@
-import { fileStatus } from '../../uploadFile/uploadImage';
+import { fileStatus } from '../../uploadFile/drawImageOnCanvas';
 import convertJSONToXML from '../fileTypeConverters/JSONtoXML';
 import buildAnnotationsObject from '../fileStructureGenerators/generateStandardAnnotationsObject';
 

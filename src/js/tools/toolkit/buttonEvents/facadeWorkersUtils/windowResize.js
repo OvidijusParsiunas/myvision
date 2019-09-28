@@ -1,4 +1,4 @@
-import { resizeCanvasAndImage, resizeCanvas } from './uploadFile/uploadImage';
+import { resizeCanvasAndImage, resizeCanvas } from './uploadFile/drawImageOnCanvas';
 import { resizeAllObjects } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../../../canvas/objects/label/properties';
 import { zoomCanvas } from '../facadeWorkers/zoomWorker';
