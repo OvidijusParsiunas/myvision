@@ -3,8 +3,10 @@ import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } 
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
   setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
-  getDefaultState, getAddingPolygonPointsState,
+  getDefaultState, getAddingPolygonPointsState, getLastDrawingModeState, getContinuousDrawingState,
 } from '../facadeWorkersUtils/stateManager';
+import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
+import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 
 function initiateResetCanvasEventsToDefaultEvent(canvas) {
   canvas.discardActiveObject();
@@ -18,6 +20,17 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
     assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
     if (getAlteringPolygonPointsState()) {
       setAlteringPolygonPointsState(false);
+    }
+    setDefaultState(true);
+  }
+  if (getContinuousDrawingState()) {
+    purgeCanvasMouseEvents(canvas);
+    if (getLastDrawingModeState() === 'polygon') {
+      // switch to start
+      assignDrawPolygonEvents(canvas);
+    } else if (getLastDrawingModeState() === 'boundingBox') {
+      // switch to start
+      assignDrawBoundingBoxEvents(canvas);
     }
     setDefaultState(true);
   }
