@@ -6,6 +6,8 @@ const canvasProperties = {};
 let canvas = null;
 let currentImage = null;
 
+// timeout canvas zooms make it look bad, check zoom in and out to original
+
 function drawResizedImage(currentImage, newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
   canvas.setHeight(newImageDimensions.height);
@@ -15,7 +17,8 @@ function drawResizedImage(currentImage, newImageDimensions) {
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
       scaleX: newFileStatus.scaleX,
       scaleY: newFileStatus.scaleY,
-    });
+    }, 
+    canvas.setZoom(1));
   });
   newFileStatus.width = newImageDimensions.width;
   newFileStatus.height = newImageDimensions.height;
@@ -25,15 +28,15 @@ function drawOriginalImage(currentImage) {
   canvas.setWidth(currentImage.width);
   canvas.setHeight(currentImage.height);
   fabric.Image.fromURL(currentImage.src, (img) => {
-    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {}, canvas.setZoom(1));
   });
   newFileStatus.width = currentImage.width;
   newFileStatus.height = currentImage.height;
 }
 
-function drawImageOnCanvas(currentImage, newImageDimensions, resize) {
+function drawImageOnCanvas(currentImage, newImageDimensions, defaultZoom) {
   if (newImageDimensions) {
-    drawResizedImage(currentImage, newImageDimensions, resize);
+    drawResizedImage(currentImage, newImageDimensions);
   } else {
     drawOriginalImage(currentImage);
   }
@@ -62,6 +65,7 @@ function setCanvasWrapperMaximumDimensions() {
 }
 
 function draw() {
+  setCanvasProperties();
     if (canvasProperties.maximumCanvasHeight < currentImage.height) {
         let newImageDimensions = resizeWhenImageExceedsMaxHeight(currentImage);
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {

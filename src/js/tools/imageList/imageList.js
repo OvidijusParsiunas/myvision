@@ -1,7 +1,9 @@
 import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { resetZoom } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 
 let imageListElement = null;
 const images = [];
+let currentlySelectedImageId = 0;
 let newImageId = 0;
 
 function findImageListElement() {
@@ -35,6 +37,7 @@ function addNewImageToList(imageText, imageData) {
   cell.appendChild(imageElement);
   imageListElement.scrollLeft = 0;
   cell.scrollIntoView();
+  currentlySelectedImageId = newImageId;
   newImageId += 1;
 }
 
@@ -53,7 +56,14 @@ function removeimageFromListOnShapeDelete(id) {
 }
 
 window.selectImageFromList = (id) => {
-    drawImageFromList(images[id]);
+    if (id !== currentlySelectedImageId) {
+        window.cancel();
+        // if continuous drawing, have the cursor prepared
+        // alter logic for cancel and still drawing - which shouldn't reset the mouse
+        resetZoom();
+        drawImageFromList(images[id]);
+        currentlySelectedImageId = id;
+    }
 };
 
 export { initialiseImageListFunctionality, addNewImageToList, removeimageFromListOnShapeDelete };

@@ -411,7 +411,7 @@ function increaseMovePolygonPathOffset() {
   }
 }
 
-function finaliseState() {
+function changeCanvas() {
   setNewCanvasDimensions(true);
   resetObjectsCoordinates();
   setCurrentZoomState(currentZoom);
@@ -443,7 +443,7 @@ function zoomIn() {
   canvas.setZoom(currentZoom);
   zoomInObjects();
   reduceMovePolygonPathOffset();
-  finaliseState();
+  changeCanvas();
 }
 
 function zoomOut() {
@@ -467,9 +467,10 @@ function zoomOut() {
       canvas.setZoom(currentZoom);
     }
   }
-  finaliseState();
+  changeCanvas();
 }
 
+// first parameter still required?
 function zoomCanvas(canvasObj, action, windowResize) {
   if (windowResize) {
     canvasProperties = getCanvasProperties();
@@ -513,6 +514,15 @@ function initialiseZoomVariables(canvasObj) {
   loadCanvasElements();
 }
 
+function resetZoom() {
+  canvasProperties = getCanvasProperties();
+  imageProperties = getImageProperties();
+  currentZoom = 1;
+  setNewCanvasDimensions(true);
+  setCurrentZoomState(currentZoom);
+  
+}
+
 window.zoomOverflowScroll = (element) => {
   canvas.viewportTransform[4] = -element.scrollLeft;
   canvas.viewportTransform[5] = -element.scrollTop;
@@ -530,4 +540,4 @@ window.initiateZoomOverflowScroll = (event) => {
   scrollWheelUsed = true;
 };
 
-export { zoomCanvas, initialiseZoomVariables };
+export { zoomCanvas, initialiseZoomVariables, resetZoom };
