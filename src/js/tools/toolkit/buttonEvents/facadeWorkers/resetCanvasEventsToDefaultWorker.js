@@ -26,10 +26,8 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
   if (getContinuousDrawingState()) {
     purgeCanvasMouseEvents(canvas);
     if (getLastDrawingModeState() === 'polygon') {
-      // switch to start
       assignDrawPolygonEvents(canvas);
     } else if (getLastDrawingModeState() === 'boundingBox') {
-      // switch to start
       assignDrawBoundingBoxEvents(canvas);
     }
     setDefaultState(true);

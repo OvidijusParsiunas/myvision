@@ -24,6 +24,7 @@ function removeTargetShape() {
   labellingState = false;
 }
 
+// this should be moved to another file
 function findInitialLabelLocation(shape) {
   const locationObj = {};
   if (shape.shapeName === 'bndBox') {
@@ -41,6 +42,7 @@ function findInitialLabelLocation(shape) {
 
 function generateLabelShapeGroup(text) {
   targetShape.set('id', currentId);
+  targetShape.set('shapeLabelText', text);
   const initialLocation = findInitialLabelLocation(targetShape);
   const textShape = new fabric.Text(text,
     labelProperties.getLabelProps(initialLocation, targetShape.shapeName));

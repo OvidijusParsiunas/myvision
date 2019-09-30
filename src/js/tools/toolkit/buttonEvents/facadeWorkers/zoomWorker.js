@@ -518,6 +518,11 @@ function resetZoom() {
   canvasProperties = getCanvasProperties();
   imageProperties = getImageProperties();
   currentZoom = 1;
+  while (timesZoomedIn !== 0) {
+    timesZoomedIn -= 1;
+    updateShapesPropertiesForZoomOut();
+    increaseMovePolygonPathOffset();
+  }
   setNewCanvasDimensions(true);
   setCurrentZoomState(currentZoom);
   

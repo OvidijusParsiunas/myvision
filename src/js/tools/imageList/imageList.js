@@ -1,4 +1,5 @@
 import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { getAllShapes, addAllShapes } from '../../canvas/objects/allShapes/allShapes';
 import { resetZoom } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 
 let imageListElement = null;
@@ -30,7 +31,8 @@ function initialiseParentElement() {
 function addNewImageToList(imageText, imageData) {
   const imageElement = initialiseParentElement();
   imageElement.id = newImageId;
-  images.push(imageData);
+  const imageObject = { data: imageData, shapes: getAllShapes() }
+  images.push(imageObject);
   imageElement.innerHTML = createImageElementMarkup(imageText, newImageId);
   const newRow = imageListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
@@ -57,12 +59,12 @@ function removeimageFromListOnShapeDelete(id) {
 
 window.selectImageFromList = (id) => {
     if (id !== currentlySelectedImageId) {
-        window.cancel();
-        // if continuous drawing, have the cursor prepared
-        // alter logic for cancel and still drawing - which shouldn't reset the mouse
-        resetZoom();
-        drawImageFromList(images[id]);
-        currentlySelectedImageId = id;
+      images[currentlySelectedImageId].shapes = getAllShapes();
+      window.cancel();
+      resetZoom();
+      drawImageFromList(images[id].data);
+      addAllShapes(images[id].shapes);
+      currentlySelectedImageId = id;
     }
 };
 
