@@ -2,7 +2,7 @@ import labelProperies from './properties';
 
 let canvas = null;
 // be careful about this as we will need to look into doing this for multiple
-const labelObjects = {};
+let labelObjects = {};
 
 function addLabelRef(labelObj, id) {
   labelObjects[id] = labelObj;
@@ -46,8 +46,15 @@ function assignCanvasForLabelManipulation(canvasObj) {
   canvas = canvasObj;
 }
 
+function removeAllLabels() {
+  Object.keys(labelObjects).forEach((key) => {
+    canvas.remove(labelObjects[key]);
+  });
+  labelObjects = {};
+}
+
 export {
-  setPolygonLabelOffsetProps, getLabelById, addLabelRef,
-  setAllLabelsVisibilityProperty, removeLabel, changeObjectLabelText,
+  setPolygonLabelOffsetProps, getLabelById, addLabelRef, removeLabel,
+  setAllLabelsVisibilityProperty, changeObjectLabelText, removeAllLabels,
   assignCanvasForLabelManipulation, changeLabelVisibilityById,
 };

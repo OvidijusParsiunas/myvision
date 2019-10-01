@@ -1,5 +1,6 @@
 import labelProperties from '../label/properties';
-import { setPolygonLabelOffsetProps } from '../label/label';
+import { setPolygonLabelOffsetProps, removeAllLabels, addLabelRef } from '../label/label';
+import { getLabelColor } from '../../../tools/labelList/labelOptions';
 
 let shapes = {};
 let canvas = null;
@@ -20,9 +21,7 @@ function getAllShapes() {
     shapeRefs[key] = shapes[key];
     canvas.remove(shapes[key].shapeRef);
   });  
-  canvas.forEachObject((iteratedObj) => {
-    canvas.remove(iteratedObj);
-  });
+  removeAllLabels();
     // populate labels list (remove all entries or repopulate them)
   shapes = {};
   // two options - copy all objects references, remove from canvas - but keep the refs (also color option)
@@ -53,19 +52,15 @@ function generateLabelShapeGroup(shape) {
     labelProperties.getLabelProps(initialLocation, shape.shapeName));
   canvas.add(textShape);
   canvas.bringToFront(textShape);
-  // addToLabelOptions(textShape.text);
-  // const shapeColor = getLabelColor(textShape.text);
-  // addShape(targetShape, shapeColor, currentId);
-  // addLabelRef(textShape, currentId);
+  const shapeColor = getLabelColor(textShape.text);
+  addLabelRef(textShape, shape.id);
   // addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
-  /// currentId += 1;
 }
 
 function addAllShapes(imageShapes) {
   Object.keys(imageShapes).forEach((key) => {
     canvas.add(imageShapes[key].shapeRef);
     generateLabelShapeGroup(imageShapes[key].shapeRef);
-    console.log(imageShapes[key]);
     shapes[key] = imageShapes[key];
   });
   canvas.renderAll();
