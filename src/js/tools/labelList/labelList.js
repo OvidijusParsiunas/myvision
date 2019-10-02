@@ -130,6 +130,16 @@ function addNewLabelToListFromPopUp(labelText, id, labelColor) {
   cell.scrollIntoView();
 }
 
+function addExistingLabelToList(labelText, id, labelColor) {
+  const labelElement = initialiseParentElement();
+  labelElement.id = id;
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor);
+  const newRow = labelListElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+  cell.scrollIntoView();
+}
+
 function removeLabelFromListOnShapeDelete(id) {
   if (id != null) {
     let index = 0;
@@ -384,6 +394,13 @@ function wasHorizontalScrollCreated() {
   return false;
 }
 
+function removeLabelListItems() {
+  var new_tbody = document.createElement('tbody');
+  if (labelListElement.childNodes[1]) {
+    labelListElement.replaceChild(new_tbody, labelListElement.childNodes[1]);
+  }
+}
+
 window.labelTextKeyDown = (event) => {
   if (event.key === 'Enter') {
     addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
@@ -576,6 +593,7 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
+  addExistingLabelToList, removeLabelListItems,
   initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
   removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
 };
