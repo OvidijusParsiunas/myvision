@@ -3,6 +3,7 @@ import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/al
 import { removeAllLabels } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
+import { removeLabelListItems } from '../labelList/labelList';
 
 let imageListElement = null;
 const images = [];
@@ -35,6 +36,8 @@ function addNewImageToList(imageText, imageData) {
   imageElement.id = newImageId;
   const imageObject = { data: imageData, shapes: removeAndRetrieveAllShapeRefs() }
   images.push(imageObject);
+  removeAllLabels();
+  removeLabelListItems();
   imageElement.innerHTML = createImageElementMarkup(imageText, newImageId);
   const newRow = imageListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
@@ -49,6 +52,7 @@ window.selectImageFromList = (id) => {
   if (id !== currentlySelectedImageId) {
     images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
     removeAllLabels();
+    removeLabelListItems();
     window.cancel();
     resetZoom();
     drawImageFromList(images[id].data);

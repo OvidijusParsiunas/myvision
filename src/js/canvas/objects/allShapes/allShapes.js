@@ -56,6 +56,10 @@ function defaultShapeFill(id) {
   canvas.renderAll();
 }
 
+function changeShapeLabelText(id, newText) {
+  shapes[id].shapeRef.set('shapeLabelText', newText);
+}
+
 function removeShape(id) {
   canvas.remove(shapes[id].shapeRef);
   delete shapes[id];
@@ -67,7 +71,7 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 }
 
 export {
-  getShapeById, getShapeColorById, changeShapeColorById,
+  getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText,
   addShape, removeShape, highlightShapeFill, defaultShapeFill,
   changeShapeVisibilityById, assignCanvasForShapeFillManipulation,
   getShapeVisibilityById, removeAndRetrieveAllShapeRefs, addExistingShape,

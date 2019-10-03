@@ -1,6 +1,6 @@
-import { changeObjectLabelText, changeLabelVisibilityById } from '../../canvas/objects/label/label';
+import { changeLabelText, changeLabelVisibilityById } from '../../canvas/objects/label/label';
 import {
-  highlightShapeFill, defaultShapeFill, changeShapeColorById,
+  highlightShapeFill, defaultShapeFill, changeShapeColorById, changeShapeLabelText,
   getShapeById, changeShapeVisibilityById, getShapeVisibilityById,
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
@@ -73,6 +73,7 @@ function initialiseLabelListFunctionality() {
 function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
   let dropdown = '<tbody>';
+  console.log(labelDropdownOptions.length);
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
     const dropdownElement = `<tr><td><div id="labelOption${i}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${labelDropdownOptions[i].color.label}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
     dropdown += dropdownElement;
@@ -106,7 +107,7 @@ function createLabelElementMarkup(labelText, id, backgroundColor) {
       <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
       <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
   </div>
-    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="changeLabelText(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="labelTextInput(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
     </div>
@@ -137,6 +138,7 @@ function addExistingLabelToList(labelText, id, labelColor) {
   const newRow = labelListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
+  repopulateDropdown();
   cell.scrollIntoView();
 }
 
@@ -190,6 +192,11 @@ function setEndOfContentEditable(contentEditableElement) {
   scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML);
 }
 
+function updateAssociatedLabelObjectsText(activeLabelId, text) {
+  changeLabelText(activeLabelId, text);
+  changeShapeLabelText(activeLabelId, text);
+}
+
 function preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent) {
   let finalText = '';
   if (inputEvent.inputType === 'insertFromPaste') {
@@ -203,7 +210,7 @@ function preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent) {
     finalText = temp;
   }
   setEndOfContentEditable(activeLabelTextElement);
-  changeObjectLabelText(activeLabelId, finalText);
+  updateAssociatedLabelObjectsText(activeLabelId, finalText);
 }
 
 function addLabelToDropdown(labelText, dropdownLabelsElem, id, color) {
@@ -319,7 +326,7 @@ function selectShapeBeforeLabelEdit(id) {
 function trimLabelText() {
   const trimmedText = activeLabelTextElement.innerHTML.trim();
   activeLabelTextElement.innerHTML = trimmedText;
-  changeObjectLabelText(activeLabelId, trimmedText);
+  updateAssociatedLabelObjectsText(activeLabelId, trimmedText);
 }
 
 function removeLabelDropDownContent() {
@@ -462,7 +469,7 @@ window.onmousedown = (event) => {
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.innerHTML;
       activeLabelTextElement.innerHTML = newText;
-      changeObjectLabelText(activeLabelId, newText);
+      updateAssociatedLabelObjectsText(activeLabelId, newText);
       removeLabelDropDownContent();
       stopEditing();
       moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
@@ -569,11 +576,11 @@ window.labelEditBtnClick = (id, element) => {
   }
 };
 
-window.changeLabelText = (innerHTML, element, inputEvent) => {
+window.labelTextInput = (innerHTML, element, inputEvent) => {
   if (element.offsetHeight > 30) {
     preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent);
   } else {
-    changeObjectLabelText(activeLabelId, innerHTML);
+    updateAssociatedLabelObjectsText(activeLabelId, innerHTML);
   }
   isLabelChanged = true;
 };

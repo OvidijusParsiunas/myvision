@@ -39,6 +39,8 @@ function generateLabelShapeGroup(shape, text) {
   currentId += 1;
 }
 
+// fix error here
+// save label references too
 function repopulateLabelShapeGroup(shape) {
   canvas.add(shape);
   const initialLocation = findInitialLabelLocation(shape);

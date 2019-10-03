@@ -1,5 +1,4 @@
 import labelProperies from './properties';
-import { removeLabelListItems } from '../../../tools/labelList/labelList';
 
 let canvas = null;
 // be careful about this as we will need to look into doing this for multiple
@@ -25,7 +24,7 @@ function setPolygonLabelOffsetProps(polygon, point) {
     - (point.y - labelProperies.pointOffsetProperties().top);
 }
 
-function changeObjectLabelText(id, text) {
+function changeLabelText(id, text) {
   labelObjects[id].text = text;
   canvas.renderAll();
 }
@@ -52,11 +51,10 @@ function removeAllLabels() {
     canvas.remove(labelObjects[key]);
   });
   labelObjects = {};
-  removeLabelListItems();
 }
 
 export {
   setPolygonLabelOffsetProps, getLabelById, addLabelRef, removeLabel,
-  setAllLabelsVisibilityProperty, changeObjectLabelText, removeAllLabels,
+  setAllLabelsVisibilityProperty, changeLabelText, removeAllLabels,
   assignCanvasForLabelManipulation, changeLabelVisibilityById,
 };
