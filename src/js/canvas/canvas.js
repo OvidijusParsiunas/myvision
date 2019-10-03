@@ -7,6 +7,7 @@ import { assignCanvasForLabelManipulation } from './objects/label/label';
 import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allShapes';
 import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 import assignCanvasForResizeWhenWindowResize from '../tools/toolkit/buttonEvents/facadeWorkersUtils/windowResize';
+import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
 import { initialiseZoomVariables } from '../tools/toolkit/buttonEvents/facadeWorkers/zoomWorker';
 
 function constructCanvas() {
@@ -20,6 +21,7 @@ function constructCanvas() {
   assignCanvasForLabelManipulation(canvas);
   assignCanvasForResettingToDefaultAfterAddPoints(canvas);
   assignCanvasForResizeWhenWindowResize(canvas);
+  assignCanvasForLabelAndShapeBuilder(canvas);
   initialiseZoomVariables(canvas);
 }
 

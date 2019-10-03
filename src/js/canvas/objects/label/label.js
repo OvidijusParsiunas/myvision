@@ -1,4 +1,5 @@
 import labelProperies from './properties';
+import { removeLabelListItems } from '../../../tools/labelList/labelList';
 
 let canvas = null;
 // be careful about this as we will need to look into doing this for multiple
@@ -51,6 +52,7 @@ function removeAllLabels() {
     canvas.remove(labelObjects[key]);
   });
   labelObjects = {};
+  removeLabelListItems();
 }
 
 export {

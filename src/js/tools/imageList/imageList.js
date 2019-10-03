@@ -1,5 +1,7 @@
 import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
-import { getAllShapes, addAllShapes } from '../../canvas/objects/allShapes/allShapes';
+import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
+import { removeAllLabels } from '../../canvas/objects/label/label';
+import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 
 let imageListElement = null;
@@ -31,7 +33,7 @@ function initialiseParentElement() {
 function addNewImageToList(imageText, imageData) {
   const imageElement = initialiseParentElement();
   imageElement.id = newImageId;
-  const imageObject = { data: imageData, shapes: getAllShapes() }
+  const imageObject = { data: imageData, shapes: removeAndRetrieveAllShapeRefs() }
   images.push(imageObject);
   imageElement.innerHTML = createImageElementMarkup(imageText, newImageId);
   const newRow = imageListElement.insertRow(-1);
@@ -43,29 +45,16 @@ function addNewImageToList(imageText, imageData) {
   newImageId += 1;
 }
 
-function removeimageFromListOnShapeDelete(id) {
-  if (id != null) {
-    let index = 0;
-    const tableList = imageListElement.childNodes[1].childNodes;
-    while (index !== tableList.length) {
-      if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
-        tableList[index].remove();
-        break;
-      }
-      index += 1;
-    }
-  }
-}
-
 window.selectImageFromList = (id) => {
-    if (id !== currentlySelectedImageId) {
-      images[currentlySelectedImageId].shapes = getAllShapes();
-      window.cancel();
-      resetZoom();
-      drawImageFromList(images[id].data);
-      addAllShapes(images[id].shapes);
-      currentlySelectedImageId = id;
-    }
+  if (id !== currentlySelectedImageId) {
+    images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+    removeAllLabels();
+    window.cancel();
+    resetZoom();
+    drawImageFromList(images[id].data);
+    repopulateLabelAndShapeObjects(images[id].shapes);
+    currentlySelectedImageId = id;
+  }
 };
 
-export { initialiseImageListFunctionality, addNewImageToList, removeimageFromListOnShapeDelete };
+export { initialiseImageListFunctionality, addNewImageToList };

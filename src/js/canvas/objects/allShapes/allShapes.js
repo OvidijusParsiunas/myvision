@@ -1,8 +1,3 @@
-import labelProperties from '../label/properties';
-import { setPolygonLabelOffsetProps, removeAllLabels, addLabelRef } from '../label/label';
-import { getLabelColor } from '../../../tools/labelList/labelOptions';
-import { removeLabelListItems, addExistingLabelToList } from '../../../tools/labelList/labelList';
-
 let shapes = {};
 let canvas = null;
 
@@ -12,60 +7,22 @@ function addShape(shapeObj, shapeColor, id) {
   shapes[id].shapeRef.set('stroke', shapeColor.stroke);
 }
 
+function addExistingShape(shapeObj, id) {
+  shapes[id] = shapeObj;
+}
+
 function getShapeById(id) {
   return shapes[id].shapeRef;
 }
 
-function getAllShapes() {
+function removeAndRetrieveAllShapeRefs() {
   const shapeRefs = {};
   Object.keys(shapes).forEach((key) => {
     shapeRefs[key] = shapes[key];
     canvas.remove(shapes[key].shapeRef);
   });  
-  removeAllLabels();
-  removeLabelListItems();
-    // populate labels list (remove all entries or repopulate them)
   shapes = {};
-  // two options - copy all objects references, remove from canvas - but keep the refs (also color option)
-  // for each shape get reference and color which is all added to a new object
   return shapeRefs;
-}
-
-// consider how zooming will work
-// different file
-function findInitialLabelLocation(shape) {
-  const locationObj = {};
-  if (shape.shapeName === 'bndBox') {
-    locationObj.left = shape.left + labelProperties.boundingBoxOffsetProperties().left;
-    locationObj.top = shape.top;
-  } else if (shape.shapeName === 'polygon') {
-    const left = shape.points[0].x - labelProperties.pointOffsetProperties().left;
-    const top = shape.points[0].y - labelProperties.pointOffsetProperties().top;
-    locationObj.left = left;
-    locationObj.top = top;
-    setPolygonLabelOffsetProps(shape, shape.points[0]);
-  }
-  return locationObj;
-}
-
-function generateLabelShapeGroup(shape) {
-  const initialLocation = findInitialLabelLocation(shape);
-  const textShape = new fabric.Text(shape.shapeLabelText,
-    labelProperties.getLabelProps(initialLocation, shape.shapeName));
-  canvas.add(textShape);
-  canvas.bringToFront(textShape);
-  const shapeColor = getLabelColor(textShape.text);
-  addLabelRef(textShape, shape.id);
-  addExistingLabelToList(shape.shapeLabelText, shape.id, shapeColor.label);
-}
-
-function addAllShapes(imageShapes) {
-  Object.keys(imageShapes).forEach((key) => {
-    canvas.add(imageShapes[key].shapeRef);
-    generateLabelShapeGroup(imageShapes[key].shapeRef);
-    shapes[key] = imageShapes[key];
-  });
-  canvas.renderAll();
 }
 
 function getShapeColorById(id) {
@@ -113,5 +70,5 @@ export {
   getShapeById, getShapeColorById, changeShapeColorById,
   addShape, removeShape, highlightShapeFill, defaultShapeFill,
   changeShapeVisibilityById, assignCanvasForShapeFillManipulation,
-  getShapeVisibilityById, getAllShapes, addAllShapes,
+  getShapeVisibilityById, removeAndRetrieveAllShapeRefs, addExistingShape,
 };
