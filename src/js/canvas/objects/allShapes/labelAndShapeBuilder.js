@@ -39,22 +39,19 @@ function generateLabelShapeGroup(shape, text) {
   currentId += 1;
 }
 
-// fix error here
-// save label references too
-function repopulateLabelShapeGroup(shape) {
-  canvas.add(shape);
+function repopulateLabelShapeGroup(shapeObj, label, id) {
+  canvas.add(shapeObj.shapeRef);
+  canvas.add(label);
+  canvas.bringToFront(label);
+  addExistingShape(shapeObj, id);
+  addLabelRef(label, id);
+  const shapeColor = getLabelColor(shapeObj.shapeRef.shapeLabelText);
+  addExistingLabelToList(shapeObj.shapeRef.shapeLabelText, id, shapeColor.label);
 }
 
 function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
     Object.keys(existingShapes).forEach((key) => {
-      repopulateLabelShapeGroup(existingShapes[key].shapeRef);
-      addExistingShape(existingShapes[key], key);
-      
-      canvas.add(existingLabels[key]);
-      canvas.bringToFront(existingLabels[key]);
-      addLabelRef(existingLabels[key], key);
-      const shapeColor = getLabelColor(existingShapes[key].shapeRef.shapeLabelText);
-      addExistingLabelToList(existingShapes[key].shapeRef.shapeLabelText, key, shapeColor.label);
+      repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key);
     });
     canvas.renderAll();
   }

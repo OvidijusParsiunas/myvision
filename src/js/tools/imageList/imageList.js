@@ -31,18 +31,26 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
-function addNewImageToList(imageText, imageData) {
-  const imageElement = initialiseParentElement();
-  imageElement.id = newImageId;
-  const imageObject = { data: imageData, shapes: removeAndRetrieveAllShapeRefs(), labels: removeAndRetrieveAllLabelRefs() }
-  images.push(imageObject);
-  removeLabelListItems();
-  imageElement.innerHTML = createImageElementMarkup(imageText, newImageId);
+function addNewItemToImageList(imageText) {
+  const imageParentElement = initialiseParentElement();
+  imageParentElement.id = newImageId;
+  imageParentElement.innerHTML = createImageElementMarkup(imageText, newImageId);
   const newRow = imageListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
-  cell.appendChild(imageElement);
+  cell.appendChild(imageParentElement);
   imageListElement.scrollLeft = 0;
   cell.scrollIntoView();
+}
+
+function addNewImageToList(imageText, imageData) {
+  if (newImageId > 0) {
+    images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+    images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  }
+  const imageObject = { data: imageData };
+  images.push(imageObject);
+  removeLabelListItems();
+  addNewItemToImageList(imageText);
   currentlySelectedImageId = newImageId;
   newImageId += 1;
 }
