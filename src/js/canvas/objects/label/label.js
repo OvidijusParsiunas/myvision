@@ -46,6 +46,16 @@ function assignCanvasForLabelManipulation(canvasObj) {
   canvas = canvasObj;
 }
 
+function removeAndRetrieveAllLabelRefs() {
+  const labelRefs = {};
+  Object.keys(labelObjects).forEach((key) => {
+    labelRefs[key] = labelObjects[key];
+    canvas.remove(labelObjects[key]);
+  });  
+  labelObjects = {};
+  return labelRefs;
+}
+
 function removeAllLabels() {
   Object.keys(labelObjects).forEach((key) => {
     canvas.remove(labelObjects[key]);
@@ -57,4 +67,5 @@ export {
   setPolygonLabelOffsetProps, getLabelById, addLabelRef, removeLabel,
   setAllLabelsVisibilityProperty, changeLabelText, removeAllLabels,
   assignCanvasForLabelManipulation, changeLabelVisibilityById,
+  removeAndRetrieveAllLabelRefs,
 };

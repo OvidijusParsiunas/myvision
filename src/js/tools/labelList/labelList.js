@@ -73,7 +73,6 @@ function initialiseLabelListFunctionality() {
 function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
   let dropdown = '<tbody>';
-  console.log(labelDropdownOptions.length);
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
     const dropdownElement = `<tr><td><div id="labelOption${i}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${labelDropdownOptions[i].color.label}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
     dropdown += dropdownElement;

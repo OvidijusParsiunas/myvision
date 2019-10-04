@@ -43,20 +43,18 @@ function generateLabelShapeGroup(shape, text) {
 // save label references too
 function repopulateLabelShapeGroup(shape) {
   canvas.add(shape);
-  const initialLocation = findInitialLabelLocation(shape);
-  const textShape = new fabric.Text(shape.shapeLabelText,
-    labelProperties.getLabelProps(initialLocation, shape.shapeName));
-  canvas.add(textShape);
-  canvas.bringToFront(textShape);
-  const shapeColor = getLabelColor(textShape.text);
-  addLabelRef(textShape, shape.id);
-  addExistingLabelToList(shape.shapeLabelText, shape.id, shapeColor.label);
 }
 
-function repopulateLabelAndShapeObjects(existingShapes) {
+function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
     Object.keys(existingShapes).forEach((key) => {
       repopulateLabelShapeGroup(existingShapes[key].shapeRef);
       addExistingShape(existingShapes[key], key);
+      
+      canvas.add(existingLabels[key]);
+      canvas.bringToFront(existingLabels[key]);
+      addLabelRef(existingLabels[key], key);
+      const shapeColor = getLabelColor(existingShapes[key].shapeRef.shapeLabelText);
+      addExistingLabelToList(existingShapes[key].shapeRef.shapeLabelText, key, shapeColor.label);
     });
     canvas.renderAll();
   }
