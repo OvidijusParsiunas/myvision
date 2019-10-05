@@ -46,7 +46,7 @@ function repopulateLabelShapeGroup(shapeObj, label, id) {
   addExistingShape(shapeObj, id);
   addLabelRef(label, id);
   const shapeColor = getLabelColor(shapeObj.shapeRef.shapeLabelText);
-  addExistingLabelToList(shapeObj.shapeRef.shapeLabelText, id, shapeColor.label);
+  addExistingLabelToList(shapeObj.shapeRef.shapeLabelText, id, shapeColor.label, shapeObj.visibility);
 }
 
 function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {

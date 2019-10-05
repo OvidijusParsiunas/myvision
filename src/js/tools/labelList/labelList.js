@@ -89,15 +89,32 @@ function repopulateDropdown() {
   }
 }
 
-// change to label list item click
-
-function createLabelElementMarkup(labelText, id, backgroundColor) {
-  return `
-  <div id="labelId${id}" onMouseEnter="mouseEnterLabel(${id})" onMouseLeave="mouseLeaveLabel(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
-    <div id="default" onMouseEnter="mouseEnterVisibilityBtn(id, this)" onMouseLeave="mouseLeaveVisibilityBtn(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px;">
+function generateDefaultLabelVisibilityMarkup(shapeVisibile) {
+  if (shapeVisibile === 'default') {
+    return `
       <img class="defaultVisibilityIcon" src="visibility-button.svg" alt="visibility">
       <img class="highlightedVisibilityIcon" src="visibility-button-highlighted.svg" style="display: none" alt="visibility">
       <img class="defaultVisibilityIcon" src="invisible-button.svg" style="display: none" alt="visibility">
+      <img class="highlightedVisibilityIcon" src="invisible-button-highlighted.svg" style="display: none" alt="visibility">
+    `;
+  } else {
+    return `
+      <img class="defaultVisibilityIcon" src="visibility-button.svg" style="display: none" alt="visibility">
+      <img class="highlightedVisibilityIcon" src="visibility-button-highlighted.svg" style="display: none" alt="visibility">
+      <img class="defaultVisibilityIcon" src="invisible-button.svg" alt="visibility">
+      <img class="highlightedVisibilityIcon" src="invisible-button-highlighted.svg" style="display: none" alt="visibility">
+    `;
+  }
+}
+
+// change to label list item click
+
+function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
+  return `
+  <div id="labelId${id}" onMouseEnter="mouseEnterLabel(${id})" onMouseLeave="mouseLeaveLabel(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
+    <div id="${visibility}" onMouseEnter="mouseEnterVisibilityBtn(id, this)" onMouseLeave="mouseLeaveVisibilityBtn(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px;">
+      ${generateDefaultLabelVisibilityMarkup(visibility)}
+      <img class="highlightedVisibilityIcon" src="visibility-button-highlighted.svg" style="display: none" alt="visibility">
       <img class="highlightedVisibilityIcon" src="invisible-button-highlighted.svg" style="display: none" alt="visibility">
     </div>
     <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px">
@@ -121,7 +138,7 @@ function initialiseParentElement() {
 function addNewLabelToListFromPopUp(labelText, id, labelColor) {
   const labelElement = initialiseParentElement();
   labelElement.id = id;
-  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor);
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default');
   const newRow = labelListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
@@ -130,10 +147,16 @@ function addNewLabelToListFromPopUp(labelText, id, labelColor) {
   cell.scrollIntoView();
 }
 
-function addExistingLabelToList(labelText, id, labelColor) {
+function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
   const labelElement = initialiseParentElement();
   labelElement.id = id;
-  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor);
+  let visibility = null;
+  if (shapeVisible === true) {
+    visibility = 'default';
+  } else {
+    visibility = 'highlighted';
+  }
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, visibility);
   const newRow = labelListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);

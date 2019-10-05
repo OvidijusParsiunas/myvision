@@ -1,6 +1,6 @@
 import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
-import { removeAllLabels, removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
+import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 import { removeLabelListItems } from '../labelList/labelList';
