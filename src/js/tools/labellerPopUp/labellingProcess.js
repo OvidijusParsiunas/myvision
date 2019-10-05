@@ -1,6 +1,6 @@
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
 import { getLabelPopUpText, hideLabelPopUp, resetPopUpLabelOptions } from './style';
-import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder'
+import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 
 let labellingState = false;
 let targetShape = null;

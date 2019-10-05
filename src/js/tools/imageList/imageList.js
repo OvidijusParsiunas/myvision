@@ -63,18 +63,19 @@ function changeToExistingImage(id) {
   const timesZoomedOut = resetZoom();
   drawImageFromList(images[id].data);
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
-  zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes, images[currentlySelectedImageId].labels, timesZoomedOut);
+  zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
+    images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = id;
 }
 
 function switchImage(direction) {
   if (direction === 'previous') {
-    if (currentlySelectedImageId != 0) {
-      changeToExistingImage(currentlySelectedImageId - 1)
+    if (currentlySelectedImageId !== 0) {
+      changeToExistingImage(currentlySelectedImageId - 1);
     }
   } else if (direction === 'next') {
-    if (currentlySelectedImageId != images.length - 1) {
-      changeToExistingImage(currentlySelectedImageId + 1)
+    if (currentlySelectedImageId !== images.length - 1) {
+      changeToExistingImage(currentlySelectedImageId + 1);
     }
   }
 }

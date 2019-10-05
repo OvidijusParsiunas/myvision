@@ -549,7 +549,7 @@ function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomO
     timesToZoomOut -= 1;
     zoomOutObjectsOnImageSelect(previousShapes, previousLabels);
   }
-} 
+}
 
 window.zoomOverflowScroll = (element) => {
   canvas.viewportTransform[4] = -element.scrollLeft;
@@ -568,4 +568,6 @@ window.initiateZoomOverflowScroll = (event) => {
   scrollWheelUsed = true;
 };
 
-export { zoomCanvas, initialiseZoomVariables, resetZoom, zoomOutObjectOnImageSelect };
+export {
+  zoomCanvas, initialiseZoomVariables, resetZoom, zoomOutObjectOnImageSelect,
+};

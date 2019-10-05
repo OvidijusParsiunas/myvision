@@ -51,7 +51,7 @@ function removeAndRetrieveAllLabelRefs() {
   Object.keys(labelObjects).forEach((key) => {
     labelRefs[key] = labelObjects[key];
     canvas.remove(labelObjects[key]);
-  });  
+  });
   labelObjects = {};
   return labelRefs;
 }

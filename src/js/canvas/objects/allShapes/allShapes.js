@@ -20,7 +20,7 @@ function removeAndRetrieveAllShapeRefs() {
   Object.keys(shapes).forEach((key) => {
     shapeRefs[key] = shapes[key];
     canvas.remove(shapes[key].shapeRef);
-  });  
+  });
   shapes = {};
   return shapeRefs;
 }

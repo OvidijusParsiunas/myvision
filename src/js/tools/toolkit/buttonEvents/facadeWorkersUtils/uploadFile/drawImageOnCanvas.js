@@ -1,5 +1,5 @@
 import fabric from 'fabric';
- 
+
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
@@ -8,7 +8,7 @@ let currentImage = null;
 
 // timeout canvas zooms make it look bad, check zoom in and out to original
 
-function drawResizedImage(currentImage, newImageDimensions) {
+function drawResizedImage(newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
   canvas.setHeight(newImageDimensions.height);
   fabric.Image.fromURL(currentImage.src, (img) => {
@@ -17,14 +17,14 @@ function drawResizedImage(currentImage, newImageDimensions) {
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
       scaleX: newFileStatus.scaleX,
       scaleY: newFileStatus.scaleY,
-    }, 
+    },
     canvas.setZoom(1));
   });
   newFileStatus.width = newImageDimensions.width;
   newFileStatus.height = newImageDimensions.height;
 }
 
-function drawOriginalImage(currentImage) {
+function drawOriginalImage() {
   canvas.setWidth(currentImage.width);
   canvas.setHeight(currentImage.height);
   fabric.Image.fromURL(currentImage.src, (img) => {
@@ -34,15 +34,15 @@ function drawOriginalImage(currentImage) {
   newFileStatus.height = currentImage.height;
 }
 
-function drawImageOnCanvas(currentImage, newImageDimensions, defaultZoom) {
+function drawImageOnCanvas(newImageDimensions) {
   if (newImageDimensions) {
-    drawResizedImage(currentImage, newImageDimensions);
+    drawResizedImage(newImageDimensions);
   } else {
-    drawOriginalImage(currentImage);
+    drawOriginalImage();
   }
 }
 
-function resizeWhenImageExceedsMaxHeight(currentImage) {
+function resizeWhenImageExceedsMaxHeight() {
   const newImageDimensions = {};
   const heightRatio = canvasProperties.maximumCanvasHeight / currentImage.height;
   newImageDimensions.height = canvasProperties.maximumCanvasHeight;
@@ -50,11 +50,11 @@ function resizeWhenImageExceedsMaxHeight(currentImage) {
   return newImageDimensions;
 }
 
-function resizeWhenImageExceedsMaxWidth(currentImage) {
+function resizeWhenImageExceedsMaxWidth(imageDimensions) {
   const newImageDimensions = {};
-  const widthRatio = canvasProperties.maximumCanvasWidth / currentImage.width;
+  const widthRatio = canvasProperties.maximumCanvasWidth / imageDimensions.width;
   newImageDimensions.width = canvasProperties.maximumCanvasWidth;
-  newImageDimensions.height = currentImage.height * widthRatio;
+  newImageDimensions.height = imageDimensions.height * widthRatio;
   return newImageDimensions;
 }
 
@@ -64,23 +64,28 @@ function setCanvasWrapperMaximumDimensions() {
   canvasWrapper.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
 }
 
+function setCanvasProperties() {
+  canvasProperties.maximumCanvasHeight = window.innerHeight - 50;
+  canvasProperties.maximumCanvasWidth = window.innerWidth - 162;
+}
+
 function draw() {
   setCanvasProperties();
-    if (canvasProperties.maximumCanvasHeight < currentImage.height) {
-        let newImageDimensions = resizeWhenImageExceedsMaxHeight(currentImage);
+  if (canvasProperties.maximumCanvasHeight < currentImage.height) {
+    let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
-        newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
+      newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }
-        drawImageOnCanvas(currentImage, newImageDimensions);
-    } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
-        const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
-        drawImageOnCanvas(currentImage, newImageDimensions);
-    } else {
-        drawImageOnCanvas(currentImage);
-    }
-    setCanvasWrapperMaximumDimensions();
-    initialFileStatus.width = newFileStatus.width;
-    initialFileStatus.height = newFileStatus.height;
+    drawImageOnCanvas(newImageDimensions);
+  } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
+    const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
+    drawImageOnCanvas(newImageDimensions);
+  } else {
+    drawImageOnCanvas();
+  }
+  setCanvasWrapperMaximumDimensions();
+  initialFileStatus.width = newFileStatus.width;
+  initialFileStatus.height = newFileStatus.height;
 }
 
 function drawImageFromList(selectedImage) {
@@ -92,11 +97,6 @@ function onImageLoad() {
   newFileStatus.uploaded = true;
   currentImage = this;
   draw();
-}
-
-function setCanvasProperties() {
-  canvasProperties.maximumCanvasHeight = window.innerHeight - 50;
-  canvasProperties.maximumCanvasWidth = window.innerWidth - 162;
 }
 
 function assignCanvasForDrawImageOnCanvas(newCanvas) {
@@ -124,16 +124,16 @@ function calculateNewFileSizeRatio() {
 function resizeCanvasAndImage() {
   setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
-    let newImageDimensions = resizeWhenImageExceedsMaxHeight(currentImage);
+    let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }
-    drawImageOnCanvas(currentImage, newImageDimensions, true);
+    drawImageOnCanvas(newImageDimensions);
   } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
     const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
-    drawImageOnCanvas(currentImage, newImageDimensions, true);
+    drawImageOnCanvas(newImageDimensions);
   } else {
-    drawImageOnCanvas(currentImage);
+    drawImageOnCanvas();
   }
   setCanvasWrapperMaximumDimensions();
   return calculateNewFileSizeRatio();
@@ -142,7 +142,7 @@ function resizeCanvasAndImage() {
 function resizeCanvas() {
   setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
-    let newImageDimensions = resizeWhenImageExceedsMaxHeight(currentImage);
+    let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }

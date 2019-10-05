@@ -17,7 +17,7 @@ function setObjets(polygonObj, polygonPointsArray, canvasObj, polygonPropertiesO
 
 function generateNewPolygon() {
   const newPolygon = new fabric.Polygon([], polygonProperties.newPolygon());
-  newPolygon.set({ 
+  newPolygon.set({
     id: currentPolygon.id,
     selectable: true,
     hoverCursor: 'move',

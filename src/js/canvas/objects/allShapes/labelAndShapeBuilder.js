@@ -3,7 +3,7 @@ import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
 import labelProperties from '../label/properties';
 import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
-import { addShape, addExistingShape } from '../allShapes/allShapes';
+import { addShape, addExistingShape } from './allShapes';
 
 let currentId = 0;
 let canvas = null;
@@ -46,21 +46,22 @@ function repopulateLabelShapeGroup(shapeObj, label, id) {
   addExistingShape(shapeObj, id);
   addLabelRef(label, id);
   const shapeColor = getLabelColor(shapeObj.shapeRef.shapeLabelText);
-  addExistingLabelToList(shapeObj.shapeRef.shapeLabelText, id, shapeColor.label, shapeObj.visibility);
+  addExistingLabelToList(shapeObj.shapeRef.shapeLabelText, id,
+    shapeColor.label, shapeObj.visibility);
 }
 
 function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
-    Object.keys(existingShapes).forEach((key) => {
-      repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key);
-    });
-    canvas.renderAll();
-  }
-
-  function assignCanvasForLabelAndShapeBuilder(canvasObj) {
-    canvas = canvasObj;
+  Object.keys(existingShapes).forEach((key) => {
+    repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key);
+  });
+  canvas.renderAll();
 }
 
-export { 
-    assignCanvasForLabelAndShapeBuilder, repopulateLabelAndShapeObjects,
-    findInitialLabelLocation, generateLabelShapeGroup,
+function assignCanvasForLabelAndShapeBuilder(canvasObj) {
+  canvas = canvasObj;
+}
+
+export {
+  assignCanvasForLabelAndShapeBuilder, repopulateLabelAndShapeObjects,
+  findInitialLabelLocation, generateLabelShapeGroup,
 };

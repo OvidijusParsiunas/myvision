@@ -97,14 +97,13 @@ function generateLabelVisibilityMarkup(shapeVisibile) {
       <img class="defaultVisibilityIcon" src="invisible-button.svg" style="display: none" alt="visibility">
       <img class="highlightedVisibilityIcon" src="invisible-button-highlighted.svg" style="display: none" alt="visibility">
     `;
-  } else {
-    return `
-      <img class="defaultVisibilityIcon" src="visibility-button.svg" style="display: none" alt="visibility">
-      <img class="highlightedVisibilityIcon" src="visibility-button-highlighted.svg" style="display: none" alt="visibility">
-      <img class="defaultVisibilityIcon" src="invisible-button.svg" alt="visibility">
-      <img class="highlightedVisibilityIcon" src="invisible-button-highlighted.svg" style="display: none" alt="visibility">
-    `;
   }
+  return `
+    <img class="defaultVisibilityIcon" src="visibility-button.svg" style="display: none" alt="visibility">
+    <img class="highlightedVisibilityIcon" src="visibility-button-highlighted.svg" style="display: none" alt="visibility">
+    <img class="defaultVisibilityIcon" src="invisible-button.svg" alt="visibility">
+    <img class="highlightedVisibilityIcon" src="invisible-button-highlighted.svg" style="display: none" alt="visibility">
+  `;
 }
 
 // change to label list item click
@@ -211,7 +210,7 @@ function setEndOfContentEditable(contentEditableElement) {
   scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML);
 }
 
-function updateAssociatedLabelObjectsText(activeLabelId, text) {
+function updateAssociatedLabelObjectsText(text) {
   changeLabelText(activeLabelId, text);
   changeShapeLabelText(activeLabelId, text);
 }
@@ -229,7 +228,7 @@ function preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent) {
     finalText = temp;
   }
   setEndOfContentEditable(activeLabelTextElement);
-  updateAssociatedLabelObjectsText(activeLabelId, finalText);
+  updateAssociatedLabelObjectsText(finalText);
 }
 
 function addLabelToDropdown(labelText, dropdownLabelsElem, id, color) {
@@ -345,7 +344,7 @@ function selectShapeBeforeLabelEdit(id) {
 function trimLabelText() {
   const trimmedText = activeLabelTextElement.innerHTML.trim();
   activeLabelTextElement.innerHTML = trimmedText;
-  updateAssociatedLabelObjectsText(activeLabelId, trimmedText);
+  updateAssociatedLabelObjectsText(trimmedText);
 }
 
 function removeLabelDropDownContent() {
@@ -421,9 +420,9 @@ function wasHorizontalScrollCreated() {
 }
 
 function removeLabelListItems() {
-  var new_tbody = document.createElement('tbody');
+  const newtbody = document.createElement('tbody');
   if (labelListElement.childNodes[1]) {
-    labelListElement.replaceChild(new_tbody, labelListElement.childNodes[1]);
+    labelListElement.replaceChild(newtbody, labelListElement.childNodes[1]);
   }
 }
 
@@ -488,7 +487,7 @@ window.onmousedown = (event) => {
     if (event.target.matches('.labelDropdownOption')) {
       const newText = event.target.innerHTML;
       activeLabelTextElement.innerHTML = newText;
-      updateAssociatedLabelObjectsText(activeLabelId, newText);
+      updateAssociatedLabelObjectsText(newText);
       removeLabelDropDownContent();
       stopEditing();
       moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
@@ -599,7 +598,7 @@ window.labelTextInput = (innerHTML, element, inputEvent) => {
   if (element.offsetHeight > 30) {
     preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent);
   } else {
-    updateAssociatedLabelObjectsText(activeLabelId, innerHTML);
+    updateAssociatedLabelObjectsText(innerHTML);
   }
   isLabelChanged = true;
 };
