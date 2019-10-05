@@ -30,6 +30,7 @@ function setDefaultCursorMode(canvas) {
 }
 
 function setDefaultCursorModeAfterAlteringPolygonPoints(canvas) {
+  console.log('fdsdsf');
   changePolygonPointsPropertiesToDefault(canvas);
   setDefaultCanvasCursors(canvas);
 }

@@ -139,6 +139,7 @@ function polygonMouseUpEvents(event) {
   } else if (polygonMoved) {
     highlightLabelInTheList(event.target.id);
     setEditablePolygonWhenPolygonMoved(event);
+    highlightShapeFill(event.target.id);
     canvas.bringToFront(labelObject);
     setLastPolygonActionWasMoveState(true);
   } else if (newPolygonSelected) {

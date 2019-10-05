@@ -18,6 +18,8 @@ function initialiseImageListFunctionality() {
   findImageListElement();
 }
 
+// when adding points and clicking another image, the cursor for polygons doesn't refresh
+
 function createImageElementMarkup(imageText, id) {
   return `
   <div id="imageId${id}" onClick="selectImageFromList(${id})" class="image${id} imageListItem">
@@ -57,10 +59,10 @@ function addNewImageToList(imageText, imageData) {
 
 window.selectImageFromList = (id) => {
   if (id !== currentlySelectedImageId) {
+    window.cancel();
     images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
     images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
     removeLabelListItems();
-    window.cancel();
     resetZoom();
     drawImageFromList(images[id].data);
     repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
