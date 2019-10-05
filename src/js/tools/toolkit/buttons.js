@@ -4,7 +4,7 @@ import {
   removePolygonPointBtnClick, downloadXMLBtnClick,
   uploadImageBtnClick, resetCanvasEventsToDefault,
   movableObjectsBtnClick, continuousDrawingBtnClick,
-  toggleLabelsVisibilityBtnClick, zoomBtnClick,
+  toggleLabelsVisibilityBtnClick, zoomBtnClick, switchImageBtnClick,
 } from './buttonEvents/facade';
 import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
@@ -28,6 +28,7 @@ function assignToolkitButtonEvents() {
   window.continuousDrawing = continuousDrawingBtnClick;
   window.toggleLabelsVisibility = toggleLabelsVisibilityBtnClick;
   window.zoom = zoomBtnClick;
+  window.switchImage = switchImageBtnClick;
 }
 
 export { assignToolkitButtonEvents as default };

@@ -10,6 +10,7 @@ import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
 import toggleLabelsVisibility from './facadeWorkers/toggleLabelsVisibilityWorker';
 import { zoomCanvas } from './facadeWorkers/zoomWorker';
+import switchImages from './facadeWorkers/switchImageWorker';
 
 let canvas = null;
 
@@ -65,6 +66,10 @@ function zoomBtnClick(activity) {
   zoomCanvas(canvas, activity);
 }
 
+function switchImageBtnClick(direction) {
+  switchImages(direction);
+}
+
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
@@ -79,4 +84,5 @@ export {
   uploadImageBtnClick,
   addPointsBtnClick,
   zoomBtnClick,
+  switchImageBtnClick,
 };

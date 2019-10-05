@@ -2,7 +2,7 @@ import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/up
 import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
-import { resetZoom } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
+import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 import { removeLabelListItems } from '../labelList/labelList';
 
 let imageListElement = null;
@@ -17,8 +17,6 @@ function findImageListElement() {
 function initialiseImageListFunctionality() {
   findImageListElement();
 }
-
-// when adding points and clicking another image, the cursor for polygons doesn't refresh
 
 function createImageElementMarkup(imageText, id) {
   return `
@@ -57,17 +55,34 @@ function addNewImageToList(imageText, imageData) {
   newImageId += 1;
 }
 
+function changeToExistingImage(id) {
+  window.cancel();
+  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  removeLabelListItems();
+  const timesZoomedOut = resetZoom();
+  drawImageFromList(images[id].data);
+  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
+  zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes, images[currentlySelectedImageId].labels, timesZoomedOut);
+  currentlySelectedImageId = id;
+}
+
+function switchImage(direction) {
+  if (direction === 'previous') {
+    if (currentlySelectedImageId != 0) {
+      changeToExistingImage(currentlySelectedImageId - 1)
+    }
+  } else if (direction === 'next') {
+    if (currentlySelectedImageId != images.length - 1) {
+      changeToExistingImage(currentlySelectedImageId + 1)
+    }
+  }
+}
+
 window.selectImageFromList = (id) => {
   if (id !== currentlySelectedImageId) {
-    window.cancel();
-    images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-    images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-    removeLabelListItems();
-    resetZoom();
-    drawImageFromList(images[id].data);
-    repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
-    currentlySelectedImageId = id;
+    changeToExistingImage(id);
   }
 };
 
-export { initialiseImageListFunctionality, addNewImageToList };
+export { initialiseImageListFunctionality, addNewImageToList, switchImage };

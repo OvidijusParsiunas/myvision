@@ -16,7 +16,6 @@ function prepareObjectsForEditablePolygonPoints(object, isDrawing) {
 }
 
 function setObjectPropertiesToDefault(object) {
-  console.log('this was called here');
   if (getMovableObjectsState() || (object.shapeName !== 'bndBox' && object.shapeName !== 'polygon')) {
     object.lockMovementX = false;
     object.lockMovementY = false;

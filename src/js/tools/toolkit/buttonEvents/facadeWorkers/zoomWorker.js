@@ -115,46 +115,54 @@ function checkIfChangeShapeSizeOnZoomout() {
   return true;
 }
 
+function zoomOutLabel(label) {
+  label.fontSize *= reduceShapeSizeRatios.label;
+  if (label.attachedShape === 'polygon') {
+    label.top -= 0.5;
+  }
+}
+
+function zoomOutObject(object) {
+  switch (object.shapeName) {
+    case 'polygon':
+      object.strokeWidth *= reduceShapeSizeRatios.polygon;
+      object.labelOffsetTop = object.top
+      - (object.points[0].y - labelProperties.pointOffsetProperties().top);
+      break;
+    case 'tempPolygon':
+    case 'addPointsLine':
+      object.strokeWidth *= reduceShapeSizeRatios.polygon;
+      break;
+    case 'point':
+    case 'invisiblePoint':
+    case 'firstPoint':
+    case 'tempPoint':
+    case 'initialAddPoint':
+      object.radius *= reduceShapeSizeRatios.point;
+      object.strokeWidth *= reduceShapeSizeRatios.point;
+      if (object.polygonMoved) {
+        object.left += 0.05;
+        object.top += 0.05;
+      }
+      break;
+    case 'label':
+      zoomOutLabel(object);
+      break;
+    case 'bndBox':
+      object.strokeWidth *= reduceShapeSizeRatios.bndBox;
+      break;
+    default:
+      break;
+  }
+}
+
 function zoomOutObjects() {
   if (canIncreaseShapeSizes) {
     if (timesZoomedWithNoShapeReduction === 0) {
       if (!checkIfChangeShapeSizeOnZoomout()) return;
       updateShapesPropertiesForZoomOut();
       canvas.forEachObject((iteratedObj) => {
-        switch (iteratedObj.shapeName) {
-          case 'polygon':
-            iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
-            iteratedObj.labelOffsetTop = iteratedObj.top
-            - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top);
-            break;
-          case 'tempPolygon':
-          case 'addPointsLine':
-            iteratedObj.strokeWidth *= reduceShapeSizeRatios.polygon;
-            break;
-          case 'point':
-          case 'invisiblePoint':
-          case 'firstPoint':
-          case 'tempPoint':
-          case 'initialAddPoint':
-            iteratedObj.radius *= reduceShapeSizeRatios.point;
-            iteratedObj.strokeWidth *= reduceShapeSizeRatios.point;
-            if (iteratedObj.polygonMoved) {
-              iteratedObj.left += 0.05;
-              iteratedObj.top += 0.05;
-            }
-            break;
-          case 'label':
-            iteratedObj.fontSize *= reduceShapeSizeRatios.label;
-            if (iteratedObj.attachedShape === 'polygon') {
-              iteratedObj.top -= 0.5;
-            }
-            break;
-          case 'bndBox':
-            iteratedObj.strokeWidth *= reduceShapeSizeRatios.bndBox;
-            break;
-          default:
-            break;
-        }
+        zoomOutObject(iteratedObj);
       });
       canvas.renderAll();
       canReduceShapeSizes = true;
@@ -164,6 +172,13 @@ function zoomOutObjects() {
   } else {
     timesZoomedWithNoShapeIncrease += 1;
   }
+}
+
+function zoomOutObjectsOnImageSelect(previousShapes, previousLabels) {
+  Object.keys(previousShapes).forEach((key) => {
+    zoomOutObject(previousShapes[key].shapeRef);
+    zoomOutLabel(previousLabels[key]);
+  });
 }
 
 function displayZoomMetrics() {
@@ -518,6 +533,7 @@ function resetZoom() {
   canvasProperties = getCanvasProperties();
   imageProperties = getImageProperties();
   currentZoom = 1;
+  const timesNeededToZoomOut = timesZoomedIn;
   while (timesZoomedIn !== 0) {
     timesZoomedIn -= 1;
     updateShapesPropertiesForZoomOut();
@@ -525,8 +541,15 @@ function resetZoom() {
   }
   setNewCanvasDimensions(true);
   setCurrentZoomState(currentZoom);
-  
+  return timesNeededToZoomOut;
 }
+
+function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomOut) {
+  while (timesToZoomOut !== 0) {
+    timesToZoomOut -= 1;
+    zoomOutObjectsOnImageSelect(previousShapes, previousLabels);
+  }
+} 
 
 window.zoomOverflowScroll = (element) => {
   canvas.viewportTransform[4] = -element.scrollLeft;
@@ -545,4 +568,4 @@ window.initiateZoomOverflowScroll = (event) => {
   scrollWheelUsed = true;
 };
 
-export { zoomCanvas, initialiseZoomVariables, resetZoom };
+export { zoomCanvas, initialiseZoomVariables, resetZoom, zoomOutObjectOnImageSelect };
