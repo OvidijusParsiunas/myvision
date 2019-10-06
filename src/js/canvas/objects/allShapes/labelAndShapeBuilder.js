@@ -24,14 +24,19 @@ function findInitialLabelLocation(shape) {
   return locationObj;
 }
 
+function generateLabel(label) {
+  label.visible = getLabelsVisibilityState();
+  canvas.add(label);
+  canvas.bringToFront(label);
+}
+
 function generateLabelShapeGroup(shape, text) {
   shape.set('id', currentId);
   shape.set('shapeLabelText', text);
   const initialLocation = findInitialLabelLocation(shape);
   const textShape = new fabric.Text(text,
     labelProperties.getLabelProps(initialLocation, shape.shapeName));
-  canvas.add(textShape);
-  canvas.bringToFront(textShape);
+  generateLabel(textShape);
   addToLabelOptions(textShape.text);
   const shapeColor = getLabelColor(textShape.text);
   addShape(shape, shapeColor, currentId);
@@ -40,15 +45,9 @@ function generateLabelShapeGroup(shape, text) {
   currentId += 1;
 }
 
-function repopulateLabel(label) {
-  label.visible = getLabelsVisibilityState();
-  canvas.add(label);
-  canvas.bringToFront(label);
-}
-
 function repopulateLabelShapeGroup(shapeObj, label, id) {
   canvas.add(shapeObj.shapeRef);
-  repopulateLabel(label);
+  generateLabel(label);
   addExistingShape(shapeObj, id);
   addLabelRef(label, id);
   const shapeColor = getLabelColor(shapeObj.shapeRef.shapeLabelText);
