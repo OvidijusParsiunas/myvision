@@ -6,6 +6,9 @@ const canvasProperties = {};
 let canvas = null;
 let currentImage = null;
 
+// persist immovable objects when changing images
+// persist label visibility toggled off
+
 // timeout canvas zooms make it look bad, check zoom in and out to original
 
 function drawResizedImage(newImageDimensions) {

@@ -1,7 +1,7 @@
 import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
-import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
+import { repopulateLabelAndShapeObjects, shapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 import { removeLabelListItems } from '../labelList/labelList';
 
@@ -9,6 +9,7 @@ let imageListElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
+
 
 function findImageListElement() {
   imageListElement = document.getElementById('image-list');
@@ -61,8 +62,9 @@ function changeToExistingImage(id) {
   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
   removeLabelListItems();
   const timesZoomedOut = resetZoom();
-  drawImageFromList(images[id].data);
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
+  drawImageFromList(images[id].data);
+  shapeMovablePropertiesOnImageSelect(images[id].shapes);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
     images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = id;

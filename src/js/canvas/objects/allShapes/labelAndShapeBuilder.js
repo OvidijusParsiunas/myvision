@@ -3,6 +3,7 @@ import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
 import labelProperties from '../label/properties';
 import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
+import { getLabelsVisibilityState, getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { addShape, addExistingShape } from './allShapes';
 
 let currentId = 0;
@@ -39,10 +40,15 @@ function generateLabelShapeGroup(shape, text) {
   currentId += 1;
 }
 
-function repopulateLabelShapeGroup(shapeObj, label, id) {
-  canvas.add(shapeObj.shapeRef);
+function repopulateLabel(label) {
+  label.visible = getLabelsVisibilityState();
   canvas.add(label);
   canvas.bringToFront(label);
+}
+
+function repopulateLabelShapeGroup(shapeObj, label, id) {
+  canvas.add(shapeObj.shapeRef);
+  repopulateLabel(label);
   addExistingShape(shapeObj, id);
   addLabelRef(label, id);
   const shapeColor = getLabelColor(shapeObj.shapeRef.shapeLabelText);
@@ -57,11 +63,29 @@ function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
   canvas.renderAll();
 }
 
+function shapeMovablePropertiesOnImageSelect(existingShapes) {
+  if (getMovableObjectsState()) {
+    Object.keys(existingShapes).forEach((key) => {
+      const shape = existingShapes[key].shapeRef;
+      shape.lockMovementX = false;
+      shape.lockMovementY = false;
+      shape.hoverCursor = 'move';
+    });
+  } else {
+    Object.keys(existingShapes).forEach((key) => {
+      const shape = existingShapes[key].shapeRef;
+      shape.lockMovementX = true;
+      shape.lockMovementY = true;
+      shape.hoverCursor = 'default';
+    });
+  }
+}
+
 function assignCanvasForLabelAndShapeBuilder(canvasObj) {
   canvas = canvasObj;
 }
 
 export {
   assignCanvasForLabelAndShapeBuilder, repopulateLabelAndShapeObjects,
-  findInitialLabelLocation, generateLabelShapeGroup,
+  findInitialLabelLocation, generateLabelShapeGroup, shapeMovablePropertiesOnImageSelect,
 };
