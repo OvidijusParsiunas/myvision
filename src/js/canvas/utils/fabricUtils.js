@@ -5,7 +5,7 @@ function setBoundingBoxEditToolsToBeTransparent() {
 }
 
 function createNewCanvas() {
-  return new fabric.Canvas('c', { selection: false });
+  return new fabric.Canvas('c', { selection: false, renderOnAddRemove: false });
 }
 
 export { setBoundingBoxEditToolsToBeTransparent, createNewCanvas };

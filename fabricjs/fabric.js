@@ -7014,7 +7014,9 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      * @param {Object} [options] Optional options to set for the {@link fabric.Image|image}.
      */
     __setBgOverlayImage: function(property, image, callback, options) {
+      console.log('1');
       if (typeof image === 'string') {
+        console.log('2');
         fabric.util.loadImage(image, function(img) {
           if (img) {
             var instance = new fabric.Image(img, options);
@@ -7025,9 +7027,15 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
         }, this, options && options.crossOrigin);
       }
       else {
+        console.log('called here');
+        // find out why smaller images don't get positioned correctly at the start
+        // when zooming in on smaller images, then zooming out - they are imemdiately zoomed out to original
+        // the switching of image dimensions, and THEN the new image is drawn
         options && image.setOptions(options);
+        // draws the image, crops it, needs to rerender for new image
         this[property] = image;
         image && (image.canvas = this);
+        // calls renderAll and renders both layers -> investigate here
         callback && callback(image);
       }
 
@@ -7405,6 +7413,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      * @chainable
      */
     renderAll: function () {
+      console.log('called 1');
       var canvasToDrawOn = this.contextContainer;
       this.renderCanvas(canvasToDrawOn, this._objects);
       return this;
@@ -9587,6 +9596,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
      * @chainable
      */
     renderAll: function () {
+      console.log('called 2');
       if (this.contextTopDirty && !this._groupSelector && !this.isDrawingMode) {
         this.clearContext(this.contextTop);
         this.contextTopDirty = false;

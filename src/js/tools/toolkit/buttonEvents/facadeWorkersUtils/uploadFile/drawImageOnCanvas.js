@@ -17,8 +17,7 @@ function drawResizedImage(newImageDimensions) {
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
       scaleX: newFileStatus.scaleX,
       scaleY: newFileStatus.scaleY,
-    },
-    canvas.setZoom(1));
+    }, canvas.setZoom(1));
   });
   newFileStatus.width = newImageDimensions.width;
   newFileStatus.height = newImageDimensions.height;
@@ -91,6 +90,13 @@ function draw() {
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
   draw();
+  // const canvasElement = document.getElementById('canvas-wrapper-inner');
+  // const newCanvasElement = canvas.toCanvasElement(1);
+  // newCanvasElement.id = 'c';
+  // canvas = new fabric.Canvas('c', { selection: false });
+  // if (canvasElement.childNodes[0]) {
+  //   canvasElement.replaceChild(newCanvasElement, canvasElement.childNodes[1]);
+  // }
 }
 
 function onImageLoad() {
@@ -122,9 +128,9 @@ function calculateNewFileSizeRatio() {
 }
 
 function resizeCanvasAndImage() {
-  setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight();
+    console.log('called here');
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }
@@ -135,7 +141,6 @@ function resizeCanvasAndImage() {
   } else {
     drawImageOnCanvas();
   }
-  setCanvasWrapperMaximumDimensions();
   return calculateNewFileSizeRatio();
 }
 

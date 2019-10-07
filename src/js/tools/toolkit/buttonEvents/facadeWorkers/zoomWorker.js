@@ -194,9 +194,10 @@ function reduceCanvasDimensionsBy(width, height) {
   newCanvasHeight -= height;
 }
 
+let originalWidth = null;
+
 function setCanvasElementProperties(left, top) {
-  canvasElement.style.left = left || '50%';
-  canvasElement.style.top = top || '50%';
+  canvasElement.style.left = `calc(50% - ${Math.round(originalWidth / 2)}px)`;
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
@@ -304,6 +305,7 @@ function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHei
 }
 
 function heightOverflowDefault(originalWidth, originalHeight) {
+  console.log('!!!!!!!!!!!');
   const zoomOverflowWidth = `${originalWidth - 1}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
@@ -380,7 +382,7 @@ function setNewCanvasDimensions(changeElements) {
   let heightOverflowed = false;
   let widthOverflowed = false;
   newCanvasWidth = imageProperties.width * currentZoom;
-  const originalWidth = newCanvasWidth;
+  originalWidth = newCanvasWidth;
   newCanvasHeight = imageProperties.height * currentZoom;
   const originalHeight = newCanvasHeight;
   if (canvasProperties.maximumCanvasHeight < newCanvasHeight) {
@@ -470,9 +472,8 @@ function zoomOut() {
     zoomOutObjects();
     increaseMovePolygonPathOffset();
     if (currentZoom === 1) {
+      console.log('ashdasdasd');
       const newFileSizeRatio = resizeCanvasAndImage();
-      labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
-      resizeAllObjects(newFileSizeRatio, canvas);
       setTimeout(() => {
         canvas.setZoom(currentZoom);
       }, 0);
