@@ -90,13 +90,6 @@ function draw() {
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
   draw();
-  // const canvasElement = document.getElementById('canvas-wrapper-inner');
-  // const newCanvasElement = canvas.toCanvasElement(1);
-  // newCanvasElement.id = 'c';
-  // canvas = new fabric.Canvas('c', { selection: false });
-  // if (canvasElement.childNodes[0]) {
-  //   canvasElement.replaceChild(newCanvasElement, canvasElement.childNodes[1]);
-  // }
 }
 
 function onImageLoad() {

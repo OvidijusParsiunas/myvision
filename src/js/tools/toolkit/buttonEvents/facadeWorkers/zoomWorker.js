@@ -175,6 +175,7 @@ function zoomOutObjects() {
 }
 
 function zoomOutObjectsOnImageSelect(previousShapes, previousLabels) {
+  console.log('after?');
   Object.keys(previousShapes).forEach((key) => {
     zoomOutObject(previousShapes[key].shapeRef);
     zoomOutLabel(previousLabels[key]);
@@ -225,7 +226,7 @@ function setAllElementPropertiesToDefault() {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
   setZoomOverFlowWrapperElementProperties('', '', '', '', '');
-  setCanvasElementProperties('', '');
+  // setCanvasElementProperties('', '');
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -305,7 +306,6 @@ function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHei
 }
 
 function heightOverflowDefault(originalWidth, originalHeight) {
-  console.log('!!!!!!!!!!!');
   const zoomOverflowWidth = `${originalWidth - 1}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
@@ -369,7 +369,7 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
   } else {
     setDoubleScrollCanvasState(false);
     setAllElementPropertiesToDefault();
-    // console.log('set to default');
+    console.log('set to default');
   }
   const finalImageDimensions = {
     width: newCanvasWidth,
@@ -472,8 +472,9 @@ function zoomOut() {
     zoomOutObjects();
     increaseMovePolygonPathOffset();
     if (currentZoom === 1) {
-      console.log('ashdasdasd');
       const newFileSizeRatio = resizeCanvasAndImage();
+      labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
+      resizeAllObjects(newFileSizeRatio, canvas);
       setTimeout(() => {
         canvas.setZoom(currentZoom);
       }, 0);
