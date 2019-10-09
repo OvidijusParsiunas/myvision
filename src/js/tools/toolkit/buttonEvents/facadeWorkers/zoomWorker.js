@@ -226,7 +226,7 @@ function setAllElementPropertiesToDefault() {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
   setZoomOverFlowWrapperElementProperties('', '', '', '', '');
-  // setCanvasElementProperties('', '');
+  setCanvasElementProperties('', '');
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -436,9 +436,7 @@ function changeCanvas() {
 
 function resetCanvasToDefault() {
   currentZoom = 1;
-  setTimeout(() => {
-    canvas.setZoom(currentZoom);
-  }, 0);
+  canvas.setZoom(currentZoom);
   while (timesZoomedIn !== 0) {
     timesZoomedIn -= 1;
     zoomOutObjects();
@@ -475,9 +473,7 @@ function zoomOut() {
       const newFileSizeRatio = resizeCanvasAndImage();
       labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
       resizeAllObjects(newFileSizeRatio, canvas);
-      setTimeout(() => {
-        canvas.setZoom(currentZoom);
-      }, 0);
+      canvas.setZoom(currentZoom);
     } else if (setNewCanvasDimensions()) {
       resetCanvasToDefault();
     } else {
