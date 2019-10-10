@@ -25,6 +25,8 @@ let canIncreaseShapeSizes = false;
 let movedPolygonPathOffsetReduced = false;
 let timesZoomedWithNoShapeReduction = 0;
 let timesZoomedWithNoShapeIncrease = 0;
+let randomdiv = null;
+const originalDimensionsToCanvaselement = {};
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
   polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104, popup: 0.1,
@@ -206,8 +208,9 @@ function setCanvasElementProperties(left, top) {
 }
 
 function setCanvasElementPropertiesUsingOriginalProperties() {
-  canvasElement.style.left = Math.round(originalWidth / 2);
-  canvasElement.style.top = Math.round(originalHeight / 2); // <-- fix here
+  randomdiv.style.width = '800px';
+  console.log('this was called today');
+  // canvasElement.style.top = Math.round(originalHeight / 2); // <-- fix here
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
@@ -235,7 +238,7 @@ function setAllElementPropertiesToDefault() {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
   setZoomOverFlowWrapperElementProperties('', '', '', '', '');
-  // setCanvasElementProperties('', '');
+  setCanvasElementPropertiesUsingOriginalProperties();
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -526,6 +529,7 @@ function loadCanvasElements() {
   zoomOverflowElement = document.getElementById('zoom-overflow');
   zoomOverflowWrapperElement = document.getElementById('zoom-overflow-wrapper');
   canvasElement = document.getElementById('canvas-wrapper-inner');
+  randomdiv = document.getElementById('randomDiv');
 }
 
 function initialiseZoomVariables(canvasObj) {
@@ -536,6 +540,9 @@ function initialiseZoomVariables(canvasObj) {
 }
 
 function resetZoom() {
+  setDoubleScrollCanvasState(false);
+  setAllElementPropertiesToDefault();
+  setCurrentZoomState(currentZoom);
   return 1;
 }
 
@@ -544,6 +551,10 @@ function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomO
     timesToZoomOut -= 1;
     zoomOutObjectsOnImageSelect(previousShapes, previousLabels);
   }
+}
+
+function updateOriginaDimensionsToCanvasElement() {
+
 }
 
 window.zoomOverflowScroll = (element) => {
