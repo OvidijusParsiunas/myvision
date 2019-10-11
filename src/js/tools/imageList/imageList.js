@@ -57,17 +57,17 @@ function addNewImageToList(imageText, imageData) {
 }
 
 function changeToExistingImage(id) {
-  window.cancel();
-  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-  removeLabelListItems();
-  const timesZoomedOut = resetZoom();
-  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
+  // window.cancel();
+  // images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+  // images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  // removeLabelListItems();
+  // const timesZoomedOut = resetZoom();
+  // repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
   drawImageFromList(images[id].data);
-  shapeMovablePropertiesOnImageSelect(images[id].shapes);
-  zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
-    images[currentlySelectedImageId].labels, timesZoomedOut);
-  currentlySelectedImageId = id;
+  // shapeMovablePropertiesOnImageSelect(images[id].shapes);
+  // zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
+  //   images[currentlySelectedImageId].labels, timesZoomedOut);
+  // currentlySelectedImageId = id;
 }
 
 function switchImage(direction) {
