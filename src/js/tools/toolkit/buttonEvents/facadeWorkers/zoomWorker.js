@@ -25,8 +25,6 @@ let canIncreaseShapeSizes = false;
 let movedPolygonPathOffsetReduced = false;
 let timesZoomedWithNoShapeReduction = 0;
 let timesZoomedWithNoShapeIncrease = 0;
-let randomdiv = null;
-const originalDimensionsToCanvaselement = {};
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
   polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104, popup: 0.1,
@@ -196,21 +194,9 @@ function reduceCanvasDimensionsBy(width, height) {
   newCanvasHeight -= height;
 }
 
-let originalWidth = null;
-
-// complete the canvas dimensions for each end
-// get strategy for calculating no overflow
-  // use original Width and Height
-  // make original height a parent scope variable
-
 function setCanvasElementProperties(left, top) {
-  canvasElement.style.left = left || `calc(50% - ${Math.round(originalWidth / 2)}px)`;
-}
-
-function setCanvasElementPropertiesUsingOriginalProperties() {
-  randomdiv.style.width = '800px';
-  console.log('this was called today');
-  // canvasElement.style.top = Math.round(originalHeight / 2); // <-- fix here
+  canvasElement.style.left = left || '50%';
+  canvasElement.style.top = top || '50%';
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
@@ -238,7 +224,7 @@ function setAllElementPropertiesToDefault() {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
   setZoomOverFlowWrapperElementProperties('', '', '', '', '');
-  setCanvasElementPropertiesUsingOriginalProperties();
+  // canvasElement.style.display = 'none';
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -325,7 +311,7 @@ function heightOverflowDefault(originalWidth, originalHeight) {
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', '', zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', '', stubMarginTop);
-  setCanvasElementProperties(`calc(50% - ${Math.round(originalWidth / 2)}px)`, '');
+  setCanvasElementProperties('', '');
 }
 
 function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
@@ -335,7 +321,7 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 - 1}px`;
   const stubMarginLeft = `${Math.round(originalWidth) - 1}px`;
   const stubMarginTop = `${Math.round(originalHeight) - scrollWidth - (currentZoom - 1)}px`;
-  const canvasLeft = `calc(50% - ${(Math.round(originalWidth / 2) - (scrollWidth) + 3)}px)`;
+  const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
   const canvasTop = `calc(50% - ${scrollWidth / 2}px)`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
@@ -350,37 +336,38 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
     if (widthOverflowed) {
       setDoubleScrollCanvasState(true);
       fullOverflowOfWidthAndHeight(originalWidth, originalHeight);
-      console.log('horizontal and vertical overlap');
+      // console.log('horizontal and vertical overlap');
     } else {
       setDoubleScrollCanvasState(false);
       heightOverflowDefault(originalWidth, originalHeight);
-      console.log('vertical overlap default');
+      // console.log('vertical overlap default');
       if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
         heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight);
-        console.log('vertical double scrollbar overlap');
+        // console.log('vertical double scrollbar overlap');
         if (Math.round(newCanvasWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth) {
           setDoubleScrollCanvasState(true);
           heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight);
-          console.log('vertical single scrollbar overlap');
+          // console.log('vertical single scrollbar overlap');
         }
       }
     }
   } else if (widthOverflowed) {
     setDoubleScrollCanvasState(false);
     widthOverflowDefault(originalWidth, originalHeight);
-    console.log('horizontal overlap default');
+    // console.log('horizontal overlap default');
     if (newCanvasHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
       widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight);
-      console.log('horizontal double scrollbar overlap');
+      // console.log('horizontal double scrollbar overlap');
       if (newCanvasHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 3) {
         setDoubleScrollCanvasState(true);
         widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight);
-        console.log('horizontal single scrollbar overlap');
+        // console.log('horizontal single scrollbar overlap');
       }
     }
   } else {
     setDoubleScrollCanvasState(false);
     setAllElementPropertiesToDefault();
+    // console.log('set to default');
   }
   const finalImageDimensions = {
     width: newCanvasWidth,
@@ -393,7 +380,7 @@ function setNewCanvasDimensions(changeElements) {
   let heightOverflowed = false;
   let widthOverflowed = false;
   newCanvasWidth = imageProperties.width * currentZoom;
-  originalWidth = newCanvasWidth;
+  const originalWidth = newCanvasWidth;
   newCanvasHeight = imageProperties.height * currentZoom;
   const originalHeight = newCanvasHeight;
   if (canvasProperties.maximumCanvasHeight < newCanvasHeight) {
@@ -529,7 +516,6 @@ function loadCanvasElements() {
   zoomOverflowElement = document.getElementById('zoom-overflow');
   zoomOverflowWrapperElement = document.getElementById('zoom-overflow-wrapper');
   canvasElement = document.getElementById('canvas-wrapper-inner');
-  randomdiv = document.getElementById('randomDiv');
 }
 
 function initialiseZoomVariables(canvasObj) {
@@ -540,10 +526,18 @@ function initialiseZoomVariables(canvasObj) {
 }
 
 function resetZoom() {
-  setDoubleScrollCanvasState(false);
-  setAllElementPropertiesToDefault();
+  canvasProperties = getCanvasProperties();
+  imageProperties = getImageProperties();
+  currentZoom = 1;
+  const timesNeededToZoomOut = timesZoomedIn;
+  while (timesZoomedIn !== 0) {
+    timesZoomedIn -= 1;
+    updateShapesPropertiesForZoomOut();
+    increaseMovePolygonPathOffset();
+  }
+  setNewCanvasDimensions(true);
   setCurrentZoomState(currentZoom);
-  return 1;
+  return timesNeededToZoomOut;
 }
 
 function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomOut) {
@@ -551,10 +545,6 @@ function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomO
     timesToZoomOut -= 1;
     zoomOutObjectsOnImageSelect(previousShapes, previousLabels);
   }
-}
-
-function updateOriginaDimensionsToCanvasElement() {
-
 }
 
 window.zoomOverflowScroll = (element) => {

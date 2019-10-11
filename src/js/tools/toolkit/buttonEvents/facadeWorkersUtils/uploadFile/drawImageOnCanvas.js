@@ -4,8 +4,9 @@ const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
+let canvas2 = null;
 let currentImage = null;
-
+let canvasElement = null;
 // timeout canvas zooms make it look bad, check zoom in and out to original
 
 function drawResizedImage(newImageDimensions) {
@@ -17,8 +18,28 @@ function drawResizedImage(newImageDimensions) {
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
       scaleX: newFileStatus.scaleX,
       scaleY: newFileStatus.scaleY,
-    }, canvas.setZoom(1));
+    });
   });
+
+  newFileStatus.width = newImageDimensions.width;
+  newFileStatus.height = newImageDimensions.height;
+}
+
+function drawResizedImage2(newImageDimensions) {
+  console.log('ACTIVATED');
+  canvas2.setWidth(newImageDimensions.width);
+  canvas2.setHeight(newImageDimensions.height);
+  fabric.Image.fromURL(currentImage.src, (img) => {
+    newFileStatus.scaleX = canvas2.width / img.width;
+    newFileStatus.scaleY = canvas2.height / img.height;
+    canvas2.setBackgroundImage(img, canvas2.renderAll.bind(canvas2), {
+      scaleX: newFileStatus.scaleX,
+      scaleY: newFileStatus.scaleY,
+    });
+  });
+  setTimeout(() => {
+    canvasElement.style.display = 'none';
+  }, 0);
   newFileStatus.width = newImageDimensions.width;
   newFileStatus.height = newImageDimensions.height;
 }
@@ -27,15 +48,19 @@ function drawOriginalImage() {
   canvas.setWidth(currentImage.width);
   canvas.setHeight(currentImage.height);
   fabric.Image.fromURL(currentImage.src, (img) => {
-    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {}, canvas.setZoom(1));
+    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {});
   });
   newFileStatus.width = currentImage.width;
   newFileStatus.height = currentImage.height;
 }
 
-function drawImageOnCanvas(newImageDimensions) {
+function drawImageOnCanvas(newImageDimensions, overlayCanvas) {
   if (newImageDimensions) {
-    drawResizedImage(newImageDimensions);
+    if (!overlayCanvas) {
+      drawResizedImage(newImageDimensions);
+    } else {
+      drawResizedImage2(newImageDimensions);
+    }
   } else {
     drawOriginalImage();
   }
@@ -68,14 +93,14 @@ function setCanvasProperties() {
   canvasProperties.maximumCanvasWidth = window.innerWidth - 162;
 }
 
-function draw() {
+function draw(overlayCanvas) {
   setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }
-    drawImageOnCanvas(newImageDimensions);
+    drawImageOnCanvas(newImageDimensions, overlayCanvas);
   } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
     const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
     drawImageOnCanvas(newImageDimensions);
@@ -89,7 +114,7 @@ function draw() {
 
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
-  draw();
+  draw(draw);
 }
 
 function onImageLoad() {
@@ -98,8 +123,10 @@ function onImageLoad() {
   draw();
 }
 
-function assignCanvasForDrawImageOnCanvas(newCanvas) {
+function assignCanvasForDrawImageOnCanvas(newCanvas, newCanvas2) {
   canvas = newCanvas;
+  canvas2 = newCanvas2;
+  canvasElement = document.getElementById('canvas-wrapper-inner');
   setCanvasProperties();
 }
 
@@ -123,7 +150,6 @@ function calculateNewFileSizeRatio() {
 function resizeCanvasAndImage() {
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight();
-    console.log('called here');
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }

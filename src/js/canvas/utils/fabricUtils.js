@@ -8,4 +8,8 @@ function createNewCanvas() {
   return new fabric.Canvas('c', { selection: false, renderOnAddRemove: false });
 }
 
-export { setBoundingBoxEditToolsToBeTransparent, createNewCanvas };
+function createNewCanvas2() {
+  return new fabric.Canvas('d', { selection: false, renderOnAddRemove: false });
+}
+
+export { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, createNewCanvas2 };
