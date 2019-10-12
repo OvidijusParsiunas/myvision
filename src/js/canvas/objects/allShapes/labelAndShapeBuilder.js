@@ -62,7 +62,7 @@ function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
   canvas.renderAll();
 }
 
-function shapeMovablePropertiesOnImageSelect(existingShapes) {
+function saveShapeMovablePropertiesOnImageSelect(existingShapes) {
   if (getMovableObjectsState()) {
     Object.keys(existingShapes).forEach((key) => {
       const shape = existingShapes[key].shapeRef;
@@ -86,5 +86,5 @@ function assignCanvasForLabelAndShapeBuilder(canvasObj) {
 
 export {
   assignCanvasForLabelAndShapeBuilder, repopulateLabelAndShapeObjects,
-  findInitialLabelLocation, generateLabelShapeGroup, shapeMovablePropertiesOnImageSelect,
+  findInitialLabelLocation, generateLabelShapeGroup, saveShapeMovablePropertiesOnImageSelect,
 };

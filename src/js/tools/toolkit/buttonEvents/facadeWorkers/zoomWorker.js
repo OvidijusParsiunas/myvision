@@ -23,6 +23,7 @@ let scrollWheelUsed = false;
 let canReduceShapeSizes = true;
 let canIncreaseShapeSizes = false;
 let movedPolygonPathOffsetReduced = false;
+let switchingImage = false;
 let timesZoomedWithNoShapeReduction = 0;
 let timesZoomedWithNoShapeIncrease = 0;
 const reduceShapeSizeRatios = {};
@@ -220,11 +221,13 @@ function setStubElementProperties(width, height, marginLeft, marginTop) {
   stubElement.style.marginTop = marginTop;
 }
 
-function setAllElementPropertiesToDefault() {
+function setAllElementPropertiesToDefault(switchImage) {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
   setZoomOverFlowWrapperElementProperties('', '', '', '', '');
-  // canvasElement.style.display = 'none';
+  if (!switchImage) {
+    setCanvasElementProperties('', '');
+  }
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -351,6 +354,11 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
         }
       }
     }
+    const finalImageDimensions = {
+      width: newCanvasWidth,
+      height: newCanvasHeight,
+    };
+    canvas.setDimensions(finalImageDimensions);
   } else if (widthOverflowed) {
     setDoubleScrollCanvasState(false);
     widthOverflowDefault(originalWidth, originalHeight);
@@ -364,16 +372,16 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
         // console.log('horizontal single scrollbar overlap');
       }
     }
+    const finalImageDimensions = {
+      width: newCanvasWidth,
+      height: newCanvasHeight,
+    };
+    canvas.setDimensions(finalImageDimensions);
   } else {
     setDoubleScrollCanvasState(false);
     setAllElementPropertiesToDefault();
     // console.log('set to default');
   }
-  const finalImageDimensions = {
-    width: newCanvasWidth,
-    height: newCanvasHeight,
-  };
-  canvas.setDimensions(finalImageDimensions);
 }
 
 function setNewCanvasDimensions(changeElements) {
@@ -526,8 +534,7 @@ function initialiseZoomVariables(canvasObj) {
 }
 
 function resetZoom() {
-  canvasProperties = getCanvasProperties();
-  imageProperties = getImageProperties();
+  switchingImage = true;
   currentZoom = 1;
   const timesNeededToZoomOut = timesZoomedIn;
   while (timesZoomedIn !== 0) {
@@ -535,7 +542,8 @@ function resetZoom() {
     updateShapesPropertiesForZoomOut();
     increaseMovePolygonPathOffset();
   }
-  setNewCanvasDimensions(true);
+  setAllElementPropertiesToDefault(true);
+  setDoubleScrollCanvasState(false);
   setCurrentZoomState(currentZoom);
   return timesNeededToZoomOut;
 }

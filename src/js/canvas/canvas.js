@@ -10,12 +10,9 @@ import assignCanvasForResizeWhenWindowResize from '../tools/toolkit/buttonEvents
 import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
 import { initialiseZoomVariables } from '../tools/toolkit/buttonEvents/facadeWorkers/zoomWorker';
 
-function constructCanvas() {
-  const canvas = createNewCanvas();
-  const canvas2 = createNewCanvas2();
-  setBoundingBoxEditToolsToBeTransparent();
+function repopulateCanvasReference(canvas) {
   assignCanvasMouseEvents(canvas);
-  assignCanvasForDrawImageOnCanvas(canvas, canvas2);
+  assignCanvasForDrawImageOnCanvas(canvas);
   assignCanvasForDownloadingAnnotationsXML(canvas);
   assignResetCanvasEventsFuncToMouseEvents(canvas);
   assignCanvasForShapeFillManipulation(canvas);
@@ -26,4 +23,15 @@ function constructCanvas() {
   initialiseZoomVariables(canvas);
 }
 
-export { constructCanvas as default };
+function constructCanvas() {
+  setBoundingBoxEditToolsToBeTransparent();
+  const canvas = createNewCanvas();
+  repopulateCanvasReference(canvas);
+}
+
+function reassignReferenceToNewCanvas() {
+  const canvas = createNewCanvas2();
+  repopulateCanvasReference(canvas);
+}
+
+export { constructCanvas, reassignReferenceToNewCanvas };

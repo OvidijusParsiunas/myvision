@@ -3,6 +3,7 @@ import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { isPolygonDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
+import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
 import { getContinuousDrawingState } from '../buttonEvents/facadeWorkersUtils/stateManager';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
@@ -50,7 +51,14 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
   if (func) func();
 }
 
+function replaceExistingCanvas(func, id) {
+  reassignReferenceToNewCanvas();
+  if (func) func(id);
+  console.log('reassigning canvas!')
+}
+
 export {
+  replaceExistingCanvas,
   doNothingIfLabellingInProgress,
   interruptAllCanvasEventsBeforeFunc,
   doNothingIfLabellingOrAddingNewPoints,

@@ -4,7 +4,6 @@ const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
-let canvas2 = null;
 let currentImage = null;
 let canvasElement = null;
 // timeout canvas zooms make it look bad, check zoom in and out to original
@@ -25,25 +24,6 @@ function drawResizedImage(newImageDimensions) {
   newFileStatus.height = newImageDimensions.height;
 }
 
-function drawResizedImage2(newImageDimensions) {
-  console.log('ACTIVATED');
-  canvas2.setWidth(newImageDimensions.width);
-  canvas2.setHeight(newImageDimensions.height);
-  fabric.Image.fromURL(currentImage.src, (img) => {
-    newFileStatus.scaleX = canvas2.width / img.width;
-    newFileStatus.scaleY = canvas2.height / img.height;
-    canvas2.setBackgroundImage(img, canvas2.renderAll.bind(canvas2), {
-      scaleX: newFileStatus.scaleX,
-      scaleY: newFileStatus.scaleY,
-    });
-  });
-  setTimeout(() => {
-    canvasElement.style.display = 'none';
-  }, 0);
-  newFileStatus.width = newImageDimensions.width;
-  newFileStatus.height = newImageDimensions.height;
-}
-
 function drawOriginalImage() {
   canvas.setWidth(currentImage.width);
   canvas.setHeight(currentImage.height);
@@ -54,13 +34,9 @@ function drawOriginalImage() {
   newFileStatus.height = currentImage.height;
 }
 
-function drawImageOnCanvas(newImageDimensions, overlayCanvas) {
+function drawImageOnCanvas(newImageDimensions) {
   if (newImageDimensions) {
-    if (!overlayCanvas) {
-      drawResizedImage(newImageDimensions);
-    } else {
-      drawResizedImage2(newImageDimensions);
-    }
+    drawResizedImage(newImageDimensions);
   } else {
     drawOriginalImage();
   }
@@ -93,14 +69,14 @@ function setCanvasProperties() {
   canvasProperties.maximumCanvasWidth = window.innerWidth - 162;
 }
 
-function draw(overlayCanvas) {
+function draw() {
   setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }
-    drawImageOnCanvas(newImageDimensions, overlayCanvas);
+    drawImageOnCanvas(newImageDimensions);
   } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
     const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
     drawImageOnCanvas(newImageDimensions);
@@ -114,18 +90,21 @@ function draw(overlayCanvas) {
 
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
-  draw(draw);
+  draw();
+  setTimeout(() => {
+    canvasElement.style.display = 'none';
+  }, 0);
 }
 
 function onImageLoad() {
   newFileStatus.uploaded = true;
   currentImage = this;
   draw();
+  canvas.setZoom(1);
 }
 
-function assignCanvasForDrawImageOnCanvas(newCanvas, newCanvas2) {
-  canvas = newCanvas;
-  canvas2 = newCanvas2;
+function assignCanvasForDrawImageOnCanvas(canvasObj) {
+  canvas = canvasObj;
   canvasElement = document.getElementById('canvas-wrapper-inner');
   setCanvasProperties();
 }

@@ -10,6 +10,7 @@ import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
   doNothingIfLabellingInProgress, interruptNewShapeDrawingWthFunc1OrExecFunc2,
   doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
+  replaceExistingCanvas,
 } from './buttonMiddleware/buttonMiddleware';
 
 function assignToolkitButtonEvents() {
@@ -28,7 +29,7 @@ function assignToolkitButtonEvents() {
   window.continuousDrawing = continuousDrawingBtnClick;
   window.toggleLabelsVisibility = toggleLabelsVisibilityBtnClick;
   window.zoom = zoomBtnClick;
-  window.switchImage = switchImageBtnClick;
+  window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick);
 }
 
 export { assignToolkitButtonEvents as default };

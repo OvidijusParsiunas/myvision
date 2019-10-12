@@ -1,7 +1,7 @@
 import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
-import { repopulateLabelAndShapeObjects, shapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
+import { repopulateLabelAndShapeObjects, saveShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 import { removeLabelListItems } from '../labelList/labelList';
 
@@ -21,7 +21,7 @@ function initialiseImageListFunctionality() {
 
 function createImageElementMarkup(imageText, id) {
   return `
-  <div id="imageId${id}" onClick="selectImageFromList(${id})" class="image${id} imageListItem">
+  <div id="imageId${id}" onClick="switchImage(${id})" class="image${id} imageListItem">
     <div id="imageText${id}" spellcheck="false" class="imageText" contentEditable="false" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${imageText}</div>
     </div>
   </div>
@@ -56,36 +56,57 @@ function addNewImageToList(imageText, imageData) {
   newImageId += 1;
 }
 
+// update these for switching image when zoomed in
 function changeToExistingImage(id) {
-  // window.cancel();
-  // images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-  // images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-  // removeLabelListItems();
-  // const timesZoomedOut = resetZoom();
-  // repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
+  window.cancel();
+  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  removeLabelListItems();
+  const timesZoomedOut = resetZoom();
+  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
   drawImageFromList(images[id].data);
-  // shapeMovablePropertiesOnImageSelect(images[id].shapes);
-  // zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
-  //   images[currentlySelectedImageId].labels, timesZoomedOut);
-  // currentlySelectedImageId = id;
+  saveShapeMovablePropertiesOnImageSelect(images[id].shapes);
+  zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
+    images[currentlySelectedImageId].labels, timesZoomedOut);
+  currentlySelectedImageId = id;
 }
 
-function switchImage(direction) {
-  if (direction === 'previous') {
+// function changeToExistingImage(id) {
+//   window.cancel();
+//   images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+//   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+//   removeLabelListItems();
+//   if (getCurrentZoomState() === 1) {
+//     const timesZoomedOut = resetZoom();
+//     repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
+//     drawImageFromList(images[id].data);
+//     saveShapeMovablePropertiesOnImageSelect(images[id].shapes);
+//     zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
+//       images[currentlySelectedImageId].labels, timesZoomedOut);
+//     currentlySelectedImageId = id;
+//   } else {
+//     const timesZoomedOut = resetZoom();
+//     repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
+//     drawImageFromList(images[id].data);
+//     saveShapeMovablePropertiesOnImageSelect(images[id].shapes);
+//     zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
+//       images[currentlySelectedImageId].labels, timesZoomedOut);
+//     currentlySelectedImageId = id;
+//   }
+// }
+
+function switchImage(id) {
+  if (id === 'previous') {
     if (currentlySelectedImageId !== 0) {
       changeToExistingImage(currentlySelectedImageId - 1);
     }
-  } else if (direction === 'next') {
+  } else if (id === 'next') {
     if (currentlySelectedImageId !== images.length - 1) {
       changeToExistingImage(currentlySelectedImageId + 1);
     }
-  }
-}
-
-window.selectImageFromList = (id) => {
-  if (id !== currentlySelectedImageId) {
+  } else if (id !== currentlySelectedImageId) {
     changeToExistingImage(id);
   }
-};
+}
 
 export { initialiseImageListFunctionality, addNewImageToList, switchImage };
