@@ -88,11 +88,23 @@ function draw() {
   initialFileStatus.height = newFileStatus.height;
 }
 
+
+// figure out how this will work with the changing of zooming etc
+// find out why the switching doesn't work well when tabbing out
+// investigate quality
+let displaying = true;
+
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
   draw();
   setTimeout(() => {
-    canvasElement.style.display = 'none';
+    if (displaying) {
+      canvasElement.style.display = 'none';
+      displaying = false;
+    } else {
+      canvasElement.style.display = '';
+      displaying = true;
+    }
   }, 0);
 }
 
@@ -104,6 +116,7 @@ function onImageLoad() {
 }
 
 function assignCanvasForDrawImageOnCanvas(canvasObj) {
+  console.log('reassigning a canvas');
   canvas = canvasObj;
   canvasElement = document.getElementById('canvas-wrapper-inner');
   setCanvasProperties();

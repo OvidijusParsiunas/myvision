@@ -2,13 +2,15 @@ import { assignCanvasMouseEvents } from '../tools/toolkit/buttonEvents/facade';
 import { assignCanvasForDrawImageOnCanvas } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { assignCanvasForDownloadingAnnotationsXML } from '../tools/toolkit/buttonEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonEvents/facadeWorkersUtils/resetCanvasEvents';
-import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, createNewCanvas2 } from './utils/fabricUtils';
+import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, reasignCanvas } from './utils/fabricUtils';
 import { assignCanvasForLabelManipulation } from './objects/label/label';
 import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allShapes';
 import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 import assignCanvasForResizeWhenWindowResize from '../tools/toolkit/buttonEvents/facadeWorkersUtils/windowResize';
 import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
 import { initialiseZoomVariables } from '../tools/toolkit/buttonEvents/facadeWorkers/zoomWorker';
+
+let currentCanvasInstance = null;
 
 function repopulateCanvasReference(canvas) {
   assignCanvasMouseEvents(canvas);
@@ -25,13 +27,15 @@ function repopulateCanvasReference(canvas) {
 
 function constructCanvas() {
   setBoundingBoxEditToolsToBeTransparent();
-  const canvas = createNewCanvas();
-  repopulateCanvasReference(canvas);
+  currentCanvasInstance = createNewCanvas();
+  repopulateCanvasReference(currentCanvasInstance);
 }
 
 function reassignReferenceToNewCanvas() {
-  const canvas = createNewCanvas2();
-  repopulateCanvasReference(canvas);
+  // this should be cleared laterrrrr for no flashing
+  currentCanvasInstance.clear();
+  currentCanvasInstance = reasignCanvas();
+  repopulateCanvasReference(currentCanvasInstance);
 }
 
 export { constructCanvas, reassignReferenceToNewCanvas };

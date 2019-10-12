@@ -4,6 +4,7 @@ import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label'
 import { repopulateLabelAndShapeObjects, saveShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
 import { removeLabelListItems } from '../labelList/labelList';
+import { setDefaultState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 
 let imageListElement = null;
 const images = [];
@@ -56,8 +57,8 @@ function addNewImageToList(imageText, imageData) {
   newImageId += 1;
 }
 
-// update these for switching image when zoomed in
 function changeToExistingImage(id) {
+  setDefaultState(false);
   window.cancel();
   images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
@@ -70,30 +71,6 @@ function changeToExistingImage(id) {
     images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = id;
 }
-
-// function changeToExistingImage(id) {
-//   window.cancel();
-//   images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-//   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-//   removeLabelListItems();
-//   if (getCurrentZoomState() === 1) {
-//     const timesZoomedOut = resetZoom();
-//     repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
-//     drawImageFromList(images[id].data);
-//     saveShapeMovablePropertiesOnImageSelect(images[id].shapes);
-//     zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
-//       images[currentlySelectedImageId].labels, timesZoomedOut);
-//     currentlySelectedImageId = id;
-//   } else {
-//     const timesZoomedOut = resetZoom();
-//     repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
-//     drawImageFromList(images[id].data);
-//     saveShapeMovablePropertiesOnImageSelect(images[id].shapes);
-//     zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
-//       images[currentlySelectedImageId].labels, timesZoomedOut);
-//     currentlySelectedImageId = id;
-//   }
-// }
 
 function switchImage(id) {
   if (id === 'previous') {
