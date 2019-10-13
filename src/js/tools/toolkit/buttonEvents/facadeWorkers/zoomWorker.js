@@ -23,7 +23,6 @@ let scrollWheelUsed = false;
 let canReduceShapeSizes = true;
 let canIncreaseShapeSizes = false;
 let movedPolygonPathOffsetReduced = false;
-let switchingImage = false;
 let timesZoomedWithNoShapeReduction = 0;
 let timesZoomedWithNoShapeIncrease = 0;
 const reduceShapeSizeRatios = {};
@@ -372,16 +371,16 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
         // console.log('horizontal single scrollbar overlap');
       }
     }
-    const finalImageDimensions = {
-      width: newCanvasWidth,
-      height: newCanvasHeight,
-    };
-    canvas.setDimensions(finalImageDimensions);
   } else {
     setDoubleScrollCanvasState(false);
     setAllElementPropertiesToDefault();
     // console.log('set to default');
   }
+  const finalImageDimensions = {
+    width: newCanvasWidth,
+    height: newCanvasHeight,
+  };
+  canvas.setDimensions(finalImageDimensions);
 }
 
 function setNewCanvasDimensions(changeElements) {
@@ -534,7 +533,6 @@ function initialiseZoomVariables(canvasObj) {
 }
 
 function resetZoom() {
-  switchingImage = true;
   currentZoom = 1;
   const timesNeededToZoomOut = timesZoomedIn;
   while (timesZoomedIn !== 0) {
@@ -552,6 +550,18 @@ function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomO
   while (timesToZoomOut !== 0) {
     timesToZoomOut -= 1;
     zoomOutObjectsOnImageSelect(previousShapes, previousLabels);
+  }
+}
+
+let one = false;
+
+function switchCanvasWrapperInnerElement() {
+  if (!one) {
+    canvasElement = document.getElementById('canvas-wrapper-inner2');
+    one = true;
+  } else {
+    canvasElement = document.getElementById('canvas-wrapper-inner');
+    one = false;
   }
 }
 
@@ -573,5 +583,6 @@ window.initiateZoomOverflowScroll = (event) => {
 };
 
 export {
-  zoomCanvas, initialiseZoomVariables, resetZoom, zoomOutObjectOnImageSelect,
+  zoomCanvas, initialiseZoomVariables, resetZoom,
+  zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement,
 };

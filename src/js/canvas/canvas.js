@@ -9,6 +9,7 @@ import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteract
 import assignCanvasForResizeWhenWindowResize from '../tools/toolkit/buttonEvents/facadeWorkersUtils/windowResize';
 import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
 import { initialiseZoomVariables } from '../tools/toolkit/buttonEvents/facadeWorkers/zoomWorker';
+import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
 
 let currentCanvasInstance = null;
 
@@ -28,13 +29,13 @@ function repopulateCanvasReference(canvas) {
 function constructCanvas() {
   setBoundingBoxEditToolsToBeTransparent();
   currentCanvasInstance = createNewCanvas();
+  assignCanvasForUtils(currentCanvasInstance);
   repopulateCanvasReference(currentCanvasInstance);
 }
 
 function reassignReferenceToNewCanvas() {
-  // this should be cleared laterrrrr for no flashing
-  currentCanvasInstance.clear();
   currentCanvasInstance = reasignCanvas();
+  assignNewCanvasForUtils(currentCanvasInstance);
   repopulateCanvasReference(currentCanvasInstance);
 }
 

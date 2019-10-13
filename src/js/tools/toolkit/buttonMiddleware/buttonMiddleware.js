@@ -5,6 +5,7 @@ import {
 import { isPolygonDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
 import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
 import { getContinuousDrawingState } from '../buttonEvents/facadeWorkersUtils/stateManager';
+import { isImageAlreadySelected } from '../../imageList/imageList';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   interruptAllCanvasEvents();
@@ -52,9 +53,10 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
 }
 
 function replaceExistingCanvas(func, id) {
-  reassignReferenceToNewCanvas();
-  if (func) func(id);
-  console.log('reassigning canvas!')
+  if (!isImageAlreadySelected(id)) {
+    reassignReferenceToNewCanvas();
+    if (func) func(id);
+  }
 }
 
 export {
