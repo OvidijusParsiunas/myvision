@@ -25,7 +25,7 @@ function preventActiveObjectsAppearInFront(canvas) {
   }
 }
 
-function switchCanvasElements() {
+function switchCanvasWrapperInnerElementsDisplay() {
   setTimeout(() => {
     if (displaying) {
       canvasElement.style.left = '50%';
@@ -45,5 +45,5 @@ function switchCanvasElements() {
 
 export {
   assignCanvasForUtils, enableActiveObjectsAppearInFront, assignNewCanvasForUtils,
-  preventActiveObjectsAppearInFront, switchCanvasElements,
+  preventActiveObjectsAppearInFront, switchCanvasWrapperInnerElementsDisplay,
 };

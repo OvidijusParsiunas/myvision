@@ -3,7 +3,7 @@ import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
 import labelProperties from '../label/properties';
 import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
-import { getLabelsVisibilityState, getMovableObjectsState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import { addShape, addExistingShape } from './allShapes';
 
 let currentId = 0;
@@ -62,21 +62,23 @@ function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
   canvas.renderAll();
 }
 
-function saveShapeMovablePropertiesOnImageSelect(existingShapes) {
-  if (getMovableObjectsState()) {
-    Object.keys(existingShapes).forEach((key) => {
-      const shape = existingShapes[key].shapeRef;
-      shape.lockMovementX = false;
-      shape.lockMovementY = false;
-      shape.hoverCursor = 'move';
-    });
-  } else {
-    Object.keys(existingShapes).forEach((key) => {
-      const shape = existingShapes[key].shapeRef;
-      shape.lockMovementX = true;
-      shape.lockMovementY = true;
-      shape.hoverCursor = 'default';
-    });
+function setShapeMovablePropertiesOnImageSelect(existingShapes) {
+  if (!getContinuousDrawingState()) {
+    if (getMovableObjectsState()) {
+      Object.keys(existingShapes).forEach((key) => {
+        const shape = existingShapes[key].shapeRef;
+        shape.lockMovementX = false;
+        shape.lockMovementY = false;
+        shape.hoverCursor = 'move';
+      });
+    } else {
+      Object.keys(existingShapes).forEach((key) => {
+        const shape = existingShapes[key].shapeRef;
+        shape.lockMovementX = true;
+        shape.lockMovementY = true;
+        shape.hoverCursor = 'default';
+      });
+    }
   }
 }
 
@@ -86,5 +88,5 @@ function assignCanvasForLabelAndShapeBuilder(canvasObj) {
 
 export {
   assignCanvasForLabelAndShapeBuilder, repopulateLabelAndShapeObjects,
-  findInitialLabelLocation, generateLabelShapeGroup, saveShapeMovablePropertiesOnImageSelect,
+  findInitialLabelLocation, generateLabelShapeGroup, setShapeMovablePropertiesOnImageSelect,
 };
