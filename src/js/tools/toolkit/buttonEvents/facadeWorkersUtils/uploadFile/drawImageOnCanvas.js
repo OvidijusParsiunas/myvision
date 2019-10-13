@@ -125,6 +125,7 @@ function calculateNewFileSizeRatio() {
 }
 
 function resizeCanvasAndImage() {
+  setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
