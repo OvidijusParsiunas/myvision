@@ -86,8 +86,6 @@ function draw() {
   initialFileStatus.height = newFileStatus.height;
 }
 
-// figure out how this will work with the changing of zooming etc
-// find out why the switching doesn't work well when tabbing out
 // investigate quality
 
 function drawImageFromList(selectedImage) {

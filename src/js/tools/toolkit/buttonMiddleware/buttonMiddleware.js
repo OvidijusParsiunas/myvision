@@ -52,10 +52,12 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
   if (func) func();
 }
 
-function replaceExistingCanvas(func, id) {
+function replaceExistingCanvas(func, func2, id) {
   if (!isImageAlreadySelected(id)) {
     reassignReferenceToNewCanvas();
+    interruptAllCanvasEvents();
     if (func) func(id);
+    if (func2) func2();
   }
 }
 

@@ -532,7 +532,7 @@ function initialiseZoomVariables(canvasObj) {
   loadCanvasElements();
 }
 
-function resetZoom() {
+function resetZoom(switchImage) {
   currentZoom = 1;
   const timesNeededToZoomOut = timesZoomedIn;
   while (timesZoomedIn !== 0) {
@@ -540,7 +540,7 @@ function resetZoom() {
     updateShapesPropertiesForZoomOut();
     increaseMovePolygonPathOffset();
   }
-  setAllElementPropertiesToDefault(true);
+  setAllElementPropertiesToDefault(switchImage);
   setDoubleScrollCanvasState(false);
   setCurrentZoomState(currentZoom);
   return timesNeededToZoomOut;

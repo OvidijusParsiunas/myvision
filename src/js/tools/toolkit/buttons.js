@@ -29,7 +29,8 @@ function assignToolkitButtonEvents() {
   window.continuousDrawing = continuousDrawingBtnClick;
   window.toggleLabelsVisibility = toggleLabelsVisibilityBtnClick;
   window.zoom = zoomBtnClick;
-  window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick);
+  window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick,
+    resetCanvasEventsToDefault);
 }
 
 export { assignToolkitButtonEvents as default };

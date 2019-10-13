@@ -54,17 +54,19 @@ function addNewImageToList(imageText, imageData) {
   images.push(imageObject);
   removeLabelListItems();
   addNewItemToImageList(imageText);
+  const timesZoomedOut = resetZoom(false);
+  zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
+    images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = newImageId;
   newImageId += 1;
 }
 
 function changeToExistingImage(id) {
   setDefaultState(false);
-  window.cancel();
   images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
   removeLabelListItems();
-  const timesZoomedOut = resetZoom();
+  const timesZoomedOut = resetZoom(true);
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
   drawImageFromList(images[id].data);
   switchCanvasElements();
