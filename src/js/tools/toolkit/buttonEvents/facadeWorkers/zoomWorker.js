@@ -344,7 +344,7 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
       setDoubleScrollCanvasState(false);
       heightOverflowDefault(originalWidth, originalHeight);
       console.log('vertical overlap default');
-      if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
+      if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth - 1) {
         heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight);
         console.log('vertical double scrollbar overlap');
         if (Math.round(newCanvasWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth) {
