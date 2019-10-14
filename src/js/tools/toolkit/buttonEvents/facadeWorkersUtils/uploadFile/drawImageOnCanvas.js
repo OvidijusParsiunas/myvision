@@ -86,7 +86,9 @@ function draw() {
   initialFileStatus.height = newFileStatus.height;
 }
 
+// investigate zooming out completely when no need to
 // investigate quality
+// check the divs are wrapped around for all pcs
 
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
@@ -124,17 +126,19 @@ function calculateNewFileSizeRatio() {
 
 function resizeCanvasAndImage() {
   setCanvasProperties();
-  if (canvasProperties.maximumCanvasHeight < currentImage.height) {
-    let newImageDimensions = resizeWhenImageExceedsMaxHeight();
-    if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
-      newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
+  if (currentImage) {
+    if (canvasProperties.maximumCanvasHeight < currentImage.height) {
+      let newImageDimensions = resizeWhenImageExceedsMaxHeight();
+      if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
+        newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
+      }
+      drawImageOnCanvas(newImageDimensions);
+    } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
+      const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
+      drawImageOnCanvas(newImageDimensions);
+    } else {
+      drawImageOnCanvas();
     }
-    drawImageOnCanvas(newImageDimensions);
-  } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
-    const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
-    drawImageOnCanvas(newImageDimensions);
-  } else {
-    drawImageOnCanvas();
   }
   return calculateNewFileSizeRatio();
 }

@@ -309,7 +309,7 @@ function heightOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${originalWidth - 1}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
-  const stubMarginTop = `${originalHeight - scrollWidth - 1}px`;
+  const stubMarginTop = `${originalHeight - scrollWidth - 3}px`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', '', zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', '', stubMarginTop);
@@ -338,18 +338,18 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
     if (widthOverflowed) {
       setDoubleScrollCanvasState(true);
       fullOverflowOfWidthAndHeight(originalWidth, originalHeight);
-      // console.log('horizontal and vertical overlap');
+      console.log('horizontal and vertical overlap');
     } else {
       setDoubleScrollCanvasState(false);
       heightOverflowDefault(originalWidth, originalHeight);
-      // console.log('vertical overlap default');
+      console.log('vertical overlap default');
       if (Math.round(newCanvasWidth) + (scrollWidth * 2) >= canvasProperties.maximumCanvasWidth) {
         heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight);
-        // console.log('vertical double scrollbar overlap');
+        console.log('vertical double scrollbar overlap');
         if (Math.round(newCanvasWidth) + scrollWidth >= canvasProperties.maximumCanvasWidth) {
           setDoubleScrollCanvasState(true);
           heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight);
-          // console.log('vertical single scrollbar overlap');
+          console.log('vertical single scrollbar overlap');
         }
       }
     }
@@ -361,20 +361,20 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
   } else if (widthOverflowed) {
     setDoubleScrollCanvasState(false);
     widthOverflowDefault(originalWidth, originalHeight);
-    // console.log('horizontal overlap default');
+    console.log('horizontal overlap default');
     if (newCanvasHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
       widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight);
-      // console.log('horizontal double scrollbar overlap');
+      console.log('horizontal double scrollbar overlap');
       if (newCanvasHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 3) {
         setDoubleScrollCanvasState(true);
         widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight);
-        // console.log('horizontal single scrollbar overlap');
+        console.log('horizontal single scrollbar overlap');
       }
     }
   } else {
     setDoubleScrollCanvasState(false);
     setAllElementPropertiesToDefault();
-    // console.log('set to default');
+    console.log('set to default');
   }
   const finalImageDimensions = {
     width: newCanvasWidth,
