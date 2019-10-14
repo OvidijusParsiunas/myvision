@@ -25,6 +25,7 @@ let canIncreaseShapeSizes = false;
 let movedPolygonPathOffsetReduced = false;
 let timesZoomedWithNoShapeReduction = 0;
 let timesZoomedWithNoShapeIncrease = 0;
+let usingFirstCanvasWrapperInnerElement = true;
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
   polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104, popup: 0.1,
@@ -554,15 +555,13 @@ function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomO
   }
 }
 
-let one = false;
-
 function switchCanvasWrapperInnerElement() {
-  if (!one) {
+  if (usingFirstCanvasWrapperInnerElement) {
     canvasElement = document.getElementById('canvas-wrapper-inner2');
-    one = true;
+    usingFirstCanvasWrapperInnerElement = false;
   } else {
     canvasElement = document.getElementById('canvas-wrapper-inner');
-    one = false;
+    usingFirstCanvasWrapperInnerElement = true;
   }
 }
 

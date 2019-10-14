@@ -41,8 +41,8 @@ function switchCanvasWrapperInnerElementsDisplay() {
       canvasElement2.style.top = '50%';
       displaying = true;
     }
+    oldCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
     oldCanvas.clear();
-    oldCanvas.setZoom(1);
   }, 0);
 }
 
