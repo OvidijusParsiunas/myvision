@@ -28,6 +28,8 @@ function drawOriginalImage() {
   fabric.Image.fromURL(currentImage.src, (img) => {
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {});
   });
+  newFileStatus.scaleX = 1;
+  newFileStatus.scaleY = 1;
   newFileStatus.width = currentImage.width;
   newFileStatus.height = currentImage.height;
 }
@@ -86,7 +88,6 @@ function draw() {
   initialFileStatus.height = newFileStatus.height;
 }
 
-// investigate zooming out completely when no need to
 // investigate quality
 // check the divs are wrapped around for all pcs
 

@@ -181,6 +181,7 @@ function zoomOutObjectsOnImageSelect(previousShapes, previousLabels) {
   });
 }
 
+// show the zoom percentage as a little fade just like google chrome resolution on resize
 function displayZoomMetrics() {
   //
 }
@@ -467,7 +468,7 @@ function zoomIn() {
 }
 
 function zoomOut() {
-  if (!stubElement.style.marginTop) {
+  if (!stubElement.style.marginTop && imageProperties.scaleX < 1) {
     resetCanvasToDefault();
   } else {
     timesZoomedIn -= 1;
@@ -479,7 +480,7 @@ function zoomOut() {
       labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
       resizeAllObjects(newFileSizeRatio, canvas);
       canvas.setZoom(currentZoom);
-    } else if (setNewCanvasDimensions()) {
+    } else if (setNewCanvasDimensions() && imageProperties.scaleX < 1) {
       resetCanvasToDefault();
     } else {
       canvas.setZoom(currentZoom);
