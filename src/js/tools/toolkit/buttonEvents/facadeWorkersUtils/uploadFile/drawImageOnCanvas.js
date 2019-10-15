@@ -90,6 +90,7 @@ function draw() {
 
 // investigate quality
 // check the divs are wrapped around for all pcs
+// flashing on fire FOX
 
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
