@@ -1,7 +1,7 @@
-let displaying = true;
+let canvasElement1Displaying = true;
 let oldCanvas = null;
 let canvas = null;
-let canvasElement = null;
+let canvasElement1 = null;
 let canvasElement2 = null;
 let timeoutMilliseconds = 0;
 
@@ -19,7 +19,7 @@ function assignTimeoutMillisecondsDependingOnBrowser() {
 function assignCanvasForUtils(canvasObj) {
   canvas = canvasObj;
   canvas.randomProperty = 'test';
-  canvasElement = document.getElementById('canvas-wrapper-inner');
+  canvasElement1 = document.getElementById('canvas-wrapper-inner');
   canvasElement2 = document.getElementById('canvas-wrapper-inner2');
   assignTimeoutMillisecondsDependingOnBrowser();
 }
@@ -41,18 +41,18 @@ function preventActiveObjectsAppearInFront(canvas) {
 
 function switchCanvasWrapperInnerElementsDisplay() {
   setTimeout(() => {
-    if (displaying) {
+    if (canvasElement1Displaying) {
       canvasElement2.style.display = '';
-      canvasElement.style.display = 'none';
-      canvasElement.style.left = '50%';
-      canvasElement.style.top = '50%';
-      displaying = false;
+      canvasElement1.style.display = 'none';
+      canvasElement1.style.left = '50%';
+      canvasElement1.style.top = '50%';
+      canvasElement1Displaying = false;
     } else {
-      canvasElement.style.display = '';
+      canvasElement1.style.display = '';
       canvasElement2.style.display = 'none';
       canvasElement2.style.left = '50%';
       canvasElement2.style.top = '50%';
-      displaying = true;
+      canvasElement1Displaying = true;
     }
     oldCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
     oldCanvas.clear();
