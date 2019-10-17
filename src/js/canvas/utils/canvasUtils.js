@@ -42,8 +42,8 @@ function preventActiveObjectsAppearInFront(canvas) {
 function switchCanvasWrapperInnerElementsDisplay() {
   setTimeout(() => {
     if (canvasElement1Displaying) {
-      canvasElement2.style.display = '';
       canvasElement1.style.display = 'none';
+      canvasElement2.style.display = '';
       canvasElement1.style.left = '50%';
       canvasElement1.style.top = '50%';
       canvasElement1Displaying = false;
