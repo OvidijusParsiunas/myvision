@@ -31,6 +31,7 @@ function assignToolkitButtonEvents() {
   window.zoom = zoomBtnClick;
   window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick,
     resetCanvasEventsToDefault);
+  window.segmentImage = () => { this.console.log('segment image'); };
 }
 
 export { assignToolkitButtonEvents as default };
