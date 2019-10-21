@@ -19,3 +19,15 @@ when finished creating polygon, have popup option to go back to editing
 should alert the user when unsaved changes before leaving
 
 polyfill for scrollIntoViewIfNeeded for all browsers (only chrome right now)
+
+
+Decided not to use image segmentation because it works on pixel bases, where each and every boundary is drawn by an array of pixels
+However, can be achieved by generating an algorithm that will draw polygons based on the boundaries found on the pixels variable's value
+on line 318, file called as segment-annotator.js.
+
+https://github.com/kyamagu/js-segment-annotator
+
+The following repo does use fabricjs, but to only draw a line;
+https://github.com/AKSHAYUBHAT/ImageSegmentation
+
+display real-time image segment when drawing a shape. In the labels section.
