@@ -108,7 +108,7 @@ function onImageLoad() {
 
 function assignCanvasForDrawImageOnCanvas(canvasObj) {
   canvas = canvasObj;
-  sideToolsTotalWidth = leftSideBar + rightSideBar - 1;
+  sideToolsTotalWidth = leftSideBar.width + rightSideBar.width;
   setCanvasProperties();
 }
 

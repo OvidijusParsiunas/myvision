@@ -51,13 +51,17 @@
     </table>
     <button id="popup-submit-button" onclick="labelShape()">Submit</button>
   </div>
-  <div id="side-bar">
-    <div>Labels:</div>
-    <table id="label-list" class="side-bar-list" onscroll="labelListScroll()">
-    </table>
-    <div>Uploads:</div>
-    <table id="image-list" class="side-bar-list">
-    </table>
+  <div id="right-side-bar">
+    <div class="right-side-bar-component"> 
+      <div class="right-side-bar-component-title">Labels:</div>
+      <table id="label-list" onscroll="labelListScroll()">
+      </table>
+    </div>
+    <div class="right-side-bar-component"> 
+      <div class="right-side-bar-component-title">Uploads:</div>
+      <table id="image-list">
+      </table>
+    </div>
   </div>
 <script src="dist/bundle.js" type="text/javascript"></script>
 </body>

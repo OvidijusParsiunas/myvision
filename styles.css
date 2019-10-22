@@ -16,12 +16,12 @@
   left: 1000px;
 }
 
-#side-bar {
+#right-side-bar {
   padding-top: 20px;
   float: right;
 }
 
-#side-bar:hover {
+#right-side-bar:hover {
   cursor: default;
 }
 
@@ -147,12 +147,25 @@
   margin-top: 5px;
 }
 
-.side-bar-list {
-  display: block;
-  overflow-x: auto;
+#right-side-bar {
   width: 210px;
+}
+
+.right-side-bar-component {
+  display: block;
+  left: 0;
+  overflow-x: auto;
+  margin-left: 1px;
   overflow-y: auto;
   height: 30vh;
+}
+
+.right-side-bar-component-title {
+  margin-left: 5px;
+}
+
+#label-list {
+  width: 209px;
 }
 
 #canvas-wrapper-parent {
@@ -219,4 +232,8 @@ tr {
 
 tbody {
   width: inherit;
+}
+
+body {
+  margin-right: 0;
 }
