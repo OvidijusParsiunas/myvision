@@ -18,6 +18,7 @@
 
 #side-bar {
   padding-top: 20px;
+  float: right;
 }
 
 #side-bar:hover {
@@ -149,19 +150,17 @@
 .side-bar-list {
   display: block;
   overflow-x: auto;
-  width: 153px;
+  width: 210px;
   overflow-y: auto;
   height: 30vh;
 }
 
 #canvas-wrapper-parent {
   height: calc(100% - 50px);
-  width: calc(100% - 162px);
 }
 
 #zoom-overflow-wrapper-parent {
   height: calc(100% - 50px);
-  width: calc(100% - 163px);
 }
 
 #base-div {

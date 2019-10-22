@@ -31,3 +31,5 @@ The following repo does use fabricjs, but to only draw a line;
 https://github.com/AKSHAYUBHAT/ImageSegmentation
 
 display real-time image segment when drawing a shape. In the labels section.
+
+Really like a light green / blue and white color theme

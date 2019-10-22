@@ -10,7 +10,7 @@
 <body onresize="windowResize()">
   <div id="base-div">
   </div>
-  <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 50px; left: 162px; display: table; text-align: center; z-index: 1">
+  <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 50px; display: table; text-align: center; z-index: 1">
     <div style="vertical-align: middle; display: table-cell; position: relative; overflow: auto;">
       <div id="zoom-overflow-wrapper" style="position: absolute; left: 50%; transform: translate(-50%, -50%); top: 50%">
         <div id="zoom-overflow" onScroll="zoomOverflowScroll(this)">
@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" onwheel="initiateZoomOverflowScroll(event)" style="position: absolute; top: 50px; left: 162px; display: table; background-color: lightgrey; text-align: center;">
+  <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" onwheel="initiateZoomOverflowScroll(event)" style="position: absolute; top: 50px; display: table; background-color: lightgrey; text-align: center;">
     <div id="canvas-wrapper" style="vertical-align: middle; display: table-cell; position: relative; overflow: auto">
       <div id="canvas-wrapper-inner2" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
         <canvas id="d"></canvas>

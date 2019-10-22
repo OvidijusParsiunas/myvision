@@ -1,10 +1,12 @@
 import fabric from 'fabric';
+import { leftSideBar, rightSideBar } from '../../../../styling/styling';
 
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
 let currentImage = null;
+let sideToolsTotalWidth = null;
 
 function drawResizedImage(newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
@@ -66,7 +68,7 @@ function setCanvasWrapperMaximumDimensions() {
 
 function setCanvasProperties() {
   canvasProperties.maximumCanvasHeight = window.innerHeight - 50;
-  canvasProperties.maximumCanvasWidth = window.innerWidth - 162;
+  canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth;
 }
 
 function draw() {
@@ -106,6 +108,7 @@ function onImageLoad() {
 
 function assignCanvasForDrawImageOnCanvas(canvasObj) {
   canvas = canvasObj;
+  sideToolsTotalWidth = leftSideBar + rightSideBar - 1;
   setCanvasProperties();
 }
 
