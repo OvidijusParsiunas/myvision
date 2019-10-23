@@ -169,11 +169,15 @@
 }
 
 #canvas-wrapper-parent {
+  width: calc(100% - 290px);
   height: calc(100% - 50px);
+  left: 80px;
 }
 
 #zoom-overflow-wrapper-parent {
+  width: calc(100% - 291px);
   height: calc(100% - 50px);
+  left: 80px;
 }
 
 #base-div {
