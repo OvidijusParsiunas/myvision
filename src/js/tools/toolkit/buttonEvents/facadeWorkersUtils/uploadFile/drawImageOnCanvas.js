@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import { leftSideBar, rightSideBar } from '../../../../styling/styling';
+import { getLeftSideBarWidth, getRightSideBarWidth } from '../../../../styling/styling';
 
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
@@ -106,10 +106,14 @@ function onImageLoad() {
   canvas.setZoom(1);
 }
 
+function setSideToolsTotalWidth() {
+  sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
+}
+
 function assignCanvasForDrawImageOnCanvas(canvasObj) {
   canvas = canvasObj;
-  sideToolsTotalWidth = leftSideBar.width + rightSideBar.width;
   setCanvasProperties();
+  setSideToolsTotalWidth();
 }
 
 function getCanvasProperties() {

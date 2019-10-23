@@ -16,15 +16,6 @@
   left: 1000px;
 }
 
-#right-side-bar {
-  padding-top: 20px;
-  float: right;
-}
-
-#right-side-bar:hover {
-  cursor: default;
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
@@ -147,8 +138,19 @@
   margin-top: 5px;
 }
 
+#left-side-bar {
+  width: 80px;
+  padding-top: 20px;
+}
+
 #right-side-bar {
   width: 210px;
+  padding-top: 20px;
+  float: right;
+}
+
+#right-side-bar:hover {
+  cursor: default;
 }
 
 .right-side-bar-component {
