@@ -6,7 +6,6 @@ const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
 let currentImage = null;
-let sideToolsTotalWidth = null;
 
 function drawResizedImage(newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
@@ -68,6 +67,7 @@ function setCanvasWrapperMaximumDimensions() {
 
 function setCanvasProperties() {
   canvasProperties.maximumCanvasHeight = window.innerHeight - 50;
+  const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
   canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth;
 }
 
@@ -106,14 +106,8 @@ function onImageLoad() {
   canvas.setZoom(1);
 }
 
-function setSideToolsTotalWidth() {
-  sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
-}
-
 function assignCanvasForDrawImageOnCanvas(canvasObj) {
   canvas = canvasObj;
-  setCanvasProperties();
-  setSideToolsTotalWidth();
 }
 
 function getCanvasProperties() {
