@@ -141,6 +141,7 @@
 #left-side-bar {
   width: 80px;
   padding-top: 20px;
+  text-align: center;
 }
 
 #right-side-bar {
@@ -183,7 +184,6 @@
 }
 
 #base-div {
-  width: 98%;
   height: 98%;
   z-index: 2;
   pointer-events: none;
@@ -242,4 +242,15 @@ tbody {
 
 body {
   margin-right: 0;
+  margin-left: 0;
+}
+
+#bounding-box-button {
+  background-color: white;
+  border-style: none;
+}
+
+#bounding-box-button:hover {
+  background-color: lightgrey;
+  border-style: outset;
 }
