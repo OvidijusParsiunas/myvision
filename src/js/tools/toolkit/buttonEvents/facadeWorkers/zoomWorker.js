@@ -576,13 +576,13 @@ window.zoomOverflowScroll = (element) => {
   resetObjectsCoordinates();
 };
 
-window.initiateZoomOverflowScroll = (event) => {
+function initiateZoomOverflowScroll(event) {
   zoomOverflowElement.scrollTop += event.deltaY;
   zoomOverflowElement.scrollTop += event.deltaX;
   scrollWheelUsed = true;
-};
+}
 
 export {
-  zoomCanvas, initialiseZoomVariables, resetZoom,
+  zoomCanvas, initialiseZoomVariables, resetZoom, initiateZoomOverflowScroll,
   zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement,
 };
