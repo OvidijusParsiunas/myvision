@@ -29,21 +29,23 @@
       </div>
     </div>
   </div>
-  <button id="tools-button" onclick="createNewBndBox()">New Bounding Box</button>
-  <button id="tools-button" onclick="createNewPolygon()">New Polygon</button>
-  <button id="tools-button" onclick="addPoints()">Add points</button>
-  <button id="tools-button" onclick="removePoint()">Remove Point</button>
-  <button id="tools-button" onclick="removeShape()">Delete Shape</button>
-  <input id="tools-button" type='file' onchange="uploadImage(this);" />
-  <button id="tools-button" onclick="movableObjects()">Movable Objects</button>
-  <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
-  <button id="tools-button" onclick="downloadXML()">DownloadXML</button>
-  <button id="tools-button" onclick="cancel()">Cancel</button>
-  <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button>
-  <button id="tools-button" onclick="zoom('in')">Zoom In</button>
-  <button id="tools-button" onclick="zoom('out')">Zoom Out</button>
-  <button id="tools-button" onclick="switchImage('previous')">Previous Image</button>
-  <button id="tools-button" onclick="switchImage('next')">Next Image</button>
+  <div id="toolkit">
+    <button id="tools-button" onclick="createNewBndBox()">New Bounding Box</button>
+    <button id="tools-button" onclick="createNewPolygon()">New Polygon</button>
+    <button id="tools-button" onclick="addPoints()">Add points</button>
+    <button id="tools-button" onclick="removePoint()">Remove Point</button>
+    <button id="tools-button" onclick="removeShape()">Delete Shape</button>
+    <input id="tools-button" type='file' onchange="uploadImage(this);" />
+    <button id="tools-button" onclick="movableObjects()">Movable Objects</button>
+    <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
+    <button id="tools-button" onclick="downloadXML()">DownloadXML</button>
+    <button id="tools-button" onclick="cancel()">Cancel</button>
+    <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button>
+    <button id="tools-button" onclick="zoom('in')">Zoom In</button>
+    <button id="tools-button" onclick="zoom('out')">Zoom Out</button>
+    <button id="tools-button" onclick="switchImage('previous')">Previous Image</button>
+    <button id="tools-button" onclick="switchImage('next')">Next Image</button>
+  </div>
   <div id="popup-label-parent" hidden>
     <div id="popup-label-title">Label name:</div>
     <input type="text" id="popup-label-input" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="asduhiadhaudiadhiuaahadauiadas">

@@ -142,6 +142,7 @@
   width: 80px;
   padding-top: 20px;
   text-align: center;
+  float: left;
 }
 
 #right-side-bar {
@@ -251,6 +252,5 @@ body {
 }
 
 #bounding-box-button:hover {
-  background-color: lightgrey;
   border-style: outset;
 }
