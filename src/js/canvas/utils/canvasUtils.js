@@ -24,7 +24,7 @@ function assignCanvasForUtils(canvasObj) {
   assignTimeoutMillisecondsDependingOnBrowser();
 }
 
-function enableActiveObjectsAppearInFront(canvas) {
+function enableActiveObjectsAppearInFront() {
   canvas.preserveObjectStacking = false;
 }
 
@@ -33,7 +33,7 @@ function assignNewCanvasForUtils(newCanvasObj) {
   canvas = newCanvasObj;
 }
 
-function preventActiveObjectsAppearInFront(canvas) {
+function preventActiveObjectsAppearInFront() {
   if (canvas) {
     canvas.preserveObjectStacking = true;
   }
