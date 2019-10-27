@@ -45,6 +45,8 @@
     </table>
     <button id="popup-submit-button" onclick="labelShape()">Submit</button>
   </div>
+  <!-- resize icons on screen size -->
+  <!-- think the icons and font could be smaller on startup -->
   <div id="left-side-bar">
     <!-- on hover, increase the size of polygon points -->
     <div style="padding-bottom: 5px">left-side-bar</div>
@@ -57,6 +59,7 @@
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
       <div class="tools-button-text">Bounding box</div>
     </button>
+    <!-- will create a new icons as a swoosh, but show the option to minimise it-->
     <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility"></img>
       Polygon
@@ -78,9 +81,17 @@
       Zoom Out
     </button>
     <input id='fileid' type='file' onchange="uploadImage(this)" hidden/>
-    <button class="tools-button" style="text-align: center" onclick="triggerUpload()">
+    <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
       Upload Image
+    </button>
+    <button class="tools-button" style="text-align: center">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Settings
+    </button>
+    <!-- only when the overflow is caused by the resize of screen-->
+    <button style="text-align: center">
+        Overflow Scroll Down
     </button>
   </div>
   <div id="right-side-bar">

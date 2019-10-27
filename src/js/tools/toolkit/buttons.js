@@ -31,9 +31,7 @@ function assignToolkitButtonEvents() {
   window.zoom = zoomBtnClick;
   window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick,
     resetCanvasEventsToDefault);
-  window.triggerUpload = () => {
-    document.getElementById('fileid').click();
-  };
+  window.triggerImageUpload = () => { document.getElementById('fileid').click(); };
 }
 
 export { assignToolkitButtonEvents as default };
