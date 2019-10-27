@@ -32,9 +32,6 @@
   <div id="toolkit">
     <button id="tools-button" onclick="addPoints()">Add points</button>
     <button id="tools-button" onclick="removePoint()">Remove Point</button>
-    <button id="tools-button" onclick="movableObjects()">Movable Objects</button>
-    <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
-    <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button>
     <button id="tools-button" onclick="switchImage('previous')">Previous Image</button>
     <button id="tools-button" onclick="switchImage('next')">Next Image</button>
   </div>
@@ -44,6 +41,13 @@
     <table id="popup-label-options">
     </table>
     <button id="popup-submit-button" onclick="labelShape()">Submit</button>
+  </div>
+  <!-- the popup should align itself if it overflows, or align itself to not overflow -->
+  <!-- the popup should disappear on clicking away -->
+  <div id="settings-popup" style="position: absolute; z-index: 3; height: 40px; width: 100px; background: white; border-style: solid; border-width: 1px; display: none">
+    <button id="tools-button" onclick="movableObjects()">Movable Objects</button>
+    <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
+    <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button>
   </div>
   <!-- resize icons on screen size -->
   <!-- think the icons and font could be smaller on startup -->
@@ -85,13 +89,9 @@
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
       Upload Image
     </button>
-    <button class="tools-button" style="text-align: center">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Settings
-    </button>
-    <!-- only when the overflow is caused by the resize of screen-->
-    <button style="text-align: center">
-        Overflow Scroll Down
+    <button id="settingsButton" class="tools-button" style="text-align: center" onclick="displaySettingsPopup()">
+      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+      Settings
     </button>
   </div>
   <div id="right-side-bar">
