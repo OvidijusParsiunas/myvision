@@ -78,13 +78,13 @@ function highlightInitialLabelOptionOnInit() {
 }
 
 function dimWindow() {
-  baseDiv = document.getElementById('base-div');
+  baseDiv = document.getElementById('window-dim');
   baseDiv.style.position = 'absolute';
   baseDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
 }
 
 function lightUpWindow() {
-  baseDiv = document.getElementById('base-div');
+  baseDiv = document.getElementById('window-dim');
   baseDiv.style.backgroundColor = 'rgba(0,0,0,0)';
   window.setTimeout(() => {
     baseDiv.style.position = '';
