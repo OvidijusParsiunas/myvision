@@ -246,11 +246,22 @@ body {
   margin-left: 0;
 }
 
-#bounding-box-button {
+.tools-button {
   background-color: white;
   border-style: none;
+  padding: 0;
+  outline:none;
 }
 
-#bounding-box-button:hover {
+.tools-button:hover {
   border-style: outset;
+}
+
+.tools-button-icon {
+  padding-top: 2px;
+  width: 50px;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-bottom: 3px;
+  padding-top: 3px;
 }
