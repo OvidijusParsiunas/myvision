@@ -30,8 +30,6 @@
     </div>
   </div>
   <div id="toolkit">
-    <button id="tools-button" onclick="addPoints()">Add points</button>
-    <button id="tools-button" onclick="removePoint()">Remove Point</button>
     <button id="tools-button" onclick="switchImage('previous')">Previous Image</button>
     <button id="tools-button" onclick="switchImage('next')">Next Image</button>
   </div>
@@ -72,6 +70,14 @@
     <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility"></img>
       Polygon
+    </button>
+    <button class="tools-button" style="text-align: center" onclick="addPoints()" >
+      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+      Add points
+    </button>
+    <button class="tools-button" style="text-align: center" onclick="removePoint()">
+      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+      Remove points
     </button>
     <button class="tools-button" style="text-align: center" onclick="removeShape()" >
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
