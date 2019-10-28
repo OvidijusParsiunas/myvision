@@ -7,8 +7,9 @@
   <script src="fabricjs/fabric.js" type="text/javascript"></script>
   <link rel="stylesheet" href="styles.css?v=1.0">
 </head>
+<!-- this will need to be set to margin-top: 0, and the rest of the elements vertical alignments will need to be changed -->
 <body onresize="windowResize()">
-  Title
+  <div>Title</div>
   <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 50px; display: table; text-align: center; z-index: 1">
     <div style="vertical-align: middle; display: table-cell; position: relative; overflow: auto;">
       <div id="zoom-overflow-wrapper" style="position: absolute; left: 50%; transform: translate(-50%, -50%); top: 50%">
@@ -43,10 +44,15 @@
   </div>
   <!-- the popup should align itself if it overflows, or align itself to not overflow -->
   <!-- the popup should disappear on clicking away -->
-  <div id="settings-popup" style="position: absolute; z-index: 3; height: 40px; width: 100px; background: white; border-style: solid; border-width: 1px; display: none">
-    <button id="tools-button" onclick="movableObjects()">Movable Objects</button>
-    <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
-    <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button>
+  <div id="settings-popup" style="position: absolute; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
+    <table id="settings-table">
+      <tr><td class="settings-table-row-data"><div class="checkbox-text">Movable Objects </div> <input class="checkbox" type="checkbox" name="something" value="car"></td></tr>
+      <tr><td class="settings-table-row-data"><div class="checkbox-text">Continuous Drawing</div><input class="checkbox" type="checkbox" name="something" value="car"></td></tr>
+      <tr><td class="settings-table-row-data"><div class="checkbox-text">Label visibility</div><input class="checkbox" type="checkbox" name="something" value="car"></td></tr>
+    </table>
+    <!-- <button id="tools-button" onclick="movableObjects()">Movable Objects</button> --> 
+    <!-- <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
+    <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button> -->
   </div>
   <!-- resize icons on screen size -->
   <!-- think the icons and font could be smaller on startup -->
@@ -87,6 +93,10 @@
     <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
       Upload Image
+    </button>
+    <button class="tools-button" style="text-align: center" onclick="zoom('in')">
+      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+      Machine Learning
     </button>
     <button id="settingsButton" class="tools-button" style="text-align: center" onclick="displaySettingsPopup()">
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
