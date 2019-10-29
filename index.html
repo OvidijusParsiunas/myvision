@@ -8,117 +8,138 @@
   <link rel="stylesheet" href="styles.css?v=1.0">
 </head>
 <!-- this will need to be set to margin-top: 0, and the rest of the elements vertical alignments will need to be changed -->
-<body onresize="windowResize()">
-  <div>Title</div>
-  <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 50px; display: table; text-align: center; z-index: 1">
-    <div style="vertical-align: middle; display: table-cell; position: relative; overflow: auto;">
-      <div id="zoom-overflow-wrapper" style="position: absolute; left: 50%; transform: translate(-50%, -50%); top: 50%">
-        <div id="zoom-overflow" onScroll="zoomOverflowScroll(this)">
-          <div id="stub">.</div>
+<body onresize="windowResize()" style="background-color: lightgray;">
+  <div id="header" style="height: 29px; background-color: white">
+    <div style="font-size: 24px">MyLabel</div>
+  </div>
+  <div id="base">
+    <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 60px; display: table; text-align: center; z-index: 1">
+      <div style="vertical-align: middle; display: table-cell; position: relative; overflow: auto;">
+        <div id="zoom-overflow-wrapper" style="position: absolute; left: 50%; transform: translate(-50%, -50%); top: 50%">
+          <div id="zoom-overflow" onScroll="zoomOverflowScroll(this)">
+            <div id="stub">.</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" style="position: absolute; top: 50px; display: table; background-color: lightgrey; text-align: center;">
-    <div id="canvas-wrapper" style="vertical-align: middle; display: table-cell; position: relative; overflow: auto">
-      <div id="canvas-wrapper-inner2" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
-        <canvas id="d"></canvas>
+    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" style="position: absolute; top: 60px; display: table; background-color: lightgrey; text-align: center;">
+      <div id="canvas-wrapper" style="vertical-align: middle; display: table-cell; position: relative; overflow: auto">
+        <div id="canvas-wrapper-inner2" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+          <canvas id="d"></canvas>
+        </div>
+        <div id="canvas-wrapper-inner" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <canvas id="c"></canvas>
+        </div>
       </div>
-      <div id="canvas-wrapper-inner" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
-          <canvas id="c"></canvas>
-      </div>
+    </div>    
+    <div id="popup-label-parent" hidden>
+      <div id="popup-label-title">Label name:</div>
+      <input type="text" id="popup-label-input" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="asduhiadhaudiadhiuaahadauiadas">
+      <table id="popup-label-options">
+      </table>
+      <button id="popup-submit-button" onclick="labelShape()">Submit</button>
     </div>
-  </div>
-  <div id="toolkit">
-    <button id="tools-button" onclick="switchImage('previous')">Previous Image</button>
-    <button id="tools-button" onclick="switchImage('next')">Next Image</button>
-  </div>
-  <div id="popup-label-parent" hidden>
-    <div id="popup-label-title">Label name:</div>
-    <input type="text" id="popup-label-input" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="asduhiadhaudiadhiuaahadauiadas">
-    <table id="popup-label-options">
-    </table>
-    <button id="popup-submit-button" onclick="labelShape()">Submit</button>
-  </div>
-  <!-- the popup should align itself if it overflows, or align itself to not overflow -->
-  <!-- the popup should disappear on clicking away -->
-  <div id="settings-popup" style="position: absolute; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
-    <table id="settings-table">
-      <tr><td class="settings-table-row-data"><div class="checkbox-text">Movable Objects </div> <input class="checkbox" type="checkbox" name="something" value="car" checked></td></tr>
-      <tr><td class="settings-table-row-data"><div class="checkbox-text">Continuous Drawing</div><input class="checkbox" type="checkbox" name="something" value="car" checked></td></tr>
-      <tr><td class="settings-table-row-data"><div class="checkbox-text">Label visibility</div><input class="checkbox" type="checkbox" name="something" value="car" checked></td></tr>
-    </table>
-    <!-- <button id="tools-button" onclick="movableObjects()">Movable Objects</button> --> 
-    <!-- <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
-    <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button> -->
-  </div>
-  <!-- resize icons on screen size -->
-  <!-- think the icons and font could be smaller on startup -->
-  <div id="left-side-bar">
-    <!-- on hover, increase the size of polygon points -->
-    <div style="padding-bottom: 5px">left-side-bar</div>
-    <button class="tools-button" style="text-align: center" onclick="cancel()">
+  
+    <!-- TO-DO -->
+    <!-- Tuesday - identify the top naviagation bar/ or switch it to bottom, begin work on resizing the icons -->
+    <!-- Wednesday - resize all of the icons work, incl text, potentially test on other pcs/browsers -->
+    <!-- Thursday - begin work on overflow, incl. button that can be clicked to go down -->
+    <!-- Friday - find new icons, incl horizontal line -->
+    <!-- Saturday - button hover and click effects -->
+    <!-- Button active events -->
+  
+    <!-- strategy is, set the tools on window loadup -->
+    <!-- create overflow when the window is resized -->
+    <!-- make sure to leave some space for download bar appearing -->
+  
+    <!-- the popup should align itself if it overflows, or align itself to not overflow -->
+    <!-- the popup should disappear on clicking away -->
+    <!-- should slide out nicely on click -->
+    <!-- divider between different sections of the left side bar -->
+    <div id="settings-popup" style="position: absolute; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
+      <table id="settings-table">
+        <tr><td class="settings-table-row-data"><div class="checkbox-text">Movable Objects </div> <input class="checkbox" type="checkbox" name="something" value="car" checked></td></tr>
+        <tr><td class="settings-table-row-data"><div class="checkbox-text">Continuous Drawing</div><input class="checkbox" type="checkbox" name="something" value="car" checked></td></tr>
+        <tr><td class="settings-table-row-data"><div class="checkbox-text">Label visibility</div><input class="checkbox" type="checkbox" name="something" value="car" checked></td></tr>
+      </table>
+      <!-- <button id="tools-button" onclick="movableObjects()">Movable Objects</button> --> 
+      <!-- <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
+      <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button> -->
+    </div>
+    <!-- resize icons on screen size -->
+    <!-- think the icons and font could be smaller on startup -->
+    <div id="left-side-bar">
+      <div style="padding-top: 20px"> </div>
+      <!-- on hover, increase the size of polygon points -->
+      <button class="tools-button" style="text-align: center" onclick="cancel()">
+          <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+          Default
+        </button>
+      <button class="tools-button" style="text-align: center" onclick="createNewBndBox()">
+        <!-- will need to have padding in the svg on default then remove top on hover by the border width-->
         <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Default
+        <div class="tools-button-text">Bounding box</div>
       </button>
-    <button class="tools-button" style="text-align: center" onclick="createNewBndBox()">
-      <!-- will need to have padding in the svg on default then remove top on hover by the border width-->
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      <div class="tools-button-text">Bounding box</div>
-    </button>
-    <!-- will create a new icons as a swoosh, but show the option to minimise it-->
-    <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility"></img>
-      Polygon
-    </button>
-    <button class="tools-button" style="text-align: center" onclick="addPoints()" >
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Add points
-    </button>
-    <button class="tools-button" style="text-align: center" onclick="removePoint()">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Remove points
-    </button>
-    <button class="tools-button" style="text-align: center" onclick="removeShape()" >
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Remove Shape
-    </button>
-    <button class="tools-button" style="text-align: center" onclick="downloadXML()">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Dowload
-    </button>
-    <button class="tools-button" style="text-align: center" onclick="zoom('in')">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Zoom In
-    </button>
-    <button class="tools-button" style="text-align: center" onclick="zoom('out')">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Zoom Out
-    </button>
-    <input id='fileid' type='file' onchange="uploadImage(this)" hidden/>
-    <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Upload Image
-    </button>
-    <button class="tools-button" style="text-align: center" onclick="zoom('in')">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Machine Learning
-    </button>
-    <button id="settingsButton" class="tools-button" style="text-align: center" onclick="displaySettingsPopup()">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-      Settings
-    </button>
-  </div>
-  <div id="right-side-bar">
-    <div class="right-side-bar-component"> 
-      <div class="right-side-bar-component-title">Labels:</div>
-      <table id="label-list" onscroll="labelListScroll()">
-      </table>
+      <!-- will create a new icons as a swoosh, but show the option to minimise it-->
+      <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility"></img>
+        Polygon
+      </button>
+      <button class="tools-button" style="text-align: center" onclick="addPoints()" >
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Add pointsZ
+      </button>
+      <button class="tools-button" style="text-align: center" onclick="removePoint()">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Remove points
+      </button>
+      <button class="tools-button" style="text-align: center" onclick="removeShape()" >
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Remove Shape
+      </button>
+      <button class="tools-button" style="text-align: center" onclick="downloadXML()">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Dowload
+      </button>
+      <button class="tools-button" style="text-align: center" onclick="zoom('in')">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Zoom In
+      </button>
+      <button class="tools-button" style="text-align: center" onclick="zoom('out')">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Zoom Out
+      </button>
+      <input id='fileid' type='file' onchange="uploadImage(this)" hidden/>
+      <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Upload Image
+      </button>
+      <button id="settingsButton" class="tools-button" style="text-align: center" onclick="displaySettingsPopup()">
+        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+        Settings
+      </button>
     </div>
-    <div class="right-side-bar-component"> 
-      <div class="right-side-bar-component-title">Uploads:</div>
-      <table id="image-list">
-      </table>
+    <div id="right-side-bar">
+      <div class="right-side-bar-component"> 
+        <div class="right-side-bar-component-title">Labels:</div>
+        <table id="label-list" onscroll="labelListScroll()">
+        </table>
+      </div>
+      <div class="right-side-bar-component"> 
+        <div class="right-side-bar-component-title">Uploads:</div>
+        <table id="image-list">
+        </table>
+      </div>
+    </div>
+    <!-- Paste the following into style to floor it -->
+    <div id="imageSwitch" style="background-color: white; height: 30px; margin-left: 70px; margin-right: 210px; text-align: center">
+      <div id="imageSwitchContents" style="padding-top: 5px">
+        <button id="tools-button" onclick="switchImage('previous')"> < </button>
+        <div id="imageName" style="display: inline-block; padding-left: 20px; padding-right: 20px">
+          Image name
+        </div>
+        <button id="tools-button" onclick="switchImage('next')"> > </button>
+      </div>
     </div>
   </div>
   <div id="window-dim">
