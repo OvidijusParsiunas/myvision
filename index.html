@@ -132,10 +132,18 @@
       </div>
     </div>
     <!-- Paste the following into style to floor it -->
+    <!-- 
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    -->
+    <!-- make sure to center it properly -->
     <div id="imageSwitch" style="background-color: white; height: 30px; margin-left: 70px; margin-right: 210px; text-align: center">
       <div id="imageSwitchContents" style="padding-top: 5px">
+        <!-- grey out everything on startup -->
         <button id="tools-button" onclick="switchImage('previous')"> < </button>
-        <div id="imageName" style="display: inline-block; padding-left: 20px; padding-right: 20px">
+        <!-- grey out buttons when 1 image -->
+        <div id="currentImageName" style="display: inline-block; padding-left: 20px; padding-right: 20px">
           Image name
         </div>
         <button id="tools-button" onclick="switchImage('next')"> > </button>

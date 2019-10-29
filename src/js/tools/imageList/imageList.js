@@ -8,6 +8,7 @@ import { setDefaultState } from '../toolkit/buttonEvents/facadeWorkersUtils/stat
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 
 let imageListElement = null;
+let switchImageElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
@@ -15,6 +16,7 @@ let newImageId = 0;
 
 function findImageListElement() {
   imageListElement = document.getElementById('image-list');
+  switchImageElement = document.getElementById('currentImageName');
 }
 
 function initialiseImageListFunctionality() {
@@ -38,6 +40,7 @@ function addNewItemToImageList(imageText) {
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
   imageParentElement.innerHTML = createImageElementMarkup(imageText, newImageId);
+  switchImageElement.innerHTML = imageText;
   const newRow = imageListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(imageParentElement);
@@ -50,7 +53,7 @@ function addNewImageToList(imageText, imageData) {
     images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
     images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
   }
-  const imageObject = { data: imageData };
+  const imageObject = { data: imageData, name: imageText };
   images.push(imageObject);
   removeLabelListItems();
   addNewItemToImageList(imageText);
@@ -59,6 +62,10 @@ function addNewImageToList(imageText, imageData) {
     images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = newImageId;
   newImageId += 1;
+}
+
+function changeCurrentImageElementText(id) {
+  switchImageElement.innerHTML = images[id].name;
 }
 
 function changeToExistingImage(id) {
@@ -75,6 +82,7 @@ function changeToExistingImage(id) {
     images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = id;
   switchCanvasWrapperInnerElement();
+  changeCurrentImageElementText(id);
 }
 
 function switchImage(id) {
