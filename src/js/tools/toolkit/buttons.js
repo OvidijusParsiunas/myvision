@@ -49,6 +49,18 @@ function assignToolkitButtonEvents() {
     settingsPopupElement.style.left = '70px';
     settingsPopupElement.style.display = '';
   };
+  window.minimiseTextAndIcons = () => {
+    const textElements = document.getElementsByClassName('tools-button-text');
+    console.log(textElements);
+    for (let i = 0; i < textElements.length; i += 1) {
+      textElements[i].style.fontSize = '90%';
+    }
+    const iconElements = document.getElementsByClassName('tools-button-icon');
+    console.log(iconElements);
+    for (let i = 0; i < iconElements.length; i += 1) {
+      iconElements[i].style.width = '30px';
+    }
+  };
 }
 
 export { assignToolkitButtonEvents as default };

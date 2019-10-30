@@ -46,7 +46,9 @@
     <!-- Thursday - begin work on overflow, incl. button that can be clicked to go down -->
     <!-- Friday - find new icons, incl horizontal line -->
     <!-- Saturday - button hover and click effects -->
+        <!-- when active, have colors -->
     <!-- Button active events -->
+
   
     <!-- strategy is, set the tools on window loadup -->
     <!-- create overflow when the window is resized -->
@@ -73,7 +75,7 @@
       <!-- on hover, increase the size of polygon points -->
       <button class="tools-button" style="text-align: center" onclick="cancel()">
           <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-          Default
+          <div class="tools-button-text">Polygon</div>
         </button>
       <button class="tools-button" style="text-align: center" onclick="createNewBndBox()">
         <!-- will need to have padding in the svg on default then remove top on hover by the border width-->
@@ -82,41 +84,45 @@
       </button>
       <!-- will create a new icons as a swoosh, but show the option to minimise it-->
       <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility"></img>
-        Polygon
+        <img src="drop-down-arrow.svg" class="tools-button-icon" alt="visibility"></img>
+        <div class="tools-button-text">Polygon</div>
       </button>
       <button class="tools-button" style="text-align: center" onclick="addPoints()" >
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Add points
+        <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Add points</div>
       </button>
       <button class="tools-button" style="text-align: center" onclick="removePoint()">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Remove points
+        <img src="done-tick-highlighted.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Remove points</div>
       </button>
       <button class="tools-button" style="text-align: center" onclick="removeShape()" >
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Remove Shape
+        <img src="edit-highlighted.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Remove Shape</div>
       </button>
       <button class="tools-button" style="text-align: center" onclick="downloadXML()">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Dowload
+        <img src="check-box.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Dowload</div>
       </button>
       <button class="tools-button" style="text-align: center" onclick="zoom('in')">
         <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Zoom In
+        <div class="tools-button-text">Zoom In</div>
       </button>
       <button class="tools-button" style="text-align: center" onclick="zoom('out')">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Zoom Out
+        <img src="done.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Zoom Out</div>
       </button>
       <input id='fileid' type='file' onchange="uploadImage(this)" hidden/>
       <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Upload Image
+        <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Upload Image</div>
       </button>
       <button id="settingsButton" class="tools-button" style="text-align: center" onclick="displaySettingsPopup()">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        Settings
+        <img src="icon.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Settings</div>
+      </button>
+      <button id="settingsButton" class="tools-button" style="text-align: center" onclick="minimiseTextAndIcons()">
+        <img src="icon.svg" class="tools-button-icon" alt="visibility">
+        <div class="tools-button-text">Minimise buttons</div>
       </button>
     </div>
     <div id="right-side-bar">
