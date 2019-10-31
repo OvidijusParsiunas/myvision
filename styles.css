@@ -144,7 +144,11 @@
   text-align: center;
   float: left;
   background-color: white;
-  height: calc(100vh - 40px);
+  height: 100vh;
+  max-height: calc(100vh - 40px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  /* 14px *  */
 }
 
 #right-side-bar {
@@ -275,6 +279,11 @@ body {
   padding-right: 13px;
   padding-bottom: 3px;
   padding-top: 3px;
+}
+
+.tools-button-text {
+  /*  font-size: calc(14px * (currentHeight / expectedMaxHeight); */
+  /* font-size: calc(14px * (100vh / expectedMaxHeight)); */
 }
 
 .checkbox {
