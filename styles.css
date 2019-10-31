@@ -146,7 +146,7 @@
   background-color: white;
   height: 100vh;
   max-height: calc(100vh - 40px);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   /* 14px *  */
 }
@@ -281,9 +281,22 @@ body {
   padding-top: 3px;
 }
 
-.tools-button-text {
-  /*  font-size: calc(14px * (currentHeight / expectedMaxHeight); */
-  /* font-size: calc(14px * (100vh / expectedMaxHeight)); */
+@media only screen and (max-height: 826px) {
+  .tools-button-text {
+    font-size: calc(13.3333 * (100vh / 826));
+  }
+  .tools-button-icon {
+    width: calc(40 * (100vh / (906)));
+  }
+}
+
+@media only screen and (max-height: 522px) {
+  .tools-button-text {
+    display: none;
+  }
+  .tools-button-icon {
+    width: calc(40 * (100vh / (806)));
+  }
 }
 
 .checkbox {
