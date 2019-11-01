@@ -8,25 +8,25 @@ import { setDefaultState } from '../toolkit/buttonEvents/facadeWorkersUtils/stat
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 
 let imageListElement = null;
-let switchImageElement = null;
+let currentImageNameElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
-
+let firstImage = true;
 
 function findImageListElement() {
   imageListElement = document.getElementById('image-list');
-  switchImageElement = document.getElementById('currentImageName');
+  currentImageNameElement = document.getElementById('currentImageName');
 }
 
 function initialiseImageListFunctionality() {
   findImageListElement();
 }
 
-function createImageElementMarkup(imageText, id) {
+function createImageElementMarkup(imageName, id) {
   return `
   <div id="imageId${id}" onClick="switchImage(${id})" class="image${id} imageListItem">
-    <div id="imageText${id}" spellcheck="false" class="imageText" contentEditable="false" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${imageText}</div>
+    <div id="imageName${id}" spellcheck="false" class="imageName" contentEditable="false" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${imageName}</div>
     </div>
   </div>
   `;
@@ -36,11 +36,10 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
-function addNewItemToImageList(imageText) {
+function addNewItemToImageList(imageName) {
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
-  imageParentElement.innerHTML = createImageElementMarkup(imageText, newImageId);
-  switchImageElement.innerHTML = imageText;
+  imageParentElement.innerHTML = createImageElementMarkup(imageName, newImageId);
   const newRow = imageListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(imageParentElement);
@@ -48,24 +47,45 @@ function addNewItemToImageList(imageText) {
   cell.scrollIntoView();
 }
 
-function addNewImageToList(imageText, imageData) {
-  if (newImageId > 0) {
+function addNewImage(imageName, imageData) {
+  const imageObject = {
+    data: imageData, name: imageName, shapes: {}, labels: {},
+  };
+  images.push(imageObject);
+  addNewItemToImageList(imageName);
+}
+
+function saveAndRemoveCurrentImageDetails() {
+  if (!firstImage) {
     images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
     images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
   }
-  const imageObject = { data: imageData, name: imageText };
-  images.push(imageObject);
   removeLabelListItems();
-  addNewItemToImageList(imageText);
   const timesZoomedOut = resetZoom(false);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
     images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = newImageId;
+  firstImage = false;
+}
+
+function addSingleImageToList(imageName, imageData) {
+  addNewImage(imageName, imageData);
+  saveAndRemoveCurrentImageDetails();
+  currentImageNameElement.innerHTML = imageName;
+  newImageId += 1;
+}
+
+function addImageFromMultiUploadToList(imageName, imageData, firstFromMany) {
+  addNewImage(imageName, imageData);
+  if (firstFromMany) {
+    saveAndRemoveCurrentImageDetails();
+    currentImageNameElement.innerHTML = imageName;
+  }
   newImageId += 1;
 }
 
 function changeCurrentImageElementText(id) {
-  switchImageElement.innerHTML = images[id].name;
+  currentImageNameElement.innerHTML = images[id].name;
 }
 
 function changeToExistingImage(id) {
@@ -85,27 +105,31 @@ function changeToExistingImage(id) {
   changeCurrentImageElementText(id);
 }
 
-function switchImage(id) {
-  if (id === 'previous') {
+function switchImage(direction) {
+  if (direction === 'previous') {
     if (currentlySelectedImageId !== 0) {
       changeToExistingImage(currentlySelectedImageId - 1);
     }
-  } else if (id === 'next') {
+  } else if (direction === 'next') {
     if (currentlySelectedImageId !== images.length - 1) {
       changeToExistingImage(currentlySelectedImageId + 1);
     }
-  } else if (id !== currentlySelectedImageId) {
-    changeToExistingImage(id);
+  } else if (direction !== currentlySelectedImageId) {
+    changeToExistingImage(direction);
   }
 }
 
-function isImageAlreadySelected(id) {
-  if (id !== currentlySelectedImageId) {
-    return false;
+function canSwitchImage(direction) {
+  if (direction === 'previous') {
+    return currentlySelectedImageId > 0;
   }
-  return true;
+  if (direction === 'next') {
+    return currentlySelectedImageId < (images.length - 1);
+  }
+  return direction !== currentlySelectedImageId;
 }
 
 export {
-  initialiseImageListFunctionality, addNewImageToList, switchImage, isImageAlreadySelected,
+  initialiseImageListFunctionality, addSingleImageToList,
+  switchImage, canSwitchImage, addImageFromMultiUploadToList,
 };
