@@ -14,6 +14,7 @@ let lastPolygonActionWasMoveState = false;
 let newShapeSelectedViaLabelListState = false;
 let currentZoomState = 1;
 let doubleScrollCanvasState = false;
+let settingsPopUpOpenState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -81,6 +82,10 @@ function getCurrentZoomState() {
 
 function getDoubleScrollCanvasState() {
   return doubleScrollCanvasState;
+}
+
+function getSettingsPopUpOpenState() {
+  return settingsPopUpOpenState;
 }
 
 function setDefaultState(state) {
@@ -152,6 +157,10 @@ function setDoubleScrollCanvasState(state) {
   doubleScrollCanvasState = state;
 }
 
+function setSettingsPopUpOpenState(state) {
+  settingsPopUpOpenState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -169,6 +178,8 @@ export {
   setReadyToDrawShapeState,
   getLabelsVisibilityState,
   setLabelsVisibilityState,
+  getSettingsPopUpOpenState,
+  setSettingsPopUpOpenState,
   getContinuousDrawingState,
   setContinuousDrawingState,
   getDoubleScrollCanvasState,

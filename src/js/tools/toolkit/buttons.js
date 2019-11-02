@@ -12,7 +12,7 @@ import {
   doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
   replaceExistingCanvas,
 } from './buttonMiddleware/buttonMiddleware';
-
+import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from './buttonEvents/facadeWorkersUtils/stateManager';
 
 function offset(el) {
   var rect = el.getBoundingClientRect(),
@@ -44,10 +44,16 @@ function assignToolkitButtonEvents() {
   window.displaySettingsPopup = () => {
     const settingsPopupElement = document.getElementById('settings-popup');
     const settingsButton = document.getElementById('settingsButton');
-    const divOffset = offset(settingsButton);
-    settingsPopupElement.style.top = `${divOffset.top}px`;
-    settingsPopupElement.style.left = '70px';
-    settingsPopupElement.style.display = '';
+    if (!getSettingsPopUpOpenState()) {
+      const divOffset = offset(settingsButton);
+      settingsPopupElement.style.top = `${divOffset.top}px`;
+      settingsPopupElement.style.left = '70px';
+      settingsPopupElement.style.display = '';
+      setSettingsPopUpOpenState(true);
+    } else {
+      settingsPopupElement.style.display = 'none';
+      setSettingsPopUpOpenState(false);
+    }
   };
   window.minimiseTextAndIcons = () => {
     const textElements = document.getElementsByClassName('tools-button-text');

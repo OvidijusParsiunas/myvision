@@ -58,11 +58,11 @@
     <!-- the popup should disappear on clicking away -->
     <!-- should slide out nicely on click -->
     <!-- divider between different sections of the left side bar -->
-    <div id="settings-popup" style="position: absolute; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
-      <table id="settings-table">
-        <tr><td class="settings-table-row-data"><div class="checkbox-text">Movable Objects</div> <input class="checkbox" type="checkbox" name="something" onclick="movableObjects()" checked></td></tr>
-        <tr><td class="settings-table-row-data"><div class="checkbox-text">Continuous Drawing</div><input class="checkbox" type="checkbox" name="something" onclick="continuousDrawing()"></td></tr>
-        <tr><td class="settings-table-row-data"><div class="checkbox-text">Label visibility</div><input class="checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" checked></td></tr>
+    <div id="settings-popup" class="settings-popup-item" style="position: absolute; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
+      <table id="settings-table" class="settings-popup-item">
+        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Movable Objects</div> <input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="movableObjects()" checked></td></tr>
+        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="continuousDrawing()"></td></tr>
+        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Label visibility</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" checked></td></tr>
       </table>
       <!-- <button id="tools-button" onclick="movableObjects()">Movable Objects</button> --> 
       <!-- <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
@@ -116,9 +116,9 @@
         <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
         <div class="tools-button-text">Upload Image</div>
       </button>
-      <button id="settingsButton" class="tools-button" style="text-align: center" onclick="displaySettingsPopup()">
-        <img src="icon.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Settings</div>
+      <button id="settingsButton" class="settings-popup-item tools-button" style="text-align: center" onclick="displaySettingsPopup()">
+        <img src="icon.svg" class="settings-popup-item tools-button-icon" alt="visibility">
+        <div class="settings-popup-item tools-button-text">Settings</div>
       </button>
       <!-- <button id="settingsButton" class="tools-button" style="text-align: center" onclick="minimiseTextAndIcons()">
         <img src="icon.svg" class="tools-button-icon" alt="visibility">

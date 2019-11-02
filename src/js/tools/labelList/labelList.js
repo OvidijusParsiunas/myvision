@@ -5,8 +5,8 @@ import {
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
-  setEditingLabelId, setNewShapeSelectedViaLabelListState,
-  getDefaultState, getAddingPolygonPointsState,
+  setEditingLabelId, setNewShapeSelectedViaLabelListState, getDefaultState,
+  getAddingPolygonPointsState, getSettingsPopUpOpenState, setSettingsPopUpOpenState,
 } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
@@ -508,6 +508,12 @@ window.onmousedown = (event) => {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
       stopEditing();
       deselectShape();
+    }
+  } else if (getSettingsPopUpOpenState()) {
+    if (event.target.classList[0] !== 'settings-popup-item') {
+      const settingsPopupElement = document.getElementById('settings-popup');
+      settingsPopupElement.style.display = 'none';
+      setSettingsPopUpOpenState(false);
     }
   }
 };
