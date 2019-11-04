@@ -47,7 +47,7 @@ function assignToolkitButtonEvents() {
     if (!getSettingsPopUpOpenState()) {
       const divOffset = offset(settingsButton);
       settingsPopupElement.style.top = `${divOffset.top}px`;
-      settingsPopupElement.style.left = '70px';
+      settingsPopupElement.style.left = '65px';
       settingsPopupElement.style.display = '';
       setSettingsPopUpOpenState(true);
     } else {

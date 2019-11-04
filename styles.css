@@ -139,8 +139,8 @@
 }
 
 #left-side-bar {
-  width: 70px;
-  padding-top: 10px;
+  width: 63px;
+  padding-top: 9px;
   text-align: center;
   float: left;
   background-color: white;
@@ -148,14 +148,22 @@
   max-height: calc(100vh - 40px);
   overflow-y: auto;
   overflow-x: hidden;
+  border-right: solid;
+  border-left: solid;
+  border-color: rgb(197, 197, 197);
+  border-width: 1px;
 }
 
 #right-side-bar {
-  width: 210px;
+  width: 208px;
   padding-top: 10px;
   float: right;
   background-color: white;
   height: calc(100vh - 40px);
+  border-right: solid;
+  border-left: solid;
+  border-width: 1px;
+  border-color: rgb(197, 197, 197);
 }
 
 #right-side-bar:hover {
@@ -180,15 +188,15 @@
 }
 
 #canvas-wrapper-parent {
-  width: calc(100% - 280px);
+  width: calc(100% - 275px);
   height: calc(100% - 60px);
-  left: 70px;
+  left: 65px;
 }
 
 #zoom-overflow-wrapper-parent {
-  width: calc(100% - 281px);
+  width: calc(100% - 276px);
   height: calc(100% - 60px);
-  left: 70px;
+  left: 65px;
 }
 
 #window-dim {
@@ -268,18 +276,19 @@ body {
 }
 
 .tools-button:active {
+  /* highlight in the color of what the icon is going to be */
   background-color: lightgreen;
 }
 
 .tools-button-icon {
   padding-top: 6px;
-  width: 40px;
+  width: 30px;
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 4px;
 }
 
-@media only screen and (max-height: 826px) {
+/* @media only screen and (max-height: 826px) {
   .tools-button-text {
     font-size: calc(13.3333 * (100vh / 826));
   }
@@ -295,7 +304,7 @@ body {
   .tools-button-icon {
     width: calc(40 * (100vh / (806)));
   }
-}
+} */
 
 .checkbox {
   float: right;
@@ -325,6 +334,12 @@ body {
 
 #settings-table {
   padding: 2px;
+}
+
+#imageSwitch {
+  border-bottom: solid;
+  border-color: rgb(197, 197, 197);
+  border-width: 1px;
 }
 
 #tools-drawing-section {

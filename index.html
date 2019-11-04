@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" style="position: absolute; top: 60px; display: table; background-color: lightgrey; text-align: center;">
+    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" style="position: absolute; top: 60px; display: table; background-color: rgb(243, 243, 243); text-align: center;">
       <div id="canvas-wrapper" style="vertical-align: middle; display: table-cell; position: relative; overflow: auto">
         <div id="canvas-wrapper-inner2" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
           <canvas id="d"></canvas>
@@ -153,7 +153,7 @@
     <button class="tools-button" style="text-align: center" onclick="zoom('out')">
       <img src="done.svg" class="tools-button-icon" alt="visibility">
     </button>
-    <input id='fileid' type='file' onchange="uploadImage(this)" hidden/>
+    <input id='fileid' type='file' onchange="uploadImage(this)" multiple accept="image/*" hidden/>
     <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
       <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
     </button>
@@ -180,7 +180,7 @@
       width: 100%;
     -->
     <!-- make sure to center it properly -->
-    <div id="imageSwitch" style="background-color: white; height: 30px; margin-left: 70px; margin-right: 210px; text-align: center">
+    <div id="imageSwitch" style="background-color: white; height: 29px; margin-left: 65px; margin-right: 210px; text-align: center">
       <div id="imageSwitchContents" style="padding-top: 5px">
         <!-- grey out everything on startup -->
         <button id="tools-button" onclick="switchImage('previous')"> < </button>
