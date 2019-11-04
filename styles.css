@@ -264,7 +264,7 @@ body {
 }
 
 .tools-button:hover {
-  border-style: outset;
+  background-color: rgb(238, 238, 238);
 }
 
 .tools-button:active {
@@ -272,12 +272,11 @@ body {
 }
 
 .tools-button-icon {
-  padding-top: 2px;
+  padding-top: 6px;
   width: 40px;
-  padding-left: 13px;
-  padding-right: 13px;
-  padding-bottom: 3px;
-  padding-top: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 4px;
 }
 
 @media only screen and (max-height: 826px) {
@@ -326,4 +325,13 @@ body {
 
 #settings-table {
   padding: 2px;
+}
+
+#tools-drawing-section {
+  border-top: solid;
+  border-bottom: solid;
+  border-width: 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-color: rgb(202, 209, 209);
 }
