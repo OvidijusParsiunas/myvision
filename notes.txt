@@ -37,3 +37,5 @@ display real-time image segment when drawing a shape. In the labels section.
 Really like a light green / blue and white color theme
 
 When switching images, move the relevant image from the list into view
+
+Initial images on canvas should not take up the full screen
