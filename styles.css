@@ -270,7 +270,8 @@ body {
   background-color: white;
   border-style: none;
   padding: 0;
-  outline:none;
+  outline: none;
+  cursor: pointer;
 }
 
 .tools-button:hover {
