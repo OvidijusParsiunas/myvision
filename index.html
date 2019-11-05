@@ -71,7 +71,7 @@
     <!-- resize icons on screen size -->
     <!-- think the icons and font could be smaller on startup -->
     <div id="left-side-bar">
-      <div style="padding-top: 20px"> </div>
+      <div style="padding-top: 20px; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #80808026"> </div>
       <!-- on hover, increase the size of polygon points -->
       <!-- <button class="tools-button" style="text-align: center" onclick="cancel()">
           <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
@@ -124,26 +124,25 @@
         <img src="icon.svg" class="tools-button-icon" alt="visibility">
         <div class="tools-button-text">Minimise buttons</div>
       </button> -->
-      <div id="tools-drawing-section">
-        <button class="tools-button" style="text-align: center" onclick="cancel()">
-          <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        </button>
-      <button class="tools-button" style="text-align: center" onclick="createNewBndBox()">
+      <button class="tools-button" style="text-align: center" onclick="cancel()">
         <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
       </button>
-      <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
-        <img src="drop-down-arrow.svg" class="tools-button-icon" alt="visibility"></img>
-      </button>
-      <button class="tools-button" style="text-align: center" onclick="addPoints()" >
-        <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
-      </button>
-      <button class="tools-button" style="text-align: center" onclick="removePoint()">
-        <img src="done-tick-highlighted.svg" class="tools-button-icon" alt="visibility">
-      </button>
-      <button class="tools-button" style="text-align: center" onclick="removeShape()" >
-        <img src="edit-highlighted.svg" class="tools-button-icon" alt="visibility">
-      </button>
-    </div>
+    <button class="tools-button" style="text-align: center" onclick="createNewBndBox()">
+      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+    </button>
+    <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
+      <img src="drop-down-arrow.svg" class="tools-button-icon" alt="visibility"></img>
+    </button>
+    <button class="tools-button" style="text-align: center" onclick="addPoints()" >
+      <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
+    </button>
+    <button class="tools-button" style="text-align: center" onclick="removePoint()">
+      <img src="done-tick-highlighted.svg" class="tools-button-icon" alt="visibility">
+    </button>
+    <button class="tools-button" style="text-align: center" onclick="removeShape()" >
+      <img src="edit-highlighted.svg" class="tools-button-icon" alt="visibility">
+    </button>
+    <div id="separator" style="width: 37px; height: 1px; border-bottom: solid; border-width: 1px; border-color: #80808026; margin-left: 10px; margin-top: 2px; margin-bottom: 7px"></div>
     <button class="tools-button" style="text-align: center" onclick="downloadXML()">
       <img src="check-box.svg" class="tools-button-icon" alt="visibility">
     </button>
