@@ -67,6 +67,18 @@ function assignToolkitButtonEvents() {
       iconElements[i].style.width = '30px';
     }
   };
+
+  window.mouseEnterToolkitButton = (event) => {
+    if (event.target.tagName === 'BUTTON') {
+      console.log('called on');
+    }
+  };
+
+  window.mouseLeaveToolkitButton = (event) => {
+    if (event.target.tagName === 'BUTTON') {
+      console.log('called out');
+    }
+  };
 }
 
 export { assignToolkitButtonEvents as default };
