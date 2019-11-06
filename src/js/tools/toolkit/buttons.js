@@ -74,15 +74,21 @@ function assignToolkitButtonEvents() {
   };
   let activePopup = null;
   const pendingButtonPopups = [];
+  let persistButtonPopupDisplay = false;
   window.mouseEnterToolkitButton = (event, id) => {
     if (event.target.tagName === 'BUTTON') {
       pendingButtonPopups.unshift(buttonPopups[id]);
-      setTimeout(() => {
-        if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]) {
-          pendingButtonPopups[0].style.display = 'block';
-          activePopup = buttonPopups[id];
-        }
-      }, 500);
+      if (persistButtonPopupDisplay) {
+        pendingButtonPopups[0].style.display = 'block';
+        activePopup = buttonPopups[id];
+      } else {
+        setTimeout(() => {
+          if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]) {
+            pendingButtonPopups[0].style.display = 'block';
+            activePopup = buttonPopups[id];
+          }
+        }, 500);
+      }
     }
   };
 
@@ -91,6 +97,10 @@ function assignToolkitButtonEvents() {
       if (activePopup !== null) {
         activePopup.style.display = 'none';
         activePopup = null;
+        persistButtonPopupDisplay = true;
+        setTimeout(() => {
+          persistButtonPopupDisplay = false;
+        }, 200);
       }
       pendingButtonPopups.pop();
     }
