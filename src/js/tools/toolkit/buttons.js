@@ -106,6 +106,7 @@ function assignToolkitButtonEvents() {
     }
   };
 
+  // upload image and potentially download datasets events should remove the active popups
   window.mouseLeaveToolkitButton = (event) => {
     if (event.target.tagName === 'BUTTON') {
       if (activePopup !== null) {

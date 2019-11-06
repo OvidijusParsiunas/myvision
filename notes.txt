@@ -40,4 +40,7 @@ When switching images, move the relevant image from the list into view
 
 Initial images on canvas should not take up the full screen
 
-Highlight the current image youn are on
+Highlight the current image you are on
+
+Window dim should restrict the use of the entire window
+

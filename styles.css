@@ -355,7 +355,7 @@ body {
 }
 
 .tools-button-hover-popup {
-  margin-left: 52px;
+  margin-left: 62px;
   position: absolute;
   margin-top: -35px;
   background: black;
@@ -365,4 +365,5 @@ body {
   padding-top: 4px;
   padding-bottom: 4px;
   display: none;
+  z-index: 2;
 }
