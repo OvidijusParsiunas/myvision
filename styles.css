@@ -356,12 +356,13 @@ body {
 
 .tools-button-hover-popup {
   margin-left: 52px;
-    position: absolute;
-    margin-top: -35px;
-    background: black;
-    color: white;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+  position: absolute;
+  margin-top: -35px;
+  background: black;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: none;
 }

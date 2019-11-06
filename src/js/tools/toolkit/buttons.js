@@ -68,15 +68,31 @@ function assignToolkitButtonEvents() {
     }
   };
 
-  window.mouseEnterToolkitButton = (event) => {
+  const buttonPopups = {
+    default: document.getElementById('default-button-popup'),
+    boundingBox: document.getElementById('bounding-box-button-popup'),
+  };
+  let activePopup = null;
+  const pendingButtonPopups = [];
+  window.mouseEnterToolkitButton = (event, id) => {
     if (event.target.tagName === 'BUTTON') {
-      console.log('called on');
+      pendingButtonPopups.unshift(buttonPopups[id]);
+      setTimeout(() => {
+        if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]) {
+          pendingButtonPopups[0].style.display = 'block';
+          activePopup = buttonPopups[id];
+        }
+      }, 500);
     }
   };
 
   window.mouseLeaveToolkitButton = (event) => {
     if (event.target.tagName === 'BUTTON') {
-      console.log('called out');
+      if (activePopup !== null) {
+        activePopup.style.display = 'none';
+        activePopup = null;
+      }
+      pendingButtonPopups.pop();
     }
   };
 }

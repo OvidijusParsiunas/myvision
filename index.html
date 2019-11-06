@@ -124,14 +124,14 @@
         <img src="icon.svg" class="tools-button-icon" alt="visibility">
         <div class="tools-button-text">Minimise buttons</div>
       </button> -->
-      <button class="tools-button" onmouseenter="mouseEnterToolkitButton(event)" onmouseleave="mouseLeaveToolkitButton(event)" style="text-align: center" onclick="cancel()">
+      <button class="tools-button" onmouseenter="mouseEnterToolkitButton(event, 'default')" onmouseleave="mouseLeaveToolkitButton(event)" style="text-align: center" onclick="cancel()">
         <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
       </button>
-      <div class="tools-button-hover-popup" id="bounding-box-button-popup">Default</div>
-    <button class="tools-button" style="text-align: center" onclick="createNewBndBox()">
+      <div class="tools-button-hover-popup" id="default-button-popup">Default</div>
+    <button class="tools-button" onmouseenter="mouseEnterToolkitButton(event, 'boundingBox')" onmouseleave="mouseLeaveToolkitButton(event)" style="text-align: center" onclick="createNewBndBox()">
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
     </button>
-    <div class="tools-button-hover-popup">Bounding box</div>
+    <div class="tools-button-hover-popup" id="bounding-box-button-popup">Bounding box</div>
     <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
       <img src="drop-down-arrow.svg" class="tools-button-icon" alt="visibility"></img>
     </button>
