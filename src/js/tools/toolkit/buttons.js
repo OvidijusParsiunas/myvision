@@ -72,9 +72,14 @@ function assignToolkitButtonEvents() {
     default: document.getElementById('default-button-popup'),
     boundingBox: document.getElementById('bounding-box-button-popup'),
   };
+
+  const HOVER_TIMEOUT = 500;
+  const SWITCH_BUTTON_DISPLAY_PERSISTANCE_TIMEOUT = 200;
+
   let activePopup = null;
-  const pendingButtonPopups = [];
   let persistButtonPopupDisplay = false;
+  const pendingButtonPopups = [];
+
   window.mouseEnterToolkitButton = (event, id) => {
     if (event.target.tagName === 'BUTTON') {
       pendingButtonPopups.unshift(buttonPopups[id]);
@@ -87,7 +92,7 @@ function assignToolkitButtonEvents() {
             pendingButtonPopups[0].style.display = 'block';
             activePopup = buttonPopups[id];
           }
-        }, 500);
+        }, HOVER_TIMEOUT);
       }
     }
   };
@@ -100,7 +105,7 @@ function assignToolkitButtonEvents() {
         persistButtonPopupDisplay = true;
         setTimeout(() => {
           persistButtonPopupDisplay = false;
-        }, 200);
+        }, SWITCH_BUTTON_DISPLAY_PERSISTANCE_TIMEOUT);
       }
       pendingButtonPopups.pop();
     }
