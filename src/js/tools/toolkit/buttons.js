@@ -71,6 +71,15 @@ function assignToolkitButtonEvents() {
   const buttonPopups = {
     default: document.getElementById('default-button-popup'),
     boundingBox: document.getElementById('bounding-box-button-popup'),
+    polygon: document.getElementById('polygon-button-popup'),
+    addPoints: document.getElementById('add-points-button-popup'),
+    removePoints: document.getElementById('remove-points-button-popup'),
+    removeShape: document.getElementById('remove-shape-button-popup'),
+    downloadDatasets: document.getElementById('download-datasets-button-popup'),
+    zoomIn: document.getElementById('zoom-in-button-popup'),
+    zoomOut: document.getElementById('zoom-out-button-popup'),
+    uploadImages: document.getElementById('upload-images-button-popup'),
+    settings: document.getElementById('settings-button-popup'),
   };
 
   const HOVER_TIMEOUT = 500;

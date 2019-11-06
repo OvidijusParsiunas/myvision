@@ -132,35 +132,44 @@
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
     </button>
     <div class="tools-button-hover-popup" id="bounding-box-button-popup">Bounding box</div>
-    <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
+    <button class="tools-button" style="text-align: center" onclick="createNewPolygon()" onmouseenter="mouseEnterToolkitButton(event, 'polygon')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="drop-down-arrow.svg" class="tools-button-icon" alt="visibility"></img>
     </button>
-    <button class="tools-button" style="text-align: center" onclick="addPoints()" >
+    <div class="tools-button-hover-popup" id="polygon-button-popup">Polygon</div>
+    <button class="tools-button" style="text-align: center" onclick="addPoints()" onmouseenter="mouseEnterToolkitButton(event, 'addPoints')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="removePoint()">
+    <div class="tools-button-hover-popup" id="add-points-button-popup">Add Points</div>
+    <button class="tools-button" style="text-align: center" onclick="removePoint()" onmouseenter="mouseEnterToolkitButton(event, 'removePoints')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="done-tick-highlighted.svg" class="tools-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="removeShape()" >
+    <div class="tools-button-hover-popup" id="remove-points-button-popup">Remove Points</div>
+    <button class="tools-button" style="text-align: center" onclick="removeShape()" onmouseenter="mouseEnterToolkitButton(event, 'removeShape')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="edit-highlighted.svg" class="tools-button-icon" alt="visibility">
     </button>
+    <div class="tools-button-hover-popup" id="remove-shape-button-popup">Remove Shape</div>
     <div id="separator" style="width: 37px; height: 1px; border-bottom: solid; border-width: 1px; border-color: #80808026; margin-left: 10px; margin-top: 2px; margin-bottom: 7px"></div>
-    <button class="tools-button" style="text-align: center" onclick="downloadXML()">
+    <button class="tools-button" style="text-align: center" onclick="downloadXML()" onmouseenter="mouseEnterToolkitButton(event, 'downloadDatasets')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="check-box.svg" class="tools-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="zoom('in')">
+    <div class="tools-button-hover-popup" id="download-datasets-button-popup">Download Datasets</div>
+    <button class="tools-button" style="text-align: center" onclick="zoom('in')" onmouseenter="mouseEnterToolkitButton(event, 'zoomIn')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="zoom('out')">
+    <div class="tools-button-hover-popup" id="zoom-in-button-popup">Zoom In</div>
+    <button class="tools-button" style="text-align: center" onclick="zoom('out')" onmouseenter="mouseEnterToolkitButton(event, 'zoomOut')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="done.svg" class="tools-button-icon" alt="visibility">
     </button>
+    <div class="tools-button-hover-popup" id="zoom-out-button-popup">Zoom out</div>
     <input id='fileid' type='file' onchange="uploadImage(this)" multiple accept="image/*" hidden/>
-    <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
+    <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
     </button>
-    <button id="settingsButton" class="settings-popup-item tools-button" style="text-align: center" onclick="displaySettingsPopup()">
+    <div class="tools-button-hover-popup" id="upload-images-button-popup">Upload Images</div>
+    <button id="settingsButton" class="settings-popup-item tools-button" style="text-align: center" onclick="displaySettingsPopup()" onmouseenter="mouseEnterToolkitButton(event, 'settings')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="icon.svg" class="settings-popup-item tools-button-icon" alt="visibility">
     </button>
+    <div class="tools-button-hover-popup" id="settings-button-popup">Settings</div>
     </div>
     <div id="right-side-bar">
       <div class="right-side-bar-component"> 
