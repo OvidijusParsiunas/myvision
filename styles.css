@@ -366,4 +366,5 @@ body {
   padding-bottom: 4px;
   display: none;
   z-index: 2;
+  border-radius: 4px;
 }
