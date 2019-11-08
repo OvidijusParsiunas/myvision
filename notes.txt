@@ -43,3 +43,5 @@ Initial images on canvas should not take up the full screen
 Highlight the current image you are on
 
 Window dim should restrict the use of the entire window
+
+Toolkit button rfunctionality for getting smaller with the screen should be done when we know all the but

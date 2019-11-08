@@ -5,6 +5,7 @@ const SWITCH_BUTTON_DISPLAY_PERSISTANCE_TIMEOUT = 200;
 let activePopup = null;
 let persistButtonPopupDisplay = false;
 const pendingButtonPopups = [];
+let doNotDisplayButtonAfterTimeoutState = false;
 
 function assignToolkitButtonHoverEvents() {
   buttonPopups.default = document.getElementById('default-button-popup');
@@ -21,6 +22,7 @@ function assignToolkitButtonHoverEvents() {
 }
 
 function removeActiveButtonPopup() {
+  doNotDisplayButtonAfterTimeoutState = true;
   if (activePopup) {
     activePopup.style.display = 'none';
     activePopup = null;
@@ -35,10 +37,12 @@ window.mouseEnterToolkitButton = (event, id) => {
       activePopup = buttonPopups[id];
     } else {
       setTimeout(() => {
-        if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]) {
+        if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]
+            && !doNotDisplayButtonAfterTimeoutState) {
           pendingButtonPopups[0].style.display = 'block';
           activePopup = buttonPopups[id];
         }
+        doNotDisplayButtonAfterTimeoutState = false;
       }, HOVER_TIMEOUT);
     }
   }
@@ -56,6 +60,7 @@ window.mouseLeaveToolkitButton = (event) => {
     }
     pendingButtonPopups.pop();
   }
+  doNotDisplayButtonAfterTimeoutState = false;
 };
 
 export { assignToolkitButtonHoverEvents, removeActiveButtonPopup };

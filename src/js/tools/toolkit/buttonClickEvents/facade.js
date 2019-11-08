@@ -11,6 +11,8 @@ import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorke
 import toggleLabelsVisibility from './facadeWorkers/toggleLabelsVisibilityWorker';
 import { zoomCanvas } from './facadeWorkers/zoomWorker';
 import switchImages from './facadeWorkers/switchImageWorker';
+import toggleSettingsPopUp from './facadeWorkers/toggleSettingsPopUpWorker';
+import triggerImageUpload from './facadeWorkers/uploadImageButtonWorker';
 
 let canvas = null;
 
@@ -46,7 +48,7 @@ function downloadXMLBtnClick() {
   downloadXMLFile(canvas);
 }
 
-function uploadImageBtnClick(uploadData) {
+function uploadImageInputClick(uploadData) {
   uploadImageFile(canvas, uploadData);
 }
 
@@ -70,6 +72,14 @@ function switchImageBtnClick(direction) {
   switchImages(direction);
 }
 
+function settingsBtnClick() {
+  toggleSettingsPopUp();
+}
+
+function uploadImageBtnClick() {
+  triggerImageUpload();
+}
+
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
@@ -81,8 +91,10 @@ export {
   movableObjectsBtnClick,
   toggleLabelsVisibilityBtnClick,
   downloadXMLBtnClick,
-  uploadImageBtnClick,
+  uploadImageInputClick,
   addPointsBtnClick,
   zoomBtnClick,
   switchImageBtnClick,
+  settingsBtnClick,
+  uploadImageBtnClick,
 };
