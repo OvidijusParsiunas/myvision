@@ -6,7 +6,7 @@ import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode'
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
-} from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;

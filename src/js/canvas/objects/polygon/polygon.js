@@ -6,7 +6,7 @@ import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
-} from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 let canvas = null;
 let pointArray = [];

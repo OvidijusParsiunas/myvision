@@ -3,7 +3,7 @@ import polygonProperties from '../properties';
 import {
   prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault,
 } from '../../objectsProperties/changeProperties';
-import { getDefaultState, getAddingPolygonPointsState } from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { getDefaultState, getAddingPolygonPointsState } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) {
   let pointId = 0;

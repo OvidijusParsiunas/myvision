@@ -43,5 +43,3 @@ Initial images on canvas should not take up the full screen
 Highlight the current image you are on
 
 Window dim should restrict the use of the entire window
-
-Curve the popup box edges

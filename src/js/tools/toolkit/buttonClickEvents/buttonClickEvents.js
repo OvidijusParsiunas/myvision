@@ -5,14 +5,14 @@ import {
   uploadImageBtnClick, resetCanvasEventsToDefault,
   movableObjectsBtnClick, continuousDrawingBtnClick,
   toggleLabelsVisibilityBtnClick, zoomBtnClick, switchImageBtnClick,
-} from './buttonEvents/facade';
+} from './facade';
 import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
   doNothingIfLabellingInProgress, interruptNewShapeDrawingWthFunc1OrExecFunc2,
   doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
   replaceExistingCanvas,
-} from './buttonMiddleware/buttonMiddleware';
-import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from './buttonEvents/facadeWorkersUtils/stateManager';
+} from '../buttonMiddleware/buttonMiddleware';
+import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from './facadeWorkersUtils/stateManager';
 
 function offset(el) {
   var rect = el.getBoundingClientRect(),
@@ -22,7 +22,7 @@ function offset(el) {
 }
 
 
-function assignToolkitButtonEvents() {
+function assignToolkitButtonClickEvents() {
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = interruptAllCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
   window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);
@@ -55,6 +55,7 @@ function assignToolkitButtonEvents() {
       setSettingsPopUpOpenState(false);
     }
   };
+
   window.minimiseTextAndIcons = () => {
     const textElements = document.getElementsByClassName('tools-button-text');
     console.log(textElements);
@@ -67,59 +68,6 @@ function assignToolkitButtonEvents() {
       iconElements[i].style.width = '30px';
     }
   };
-
-  const buttonPopups = {
-    default: document.getElementById('default-button-popup'),
-    boundingBox: document.getElementById('bounding-box-button-popup'),
-    polygon: document.getElementById('polygon-button-popup'),
-    addPoints: document.getElementById('add-points-button-popup'),
-    removePoints: document.getElementById('remove-points-button-popup'),
-    removeShape: document.getElementById('remove-shape-button-popup'),
-    downloadDatasets: document.getElementById('download-datasets-button-popup'),
-    zoomIn: document.getElementById('zoom-in-button-popup'),
-    zoomOut: document.getElementById('zoom-out-button-popup'),
-    uploadImages: document.getElementById('upload-images-button-popup'),
-    settings: document.getElementById('settings-button-popup'),
-  };
-
-  const HOVER_TIMEOUT = 500;
-  const SWITCH_BUTTON_DISPLAY_PERSISTANCE_TIMEOUT = 200;
-
-  let activePopup = null;
-  let persistButtonPopupDisplay = false;
-  const pendingButtonPopups = [];
-
-  window.mouseEnterToolkitButton = (event, id) => {
-    if (event.target.tagName === 'BUTTON') {
-      pendingButtonPopups.unshift(buttonPopups[id]);
-      if (persistButtonPopupDisplay) {
-        pendingButtonPopups[0].style.display = 'block';
-        activePopup = buttonPopups[id];
-      } else {
-        setTimeout(() => {
-          if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]) {
-            pendingButtonPopups[0].style.display = 'block';
-            activePopup = buttonPopups[id];
-          }
-        }, HOVER_TIMEOUT);
-      }
-    }
-  };
-
-  // upload image and potentially download datasets events should remove the active popups
-  window.mouseLeaveToolkitButton = (event) => {
-    if (event.target.tagName === 'BUTTON') {
-      if (activePopup !== null) {
-        activePopup.style.display = 'none';
-        activePopup = null;
-        persistButtonPopupDisplay = true;
-        setTimeout(() => {
-          persistButtonPopupDisplay = false;
-        }, SWITCH_BUTTON_DISPLAY_PERSISTANCE_TIMEOUT);
-      }
-      pendingButtonPopups.pop();
-    }
-  };
 }
 
-export { assignToolkitButtonEvents as default };
+export { assignToolkitButtonClickEvents as default };

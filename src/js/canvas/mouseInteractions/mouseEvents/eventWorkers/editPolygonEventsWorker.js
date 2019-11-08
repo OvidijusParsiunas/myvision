@@ -10,7 +10,7 @@ import labelProperies from '../../../objects/label/properties';
 import {
   setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
   getRemovingPointsAfterCancelDrawState, getCurrentZoomState, getDoubleScrollCanvasState,
-} from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+} from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
 

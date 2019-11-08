@@ -7,7 +7,7 @@ import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/a
 import {
   setEditingLabelId, setNewShapeSelectedViaLabelListState, getDefaultState,
   getAddingPolygonPointsState, getSettingsPopUpOpenState, setSettingsPopUpOpenState,
-} from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+} from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,

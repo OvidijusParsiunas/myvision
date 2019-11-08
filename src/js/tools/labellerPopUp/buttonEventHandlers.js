@@ -1,7 +1,7 @@
 import { createLabelShape, removeTargetShape, isLabelling } from './labellingProcess';
-import { resetCanvasEventsToDefault } from '../toolkit/buttonEvents/facade';
+import { resetCanvasEventsToDefault } from '../toolkit/buttonClickEvents/facade';
 import { hideLabelPopUp } from './style';
-import { getContinuousDrawingState, getLastDrawingModeState, setHasDrawnShapeState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { getContinuousDrawingState, getLastDrawingModeState, setHasDrawnShapeState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';

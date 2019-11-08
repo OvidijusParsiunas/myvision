@@ -3,7 +3,7 @@ import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
 import labelProperties from '../label/properties';
 import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
-import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { addShape, addExistingShape } from './allShapes';
 
 let currentId = 0;

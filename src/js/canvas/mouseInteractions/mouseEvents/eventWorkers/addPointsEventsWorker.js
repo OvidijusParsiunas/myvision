@@ -10,7 +10,7 @@ import { resetCanvasEventsToDefault, setContinuousDrawingModeToLast } from '../r
 import {
   getContinuousDrawingState, getCancelledReadyToDrawState, getRemovingPointsAfterCancelDrawState,
   getCurrentZoomState, getDoubleScrollCanvasState,
-} from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+} from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;

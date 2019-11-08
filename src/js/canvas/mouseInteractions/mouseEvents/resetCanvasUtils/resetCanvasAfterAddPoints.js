@@ -1,6 +1,6 @@
 import {
   setAddingPolygonPointsState, setDefaultState,
-} from '../../../../tools/toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+} from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { resetAddPoints } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../cursorModes/defaultMode';
 import assignDefaultEvents from '../eventHandlers/defaultEventHandlers';

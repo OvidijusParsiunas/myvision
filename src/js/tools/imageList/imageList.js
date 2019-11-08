@@ -1,10 +1,10 @@
-import { drawImageFromList } from '../toolkit/buttonEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { drawImageFromList } from '../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
-import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
+import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeLabelListItems } from '../labelList/labelList';
-import { setDefaultState } from '../toolkit/buttonEvents/facadeWorkersUtils/stateManager';
+import { setDefaultState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 
 let imageListElement = null;

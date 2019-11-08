@@ -1,4 +1,4 @@
-import { initiateZoomOverflowScroll } from '../toolkit/buttonEvents/facadeWorkers/zoomWorker';
+import { initiateZoomOverflowScroll } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 
 function assignWheelEvents() {
   const canvasWrapperParentElement = document.getElementById('canvas-wrapper-parent');
