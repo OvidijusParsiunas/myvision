@@ -1,3 +1,5 @@
+import { getSettingsPopUpOpenState } from '../buttonClickEvents/facadeWorkersUtils/stateManager';
+
 const buttonPopups = {};
 const HOVER_TIMEOUT = 500;
 const SWITCH_BUTTON_DISPLAY_PERSISTANCE_TIMEOUT = 200;
@@ -29,6 +31,11 @@ function removeActiveButtonPopup() {
   }
 }
 
+function displaySettingsPopup(id) {
+  pendingButtonPopups[0].style.display = 'block';
+  activePopup = buttonPopups[id];
+}
+
 window.mouseEnterToolkitButton = (event, id) => {
   if (event.target.tagName === 'BUTTON') {
     pendingButtonPopups.unshift(buttonPopups[id]);
@@ -39,8 +46,13 @@ window.mouseEnterToolkitButton = (event, id) => {
       setTimeout(() => {
         if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]
             && !doNotDisplayButtonAfterTimeoutState) {
-          pendingButtonPopups[0].style.display = 'block';
-          activePopup = buttonPopups[id];
+          if (event.target.id === 'settingsButton') {
+            if (!getSettingsPopUpOpenState()) {
+              displaySettingsPopup(id);
+            }
+          } else {
+            displaySettingsPopup(id);
+          }
         }
         doNotDisplayButtonAfterTimeoutState = false;
       }, HOVER_TIMEOUT);
