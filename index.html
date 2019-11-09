@@ -58,7 +58,7 @@
     <!-- the popup should disappear on clicking away -->
     <!-- should slide out nicely on click -->
     <!-- divider between different sections of the left side bar -->
-    <div id="settings-popup" class="settings-popup-item" style="position: absolute; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
+    <div id="settings-popup" class="settings-popup-item" style="position: absolute; border-radius: 3px; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
       <table id="settings-table" class="settings-popup-item">
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Movable Objects</div> <input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="movableObjects()" checked></td></tr>
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="continuousDrawing()"></td></tr>
@@ -172,15 +172,17 @@
     <div class="tools-button-hover-popup" id="settings-button-popup">Settings</div>
     </div>
     <div id="right-side-bar">
-      <div class="right-side-bar-component"> 
-        <div class="right-side-bar-component-title">Labels:</div>
-        <table id="label-list" onscroll="labelListScroll()">
-        </table>
-      </div>
-      <div class="right-side-bar-component"> 
-        <div class="right-side-bar-component-title">Uploads:</div>
-        <table id="image-list">
-        </table>
+      <div id="right-side-bar-components">
+        <div id="labels-list-component" class="right-side-bar-component"> 
+          <div class="right-side-bar-component-title">Labels:</div>
+          <table id="label-list" onscroll="labelListScroll()">
+          </table>
+        </div>
+        <div id="image-list-component" class="right-side-bar-component"> 
+          <div class="right-side-bar-component-title">Uploads:</div>
+          <table id="image-list">
+          </table>
+        </div>
       </div>
     </div>
     <!-- Paste the following into style to floor it -->
