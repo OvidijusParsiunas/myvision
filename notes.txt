@@ -44,7 +44,6 @@ Toolkit button functionality for getting smaller with the screen should be done 
 
 Escape button should close the settings popup
 
-Attempt to introduce padding to the items in the label list
 Create padding for the visibility icon on the left
 Create bottom border for when there is y overflow
 
