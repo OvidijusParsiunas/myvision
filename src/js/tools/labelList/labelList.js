@@ -119,7 +119,7 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
       <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
       <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
   </div>
-    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="labelTextInput(innerHTML, this, event)" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="labelTextInput(innerHTML, this, event)" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
     </div>

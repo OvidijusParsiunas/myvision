@@ -2,7 +2,7 @@
 }
 
 #popup-label-input {
-  width: 150px;
+  width: 162px;
   border: thin ridge grey;
   margin: 5px 5px 5px 5px;
   font-family: sans-serif;
@@ -22,12 +22,13 @@
 }
 
 .dropdown-content {
+  margin-left: 31px;
   padding-top: 3px;
   padding-bottom: 3px;
   display: none;
   position: absolute;
   background-color: white;
-  width: 151px;
+  width: 171px;
   overflow-y: auto;
   overflow-x: auto;
   border: thin solid grey;
@@ -120,7 +121,7 @@
   margin-top: 3px;
   display: block;
   overflow-x: auto;
-  width: 153px;
+  width: 165px;
   overflow-y: auto;
   border: thin ridge grey;
   height: 95px;
@@ -131,11 +132,34 @@
   cursor: default;
 }
 
+#popup-label-buttons {
+  text-align: center;
+}
+
 #popup-submit-button {
   margin-left: 5px;
+  margin-bottom: 4px;
+  margin-top: 5px;
+  padding-top: 6px;
+  width: 60px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+  background-color: rgb(238, 238, 238);
+  display: inline-block;
+}
+
+#popup-cancel-button {
   margin-right: 5px;
   margin-bottom: 4px;
   margin-top: 5px;
+  padding-top: 6px;
+  width: 60px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+  background-color: rgb(238, 238, 238);
+  display: inline-block;
 }
 
 #left-side-bar {
@@ -156,10 +180,10 @@
 
 #right-side-bar {
   width: 208px;
-  padding-top: 25px;
+  padding-top: 8px;
   float: right;
   background-color: white;
-  height: calc(100vh - 55px);
+  height: calc(100vh - 38px);
   border-right: solid;
   border-left: solid;
   border-width: 1px;
@@ -195,7 +219,7 @@
 }
 
 #label-list {
-  width: 209px;
+  width: 208px;
 }
 
 /* update these when changing the left side bar width */

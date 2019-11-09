@@ -44,7 +44,6 @@ Toolkit button functionality for getting smaller with the screen should be done 
 
 Escape button should close the settings popup
 
-Create padding for the visibility icon on the left
 Create bottom border for when there is y overflow
 
 Things to check for optimal UX:
@@ -52,3 +51,7 @@ Should the switch images section be located at the top or bot of the screen:
     index.html
 Should the canvas fill up the entire screen when displaying images:
     drawImagesOnCanvas.js
+
+should be able to select labels in add/remove point modes
+
+increase label popup height when width has overflown
