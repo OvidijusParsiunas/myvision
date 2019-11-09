@@ -31,28 +31,37 @@ function removeActiveButtonPopup() {
   }
 }
 
-function displaySettingsPopup(id) {
-  pendingButtonPopups[0].style.display = 'block';
-  activePopup = buttonPopups[id];
+function displaySettingsPopup(middlewareCheck, id) {
+  if (middlewareCheck()) {
+    pendingButtonPopups[0].style.display = 'block';
+    activePopup = buttonPopups[id];
+  }
+}
+
+function checkIfSettingsButtonNotUp(event) {
+  if (event.target.id === 'settingsButton') {
+    if (!getSettingsPopUpOpenState()) {
+      return true;
+    }
+    return false;
+  }
+  return true;
+}
+
+function settingsPopUpMiddleware(event) {
+  return checkIfSettingsButtonNotUp(event);
 }
 
 window.mouseEnterToolkitButton = (event, id) => {
   if (event.target.tagName === 'BUTTON') {
     pendingButtonPopups.unshift(buttonPopups[id]);
     if (persistButtonPopupDisplay) {
-      pendingButtonPopups[0].style.display = 'block';
-      activePopup = buttonPopups[id];
+      displaySettingsPopup(settingsPopUpMiddleware.bind(this, event), id);
     } else {
       setTimeout(() => {
         if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]
             && !doNotDisplayButtonAfterTimeoutState) {
-          if (event.target.id === 'settingsButton') {
-            if (!getSettingsPopUpOpenState()) {
-              displaySettingsPopup(id);
-            }
-          } else {
-            displaySettingsPopup(id);
-          }
+          displaySettingsPopup(checkIfSettingsButtonNotUp.bind(this, event), id);
         }
         doNotDisplayButtonAfterTimeoutState = false;
       }, HOVER_TIMEOUT);

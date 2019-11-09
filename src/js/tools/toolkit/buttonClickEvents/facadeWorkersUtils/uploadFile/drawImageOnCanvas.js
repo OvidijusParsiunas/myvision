@@ -54,6 +54,11 @@ function resizeWhenImageExceedsMaxHeight() {
 function resizeWhenImageExceedsMaxWidth(imageDimensions) {
   const newImageDimensions = {};
   const widthRatio = canvasProperties.maximumCanvasWidth / imageDimensions.width;
+  /*
+    code for not filling up the entire screen with the canvas
+     newImageDimensions.width = canvasProperties.maximumCanvasWidth - 20;
+     newImageDimensions.height = imageDimensions.height * widthRatio - 20;
+  */
   newImageDimensions.width = canvasProperties.maximumCanvasWidth;
   newImageDimensions.height = imageDimensions.height * widthRatio;
   return newImageDimensions;
