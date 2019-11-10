@@ -30,7 +30,7 @@ https://github.com/kyamagu/js-segment-annotator
 The following repo does use fabricjs, but to only draw a line;
 https://github.com/AKSHAYUBHAT/ImageSegmentation
 
-consider using pretrained models to auto-label the images
+consider using pretrained models to auto-lab`el the images
 
 display real-time image segment when drawing a shape. In the labels section.
 
@@ -56,4 +56,4 @@ should be able to select labels in add/remove point modes
 
 increase label popup height when width has overflown
 
-settings popup should not overflow when the screen size is small
+When typing in the labeller popup or have selected an item, highlight the Submit button (maybe border)
