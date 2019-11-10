@@ -55,3 +55,5 @@ Should the canvas fill up the entire screen when displaying images:
 should be able to select labels in add/remove point modes
 
 increase label popup height when width has overflown
+
+settings popup should not overflow when the screen size is small
