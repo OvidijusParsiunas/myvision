@@ -42,7 +42,7 @@ function resetLabelOptionsListScroll() {
   labellerPopupLabelOptionsElement.scrollLeft = 0;
 }
 
-function hasScrollbar() {
+function windowHasScrollbar() {
   // For most browsers
   if (typeof window.innerWidth === 'number') {
     return window.innerWidth > document.documentElement.clientWidth;
@@ -96,6 +96,15 @@ function hideLabelPopUp() {
   popupLabelParentElement.style.display = 'none';
 }
 
+function validateFullPopUpVisibile() {
+  if (windowHasScrollbar()) {
+    popupLabelParentElement.style.top = '';
+    popupLabelParentElement.style.bottom = '5px';
+  } else {
+    popupLabelParentElement.style.bottom = '';
+  }
+}
+
 function showLabelPopUp() {
   dimWindow();
   popupLabelParentElement = document.getElementById('popup-label-parent');
@@ -105,12 +114,7 @@ function showLabelPopUp() {
   deleteAndAddLastRowToRefreshDiv();
   popupLabelParentElement.style.display = 'block';
   resetLabelOptionsListScroll();
-  if (hasScrollbar()) {
-    popupLabelParentElement.style.top = '';
-    popupLabelParentElement.style.bottom = '5px';
-  } else {
-    popupLabelParentElement.style.bottom = '';
-  }
+  validateFullPopUpVisibile();
   window.setTimeout(() => {
     getLabelPopUp().select();
     highlightInitialLabelOptionOnInit();
