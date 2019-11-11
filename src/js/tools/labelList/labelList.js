@@ -46,6 +46,7 @@ let lastSelectedLabelOption = null;
 let originalLabelText = null;
 let availableListOptions = [];
 let labelListELementHorizontalScrollPresent = false;
+let labelsListOverfowParentElement = null;
 
 // refactor label popup label options element manipulation code
 
@@ -58,6 +59,7 @@ let labelListELementHorizontalScrollPresent = false;
 
 function findLabelListElement() {
   labelListElement = document.getElementById('label-list');
+  labelsListOverfowParentElement = document.getElementById('labels-list-overflow-parent');
 }
 
 function findPopupElement() {
@@ -179,10 +181,12 @@ function scrollHorizontallyToAppropriateWidth(text) {
   const context = myCanvas.getContext('2d');
   context.font = '16pt Times New Roman';
   const metrics = context.measureText(text);
+  console.log(metrics.width);
   if (metrics.width > 160) {
-    labelListElement.scrollLeft = metrics.width - 150;
+    console.log(labelListElement);
+    labelsListOverfowParentElement.scrollLeft = 900;
   } else {
-    labelListElement.scrollLeft = 0;
+    labelsListOverfowParentElement.scrollLeft = 0;
   }
   myCanvas = null;
 }
@@ -297,9 +301,9 @@ function initLabelEditing(id) {
   // }
   originalLabelText = activeLabelTextElement.innerHTML;
   availableListOptions = getLabelOptions();
-  currentTableElementScrollPosition = labelListElement.scrollTop;
-  labelListELementHorizontalScrollPresent = labelListElement.scrollWidth
-    > labelListElement.clientWidth;
+  currentTableElementScrollPosition = labelsListOverfowParentElement.scrollTop;
+  labelListELementHorizontalScrollPresent = labelsListOverfowParentElement.scrollWidth
+    > labelsListOverfowParentElement.clientWidth;
   isEditingLabel = true;
 }
 
@@ -362,7 +366,7 @@ function resetLabelElement() {
   activeLabelTextElement.style.borderColor = 'transparent';
   activeLabelTextElement.style.paddingLeft = '';
   activeEditLabelButton.style.paddingRight = '5px';
-  labelListElement.scrollLeft = 0;
+  labelsListOverfowParentElement.scrollLeft = 0;
   setEditingLabelId(null);
   isLabelChanged = false;
 }
@@ -410,8 +414,8 @@ function highlightDropdownLabelOption(labelOptionsIndex, divIndex) {
 
 function wasHorizontalScrollCreated() {
   if (!labelListELementHorizontalScrollPresent
-    && labelListElement.scrollWidth > labelListElement.clientWidth) {
-    currentTableElementScrollPosition = labelListElement.scrollTop;
+    && labelsListOverfowParentElement.scrollWidth > labelsListOverfowParentElement.clientWidth) {
+    currentTableElementScrollPosition = labelsListOverfowParentElement.scrollTop;
     labelListELementHorizontalScrollPresent = true;
     positionDropDownCorrectlyOnScreen();
     return true;
@@ -519,7 +523,7 @@ window.onmousedown = (event) => {
 };
 
 window.labelListScroll = () => {
-  if (currentTableElementScrollPosition !== labelListElement.scrollTop) {
+  if (currentTableElementScrollPosition !== labelsListOverfowParentElement.scrollTop) {
     if (!wasHorizontalScrollCreated()) {
       if (activeDropdownElements && activeDropdownElements[0].classList.contains('show')) {
         addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);

@@ -57,3 +57,5 @@ should be able to select labels in add/remove point modes
 increase label popup height when width has overflown
 
 When typing in the labeller popup or have selected an item, highlight the Submit button (maybe border)
+
+Labels is scrolalble with the title

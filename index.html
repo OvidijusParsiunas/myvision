@@ -126,13 +126,16 @@
       <div id="right-side-bar-components">
         <div id="labels-list-component" class="right-side-bar-component"> 
           <div class="right-side-bar-component-title">Labels:</div>
-          <table id="label-list" onscroll="labelListScroll()">
-          </table>
+          <div id="labels-list-overflow-parent">
+            <table id="label-list" onscroll="labelListScroll()"></table>
+          </div>
         </div>
+        <!-- should be called images list -->
         <div id="image-list-component" class="right-side-bar-component"> 
           <div class="right-side-bar-component-title">Uploads:</div>
-          <table id="image-list">
-          </table>
+          <div id="image-list-overflow-parent">
+            <table id="image-list"></table>
+          </div>
         </div>
       </div>
     </div>

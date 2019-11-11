@@ -216,8 +216,6 @@
 .right-side-bar-component {
   display: block;
   left: 0;
-  overflow-x: auto;
-  overflow-y: auto;
   padding-top: 3px;
 }
 
@@ -229,13 +227,16 @@
   user-select: none;
 }
 
-#labels-list-component {
-  /* height: calc((100vh - 75px) / 2); */
-  height: calc((100vh - 250px) / 2);
+#labels-list-overflow-parent {
+  overflow-x: auto;
+  overflow-y: auto;
+  height: calc((100vh - 287px) / 2);
 }
 
-#image-list-component {
-  height: calc((100vh + 100px) / 2);
+#image-list-overflow-parent {
+  overflow-x: auto;
+  overflow-y: auto;
+  height: calc((100vh + 120px) / 2);
 }
 
 #label-list {
