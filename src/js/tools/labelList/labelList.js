@@ -181,9 +181,7 @@ function scrollHorizontallyToAppropriateWidth(text) {
   const context = myCanvas.getContext('2d');
   context.font = '16pt Times New Roman';
   const metrics = context.measureText(text);
-  console.log(metrics.width);
   if (metrics.width > 160) {
-    console.log(labelListElement);
     labelsListOverfowParentElement.scrollLeft = 900;
   } else {
     labelsListOverfowParentElement.scrollLeft = 0;
