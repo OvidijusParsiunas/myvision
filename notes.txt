@@ -58,4 +58,4 @@ increase label popup height when width has overflown
 
 When typing in the labeller popup or have selected an item, highlight the Submit button (maybe border)
 
-Within the label list, the horizontal scroll bar appears even when there is no real word overflow
+Remove shape doesn't remove the label from the list

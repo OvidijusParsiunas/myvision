@@ -182,7 +182,7 @@ function scrollHorizontallyToAppropriateWidth(text) {
   context.font = '16pt Times New Roman';
   const metrics = context.measureText(text);
   if (metrics.width > 160) {
-    labelsListOverfowParentElement.scrollLeft = 900;
+    labelsListOverfowParentElement.scrollLeft = metrics.width - 150;
   } else {
     labelsListOverfowParentElement.scrollLeft = 0;
   }
@@ -283,6 +283,8 @@ function prepareLabelDivForEditing(id) {
   activeLabelId = id;
   setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
+  activeDropdownElements[0].style.marginLeft = `${31 - labelsListOverfowParentElement.scrollLeft}px`;
+  activeDropdownElements[0].style.width = `${(labelsListOverfowParentElement.scrollLeft) + 171}px`;
   activeDropdownElements[0].classList.toggle('show');
   activeDropdownElements[0].scrollTop = 0;
   activeDropdownElements[0].scrollLeft = 0;
