@@ -283,8 +283,11 @@ function prepareLabelDivForEditing(id) {
   activeLabelId = id;
   setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
-  activeDropdownElements[0].style.marginLeft = `${31 - labelsListOverfowParentElement.scrollLeft}px`;
-  activeDropdownElements[0].style.width = `${(labelsListOverfowParentElement.scrollLeft) + 171}px`;
+  const labelListElementScrollLeftVSDropdownMarginLeft = Math.max(0,
+    31 - labelsListOverfowParentElement.scrollLeft);
+  const labelListElementScrollLeftVSDropdownWidth = labelsListOverfowParentElement.scrollLeft + 171;
+  activeDropdownElements[0].style.marginLeft = `${labelListElementScrollLeftVSDropdownMarginLeft}px`;
+  activeDropdownElements[0].style.width = `${labelListElementScrollLeftVSDropdownWidth}px`;
   activeDropdownElements[0].classList.toggle('show');
   activeDropdownElements[0].scrollTop = 0;
   activeDropdownElements[0].scrollLeft = 0;
