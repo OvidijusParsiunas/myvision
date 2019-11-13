@@ -64,3 +64,5 @@ Make sure the dropdown from the label list doesn't expand too much (use absolute
 When typing in the label edit section, make sure the dropdown width changes accordingly
 
 Bug: when you make label text too long, then go back to normal, the algorithm attempts to scroll left anyway
+
+The label lists are not working correctly when switching images, used a rectangle and a polygon.
