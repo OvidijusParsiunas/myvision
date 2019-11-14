@@ -427,12 +427,9 @@ function wasHorizontalScrollCreated() {
 }
 
 function removeLabelListItems() {
-  console.log('called');
   const newtbody = document.createElement('tbody');
-  console.log(labelListElement);
-  console.log(labelListElement.childNodes[0]);
-  if (labelListElement.childNodes[1]) {
-    labelListElement.replaceChild(newtbody, labelListElement.childNodes[1]);
+  if (labelListElement.childNodes[0]) {
+    labelListElement.replaceChild(newtbody, labelListElement.childNodes[0]);
   }
 }
 
