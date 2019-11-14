@@ -165,7 +165,7 @@ function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
 function removeLabelFromListOnShapeDelete(id) {
   if (id != null) {
     let index = 0;
-    const tableList = labelListElement.childNodes[1].childNodes;
+    const tableList = labelListElement.childNodes[0].childNodes;
     while (index !== tableList.length) {
       if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
         tableList[index].remove();
