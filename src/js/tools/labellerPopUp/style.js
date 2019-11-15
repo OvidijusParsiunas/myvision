@@ -4,6 +4,7 @@ let popupLabelParentElement = null;
 let labellerPopupLabelOptionsElement = null;
 let baseDiv = null;
 let mouseProperties = {};
+let horizontalScrollPresent = false;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -19,12 +20,22 @@ function addLabelToList(labelText, color) {
   cell.appendChild(labelElement);
 }
 
+function changeTableHeightIfHorizontalScrollPresent() {
+  if (!horizontalScrollPresent
+  && labellerPopupLabelOptionsElement.scrollWidth > labellerPopupLabelOptionsElement.clientWidth) {
+    labellerPopupLabelOptionsElement.style.height = '129px';
+    horizontalScrollPresent = true;
+  }
+}
+
 // should be in label list
 function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
-    labellerPopupLabelOptionsElement.style.height = '114px';
+    if (!horizontalScrollPresent) {
+      labellerPopupLabelOptionsElement.style.height = '114px';
+    }
   } else if (labelOptions.length === 7) {
     addLabelToList('temp horizontal');
   }
@@ -113,6 +124,7 @@ function showLabelPopUp() {
   getLabelOptions();
   deleteAndAddLastRowToRefreshDiv();
   popupLabelParentElement.style.display = 'block';
+  changeTableHeightIfHorizontalScrollPresent();
   resetLabelOptionsListScroll();
   validateFullPopUpVisibile();
   window.setTimeout(() => {

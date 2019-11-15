@@ -54,6 +54,7 @@ function selectLabelOption(text, element) {
   element.id = 'used';
   currentlySelectedLabelOption = element;
   textInputElement.value = text;
+  changeSubmitButtonStyling();
 }
 
 function inputKeyDown(event) {
