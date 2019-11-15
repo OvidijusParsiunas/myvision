@@ -7,13 +7,23 @@ import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/bound
 import { getLabelOptions } from '../labelList/labelOptions';
 
 let textInputElement = null;
+let submitButtonElement = null;
 let popupLabelOptions = null;
 let popupLabelOptionsIndex = 1;
 let currentlySelectedLabelOption = null;
 
+function changeSubmitButtonStyling() {
+  if (textInputElement.value !== '' && textInputElement.value !== 'new label') {
+    submitButtonElement.style.backgroundColor = 'rgb(205, 232, 205)';
+  } else {
+    submitButtonElement.style.backgroundColor = '';
+  }
+}
+
 function prepareLabelPopupElements() {
   textInputElement = document.getElementById('popup-label-input');
   popupLabelOptions = document.getElementById('popup-label-options');
+  submitButtonElement = document.getElementById('popup-submit-button');
 }
 
 function labelShape() {
@@ -66,6 +76,7 @@ function inputKeyDown(event) {
           break;
         }
       }
+      changeSubmitButtonStyling();
     }, 0);
   }
 }

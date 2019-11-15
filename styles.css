@@ -164,7 +164,7 @@
 }
 
 #popup-submit-button:hover {
-  background-color: #9ed49f;
+  background-color: #9ed49f !important;
 }
 
 #popup-cancel-button:hover {
@@ -172,7 +172,7 @@
 }
 
 #popup-submit-button:active {
-  background-color: #43b543;
+  background-color: #43b543 !important;
 }
 
 #popup-cancel-button:active {

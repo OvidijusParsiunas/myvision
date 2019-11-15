@@ -176,13 +176,22 @@ function removeLabelFromListOnShapeDelete(id) {
   }
 }
 
+// test this in different browsers
+function getDefaultFont() {
+  const defaultSyle = window.getComputedStyle(activeLabelTextElement, null);
+  const size = defaultSyle.getPropertyValue('font-size');
+  const fontFamily = defaultSyle.getPropertyValue('font-family');
+  return `${size} ${fontFamily}`;
+}
+
 function scrollHorizontallyToAppropriateWidth(text) {
   let myCanvas = document.createElement('canvas');
   const context = myCanvas.getContext('2d');
-  context.font = '16pt Times New Roman';
+  // find a way to get the font
+  context.font = getDefaultFont();
   const metrics = context.measureText(text);
-  if (metrics.width > 160) {
-    labelsListOverfowParentElement.scrollLeft = metrics.width - 150;
+  if (metrics.width > 170) {
+    labelsListOverfowParentElement.scrollLeft = metrics.width - 165;
   } else {
     labelsListOverfowParentElement.scrollLeft = 0;
   }
@@ -272,6 +281,15 @@ function deleteAndAddLastRowToRefreshDropdownDiv(dropdownLabelsElement) {
   }, 0);
 }
 
+function changeActiveDropdownElementStyling() {
+  const labelListElementScrollLeftVSDropdownMarginLeft = Math.max(-4,
+    31 - labelsListOverfowParentElement.scrollLeft);
+  const labelListElementScrollLeftVSDropdownWidth = Math.min(206,
+    171 + labelsListOverfowParentElement.scrollLeft);
+  activeDropdownElements[0].style.marginLeft = `${labelListElementScrollLeftVSDropdownMarginLeft}px`;
+  activeDropdownElements[0].style.width = `${labelListElementScrollLeftVSDropdownWidth}px`;
+}
+
 function prepareLabelDivForEditing(id) {
   activeLabelTextElement = document.getElementById(`labelText${id}`);
   activeLabelTextElement.contentEditable = true;
@@ -283,11 +301,7 @@ function prepareLabelDivForEditing(id) {
   activeLabelId = id;
   setEndOfContentEditable(activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
-  const labelListElementScrollLeftVSDropdownMarginLeft = Math.max(0,
-    31 - labelsListOverfowParentElement.scrollLeft);
-  const labelListElementScrollLeftVSDropdownWidth = labelsListOverfowParentElement.scrollLeft + 171;
-  activeDropdownElements[0].style.marginLeft = `${labelListElementScrollLeftVSDropdownMarginLeft}px`;
-  activeDropdownElements[0].style.width = `${labelListElementScrollLeftVSDropdownWidth}px`;
+  changeActiveDropdownElementStyling();
   activeDropdownElements[0].classList.toggle('show');
   activeDropdownElements[0].scrollTop = 0;
   activeDropdownElements[0].scrollLeft = 0;
@@ -455,6 +469,7 @@ window.labelTextKeyDown = (event) => {
         highlightDropdownLabelOption(lastLabelOptionIndex, lastLabelOptionIndex * 2 + 1);
       }
     }
+    changeActiveDropdownElementStyling();
   }, 0);
 };
 
