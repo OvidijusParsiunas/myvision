@@ -57,11 +57,33 @@ function selectLabelOption(text, element) {
   changeSubmitButtonStyling();
 }
 
+function setCaretPosition(caretPos) {
+  textInputElement.value = textInputElement.value;
+  if (textInputElement.createTextRange) {
+    const range = textInputElement.createTextRange();
+    range.move('character', caretPos);
+    range.select();
+    return true;
+  }
+  if (textInputElement.selectionStart || textInputElement.selectionStart === 0) {
+    textInputElement.focus();
+    textInputElement.setSelectionRange(caretPos, caretPos);
+    return true;
+  }
+  textInputElement.focus();
+  return false;
+}
+
 function inputKeyDown(event) {
   if (event.key === 'Enter') {
     labelShape();
   } else {
     window.setTimeout(() => {
+      if (event.code === 'Space') {
+        const initialCaretLocation = textInputElement.selectionStart;
+        textInputElement.value = textInputElement.value.replace(/\s/g, '-');
+        setCaretPosition(initialCaretLocation);
+      }
       if (currentlySelectedLabelOption) {
         currentlySelectedLabelOption.style.backgroundColor = '';
         currentlySelectedLabelOption.id = '';
@@ -82,7 +104,21 @@ function inputKeyDown(event) {
   }
 }
 
+function preprocessPastedText(text) {
+  const noReturnChars = text.replace(/\n|\r/g, '');
+  const spacesToHythons = noReturnChars.replace(/\s/g, '-');
+  return spacesToHythons;
+}
+
+function pasteLabelText() {
+  window.setTimeout(() => {
+    const initialCaretLocation = textInputElement.selectionStart;
+    textInputElement.value = preprocessPastedText(textInputElement.value);
+    setCaretPosition(initialCaretLocation);
+  }, 0);
+}
+
 export {
   labelShape, cancelLabellingProcess, inputKeyDown,
-  selectLabelOption, prepareLabelPopupElements,
+  selectLabelOption, prepareLabelPopupElements, pasteLabelText,
 };

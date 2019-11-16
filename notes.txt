@@ -42,7 +42,7 @@ Highlight the current image you are on
 
 Toolkit button functionality for getting smaller with the screen should be done when we know all of the buttons
 
-Escape button should close the settings popup
+Escape button should close the settings popup and cancel the labeller popup
 
 Create bottom border for when there is y overflow
 
@@ -54,4 +54,4 @@ Should the canvas fill up the entire screen when displaying images:
 
 should be able to select labels in add/remove point modes
 
-increase label popup height when width has overflown
+set labelling popup height relative to text or label option height

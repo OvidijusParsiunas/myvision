@@ -121,7 +121,7 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
       <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
       <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
   </div>
-    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="labelTextInput(innerHTML, this, event)" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="labelTextInput(this, event)" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
     </div>
@@ -226,12 +226,18 @@ function updateAssociatedLabelObjectsText(text) {
   changeShapeLabelText(activeLabelId, text);
 }
 
-function preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent) {
+function preprocessPastedText(text) {
+  const noReturnChars = text.replace(/(\r\n|\n|\r)/gm, '');
+  const spacesToHythons = noReturnChars.replace(/\s/g, '-');
+  return spacesToHythons;
+}
+
+function safeWhenPasteOrMovingTextFromCreatingNewLine(element, inputEvent) {
   let finalText = '';
   if (inputEvent.inputType === 'insertFromPaste') {
-    const noReturnCharactersText = element.innerHTML.replace(/(\r\n|\n|\r)/gm, '');
-    element.innerHTML = noReturnCharactersText;
-    finalText = noReturnCharactersText;
+    const preprocessedText = preprocessPastedText(element.innerHTML);
+    element.innerHTML = preprocessedText;
+    finalText = preprocessedText;
   } else {
     const temp = element.innerHTML;
     element.innerHTML = '';
@@ -362,12 +368,6 @@ function selectShapeBeforeLabelEdit(id) {
   activeLabelElementId = `labelId${id}`;
 }
 
-function trimLabelText() {
-  const trimmedText = activeLabelTextElement.innerHTML.trim();
-  activeLabelTextElement.innerHTML = trimmedText;
-  updateAssociatedLabelObjectsText(trimmedText);
-}
-
 function removeLabelDropDownContent() {
   if (activeDropdownElements[0].classList.contains('show')) {
     activeDropdownElements[0].classList.remove('show');
@@ -376,7 +376,6 @@ function removeLabelDropDownContent() {
 }
 
 function resetLabelElement() {
-  trimLabelText();
   removeLabelDropDownContent();
   activeLabelTextElement.contentEditable = false;
   activeLabelTextElement.style.backgroundColor = null;
@@ -453,6 +452,10 @@ window.labelTextKeyDown = (event) => {
     stopEditing();
   }
   window.setTimeout(() => {
+    if (event.code === 'Space') {
+      activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.replace(/\s/g, '-');
+      setEndOfContentEditable(activeLabelTextElement);
+    }
     if (lastSelectedLabelOption) {
       lastSelectedLabelOption.style.backgroundColor = '';
     }
@@ -623,12 +626,8 @@ window.labelEditBtnClick = (id, element) => {
   }
 };
 
-window.labelTextInput = (innerHTML, element, inputEvent) => {
-  if (element.offsetHeight > 30) {
-    preventPasteOrMoveTextFromCreatingNewLine(element, inputEvent);
-  } else {
-    updateAssociatedLabelObjectsText(innerHTML);
-  }
+window.labelTextInput = (element, inputEvent) => {
+  safeWhenPasteOrMovingTextFromCreatingNewLine(element, inputEvent);
   isLabelChanged = true;
 };
 

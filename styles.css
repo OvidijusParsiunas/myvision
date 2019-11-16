@@ -77,7 +77,6 @@
 .show {display: block;}
 
 .labelText {
-  white-space: pre;
   font-family: Arial;
   font-size: 15px;
 }

@@ -1,6 +1,6 @@
 import { initialiseLabelPopupOptionsList } from './style';
 import {
-  labelShape, selectLabelOption, prepareLabelPopupElements, inputKeyDown,
+  labelShape, selectLabelOption, prepareLabelPopupElements, inputKeyDown, pasteLabelText,
 } from './buttonEventHandlers';
 
 function initialiseLabellerPopUp() {
@@ -8,6 +8,7 @@ function initialiseLabellerPopUp() {
   initialiseLabelPopupOptionsList();
   window.labelShape = labelShape;
   window.popupInputKeyDown = inputKeyDown;
+  window.popupPaste = pasteLabelText;
   window.selectLabelOption = selectLabelOption;
 }
 

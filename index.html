@@ -34,7 +34,7 @@
     </div>    
     <div id="popup-label-parent" hidden>
       <div id="popup-label-title">Label name:</div>
-      <input type="text" id="popup-label-input" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="new label">
+      <input type="text" id="popup-label-input" onpaste="popupPaste()" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="new label">
       <table id="popup-label-options">
       </table>
       <div id="popup-label-buttons">

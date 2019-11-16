@@ -18,15 +18,9 @@ function removeTargetShape() {
   labellingState = false;
 }
 
-function getTrimmedLabelText() {
-  const rawText = getLabelPopUpText();
-  return rawText.trim();
-}
-
 function createLabelShape() {
-  const text = getTrimmedLabelText();
   hideLabelPopUp();
-  generateLabelShapeGroup(targetShape, text);
+  generateLabelShapeGroup(targetShape, getLabelPopUpText());
   resetObjectCursors(canvas);
   resetPopUpLabelOptions();
   labellingState = false;
