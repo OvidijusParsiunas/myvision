@@ -425,6 +425,7 @@ body {
   display: none;
   z-index: 2;
   border-radius: 4px;
+  user-select: none;
 }
 
 

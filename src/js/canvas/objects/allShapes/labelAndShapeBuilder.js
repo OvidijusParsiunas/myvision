@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
 import labelProperties from '../label/properties';
-import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
+import { addNewLabelToListFromPopUp, addExistingLabelToList, wasLabelListVerticalScrollCreated } from '../../../tools/labelList/labelList';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
 import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { addShape, addExistingShape } from './allShapes';
@@ -59,6 +59,7 @@ function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
   Object.keys(existingShapes).forEach((key) => {
     repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key);
   });
+  wasLabelListVerticalScrollCreated();
   canvas.renderAll();
 }
 
