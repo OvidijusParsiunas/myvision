@@ -55,3 +55,5 @@ Should the canvas fill up the entire screen when displaying images:
 should be able to select labels in add/remove point modes
 
 set labelling popup height relative to text or label option height
+
+when editing label and clicking scroll, should not close the editing process

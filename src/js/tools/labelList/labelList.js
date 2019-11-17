@@ -133,49 +133,6 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
-function addNewLabelToListFromPopUp(labelText, id, labelColor) {
-  const labelElement = initialiseParentElement();
-  labelElement.id = id;
-  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default');
-  const newRow = labelListElement.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(labelElement);
-  labelListElement.scrollLeft = 0;
-  repopulateDropdown();
-  cell.scrollIntoView();
-}
-
-function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
-  const labelElement = initialiseParentElement();
-  labelElement.id = id;
-  let visibility = null;
-  if (shapeVisible === true) {
-    visibility = 'default';
-  } else {
-    visibility = 'highlighted';
-  }
-  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, visibility);
-  const newRow = labelListElement.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(labelElement);
-  repopulateDropdown();
-  cell.scrollIntoView();
-}
-
-function removeLabelFromListOnShapeDelete(id) {
-  if (id != null) {
-    let index = 0;
-    const tableList = labelListElement.childNodes[0].childNodes;
-    while (index !== tableList.length) {
-      if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
-        tableList[index].remove();
-        break;
-      }
-      index += 1;
-    }
-  }
-}
-
 // test this in different browsers
 function getDefaultFont() {
   const defaultSyle = window.getComputedStyle(activeLabelTextElement, null);
@@ -198,13 +155,38 @@ function scrollHorizontallyToAppropriateWidth(text) {
   myCanvas = null;
 }
 
-function setEndOfContentEditable(contentEditableElement) {
+function getCaretPositionOnDiv(editableDiv) {
+  let currentCaretPosition = 0;
+  let range = null;
+  if (window.getSelection) {
+    const selection = window.getSelection();
+    if (selection.rangeCount) {
+      range = selection.getRangeAt(0);
+      if (range.commonAncestorContainer.parentNode === editableDiv) {
+        currentCaretPosition = range.endOffset;
+      }
+    }
+  } else if (document.selection && document.selection.createRange) {
+    range = document.selection.createRange();
+    if (range.parentElement() === editableDiv) {
+      const tempElement = document.createElement('span');
+      editableDiv.insertBefore(tempElement, editableDiv.firstChild);
+      const tempRange = range.duplicate();
+      tempRange.moveToElementText(tempRange);
+      tempRange.setEndPoint('EndToEnd', range);
+      currentCaretPosition = tempRange.text.length;
+    }
+  }
+  return currentCaretPosition;
+}
+
+function setCaretPositionOnDiv(index, contentEditableElement, space) {
   let range;
   if (document.createRange) {
     // Firefox, Chrome, Opera, Safari, IE 9+
     range = document.createRange();
-    range.selectNodeContents(contentEditableElement);
     // false means collapse to end rather than the start
+    range.setStart(contentEditableElement.childNodes[0], index);
     range.collapse(false);
     const selection = window.getSelection();
     // remove any selections already made
@@ -218,12 +200,9 @@ function setEndOfContentEditable(contentEditableElement) {
     // make it the visible selection
     range.select();
   }
-  scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML);
-}
-
-function updateAssociatedLabelObjectsText(text) {
-  changeLabelText(activeLabelId, text);
-  changeShapeLabelText(activeLabelId, text);
+  if (!space) {
+    scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML.substring(0, index));
+  }
 }
 
 function preprocessPastedText(text) {
@@ -232,20 +211,66 @@ function preprocessPastedText(text) {
   return spacesToHythons;
 }
 
-function safeWhenPasteOrMovingTextFromCreatingNewLine(element, inputEvent) {
-  let finalText = '';
-  if (inputEvent.inputType === 'insertFromPaste') {
-    const preprocessedText = preprocessPastedText(element.innerHTML);
-    element.innerHTML = preprocessedText;
-    finalText = preprocessedText;
+function pasteHandlerOnDiv(event) {
+  event.stopPropagation();
+  event.preventDefault();
+  const clipboardData = event.clipboardData || window.clipboardData;
+  const pastedData = clipboardData.getData('Text');
+  const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement);
+  const preprocessedPastedData = preprocessPastedText(pastedData);
+  activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.slice(0, currentCaretPosition)
+   + preprocessedPastedData + activeLabelTextElement.innerHTML.slice(currentCaretPosition);
+  setCaretPositionOnDiv(currentCaretPosition + pastedData.length, activeLabelTextElement);
+}
+
+function addNewLabelToListFromPopUp(labelText, id, labelColor) {
+  const labelElement = initialiseParentElement();
+  labelElement.id = id;
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default');
+  const newRow = labelListElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+  labelListElement.scrollLeft = 0;
+  labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
+  repopulateDropdown();
+  cell.scrollIntoView();
+}
+
+function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
+  const labelElement = initialiseParentElement();
+  labelElement.id = id;
+  let visibility = null;
+  if (shapeVisible === true) {
+    visibility = 'default';
   } else {
-    const temp = element.innerHTML;
-    element.innerHTML = '';
-    element.innerHTML = temp;
-    finalText = temp;
+    visibility = 'highlighted';
   }
-  setEndOfContentEditable(activeLabelTextElement);
-  updateAssociatedLabelObjectsText(finalText);
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, visibility);
+  const newRow = labelListElement.insertRow(-1);
+  const cell = newRow.insertCell(0);
+  cell.appendChild(labelElement);
+  labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
+  repopulateDropdown();
+  cell.scrollIntoView();
+}
+
+function removeLabelFromListOnShapeDelete(id) {
+  if (id != null) {
+    let index = 0;
+    const tableList = labelListElement.childNodes[0].childNodes;
+    while (index !== tableList.length) {
+      if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
+        tableList[index].remove();
+        break;
+      }
+      index += 1;
+    }
+  }
+}
+
+function updateAssociatedLabelObjectsText(text) {
+  changeLabelText(activeLabelId, text);
+  changeShapeLabelText(activeLabelId, text);
 }
 
 function addLabelToDropdown(labelText, dropdownLabelsElem, id, color) {
@@ -305,7 +330,7 @@ function prepareLabelDivForEditing(id) {
   activeEditLabelButton = document.getElementById(`editButton${id}`);
   activeEditLabelButton.style.paddingRight = '3px';
   activeLabelId = id;
-  setEndOfContentEditable(activeLabelTextElement);
+  setCaretPositionOnDiv(activeLabelTextElement.innerHTML.length, activeLabelTextElement);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   changeActiveDropdownElementStyling();
   activeDropdownElements[0].classList.toggle('show');
@@ -453,8 +478,9 @@ window.labelTextKeyDown = (event) => {
   }
   window.setTimeout(() => {
     if (event.code === 'Space') {
+      const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement);
       activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.replace(/\s/g, '-');
-      setEndOfContentEditable(activeLabelTextElement);
+      setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement);
     }
     if (lastSelectedLabelOption) {
       lastSelectedLabelOption.style.backgroundColor = '';
@@ -626,8 +652,8 @@ window.labelEditBtnClick = (id, element) => {
   }
 };
 
-window.labelTextInput = (element, inputEvent) => {
-  safeWhenPasteOrMovingTextFromCreatingNewLine(element, inputEvent);
+window.labelTextInput = (element) => {
+  updateAssociatedLabelObjectsText(element.innerHTML);
   isLabelChanged = true;
 };
 
