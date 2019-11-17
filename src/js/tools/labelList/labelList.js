@@ -121,7 +121,7 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
       <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
       <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
   </div>
-    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" onInput="labelTextInput(this, event)" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: grid;">${labelText}</div>
+    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
     </div>
@@ -144,7 +144,6 @@ function getDefaultFont() {
 function scrollHorizontallyToAppropriateWidth(text) {
   let myCanvas = document.createElement('canvas');
   const context = myCanvas.getContext('2d');
-  // find a way to get the font
   context.font = getDefaultFont();
   const metrics = context.measureText(text);
   if (metrics.width > 170) {
@@ -499,6 +498,8 @@ window.labelTextKeyDown = (event) => {
       }
     }
     changeActiveDropdownElementStyling();
+    updateAssociatedLabelObjectsText(activeLabelTextElement.innerHTML);
+    isLabelChanged = true;
   }, 0);
 };
 
@@ -650,11 +651,6 @@ window.labelEditBtnClick = (id, element) => {
     selectShapeBeforeLabelEdit(id);
     switchToHighlightedActiveIcon(element);
   }
-};
-
-window.labelTextInput = (element) => {
-  updateAssociatedLabelObjectsText(element.innerHTML);
-  isLabelChanged = true;
 };
 
 window.labelDblClicked = (id) => {
