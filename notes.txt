@@ -20,7 +20,6 @@ should alert the user when unsaved changes before leaving
 
 polyfill for scrollIntoViewIfNeeded for all browsers (only chrome right now)
 
-
 Decided not to use image segmentation because it works on pixel bases, where each and every boundary is drawn by an array of pixels
 However, can be achieved by generating an algorithm that will draw polygons based on the boundaries found on the pixels variable's value
 on line 318, file called as segment-annotator.js.
@@ -29,6 +28,9 @@ https://github.com/kyamagu/js-segment-annotator
 
 The following repo does use fabricjs, but to only draw a line;
 https://github.com/AKSHAYUBHAT/ImageSegmentation
+
+when editing label and clicking scroll, should not close the editing process, however not able to fix it
+as click event on the horizontal scroll identifies the target as the label list parent (required)
 
 consider using pretrained models to auto-lab`el the images
 
@@ -44,8 +46,6 @@ Toolkit button functionality for getting smaller with the screen should be done 
 
 Escape button should close the settings popup and cancel the labeller popup
 
-Create bottom border for when there is y overflow
-
 Things to check for optimal UX:
 Should the switch images section be located at the top or bot of the screen:
     index.html
@@ -55,5 +55,3 @@ Should the canvas fill up the entire screen when displaying images:
 should be able to select labels in add/remove point modes
 
 set labelling popup height relative to text or label option height
-
-when editing label and clicking scroll, should not close the editing process

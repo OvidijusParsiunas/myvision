@@ -3,7 +3,7 @@ import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/al
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { removeLabelListItems } from '../labelList/labelList';
+import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 
@@ -60,7 +60,7 @@ function saveAndRemoveCurrentImageDetails() {
     images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
     images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
   }
-  removeLabelListItems();
+  removeAllLabelListItems();
   const timesZoomedOut = resetZoom(false);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
     images[currentlySelectedImageId].labels, timesZoomedOut);
@@ -92,7 +92,7 @@ function changeToExistingImage(id) {
   setDefaultState(false);
   images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-  removeLabelListItems();
+  removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
   drawImageFromList(images[id].data);

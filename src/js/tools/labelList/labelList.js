@@ -45,8 +45,10 @@ let popuplabelOptionsElement = null;
 let lastSelectedLabelOption = null;
 let originalLabelText = null;
 let availableListOptions = [];
-let labelListELementHorizontalScrollPresent = false;
 let labelsListOverfowParentElement = null;
+let labelListELementHorizontalScrollPresent = false;
+let labelListELementVerticalScrollPresent = false;
+let imageListOverflowParentElement = null;
 
 // refactor label popup label options element manipulation code
 
@@ -60,6 +62,7 @@ let labelsListOverfowParentElement = null;
 function findLabelListElement() {
   labelListElement = document.getElementById('label-list');
   labelsListOverfowParentElement = document.getElementById('labels-list-overflow-parent');
+  imageListOverflowParentElement = document.getElementById('image-list-overflow-parent');
 }
 
 function findPopupElement() {
@@ -154,15 +157,19 @@ function scrollHorizontallyToAppropriateWidth(text) {
   myCanvas = null;
 }
 
-function getCaretPositionOnDiv(editableDiv) {
-  let currentCaretPosition = 0;
+function getCaretPositionOnDiv(editableDiv, paste) {
+  const currentCaretPosition = { position: 0, highlightRangeOnPaste: 0 };
   let range = null;
   if (window.getSelection) {
     const selection = window.getSelection();
     if (selection.rangeCount) {
       range = selection.getRangeAt(0);
       if (range.commonAncestorContainer.parentNode === editableDiv) {
-        currentCaretPosition = range.endOffset;
+        currentCaretPosition.position = range.endOffset;
+      }
+      if (paste) {
+        currentCaretPosition.highlightRangeOnPaste = Math.abs(selection.focusOffset
+          - selection.anchorOffset);
       }
     }
   } else if (document.selection && document.selection.createRange) {
@@ -173,7 +180,7 @@ function getCaretPositionOnDiv(editableDiv) {
       const tempRange = range.duplicate();
       tempRange.moveToElementText(tempRange);
       tempRange.setEndPoint('EndToEnd', range);
-      currentCaretPosition = tempRange.text.length;
+      currentCaretPosition.position = tempRange.text.length;
     }
   }
   return currentCaretPosition;
@@ -204,6 +211,19 @@ function setCaretPositionOnDiv(index, contentEditableElement, space) {
   }
 }
 
+function wasLabelListVerticalScrollCreated() {
+  if (!labelListELementVerticalScrollPresent
+    && labelsListOverfowParentElement.scrollHeight > labelsListOverfowParentElement.clientHeight) {
+    labelsListOverfowParentElement.style.borderBottom = 'solid 1px #cccccc';
+    imageListOverflowParentElement.style.height = 'calc(((100vh + 119px) / 2)';
+    labelListELementVerticalScrollPresent = true;
+  } else {
+    labelsListOverfowParentElement.style.borderBottom = '';
+    imageListOverflowParentElement.style.height = 'calc(((100vh + 120px) / 2)';
+    labelListELementVerticalScrollPresent = false;
+  }
+}
+
 function preprocessPastedText(text) {
   const noReturnChars = text.replace(/(\r\n|\n|\r)/gm, '');
   const spacesToHythons = noReturnChars.replace(/\s/g, '-');
@@ -215,11 +235,13 @@ function pasteHandlerOnDiv(event) {
   event.preventDefault();
   const clipboardData = event.clipboardData || window.clipboardData;
   const pastedData = clipboardData.getData('Text');
-  const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement);
+  const caretOnPaste = getCaretPositionOnDiv(activeLabelTextElement, true);
+  const caretPositionEnd = caretOnPaste.position;
+  const caretPositionStart = caretPositionEnd - caretOnPaste.highlightRangeOnPaste;
   const preprocessedPastedData = preprocessPastedText(pastedData);
-  activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.slice(0, currentCaretPosition)
-   + preprocessedPastedData + activeLabelTextElement.innerHTML.slice(currentCaretPosition);
-  setCaretPositionOnDiv(currentCaretPosition + pastedData.length, activeLabelTextElement);
+  activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.slice(0, caretPositionStart)
+   + preprocessedPastedData + activeLabelTextElement.innerHTML.slice(caretPositionEnd);
+  setCaretPositionOnDiv(caretPositionStart + pastedData.length, activeLabelTextElement);
 }
 
 function addNewLabelToListFromPopUp(labelText, id, labelColor) {
@@ -233,6 +255,7 @@ function addNewLabelToListFromPopUp(labelText, id, labelColor) {
   labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
   repopulateDropdown();
   cell.scrollIntoView();
+  wasLabelListVerticalScrollCreated();
 }
 
 function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
@@ -251,6 +274,7 @@ function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
   labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
   repopulateDropdown();
   cell.scrollIntoView();
+  wasLabelListVerticalScrollCreated();
 }
 
 function removeLabelFromListOnShapeDelete(id) {
@@ -265,6 +289,7 @@ function removeLabelFromListOnShapeDelete(id) {
       index += 1;
     }
   }
+  wasLabelListVerticalScrollCreated();
 }
 
 function updateAssociatedLabelObjectsText(text) {
@@ -452,7 +477,7 @@ function highlightDropdownLabelOption(labelOptionsIndex, divIndex) {
   lastSelectedLabelOption.scrollIntoViewIfNeeded();
 }
 
-function wasHorizontalScrollCreated() {
+function wasLabelListHorizontalScrollCreated() {
   if (!labelListELementHorizontalScrollPresent
     && labelsListOverfowParentElement.scrollWidth > labelsListOverfowParentElement.clientWidth) {
     currentTableElementScrollPosition = labelsListOverfowParentElement.scrollTop;
@@ -463,10 +488,11 @@ function wasHorizontalScrollCreated() {
   return false;
 }
 
-function removeLabelListItems() {
+function removeAllLabelListItems() {
   const newtbody = document.createElement('tbody');
   if (labelListElement.childNodes[0]) {
     labelListElement.replaceChild(newtbody, labelListElement.childNodes[0]);
+    wasLabelListVerticalScrollCreated();
   }
 }
 
@@ -477,9 +503,9 @@ window.labelTextKeyDown = (event) => {
   }
   window.setTimeout(() => {
     if (event.code === 'Space') {
-      const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement);
+      const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement).position;
       activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.replace(/\s/g, '-');
-      setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement);
+      setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement, true);
     }
     if (lastSelectedLabelOption) {
       lastSelectedLabelOption.style.backgroundColor = '';
@@ -572,7 +598,7 @@ window.onmousedown = (event) => {
 
 window.labelListScroll = () => {
   if (currentTableElementScrollPosition !== labelsListOverfowParentElement.scrollTop) {
-    if (!wasHorizontalScrollCreated()) {
+    if (!wasLabelListHorizontalScrollCreated()) {
       if (activeDropdownElements && activeDropdownElements[0].classList.contains('show')) {
         addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
         stopEditing();
@@ -668,7 +694,7 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
-  addExistingLabelToList, removeLabelListItems,
   initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
   removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
+  addExistingLabelToList, removeAllLabelListItems, wasLabelListVerticalScrollCreated,
 };
