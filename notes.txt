@@ -56,4 +56,4 @@ should be able to select labels in add/remove point modes
 
 set labelling popup height relative to text or label option height
 
-fix bug where the edited element is not clearly seen
+investigate delete problem where upon deleting a shape, then mouse up, the shape label appears

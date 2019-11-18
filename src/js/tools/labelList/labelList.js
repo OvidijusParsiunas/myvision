@@ -369,9 +369,44 @@ function prepareLabelDivForEditing(id) {
   activeDropdownElements[0].scrollLeft = 0;
 }
 
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+
+  // must put it in the document, otherwise sizes will be 0
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth * 2;
+}
+
+function isElementHeightFullyVisibleInParent(childElement, parentElement) {
+  const childBoundingRect = childElement.getBoundingClientRect();
+  const parentBoundingRect = parentElement.getBoundingClientRect();
+  if (childBoundingRect.top < parentBoundingRect.top) {
+    return false;
+  }
+  if ((isHorizontalScrollPresent()
+    && childBoundingRect.bottom > parentBoundingRect.bottom - getScrollWidth())
+    || (childBoundingRect.bottom > parentBoundingRect.bottom)) {
+    return false;
+  }
+  return true;
+}
+
+function scrollIntoViewIfNeeded(childElement, parentElement) {
+  if (!isElementHeightFullyVisibleInParent(childElement, parentElement)) {
+    activeLabelTextElement.scrollIntoView();
+  }
+}
+
 function initLabelEditing(id) {
   prepareLabelDivForEditing(id);
   deleteAndAddLastRowToRefreshDropdownDiv(activeDropdownElements[0]);
+  scrollIntoViewIfNeeded(activeLabelTextElement, labelsListOverflowParentElement);
   positionDropDownCorrectlyOnScreen();
   // change this to match wider div
   // const labelDropdownOptions = getLabelOptions();
@@ -383,8 +418,7 @@ function initLabelEditing(id) {
   // USE THESE TO SEE IF CONTENT VISIBLE, THEN SCROLL TO APPROPRIATE HEIGHT
   // POTENTIALLY CAN CHECK SCROLL HEIGHT AGAINST OVERFLOW ELEMENT HEIGHT WITH SCROLL WIDTH
   // AND THEN SCROLL FURTHER
-  // console.log(activeLabelTextElement.getBoundingClientRect());
-  // console.log(labelsListOverflowParentElement.getBoundingClientRect());
+
   availableListOptions = getLabelOptions();
   currentTableElementScrollPosition = labelsListOverflowParentElement.scrollTop;
   horizontalScrollPresentWhenEditAndScroll = isHorizontalScrollPresent();
