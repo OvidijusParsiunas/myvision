@@ -56,4 +56,5 @@ should be able to select labels in add/remove point modes
 
 set labelling popup height relative to text or label option height
 
-investigate delete problem where upon deleting a shape, then mouse up, the shape label appears
+make sure to use the custom scrollIntoViewIfNeeded in the labelList instead of element.scrollIntoViewIfNeeded
+which is currently present in many files as it is not supported by FireFox

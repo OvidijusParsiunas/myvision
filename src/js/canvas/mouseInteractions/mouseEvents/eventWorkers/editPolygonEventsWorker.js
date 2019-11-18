@@ -206,6 +206,10 @@ function removeEditedPolygonId() {
   selectedShapeId = null;
 }
 
+function removeActiveLabelObject() {
+  labelObject = null;
+}
+
 function setShapeToInvisible() {
   selectedShapeId = null;
   shapeSetToInvisible = true;
@@ -368,5 +372,5 @@ export {
   setEditPolygonEventObjects, boundingBoxScalingEvents,
   programaticallySelectBoundingBox, setShapeToInvisible,
   programaticallyDeselectBoundingBox, getLastSelectedShapeId,
-  shapeScrollEvents,
+  shapeScrollEvents, removeActiveLabelObject,
 };

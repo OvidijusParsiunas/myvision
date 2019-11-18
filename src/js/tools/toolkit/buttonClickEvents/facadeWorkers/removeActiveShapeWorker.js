@@ -6,7 +6,7 @@ import {
   resetNewPolygonData, isPolygonDrawingInProgress, isPolygonDrawingFinished, resetDrawPolygonMode,
 } from '../../../../canvas/objects/polygon/polygon';
 import { clearBoundingBoxData, isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../../../canvas/objects/boundingBox/boundingBox';
-import { removeEditedPolygonId } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
+import { removeEditedPolygonId, removeActiveLabelObject } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
@@ -26,6 +26,7 @@ function removeBoundingBox(canvas) {
   if (activeObject && activeObject.shapeName === 'bndBox') {
     removeShape(activeObject.id);
     removeLabel(activeObject.id, canvas);
+    removeActiveLabelObject();
     removeLabelFromListOnShapeDelete(activeObject.id);
     clearBoundingBoxData();
     return true;
