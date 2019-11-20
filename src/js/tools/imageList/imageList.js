@@ -32,19 +32,24 @@ function createImageElementMarkup(imageName, id) {
   `;
 }
 
+function addNewDiv() {
+  return '<img src="sample-img.jpg" style="float: left; width: 80px">';
+}
+
 function initialiseParentElement() {
   return document.createElement('div');
 }
 
 function addNewItemToImageList(imageName) {
+  const imageListOverflowParent = document.getElementById('image-list-overflow-parent');
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
-  imageParentElement.innerHTML = createImageElementMarkup(imageName, newImageId);
+  imageParentElement.innerHTML = addNewDiv();
   const newRow = imageListElement.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.appendChild(imageParentElement);
-  imageListElement.scrollLeft = 0;
-  cell.scrollIntoView();
+  // const cell = newRow.insertCell(0);
+  imageListOverflowParent.appendChild(imageParentElement);
+  // imageListElement.scrollLeft = 0;
+  // cell.scrollIntoView();
 }
 
 function addNewImage(imageName, imageData) {
