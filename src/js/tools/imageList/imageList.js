@@ -33,7 +33,7 @@ function createImageElementMarkup(imageName, id) {
 }
 
 function addNewDiv() {
-  return '<img src="sample-img.jpg" style="float: left; width: 80px">';
+  return '<img src="sample-img.jpg" style="float: left; width: 104px; border-bottom: 1px solid white">';
 }
 
 function initialiseParentElement() {
@@ -41,6 +41,7 @@ function initialiseParentElement() {
 }
 
 function addNewItemToImageList(imageName) {
+  // use nth child to render a border in the middle
   const imageListOverflowParent = document.getElementById('image-list-overflow-parent');
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
