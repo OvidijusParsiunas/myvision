@@ -239,6 +239,10 @@
   height: calc((100vh + 120px) / 2);
 }
 
+#image-list-overflow-parent img:nth-child(odd) {
+  border-right: 1px solid white;
+}
+
 #label-list {
   width: 100%;
 }

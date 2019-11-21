@@ -33,11 +33,11 @@ function createImageElementMarkup(imageName, id) {
 }
 
 function addNewDiv() {
-  return '<img src="sample-img.jpg" style="float: left; width: 104px; border-bottom: 1px solid white">';
+  return '<img src="sample-img.jpg" style="float: left; width: calc(50% - 4px); border-bottom: 1px solid white">';
 }
 
 function initialiseParentElement() {
-  return document.createElement('div');
+  return document.createElement('img');
 }
 
 function addNewItemToImageList(imageName) {
@@ -45,8 +45,10 @@ function addNewItemToImageList(imageName) {
   const imageListOverflowParent = document.getElementById('image-list-overflow-parent');
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
-  imageParentElement.innerHTML = addNewDiv();
-  const newRow = imageListElement.insertRow(-1);
+  imageParentElement.style = 'float: left; width: calc(50% - 0.5px); border-bottom: 1px solid white';
+  imageParentElement.src = 'sample-img.jpg';
+  // imageParentElement.innerHTML = addNewDiv();
+  // const newRow = imageListElement.insertRow(-1);
   // const cell = newRow.insertCell(0);
   imageListOverflowParent.appendChild(imageParentElement);
   // imageListElement.scrollLeft = 0;
