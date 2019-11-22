@@ -40,13 +40,13 @@ function initialiseParentElement() {
   return document.createElement('img');
 }
 
-function addNewItemToImageList(imageName) {
+function addNewItemToImageList(imageName, imageData) {
   // use nth child to render a border in the middle
   const imageListOverflowParent = document.getElementById('image-list-overflow-parent');
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
   imageParentElement.style = 'float: left; width: calc(50% - 0.5px); border-bottom: 1px solid white';
-  imageParentElement.src = 'sample-img.jpg';
+  imageParentElement.src = imageData.src;
   // imageParentElement.innerHTML = addNewDiv();
   // const newRow = imageListElement.insertRow(-1);
   // const cell = newRow.insertCell(0);
@@ -60,7 +60,7 @@ function addNewImage(imageName, imageData) {
     data: imageData, name: imageName, shapes: {}, labels: {},
   };
   images.push(imageObject);
-  addNewItemToImageList(imageName);
+  addNewItemToImageList(imageName, imageData);
 }
 
 function saveAndRemoveCurrentImageDetails() {
