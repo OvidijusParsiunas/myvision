@@ -239,8 +239,8 @@
   height: calc((100vh + 120px) / 2);
 }
 
-#image-list-overflow-parent img:nth-child(odd) {
-  border-right: 1px solid white;
+#image-list-overflow-parent div:nth-child(odd) {
+  border-right: 1px solid #4e4b4b26;
 }
 
 #label-list {
@@ -432,6 +432,18 @@ body {
   user-select: none;
 }
 
+.image-list-thumbnail {
+  overflow: hidden;
+}
+
+.image-list-thumbnail img {
+  /* transition: all .2s ease; */
+}
+
+.image-list-thumbnail:hover img {
+  /* transform: scale(1.05); */
+  filter: brightness(80%);
+}
 
 /*  Using panels 
 #canvas-wrapper {
