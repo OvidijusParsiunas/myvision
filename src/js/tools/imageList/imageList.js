@@ -49,12 +49,13 @@ function addNewItemToImageList(imageName, imageData) {
   const imageListOverflowParent = document.getElementById('image-list-overflow-parent');
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
+  imageParentElement.style = 'position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;';
   imageParentElement.style.maxWidth = '100%';
   imageParentElement.style.maxHeight = '100%';
   imageParentElement.onclick = window.switchImage.bind(null, newImageId);
   imageParentElement.src = imageData.src;
   const divElement = initiateDiv();
-  divElement.style = 'float: left; width: calc(50% - 0.5px); height: 60px; border-bottom: 1px solid #4e4b4b26; cursor: pointer; text-align: center';
+  divElement.style = 'float: left; width: calc(50% - 0.5px); height: 60px; border-bottom: 1px solid #4e4b4b26; cursor: pointer; text-align: center; position: relative';
   divElement.classList.add('image-list-thumbnail');
   divElement.appendChild(imageParentElement);
   divElement.appendChild(initiateDiv());
