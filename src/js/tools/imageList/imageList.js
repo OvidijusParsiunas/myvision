@@ -63,6 +63,7 @@ function addNewItemToImageList(imageName, imageData) {
   divElement.appendChild(overlayDivElement);
   divElement.onclick = window.highlightImageThumbnail.bind(this, overlayDivElement);
   imageListOverflowParent.appendChild(divElement);
+  return divElement;
 }
 
 let currentlyActiveElement = null;
@@ -76,11 +77,11 @@ window.highlightImageThumbnail = (element) => {
 };
 
 function addNewImage(imageName, imageData) {
+  const thumbnailElementRef = addNewItemToImageList(imageName, imageData);
   const imageObject = {
-    data: imageData, name: imageName, shapes: {}, labels: {},
+    data: imageData, name: imageName, shapes: {}, labels: {}, thumbnailElementRef,
   };
   images.push(imageObject);
-  addNewItemToImageList(imageName, imageData);
 }
 
 function saveAndRemoveCurrentImageDetails() {
@@ -100,6 +101,7 @@ function addSingleImageToList(imageName, imageData) {
   addNewImage(imageName, imageData);
   saveAndRemoveCurrentImageDetails();
   currentImageNameElement.innerHTML = imageName;
+  window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   newImageId += 1;
 }
 
@@ -108,6 +110,7 @@ function addImageFromMultiUploadToList(imageName, imageData, firstFromMany) {
   if (firstFromMany) {
     saveAndRemoveCurrentImageDetails();
     currentImageNameElement.innerHTML = imageName;
+    window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   }
   newImageId += 1;
 }
@@ -131,6 +134,7 @@ function changeToExistingImage(id) {
   currentlySelectedImageId = id;
   switchCanvasWrapperInnerElement();
   changeCurrentImageElementText(id);
+  window.highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
 }
 
 function switchImage(direction) {
