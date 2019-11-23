@@ -58,3 +58,7 @@ set labelling popup height relative to text or label option height
 
 make sure to use the custom scrollIntoViewIfNeeded in the labelList instead of element.scrollIntoViewIfNeeded
 which is currently present in many files as it is not supported by FireFox
+
+can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
+
+append an edited tag to already edited images in the list (or a border/highlight)
