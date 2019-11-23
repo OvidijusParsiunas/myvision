@@ -52,20 +52,28 @@ function addNewItemToImageList(imageName, imageData) {
   imageParentElement.style = 'position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;';
   imageParentElement.style.maxWidth = '100%';
   imageParentElement.style.maxHeight = '100%';
-  imageParentElement.onclick = window.switchImage.bind(null, newImageId);
+  const overlayDivElement = initiateDiv();
+  imageParentElement.onclick = window.switchImage.bind(this, newImageId);
   imageParentElement.src = imageData.src;
   const divElement = initiateDiv();
   divElement.style = 'float: left; width: calc(50% - 0.5px); height: 60px; border-bottom: 1px solid #4e4b4b26; cursor: pointer; text-align: center; position: relative';
   divElement.classList.add('image-list-thumbnail');
   divElement.appendChild(imageParentElement);
-  divElement.appendChild(initiateDiv());
-  // imageParentElement.innerHTML = addNewDiv();
-  // const newRow = imageListElement.insertRow(-1);
-  // const cell = newRow.insertCell(0);
+  overlayDivElement.style = 'position: absolute; width: calc(100% - 4px); height: 56px; border: 2px solid #0dc7ff; display: none';
+  divElement.appendChild(overlayDivElement);
+  divElement.onclick = window.highlightImageThumbnail.bind(this, overlayDivElement);
   imageListOverflowParent.appendChild(divElement);
-  // imageListElement.scrollLeft = 0;
-  // cell.scrollIntoView();
 }
+
+let currentlyActiveElement = null;
+
+window.highlightImageThumbnail = (element) => {
+  if (currentlyActiveElement) {
+    currentlyActiveElement.style.display = 'none';
+  }
+  element.style.display = '';
+  currentlyActiveElement = element;
+};
 
 function addNewImage(imageName, imageData) {
   const imageObject = {

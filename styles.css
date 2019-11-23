@@ -436,6 +436,25 @@ body {
   overflow: hidden;
 }
 
+/*
+
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    filter: brightness(108%);
+    -webkit-filter: sepia(90%) hue-rotate(-47deg);
+
+    */
+    /*
+        border: 3px solid #0dc7ff;
+            width: calc(50% - 5.5px);
+    */
+
 .image-list-thumbnail img {
   /* transition: all .2s ease; */
 }
