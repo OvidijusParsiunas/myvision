@@ -13,10 +13,12 @@ const images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
 let firstImage = true;
+let imageListOverflowParent = null;
 
 function findImageListElement() {
   imageListElement = document.getElementById('image-list');
   currentImageNameElement = document.getElementById('currentImageName');
+  imageListOverflowParent = document.getElementById('image-list-overflow-parent');
 }
 
 function initialiseImageListFunctionality() {
@@ -46,7 +48,6 @@ function initiateDiv() {
 
 function addNewItemToImageList(imageName, imageData) {
   // use nth child to render a border in the middle
-  const imageListOverflowParent = document.getElementById('image-list-overflow-parent');
   const imageParentElement = initialiseParentElement();
   imageParentElement.id = newImageId;
   imageParentElement.style = 'position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;';
@@ -62,7 +63,7 @@ function addNewItemToImageList(imageName, imageData) {
   divElement.appendChild(overlayDivElement);
   const tickSVGElement = initialiseParentElement();
   tickSVGElement.src = 'done-tick-highlighted.svg';
-  tickSVGElement.style = 'display: none';
+  tickSVGElement.style = 'position: absolute; width: 16%; height: 45%; bottom: 0px; right: 0px; display: none';
   divElement.appendChild(tickSVGElement);
   divElement.onclick = window.switchImage.bind(this, newImageId);
   imageListOverflowParent.appendChild(divElement);
@@ -70,7 +71,7 @@ function addNewItemToImageList(imageName, imageData) {
 }
 
 function displayTickSVGOverImageThumbnail() {
-  images[currentlySelectedImageId].thumbnailElementRef.childNodes[2].style = 'position: absolute; width: 16%; height: 45%; bottom: 0px; right: 0px; display: ""';
+  images[currentlySelectedImageId].thumbnailElementRef.childNodes[2].style.display = '';
 }
 
 function removeTickSVGOverImageThumbnail() {
@@ -115,6 +116,7 @@ function addSingleImageToList(imageName, imageData) {
   saveAndRemoveCurrentImageDetails();
   currentImageNameElement.innerHTML = imageName;
   window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
+  images[newImageId].thumbnailElementRef.scrollIntoView();
   newImageId += 1;
 }
 
@@ -124,12 +126,28 @@ function addImageFromMultiUploadToList(imageName, imageData, firstFromMany) {
     saveAndRemoveCurrentImageDetails();
     currentImageNameElement.innerHTML = imageName;
     window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
+    images[newImageId].thumbnailElementRef.scrollIntoView();
   }
   newImageId += 1;
 }
 
 function changeCurrentImageElementText(id) {
   currentImageNameElement.innerHTML = images[id].name;
+}
+
+function isElementHeightFullyVisibleInParent(childElement, parentElement) {
+  const childBoundingRect = childElement.getBoundingClientRect();
+  const parentBoundingRect = parentElement.getBoundingClientRect();
+  if (childBoundingRect.top < parentBoundingRect.top || childBoundingRect.bottom > parentBoundingRect.bottom) {
+    return false;
+  }
+  return true;
+}
+
+function scrollIntoViewIfNeeded(childElement, parentElement) {
+  if (!isElementHeightFullyVisibleInParent(childElement, parentElement)) {
+    childElement.scrollIntoView();
+  }
 }
 
 function changeToExistingImage(id) {
@@ -148,6 +166,7 @@ function changeToExistingImage(id) {
   switchCanvasWrapperInnerElement();
   changeCurrentImageElementText(id);
   window.highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
+  scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
 }
 
 function switchImage(direction) {
