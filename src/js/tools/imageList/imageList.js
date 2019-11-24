@@ -60,6 +60,11 @@ function addNewItemToImageList(imageName, imageData) {
   divElement.appendChild(imageParentElement);
   overlayDivElement.style = 'position: absolute; width: calc(100% - 4px); height: 56px; border: 2px solid #0dc7ff; display: none';
   divElement.appendChild(overlayDivElement);
+  const tickSVGElement = initialiseParentElement();
+  tickSVGElement.src = 'done-tick-highlighted.svg';
+  tickSVGElement.style = 'display: none';
+  // tickSVGElement.style = 'position: absolute; width: 16%; height: 45%; bottom: 0px; right: 0px; display: ""';
+  divElement.appendChild(tickSVGElement);
   divElement.onclick = window.switchImage.bind(this, newImageId);
   imageListOverflowParent.appendChild(divElement);
   return divElement;

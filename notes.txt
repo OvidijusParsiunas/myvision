@@ -34,13 +34,8 @@ as click event on the horizontal scroll identifies the target as the label list 
 
 consider using pretrained models to auto-lab`el the images
 
-display real-time image segment when drawing a shape. In the labels section.
-
 Really like a light green / blue and white color theme
 
-When switching images, move the relevant image from the list into view
-
-Highlight the current image you are on
 
 Toolkit button functionality for getting smaller with the screen should be done when we know all of the buttons
 
@@ -61,4 +56,10 @@ which is currently present in many files as it is not supported by FireFox
 
 can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
 
-append an edited tag to already edited images in the list (or a border/highlight)
+append an edited tag to already edited images in the list (or a border/highlight) in real time
+
+When switching images, move the relevant image from the list into view
+
+border-bottom: solid;
+border-bottom-color: #4e4b4b26;
+border-bottom-width: 1px;

@@ -459,7 +459,7 @@ body {
   /* transition: all .2s ease; */
 }
 
-.image-list-thumbnail:hover img {
+.image-list-thumbnail:hover {
   /* transform: scale(1.05); */
   filter: brightness(80%);
 }
