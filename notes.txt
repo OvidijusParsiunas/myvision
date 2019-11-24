@@ -63,3 +63,5 @@ When switching images, move the relevant image from the list into view
 border-bottom: solid;
 border-bottom-color: #4e4b4b26;
 border-bottom-width: 1px;
+
+after being on a continuous mode, default doesn't set it back to the non-continuous mode

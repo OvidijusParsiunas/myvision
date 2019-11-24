@@ -20,6 +20,7 @@ import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseE
 import { removeLabel } from '../../../../canvas/objects/label/label';
 import { removeLabelFromListOnShapeDelete } from '../../../labelList/labelList';
 import { removeShape } from '../../../../canvas/objects/allShapes/allShapes';
+import { removeTickSVGOverImageThumbnail } from '../../../imageList/imageList';
 
 function removeBoundingBox(canvas) {
   const activeObject = canvas.getActiveObject();
@@ -76,6 +77,7 @@ function removeActiveShapeEvent(canvas) {
     removePolygonPoints();
     removeEditedPolygonId();
   }
+  removeTickSVGOverImageThumbnail();
 }
 
 export { removeActiveShapeEvent as default };

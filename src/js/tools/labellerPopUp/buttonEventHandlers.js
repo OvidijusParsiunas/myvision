@@ -5,6 +5,7 @@ import { getContinuousDrawingState, getLastDrawingModeState, setHasDrawnShapeSta
 import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';
+import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
 
 let textInputElement = null;
 let submitButtonElement = null;
@@ -37,6 +38,7 @@ function labelShape() {
   } else if (getLastDrawingModeState() === 'boundingBox') {
     resetDrawBoundingBoxMode();
   }
+  displayTickSVGOverImageThumbnail();
 }
 
 function cancelLabellingProcess() {

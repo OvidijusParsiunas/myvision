@@ -1,5 +1,5 @@
 import { drawImageFromList } from '../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
-import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
+import { removeAndRetrieveAllShapeRefs, getNumberOfShapes } from '../../canvas/objects/allShapes/allShapes';
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
@@ -63,11 +63,20 @@ function addNewItemToImageList(imageName, imageData) {
   const tickSVGElement = initialiseParentElement();
   tickSVGElement.src = 'done-tick-highlighted.svg';
   tickSVGElement.style = 'display: none';
-  // tickSVGElement.style = 'position: absolute; width: 16%; height: 45%; bottom: 0px; right: 0px; display: ""';
   divElement.appendChild(tickSVGElement);
   divElement.onclick = window.switchImage.bind(this, newImageId);
   imageListOverflowParent.appendChild(divElement);
   return divElement;
+}
+
+function displayTickSVGOverImageThumbnail() {
+  images[currentlySelectedImageId].thumbnailElementRef.childNodes[2].style = 'position: absolute; width: 16%; height: 45%; bottom: 0px; right: 0px; display: ""';
+}
+
+function removeTickSVGOverImageThumbnail() {
+  if (getNumberOfShapes() === 0) {
+    images[currentlySelectedImageId].thumbnailElementRef.childNodes[2].style.display = 'none';
+  }
 }
 
 let currentlyActiveElement = null;
@@ -168,4 +177,5 @@ function canSwitchImage(direction) {
 export {
   initialiseImageListFunctionality, addSingleImageToList,
   switchImage, canSwitchImage, addImageFromMultiUploadToList,
+  displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail,
 };
