@@ -231,6 +231,9 @@
   overflow-x: auto;
   overflow-y: auto;
   height: calc((100vh - 287px) / 2);
+  border-bottom: solid;
+  border-bottom-color: #4e4b4b26;
+  border-bottom-width: 1px;
 }
 
 #image-list-overflow-parent {

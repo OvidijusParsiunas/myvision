@@ -138,7 +138,8 @@ function changeCurrentImageElementText(id) {
 function isElementHeightFullyVisibleInParent(childElement, parentElement) {
   const childBoundingRect = childElement.getBoundingClientRect();
   const parentBoundingRect = parentElement.getBoundingClientRect();
-  if (childBoundingRect.top < parentBoundingRect.top || childBoundingRect.bottom > parentBoundingRect.bottom) {
+  if (childBoundingRect.top < parentBoundingRect.top
+    || childBoundingRect.bottom > parentBoundingRect.bottom) {
     return false;
   }
   return true;

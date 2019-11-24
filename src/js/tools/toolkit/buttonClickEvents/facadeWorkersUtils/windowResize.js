@@ -3,7 +3,6 @@ import { resizeAllObjects } from '../../../../canvas/objects/objectsProperties/c
 import labelProperies from '../../../../canvas/objects/label/properties';
 import { zoomCanvas } from '../facadeWorkers/zoomWorker';
 import { getCurrentZoomState } from './stateManager';
-import { wasLabelListVerticalScrollCreated } from '../../../labelList/labelList';
 
 let canvas = null;
 
@@ -16,7 +15,6 @@ window.windowResize = () => {
     labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
     resizeAllObjects(newFileSizeRatio, canvas);
   }
-  wasLabelListVerticalScrollCreated();
 };
 
 function assignCanvasForResizeWhenWindowResize(canvasObj) {

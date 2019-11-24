@@ -214,22 +214,6 @@ function isHorizontalScrollPresent() {
   return labelsListOverflowParentElement.scrollWidth > labelsListOverflowParentElement.clientWidth;
 }
 
-function wasLabelListVerticalScrollCreated() {
-  if (labelsListOverflowParentElement.scrollHeight > labelsListOverflowParentElement.clientHeight) {
-    if (isHorizontalScrollPresent()) {
-      // fix for bug where the horizontal scroll would not appear when label option contains text
-      // just on top of the vertical scroll area
-      labelsListOverflowParentElement.style.borderBottom = 'solid 1px white';
-    } else {
-      labelsListOverflowParentElement.style.borderBottom = 'solid 1px #cccccc';
-    }
-    imageListOverflowParentElement.style.height = 'calc(((100vh + 119px) / 2)';
-  } else {
-    labelsListOverflowParentElement.style.borderBottom = '';
-    imageListOverflowParentElement.style.height = 'calc(((100vh + 120px) / 2)';
-  }
-}
-
 function preprocessPastedText(text) {
   const noReturnChars = text.replace(/(\r\n|\n|\r)/gm, '');
   const spacesToHythons = noReturnChars.replace(/\s/g, '-');
@@ -261,7 +245,6 @@ function addNewLabelToListFromPopUp(labelText, id, labelColor) {
   labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
   repopulateDropdown();
   cell.scrollIntoView();
-  wasLabelListVerticalScrollCreated();
 }
 
 function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
@@ -294,7 +277,6 @@ function removeLabelFromListOnShapeDelete(id) {
       index += 1;
     }
   }
-  wasLabelListVerticalScrollCreated();
 }
 
 function updateAssociatedLabelObjectsText(text) {
@@ -505,7 +487,6 @@ function addNewLabelToLabelOptions(text) {
       repopulateDropdown();
       resetPopUpLabelOptions();
     }
-    wasLabelListVerticalScrollCreated();
   }
 }
 
@@ -544,7 +525,6 @@ function removeAllLabelListItems() {
   const newtbody = document.createElement('tbody');
   if (labelListElement.childNodes[0]) {
     labelListElement.replaceChild(newtbody, labelListElement.childNodes[0]);
-    wasLabelListVerticalScrollCreated();
   }
 }
 
@@ -748,5 +728,5 @@ window.mouseLeaveLabel = (id) => {
 export {
   initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
   removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
-  addExistingLabelToList, removeAllLabelListItems, wasLabelListVerticalScrollCreated,
+  addExistingLabelToList, removeAllLabelListItems,
 };
