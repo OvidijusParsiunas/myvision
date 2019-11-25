@@ -52,6 +52,10 @@ function settingsPopUpMiddleware(event) {
   return checkIfSettingsButtonNotUp(event);
 }
 
+window.mouseEnterLeftSideBar = () => {
+  doNotDisplayButtonAfterTimeoutState = false;
+};
+
 window.mouseEnterToolkitButton = (event, id) => {
   if (event.target.tagName === 'BUTTON') {
     pendingButtonPopups.unshift(buttonPopups[id]);
