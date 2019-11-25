@@ -7,8 +7,8 @@ import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 
-let imageListElement = null;
 let currentImageNameElement = null;
+let currentlyActiveElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
@@ -16,7 +16,6 @@ let firstImage = true;
 let imageListOverflowParent = null;
 
 function findImageListElement() {
-  imageListElement = document.getElementById('image-list');
   currentImageNameElement = document.getElementById('currentImageName');
   imageListOverflowParent = document.getElementById('image-list-overflow-parent');
 }
@@ -25,53 +24,41 @@ function initialiseImageListFunctionality() {
   findImageListElement();
 }
 
-function createImageElementMarkup(imageName, id) {
-  return `
-  <div id="imageId${id}" onClick="switchImage(${id})" class="image${id} imageListItem">
-    <div id="imageName${id}" spellcheck="false" class="imageName" contentEditable="false" style="user-select: none; padding-right: 29px; border: 1px solid transparent; display: grid;">${imageName}</div>
-    </div>
-  </div>
-  `;
-}
-
-function addNewDiv() {
-  return '<img src="sample-img.jpg" style="float: left; width: calc(50% - 4px); border-bottom: 1px solid white">';
-}
-
-function initialiseParentElement() {
+function initialiseImageElement() {
   return document.createElement('img');
 }
 
-function initiateDiv() {
+function initialiseDivElement() {
   return document.createElement('div');
 }
 
-function addNewItemToImageList(imageName, imageData) {
-  // use nth child to render a border in the middle
-  const imageParentElement = initialiseParentElement();
-  imageParentElement.id = newImageId;
-  imageParentElement.style = 'position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;';
-  imageParentElement.style.maxWidth = '100%';
-  imageParentElement.style.maxHeight = '100%';
-  const overlayDivElement = initiateDiv();
-  imageParentElement.src = imageData.src;
-  const divElement = initiateDiv();
-  divElement.style = 'float: left; width: calc(50% - 0.5px); height: 60px; border-bottom: 1px solid #4e4b4b26; cursor: pointer; text-align: center; position: relative';
-  divElement.classList.add('image-list-thumbnail');
-  divElement.appendChild(imageParentElement);
-  overlayDivElement.style = 'position: absolute; width: calc(100% - 4px); height: 56px; border: 2px solid #0dc7ff; display: none';
-  divElement.appendChild(overlayDivElement);
-  const tickSVGElement = initialiseParentElement();
+function createImageThumbnail(imageData) {
+  const imageThumbnailElement = initialiseImageElement();
+  imageThumbnailElement.id = newImageId;
+  imageThumbnailElement.classList.add('image-list-thumbnail-image');
+  imageThumbnailElement.src = imageData.src;
+  return imageThumbnailElement;
+}
+
+function addNewItemToImageList(imageData) {
+  const imageThumbnailElement = createImageThumbnail(imageData);
+  const colorOverlayElement = initialiseDivElement();
+  colorOverlayElement.classList.add('image-list-thumbnail-color-overlay');
+  const tickSVGElement = initialiseImageElement();
+  tickSVGElement.classList.add('image-list-thumbnail-SVG-tick-icon');
   tickSVGElement.src = 'done-tick-highlighted.svg';
-  tickSVGElement.style = 'position: absolute; width: 16%; height: 45%; bottom: 0px; right: 0px; display: none';
-  divElement.appendChild(tickSVGElement);
-  divElement.onclick = window.switchImage.bind(this, newImageId);
-  imageListOverflowParent.appendChild(divElement);
-  return divElement;
+  const parentThumbnailDivElement = initialiseDivElement();
+  parentThumbnailDivElement.classList.add('image-list-thumbnail');
+  parentThumbnailDivElement.onclick = window.switchImage.bind(this, newImageId);
+  parentThumbnailDivElement.appendChild(imageThumbnailElement);
+  parentThumbnailDivElement.appendChild(colorOverlayElement);
+  parentThumbnailDivElement.appendChild(tickSVGElement);
+  imageListOverflowParent.appendChild(parentThumbnailDivElement);
+  return parentThumbnailDivElement;
 }
 
 function displayTickSVGOverImageThumbnail() {
-  images[currentlySelectedImageId].thumbnailElementRef.childNodes[2].style.display = '';
+  images[currentlySelectedImageId].thumbnailElementRef.childNodes[2].style.display = 'block';
 }
 
 function removeTickSVGOverImageThumbnail() {
@@ -80,18 +67,16 @@ function removeTickSVGOverImageThumbnail() {
   }
 }
 
-let currentlyActiveElement = null;
-
 window.highlightImageThumbnail = (element) => {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
   }
-  element.style.display = '';
+  element.style.display = 'block';
   currentlyActiveElement = element;
 };
 
 function addNewImage(imageName, imageData) {
-  const thumbnailElementRef = addNewItemToImageList(imageName, imageData);
+  const thumbnailElementRef = addNewItemToImageList(imageData);
   const imageObject = {
     data: imageData, name: imageName, shapes: {}, labels: {}, thumbnailElementRef,
   };

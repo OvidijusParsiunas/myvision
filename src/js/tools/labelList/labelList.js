@@ -47,7 +47,6 @@ let originalLabelText = null;
 let availableListOptions = [];
 let labelsListOverflowParentElement = null;
 let horizontalScrollPresentWhenEditAndScroll = false;
-let imageListOverflowParentElement = null;
 
 // refactor label popup label options element manipulation code
 
@@ -61,7 +60,6 @@ let imageListOverflowParentElement = null;
 function findLabelListElement() {
   labelListElement = document.getElementById('label-list');
   labelsListOverflowParentElement = document.getElementById('labels-list-overflow-parent');
-  imageListOverflowParentElement = document.getElementById('image-list-overflow-parent');
 }
 
 function findPopupElement() {

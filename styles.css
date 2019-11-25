@@ -436,7 +436,40 @@ body {
 }
 
 .image-list-thumbnail {
-  overflow: hidden;
+  float: left;
+  width: calc(50% - 0.5px);
+  height: 60px;
+  border-bottom: 1px solid #4e4b4b26;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+
+.image-list-thumbnail-image {
+  position: absolute; top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%
+}
+
+.image-list-thumbnail-color-overlay {
+  position: absolute;
+  width: calc(100% - 4px);
+  height: 56px;
+  border: 2px solid #0dc7ff;
+  display: none;
+}
+
+.image-list-thumbnail-SVG-tick-icon {
+  position: absolute;
+  width: 16%;
+  height: 45%;
+  bottom: 0px;
+  right: 0px;
+  display: none;
 }
 
 /*
@@ -458,14 +491,6 @@ body {
             width: calc(50% - 5.5px);
     */
 
-.image-list-thumbnail img {
-  /* transition: all .2s ease; */
-}
-
-.image-list-thumbnail:hover {
-  /* transform: scale(1.05); */
-  filter: brightness(80%);
-}
 
 /*  Using panels 
 #canvas-wrapper {
