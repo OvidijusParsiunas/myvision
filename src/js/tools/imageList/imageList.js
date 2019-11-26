@@ -28,26 +28,21 @@ function initialiseImageElement() {
   return document.createElement('img');
 }
 
-function initialiseDivElement() {
+function initiateDivElement() {
   return document.createElement('div');
 }
 
-function createImageThumbnail(imageData) {
+function addNewItemToImageList(imageData) {
   const imageThumbnailElement = initialiseImageElement();
   imageThumbnailElement.id = newImageId;
   imageThumbnailElement.classList.add('image-list-thumbnail-image');
   imageThumbnailElement.src = imageData.src;
-  return imageThumbnailElement;
-}
-
-function addNewItemToImageList(imageData) {
-  const imageThumbnailElement = createImageThumbnail(imageData);
-  const colorOverlayElement = initialiseDivElement();
+  const colorOverlayElement = initiateDivElement();
   colorOverlayElement.classList.add('image-list-thumbnail-color-overlay');
   const tickSVGElement = initialiseImageElement();
   tickSVGElement.classList.add('image-list-thumbnail-SVG-tick-icon');
   tickSVGElement.src = 'done-tick-highlighted.svg';
-  const parentThumbnailDivElement = initialiseDivElement();
+  const parentThumbnailDivElement = initiateDivElement();
   parentThumbnailDivElement.classList.add('image-list-thumbnail');
   parentThumbnailDivElement.onclick = window.switchImage.bind(this, newImageId);
   parentThumbnailDivElement.appendChild(imageThumbnailElement);

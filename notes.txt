@@ -58,4 +58,5 @@ can update the image list thumbnails by taking screenshot from farbicjs canvas w
 
 after being on a continuous mode, default doesn't set it back to the non-continuous mode
 
-Refactor code
+// cancel
+// edit/render

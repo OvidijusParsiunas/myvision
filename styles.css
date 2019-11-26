@@ -472,6 +472,9 @@ body {
   display: none;
 }
 
+.image-list-thumbnail:hover {	
+  filter: brightness(80%);	
+}
 /*
 
     position: absolute;
