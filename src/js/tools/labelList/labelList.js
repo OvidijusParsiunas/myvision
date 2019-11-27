@@ -413,7 +413,6 @@ function selectShape() {
   if (getRemovingPolygonPointsState()) {
     pointMouseDownEvents(eventShape);
     pointMouseUpEvents(eventShape);
-    console.log('called');
   } else if (getAddingPolygonPointsState()) {
     // do this after making adding points a mode
   } else {
@@ -421,7 +420,9 @@ function selectShape() {
     polygonMouseUpEvents(eventShape);
   }
   if (activeShape.shapeName === 'bndBox') {
-    programaticallySelectBoundingBox(activeShape);
+    if (!getRemovingPolygonPointsState()) {
+      programaticallySelectBoundingBox(activeShape);
+    }
   }
 }
 
