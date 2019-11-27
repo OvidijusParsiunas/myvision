@@ -46,6 +46,8 @@ Should the switch images section be located at the top or bot of the screen:
     index.html
 Should the canvas fill up the entire screen when displaying images:
     drawImagesOnCanvas.js
+Should there be a hover dim effect on image thumbnails
+    styles.css
 
 should be able to select labels in add/remove point modes
 
@@ -56,7 +58,10 @@ which is currently present in many files as it is not supported by FireFox
 
 can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
 
-after being on a continuous mode, default doesn't set it back to the non-continuous mode
-
-// cancel
-// edit/render
+/* button states file
+ default button active
+ draw polygon button active
+ draw bounding box button active
+ remove polygon points button active
+ add polygon points button active
+*/

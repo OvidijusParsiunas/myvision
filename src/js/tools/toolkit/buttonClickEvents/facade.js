@@ -13,6 +13,7 @@ import { zoomCanvas } from './facadeWorkers/zoomWorker';
 import switchImages from './facadeWorkers/switchImageWorker';
 import toggleSettingsPopUp from './facadeWorkers/toggleSettingsPopUpWorker';
 import triggerImageUpload from './facadeWorkers/uploadImageButtonWorker';
+import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
 
 let canvas = null;
 
@@ -80,6 +81,10 @@ function uploadImageBtnClick() {
   triggerImageUpload();
 }
 
+function editShapesBtnClick() {
+  initiateEditShapesEvent(canvas);
+}
+
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
@@ -97,4 +102,5 @@ export {
   switchImageBtnClick,
   settingsBtnClick,
   uploadImageBtnClick,
+  editShapesBtnClick,
 };
