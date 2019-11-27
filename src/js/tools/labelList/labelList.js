@@ -5,13 +5,15 @@ import {
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
-  setEditingLabelId, setNewShapeSelectedViaLabelListState, getDefaultState,
-  getAddingPolygonPointsState, getSettingsPopUpOpenState, setSettingsPopUpOpenState,
+  setEditingLabelId, getRemovingPolygonPointsState, getAddingPolygonPointsState, getDefaultState,
+  getSettingsPopUpOpenState, setSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
 } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,
 } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
+import { pointMouseDownEvents, pointMouseUpEvents, setPolygonNotEditableOnClick } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
+// import { pointMouseDownEvents as one, pointMouseUpEvents as two } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import {
   setLabelListElementForHighlights, changeLabelColor,
   removeHighlightOfListLabel, highlightLabelInTheList,
@@ -408,8 +410,16 @@ function initLabelEditing(id) {
 function selectShape() {
   const eventShape = {};
   eventShape.target = activeShape;
-  polygonMouseDownEvents(eventShape);
-  polygonMouseUpEvents(eventShape);
+  if (getRemovingPolygonPointsState()) {
+    pointMouseDownEvents(eventShape);
+    pointMouseUpEvents(eventShape);
+    console.log('called');
+  } else if (getAddingPolygonPointsState()) {
+    // do this after making adding points a mode
+  } else {
+    polygonMouseDownEvents(eventShape);
+    polygonMouseUpEvents(eventShape);
+  }
   if (activeShape.shapeName === 'bndBox') {
     programaticallySelectBoundingBox(activeShape);
   }
@@ -417,8 +427,15 @@ function selectShape() {
 
 function deselectShape() {
   removeHighlightOfListLabel();
-  polygonMouseDownEvents({});
-  polygonMouseUpEvents({});
+  if (getRemovingPolygonPointsState()) {
+    pointMouseDownEvents({});
+    pointMouseUpEvents({});
+  } else if (getAddingPolygonPointsState()) {
+    // do this after making adding points a mode
+  } else {
+    polygonMouseDownEvents({});
+    polygonMouseUpEvents({});
+  }
   if (activeShape.shapeName === 'bndBox') {
     programaticallyDeselectBoundingBox();
   }
@@ -434,7 +451,7 @@ function selectShapeBeforeLabelEdit(id) {
   if (getAddingPolygonPointsState()) {
     resetCanvasToDefaultAfterAddPoints(id);
   } else {
-    window.cancel();
+    // window.cancel();
   }
   activeShape = getShapeById(id);
   selectShape(id);
@@ -561,7 +578,7 @@ window.labelTextKeyDown = (event) => {
 
 window.labelBtnClick = (id) => {
   if (!getDefaultState()) {
-    window.cancel();
+    // window.cancel();
   }
   highlightLabelInTheList(id);
   activeShape = getShapeById(id);
@@ -569,11 +586,12 @@ window.labelBtnClick = (id) => {
     if (getShapeVisibilityById(id)) {
       selectShape();
     } else if (activeShape.shapeName === 'bndBox') {
+      // should not do anything when bounding box selected during add/remove points
       programaticallyDeselectBoundingBox();
     } else {
-      removePolygonPoints();
-      removeEditedPolygonId();
-      setShapeToInvisible();
+      // removePolygonPoints();
+      // removeEditedPolygonId();
+      // setShapeToInvisible();
     }
   } else {
     if (isVisibilityRestored) {
@@ -669,6 +687,9 @@ window.visibilityBtnClick = (id, element) => {
   isVisibilitySelected = true;
   if (element.id === 'default') {
     element.id = 'highlighted';
+    if (getRemovingPolygonPointsState()) {
+      setPolygonNotEditableOnClick();
+    }
     switchToHighlightedActiveIcon(element);
   } else {
     element.id = 'default';

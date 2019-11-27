@@ -4,6 +4,7 @@ import {
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -15,6 +16,9 @@ function setRemovablePointsEventsCanvas(canvasObj) {
   changeExistingPolygonPointsToRemovable(canvasObj);
   canvas = canvasObj;
   selectedPolygonId = getPolygonIdIfEditing();
+  if (selectedPolygonId !== null && selectedPolygonId !== undefined) {
+    highlightLabelInTheList(selectedPolygonId);
+  }
 }
 
 function prepareToEditPolygonPoints(event) {
@@ -26,11 +30,14 @@ function prepareToEditPolygonPoints(event) {
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, true);
   selectedPolygonId = event.target.id;
+  removeHighlightOfListLabel();
+  highlightLabelInTheList(selectedPolygonId);
 }
 
 function setPolygonNotEditableOnClick() {
   removePolygonPoints();
   selectedPolygonId = null;
+  removeHighlightOfListLabel();
 }
 
 function pointMouseDownEvents(event) {
@@ -80,6 +87,6 @@ function getSelectedPolygonIdForRemovingPoints() {
 
 export {
   pointMouseDownEvents, pointMouseOverEvents,
-  pointMouseUpEvents, pointMouseOutEvents,
+  pointMouseUpEvents, pointMouseOutEvents, setPolygonNotEditableOnClick,
   setRemovablePointsEventsCanvas, getSelectedPolygonIdForRemovingPoints,
 };
