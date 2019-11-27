@@ -30,7 +30,6 @@ function prepareToEditPolygonPoints(event) {
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, true);
   selectedPolygonId = event.target.id;
-  removeHighlightOfListLabel();
   highlightLabelInTheList(selectedPolygonId);
 }
 

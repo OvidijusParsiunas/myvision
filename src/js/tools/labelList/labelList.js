@@ -544,10 +544,23 @@ function removeAllLabelListItems() {
   }
 }
 
+function highlightLabel(currentlySelectedShapeName, idArg) {
+  const id = idArg !== undefined ? idArg : activeLabelId;
+  if (getRemovingPolygonPointsState()) {
+    if (currentlySelectedShapeName !== 'bndBox') {
+      highlightLabelInTheList(id);
+    }
+  } else {
+    highlightLabelInTheList(id);
+  }
+}
+
 window.labelTextKeyDown = (event) => {
   if (event.key === 'Enter') {
+    const currentlySelectedShapeName = activeShape.shapeName;
     addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
     stopEditing();
+    highlightLabel(currentlySelectedShapeName);
   }
   window.setTimeout(() => {
     if (event.code === 'Space') {
@@ -581,13 +594,13 @@ window.labelBtnClick = (id) => {
   if (!getDefaultState()) {
     // window.cancel();
   }
-  highlightLabelInTheList(id);
+  const currentlySelectedShapeName = activeShape !== null ? activeShape.shapeName : null;
+  highlightLabel(currentlySelectedShapeName, id);
   activeShape = getShapeById(id);
   if (!isVisibilitySelected) {
     if (getShapeVisibilityById(id)) {
       selectShape();
     } else if (activeShape.shapeName === 'bndBox') {
-      // should not do anything when bounding box selected during add/remove points
       programaticallyDeselectBoundingBox();
     } else {
       // removePolygonPoints();
@@ -612,12 +625,14 @@ window.labelBtnClick = (id) => {
 window.onmousedown = (event) => {
   if (isEditingLabel) {
     if (event.target.matches('.labelDropdownOption')) {
+      const currentlySelectedShapeName = activeShape !== null ? activeShape.shapeName : null;
       const newText = event.target.innerHTML;
       activeLabelTextElement.innerHTML = newText;
       updateAssociatedLabelObjectsText(newText);
       removeLabelDropDownContent();
       stopEditing();
       moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
+      highlightLabel(currentlySelectedShapeName, activeLabelId);
     } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
