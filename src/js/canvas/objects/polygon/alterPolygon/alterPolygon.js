@@ -44,6 +44,13 @@ function getPolygonIdIfEditing() {
   return null;
 }
 
+function getPolygonIfEditing() {
+  if (editingPolygon) {
+    return polygon;
+  }
+  return null;
+}
+
 function sendPolygonPointsToFront() {
   sendPolygonPointsToFrontImpl(canvas, polygonPoints);
   setPolygonEditingStatus(true);
@@ -212,7 +219,7 @@ export {
   movePolygonPoint, sendPolygonPointsToFront,
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, removePolygon,
-  removePolygonPoint, getPolygonEditingStatus,
+  removePolygonPoint, getPolygonEditingStatus, getPolygonIfEditing,
   initializeAddNewPoints, addFirstPoint, addPoint,
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
   resetAddPoints, isAddingPointsToPolygon, addPointsMouseOut,

@@ -49,7 +49,7 @@ Should the canvas fill up the entire screen when displaying images:
 Should there be a hover dim effect on image thumbnails
     styles.css
 
-should be able to select labels in add/remove point modes
+should be able to select labels in add point mode
 
 set labelling popup height relative to text or label option height
 

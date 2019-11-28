@@ -1,7 +1,7 @@
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import {
   removePolygonPoints, getPolygonEditingStatus, setEditablePolygon,
-  getPolygonIdIfEditing, initializeAddNewPoints, addFirstPoint,
+  getPolygonIfEditing, initializeAddNewPoints, addFirstPoint, getPolygonIdIfEditing,
   addPoint, completePolygon, drawLineOnMouseMove, moveAddablePoint,
   addPointsMouseOver, resetAddPointProperties, addPointsMouseOut,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
@@ -20,6 +20,7 @@ let selectedNothing = false;
 let addFirstPointMode = false;
 let coordinatesOfLastMouseHover = null;
 let mouseIsDownOnTempPoint = false;
+let activeShape = null;
 
 function isRightMouseButtonClicked(pointer) {
   if (coordinatesOfLastMouseHover.x !== pointer.x) {
@@ -34,17 +35,18 @@ function mouseOverEvents(event) {
 
 function setAddPointsEventsCanvas(canvasObj) {
   canvas = canvasObj;
+  activeShape = getPolygonIfEditing();
   selectedPolygonId = getPolygonIdIfEditing();
   addingPoints = false;
   addFirstPointMode = false;
   resetAddPointProperties(canvasObj);
 }
 
-function prepareToAddPolygonPoints(event) {
+function prepareToAddPolygonPoints(shape) {
   removePolygonPoints();
   removeEditedPolygonId();
-  setEditablePolygon(canvas, event.target, false, false, true);
-  selectedPolygonId = event.target.id;
+  setEditablePolygon(canvas, shape, false, false, true);
+  selectedPolygonId = shape.id;
   // should not be managed here
 }
 
@@ -91,13 +93,7 @@ function pointMouseDownEvents(event) {
   } else if (event.target && event.target.shapeName === 'point') {
     addingPoints = false;
     completePolygon(event.target);
-    if (getContinuousDrawingState()
-    && (getCancelledReadyToDrawState() || getRemovingPointsAfterCancelDrawState())) {
-      removePolygonPoints();
-      setContinuousDrawingModeToLast();
-    } else {
-      resetCanvasEventsToDefault();
-    }
+    prepareToAddPolygonPoints(activeShape);
   } else if (!event.target
       || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
     const pointer = canvas.getPointer(event.e);
@@ -112,7 +108,8 @@ function pointMouseDownEvents(event) {
 function pointMouseUpEvents(event) {
   mouseIsDownOnTempPoint = false;
   if (event.target && event.target.shapeName === 'polygon' && (newPolygonSelected || selectedNothing)) {
-    prepareToAddPolygonPoints(event);
+    activeShape = event.target;
+    prepareToAddPolygonPoints(event.target);
     selectedNothing = false;
     newPolygonSelected = false;
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
