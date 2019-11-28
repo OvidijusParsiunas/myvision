@@ -594,9 +594,8 @@ window.labelBtnClick = (id) => {
   if (!getDefaultState()) {
     // window.cancel();
   }
-  const currentlySelectedShapeName = activeShape !== null ? activeShape.shapeName : null;
-  highlightLabel(currentlySelectedShapeName, id);
   activeShape = getShapeById(id);
+  highlightLabel(activeShape.shapeName, id);
   if (!isVisibilitySelected) {
     if (getShapeVisibilityById(id)) {
       selectShape();
@@ -750,6 +749,7 @@ window.labelDblClicked = (id) => {
   initLabelEditing(id);
   const editElement = document.getElementById(`editButton${id}`);
   switchToActiveIcon(editElement);
+  labelHasBeenDeselected = false;
 };
 
 window.mouseEnterLabel = (id) => {
