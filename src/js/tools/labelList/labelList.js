@@ -18,7 +18,6 @@ import {
   setLabelListElementForHighlights, changeLabelColor,
   removeHighlightOfListLabel, highlightLabelInTheList,
 } from './labelListHighlightUtils';
-import { resetCanvasToDefaultAfterAddPoints } from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 import {
   addToLabelOptions, sendLabelOptionToFront, getLabelOptions, getLabelColor,
 } from './labelOptions';
@@ -50,6 +49,7 @@ let originalLabelText = null;
 let availableListOptions = [];
 let labelsListOverflowParentElement = null;
 let horizontalScrollPresentWhenEditAndScroll = false;
+let mouseHoveredOnLabelEditButton = false;
 
 // refactor label popup label options element manipulation code
 
@@ -555,9 +555,16 @@ function highlightLabel(currentlySelectedShapeName, idArg) {
 
 window.labelTextKeyDown = (event) => {
   if (event.key === 'Enter') {
+    deselectedEditing = true;
     const currentlySelectedShapeName = activeShape.shapeName;
+    activeShape = false;
+    if (mouseHoveredOnLabelEditButton) {
+      switchToHighlightedDefaultIcon(activeEditLabelButton);
+    } else {
+      switchToDefaultIcon(activeEditLabelButton);
+    }
     addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
-    stopEditing();
+    resetLabelElement();
     highlightLabel(currentlySelectedShapeName);
   }
   window.setTimeout(() => {
@@ -585,6 +592,9 @@ window.labelTextKeyDown = (event) => {
     changeActiveDropdownElementStyling();
     updateAssociatedLabelObjectsText(activeLabelTextElement.innerHTML);
     isLabelChanged = true;
+    if (event.key === 'Enter') {
+      activeLabelId = null;
+    }
   }, 0);
 };
 
@@ -701,7 +711,6 @@ window.mouseLeaveVisibilityBtn = (id, element) => {
 };
 
 window.visibilityBtnClick = (id, element) => {
-  console.log('called first');
   changeShapeVisibilityById(id);
   isVisibilityRestored = changeLabelVisibilityById(id);
   isVisibilitySelected = true;
@@ -720,6 +729,7 @@ window.visibilityBtnClick = (id, element) => {
 };
 
 window.mouseEnterLabelEditBtn = (element) => {
+  mouseHoveredOnLabelEditButton = true;
   if (!isEditingLabel) {
     highlightDefaultIcon(element);
   } else if (activeEditLabelButton.id !== element.id) {
@@ -730,6 +740,7 @@ window.mouseEnterLabelEditBtn = (element) => {
 };
 
 window.mouseLeaveLabelEditBtn = (element) => {
+  mouseHoveredOnLabelEditButton = false;
   if (!isEditingLabel) {
     dimDefaultIcon(element);
   } else if (activeEditLabelButton.id !== element.id) {
