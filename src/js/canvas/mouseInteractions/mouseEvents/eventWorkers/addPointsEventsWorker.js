@@ -6,11 +6,10 @@ import {
   addPointsMouseOver, resetAddPointProperties, addPointsMouseOut,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { resetCanvasEventsToDefault, setContinuousDrawingModeToLast } from '../resetCanvasUtils/resetCanvasEventsFacade';
-import {
-  getContinuousDrawingState, getCancelledReadyToDrawState, getRemovingPointsAfterCancelDrawState,
-  getCurrentZoomState, getDoubleScrollCanvasState,
-} from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
+
+// Originally designed to be turned off after the points have been successfully added to a polygon
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -40,6 +39,9 @@ function setAddPointsEventsCanvas(canvasObj) {
   addingPoints = false;
   addFirstPointMode = false;
   resetAddPointProperties(canvasObj);
+  if (selectedPolygonId !== null && selectedPolygonId !== undefined) {
+    highlightLabelInTheList(selectedPolygonId);
+  }
 }
 
 function prepareToAddPolygonPoints(shape) {
@@ -47,6 +49,7 @@ function prepareToAddPolygonPoints(shape) {
   removeEditedPolygonId();
   setEditablePolygon(canvas, shape, false, false, true);
   selectedPolygonId = shape.id;
+  highlightLabelInTheList(selectedPolygonId);
   // should not be managed here
 }
 
@@ -62,6 +65,12 @@ function mouseMove(event) {
     coordinatesOfLastMouseHover = pointer;
     drawLineOnMouseMove(pointer);
   }
+}
+
+function setPolygonNotEditableOnClick() {
+  removePolygonPoints();
+  selectedPolygonId = null;
+  removeHighlightOfListLabel();
 }
 
 function pointMouseDownEvents(event) {
@@ -114,8 +123,7 @@ function pointMouseUpEvents(event) {
     newPolygonSelected = false;
   } else if ((!event.target && getPolygonEditingStatus()) || (event.target && event.target.shapeName === 'bndBox')) {
     if (!addingPoints) {
-      removePolygonPoints();
-      selectedPolygonId = null;
+      setPolygonNotEditableOnClick();
     }
   }
 }
@@ -206,5 +214,6 @@ export {
   pointMouseUpEvents,
   pointMouseDownEvents,
   setAddPointsEventsCanvas,
+  setPolygonNotEditableOnClick,
   getSelectedPolygonIdForAddPoints,
 };

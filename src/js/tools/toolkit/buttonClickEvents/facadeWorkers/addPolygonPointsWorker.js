@@ -13,6 +13,8 @@ import { resetAddPoints, isAddingPointsToPolygon, removePolygonPoints } from '..
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 
+// Originally designed to be turned off after the points have been successfully added to a polygon
+
 function discardAddPointsEvents(canvas) {
   if (getContinuousDrawingState()
   && (getCancelledReadyToDrawState() || getRemovingPointsAfterCancelDrawState())) {

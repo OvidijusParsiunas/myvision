@@ -49,14 +49,16 @@ Should the canvas fill up the entire screen when displaying images:
 Should there be a hover dim effect on image thumbnails
     styles.css
 
-should be able to select labels in add point mode
-
 set labelling popup height relative to text or label option height
 
 make sure to use the custom scrollIntoViewIfNeeded in the labelList instead of element.scrollIntoViewIfNeeded
 which is currently present in many files as it is not supported by FireFox
 
 can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
+
+issue in label list is still there, where upon editing two labels with add points mode and selecting a new one, eventually the new label is off the list
+
+when on the add or remove points, then switching to edit should switch the points colour to the edit points
 
 /* button states file
  default button active
