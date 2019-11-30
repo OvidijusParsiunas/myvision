@@ -200,7 +200,7 @@ function completePolygon(finalPoint) {
 function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, addingPoints) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
-  polygon.bringForward();
+  polygon.bringToFront();
   // edit this
   if (addingPoints) {
     displayStartingAddPolygonPoints();
