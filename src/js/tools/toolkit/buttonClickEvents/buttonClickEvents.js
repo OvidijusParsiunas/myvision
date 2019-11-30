@@ -17,7 +17,7 @@ function assignToolkitButtonClickEvents() {
   window.createNewPolygon = interruptAllCanvasEventsBeforeFunc.bind(this, createNewPolygonBtnClick);
   window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
-  window.editShapes = interruptAllCanvasEventsBeforeFunc.bind(this, editShapesBtnClick);
+  window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
   window.downloadXML = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
     resetCanvasEventsToDefault, downloadXMLBtnClick);
