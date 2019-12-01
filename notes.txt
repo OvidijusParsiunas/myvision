@@ -14,7 +14,6 @@ deselect continuous when added polygon or another shape and waiting to add anoth
 add is not a mode and should not light up
 
 change cursor modes name convention
-when finished creating polygon, have popup option to go back to editing
 
 should alert the user when unsaved changes before leaving
 
@@ -28,6 +27,9 @@ https://github.com/kyamagu/js-segment-annotator
 
 The following repo does use fabricjs, but to only draw a line;
 https://github.com/AKSHAYUBHAT/ImageSegmentation
+
+Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
+would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation
 
 when editing label and clicking scroll, should not close the editing process, however not able to fix it
 as click event on the horizontal scroll identifies the target as the label list parent (required)
