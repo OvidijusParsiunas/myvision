@@ -5,14 +5,6 @@ they can all be potentially edited (when none are selected)
 Make sure this is properly needed by doing tests
 when finished adding points, return to editable
 
-created code to return from the continuous drawing mode to default,
-however this may not be required if there will not be an explicit button
-for continuous drawing, thus it is all up to the UX
-
-deselect continuous when added polygon or another shape and waiting to add another one
-
-add is not a mode and should not light up
-
 change cursor modes name convention
 
 should alert the user when unsaved changes before leaving
@@ -57,10 +49,6 @@ make sure to use the custom scrollIntoViewIfNeeded in the labelList instead of e
 which is currently present in many files as it is not supported by FireFox
 
 can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
-
-issue in label list is still there, where upon editing two labels with add points mode and selecting a new one, eventually the new label is off the list
-
-when on the add or remove points, then switching to edit should switch the points colour to the edit points
 
 /* button states file
  default button active
