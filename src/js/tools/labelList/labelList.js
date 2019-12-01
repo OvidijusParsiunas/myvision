@@ -764,10 +764,12 @@ window.labelEditBtnClick = (id, element) => {
 };
 
 window.labelDblClicked = (id) => {
-  initLabelEditing(id);
-  const editElement = document.getElementById(`editButton${id}`);
-  switchToActiveIcon(editElement);
-  labelHasBeenDeselected = false;
+  if (!isEditingLabel) {
+    initLabelEditing(id);
+    const editElement = document.getElementById(`editButton${id}`);
+    switchToActiveIcon(editElement);
+    labelHasBeenDeselected = false;
+  }
 };
 
 window.mouseEnterLabel = (id) => {
