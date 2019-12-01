@@ -27,10 +27,7 @@ function prepareLabelPopupElements() {
   submitButtonElement = document.getElementById('popup-submit-button');
 }
 
-function labelShape() {
-  popupLabelOptionsIndex = 0;
-  createLabelShape();
-  setHasDrawnShapeState(true);
+function resetDrawingMode() {
   if (!getContinuousDrawingState()) {
     resetCanvasEventsToDefault();
   } else if (getLastDrawingModeState() === 'polygon') {
@@ -38,6 +35,13 @@ function labelShape() {
   } else if (getLastDrawingModeState() === 'boundingBox') {
     resetDrawBoundingBoxMode();
   }
+}
+
+function labelShape() {
+  popupLabelOptionsIndex = 0;
+  createLabelShape();
+  setHasDrawnShapeState(true);
+  resetDrawingMode();
   displayTickSVGOverImageThumbnail();
 }
 
@@ -45,6 +49,7 @@ function cancelLabellingProcess() {
   if (isLabelling()) {
     hideLabelPopUp();
     removeTargetShape();
+    resetDrawingMode();
   }
 }
 
