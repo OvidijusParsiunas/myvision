@@ -1,7 +1,6 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import convertJSONToXML from '../fileTypeConverters/JSONtoXML';
 import buildAnnotationsObject from '../fileStructureGenerators/generateStandardAnnotationsObject';
-import { getAllImageData } from '../../../../../imageList/imageList';
 
 let canvas = null;
 let fileProperties = null;
@@ -25,6 +24,13 @@ function generateTempDownloadableElement(xml) {
 function generateXML() {
   const downloadableObject = buildAnnotationsObject(canvas, fileProperties);
   return convertJSONToXML(downloadableObject);
+}
+
+function downloadXML() {
+  fileProperties = getImageProperties();
+  const xml = generateXML();
+  const downloadableElement = generateTempDownloadableElement(xml);
+  downloadableElement.click();
 }
 
 
@@ -89,12 +95,6 @@ function getFinalCoordinatesObj() {
   return finalObject;
 }
 
-function downloadXML() {
-  fileProperties = getImageProperties();
-  const xml = generateXML();
-  const downloadableElement = generateTempDownloadableElement(xml);
-  downloadableElement.click();
-}
 
 function downloadJSON() {
   fileProperties = getImageProperties();
@@ -104,22 +104,8 @@ function downloadJSON() {
   downloadableElement.click();
 }
 
-function parseImageData(image) {
-  console.log(image);
-}
-
-function downloadVGGJSON() {
-  // traverse all images
-  const allImageProperties = getAllImageData();
-  allImageProperties.forEach((image) => {
-    parseImageData(image);
-  });
-}
-
-// will need to be moved to a separate file
-
 function assignCanvasForDownloadingAnnotationsXML(canvasObj) {
   canvas = canvasObj;
 }
 
-export { assignCanvasForDownloadingAnnotationsXML, downloadXML, downloadJSON, downloadVGGJSON };
+export { assignCanvasForDownloadingAnnotationsXML, downloadXML, downloadJSON };

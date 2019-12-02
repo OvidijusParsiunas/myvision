@@ -24,6 +24,10 @@ function initialiseImageListFunctionality() {
   findImageListElement();
 }
 
+function getAllImageData() {
+  return images;
+}
+
 function initialiseImageElement() {
   return document.createElement('img');
 }
@@ -175,7 +179,7 @@ function canSwitchImage(direction) {
 }
 
 export {
-  initialiseImageListFunctionality, addSingleImageToList,
   switchImage, canSwitchImage, addImageFromMultiUploadToList,
   displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail,
+  initialiseImageListFunctionality, addSingleImageToList, getAllImageData,
 };

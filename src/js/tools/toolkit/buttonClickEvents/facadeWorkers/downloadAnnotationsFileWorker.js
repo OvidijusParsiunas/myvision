@@ -1,9 +1,8 @@
-import { downloadJSON } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
+import { downloadVGGJSON } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
 
 function downloadTrainingDataEvent(canvas) {
   canvas.discardActiveObject();
-  downloadJSON();
-
+  downloadVGGJSON();
   // nothing to download message
 }
 

@@ -57,3 +57,7 @@ can update the image list thumbnails by taking screenshot from farbicjs canvas w
  remove polygon points button active
  add polygon points button active
 */
+
+are you allowed spaces in annotations?
+research what formats are allowed
+update labelimg
