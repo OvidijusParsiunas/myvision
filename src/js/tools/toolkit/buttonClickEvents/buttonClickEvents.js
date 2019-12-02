@@ -1,7 +1,7 @@
 import {
   createNewBndBoxBtnClick, createNewPolygonBtnClick, settingsBtnClick, zoomBtnClick,
   addPointsBtnClick, removeActiveShapeBtnClick, removePolygonPointBtnClick,
-  downloadXMLBtnClick, uploadImageInputClick, resetCanvasEventsToDefault,
+  downloadTrainingDataBtnClick, uploadImageInputClick, resetCanvasEventsToDefault,
   movableObjectsBtnClick, continuousDrawingBtnClick, editShapesBtnClick,
   toggleLabelsVisibilityBtnClick, switchImageBtnClick, uploadImageBtnClick,
 } from './facade';
@@ -19,8 +19,8 @@ function assignToolkitButtonClickEvents() {
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
   window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
-  window.downloadXML = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
-    resetCanvasEventsToDefault, downloadXMLBtnClick);
+  window.downloadTrainingData = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
+    resetCanvasEventsToDefault, downloadTrainingDataBtnClick);
   window.uploadImage = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
     { uploadImageInputClick, resetCanvasEventsToDefault });
   window.removeShape = interruptNewShapeDrawingWthFunc1OrExecFunc2.bind(this,

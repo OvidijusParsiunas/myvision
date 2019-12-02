@@ -1,10 +1,10 @@
 import { downloadJSON } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
 
-function downloadXMLFile(canvas) {
+function downloadTrainingDataEvent(canvas) {
   canvas.discardActiveObject();
-  // if (canvas.backgroundImage) {
   downloadJSON();
-  //  }
+
+  // nothing to download message
 }
 
-export { downloadXMLFile as default };
+export { downloadTrainingDataEvent as default };

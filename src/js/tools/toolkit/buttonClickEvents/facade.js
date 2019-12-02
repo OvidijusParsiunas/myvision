@@ -4,7 +4,7 @@ import removeActiveShapeEvent from './facadeWorkers/removeActiveShapeWorker';
 import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWorker';
 import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
-import downloadXMLFile from './facadeWorkers/downloadAnnotationsFileWorker';
+import downloadTrainingDataEvent from './facadeWorkers/downloadAnnotationsFileWorker';
 import uploadImageFile from './facadeWorkers/uploadImageWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
@@ -45,8 +45,8 @@ function assignCanvasMouseEvents(canvasObj) {
   canvas = canvasObj;
 }
 
-function downloadXMLBtnClick() {
-  downloadXMLFile(canvas);
+function downloadTrainingDataBtnClick() {
+  downloadTrainingDataEvent(canvas);
 }
 
 function uploadImageInputClick(uploadData) {
@@ -95,7 +95,7 @@ export {
   removePolygonPointBtnClick,
   movableObjectsBtnClick,
   toggleLabelsVisibilityBtnClick,
-  downloadXMLBtnClick,
+  downloadTrainingDataBtnClick,
   uploadImageInputClick,
   addPointsBtnClick,
   zoomBtnClick,
