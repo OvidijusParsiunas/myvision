@@ -7,6 +7,8 @@ import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 
+// parse imageDimensions from newFileStatus object properties
+
 let currentImageNameElement = null;
 let currentlyActiveElement = null;
 const images = [];
@@ -95,11 +97,12 @@ function saveAndRemoveCurrentImageDetails() {
   firstImage = false;
 }
 
-function addSingleImageToList(imageName, imageData) {
+function addSingleImageToList(imageName, imageData, newFileStatus) {
   addNewImage(imageName, imageData);
   saveAndRemoveCurrentImageDetails();
   currentImageNameElement.innerHTML = imageName;
   window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
+  images[newImageId].imageDimensions = newFileStatus;
   images[newImageId].thumbnailElementRef.scrollIntoView();
   newImageId += 1;
 }
@@ -142,7 +145,7 @@ function changeToExistingImage(id) {
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
-  drawImageFromList(images[id].data);
+  images[currentlySelectedImageId].imageDimensions = drawImageFromList(images[id].data);
   switchCanvasWrapperInnerElementsDisplay();
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,

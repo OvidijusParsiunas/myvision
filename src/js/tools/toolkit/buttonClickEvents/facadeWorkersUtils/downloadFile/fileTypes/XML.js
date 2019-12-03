@@ -104,22 +104,80 @@ function downloadJSON() {
   downloadableElement.click();
 }
 
-function parseImageData(image) {
-  console.log(image);
+function getJSONFileName() {
+  const currentDate = new Date();
+  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.json`;
+}
+
+function generateTempDownloadableJSONElement(json) {
+  const pom = document.createElement('a');
+  const bb = new Blob([JSON.stringify(json)], { type: 'application/json' });
+  pom.setAttribute('href', window.URL.createObjectURL(bb));
+  pom.setAttribute('download', getJSONFileName());
+  pom.dataset.downloadurl = ['application/json', pom.download, pom.href].join(':');
+  pom.draggable = true;
+  pom.classList.add('dragout');
+  return pom;
+}
+
+function getShapesData(shapes, dimensions) {
+  const shapesCoordinates = [];
+  Object.keys(shapes).forEach((key) => {
+    const shape = shapes[key].shapeRef;
+    if (shape.shapeName === 'polygon') {
+      const coordinatesObj = getPolygonPointsCoordinates(shape);
+      shapesCoordinates[1] = {
+        shape_attributes: {
+          name: shape.shapeName,
+          all_points_x: coordinatesObj.all_points_x,
+          all_points_y: coordinatesObj.all_points_y,
+        },
+        region_attributes: {},
+      };
+    } else if (shape.shapeName === 'bndBox') {
+      shapesCoordinates.push({
+        shape_attributes: {
+          name: 'rect',
+          x: shape.left / dimensions.scaleX,
+          y: shape.top / dimensions.scaleY,
+          width: shape.width / dimensions.scaleX,
+          height: shape.height / dimensions.scaleY,
+        },
+        region_attributes: {
+          name: shape.shapeLabelText,
+        },
+      });
+    }
+  });
+  return shapesCoordinates;
+}
+
+function parseRequiredImageData(image) {
+  const parsedImageData = {};
+  parsedImageData.filename = image.name;
+  parsedImageData.size = 'how do you get this';
+  parsedImageData.regions = getShapesData(image.shapes, image.imageDimensions);
+
+  return parsedImageData;
 }
 
 function downloadVGGJSON() {
   // traverse all images
   const allImageProperties = getAllImageData();
+  const marshalledObject = {};
   allImageProperties.forEach((image) => {
-    parseImageData(image);
+    marshalledObject[image.name] = parseRequiredImageData(image);
   });
+  const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
+  downloadableElement.click();
+  console.log(allImageProperties);
+  console.log(marshalledObject);
 }
-
-// will need to be moved to a separate file
 
 function assignCanvasForDownloadingAnnotationsXML(canvasObj) {
   canvas = canvasObj;
 }
 
-export { assignCanvasForDownloadingAnnotationsXML, downloadXML, downloadJSON, downloadVGGJSON };
+export {
+  assignCanvasForDownloadingAnnotationsXML, downloadXML, downloadJSON, downloadVGGJSON,
+};
