@@ -104,6 +104,20 @@ function downloadJSON() {
   downloadableElement.click();
 }
 
+function getJSONPolygonPointsCoordinates(polygon, dimensions) {
+  const coordinatesObj = {
+    all_points_x: [],
+    all_points_y: [],
+  };
+  polygon.points.forEach((point) => {
+    coordinatesObj.all_points_x.push(point.x / dimensions.scaleX);
+    coordinatesObj.all_points_y.push(point.y / dimensions.scaleY);
+  });
+  coordinatesObj.all_points_x.push(polygon.points[0].x / dimensions.scaleX);
+  coordinatesObj.all_points_y.push(polygon.points[0].y / dimensions.scaleY);
+  return coordinatesObj;
+}
+
 function getJSONFileName() {
   const currentDate = new Date();
   return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.json`;
@@ -125,15 +139,17 @@ function getShapesData(shapes, dimensions) {
   Object.keys(shapes).forEach((key) => {
     const shape = shapes[key].shapeRef;
     if (shape.shapeName === 'polygon') {
-      const coordinatesObj = getPolygonPointsCoordinates(shape);
-      shapesCoordinates[1] = {
+      const coordinatesObj = getJSONPolygonPointsCoordinates(shape, dimensions);
+      shapesCoordinates.push({
         shape_attributes: {
-          name: shape.shapeName,
+          name: 'polygon',
           all_points_x: coordinatesObj.all_points_x,
           all_points_y: coordinatesObj.all_points_y,
         },
-        region_attributes: {},
-      };
+        region_attributes: {
+          name: shape.shapeLabelText,
+        },
+      });
     } else if (shape.shapeName === 'bndBox') {
       shapesCoordinates.push({
         shape_attributes: {
