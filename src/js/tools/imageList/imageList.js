@@ -97,12 +97,13 @@ function saveAndRemoveCurrentImageDetails() {
   firstImage = false;
 }
 
-function addSingleImageToList(imageName, imageData, newFileStatus) {
-  addNewImage(imageName, imageData);
+function addSingleImageToList(imageMetadata, imageData, newFileStatus) {
+  addNewImage(imageMetadata.name, imageData);
   saveAndRemoveCurrentImageDetails();
-  currentImageNameElement.innerHTML = imageName;
+  currentImageNameElement.innerHTML = imageMetadata.name;
   window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   images[newImageId].imageDimensions = newFileStatus;
+  images[newImageId].size = imageMetadata.size;
   images[newImageId].thumbnailElementRef.scrollIntoView();
   newImageId += 1;
 }

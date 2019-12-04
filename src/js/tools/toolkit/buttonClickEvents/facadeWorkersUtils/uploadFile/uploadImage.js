@@ -1,12 +1,12 @@
 import { addSingleImageToList, addImageFromMultiUploadToList } from '../../../../imageList/imageList';
 import { onImageLoad, getNewFileStatus } from './drawImageOnCanvas';
 
-function onFileLoad(name, e) {
+function onFileLoad(imageMetaData, e) {
   const image = new Image();
   image.src = e.target.result;
   image.onload = onImageLoad;
   const newFileStatus = getNewFileStatus();
-  addSingleImageToList(name, image, newFileStatus);
+  addSingleImageToList(imageMetaData, image, newFileStatus);
 }
 
 function onMultiFileLoad(name, firstImage, e) {
@@ -22,7 +22,7 @@ function uploadImage(uploadData) {
   if (uploadData.files && uploadData.files.length > 0) {
     if (uploadData.files.length === 1) {
       const reader = new FileReader();
-      reader.onload = onFileLoad.bind(this, uploadData.files[0].name);
+      reader.onload = onFileLoad.bind(this, uploadData.files[0]);
       reader.readAsDataURL(uploadData.files[0]);
     } else {
       for (let i = 0; i < uploadData.files.length; i += 1) {

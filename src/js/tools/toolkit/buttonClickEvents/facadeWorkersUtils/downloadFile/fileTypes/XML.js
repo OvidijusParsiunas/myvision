@@ -171,14 +171,17 @@ function getShapesData(shapes, dimensions) {
 function parseRequiredImageData(image) {
   const parsedImageData = {};
   parsedImageData.filename = image.name;
-  parsedImageData.size = 'how do you get this';
+  parsedImageData.size = image.size;
   parsedImageData.regions = getShapesData(image.shapes, image.imageDimensions);
 
   return parsedImageData;
 }
 
+// All formats:
+// what happens when there are no shapes in an image
+// double check if the generated coordinates are ok
+
 function downloadVGGJSON() {
-  // traverse all images
   const allImageProperties = getAllImageData();
   const marshalledObject = {};
   allImageProperties.forEach((image) => {
@@ -186,8 +189,6 @@ function downloadVGGJSON() {
   });
   const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
   downloadableElement.click();
-  console.log(allImageProperties);
-  console.log(marshalledObject);
 }
 
 function assignCanvasForDownloadingAnnotationsXML(canvasObj) {
