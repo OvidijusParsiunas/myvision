@@ -43,10 +43,6 @@ function drawImageOnCanvas(newImageDimensions) {
   }
 }
 
-function getNewFileStatus() {
-  return newFileStatus;
-}
-
 function resizeWhenImageExceedsMaxHeight() {
   const newImageDimensions = {};
   const heightRatio = canvasProperties.maximumCanvasHeight / currentImage.height;
@@ -101,12 +97,10 @@ function draw() {
 
 // investigate quality
 // check the divs are wrapped around for all pcs
-// flashing on fire FOX
 
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;
   draw();
-  return newFileStatus;
 }
 
 function onImageLoad() {
@@ -177,6 +171,6 @@ function resizeCanvas() {
 }
 
 export {
-  onImageLoad, getImageProperties, resizeCanvasAndImage, resizeCanvas, getNewFileStatus,
+  onImageLoad, getImageProperties, resizeCanvasAndImage, resizeCanvas,
   assignCanvasForDrawImageOnCanvas, getCanvasProperties, drawImageFromList,
 };

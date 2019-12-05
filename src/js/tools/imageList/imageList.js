@@ -1,4 +1,4 @@
-import { drawImageFromList } from '../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { drawImageFromList, getImageProperties } from '../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { removeAndRetrieveAllShapeRefs, getNumberOfShapes } from '../../canvas/objects/allShapes/allShapes';
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
@@ -97,14 +97,14 @@ function saveAndRemoveCurrentImageDetails() {
   firstImage = false;
 }
 
-function addSingleImageToList(imageMetadata, imageData, newFileStatus) {
+function addSingleImageToList(imageMetadata, imageData) {
   addNewImage(imageMetadata.name, imageData);
   saveAndRemoveCurrentImageDetails();
   currentImageNameElement.innerHTML = imageMetadata.name;
   window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
-  images[newImageId].imageDimensions = newFileStatus;
   images[newImageId].size = imageMetadata.size;
   images[newImageId].thumbnailElementRef.scrollIntoView();
+  images[newImageId].imageDimensions = {};
   newImageId += 1;
 }
 
@@ -143,10 +143,15 @@ function changeToExistingImage(id) {
   setDefaultState(false);
   images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  const currentlySelectedImageProperties = getImageProperties();
+  console.log(currentlySelectedImageProperties);
+  images[currentlySelectedImageId].imageDimensions = {};
+  images[currentlySelectedImageId].imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
+  images[currentlySelectedImageId].imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
-  images[currentlySelectedImageId].imageDimensions = drawImageFromList(images[id].data);
+  drawImageFromList(images[id].data);
   switchCanvasWrapperInnerElementsDisplay();
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,

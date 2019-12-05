@@ -110,11 +110,11 @@ function getJSONPolygonPointsCoordinates(polygon, dimensions) {
     all_points_y: [],
   };
   polygon.points.forEach((point) => {
-    coordinatesObj.all_points_x.push(point.x / dimensions.scaleX);
-    coordinatesObj.all_points_y.push(point.y / dimensions.scaleY);
+    coordinatesObj.all_points_x.push(Math.round(point.x / dimensions.scaleX));
+    coordinatesObj.all_points_y.push(Math.round(point.y / dimensions.scaleY));
   });
-  coordinatesObj.all_points_x.push(polygon.points[0].x / dimensions.scaleX);
-  coordinatesObj.all_points_y.push(polygon.points[0].y / dimensions.scaleY);
+  coordinatesObj.all_points_x.push(Math.round(polygon.points[0].x / dimensions.scaleX));
+  coordinatesObj.all_points_y.push(Math.round(polygon.points[0].y / dimensions.scaleY));
   return coordinatesObj;
 }
 
@@ -154,10 +154,10 @@ function getShapesData(shapes, dimensions) {
       shapesCoordinates.push({
         shape_attributes: {
           name: 'rect',
-          x: shape.left / dimensions.scaleX,
-          y: shape.top / dimensions.scaleY,
-          width: shape.width / dimensions.scaleX,
-          height: shape.height / dimensions.scaleY,
+          x: Math.round(shape.left / dimensions.scaleX),
+          y: Math.round(shape.top / dimensions.scaleY),
+          width: Math.round(shape.width / dimensions.scaleX),
+          height: Math.round(shape.height / dimensions.scaleY),
         },
         region_attributes: {
           name: shape.shapeLabelText,
@@ -168,7 +168,7 @@ function getShapesData(shapes, dimensions) {
   return shapesCoordinates;
 }
 
-function parseRequiredImageData(image) {
+function parseImageData(image) {
   const parsedImageData = {};
   parsedImageData.filename = image.name;
   parsedImageData.size = image.size;
@@ -181,11 +181,13 @@ function parseRequiredImageData(image) {
 // what happens when there are no shapes in an image
 // double check if the generated coordinates are ok
 
+// need rounding
+
 function downloadVGGJSON() {
   const allImageProperties = getAllImageData();
   const marshalledObject = {};
   allImageProperties.forEach((image) => {
-    marshalledObject[image.name] = parseRequiredImageData(image);
+    marshalledObject[image.name] = parseImageData(image);
   });
   const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
   downloadableElement.click();

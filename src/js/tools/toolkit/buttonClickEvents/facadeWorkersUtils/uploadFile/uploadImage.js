@@ -1,11 +1,11 @@
 import { addSingleImageToList, addImageFromMultiUploadToList } from '../../../../imageList/imageList';
-import { onImageLoad, getNewFileStatus } from './drawImageOnCanvas';
+import { onImageLoad, getImageProperties } from './drawImageOnCanvas';
 
 function onFileLoad(imageMetaData, e) {
   const image = new Image();
   image.src = e.target.result;
   image.onload = onImageLoad;
-  const newFileStatus = getNewFileStatus();
+  const newFileStatus = getImageProperties();
   addSingleImageToList(imageMetaData, image, newFileStatus);
 }
 
