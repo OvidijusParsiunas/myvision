@@ -13,12 +13,14 @@ function drawResizedImage(newImageDimensions) {
   fabric.Image.fromURL(currentImage.src, (img) => {
     newFileStatus.scaleX = canvas.width / img.width;
     newFileStatus.scaleY = canvas.height / img.height;
+    newFileStatus.originalWidth = img.width;
+    newFileStatus.originalHeight = img.height;
+    // console.log(newFileStatus.originalHeight);
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
       scaleX: newFileStatus.scaleX,
       scaleY: newFileStatus.scaleY,
     });
   });
-
   newFileStatus.width = newImageDimensions.width;
   newFileStatus.height = newImageDimensions.height;
 }
@@ -27,6 +29,8 @@ function drawOriginalImage() {
   canvas.setWidth(currentImage.width);
   canvas.setHeight(currentImage.height);
   fabric.Image.fromURL(currentImage.src, (img) => {
+    newFileStatus.originalWidth = img.width;
+    newFileStatus.originalHeight = img.height;
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {});
   });
   newFileStatus.scaleX = 1;
@@ -122,6 +126,10 @@ function getImageProperties() {
   return newFileStatus;
 }
 
+function calculateCurrentImageHeightRatio() {
+  return newFileStatus.height / newFileStatus.originalHeight;
+}
+
 function calculateNewFileSizeRatio() {
   const newFileSizeRatio = {};
   newFileSizeRatio.width = newFileStatus.width / initialFileStatus.width;
@@ -173,4 +181,5 @@ function resizeCanvas() {
 export {
   onImageLoad, getImageProperties, resizeCanvasAndImage, resizeCanvas,
   assignCanvasForDrawImageOnCanvas, getCanvasProperties, drawImageFromList,
+  calculateCurrentImageHeightRatio,
 };

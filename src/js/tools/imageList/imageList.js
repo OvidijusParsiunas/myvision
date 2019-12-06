@@ -1,4 +1,4 @@
-import { drawImageFromList, getImageProperties } from '../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from '../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { removeAndRetrieveAllShapeRefs, getNumberOfShapes } from '../../canvas/objects/allShapes/allShapes';
 import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
@@ -6,8 +6,6 @@ import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement 
 import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
-
-// parse imageDimensions from newFileStatus object properties
 
 let currentImageNameElement = null;
 let currentlyActiveElement = null;
@@ -88,6 +86,10 @@ function saveAndRemoveCurrentImageDetails() {
   if (!firstImage) {
     images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
     images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+    const currentlySelectedImageProperties = getImageProperties();
+    images[currentlySelectedImageId].imageDimensions = {};
+    images[currentlySelectedImageId].imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
+    images[currentlySelectedImageId].imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
   }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(false);
@@ -139,19 +141,25 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
+// the reason why we do not use scaleX/scaleY is because these are returned in
+// a promise as the image is drawn hence we do not have it at this time
 function changeToExistingImage(id) {
   setDefaultState(false);
   images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
   images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
   const currentlySelectedImageProperties = getImageProperties();
-  console.log(currentlySelectedImageProperties);
+  // this will need to be moved or removed
   images[currentlySelectedImageId].imageDimensions = {};
   images[currentlySelectedImageId].imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
   images[currentlySelectedImageId].imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
+  images[currentlySelectedImageId].imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
+  images[currentlySelectedImageId].imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
+  images[currentlySelectedImageId].imageDimensions.oldImageHeightRatio = calculateCurrentImageHeightRatio();
+  // the above should be moved to the on-resize event handler
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
-  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels);
   drawImageFromList(images[id].data);
+  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels, images[id].imageDimensions);
   switchCanvasWrapperInnerElementsDisplay();
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,

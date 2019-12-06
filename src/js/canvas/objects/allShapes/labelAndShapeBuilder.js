@@ -45,8 +45,74 @@ function generateLabelShapeGroup(shape, text) {
   currentId += 1;
 }
 
-function repopulateLabelShapeGroup(shapeObj, label, id) {
+function resetPolygonSelectableArea(currentPolygon) {
+  const newPosition = currentPolygon._calcDimensions();
+  currentPolygon.set({
+    left: newPosition.left,
+    top: newPosition.top,
+    height: newPosition.height,
+    width: newPosition.width,
+    pathOffset: {
+      x: newPosition.left + newPosition.width / 2,
+      y: newPosition.top + newPosition.height / 2,
+    },
+  });
+  currentPolygon.setCoords();
+}
+
+function resizeAllObjects(object, newFileSizeRatio) {
+  switch (object.shapeName) {
+    case 'polygon':
+      object.points.forEach((point) => {
+        point.x *= newFileSizeRatio;
+        point.y *= newFileSizeRatio;
+      });
+      resetPolygonSelectableArea(object);
+      setPolygonLabelOffsetProps(object, object.points[0]);
+      break;
+    case 'tempPolygon':
+      object.points.forEach((point) => {
+        point.x *= newFileSizeRatio;
+        point.y *= newFileSizeRatio;
+      });
+      break;
+    case 'point':
+    case 'invisiblePoint':
+    case 'firstPoint':
+    case 'tempPoint':
+    case 'initialAddPoint':
+    case 'label':
+      object.top *= newFileSizeRatio;
+      object.left *= newFileSizeRatio;
+      break;
+    case 'addPointsLine':
+      object.top *= newFileSizeRatio;
+      object.left *= newFileSizeRatio;
+      object.height *= newFileSizeRatio;
+      object.width *= newFileSizeRatio;
+      object.x1 *= newFileSizeRatio;
+      object.x2 *= newFileSizeRatio;
+      object.y1 *= newFileSizeRatio;
+      object.y2 *= newFileSizeRatio;
+      break;
+    case 'bndBox':
+      object.height *= newFileSizeRatio;
+      object.width *= newFileSizeRatio;
+      object.top *= newFileSizeRatio;
+      object.left *= newFileSizeRatio;
+      break;
+    default:
+      break;
+  }
+  object.setCoords();
+}
+
+// a change will need to be made here
+function repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
+  const shape = shapeObj.shapeRef;
+  resizeAllObjects(shape, newFileSizeRatio);
   canvas.add(shapeObj.shapeRef);
+  resizeAllObjects(label, newFileSizeRatio);
   generateLabel(label);
   addExistingShape(shapeObj, id);
   addLabelRef(label, id);
@@ -55,11 +121,18 @@ function repopulateLabelShapeGroup(shapeObj, label, id) {
     shapeColor.label, shapeObj.visibility);
 }
 
-function repopulateLabelAndShapeObjects(existingShapes, existingLabels) {
-  Object.keys(existingShapes).forEach((key) => {
-    repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key);
-  });
-  canvas.renderAll();
+function calculateNewFileSizeRatio(previousDimensions) {
+  return canvas.height / previousDimensions.originalHeight;
+}
+
+function repopulateLabelAndShapeObjects(existingShapes, existingLabels, previousDimensions) {
+  if (previousDimensions.originalHeight) {
+    const newFileSizeRatio = calculateNewFileSizeRatio(previousDimensions) / previousDimensions.oldImageHeightRatio;
+    Object.keys(existingShapes).forEach((key) => {
+      repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
+    });
+    canvas.renderAll();
+  }
 }
 
 function setShapeMovablePropertiesOnImageSelect(existingShapes) {
