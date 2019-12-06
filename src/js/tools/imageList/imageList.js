@@ -6,6 +6,7 @@ import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement 
 import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
+import labelProperties from '../../canvas/objects/label/properties';
 
 let currentImageNameElement = null;
 let currentlyActiveElement = null;
@@ -141,20 +142,26 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
+function captureCurrentImageData() {
+  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  const currentlySelectedImageProperties = getImageProperties();
+  const imageDimensions = {};
+  imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
+  imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
+  imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
+  imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
+  imageDimensions.oldImageHeightRatio = calculateCurrentImageHeightRatio();
+  imageDimensions.polygonOffsetLeft = labelProperties.pointOffsetProperties().left;
+  imageDimensions.polygonOffsetTop = labelProperties.pointOffsetProperties().top;
+  images[currentlySelectedImageId].imageDimensions = imageDimensions;
+}
+
 // the reason why we do not use scaleX/scaleY is because these are returned in
 // a promise as the image is drawn hence we do not have it at this time
 function changeToExistingImage(id) {
   setDefaultState(false);
-  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-  const currentlySelectedImageProperties = getImageProperties();
-  // this will need to be moved or removed
-  images[currentlySelectedImageId].imageDimensions = {};
-  images[currentlySelectedImageId].imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
-  images[currentlySelectedImageId].imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
-  images[currentlySelectedImageId].imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
-  images[currentlySelectedImageId].imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
-  images[currentlySelectedImageId].imageDimensions.oldImageHeightRatio = calculateCurrentImageHeightRatio();
+  captureCurrentImageData();
   // the above should be moved to the on-resize event handler
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);

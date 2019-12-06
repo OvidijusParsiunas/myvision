@@ -44,6 +44,11 @@ function updatePolygonOffsetProperties(newOffsetRatio) {
   polygonOffsetTop *= newOffsetRatio.height;
 }
 
+function setPolygonOffsetProperties(newOffsetData) {
+  polygonOffsetLeft = newOffsetData.width;
+  polygonOffsetTop = newOffsetData.height;
+}
+
 function generateBoundingBoxOffsetProperties() {
   return {
     left: 2,
@@ -57,6 +62,7 @@ function generateBoundingBoxOffsetProperties() {
   labelProperties.setZoomInProperties = setZoomInProperties;
   labelProperties.setZoomOutProperties = setZoomOutProperties;
   labelProperties.updatePolygonOffsetProperties = updatePolygonOffsetProperties;
+  labelProperties.setPolygonOffsetProperties = setPolygonOffsetProperties;
 }());
 
 export { labelProperties as default };
