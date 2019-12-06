@@ -125,9 +125,17 @@ function calculateNewFileSizeRatio(previousDimensions) {
   return canvas.height / previousDimensions.originalHeight;
 }
 
+// when a new polygon has been drawn, switch to a different image, reduce screen size,
+// switch back, select and move polygon, switch to the other image, increase the screen size
+// then switch back, and move polygon -> you will notice that the label tends to jump a little.
+// the potential cause for this is the fact that when the polygon is at small scale;
+// the polygonOffsetLeft has moved the label too left, then when scaling back
+//  the polygonOffsetLeft is too big
 function repopulateLabelAndShapeObjects(existingShapes, existingLabels, previousDimensions) {
   if (previousDimensions.originalHeight) {
     const newFileSizeRatio = calculateNewFileSizeRatio(previousDimensions) / previousDimensions.oldImageHeightRatio;
+    const newPolygonOffsetProperties = { width: newFileSizeRatio, height: newFileSizeRatio };
+    labelProperties.updatePolygonOffsetProperties(newPolygonOffsetProperties);
     Object.keys(existingShapes).forEach((key) => {
       repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
     });
