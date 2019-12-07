@@ -29,6 +29,10 @@ function getAllImageData() {
   return images;
 }
 
+function getCurrentlySelectedImageId() {
+  return currentlySelectedImageId;
+}
+
 function initialiseImageElement() {
   return document.createElement('img');
 }
@@ -121,11 +125,12 @@ function addSingleImageToList(imageMetadata, imageData) {
   newImageId += 1;
 }
 
-function addImageFromMultiUploadToList(imageName, imageData, firstFromMany) {
-  addNewImage(imageName, imageData);
+function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) {
+  addNewImage(imageMetadata.name, imageData);
+  images[newImageId].size = imageMetadata.size;
   if (firstFromMany) {
     saveAndRemoveCurrentImageDetails();
-    currentImageNameElement.innerHTML = imageName;
+    currentImageNameElement.innerHTML = imageMetadata.name;
     window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     images[newImageId].thumbnailElementRef.scrollIntoView();
   }
@@ -156,9 +161,13 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
 // a promise as the image is drawn hence we do not have it at this time
 // (for the new image)
 function changeToExistingImage(id) {
+  // things to take before evaluatng the current shapes on the current image
+  // get shapes
+  // zoomOutObjectOnImageSelect
+  // make sure the scales are correct
+
   setDefaultState(false);
   captureCurrentImageData();
-  // the above should be moved to the on-resize event handler
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   drawImageFromList(images[id].data);
@@ -202,4 +211,5 @@ export {
   switchImage, canSwitchImage, addImageFromMultiUploadToList,
   displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail,
   initialiseImageListFunctionality, addSingleImageToList, getAllImageData,
+  getCurrentlySelectedImageId,
 };

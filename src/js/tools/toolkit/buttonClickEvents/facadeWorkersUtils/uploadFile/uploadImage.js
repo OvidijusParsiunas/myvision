@@ -8,13 +8,13 @@ function onFileLoad(imageMetaData, e) {
   addSingleImageToList(imageMetaData, image);
 }
 
-function onMultiFileLoad(name, firstImage, e) {
+function onMultiFileLoad(imageMetadata, firstImage, e) {
   const image = new Image();
   image.src = e.target.result;
   if (firstImage) {
     image.onload = onImageLoad;
   }
-  addImageFromMultiUploadToList(name, image, firstImage);
+  addImageFromMultiUploadToList(imageMetadata, image, firstImage);
 }
 
 function uploadImage(uploadData) {
@@ -27,7 +27,7 @@ function uploadImage(uploadData) {
       for (let i = 0; i < uploadData.files.length; i += 1) {
         const reader = new FileReader();
         const firstImage = i === 0;
-        reader.onload = onMultiFileLoad.bind(this, uploadData.files[i].name, firstImage);
+        reader.onload = onMultiFileLoad.bind(this, uploadData.files[i], firstImage);
         reader.readAsDataURL(uploadData.files[i]);
       }
     }

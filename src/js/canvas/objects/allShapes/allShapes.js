@@ -19,6 +19,10 @@ function getNumberOfShapes() {
   return Object.keys(shapes).length;
 }
 
+function getAllExistingShapes() {
+  return shapes;
+}
+
 function removeAndRetrieveAllShapeRefs() {
   const shapeRefs = {};
   Object.keys(shapes).forEach((key) => {
@@ -76,8 +80,8 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 }
 
 export {
-  changeShapeVisibilityById, assignCanvasForShapeFillManipulation,
   getShapeVisibilityById, removeAndRetrieveAllShapeRefs, addExistingShape,
   getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText,
   addShape, removeShape, highlightShapeFill, defaultShapeFill, getNumberOfShapes,
+  changeShapeVisibilityById, assignCanvasForShapeFillManipulation, getAllExistingShapes,
 };

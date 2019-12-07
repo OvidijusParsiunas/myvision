@@ -1,7 +1,8 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import convertJSONToXML from '../fileTypeConverters/JSONtoXML';
 import buildAnnotationsObject from '../fileStructureGenerators/generateStandardAnnotationsObject';
-import { getAllImageData } from '../../../../../imageList/imageList';
+import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 
 let canvas = null;
 let fileProperties = null;
@@ -113,8 +114,6 @@ function getJSONPolygonPointsCoordinates(polygon, dimensions) {
     coordinatesObj.all_points_x.push(Math.round(point.x / dimensions.scaleX));
     coordinatesObj.all_points_y.push(Math.round(point.y / dimensions.scaleY));
   });
-  coordinatesObj.all_points_x.push(Math.round(polygon.points[0].x / dimensions.scaleX));
-  coordinatesObj.all_points_y.push(Math.round(polygon.points[0].y / dimensions.scaleY));
   return coordinatesObj;
 }
 
@@ -179,13 +178,21 @@ function parseImageData(image) {
 
 // All formats:
 // what happens when there are no shapes in an image
-// double check if the generated coordinates are ok
 
-// need rounding
+function saveCurrentImageDetails(allImageProperties) {
+  const currentlySelectedImageId = getCurrentlySelectedImageId();
+  const currentlySelectedImageProperties = getImageProperties();
+  const imageDimensions = {};
+  imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
+  imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
+  allImageProperties[currentlySelectedImageId].imageDimensions = imageDimensions;
+  allImageProperties[currentlySelectedImageId].shapes = getAllExistingShapes();
+}
 
 function downloadVGGJSON() {
   const allImageProperties = getAllImageData();
   const marshalledObject = {};
+  saveCurrentImageDetails(allImageProperties);
   allImageProperties.forEach((image) => {
     marshalledObject[image.name] = parseImageData(image);
   });
