@@ -83,14 +83,24 @@ function addNewImage(imageName, imageData) {
   images.push(imageObject);
 }
 
+function captureCurrentImageData() {
+  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
+  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  const currentlySelectedImageProperties = getImageProperties();
+  const imageDimensions = {};
+  imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
+  imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
+  imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
+  imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
+  imageDimensions.oldImageHeightRatio = calculateCurrentImageHeightRatio();
+  imageDimensions.polygonOffsetLeft = labelProperties.pointOffsetProperties().left;
+  imageDimensions.polygonOffsetTop = labelProperties.pointOffsetProperties().top;
+  images[currentlySelectedImageId].imageDimensions = imageDimensions;
+}
+
 function saveAndRemoveCurrentImageDetails() {
   if (!firstImage) {
-    images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-    images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-    const currentlySelectedImageProperties = getImageProperties();
-    images[currentlySelectedImageId].imageDimensions = {};
-    images[currentlySelectedImageId].imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
-    images[currentlySelectedImageId].imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
+    captureCurrentImageData();
   }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(false);
@@ -142,23 +152,9 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
-function captureCurrentImageData() {
-  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
-  const currentlySelectedImageProperties = getImageProperties();
-  const imageDimensions = {};
-  imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
-  imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
-  imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
-  imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
-  imageDimensions.oldImageHeightRatio = calculateCurrentImageHeightRatio();
-  imageDimensions.polygonOffsetLeft = labelProperties.pointOffsetProperties().left;
-  imageDimensions.polygonOffsetTop = labelProperties.pointOffsetProperties().top;
-  images[currentlySelectedImageId].imageDimensions = imageDimensions;
-}
-
 // the reason why we do not use scaleX/scaleY is because these are returned in
 // a promise as the image is drawn hence we do not have it at this time
+// (for the new image)
 function changeToExistingImage(id) {
   setDefaultState(false);
   captureCurrentImageData();

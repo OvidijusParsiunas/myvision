@@ -2,6 +2,7 @@ import fabric from 'fabric';
 import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
 import labelProperties from '../label/properties';
 import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
+import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
 import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { addShape, addExistingShape } from './allShapes';
@@ -45,74 +46,12 @@ function generateLabelShapeGroup(shape, text) {
   currentId += 1;
 }
 
-function resetPolygonSelectableArea(currentPolygon) {
-  const newPosition = currentPolygon._calcDimensions();
-  currentPolygon.set({
-    left: newPosition.left,
-    top: newPosition.top,
-    height: newPosition.height,
-    width: newPosition.width,
-    pathOffset: {
-      x: newPosition.left + newPosition.width / 2,
-      y: newPosition.top + newPosition.height / 2,
-    },
-  });
-  currentPolygon.setCoords();
-}
-
-function resizeAllObjects(object, newFileSizeRatio) {
-  switch (object.shapeName) {
-    case 'polygon':
-      object.points.forEach((point) => {
-        point.x *= newFileSizeRatio;
-        point.y *= newFileSizeRatio;
-      });
-      resetPolygonSelectableArea(object);
-      setPolygonLabelOffsetProps(object, object.points[0]);
-      break;
-    case 'tempPolygon':
-      object.points.forEach((point) => {
-        point.x *= newFileSizeRatio;
-        point.y *= newFileSizeRatio;
-      });
-      break;
-    case 'point':
-    case 'invisiblePoint':
-    case 'firstPoint':
-    case 'tempPoint':
-    case 'initialAddPoint':
-    case 'label':
-      object.top *= newFileSizeRatio;
-      object.left *= newFileSizeRatio;
-      break;
-    case 'addPointsLine':
-      object.top *= newFileSizeRatio;
-      object.left *= newFileSizeRatio;
-      object.height *= newFileSizeRatio;
-      object.width *= newFileSizeRatio;
-      object.x1 *= newFileSizeRatio;
-      object.x2 *= newFileSizeRatio;
-      object.y1 *= newFileSizeRatio;
-      object.y2 *= newFileSizeRatio;
-      break;
-    case 'bndBox':
-      object.height *= newFileSizeRatio;
-      object.width *= newFileSizeRatio;
-      object.top *= newFileSizeRatio;
-      object.left *= newFileSizeRatio;
-      break;
-    default:
-      break;
-  }
-  object.setCoords();
-}
-
 // a change will need to be made here
 function repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
   const shape = shapeObj.shapeRef;
-  resizeAllObjects(shape, newFileSizeRatio);
+  resizeAllPassedObjectsDimensionsBySingleScale(shape, newFileSizeRatio);
   canvas.add(shapeObj.shapeRef);
-  resizeAllObjects(label, newFileSizeRatio);
+  resizeLabelDimensionsBySingleScale(label, newFileSizeRatio);
   generateLabel(label);
   addExistingShape(shapeObj, id);
   addLabelRef(label, id);

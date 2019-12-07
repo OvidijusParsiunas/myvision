@@ -64,7 +64,7 @@ function resetPolygonSelectableArea(currentPolygon) {
   currentPolygon.setCoords();
 }
 
-function resizeAllObjects(newFileSizeRatio, canvas) {
+function resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas) {
   canvas.forEachObject((object) => {
     switch (object.shapeName) {
       case 'polygon':
@@ -114,10 +114,63 @@ function resizeAllObjects(newFileSizeRatio, canvas) {
   canvas.renderAll();
 }
 
+function resizeLabelDimensionsBySingleScale(object, newFileSizeRatio) {
+  object.top *= newFileSizeRatio;
+  object.left *= newFileSizeRatio;
+}
+
+function resizeAllPassedObjectsDimensionsBySingleScale(object, newFileSizeRatio) {
+  switch (object.shapeName) {
+    case 'polygon':
+      object.points.forEach((point) => {
+        point.x *= newFileSizeRatio;
+        point.y *= newFileSizeRatio;
+      });
+      resetPolygonSelectableArea(object);
+      setPolygonLabelOffsetProps(object, object.points[0]);
+      break;
+    case 'tempPolygon':
+      object.points.forEach((point) => {
+        point.x *= newFileSizeRatio;
+        point.y *= newFileSizeRatio;
+      });
+      break;
+    case 'point':
+    case 'invisiblePoint':
+    case 'firstPoint':
+    case 'tempPoint':
+    case 'initialAddPoint':
+    case 'label':
+      resizeLabelDimensionsBySingleScale(object, newFileSizeRatio);
+      break;
+    case 'addPointsLine':
+      object.top *= newFileSizeRatio;
+      object.left *= newFileSizeRatio;
+      object.height *= newFileSizeRatio;
+      object.width *= newFileSizeRatio;
+      object.x1 *= newFileSizeRatio;
+      object.x2 *= newFileSizeRatio;
+      object.y1 *= newFileSizeRatio;
+      object.y2 *= newFileSizeRatio;
+      break;
+    case 'bndBox':
+      object.height *= newFileSizeRatio;
+      object.width *= newFileSizeRatio;
+      object.top *= newFileSizeRatio;
+      object.left *= newFileSizeRatio;
+      break;
+    default:
+      break;
+  }
+  object.setCoords();
+}
+
 export {
   setObjectPropertiesToDefault,
   setObjectsHoverCursorToDefault,
   prepareObjectsForEditablePolygonPoints,
   setObjectPropertiesToDefaultWhenReadyToDraw,
-  resizeAllObjects,
+  resizeAllPassedObjectsDimensionsBySingleScale,
+  resizeLabelDimensionsBySingleScale,
+  resizeAllObjectsDimensionsByDoubleScale,
 };

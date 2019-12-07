@@ -1,5 +1,5 @@
 import { resizeCanvasAndImage, resizeCanvas } from './uploadFile/drawImageOnCanvas';
-import { resizeAllObjects } from '../../../../canvas/objects/objectsProperties/changeProperties';
+import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../../../canvas/objects/label/properties';
 import { zoomCanvas } from '../facadeWorkers/zoomWorker';
 import { getCurrentZoomState } from './stateManager';
@@ -13,7 +13,7 @@ window.windowResize = () => {
   } else {
     const newFileSizeRatio = resizeCanvasAndImage();
     labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
-    resizeAllObjects(newFileSizeRatio, canvas);
+    resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
   }
 };
 

@@ -2,7 +2,7 @@ import { getCanvasProperties, getImageProperties, resizeCanvasAndImage } from '.
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
-import { resizeAllObjects } from '../../../../canvas/objects/objectsProperties/changeProperties';
+import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
 import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
@@ -451,7 +451,7 @@ function resetCanvasToDefault() {
   }
   const newFileSizeRatio = resizeCanvasAndImage();
   labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
-  resizeAllObjects(newFileSizeRatio, canvas);
+  resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
   timesZoomedWithNoShapeIncrease = 0;
   timesZoomedWithNoShapeReduction = 0;
   movedPolygonPathOffsetReduced = false;
@@ -479,7 +479,7 @@ function zoomOut() {
     if (currentZoom === 1) {
       const newFileSizeRatio = resizeCanvasAndImage();
       labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
-      resizeAllObjects(newFileSizeRatio, canvas);
+      resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
       canvas.setZoom(currentZoom);
     } else if (setNewCanvasDimensions() && imageProperties.scaleX < 1) {
       resetCanvasToDefault();
