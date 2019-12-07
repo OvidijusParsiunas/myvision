@@ -15,7 +15,6 @@ function drawResizedImage(newImageDimensions) {
     newFileStatus.scaleY = canvas.height / img.height;
     newFileStatus.originalWidth = img.width;
     newFileStatus.originalHeight = img.height;
-    // console.log(newFileStatus.originalHeight);
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
       scaleX: newFileStatus.scaleX,
       scaleY: newFileStatus.scaleY,

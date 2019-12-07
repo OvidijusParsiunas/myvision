@@ -65,7 +65,7 @@ function calculateNewImageHeightRatio(previousDimensions) {
 }
 
 function repopulateLabelAndShapeObjects(existingShapes, existingLabels, previousDimensions) {
-  if (previousDimensions.originalHeight) {
+  if (previousDimensions && previousDimensions.originalHeight) {
     const newFileSizeRatio = calculateNewImageHeightRatio(previousDimensions)
     / previousDimensions.oldImageHeightRatio;
     const newPolygonOffsetProperties = {
