@@ -61,6 +61,10 @@ can update the image list thumbnails by taking screenshot from farbicjs canvas w
 cancel the creation of a new polygon when clicked escape or delete
 or move shapes button
 
+when creating new polygon, clicking add points should not do anything
+when creating new polygon, choosing to delete points, then clicking to create new polygon again
+should resume polygon drawing
+
 the label should not track off the screen
 
 are you allowed spaces in annotations?
