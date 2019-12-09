@@ -20,7 +20,7 @@ function generateTempDownloadableJSONElement(json) {
 }
 
 function getPolygonProperties(polygon, dimensions) {
-  const properties = { segmentations: [], bbox: [], area: 0 };
+  const properties = { segmentation: [], bbox: [], area: 0 };
   let minX = 999999999999;
   let minY = 999999999999;
   let maxX = 0;
@@ -28,8 +28,8 @@ function getPolygonProperties(polygon, dimensions) {
   polygon.points.forEach((point) => {
     const pointX = Math.round(point.x / dimensions.scaleX);
     const pointY = Math.round(point.y / dimensions.scaleY);
-    properties.segmentations.push(pointX);
-    properties.segmentations.push(pointY);
+    properties.segmentation.push(pointX);
+    properties.segmentation.push(pointY);
     if (pointX < minX) { minX = pointX; }
     if (pointY < minY) { minY = pointY; }
     if (pointX > maxX) { maxX = pointX; }
@@ -46,19 +46,19 @@ function getPolygonProperties(polygon, dimensions) {
 }
 
 function getBoundingBoxProperties(boundingBox, dimensions) {
-  const properties = { segmentations: [], bbox: [], area: 0 };
+  const properties = { segmentation: [], bbox: [], area: 0 };
   const topLeftX = boundingBox.left / dimensions.scaleX;
   const topleftY = boundingBox.top / dimensions.scaleY;
   const width = boundingBox.width / dimensions.scaleX;
   const height = boundingBox.height / dimensions.scaleY;
-  properties.segmentations.push(Math.round(topLeftX));
-  properties.segmentations.push(Math.round(topleftY));
-  properties.segmentations.push(Math.round(topLeftX + width));
-  properties.segmentations.push(Math.round(topleftY));
-  properties.segmentations.push(Math.round(topLeftX + width));
-  properties.segmentations.push(Math.round(topleftY + height));
-  properties.segmentations.push(Math.round(topLeftX));
-  properties.segmentations.push(Math.round(topleftY + height));
+  properties.segmentation.push(Math.round(topLeftX));
+  properties.segmentation.push(Math.round(topleftY));
+  properties.segmentation.push(Math.round(topLeftX + width));
+  properties.segmentation.push(Math.round(topleftY));
+  properties.segmentation.push(Math.round(topLeftX + width));
+  properties.segmentation.push(Math.round(topleftY + height));
+  properties.segmentation.push(Math.round(topLeftX));
+  properties.segmentation.push(Math.round(topleftY + height));
   properties.bbox.push(Math.round(topLeftX));
   properties.bbox.push(Math.round(topleftY));
   properties.bbox.push(Math.round(width));
@@ -78,23 +78,26 @@ function getShapeProperties(shape, dimensions) {
   if (shape.shapeName === 'bndBox') {
     return getBoundingBoxProperties(shape, dimensions);
   }
-  return { segmentations: [], bbox: [], area: 0 };
+  return { segmentation: [], bbox: [], area: 0 };
 }
 
 function parseImageShapeData(shape, imageId, shapeId, dimensions, categories) {
   const parsedImageShapeData = {};
   parsedImageShapeData.id = shapeId;
   parsedImageShapeData.image_id = imageId;
-  const shapeProperties = getShapeProperties(shape, dimensions);
-  parsedImageShapeData.segmentations = shapeProperties.segmentations;
-  parsedImageShapeData.bbox = shapeProperties.bbox;
-  parsedImageShapeData.area = shapeProperties.area;
-  parsedImageShapeData.isCrowd = 0;
   parsedImageShapeData.category_id = getCategoryIdByLabelText(categories, shape.shapeLabelText);
+  const shapeProperties = getShapeProperties(shape, dimensions);
+  parsedImageShapeData.segmentation = shapeProperties.segmentation;
+  parsedImageShapeData.area = shapeProperties.area;
+  parsedImageShapeData.bbox = shapeProperties.bbox;
+  parsedImageShapeData.isCrowd = 0;
   return parsedImageShapeData;
 }
 
 // All formats:
+
+// column_name = ['filename', 'width', 'height',
+// 'class', 'xmin', 'ymin', 'xmax', 'ymax']
 // what happens when there are no shapes in an image
 
 function parseImageData(image, imageId) {
@@ -119,9 +122,9 @@ function parseLabelData(label, labelId) {
 function getImageAndAnnotationData(allImageProperties, categoriesObject) {
   const imageAndAnnotationData = { images: [], annotations: [] };
   let imageId = 0;
+  let shapeId = 0;
   allImageProperties.forEach((image) => {
     imageAndAnnotationData.images.push(parseImageData(image, imageId));
-    let shapeId = 0;
     Object.keys(image.shapes).forEach((key) => {
       const shape = image.shapes[key].shapeRef;
       imageAndAnnotationData.annotations.push(parseImageShapeData(shape, imageId,
@@ -165,10 +168,10 @@ function downloadCOCOJSON() {
   const categoriesData = getCategoriesData();
   const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties,
     categoriesData.categoriesObject);
-  marshalledObject.categories = categoriesData.categoriesArray;
   marshalledObject.images = imageAndAnnotationData.images;
   marshalledObject.annotations = imageAndAnnotationData.annotations;
   marshalledObject.licenses = [{ id: 1, name: 'Unknown', url: '' }];
+  marshalledObject.categories = categoriesData.categoriesArray;
   const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
   downloadableElement.click();
 }
