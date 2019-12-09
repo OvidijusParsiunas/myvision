@@ -1,6 +1,7 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
+import { getLabelOptions } from '../../../../../labelList/labelOptions';
 
 function getJSONFileName() {
   const currentDate = new Date();
@@ -52,14 +53,22 @@ function getShapesData(shapes, dimensions) {
   return shapesCoordinates;
 }
 
+function parseLabelData(label, labelId) {
+  const parsedLabelData = {};
+  parsedLabelData.id = labelId;
+  parsedLabelData.name = label.text;
+  parsedLabelData.supercategory = 'none';
+  return parsedLabelData;
+}
+
 function parseImageData(image, imageId) {
   const parsedImageData = {};
   parsedImageData.id = imageId;
   parsedImageData.width = image.imageDimensions.originalWidth;
   parsedImageData.height = image.imageDimensions.originalHeight;
   parsedImageData.file_name = image.name;
-  // emmitting license
-  // emmitting date captured
+  parsedImageData.license = 1;
+  parsedImageData.date_captured = '';
   return parsedImageData;
 }
 
@@ -121,7 +130,11 @@ function getShapeProperties(shape, dimensions) {
   return { segmentations: [], bbox: [], area: 0 };
 }
 
-function parseImageShapeData(shape, imageId, shapeId, dimensions) {
+function getCategoryIdByLabelText(categories, text) {
+  return categories[text];
+}
+
+function parseImageShapeData(shape, imageId, shapeId, dimensions, categories) {
   const parsedImageShapeData = {};
   parsedImageShapeData.id = shapeId;
   parsedImageShapeData.image_id = imageId;
@@ -129,7 +142,8 @@ function parseImageShapeData(shape, imageId, shapeId, dimensions) {
   parsedImageShapeData.segmentations = shapeProperties.segmentations;
   parsedImageShapeData.bbox = shapeProperties.bbox;
   parsedImageShapeData.area = shapeProperties.area;
-  // emitting is crowded
+  parsedImageShapeData.isCrowd = 0;
+  parsedImageShapeData.category_id = getCategoryIdByLabelText(categories, shape.shapeLabelText);
   return parsedImageShapeData;
 }
 
@@ -153,7 +167,17 @@ function downloadCOCOJSON() {
   const marshalledObject = {};
   marshalledObject.images = [];
   marshalledObject.annotations = [];
+  marshalledObject.categories = [];
   saveCurrentImageDetails(allImageProperties);
+  const labels = getLabelOptions();
+  let labelId = 0;
+  const categoriesObject = {};
+  for (let i = labels.length - 1; i >= 0; i -= 1) {
+    const label = labels[i];
+    marshalledObject.categories.push(parseLabelData(label, labelId));
+    categoriesObject[label.text] = labelId;
+    labelId += 1;
+  }
   let imageId = 0;
   allImageProperties.forEach((image) => {
     marshalledObject.images.push(parseImageData(image, imageId));
@@ -161,15 +185,14 @@ function downloadCOCOJSON() {
     Object.keys(image.shapes).forEach((key) => {
       const shape = image.shapes[key].shapeRef;
       marshalledObject.annotations.push(parseImageShapeData(shape, imageId,
-        shapeId, image.imageDimensions));
+        shapeId, image.imageDimensions, categoriesObject));
       shapeId += 1;
     });
     imageId += 1;
   });
-  // emitting licenses
-  console.log(marshalledObject);
-  // const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
-  // downloadableElement.click();
+  marshalledObject.licenses = [{ id: 1, name: 'Unknown', url: '' }];
+  const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
+  downloadableElement.click();
 }
 
 export { downloadCOCOJSON as default };

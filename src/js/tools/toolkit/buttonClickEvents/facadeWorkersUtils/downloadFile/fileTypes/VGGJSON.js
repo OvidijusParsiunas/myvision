@@ -69,7 +69,6 @@ function parseImageData(image) {
   parsedImageData.filename = image.name;
   parsedImageData.size = image.size;
   parsedImageData.regions = getShapesData(image.shapes, image.imageDimensions);
-
   return parsedImageData;
 }
 
