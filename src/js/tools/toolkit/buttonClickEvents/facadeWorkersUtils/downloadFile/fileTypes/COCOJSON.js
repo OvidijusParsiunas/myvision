@@ -19,59 +19,6 @@ function generateTempDownloadableJSONElement(json) {
   return pom;
 }
 
-function getShapesData(shapes, dimensions) {
-  const shapesCoordinates = [];
-  Object.keys(shapes).forEach((key) => {
-    const shape = shapes[key].shapeRef;
-    if (shape.shapeName === 'polygon') {
-      const coordinatesObj = getJSONPolygonPointsCoordinates(shape, dimensions);
-      shapesCoordinates.push({
-        shape_attributes: {
-          name: 'polygon',
-          all_points_x: coordinatesObj.all_points_x,
-          all_points_y: coordinatesObj.all_points_y,
-        },
-        region_attributes: {
-          name: shape.shapeLabelText,
-        },
-      });
-    } else if (shape.shapeName === 'bndBox') {
-      shapesCoordinates.push({
-        shape_attributes: {
-          name: 'rect',
-          x: Math.round(shape.left / dimensions.scaleX),
-          y: Math.round(shape.top / dimensions.scaleY),
-          width: Math.round(shape.width / dimensions.scaleX),
-          height: Math.round(shape.height / dimensions.scaleY),
-        },
-        region_attributes: {
-          name: shape.shapeLabelText,
-        },
-      });
-    }
-  });
-  return shapesCoordinates;
-}
-
-function parseLabelData(label, labelId) {
-  const parsedLabelData = {};
-  parsedLabelData.id = labelId;
-  parsedLabelData.name = label.text;
-  parsedLabelData.supercategory = 'none';
-  return parsedLabelData;
-}
-
-function parseImageData(image, imageId) {
-  const parsedImageData = {};
-  parsedImageData.id = imageId;
-  parsedImageData.width = image.imageDimensions.originalWidth;
-  parsedImageData.height = image.imageDimensions.originalHeight;
-  parsedImageData.file_name = image.name;
-  parsedImageData.license = 1;
-  parsedImageData.date_captured = '';
-  return parsedImageData;
-}
-
 function getPolygonProperties(polygon, dimensions) {
   const properties = { segmentations: [], bbox: [], area: 0 };
   let minX = 999999999999;
@@ -120,6 +67,10 @@ function getBoundingBoxProperties(boundingBox, dimensions) {
   return properties;
 }
 
+function getCategoryIdByLabelText(categories, text) {
+  return categories[text];
+}
+
 function getShapeProperties(shape, dimensions) {
   if (shape.shapeName === 'polygon') {
     return getPolygonProperties(shape, dimensions);
@@ -128,10 +79,6 @@ function getShapeProperties(shape, dimensions) {
     return getBoundingBoxProperties(shape, dimensions);
   }
   return { segmentations: [], bbox: [], area: 0 };
-}
-
-function getCategoryIdByLabelText(categories, text) {
-  return categories[text];
 }
 
 function parseImageShapeData(shape, imageId, shapeId, dimensions, categories) {
@@ -150,6 +97,55 @@ function parseImageShapeData(shape, imageId, shapeId, dimensions, categories) {
 // All formats:
 // what happens when there are no shapes in an image
 
+function parseImageData(image, imageId) {
+  const parsedImageData = {};
+  parsedImageData.id = imageId;
+  parsedImageData.width = image.imageDimensions.originalWidth;
+  parsedImageData.height = image.imageDimensions.originalHeight;
+  parsedImageData.file_name = image.name;
+  parsedImageData.license = 1;
+  parsedImageData.date_captured = '';
+  return parsedImageData;
+}
+
+function parseLabelData(label, labelId) {
+  const parsedLabelData = {};
+  parsedLabelData.id = labelId;
+  parsedLabelData.name = label.text;
+  parsedLabelData.supercategory = 'none';
+  return parsedLabelData;
+}
+
+function getImageAndAnnotationData(allImageProperties, categoriesObject) {
+  const imageAndAnnotationData = { images: [], annotations: [] };
+  let imageId = 0;
+  allImageProperties.forEach((image) => {
+    imageAndAnnotationData.images.push(parseImageData(image, imageId));
+    let shapeId = 0;
+    Object.keys(image.shapes).forEach((key) => {
+      const shape = image.shapes[key].shapeRef;
+      imageAndAnnotationData.annotations.push(parseImageShapeData(shape, imageId,
+        shapeId, image.imageDimensions, categoriesObject));
+      shapeId += 1;
+    });
+    imageId += 1;
+  });
+  return imageAndAnnotationData;
+}
+
+function getCategoriesData() {
+  const categoriesData = { categoriesArray: [], categoriesObject: {} };
+  const labels = getLabelOptions();
+  let labelId = 0;
+  for (let i = labels.length - 1; i >= 0; i -= 1) {
+    const label = labels[i];
+    categoriesData.categoriesArray.push(parseLabelData(label, labelId));
+    categoriesData.categoriesObject[label.text] = labelId;
+    labelId += 1;
+  }
+  return categoriesData;
+}
+
 function saveCurrentImageDetails(allImageProperties) {
   const currentlySelectedImageId = getCurrentlySelectedImageId();
   const currentlySelectedImageProperties = getImageProperties();
@@ -163,33 +159,15 @@ function saveCurrentImageDetails(allImageProperties) {
 }
 
 function downloadCOCOJSON() {
-  const allImageProperties = getAllImageData();
   const marshalledObject = {};
-  marshalledObject.images = [];
-  marshalledObject.annotations = [];
-  marshalledObject.categories = [];
+  const allImageProperties = getAllImageData();
   saveCurrentImageDetails(allImageProperties);
-  const labels = getLabelOptions();
-  let labelId = 0;
-  const categoriesObject = {};
-  for (let i = labels.length - 1; i >= 0; i -= 1) {
-    const label = labels[i];
-    marshalledObject.categories.push(parseLabelData(label, labelId));
-    categoriesObject[label.text] = labelId;
-    labelId += 1;
-  }
-  let imageId = 0;
-  allImageProperties.forEach((image) => {
-    marshalledObject.images.push(parseImageData(image, imageId));
-    let shapeId = 0;
-    Object.keys(image.shapes).forEach((key) => {
-      const shape = image.shapes[key].shapeRef;
-      marshalledObject.annotations.push(parseImageShapeData(shape, imageId,
-        shapeId, image.imageDimensions, categoriesObject));
-      shapeId += 1;
-    });
-    imageId += 1;
-  });
+  const categoriesData = getCategoriesData();
+  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties,
+    categoriesData.categoriesObject);
+  marshalledObject.categories = categoriesData.categoriesArray;
+  marshalledObject.images = imageAndAnnotationData.images;
+  marshalledObject.annotations = imageAndAnnotationData.annotations;
   marshalledObject.licenses = [{ id: 1, name: 'Unknown', url: '' }];
   const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
   downloadableElement.click();
