@@ -30,9 +30,6 @@ function generateTempDownloadableJSONElement(json) {
 }
 
 // All formats:
-
-// column_name = ['filename', 'width', 'height',
-// 'class', 'xmin', 'ymin', 'xmax', 'ymax']
 // what happens when there are no shapes in an image
 
 function constructCsvString(csvArray) {
@@ -52,13 +49,13 @@ function buildCSVRowObj(imageData, boundingBoxData) {
   return { ...imageData, ...boundingBoxData };
 }
 
-function getBoundingBoxData(boundingBox) {
+function getBoundingBoxData(boundingBox, dimensions) {
   const boundingBoxData = {};
   boundingBoxData.class = boundingBox.shapeLabelText;
-  const topLeftX = boundingBox.left / boundingBox.scaleX;
-  const topleftY = boundingBox.top / boundingBox.scaleY;
-  const width = boundingBox.width / boundingBox.scaleX;
-  const height = boundingBox.height / boundingBox.scaleY;
+  const topLeftX = boundingBox.left / dimensions.scaleX;
+  const topleftY = boundingBox.top / dimensions.scaleY;
+  const width = boundingBox.width / dimensions.scaleX;
+  const height = boundingBox.height / dimensions.scaleY;
   boundingBoxData.xmin = Math.round(topLeftX);
   boundingBoxData.ymin = Math.round(topleftY);
   boundingBoxData.xmax = Math.round(topLeftX + width);
@@ -81,7 +78,7 @@ function getImageAndAnnotationData(allImageProperties) {
     Object.keys(image.shapes).forEach((key) => {
       const shape = image.shapes[key].shapeRef;
       if (shape.shapeName === 'bndBox') {
-        const boundingBoxData = getBoundingBoxData(shape);
+        const boundingBoxData = getBoundingBoxData(shape, image.imageDimensions);
         const csvRow = buildCSVRowObj(imageData, boundingBoxData);
         imageAndAnnotationData.push(csvRow);
       }
