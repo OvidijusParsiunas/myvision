@@ -1,9 +1,9 @@
 // import { downloadXML } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
-import downloadCSV from '../facadeWorkersUtils/downloadFile/fileTypes/CSV';
+import downloadXML from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
 
 function downloadTrainingDataEvent(canvas) {
   canvas.discardActiveObject();
-  downloadCSV();
+  downloadXML();
   // nothing to download message
 }
 

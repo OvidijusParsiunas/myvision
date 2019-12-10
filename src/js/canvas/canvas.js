@@ -1,6 +1,5 @@
 import { assignCanvasMouseEvents } from '../tools/toolkit/buttonClickEvents/facade';
 import { assignCanvasForDrawImageOnCanvas } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
-import { assignCanvasForDownloadingAnnotationsXML } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/resetCanvasEvents';
 import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, reasignCanvas } from './utils/fabricUtils';
 import { assignCanvasForLabelManipulation } from './objects/label/label';
@@ -16,7 +15,6 @@ let currentCanvasInstance = null;
 function repopulateCanvasReference(canvas) {
   assignCanvasMouseEvents(canvas);
   assignCanvasForDrawImageOnCanvas(canvas);
-  assignCanvasForDownloadingAnnotationsXML(canvas);
   assignResetCanvasEventsFuncToMouseEvents(canvas);
   assignCanvasForShapeFillManipulation(canvas);
   assignCanvasForLabelManipulation(canvas);

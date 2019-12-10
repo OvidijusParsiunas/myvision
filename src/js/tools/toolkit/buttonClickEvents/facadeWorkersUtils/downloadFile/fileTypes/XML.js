@@ -1,15 +1,12 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
-import convertJSONToXML from '../fileTypeConverters/JSONtoXML';
-import buildAnnotationsObject from '../fileStructureGenerators/generateStandardAnnotationsObject';
 import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 
-let canvas = null;
-let fileProperties = null;
-
 function getFileName() {
-  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
-  return `${regexToFindFirstWordBeforeFullStop.exec(fileProperties.name)[0]}.json`;
+  // const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
+  // return `${regexToFindFirstWordBeforeFullStop.exec(fileProperties.name)[0]}.xml`;
+  const currentDate = new Date();
+  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.xml`;
 }
 
 function generateTempDownloadableElement(xml) {
@@ -23,160 +20,37 @@ function generateTempDownloadableElement(xml) {
   return pom;
 }
 
-function generateXML() {
-  const downloadableObject = buildAnnotationsObject(canvas, fileProperties);
-  return convertJSONToXML(downloadableObject);
-}
-
-
-function getPolygonPointsCoordinates(polygon) {
-  const coordinatesObj = {
-    all_points_x: [],
-    all_points_y: [],
-  };
-  polygon.points.forEach((point) => {
-    coordinatesObj.all_points_x.push(point.x / fileProperties.scaleX);
-    coordinatesObj.all_points_y.push(point.y / fileProperties.scaleY);
-  });
-  coordinatesObj.all_points_x.push(polygon.points[0].x / fileProperties.scaleX);
-  coordinatesObj.all_points_y.push(polygon.points[0].y / fileProperties.scaleY);
-  return coordinatesObj;
-}
-
-// should they be rounded?
-function getShapeCoordinates() {
-  let shapeIndex = 0;
-  const shapesCoordinates = {};
-  canvas.forEachObject((object) => {
-    if (object.shapeName === 'polygon') {
-      const coordinatesObj = getPolygonPointsCoordinates(object);
-      shapesCoordinates[shapeIndex] = {
-        shape_attributes: {
-          name: object.shapeName,
-          all_points_x: coordinatesObj.all_points_x,
-          all_points_y: coordinatesObj.all_points_y,
-        },
-        region_attributes: {},
-      };
-      shapeIndex += 1;
-    } else if (object.shapeName === 'bndBox') {
-      shapesCoordinates[shapeIndex] = {
-        shape_attributes: {
-          name: 'rect',
-          x: object.left / fileProperties.scaleX,
-          y: object.top / fileProperties.scaleY,
-          width: object.width / fileProperties.scaleX,
-          height: object.height / fileProperties.scaleY,
-        },
-      };
-      shapeIndex += 1;
-    }
-  });
-  return shapesCoordinates;
-}
-
-function getFinalCoordinatesObj() {
-  const coordinatesObj = {
-    fileref: '',
-    size: 76744,
-    filename: fileProperties.name,
-    base64_img_data: '',
-    file_attributes: {},
-  };
-  coordinatesObj.regions = getShapeCoordinates();
-  const finalObject = {};
-  finalObject[fileProperties.name] = coordinatesObj;
-  return finalObject;
-}
-
-function downloadXML() {
-  fileProperties = getImageProperties();
-  const xml = generateXML();
-  const downloadableElement = generateTempDownloadableElement(xml);
-  downloadableElement.click();
-}
-
-function downloadJSON() {
-  fileProperties = getImageProperties();
-  const downloadableElement = generateTempDownloadableElement(
-    JSON.stringify(getFinalCoordinatesObj()),
-  );
-  downloadableElement.click();
-}
-
-function getJSONPolygonPointsCoordinates(polygon, dimensions) {
-  const coordinatesObj = {
-    all_points_x: [],
-    all_points_y: [],
-  };
-  polygon.points.forEach((point) => {
-    coordinatesObj.all_points_x.push(Math.round(point.x / dimensions.scaleX));
-    coordinatesObj.all_points_y.push(Math.round(point.y / dimensions.scaleY));
-  });
-  return coordinatesObj;
-}
-
-function getJSONFileName() {
-  const currentDate = new Date();
-  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.json`;
-}
-
-function generateTempDownloadableJSONElement(json) {
-  const pom = document.createElement('a');
-  const bb = new Blob([JSON.stringify(json)], { type: 'application/json' });
-  pom.setAttribute('href', window.URL.createObjectURL(bb));
-  pom.setAttribute('download', getJSONFileName());
-  pom.dataset.downloadurl = ['application/json', pom.download, pom.href].join(':');
-  pom.draggable = true;
-  pom.classList.add('dragout');
-  return pom;
-}
-
-function getShapesData(shapes, dimensions) {
-  const shapesCoordinates = [];
-  Object.keys(shapes).forEach((key) => {
-    const shape = shapes[key].shapeRef;
-    if (shape.shapeName === 'polygon') {
-      const coordinatesObj = getJSONPolygonPointsCoordinates(shape, dimensions);
-      shapesCoordinates.push({
-        shape_attributes: {
-          name: 'polygon',
-          all_points_x: coordinatesObj.all_points_x,
-          all_points_y: coordinatesObj.all_points_y,
-        },
-        region_attributes: {
-          name: shape.shapeLabelText,
-        },
-      });
-    } else if (shape.shapeName === 'bndBox') {
-      shapesCoordinates.push({
-        shape_attributes: {
-          name: 'rect',
-          x: Math.round(shape.left / dimensions.scaleX),
-          y: Math.round(shape.top / dimensions.scaleY),
-          width: Math.round(shape.width / dimensions.scaleX),
-          height: Math.round(shape.height / dimensions.scaleY),
-        },
-        region_attributes: {
-          name: shape.shapeLabelText,
-        },
-      });
-    }
-  });
-  return shapesCoordinates;
+function parseBoundingBoxData(boundingBox, dimensions) {
+  const parsedShapeData = {};
+  parsedShapeData.name = boundingBox.shapeLabelText;
+  parsedShapeData.pose = 'Unspecified';
+  parsedShapeData.truncated = 0;
+  parsedShapeData.difficult = 0;
+  parsedShapeData.bndbox = {};
+  const topLeftX = boundingBox.left / dimensions.scaleX;
+  const topleftY = boundingBox.top / dimensions.scaleY;
+  const width = boundingBox.width / dimensions.scaleX;
+  const height = boundingBox.height / dimensions.scaleY;
+  parsedShapeData.bndbox.xmin = Math.round(topLeftX);
+  parsedShapeData.bndbox.ymin = Math.round(topleftY);
+  parsedShapeData.bndbox.xmax = Math.round(topLeftX + width);
+  parsedShapeData.bndbox.ymax = Math.round(topleftY + height);
+  return parsedShapeData;
 }
 
 function parseImageData(image) {
   const parsedImageData = {};
+  parsedImageData.folder = 'Unknown';
   parsedImageData.filename = image.name;
-  parsedImageData.size = image.size;
-  parsedImageData.regions = getShapesData(image.shapes, image.imageDimensions);
-
+  parsedImageData.path = 'Unknown';
+  parsedImageData.source = { database: 'Unknown' };
+  parsedImageData.size = {};
+  parsedImageData.size.width = image.imageDimensions.originalWidth;
+  parsedImageData.size.height = image.imageDimensions.originalHeight;
+  parsedImageData.size.depth = 1;
+  parsedImageData.segmented = 0;
   return parsedImageData;
 }
-
-// All formats:
-// what happens when there are no shapes in an image
 
 function saveCurrentImageDetails(allImageProperties) {
   const currentlySelectedImageId = getCurrentlySelectedImageId();
@@ -184,25 +58,54 @@ function saveCurrentImageDetails(allImageProperties) {
   const imageDimensions = {};
   imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
   imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
+  imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
+  imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
   allImageProperties[currentlySelectedImageId].imageDimensions = imageDimensions;
   allImageProperties[currentlySelectedImageId].shapes = getAllExistingShapes();
 }
 
-function downloadVGGJSON() {
+function JSONtoXML(JSONObject) {
+  let tagString = '';
+  Object.keys(JSONObject).forEach((key) => {
+    if (typeof (JSONObject[key]) === 'object') {
+      if (key === 'objects') {
+        JSONObject[key].forEach((object) => {
+          tagString += `<object>${JSONtoXML(object)}</object>`;
+        });
+      } else {
+        tagString += `<${key}>${JSONtoXML(JSONObject[key])}</${key}>`;
+      }
+    } else {
+      tagString += `<${key}>${JSONObject[key]}</${key}>`;
+    }
+  });
+  return tagString;
+}
+
+// All formats:
+// what happens when there are no shapes in an image
+
+function downloadXML() {
+  const annotatedImages = [];
   const allImageProperties = getAllImageData();
-  const marshalledObject = {};
   saveCurrentImageDetails(allImageProperties);
   allImageProperties.forEach((image) => {
-    marshalledObject[image.name] = parseImageData(image);
+    let annotationsObject = {};
+    annotationsObject = { ...parseImageData(image) };
+    annotationsObject.objects = [];
+    Object.keys(image.shapes).forEach((key) => {
+      const shape = image.shapes[key].shapeRef;
+      if (shape.shapeName === 'bndBox') {
+        annotationsObject.objects.push(parseBoundingBoxData(shape, image.imageDimensions));
+      }
+    });
+    if (annotationsObject.objects && annotationsObject.objects.length > 0) {
+      annotatedImages.push({ annotation: annotationsObject });
+    }
   });
-  const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
+  const xmlObject = JSONtoXML(annotatedImages[0]);
+  const downloadableElement = generateTempDownloadableElement(xmlObject);
   downloadableElement.click();
 }
 
-function assignCanvasForDownloadingAnnotationsXML(canvasObj) {
-  canvas = canvasObj;
-}
-
-export {
-  assignCanvasForDownloadingAnnotationsXML, downloadXML, downloadJSON, downloadVGGJSON,
-};
+export { downloadXML as default };
