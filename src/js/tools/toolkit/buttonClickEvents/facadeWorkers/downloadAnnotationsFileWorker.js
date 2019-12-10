@@ -1,9 +1,9 @@
 // import { downloadXML } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
-import downloadCOCOJSON from '../facadeWorkersUtils/downloadFile/fileTypes/COCOJSON';
+import downloadCSV from '../facadeWorkersUtils/downloadFile/fileTypes/CSV';
 
 function downloadTrainingDataEvent(canvas) {
   canvas.discardActiveObject();
-  downloadCOCOJSON();
+  downloadCSV();
   // nothing to download message
 }
 
