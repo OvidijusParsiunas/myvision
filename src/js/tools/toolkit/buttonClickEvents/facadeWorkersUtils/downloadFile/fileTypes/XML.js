@@ -47,7 +47,7 @@ function parseImageData(image) {
   parsedImageData.size = {};
   parsedImageData.size.width = image.imageDimensions.originalWidth;
   parsedImageData.size.height = image.imageDimensions.originalHeight;
-  parsedImageData.size.depth = 1;
+  parsedImageData.size.depth = 3;
   parsedImageData.segmented = 0;
   return parsedImageData;
 }
@@ -64,19 +64,20 @@ function saveCurrentImageDetails(allImageProperties) {
   allImageProperties[currentlySelectedImageId].shapes = getAllExistingShapes();
 }
 
-function JSONtoXML(JSONObject) {
+function JSONtoXML(JSONObject, tabsString) {
   let tagString = '';
+  tabsString = tabsString !== undefined ? tabsString += '\t' : '';
   Object.keys(JSONObject).forEach((key) => {
     if (typeof (JSONObject[key]) === 'object') {
       if (key === 'objects') {
         JSONObject[key].forEach((object) => {
-          tagString += `<object>${JSONtoXML(object)}</object>`;
+          tagString += `${tabsString}<object>\n${JSONtoXML(object, tabsString)}${tabsString}</object>\n`;
         });
       } else {
-        tagString += `<${key}>${JSONtoXML(JSONObject[key])}</${key}>`;
+        tagString += `${tabsString}<${key}>\n${JSONtoXML(JSONObject[key], tabsString)}${tabsString}</${key}>\n`;
       }
     } else {
-      tagString += `<${key}>${JSONObject[key]}</${key}>`;
+      tagString += `${tabsString}<${key}>${JSONObject[key]}</${key}>\n`;
     }
   });
   return tagString;
@@ -122,3 +123,20 @@ function downloadXML() {
 }
 
 export { downloadXML as default };
+
+// If there is an error - try to use a file receiver
+// import FileSaver from 'file-saver';
+// import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
+// import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+// import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
+
+// function getFileName() {
+//   const currentDate = new Date();
+//   return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
+// }
+
+// function downloadZip(xml) {
+//   xml.generateAsync({ type: 'blob' }).then((blob) => {
+//     FileSaver.saveAs(blob, getFileName());
+//   });
+// }
