@@ -1,23 +1,23 @@
+import JSZip from 'jszip';
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 
 function getFileName() {
-  // const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
-  // return `${regexToFindFirstWordBeforeFullStop.exec(fileProperties.name)[0]}.xml`;
   const currentDate = new Date();
-  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.xml`;
+  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
 }
 
-function generateTempDownloadableElement(xml) {
+function downloadZip(xml) {
   const pom = document.createElement('a');
-  const bb = new Blob([xml], { type: 'text/plain' });
-  pom.setAttribute('href', window.URL.createObjectURL(bb));
-  pom.setAttribute('download', getFileName());
-  pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
-  pom.draggable = true;
-  pom.classList.add('dragout');
-  return pom;
+  xml.generateAsync({ type: 'blob' }).then((blob) => {
+    pom.setAttribute('href', window.URL.createObjectURL(blob));
+    pom.setAttribute('download', getFileName());
+    pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
+    pom.draggable = true;
+    pom.classList.add('dragout');
+    pom.click();
+  });
 }
 
 function parseBoundingBoxData(boundingBox, dimensions) {
@@ -85,27 +85,40 @@ function JSONtoXML(JSONObject) {
 // All formats:
 // what happens when there are no shapes in an image
 
+function buildDownloadableZip(annotatedImages) {
+  const zip = new JSZip();
+  const imagesFolder = zip.folder('images');
+  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
+  annotatedImages.forEach((annotatedImage) => {
+    const imageName = `${regexToFindFirstWordBeforeFullStop.exec(annotatedImage.annotation.filename)[0]}.xml`;
+    const annotatedImageXML = JSONtoXML(annotatedImage);
+    imagesFolder.file(imageName, annotatedImageXML);
+  });
+  return imagesFolder;
+}
+
 function downloadXML() {
   const annotatedImages = [];
   const allImageProperties = getAllImageData();
   saveCurrentImageDetails(allImageProperties);
   allImageProperties.forEach((image) => {
-    let annotationsObject = {};
-    annotationsObject = { ...parseImageData(image) };
-    annotationsObject.objects = [];
-    Object.keys(image.shapes).forEach((key) => {
-      const shape = image.shapes[key].shapeRef;
-      if (shape.shapeName === 'bndBox') {
-        annotationsObject.objects.push(parseBoundingBoxData(shape, image.imageDimensions));
+    if (image.imageDimensions) {
+      let annotationsObject = {};
+      annotationsObject = { ...parseImageData(image) };
+      annotationsObject.objects = [];
+      Object.keys(image.shapes).forEach((key) => {
+        const shape = image.shapes[key].shapeRef;
+        if (shape.shapeName === 'bndBox') {
+          annotationsObject.objects.push(parseBoundingBoxData(shape, image.imageDimensions));
+        }
+      });
+      if (annotationsObject.objects && annotationsObject.objects.length > 0) {
+        annotatedImages.push({ annotation: annotationsObject });
       }
-    });
-    if (annotationsObject.objects && annotationsObject.objects.length > 0) {
-      annotatedImages.push({ annotation: annotationsObject });
     }
   });
-  const xmlObject = JSONtoXML(annotatedImages[0]);
-  const downloadableElement = generateTempDownloadableElement(xmlObject);
-  downloadableElement.click();
+  const downloadableZip = buildDownloadableZip(annotatedImages);
+  downloadZip(downloadableZip);
 }
 
 export { downloadXML as default };

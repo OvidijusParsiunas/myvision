@@ -8,6 +8,7 @@
       "child_process": false,
       "fs": false
     },
+    "jszip": "^3.2.2",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
   },

@@ -124,14 +124,16 @@ function getImageAndAnnotationData(allImageProperties, categoriesObject) {
   let imageId = 0;
   let shapeId = 0;
   allImageProperties.forEach((image) => {
-    imageAndAnnotationData.images.push(parseImageData(image, imageId));
-    Object.keys(image.shapes).forEach((key) => {
-      const shape = image.shapes[key].shapeRef;
-      imageAndAnnotationData.annotations.push(parseImageShapeData(shape, imageId,
-        shapeId, image.imageDimensions, categoriesObject));
-      shapeId += 1;
-    });
-    imageId += 1;
+    if (image.imageDimensions) {
+      imageAndAnnotationData.images.push(parseImageData(image, imageId));
+      Object.keys(image.shapes).forEach((key) => {
+        const shape = image.shapes[key].shapeRef;
+        imageAndAnnotationData.annotations.push(parseImageShapeData(shape, imageId,
+          shapeId, image.imageDimensions, categoriesObject));
+        shapeId += 1;
+      });
+      imageId += 1;
+    }
   });
   return imageAndAnnotationData;
 }

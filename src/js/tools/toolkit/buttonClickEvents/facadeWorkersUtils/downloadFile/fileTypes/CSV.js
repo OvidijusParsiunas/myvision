@@ -74,15 +74,17 @@ function getImageData(image) {
 function getImageAndAnnotationData(allImageProperties) {
   const imageAndAnnotationData = [];
   allImageProperties.forEach((image) => {
-    const imageData = getImageData(image);
-    Object.keys(image.shapes).forEach((key) => {
-      const shape = image.shapes[key].shapeRef;
-      if (shape.shapeName === 'bndBox') {
-        const boundingBoxData = getBoundingBoxData(shape, image.imageDimensions);
-        const csvRow = buildCSVRowObj(imageData, boundingBoxData);
-        imageAndAnnotationData.push(csvRow);
-      }
-    });
+    if (image.imageDimensions) {
+      const imageData = getImageData(image);
+      Object.keys(image.shapes).forEach((key) => {
+        const shape = image.shapes[key].shapeRef;
+        if (shape.shapeName === 'bndBox') {
+          const boundingBoxData = getBoundingBoxData(shape, image.imageDimensions);
+          const csvRow = buildCSVRowObj(imageData, boundingBoxData);
+          imageAndAnnotationData.push(csvRow);
+        }
+      });
+    }
   });
   return imageAndAnnotationData;
 }
