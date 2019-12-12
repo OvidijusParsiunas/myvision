@@ -32,6 +32,7 @@
         </div>
       </div>
     </div>    
+    <!-- needs to be renamed to popup labeller -->
     <div id="popup-label-parent" hidden>
       <div id="popup-label-title">Label name:</div>
       <input type="text" id="popup-label-input" onpaste="popupPaste()" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="new label">
@@ -42,15 +43,23 @@
         <div id="popup-cancel-button" class="popup-label-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
-  
-    <!-- TO-DO -->
-    <!-- Tuesday - identify the top naviagation bar/ or switch it to bottom, begin work on resizing the icons -->
-    <!-- Wednesday - resize all of the icons work, incl text, potentially test on other pcs/browsers -->
-    <!-- Thursday - begin work on overflow, incl. button that can be clicked to go down -->
-    <!-- Friday - find new icons, incl horizontal line -->
-    <!-- Saturday - button hover and click effects -->
-        <!-- when active, have colors -->
-    <!-- Button active events -->
+    <!-- color: #cecece; -->
+    <div id="export-labels-popup-parent">
+      <div id="popup-label-title">Choose format:</div>
+      <div id="parent-table-element" style="width: 172px;">
+        <table style="width: inherit; padding-left: 5px;" id="settings-table" class="settings-popup-item">
+          <tr><td style="padding-top: 7px" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">COCO JSON</div> <input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="movableObjects()" checked></td></tr>
+          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">VGG JSON</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="continuousDrawing()" checked></td></tr>
+          <tr><td style="padding-top: 7px" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">CSV</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" disabled></td></tr>
+          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">VOC XML</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" disabled></td></tr>
+          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">YOLO TXT</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" disabled></td></tr>
+        </table>
+      </div>
+      <div id="popup-label-buttons" style="margin-top: 4px">
+        <div id="popup-submit-button" class="popup-label-button" onclick="labelShape()">Export</div>
+        <div id="popup-cancel-button" class="popup-label-button" onclick="cancelLabellingProcess()">Cancel</div>
+      </div>
+    </div>
 
   
     <!-- strategy is, set the tools on window loadup -->
@@ -58,9 +67,6 @@
     <!-- make sure to leave some space for download bar appearing -->
   
     <!-- the popup should align itself if it overflows, or align itself to not overflow -->
-    <!-- the popup should disappear on clicking away -->
-    <!-- should slide out nicely on click -->
-    <!-- divider between different sections of the left side bar -->
     <div id="settings-popup" class="settings-popup-item" style="position: absolute; border-radius: 3px; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
       <table id="settings-table" class="settings-popup-item">
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Movable Objects</div> <input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="movableObjects()" checked></td></tr>

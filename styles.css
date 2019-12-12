@@ -181,6 +181,22 @@
   background-color: #d65e5e;
 }
 
+#export-labels-popup-parent {
+  position: absolute;
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: grey;
+  z-index: 3;
+  height: 202px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 180px;
+}
+
 #left-side-bar {
   width: 57px;
   padding-top: 9px;

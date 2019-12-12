@@ -72,6 +72,10 @@ a shape has been selected or not)
 
 shapes should not be out of bounds for the image
 
+delete images button
+
+check XML and YOLOTXT formats
+
 are you allowed spaces in annotations?
 research what formats are allowed
 update labelimg
