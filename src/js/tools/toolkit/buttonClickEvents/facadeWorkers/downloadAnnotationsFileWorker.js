@@ -1,9 +1,9 @@
 // import { downloadXML } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
-import downloadXML from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
+import downloadYOLOTXT from '../facadeWorkersUtils/downloadFile/fileTypes/YOLOTXT';
 
 function downloadTrainingDataEvent(canvas) {
   canvas.discardActiveObject();
-  downloadXML();
+  downloadYOLOTXT();
   // nothing to download message
 }
 

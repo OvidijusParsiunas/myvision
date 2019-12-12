@@ -3,6 +3,26 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 
+/*
+If there is an error on generating zips - try to use a file receiver
+import FileSaver from 'file-saver';
+import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
+import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
+
+function getFileName() {
+  const currentDate = new Date();
+  return `myLabel-${currentDate.getDay()}-
+    ${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
+}
+
+function downloadZip(xml) {
+  xml.generateAsync({ type: 'blob' }).then((blob) => {
+    FileSaver.saveAs(blob, getFileName());
+  });
+}
+
+*/
 function getFileName() {
   const currentDate = new Date();
   return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
@@ -98,45 +118,37 @@ function buildDownloadableZip(annotatedImages) {
   return imagesFolder;
 }
 
-function downloadXML() {
-  const annotatedImages = [];
-  const allImageProperties = getAllImageData();
-  saveCurrentImageDetails(allImageProperties);
+function getObjectsArray(image) {
+  const objectsArray = [];
+  Object.keys(image.shapes).forEach((key) => {
+    const shape = image.shapes[key].shapeRef;
+    if (shape.shapeName === 'bndBox') {
+      objectsArray.objects.push(parseBoundingBoxData(shape, image.imageDimensions));
+    }
+  });
+  return objectsArray;
+}
+
+function getImageAndAnnotationData(allImageProperties) {
+  const imageAndAnnotationData = [];
   allImageProperties.forEach((image) => {
     if (image.imageDimensions) {
       let annotationsObject = {};
       annotationsObject = { ...parseImageData(image) };
-      annotationsObject.objects = [];
-      Object.keys(image.shapes).forEach((key) => {
-        const shape = image.shapes[key].shapeRef;
-        if (shape.shapeName === 'bndBox') {
-          annotationsObject.objects.push(parseBoundingBoxData(shape, image.imageDimensions));
-        }
-      });
+      annotationsObject.objects = getObjectsArray(image);
       if (annotationsObject.objects && annotationsObject.objects.length > 0) {
-        annotatedImages.push({ annotation: annotationsObject });
+        imageAndAnnotationData.push({ annotation: annotationsObject });
       }
     }
   });
-  const downloadableZip = buildDownloadableZip(annotatedImages);
+}
+
+function downloadXML() {
+  const allImageProperties = getAllImageData();
+  saveCurrentImageDetails(allImageProperties);
+  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties);
+  const downloadableZip = buildDownloadableZip(imageAndAnnotationData);
   downloadZip(downloadableZip);
 }
 
 export { downloadXML as default };
-
-// If there is an error - try to use a file receiver
-// import FileSaver from 'file-saver';
-// import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
-// import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
-// import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
-
-// function getFileName() {
-//   const currentDate = new Date();
-//   return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
-// }
-
-// function downloadZip(xml) {
-//   xml.generateAsync({ type: 'blob' }).then((blob) => {
-//     FileSaver.saveAs(blob, getFileName());
-//   });
-// }
