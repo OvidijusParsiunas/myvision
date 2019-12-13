@@ -197,6 +197,12 @@
   width: 180px;
 }
 
+/* repeating code for the submit buttons */
+
+#export-lables-popup-submit-button {
+  margin-right: 3px;
+}
+
 #left-side-bar {
   width: 57px;
   padding-top: 9px;
