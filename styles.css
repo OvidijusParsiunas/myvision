@@ -203,8 +203,12 @@
   margin-right: 3px;
 }
 
+.export-button-active:hover {
+  background-color: #9ed49f !important;
+}
+
 .export-button-active:active {
-  background-color:#43b543 !important;
+  background-color: #69bd69 !important;
 }
 
 #left-side-bar {

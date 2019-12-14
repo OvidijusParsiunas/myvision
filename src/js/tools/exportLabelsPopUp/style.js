@@ -40,7 +40,9 @@ function selectFormat(target) {
 
 function displayExportLabelsPopup() {
   const exportLabelsPopUpElement = document.getElementById('export-labels-popup-parent');
-  exportLabelsPopUpElement.style.display = 'block';
+  setTimeout(() => {
+    exportLabelsPopUpElement.style.display = 'block';
+  }, 100);
 }
 
 function hideExportLabelsPopUp() {
