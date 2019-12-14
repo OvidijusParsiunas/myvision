@@ -1,4 +1,4 @@
-import selectFormat from './style';
+import { selectFormat } from './style';
 import downloadCOCOJSON from '../toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/COCOJSON';
 
 let currentlySelectedFormat = null;

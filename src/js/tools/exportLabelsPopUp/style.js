@@ -36,4 +36,9 @@ function selectFormat(target) {
   }
 }
 
-export { selectFormat as default };
+function displayExportLabelsPopup() {
+  const exportLabelsPopUpElement = document.getElementById('export-labels-popup-parent');
+  exportLabelsPopUpElement.style.display = 'block';
+}
+
+export { selectFormat, displayExportLabelsPopup };

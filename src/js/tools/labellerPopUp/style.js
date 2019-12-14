@@ -166,6 +166,6 @@ window.updateMouseProperties = (event) => {
 };
 
 export {
-  showLabelPopUp, getLabelPopUpText, hideLabelPopUp,
+  showLabelPopUp, getLabelPopUpText, hideLabelPopUp, dimWindow,
   initialiseLabelPopupOptionsList, resetPopUpLabelOptions,
 };

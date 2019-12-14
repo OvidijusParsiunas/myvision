@@ -1,8 +1,7 @@
 // import { downloadXML } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
-import downloadYOLOTXT from '../facadeWorkersUtils/downloadFile/fileTypes/YOLOTXT';
-
+import { dimWindow } from '../../../labellerPopUp/style';
+import { displayExportLabelsPopup } from '../../../exportLabelsPopUp/style';
 // function showLabelPopUp() {
-// dimWindow();
 // popupLabelParentElement = document.getElementById('popup-label-parent');
 // popupLabelParentElement.style.display = 'block';
 // validateFullPopUpVisibile();
@@ -10,7 +9,9 @@ import downloadYOLOTXT from '../facadeWorkersUtils/downloadFile/fileTypes/YOLOTX
 
 function downloadTrainingDataEvent(canvas) {
   canvas.discardActiveObject();
-  downloadYOLOTXT();
+  dimWindow();
+  displayExportLabelsPopup();
+  // downloadYOLOTXT();
   // nothing to download message
 }
 
