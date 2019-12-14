@@ -1,3 +1,5 @@
+import { incrementShapeType, decrementShapeType } from '../../../tools/globalStatistics/globalStatistics';
+
 let shapes = {};
 let canvas = null;
 
@@ -5,6 +7,7 @@ function addShape(shapeObj, shapeColor, id) {
   shapes[id] = { shapeRef: shapeObj, color: shapeColor, visibility: true };
   shapes[id].shapeRef.set('fill', shapeColor.default);
   shapes[id].shapeRef.set('stroke', shapeColor.stroke);
+  incrementShapeType(shapeObj);
 }
 
 function addExistingShape(shapeObj, id) {
@@ -70,6 +73,7 @@ function changeShapeLabelText(id, newText) {
 }
 
 function removeShape(id) {
+  decrementShapeType(shapes[id].shapeRef);
   canvas.remove(shapes[id].shapeRef);
   delete shapes[id];
 }

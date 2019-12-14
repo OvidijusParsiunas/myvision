@@ -1,22 +1,25 @@
 import { lightUpWindow } from '../dimWindow/dimWindowService';
+import { getNumberOfShapeTypes } from '../globalStatistics/globalStatistics';
 
 let selected = false;
 let exportButtonActive = false;
 let currentlySelectedElement = null;
+let exportLabelsPopupParent = null;
+let exportButtonElement = null;
+let boundingBoxFormatOptionsTextElements = null;
+let boundingBoxFormatOptionsCheckboxElements = null;
 
 function setExportButtonActive() {
   if (!exportButtonActive) {
-    const exportButton = document.getElementById('export-labels-popup-export-button');
-    exportButton.style.backgroundColor = 'rgb(205, 232, 205)';
-    exportButton.classList.add('export-button-active');
+    exportButtonElement.style.backgroundColor = 'rgb(205, 232, 205)';
+    exportButtonElement.classList.add('export-button-active');
     exportButtonActive = true;
   }
 }
 
 function setExportButtonDefault() {
-  const exportButton = document.getElementById('export-labels-popup-export-button');
-  exportButton.style.backgroundColor = 'rgb(222, 222, 222)';
-  exportButton.classList.remove('export-button-active');
+  exportButtonElement.style.backgroundColor = 'rgb(222, 222, 222)';
+  exportButtonElement.classList.remove('export-button-active');
   exportButtonActive = false;
 }
 
@@ -38,17 +41,45 @@ function selectFormat(target) {
   }
 }
 
+function disableFormatOptionsTextIfNoBoundingBoxes() {
+  if (getNumberOfShapeTypes().boundingBoxes === 0) {
+    for (let i = 0; i < boundingBoxFormatOptionsTextElements.length; i += 1) {
+      boundingBoxFormatOptionsTextElements[i].style.color = '#bfbfbf';
+      boundingBoxFormatOptionsCheckboxElements[i].disabled = true;
+      if (boundingBoxFormatOptionsCheckboxElements[i].checked === true) {
+        boundingBoxFormatOptionsCheckboxElements[i].checked = false;
+        selected = false;
+        setExportButtonDefault();
+      }
+    }
+  } else {
+    for (let i = 0; i < boundingBoxFormatOptionsCheckboxElements.length; i += 1) {
+      boundingBoxFormatOptionsTextElements[i].style.color = 'black';
+      boundingBoxFormatOptionsCheckboxElements[i].disabled = false;
+    }
+  }
+}
+
 function displayExportLabelsPopup() {
-  const exportLabelsPopUpElement = document.getElementById('export-labels-popup-parent');
+  disableFormatOptionsTextIfNoBoundingBoxes();
   setTimeout(() => {
-    exportLabelsPopUpElement.style.display = 'block';
+    exportLabelsPopupParent.style.display = 'block';
   }, 100);
 }
 
 function hideExportLabelsPopUp() {
-  const exportLabelsPopUpElement = document.getElementById('export-labels-popup-parent');
-  exportLabelsPopUpElement.style.display = 'none';
+  exportLabelsPopupParent.style.display = 'none';
   lightUpWindow();
 }
 
-export { selectFormat, displayExportLabelsPopup, hideExportLabelsPopUp };
+function initialiseExportLabelsPopupElements() {
+  exportLabelsPopupParent = document.getElementById('export-labels-popup-parent');
+  exportButtonElement = document.getElementById('export-labels-popup-export-button');
+  boundingBoxFormatOptionsTextElements = document.getElementsByClassName('bounding-box-format-option-text');
+  boundingBoxFormatOptionsCheckboxElements = document.getElementsByClassName('bounding-box-format-option-checkbox');
+}
+
+export {
+  selectFormat, displayExportLabelsPopup,
+  hideExportLabelsPopUp, initialiseExportLabelsPopupElements,
+};
