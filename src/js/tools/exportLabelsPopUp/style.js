@@ -1,3 +1,5 @@
+import { lightUpWindow } from '../dimWindow/dimWindowService';
+
 let selected = false;
 let exportButtonActive = false;
 let currentlySelectedElement = null;
@@ -41,4 +43,10 @@ function displayExportLabelsPopup() {
   exportLabelsPopUpElement.style.display = 'block';
 }
 
-export { selectFormat, displayExportLabelsPopup };
+function hideExportLabelsPopUp() {
+  const exportLabelsPopUpElement = document.getElementById('export-labels-popup-parent');
+  exportLabelsPopUpElement.style.display = 'none';
+  lightUpWindow();
+}
+
+export { selectFormat, displayExportLabelsPopup, hideExportLabelsPopUp };
