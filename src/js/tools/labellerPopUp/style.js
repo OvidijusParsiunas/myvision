@@ -1,8 +1,8 @@
 import { getLabelOptions } from '../labelList/labelOptions';
+import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
 
 let popupLabelParentElement = null;
 let labellerPopupLabelOptionsElement = null;
-let baseDiv = null;
 let mouseProperties = {};
 let horizontalScrollPresent = false;
 
@@ -88,20 +88,6 @@ function highlightInitialLabelOptionOnInit() {
   window.popupInputKeyDown({ key: 'stub' });
 }
 
-function dimWindow() {
-  baseDiv = document.getElementById('window-dim');
-  baseDiv.style.position = 'absolute';
-  baseDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
-}
-
-function lightUpWindow() {
-  baseDiv = document.getElementById('window-dim');
-  baseDiv.style.backgroundColor = 'rgba(0,0,0,0)';
-  window.setTimeout(() => {
-    baseDiv.style.position = '';
-  }, 500);
-}
-
 function hideLabelPopUp() {
   lightUpWindow();
   popupLabelParentElement.style.display = 'none';
@@ -117,7 +103,7 @@ function validateFullPopUpVisibile() {
 }
 
 function showLabelPopUp() {
-  dimWindow();
+  dimWindow(0.5);
   popupLabelParentElement = document.getElementById('popup-label-parent');
   popupLabelParentElement.style.top = `${mouseProperties.clientY}px`;
   popupLabelParentElement.style.left = `${mouseProperties.clientX}px`;
@@ -166,6 +152,6 @@ window.updateMouseProperties = (event) => {
 };
 
 export {
-  showLabelPopUp, getLabelPopUpText, hideLabelPopUp, dimWindow,
+  showLabelPopUp, getLabelPopUpText, hideLabelPopUp,
   initialiseLabelPopupOptionsList, resetPopUpLabelOptions,
 };

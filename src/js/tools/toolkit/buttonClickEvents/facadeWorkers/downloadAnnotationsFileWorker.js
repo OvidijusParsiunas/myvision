@@ -1,5 +1,5 @@
 // import { downloadXML } from '../facadeWorkersUtils/downloadFile/fileTypes/XML';
-import { dimWindow } from '../../../labellerPopUp/style';
+import { dimWindow } from '../../../dimWindow/dimWindowService';
 import { displayExportLabelsPopup } from '../../../exportLabelsPopUp/style';
 // function showLabelPopUp() {
 // popupLabelParentElement = document.getElementById('popup-label-parent');
@@ -9,10 +9,8 @@ import { displayExportLabelsPopup } from '../../../exportLabelsPopUp/style';
 
 function downloadTrainingDataEvent(canvas) {
   canvas.discardActiveObject();
-  dimWindow();
+  dimWindow(0.4);
   displayExportLabelsPopup();
-  // downloadYOLOTXT();
-  // nothing to download message
 }
 
 export { downloadTrainingDataEvent as default };
