@@ -76,6 +76,7 @@ delete images button
 
 check XML and YOLOTXT formats
 
+popover for why things are disabled
+
 are you allowed spaces in annotations?
-research what formats are allowed
 update labelimg

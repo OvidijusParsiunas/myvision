@@ -123,7 +123,7 @@ function getObjectsArray(image) {
   Object.keys(image.shapes).forEach((key) => {
     const shape = image.shapes[key].shapeRef;
     if (shape.shapeName === 'bndBox') {
-      objectsArray.objects.push(parseBoundingBoxData(shape, image.imageDimensions));
+      objectsArray.push(parseBoundingBoxData(shape, image.imageDimensions));
     }
   });
   return objectsArray;
@@ -141,6 +141,7 @@ function getImageAndAnnotationData(allImageProperties) {
       }
     }
   });
+  return imageAndAnnotationData;
 }
 
 function downloadXML() {
