@@ -1,8 +1,21 @@
-import selectLabel from './style';
+import selectFormat from './style';
+import downloadCOCOJSON from '../toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/COCOJSON';
 
-function selectLabelExportFormat(format) {
-  console.log(format);
-  selectLabel();
+let currentlySelectedFormat = null;
+
+function selectLabelExportFormat(format, target) {
+  selectFormat(target);
+  currentlySelectedFormat = currentlySelectedFormat === format ? '' : format;
 }
 
-export { selectLabelExportFormat as default };
+function exportLabels() {
+  switch (currentlySelectedFormat) {
+    case 'COCO JSON':
+      downloadCOCOJSON();
+      break;
+    default:
+      break;
+  }
+}
+
+export { selectLabelExportFormat, exportLabels };

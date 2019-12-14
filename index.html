@@ -48,15 +48,15 @@
       <div id="popup-label-title">Choose format:</div>
       <div id="parent-table-element" style="width: 172px;">
         <table style="width: inherit; padding-left: 5px;" id="settings-table" class="settings-popup-item">
-          <tr><td style="padding-top: 7px;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">COCO JSON</div> <input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON')"></td></tr>
-          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">VGG JSON</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VGG JSON')"></td></tr>
-          <tr><td style="padding-top: 7px; color: #cecece;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">CSV</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('CSV')" disabled></td></tr>
-          <tr><td style="color: #cecece;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">VOC XML</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VOC XML')" disabled></td></tr>
-          <tr><td style="color: #cecece;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">YOLO TXT</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('YOLO TXT')" disabled></td></tr>
+          <tr><td style="padding-top: 7px;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">COCO JSON</div> <input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON', this)"></td></tr>
+          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">VGG JSON</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VGG JSON', this)"></td></tr>
+          <tr><td style="padding-top: 7px; color: #cecece;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">CSV</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('CSV', this)" disabled></td></tr>
+          <tr><td style="color: #cecece;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">VOC XML</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VOC XML', this)" disabled></td></tr>
+          <tr><td style="color: #cecece;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">YOLO TXT</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('YOLO TXT', this)" disabled></td></tr>
         </table>
       </div>
       <div id="popup-label-buttons" style="margin-top: 4px">
-        <div id="export-lables-popup-submit-button" class="popup-label-button" onclick="labelShape()">Export</div>
+        <div id="export-labels-popup-export-button" class="popup-label-button" onclick="exportLabels()">Export</div>
         <div id="popup-cancel-button" class="popup-label-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>

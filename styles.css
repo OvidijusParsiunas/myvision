@@ -199,8 +199,12 @@
 
 /* repeating code for the submit buttons */
 
-#export-lables-popup-submit-button {
+#export-labels-popup-export-button {
   margin-right: 3px;
+}
+
+.export-button-active:active {
+  background-color:#43b543 !important;
 }
 
 #left-side-bar {
