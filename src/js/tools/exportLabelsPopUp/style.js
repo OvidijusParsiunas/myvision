@@ -72,6 +72,38 @@ function hideExportLabelsPopUp() {
   lightUpWindow();
 }
 
+let readyToDisplay = null;
+
+function displayPopover(id) {
+  readyToDisplay = id;
+  setTimeout(() => {
+    if (readyToDisplay === id) {
+      const popover = document.getElementById(`format-option-checkbox-popover-${id}`);
+      const arrow = document.getElementById(`format-option-checkbox-arrow-${id}`);
+      popover.style.display = 'block';
+      arrow.style.display = 'block';
+    }
+  }, 400);
+}
+
+function displayCheckBoxInformationPopover(id, text) {
+  if (text) {
+    if (getNumberOfShapeTypes().boundingBoxes === 0) {
+      displayPopover(id);
+    }
+  } else {
+    displayPopover(id);
+  }
+}
+
+function removeCheckBoxInformationPopover(id) {
+  readyToDisplay = null;
+  const popover = document.getElementById(`format-option-checkbox-popover-${id}`);
+  const arrow = document.getElementById(`format-option-checkbox-arrow-${id}`);
+  popover.style.display = 'none';
+  arrow.style.display = 'none';
+}
+
 function initialiseExportLabelsPopupElements() {
   exportLabelsPopupParent = document.getElementById('export-labels-popup-parent');
   exportButtonElement = document.getElementById('export-labels-popup-export-button');
@@ -80,6 +112,6 @@ function initialiseExportLabelsPopupElements() {
 }
 
 export {
-  selectFormat, displayExportLabelsPopup,
-  hideExportLabelsPopUp, initialiseExportLabelsPopupElements,
+  selectFormat, displayExportLabelsPopup, displayCheckBoxInformationPopover,
+  hideExportLabelsPopUp, initialiseExportLabelsPopupElements, removeCheckBoxInformationPopover,
 };

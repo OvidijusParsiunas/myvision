@@ -211,6 +211,37 @@
   background-color: #69bd69 !important;
 }
 
+.format-option-checkbox-popover {
+  font-size: 15px;
+  margin-left: 28px;
+  position: absolute;
+  margin-top: -29px;
+  background: rgb(224, 224, 224);
+  color: #191919;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: none;
+  z-index: 2;
+  border-radius: 4px;
+  user-select: none;
+  border: solid 1px rgb(202, 202, 202);
+}
+
+.arrow-down {
+  position: absolute;
+  display: none;
+  width: 0; 
+  height: 0; 
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid rgb(218, 218, 218);
+  margin-left: 145px;
+  margin-top: -3px;
+
+}
+
 #left-side-bar {
   width: 57px;
   padding-top: 9px;
@@ -413,6 +444,7 @@ body {
 .checkbox-text {
   float: left;
   padding-left: 5px;
+  user-select: none;
 }
 
 .settings-table-row-data {
