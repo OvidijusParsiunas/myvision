@@ -76,7 +76,7 @@ delete images button
 
 check XML and YOLOTXT formats
 
-popover for why things are disabled
+fix firefox support for checkbox popover
 
 are you allowed spaces in annotations?
 update labelimg
