@@ -78,5 +78,7 @@ check XML and YOLOTXT formats
 
 fix firefox support for checkbox popover
 
+rename exportlabels to exportdatasets
+
 are you allowed spaces in annotations?
 update labelimg

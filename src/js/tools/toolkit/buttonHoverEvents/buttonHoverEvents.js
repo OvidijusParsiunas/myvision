@@ -1,4 +1,4 @@
-import { getSettingsPopUpOpenState } from '../buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../buttonClickEvents/facadeWorkersUtils/stateManager';
 
 const buttonPopups = {};
 const HOVER_TIMEOUT = 500;
@@ -31,11 +31,12 @@ function removeActiveButtonPopup() {
   }
 }
 
-function displaySettingsPopup(middlewareCheck, id) {
-  if (middlewareCheck()) {
-    pendingButtonPopups[0].style.display = 'block';
-    activePopup = buttonPopups[id];
+function displayPopup(middlewareChecks, id) {
+  for (let i = 0; i < middlewareChecks.length; i += 1) {
+    if (!middlewareChecks[i]()) return;
   }
+  pendingButtonPopups[0].style.display = 'block';
+  activePopup = buttonPopups[id];
 }
 
 function checkIfSettingsButtonNotUp(event) {
@@ -48,8 +49,22 @@ function checkIfSettingsButtonNotUp(event) {
   return true;
 }
 
-function settingsPopUpMiddleware(event) {
+function checkIfExportDatasetsButtonNotUp(event) {
+  if (event.target.id === 'exportDatasetsButton') {
+    if (!getExportDatasetsPopUpOpenState()) {
+      return true;
+    }
+    return false;
+  }
+  return true;
+}
+
+function checkIfSettingsButtonNotUpMiddleware(event) {
   return checkIfSettingsButtonNotUp(event);
+}
+
+function checkIfExportDatasetsButtonNotUpMiddleware(event) {
+  return checkIfExportDatasetsButtonNotUp(event);
 }
 
 window.mouseEnterLeftSideBar = () => {
@@ -60,12 +75,14 @@ window.mouseEnterToolkitButton = (event, id) => {
   if (event.target.tagName === 'BUTTON') {
     pendingButtonPopups.unshift(buttonPopups[id]);
     if (persistButtonPopupDisplay) {
-      displaySettingsPopup(settingsPopUpMiddleware.bind(this, event), id);
+      displayPopup([checkIfSettingsButtonNotUpMiddleware.bind(this, event),
+        checkIfExportDatasetsButtonNotUpMiddleware.bind(this, event)], id);
     } else {
       setTimeout(() => {
         if (pendingButtonPopups.length === 1 && buttonPopups[id] === pendingButtonPopups[0]
             && !doNotDisplayButtonAfterTimeoutState) {
-          displaySettingsPopup(checkIfSettingsButtonNotUp.bind(this, event), id);
+          displayPopup([checkIfSettingsButtonNotUp.bind(this, event),
+            checkIfExportDatasetsButtonNotUp.bind(this, event)], id);
         }
         doNotDisplayButtonAfterTimeoutState = false;
       }, HOVER_TIMEOUT);

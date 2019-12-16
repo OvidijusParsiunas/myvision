@@ -1,9 +1,9 @@
 import { selectFormat, hideExportLabelsPopUp } from './style';
-import downloadCOCOJSON from '../toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/COCOJSON';
-import downloadVGGJSON from '../toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/VGGJSON';
-import downloadCSV from '../toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/CSV';
-import downloadXML from '../toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/XML';
-import downloadYOLOTXT from '../toolkit/buttonClickEvents/facadeWorkersUtils/downloadFile/fileTypes/YOLOTXT';
+import downloadCOCOJSON from './fileTypes/COCOJSON';
+import downloadVGGJSON from './fileTypes/VGGJSON';
+import downloadCSV from './fileTypes/CSV';
+import downloadXML from './fileTypes/XML';
+import downloadYOLOTXT from './fileTypes/YOLOTXT';
 
 let currentlySelectedFormat = null;
 

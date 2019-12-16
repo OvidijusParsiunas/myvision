@@ -72,7 +72,7 @@ function replaceExistingCanvas(func, func2, direction) {
 
 function removeButtonPopIfActive(func) {
   removeActiveButtonPopup();
-  func();
+  if (func) func();
 }
 
 function removeButtonPopIfActiveWithParam(func, arg) {

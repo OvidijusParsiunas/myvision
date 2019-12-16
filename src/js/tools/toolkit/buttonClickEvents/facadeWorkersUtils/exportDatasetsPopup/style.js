@@ -1,5 +1,4 @@
-import { lightUpWindow } from '../dimWindow/dimWindowService';
-import { getNumberOfShapeTypes } from '../globalStatistics/globalStatistics';
+import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';
 
 let selected = false;
 let exportButtonActive = false;
@@ -69,7 +68,6 @@ function displayExportLabelsPopup() {
 
 function hideExportLabelsPopUp() {
   exportLabelsPopupParent.style.display = 'none';
-  lightUpWindow();
 }
 
 let readyToDisplay = null;

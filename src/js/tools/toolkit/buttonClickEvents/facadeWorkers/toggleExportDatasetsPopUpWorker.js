@@ -1,4 +1,13 @@
-import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
+// import { dimWindow } from '../../../dimWindow/dimWindowService';
+// import { displayExportLabelsPopup } from '../../../exportLabelsPopUp/style';
+
+// function toggleExportDatasetsPopUp(canvas) {
+//   canvas.discardActiveObject();
+//   // dimWindow(0.4);
+//   displayExportLabelsPopup();
+// }
+
+import { getExportDatasetsPopUpOpenState, setExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
 
 function windowHasScrollbar() {
   if (typeof window.innerWidth === 'number') {
@@ -38,20 +47,20 @@ function calculateElementOffset(el) {
   return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
 }
 
-function toggleSettingsPopUp() {
-  const settingsPopupElement = document.getElementById('settings-popup');
-  const settingsButton = document.getElementById('settingsButton');
-  if (!getSettingsPopUpOpenState()) {
-    const divOffset = calculateElementOffset(settingsButton);
-    settingsPopupElement.style.top = `${divOffset.top}px`;
-    settingsPopupElement.style.left = '65px';
-    settingsPopupElement.style.display = '';
-    validateFullPopUpVisible(settingsPopupElement);
-    setSettingsPopUpOpenState(true);
+function toggleExportDatasetsPopUp() {
+  const exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
+  const exportDatasetsButton = document.getElementById('exportDatasetsButton');
+  if (!getExportDatasetsPopUpOpenState()) {
+    const divOffset = calculateElementOffset(exportDatasetsButton);
+    exportLabelsPopupParentElement.style.top = `${divOffset.top}px`;
+    exportLabelsPopupParentElement.style.left = '65px';
+    exportLabelsPopupParentElement.style.display = '';
+    validateFullPopUpVisible(exportLabelsPopupParentElement);
+    setExportDatasetsPopUpOpenState(true);
   } else {
-    settingsPopupElement.style.display = 'none';
-    setSettingsPopUpOpenState(false);
+    exportLabelsPopupParentElement.style.display = 'none';
+    setExportDatasetsPopUpOpenState(false);
   }
 }
 
-export { toggleSettingsPopUp as default };
+export { toggleExportDatasetsPopUp as default };

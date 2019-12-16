@@ -15,6 +15,7 @@ let newShapeSelectedViaLabelListState = false;
 let currentZoomState = 1;
 let doubleScrollCanvasState = false;
 let settingsPopUpOpenState = false;
+let exportDatasetsPopUpOpenState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -86,6 +87,10 @@ function getDoubleScrollCanvasState() {
 
 function getSettingsPopUpOpenState() {
   return settingsPopUpOpenState;
+}
+
+function getExportDatasetsPopUpOpenState() {
+  return exportDatasetsPopUpOpenState;
 }
 
 function setDefaultState(state) {
@@ -161,6 +166,10 @@ function setSettingsPopUpOpenState(state) {
   settingsPopUpOpenState = state;
 }
 
+function setExportDatasetsPopUpOpenState(state) {
+  exportDatasetsPopUpOpenState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -192,6 +201,8 @@ export {
   setAlteringPolygonPointsState,
   getRemovingPolygonPointsState,
   setRemovingPolygonPointsState,
+  getExportDatasetsPopUpOpenState,
+  setExportDatasetsPopUpOpenState,
   getLastPolygonActionWasMoveState,
   setLastPolygonActionWasMoveState,
   getNewShapeSelectedViaLabelListState,

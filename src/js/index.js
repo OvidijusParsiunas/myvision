@@ -1,6 +1,6 @@
 import { constructCanvas } from './canvas/canvas';
 import initialiseLabellerPopUp from './tools/labellerPopUp/buttons';
-import initialiseExportLabelsPopUp from './tools/exportLabelsPopUp/buttons';
+import initialiseExportLabelsPopUp from './tools/toolkit/buttonClickEvents/facadeWorkersUtils/exportDatasetsPopup/buttonClickEvents';
 import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/buttonClickEvents';
 import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
