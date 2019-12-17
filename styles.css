@@ -234,7 +234,22 @@
   border-top: 8px solid rgb(228, 228, 228);
   margin-left: 145px;
   margin-top: -3px;
+}
 
+#machine-learning-popup-parent {
+  position: absolute;
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: grey;
+  z-index: 3;
+  height: 202px;
+  margin: auto;	
+  top: 0;	
+  left: -151px;	
+  bottom: 0;	
+  right: 0;	
+  width: 180px
 }
 
 #left-side-bar {
@@ -445,6 +460,11 @@ body {
 .settings-table-row-data {
   padding-top: 2px;
   padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.settings-table-row-data:hover {
+  background-color: rgb(245, 243, 243);
 }
 
 #header {

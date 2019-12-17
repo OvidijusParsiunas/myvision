@@ -16,7 +16,8 @@ function assignToolkitButtonHoverEvents() {
   buttonPopups.addPoints = document.getElementById('add-points-button-popup');
   buttonPopups.removePoints = document.getElementById('remove-points-button-popup');
   buttonPopups.removeShape = document.getElementById('remove-shape-button-popup');
-  buttonPopups.downloadDatasets = document.getElementById('download-datasets-button-popup');
+  buttonPopups.exportDatasets = document.getElementById('export-datasets-button-popup');
+  buttonPopups.machineLearning = document.getElementById('machine-learning-button-popup');
   buttonPopups.zoomIn = document.getElementById('zoom-in-button-popup');
   buttonPopups.zoomOut = document.getElementById('zoom-out-button-popup');
   buttonPopups.uploadImages = document.getElementById('upload-images-button-popup');

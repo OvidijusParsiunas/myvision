@@ -5,6 +5,7 @@ import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWork
 import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
 import toggleExportDatasetsPopUp from './facadeWorkers/toggleExportDatasetsPopUpWorker';
+import toggleMachineLearningPopUp from './facadeWorkers/toggleMachineLearningPopUp';
 import uploadImageFile from './facadeWorkers/uploadImageWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
@@ -47,6 +48,10 @@ function assignCanvasMouseEvents(canvasObj) {
 
 function exportDatasetsBtnClick() {
   toggleExportDatasetsPopUp(canvas);
+}
+
+function machineLearningBtnClick() {
+  toggleMachineLearningPopUp(canvas);
 }
 
 function uploadImageInputClick(uploadData) {
@@ -96,6 +101,7 @@ export {
   movableObjectsBtnClick,
   toggleLabelsVisibilityBtnClick,
   exportDatasetsBtnClick,
+  machineLearningBtnClick,
   uploadImageInputClick,
   addPointsBtnClick,
   zoomBtnClick,
