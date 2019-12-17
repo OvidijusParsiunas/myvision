@@ -5,7 +5,6 @@ module.exports = {
   },
   externals: {
     fabric: 'fabric',
-    cocoSsd: 'cocoSsd',
   },
   watch: true,
   mode: 'development',
