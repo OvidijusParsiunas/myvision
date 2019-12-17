@@ -80,5 +80,9 @@ fix firefox support for checkbox popover
 
 rename exportlabels to exportdatasets
 
+rename uploadFile to uploadImage
+
+move facadeWorkersUtils contents to a folder outside named utils
+
 are you allowed spaces in annotations?
 update labelimg

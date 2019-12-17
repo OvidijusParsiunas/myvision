@@ -1,5 +1,6 @@
 import { getAllImageData } from '../imageList/imageList';
 import { displayErrorMessage, updateProgressMessage } from './style';
+import { drawShapesFromCoordinates } from '../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 
 let tfModel = null;
 
@@ -7,23 +8,28 @@ function errorHandler() {
   displayErrorMessage();
 }
 
-function makePredictions() {
-  getAllImageData().forEach((image) => {
-    tfModel.detect(image.data).then((predictions) => {
-      console.log('Predictions: ', predictions[0]);
-    }).catch(() => {
-      errorHandler();
-    });
+const predictedImageCoordinates = {};
+
+function predict(image) {
+  return tfModel.detect(image.data);
+}
+
+function trackAndRecordPredictions(promisesArray) {
+  Promise.all(promisesArray).then((predictions) => {
+    for (let i = 0; i < predictions.length; i += 1) {
+      predictedImageCoordinates[i] = predictions[i];
+    }
+    console.log(predictedImageCoordinates);
+    updateProgressMessage('Finished!');
   });
-  updateProgressMessage('Finished!');
 }
 
-function rejectPromise(reject) {
-  reject();
-}
-
-function resolvePromise(resolve) {
-  resolve();
+function makePredictionsForAllImages() {
+  const predictionPromises = [];
+  getAllImageData().forEach((image) => {
+    predictionPromises.push(predict(image));
+  });
+  trackAndRecordPredictions(predictionPromises);
 }
 
 function loadModel() {
@@ -41,8 +47,8 @@ function loadModel() {
 function downloadCOCOSSD() {
   return new Promise((resolve, reject) => {
     const cocoSSDScript = document.createElement('script');
-    cocoSSDScript.onload = resolvePromise.bind(this, resolve);
-    cocoSSDScript.onerror = rejectPromise.bind(this, reject);
+    cocoSSDScript.onload = resolve;
+    cocoSSDScript.onerror = reject;
     cocoSSDScript.src = 'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd';
     document.head.appendChild(cocoSSDScript);
   });
@@ -52,8 +58,8 @@ function downloadTensorflowJS() {
   return new Promise((resolve, reject) => {
     updateProgressMessage('In Progress...');
     const tensorflowJSScript = document.createElement('script');
-    tensorflowJSScript.onload = resolvePromise.bind(this, resolve);
-    tensorflowJSScript.onerror = rejectPromise.bind(this, reject);
+    tensorflowJSScript.onload = resolve;
+    tensorflowJSScript.onerror = reject;
     tensorflowJSScript.src = 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs';
     document.head.appendChild(tensorflowJSScript);
   });
@@ -64,10 +70,10 @@ function startMachineLearning() {
     downloadTensorflowJS()
       .then(() => downloadCOCOSSD())
       .then(() => loadModel())
-      .then(() => makePredictions())
+      .then(() => makePredictionsForAllImages())
       .catch(() => errorHandler());
   } else {
-    makePredictions();
+    makePredictionsForAllImages();
   }
 }
 
