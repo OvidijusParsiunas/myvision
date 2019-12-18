@@ -1,6 +1,6 @@
 import { getAllImageData } from '../imageList/imageList';
 import { displayErrorMessage, updateProgressMessage } from './style';
-import { drawShapesFromCoordinates } from '../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { drawShapesViaCoordinates } from '../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 
 let tfModel = null;
 
@@ -14,22 +14,22 @@ function predict(image) {
   return tfModel.detect(image.data);
 }
 
-function trackAndRecordPredictions(promisesArray) {
+function executeAndRecordPredictionResults(promisesArray) {
   Promise.all(promisesArray).then((predictions) => {
     for (let i = 0; i < predictions.length; i += 1) {
       predictedImageCoordinates[i] = predictions[i];
     }
-    console.log(predictedImageCoordinates);
+    drawShapesViaCoordinates(predictedImageCoordinates);
     updateProgressMessage('Finished!');
   });
 }
 
 function makePredictionsForAllImages() {
-  const predictionPromises = [];
+  const predictPromises = [];
   getAllImageData().forEach((image) => {
-    predictionPromises.push(predict(image));
+    predictPromises.push(predict(image));
   });
-  trackAndRecordPredictions(predictionPromises);
+  executeAndRecordPredictionResults(predictPromises);
 }
 
 function loadModel() {

@@ -193,6 +193,20 @@ function shapeScrollEvents(event) {
   }
 }
 
+function createNewBoundingBoxFromCoordinates(left, top, width, height, imageDimensions) {
+  boundingBoxProps.left = left;
+  boundingBoxProps.top = top;
+  boundingBoxProps.width = width;
+  boundingBoxProps.height = height;
+  boundingBoxProps.scaleX = imageDimensions.scaleX;
+  boundingBoxProps.scaleY = imageDimensions.scaleY;
+  const newBoundingBox = new fabric.Rect(
+    boundingBoxProperties.getStandaloneBoundingBoxProperties(boundingBoxProps),
+  );
+  canvas.add(newBoundingBox);
+  return newBoundingBox;
+}
+
 export {
   drawBoundingBox,
   shapeScrollEvents,
@@ -203,4 +217,5 @@ export {
   instantiateNewBoundingBox,
   isBoundingBoxDrawingFinished,
   prepareCanvasForNewBoundingBox,
+  createNewBoundingBoxFromCoordinates,
 };

@@ -1,3 +1,4 @@
+import { assignCanvasForDrawingShapesViaCoordinates } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { assignCanvasMouseEvents } from '../tools/toolkit/buttonClickEvents/facade';
 import { assignCanvasForDrawImageOnCanvas } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/resetCanvasEvents';
@@ -19,6 +20,7 @@ function repopulateCanvasReference(canvas) {
   assignCanvasForShapeFillManipulation(canvas);
   assignCanvasForLabelManipulation(canvas);
   assignCanvasForResettingToDefaultAfterAddPoints(canvas);
+  assignCanvasForDrawingShapesViaCoordinates(canvas);
   assignCanvasForResizeWhenWindowResize(canvas);
   assignCanvasForLabelAndShapeBuilder(canvas);
   initialiseZoomVariables(canvas);

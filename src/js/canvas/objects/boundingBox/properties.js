@@ -41,12 +41,31 @@ function getFinalBoundingBoxProps() {
   };
 }
 
+function getStandaloneBoundingBoxProperties(dimensions) {
+  return {
+    shapeName: 'bndBox',
+    objectCaching: false,
+    selectable: false,
+    hasRotatingPoint: false,
+    perPixelTargetFind: false,
+    cornerSize: 8,
+    strokeWidth: finalBoundingBoxStrokeWidth,
+    left: dimensions.left * dimensions.scaleX,
+    top: dimensions.top * dimensions.scaleY,
+    width: dimensions.width * dimensions.scaleX,
+    height: dimensions.height * dimensions.scaleY,
+    stroke: 'hsla(112, 57%, 50%, 1)',
+    fill: 'rgba(255,0,0,0)',
+  };
+}
+
 // http://fabricjs.com/controls-customization
 (function setProperties() {
   boundingBoxProps.tempBoundingBoxProps = getTempBoundingBoxProps;
   boundingBoxProps.finalBoundingBoxProps = getFinalBoundingBoxProps;
   boundingBoxProps.setZoomInProperties = setZoomInProperties;
   boundingBoxProps.setZoomOutProperties = setZoomOutProperties;
+  boundingBoxProps.getStandaloneBoundingBoxProperties = getStandaloneBoundingBoxProperties;
 }());
 
 export { boundingBoxProps as default };
