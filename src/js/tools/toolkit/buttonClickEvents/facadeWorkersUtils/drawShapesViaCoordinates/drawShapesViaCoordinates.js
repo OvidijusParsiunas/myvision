@@ -3,6 +3,8 @@ import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBox, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 // import { addExistingShape } from '../../../../../canvas/objects/allShapes/allShapes';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
+import { resetCanvasEventsToDefault } from '../../facade';
+import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 
 let canvas = null;
 
@@ -44,6 +46,10 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
       }
     });
   });
+  setDefaultCursorMode(canvas);
+  resetCanvasEventsToDefault();
+  // investigate why uppon the appearance of the labeller popup, there is an error
+  // the cause may potentially be due to an unpopulated label option list
 }
 
 function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {

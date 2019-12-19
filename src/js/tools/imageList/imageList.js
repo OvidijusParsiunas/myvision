@@ -216,6 +216,6 @@ function canSwitchImage(direction) {
 
 export {
   displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail,
-  initialiseImageListFunctionality, addSingleImageToList, getAllImageData,
-  switchImage, canSwitchImage, addImageFromMultiUploadToList, getCurrentlySelectedImageId,
+  switchImage, canSwitchImage, addImageFromMultiUploadToList, getAllImageData,
+  initialiseImageListFunctionality, addSingleImageToList, getCurrentlySelectedImageId,
 };
