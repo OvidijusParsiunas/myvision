@@ -203,7 +203,6 @@ function createNewBoundingBoxFromCoordinates(left, top, width, height, imageDime
   const newBoundingBox = new fabric.Rect(
     boundingBoxProperties.getStandaloneBoundingBoxProperties(boundingBoxProps),
   );
-  canvas.add(newBoundingBox);
   return newBoundingBox;
 }
 

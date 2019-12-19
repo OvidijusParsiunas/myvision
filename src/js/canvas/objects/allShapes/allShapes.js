@@ -3,11 +3,22 @@ import { incrementShapeType, decrementShapeType } from '../../../tools/globalSta
 let shapes = {};
 let canvas = null;
 
+function createNewShapeObject(shapeObj, shapeColor) {
+  const newShapeObject = { shapeRef: shapeObj, color: shapeColor, visibility: true };
+  newShapeObject.shapeRef.set('fill', shapeColor.default);
+  newShapeObject.shapeRef.set('stroke', shapeColor.stroke);
+  return newShapeObject;
+}
+
 function addShape(shapeObj, shapeColor, id) {
-  shapes[id] = { shapeRef: shapeObj, color: shapeColor, visibility: true };
-  shapes[id].shapeRef.set('fill', shapeColor.default);
-  shapes[id].shapeRef.set('stroke', shapeColor.stroke);
+  shapes[id] = createNewShapeObject(shapeObj, shapeColor);
   incrementShapeType(shapeObj);
+}
+
+function addShapeForNotSelectedImage(shapeObj, shapeColor) {
+  const newShapeObject = createNewShapeObject(shapeObj, shapeColor);
+  incrementShapeType(shapeObj);
+  return newShapeObject;
 }
 
 function addExistingShape(shapeObj, id) {
@@ -85,7 +96,7 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 
 export {
   getShapeVisibilityById, removeAndRetrieveAllShapeRefs, addExistingShape,
-  getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText,
-  addShape, removeShape, highlightShapeFill, defaultShapeFill, getNumberOfShapes,
-  changeShapeVisibilityById, assignCanvasForShapeFillManipulation, getAllExistingShapes,
+  changeShapeVisibilityById, assignCanvasForShapeFillManipulation, getNumberOfShapes,
+  addShape, removeShape, highlightShapeFill, defaultShapeFill, addShapeForNotSelectedImage,
+  getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText, getAllExistingShapes,
 };

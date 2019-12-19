@@ -114,20 +114,26 @@ function saveAndRemoveCurrentImageDetails() {
   firstImage = false;
 }
 
+function setDefaultImageProperties(image, imageMetadata) {
+  image.imageDimensions = {};
+  image.shapes = {};
+  image.labels = {};
+  image.size = imageMetadata.size;
+}
+
 function addSingleImageToList(imageMetadata, imageData) {
   addNewImage(imageMetadata.name, imageData);
   saveAndRemoveCurrentImageDetails();
   currentImageNameElement.innerHTML = imageMetadata.name;
   window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
-  images[newImageId].size = imageMetadata.size;
   images[newImageId].thumbnailElementRef.scrollIntoView();
-  images[newImageId].imageDimensions = {};
+  setDefaultImageProperties(images[newImageId], imageMetadata);
   newImageId += 1;
 }
 
 function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) {
   addNewImage(imageMetadata.name, imageData);
-  images[newImageId].size = imageMetadata.size;
+  setDefaultImageProperties(images[newImageId], imageMetadata);
   if (firstFromMany) {
     saveAndRemoveCurrentImageDetails();
     currentImageNameElement.innerHTML = imageMetadata.name;
@@ -171,7 +177,9 @@ function changeToExistingImage(id) {
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   drawImageFromList(images[id].data);
-  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels, images[id].imageDimensions);
+  // change!!
+  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels,
+    images[id].imageDimensions, true, images[id].data);
   switchCanvasWrapperInnerElementsDisplay();
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,

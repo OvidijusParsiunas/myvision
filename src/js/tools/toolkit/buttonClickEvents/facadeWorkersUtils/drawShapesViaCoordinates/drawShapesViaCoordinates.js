@@ -2,11 +2,11 @@ import { getAllImageData, getCurrentlySelectedImageId } from '../../../../imageL
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBox, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 // import { addExistingShape } from '../../../../../canvas/objects/allShapes/allShapes';
+import { generateLabelShapeGroup, generateLabelShapeGroupWithoutAdding } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
 
 let canvas = null;
 
-function captureCurrentImageData(allImageData) {
-  const currentlySelectedImageId = getCurrentlySelectedImageId();
+function captureCurrentImageData(allImageData, currentlySelectedImageId) {
   const currentlySelectedImageProperties = getImageProperties();
   const imageDimensions = {};
   imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
@@ -14,20 +14,34 @@ function captureCurrentImageData(allImageData) {
   allImageData[currentlySelectedImageId].imageDimensions = imageDimensions;
 }
 
-function drawShapesViaCoordinates(predictedImageCoordinates) {
+function getImageDimensions(image) {
+  if (image && image.imageDimensions && Object.keys(image.imageDimensions).length > 0) {
+    return image.imageDimensions;
+  }
+  return { scaleX: 1, scaleY: 1 };
+}
+
+function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
+  const currentlySelectedImageId = getCurrentlySelectedImageId();
   const allImageData = getAllImageData();
-  console.log(allImageData);
-  captureCurrentImageData(allImageData);
+  captureCurrentImageData(allImageData, currentlySelectedImageId);
   prepareCanvasForNewBoundingBox(canvas);
-  Object.keys(predictedImageCoordinates).forEach((key) => {
-    const { imageDimensions } = allImageData[key];
-    const imageObjects = predictedImageCoordinates[key];
-    imageObjects.forEach((shapeCoordinates) => {
-      createNewBoundingBoxFromCoordinates(shapeCoordinates.bbox[0],
+  Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
+    const image = allImageData[key];
+    const imageDimensions = getImageDimensions(image);
+    const predictedShapeCoordinates = predictedShapeCoordinatesForImages[key];
+    predictedShapeCoordinates.forEach((shapeCoordinates) => {
+      const boundingBoxShape = createNewBoundingBoxFromCoordinates(shapeCoordinates.bbox[0],
         shapeCoordinates.bbox[1],
         shapeCoordinates.bbox[2],
         shapeCoordinates.bbox[3],
         imageDimensions);
+      if (currentlySelectedImageId === parseInt(key, 10)) {
+        generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class);
+        canvas.add(boundingBoxShape);
+      } else {
+        generateLabelShapeGroupWithoutAdding(boundingBoxShape, shapeCoordinates.class, image);
+      }
     });
   });
 }

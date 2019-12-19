@@ -5,7 +5,7 @@ import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../too
 import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
 import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
-import { addShape, addExistingShape } from './allShapes';
+import { addShape, addExistingShape, addShapeForNotSelectedImage } from './allShapes';
 
 let currentId = 0;
 let canvas = null;
@@ -46,6 +46,27 @@ function generateLabelShapeGroup(shape, text) {
   currentId += 1;
 }
 
+function populateImageProperties(image, shapeRefObject, label, id) {
+  image.shapes[id] = shapeRefObject;
+  image.labels[id] = label;
+}
+
+function generateLabelShapeGroupWithoutAdding(shape, text, image) {
+  shape.set('id', currentId);
+  shape.set('shapeLabelText', text);
+  const initialLocation = findInitialLabelLocation(shape);
+  const textShape = new fabric.Text(text,
+    labelProperties.getLabelProps(initialLocation, shape.shapeName));
+  // generateLabel(textShape);
+  addToLabelOptions(textShape.text);
+  const shapeColor = getLabelColor(textShape.text);
+  const shapeRefObject = addShapeForNotSelectedImage(shape, shapeColor);
+  addLabelRef(textShape, currentId);
+  populateImageProperties(image, shapeRefObject, textShape, currentId);
+  // addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
+  currentId += 1;
+}
+
 // a change will need to be made here
 function repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
   const shape = shapeObj.shapeRef;
@@ -64,7 +85,8 @@ function calculateNewImageHeightRatio(previousDimensions) {
   return canvas.height / previousDimensions.originalHeight;
 }
 
-function repopulateLabelAndShapeObjects(existingShapes, existingLabels, previousDimensions) {
+function repopulateLabelAndShapeObjects(existingShapes, existingLabels, previousDimensions,
+  MLGeneratedBoundingBoxes, data) {
   if (previousDimensions && previousDimensions.originalHeight) {
     const newFileSizeRatio = calculateNewImageHeightRatio(previousDimensions)
     / previousDimensions.oldImageHeightRatio;
@@ -77,6 +99,14 @@ function repopulateLabelAndShapeObjects(existingShapes, existingLabels, previous
       repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
     });
     canvas.renderAll();
+    // change!!
+  } else if (MLGeneratedBoundingBoxes && data) {
+    const newFileSizeRatio = canvas.height / data.height;
+    const newPolygonOffsetProperties = { width: newFileSizeRatio, height: newFileSizeRatio };
+    labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
+    Object.keys(existingShapes).forEach((key) => {
+      repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
+    });
   }
 }
 
@@ -104,7 +134,9 @@ function assignCanvasForLabelAndShapeBuilder(canvasObj) {
   canvas = canvasObj;
 }
 
+// change!!
 export {
   assignCanvasForLabelAndShapeBuilder, repopulateLabelAndShapeObjects,
   findInitialLabelLocation, generateLabelShapeGroup, setShapeMovablePropertiesOnImageSelect,
+  generateLabelShapeGroupWithoutAdding,
 };
