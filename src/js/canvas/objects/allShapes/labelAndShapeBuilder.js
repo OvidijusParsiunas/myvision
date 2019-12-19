@@ -31,39 +31,29 @@ function generateLabel(label) {
   canvas.bringToFront(label);
 }
 
-function generateLabelShapeGroup(shape, text) {
-  shape.set('id', currentId);
-  shape.set('shapeLabelText', text);
-  const initialLocation = findInitialLabelLocation(shape);
-  const textShape = new fabric.Text(text,
-    labelProperties.getLabelProps(initialLocation, shape.shapeName));
-  generateLabel(textShape);
-  addToLabelOptions(textShape.text);
-  const shapeColor = getLabelColor(textShape.text);
-  addShape(shape, shapeColor, currentId);
-  addLabelRef(textShape, currentId);
-  addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
-  currentId += 1;
-}
-
 function populateImageProperties(image, shapeRefObject, label, id) {
   image.shapes[id] = shapeRefObject;
   image.labels[id] = label;
 }
 
-function generateLabelShapeGroupWithoutAdding(shape, text, image) {
+function generateLabelShapeGroup(shape, text, image) {
   shape.set('id', currentId);
   shape.set('shapeLabelText', text);
   const initialLocation = findInitialLabelLocation(shape);
   const textShape = new fabric.Text(text,
     labelProperties.getLabelProps(initialLocation, shape.shapeName));
-  // generateLabel(textShape);
   addToLabelOptions(textShape.text);
   const shapeColor = getLabelColor(textShape.text);
-  const shapeRefObject = addShapeForNotSelectedImage(shape, shapeColor);
   addLabelRef(textShape, currentId);
-  populateImageProperties(image, shapeRefObject, textShape, currentId);
-  // addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
+  // sending image reference when not current image
+  if (image) {
+    const shapeRefObject = addShapeForNotSelectedImage(shape, shapeColor);
+    populateImageProperties(image, shapeRefObject, textShape, currentId);
+  } else {
+    generateLabel(textShape);
+    addShape(shape, shapeColor, currentId);
+    addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
+  }
   currentId += 1;
 }
 
@@ -85,28 +75,35 @@ function calculateNewImageHeightRatio(previousDimensions) {
   return canvas.height / previousDimensions.originalHeight;
 }
 
-function repopulateLabelAndShapeObjects(existingShapes, existingLabels, previousDimensions,
-  MLGeneratedBoundingBoxes, data) {
-  if (previousDimensions && previousDimensions.originalHeight) {
-    const newFileSizeRatio = calculateNewImageHeightRatio(previousDimensions)
+function repopulateHiddenImageObjects(newImageDimensions, existingShapes, existingLabels) {
+  const newFileSizeRatio = canvas.height / newImageDimensions.height;
+  const newPolygonOffsetProperties = { width: newFileSizeRatio, height: newFileSizeRatio };
+  labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
+  Object.keys(existingShapes).forEach((key) => {
+    repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
+  });
+}
+
+function repopulateVisibleImageObjects(previousDimensions, existingShapes, existingLabels) {
+  const newFileSizeRatio = calculateNewImageHeightRatio(previousDimensions)
     / previousDimensions.oldImageHeightRatio;
-    const newPolygonOffsetProperties = {
-      width: newFileSizeRatio * previousDimensions.polygonOffsetLeft,
-      height: newFileSizeRatio * previousDimensions.polygonOffsetTop,
-    };
-    labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
-    Object.keys(existingShapes).forEach((key) => {
-      repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
-    });
-    canvas.renderAll();
-    // change!!
-  } else if (MLGeneratedBoundingBoxes && data) {
-    const newFileSizeRatio = canvas.height / data.height;
-    const newPolygonOffsetProperties = { width: newFileSizeRatio, height: newFileSizeRatio };
-    labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
-    Object.keys(existingShapes).forEach((key) => {
-      repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
-    });
+  const newPolygonOffsetProperties = {
+    width: newFileSizeRatio * previousDimensions.polygonOffsetLeft,
+    height: newFileSizeRatio * previousDimensions.polygonOffsetTop,
+  };
+  labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
+  Object.keys(existingShapes).forEach((key) => {
+    repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
+  });
+  canvas.renderAll();
+}
+
+function repopulateLabelAndShapeObjects(existingShapes, existingLabels,
+  previousDimensions, newImageDimensions) {
+  if (previousDimensions && previousDimensions.originalHeight) {
+    repopulateVisibleImageObjects(previousDimensions, existingShapes, existingLabels);
+  } else if (Object.keys(existingShapes).length > 0) {
+    repopulateHiddenImageObjects(newImageDimensions, existingShapes, existingLabels);
   }
 }
 
@@ -134,9 +131,7 @@ function assignCanvasForLabelAndShapeBuilder(canvasObj) {
   canvas = canvasObj;
 }
 
-// change!!
 export {
-  assignCanvasForLabelAndShapeBuilder, repopulateLabelAndShapeObjects,
-  findInitialLabelLocation, generateLabelShapeGroup, setShapeMovablePropertiesOnImageSelect,
-  generateLabelShapeGroupWithoutAdding,
+  assignCanvasForLabelAndShapeBuilder, setShapeMovablePropertiesOnImageSelect,
+  generateLabelShapeGroup, findInitialLabelLocation, repopulateLabelAndShapeObjects,
 };

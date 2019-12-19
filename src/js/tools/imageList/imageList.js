@@ -177,9 +177,8 @@ function changeToExistingImage(id) {
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   drawImageFromList(images[id].data);
-  // change!!
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels,
-    images[id].imageDimensions, true, images[id].data);
+    images[id].imageDimensions, images[id].data);
   switchCanvasWrapperInnerElementsDisplay();
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
@@ -216,8 +215,7 @@ function canSwitchImage(direction) {
 }
 
 export {
-  switchImage, canSwitchImage, addImageFromMultiUploadToList,
   displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail,
   initialiseImageListFunctionality, addSingleImageToList, getAllImageData,
-  getCurrentlySelectedImageId,
+  switchImage, canSwitchImage, addImageFromMultiUploadToList, getCurrentlySelectedImageId,
 };

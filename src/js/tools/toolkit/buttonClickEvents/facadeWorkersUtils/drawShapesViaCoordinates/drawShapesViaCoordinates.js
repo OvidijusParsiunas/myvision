@@ -2,7 +2,7 @@ import { getAllImageData, getCurrentlySelectedImageId } from '../../../../imageL
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBox, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 // import { addExistingShape } from '../../../../../canvas/objects/allShapes/allShapes';
-import { generateLabelShapeGroup, generateLabelShapeGroupWithoutAdding } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
+import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
 
 let canvas = null;
 
@@ -40,7 +40,7 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
         generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class);
         canvas.add(boundingBoxShape);
       } else {
-        generateLabelShapeGroupWithoutAdding(boundingBoxShape, shapeCoordinates.class, image);
+        generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class, image);
       }
     });
   });
