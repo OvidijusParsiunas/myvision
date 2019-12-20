@@ -5,7 +5,7 @@ import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../too
 import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
 import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
-import { addShape, addExistingShape, addShapeForNotSelectedImage } from './allShapes';
+import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 
 let currentId = 0;
 let canvas = null;
@@ -47,7 +47,7 @@ function generateLabelShapeGroup(shape, text, image) {
   addLabelRef(textShape, currentId);
   // sending image reference when not current image
   if (image) {
-    const shapeRefObject = addShapeForNotSelectedImage(shape, shapeColor);
+    const shapeRefObject = addShapeForInvisibleImage(shape, shapeColor);
     populateImageProperties(image, shapeRefObject, textShape, currentId);
   } else {
     generateLabel(textShape);
@@ -71,12 +71,13 @@ function repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
     shapeColor.label, shapeObj.visibility);
 }
 
-function calculateNewImageHeightRatio(previousDimensions) {
-  return canvas.height / previousDimensions.originalHeight;
+function calculateNewImageHeightRatio(imageDimensions) {
+  return canvas.height / imageDimensions.originalHeight;
 }
 
 function repopulateHiddenImageObjects(newImageDimensions, existingShapes, existingLabels) {
-  const newFileSizeRatio = canvas.height / newImageDimensions.height;
+  const imageDimensions = { originalHeight: newImageDimensions.height };
+  const newFileSizeRatio = calculateNewImageHeightRatio(imageDimensions);
   const newPolygonOffsetProperties = { width: newFileSizeRatio, height: newFileSizeRatio };
   labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
   Object.keys(existingShapes).forEach((key) => {

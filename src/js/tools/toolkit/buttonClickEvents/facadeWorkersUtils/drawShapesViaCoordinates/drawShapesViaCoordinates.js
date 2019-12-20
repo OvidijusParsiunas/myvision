@@ -5,6 +5,8 @@ import { prepareCanvasForNewBoundingBox, createNewBoundingBoxFromCoordinates } f
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetCanvasEventsToDefault } from '../../facade';
 import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
+import { resetPopUpLabelOptions } from '../../../../labellerPopUp/style';
+import { setPopupLabelOptionsIndexToZero } from '../../../../labellerPopUp/buttonEventHandlers';
 
 let canvas = null;
 
@@ -46,10 +48,15 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
       }
     });
   });
+  // only execute these two if new shapes have been created
+  resetPopUpLabelOptions();
+  setPopupLabelOptionsIndexToZero();
+
   setDefaultCursorMode(canvas);
   resetCanvasEventsToDefault();
-  // investigate why uppon the appearance of the labeller popup, there is an error
-  // the cause may potentially be due to an unpopulated label option list
+
+  // the JUST generated bounding boxes should not be movable when disabled
+  // Check if the newImageDimensions are correct using height only
 }
 
 function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {

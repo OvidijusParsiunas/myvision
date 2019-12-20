@@ -37,8 +37,12 @@ function resetDrawingMode() {
   }
 }
 
-function labelShape() {
+function setPopupLabelOptionsIndexToZero() {
   popupLabelOptionsIndex = 0;
+}
+
+function labelShape() {
+  setPopupLabelOptionsIndexToZero();
   createLabelShape();
   setHasDrawnShapeState(true);
   resetDrawingMode();
@@ -126,6 +130,6 @@ function pasteLabelText() {
 }
 
 export {
-  labelShape, cancelLabellingProcess, inputKeyDown,
-  selectLabelOption, prepareLabelPopupElements, pasteLabelText,
+  selectLabelOption, prepareLabelPopupElements, cancelLabellingProcess,
+  labelShape, pasteLabelText, inputKeyDown, setPopupLabelOptionsIndexToZero,
 };

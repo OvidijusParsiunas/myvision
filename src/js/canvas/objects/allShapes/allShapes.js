@@ -15,7 +15,7 @@ function addShape(shapeObj, shapeColor, id) {
   incrementShapeType(shapeObj);
 }
 
-function addShapeForNotSelectedImage(shapeObj, shapeColor) {
+function addShapeForInvisibleImage(shapeObj, shapeColor) {
   const newShapeObject = createNewShapeObject(shapeObj, shapeColor);
   incrementShapeType(shapeObj);
   return newShapeObject;
@@ -97,6 +97,6 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 export {
   getShapeVisibilityById, removeAndRetrieveAllShapeRefs, addExistingShape,
   changeShapeVisibilityById, assignCanvasForShapeFillManipulation, getNumberOfShapes,
-  addShape, removeShape, highlightShapeFill, defaultShapeFill, addShapeForNotSelectedImage,
+  addShape, removeShape, highlightShapeFill, defaultShapeFill, addShapeForInvisibleImage,
   getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText, getAllExistingShapes,
 };
