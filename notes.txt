@@ -70,6 +70,10 @@ the label should not track off the screen
 when want to delete shape and not selected shape, upon clicking delete, a cursor should appear to delete (colour should change whether 
 a shape has been selected or not)
 
+delete button does not set to a default mode when in continuous mode
+
+add points mode should not delete the currently being drawn polygon and should instead remain in that same mode
+
 shapes should not be out of bounds for the image
 
 delete images button

@@ -1,6 +1,6 @@
 import { getAllImageData, getCurrentlySelectedImageId } from '../../../../imageList/imageList';
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
-import { prepareCanvasForNewBoundingBox, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
+import { prepareCanvasForNewBoundingBoxesWithMachineLearning, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 // import { addExistingShape } from '../../../../../canvas/objects/allShapes/allShapes';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetCanvasEventsToDefault } from '../../facade';
@@ -29,7 +29,7 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
   const currentlySelectedImageId = getCurrentlySelectedImageId();
   const allImageData = getAllImageData();
   captureCurrentImageData(allImageData, currentlySelectedImageId);
-  prepareCanvasForNewBoundingBox(canvas);
+  prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
   Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
     const image = allImageData[key];
     const imageDimensions = getImageDimensions(image);

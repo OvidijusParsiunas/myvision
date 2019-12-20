@@ -28,7 +28,7 @@ function instantiateNewBoundingBox() {
 }
 
 function clearBoundingBoxData() {
-  drawingFinished = false;
+  drawingFinished = true;
 }
 
 function deselectBoundingBox() {
@@ -120,6 +120,11 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
   }
 }
 
+function prepareCanvasForNewBoundingBoxesWithMachineLearning(canvasObj) {
+  canvas = canvasObj;
+  setDrawCursorMode(canvas);
+}
+
 function getScrollWidth() {
   // create a div with the scroll
   const div = document.createElement('div');
@@ -203,6 +208,7 @@ function createNewBoundingBoxFromCoordinates(left, top, width, height, imageDime
   const newBoundingBox = new fabric.Rect(
     boundingBoxProperties.getStandaloneBoundingBoxProperties(boundingBoxProps),
   );
+  lockMovementIfAssertedByState(newBoundingBox);
   return newBoundingBox;
 }
 
@@ -217,4 +223,5 @@ export {
   isBoundingBoxDrawingFinished,
   prepareCanvasForNewBoundingBox,
   createNewBoundingBoxFromCoordinates,
+  prepareCanvasForNewBoundingBoxesWithMachineLearning,
 };
