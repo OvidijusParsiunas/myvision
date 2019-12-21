@@ -71,13 +71,20 @@ function removeTickSVGOverImageThumbnail() {
   }
 }
 
-window.highlightImageThumbnail = (element) => {
+function highlightImageThumbnailForML(element) {
+  // clear when clicked on
+  element.childNodes[1].style.borderColor = 'green';
+  element.childNodes[1].style.display = 'block';
+}
+
+function highlightImageThumbnail(element) {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
   }
+  element.style.borderColor = '#0dc7ff';
   element.style.display = 'block';
   currentlyActiveElement = element;
-};
+}
 
 function addNewImage(imageName, imageData) {
   const thumbnailElementRef = addNewItemToImageList(imageData);
@@ -125,7 +132,7 @@ function addSingleImageToList(imageMetadata, imageData) {
   addNewImage(imageMetadata.name, imageData);
   saveAndRemoveCurrentImageDetails();
   currentImageNameElement.innerHTML = imageMetadata.name;
-  window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
+  highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   setDefaultImageProperties(images[newImageId], imageMetadata);
   newImageId += 1;
@@ -137,7 +144,7 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
   if (firstFromMany) {
     saveAndRemoveCurrentImageDetails();
     currentImageNameElement.innerHTML = imageMetadata.name;
-    window.highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
+    highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     images[newImageId].thumbnailElementRef.scrollIntoView();
   }
   newImageId += 1;
@@ -186,7 +193,7 @@ function changeToExistingImage(id) {
   currentlySelectedImageId = id;
   switchCanvasWrapperInnerElement();
   changeCurrentImageElementText(id);
-  window.highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
+  highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
   scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
 }
 
@@ -215,7 +222,7 @@ function canSwitchImage(direction) {
 }
 
 export {
-  displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail,
   switchImage, canSwitchImage, addImageFromMultiUploadToList, getAllImageData,
   initialiseImageListFunctionality, addSingleImageToList, getCurrentlySelectedImageId,
+  displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail, highlightImageThumbnailForML,
 };

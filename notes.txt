@@ -86,6 +86,8 @@ rename exportlabels to exportdatasets
 
 rename uploadFile to uploadImage
 
+rename labellerPopUp to labellingPopUp
+
 move facadeWorkersUtils contents to a folder outside named utils
 
 are you allowed spaces in annotations?
