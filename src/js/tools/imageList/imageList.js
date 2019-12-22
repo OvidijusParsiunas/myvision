@@ -15,6 +15,7 @@ let currentlySelectedImageId = 0;
 let newImageId = 0;
 let firstImage = true;
 let imageListOverflowParent = null;
+let currentlySelectedImageAffectedByML = false;
 
 function findImageListElement() {
   currentImageNameElement = document.getElementById('currentImageName');
@@ -78,6 +79,11 @@ function changeThumbnailWidthIfOnRight(element, width) {
   }
 }
 
+function highlightCurrentImageThumbnailForML(element) {
+  element.childNodes[1].style.background = '#0080001f';
+  currentlySelectedImageAffectedByML = true;
+}
+
 function highlightImageThumbnailForML(element) {
   element.childNodes[1].style.display = 'block';
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning');
@@ -87,6 +93,10 @@ function highlightImageThumbnailForML(element) {
 function setCurrentlyActiveElementToInvisible() {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
+    if (currentlySelectedImageAffectedByML) {
+      currentlyActiveElement.style.background = '';
+      currentlySelectedImageAffectedByML = false;
+    }
   }
 }
 
@@ -242,7 +252,8 @@ function canSwitchImage(direction) {
 }
 
 export {
-  switchImage, canSwitchImage, addImageFromMultiUploadToList, getAllImageData,
-  initialiseImageListFunctionality, addSingleImageToList, getCurrentlySelectedImageId,
-  displayTickSVGOverImageThumbnail, removeTickSVGOverImageThumbnail, highlightImageThumbnailForML,
+  initialiseImageListFunctionality, getCurrentlySelectedImageId,
+  highlightCurrentImageThumbnailForML, highlightImageThumbnailForML,
+  switchImage, canSwitchImage, addImageFromMultiUploadToList, addSingleImageToList,
+  displayTickSVGOverImageThumbnail, getAllImageData, removeTickSVGOverImageThumbnail,
 };

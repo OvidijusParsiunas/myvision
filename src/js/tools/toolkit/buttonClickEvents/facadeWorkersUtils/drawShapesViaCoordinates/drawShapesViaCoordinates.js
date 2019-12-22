@@ -1,4 +1,7 @@
-import { getAllImageData, getCurrentlySelectedImageId, highlightImageThumbnailForML } from '../../../../imageList/imageList';
+import {
+  highlightCurrentImageThumbnailForML, getAllImageData,
+  highlightImageThumbnailForML, getCurrentlySelectedImageId,
+} from '../../../../imageList/imageList';
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBoxesWithMachineLearning, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
@@ -34,6 +37,7 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
     const imageDimensions = getImageDimensions(image);
     const predictedShapeCoordinates = predictedShapeCoordinatesForImages[key];
     if (predictedShapeCoordinates.length > 0) {
+      const currentlySelectedImage = currentlySelectedImageId === parseInt(key, 10);
       // place into a separate function
       predictedShapeCoordinates.forEach((shapeCoordinates) => {
         const boundingBoxShape = createNewBoundingBoxFromCoordinates(shapeCoordinates.bbox[0],
@@ -41,14 +45,18 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
           shapeCoordinates.bbox[2],
           shapeCoordinates.bbox[3],
           imageDimensions);
-        if (currentlySelectedImageId === parseInt(key, 10)) {
+        if (currentlySelectedImage) {
           generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class);
           canvas.add(boundingBoxShape);
         } else {
           generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class, image);
         }
       });
-      highlightImageThumbnailForML(image.thumbnailElementRef);
+      if (!currentlySelectedImage) {
+        highlightImageThumbnailForML(image.thumbnailElementRef);
+      } else {
+        highlightCurrentImageThumbnailForML(image.thumbnailElementRef);
+      }
     }
   });
   // only execute these two if new shapes have been created

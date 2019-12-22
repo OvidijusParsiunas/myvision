@@ -65,6 +65,8 @@ when creating new polygon, clicking add points should not do anything
 when creating new polygon, choosing to delete points, then clicking to create new polygon again
 should resume polygon drawing
 
+when there is vertical overflow in the label list, the label options width should be narrower
+
 the label should not track off the screen
 
 when want to delete shape and not selected shape, upon clicking delete, a cursor should appear to delete (colour should change whether 
