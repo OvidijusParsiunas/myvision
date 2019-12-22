@@ -16,6 +16,7 @@ let currentZoomState = 1;
 let doubleScrollCanvasState = false;
 let settingsPopUpOpenState = false;
 let exportDatasetsPopUpOpenState = false;
+let currentImageId = false;
 
 function getDefaultState() {
   return defaultState;
@@ -91,6 +92,10 @@ function getSettingsPopUpOpenState() {
 
 function getExportDatasetsPopUpOpenState() {
   return exportDatasetsPopUpOpenState;
+}
+
+function getCurrentImageId() {
+  return currentImageId;
 }
 
 function setDefaultState(state) {
@@ -170,9 +175,15 @@ function setExportDatasetsPopUpOpenState(state) {
   exportDatasetsPopUpOpenState = state;
 }
 
+function setCurrentImageId(id) {
+  currentImageId = id;
+}
+
 export {
   getDefaultState,
   setDefaultState,
+  getCurrentImageId,
+  setCurrentImageId,
   getEditingLabelId,
   setEditingLabelId,
   getCurrentZoomState,

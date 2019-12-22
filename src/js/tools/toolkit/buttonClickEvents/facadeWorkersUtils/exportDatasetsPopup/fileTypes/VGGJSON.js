@@ -1,6 +1,7 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
-import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
+import { getCurrentImageId } from '../../stateManager';
 
 function getJSONPolygonPointsCoordinates(polygon, dimensions) {
   const coordinatesObj = {
@@ -76,7 +77,7 @@ function parseImageData(image) {
 // what happens when there are no shapes in an image
 
 function saveCurrentImageDetails(allImageProperties) {
-  const currentlySelectedImageId = getCurrentlySelectedImageId();
+  const currentlySelectedImageId = getCurrentImageId();
   const currentlySelectedImageProperties = getImageProperties();
   const imageDimensions = {};
   imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;

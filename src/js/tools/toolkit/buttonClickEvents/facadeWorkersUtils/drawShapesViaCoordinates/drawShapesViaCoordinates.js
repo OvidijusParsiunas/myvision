@@ -1,7 +1,4 @@
-import {
-  highlightCurrentImageThumbnailForML, getAllImageData,
-  highlightImageThumbnailForML, getCurrentlySelectedImageId,
-} from '../../../../imageList/imageList';
+import { highlightCurrentImageThumbnailForML, getAllImageData, highlightImageThumbnailForML } from '../../../../imageList/imageList';
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBoxesWithMachineLearning, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
@@ -9,6 +6,7 @@ import { resetCanvasEventsToDefault } from '../../facade';
 import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { resetPopUpLabelOptions } from '../../../../labellerPopUp/style';
 import { setPopupLabelOptionsIndexToZero } from '../../../../labellerPopUp/buttonEventHandlers';
+import { getCurrentImageId } from '../stateManager';
 
 let canvas = null;
 
@@ -27,8 +25,9 @@ function getImageDimensions(image) {
   return { scaleX: 1, scaleY: 1 };
 }
 
-function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
-  const currentlySelectedImageId = getCurrentlySelectedImageId();
+function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
+  isUsingMachineLearning = true;
+  const currentlySelectedImageId = getCurrentImageId();
   const allImageData = getAllImageData();
   captureCurrentImageData(allImageData, currentlySelectedImageId);
   prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
@@ -46,10 +45,12 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages) {
           shapeCoordinates.bbox[3],
           imageDimensions);
         if (currentlySelectedImage) {
-          generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class);
+          generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
+            null, isUsingMachineLearning);
           canvas.add(boundingBoxShape);
         } else {
-          generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class, image);
+          generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
+            image, isUsingMachineLearning);
         }
       });
       if (!currentlySelectedImage) {

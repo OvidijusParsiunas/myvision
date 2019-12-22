@@ -1,7 +1,8 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
-import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions } from '../../../../../labelList/labelOptions';
+import { getCurrentImageId } from '../../stateManager';
 
 function getJSONFileName() {
   const currentDate = new Date();
@@ -152,7 +153,7 @@ function getCategoriesData() {
 }
 
 function saveCurrentImageDetails(allImageProperties) {
-  const currentlySelectedImageId = getCurrentlySelectedImageId();
+  const currentlySelectedImageId = getCurrentImageId();
   const currentlySelectedImageProperties = getImageProperties();
   const imageDimensions = {};
   imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;

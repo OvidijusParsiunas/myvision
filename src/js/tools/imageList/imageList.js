@@ -4,9 +4,10 @@ import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label'
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
-import { setDefaultState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { setDefaultState, setCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
+import { initialiseImageListML } from './imageListML';
 
 let currentImageNameElement = null;
 let currentlyActiveElement = null;
@@ -24,14 +25,11 @@ function findImageListElement() {
 
 function initialiseImageListFunctionality() {
   findImageListElement();
+  initialiseImageListML(images);
 }
 
 function getAllImageData() {
   return images;
-}
-
-function getCurrentlySelectedImageId() {
-  return currentlySelectedImageId;
 }
 
 function initialiseImageElement() {
@@ -148,6 +146,7 @@ function saveAndRemoveCurrentImageDetails() {
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
     images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = newImageId;
+  setCurrentImageId(newImageId);
   firstImage = false;
 }
 
@@ -221,6 +220,7 @@ function changeToExistingImage(id) {
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
     images[currentlySelectedImageId].labels, timesZoomedOut);
   currentlySelectedImageId = id;
+  setCurrentImageId(id);
   switchCanvasWrapperInnerElement();
   changeCurrentImageElementText(id);
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
@@ -252,8 +252,8 @@ function canSwitchImage(direction) {
 }
 
 export {
-  initialiseImageListFunctionality, getCurrentlySelectedImageId,
-  highlightCurrentImageThumbnailForML, highlightImageThumbnailForML,
-  switchImage, canSwitchImage, addImageFromMultiUploadToList, addSingleImageToList,
-  displayTickSVGOverImageThumbnail, getAllImageData, removeTickSVGOverImageThumbnail,
+  switchImage, canSwitchImage, addImageFromMultiUploadToList,
+  initialiseImageListFunctionality, highlightImageThumbnailForML,
+  highlightCurrentImageThumbnailForML, removeTickSVGOverImageThumbnail,
+  displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
 };

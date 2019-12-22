@@ -1,8 +1,9 @@
 import JSZip from 'jszip';
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
-import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions } from '../../../../../labelList/labelOptions';
+import { getCurrentImageId } from '../../stateManager';
 
 /*
 If there is an error on generating zips - try to use a file receiver
@@ -62,7 +63,7 @@ function parseBoundingBoxData(boundingBox, dimensions, categories) {
 }
 
 function saveCurrentImageDetails(allImageProperties) {
-  const currentlySelectedImageId = getCurrentlySelectedImageId();
+  const currentlySelectedImageId = getCurrentImageId();
   const currentlySelectedImageProperties = getImageProperties();
   const imageDimensions = {};
   imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;

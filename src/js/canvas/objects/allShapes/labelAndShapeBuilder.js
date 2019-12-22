@@ -36,7 +36,15 @@ function populateImageProperties(image, shapeRefObject, label, id) {
   image.labels[id] = label;
 }
 
-function generateLabelShapeGroup(shape, text, image) {
+function replaceCurrentShapeColourPropertiesWithMLPallette(shape) {
+  shape.set('isGeneratedViaML', true);
+  shape.set('trueFill', shape.fill);
+  shape.set('trueStroke', shape.stroke);
+  shape.set('fill', 'rgb(88, 202, 75, 0.3)');
+  shape.set('stroke', 'rgb(88, 202, 75)');
+}
+
+function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
   shape.set('id', currentId);
   shape.set('shapeLabelText', text);
   const initialLocation = findInitialLabelLocation(shape);
@@ -53,6 +61,9 @@ function generateLabelShapeGroup(shape, text, image) {
     generateLabel(textShape);
     addShape(shape, shapeColor, currentId);
     addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
+  }
+  if (isUsingMachineLearning) {
+    replaceCurrentShapeColourPropertiesWithMLPallette(shape);
   }
   currentId += 1;
 }

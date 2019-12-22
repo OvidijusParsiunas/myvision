@@ -1,6 +1,7 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
-import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
+import { getCurrentImageId } from '../../stateManager';
 
 const columnHeaders = {
   filename: 'filename',
@@ -90,7 +91,7 @@ function getImageAndAnnotationData(allImageProperties) {
 }
 
 function saveCurrentImageDetails(allImageProperties) {
-  const currentlySelectedImageId = getCurrentlySelectedImageId();
+  const currentlySelectedImageId = getCurrentImageId();
   const currentlySelectedImageProperties = getImageProperties();
   const imageDimensions = {};
   imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;

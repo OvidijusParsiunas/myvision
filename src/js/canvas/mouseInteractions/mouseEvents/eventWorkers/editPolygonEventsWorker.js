@@ -13,6 +13,7 @@ import {
 } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
+import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
 
 let canvas = null;
 let polygonMoved = false;
@@ -198,6 +199,12 @@ function shapeMouseOutEvents(event) {
 
 function shapeMouseOverEvents(event) {
   if (event.target && event.target.shapeName !== 'point' && event.target.shapeName !== 'label') {
+    if (event.target.isGeneratedViaML) {
+      updateNumberOfUncheckedMLImages();
+      event.target.fill = event.target.trueFill;
+      event.target.stroke = event.target.trueStroke;
+      event.target.isGeneratedViaML = false;
+    }
     highlightShapeFill(event.target.id);
   }
 }
