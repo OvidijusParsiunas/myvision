@@ -71,10 +71,17 @@ function removeTickSVGOverImageThumbnail() {
   }
 }
 
+function changeRightsideThumbnailWidth(element) {
+  if (element.childNodes[0].id % 2 === 1) {
+    element.childNodes[1].style.width = 'calc(100% - 6px)';
+  }
+}
+
 function highlightImageThumbnailForML(element) {
-  // clear when clicked on
-  element.childNodes[1].style.borderColor = 'green';
   element.childNodes[1].style.display = 'block';
+  element.childNodes[1].style.border = '3px solid #58ca4b';
+  element.childNodes[1].style.background = '#0080001f';
+  changeRightsideThumbnailWidth(element);
 }
 
 function highlightImageThumbnail(element) {

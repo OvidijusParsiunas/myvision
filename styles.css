@@ -308,7 +308,7 @@
 }
 
 #image-list-overflow-parent {
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
   height: calc((100vh + 120px) / 2);
 }
