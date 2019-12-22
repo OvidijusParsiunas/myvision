@@ -25,41 +25,60 @@ function getImageDimensions(image) {
   return { scaleX: 1, scaleY: 1 };
 }
 
-function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
-  isUsingMachineLearning = true;
-  const currentlySelectedImageId = getCurrentImageId();
-  const allImageData = getAllImageData();
-  captureCurrentImageData(allImageData, currentlySelectedImageId);
-  prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
+function generateNewBoundingBox(shapeCoordinates, imageDimensions, image,
+  isCurrentlySelectedImage, isUsingMachineLearning) {
+  const boundingBoxShape = createNewBoundingBoxFromCoordinates(
+    shapeCoordinates.bbox[0],
+    shapeCoordinates.bbox[1],
+    shapeCoordinates.bbox[2],
+    shapeCoordinates.bbox[3],
+    imageDimensions,
+  );
+  if (isCurrentlySelectedImage) {
+    generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
+      null, isUsingMachineLearning);
+    canvas.add(boundingBoxShape);
+  } else {
+    generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
+      image, isUsingMachineLearning);
+  }
+}
+
+function generateNewShapes(image, imageId, currentlySelectedImageId,
+  predictedShapeCoordinates, imageDimensions, isUsingMachineLearning) {
+  const isCurrentlySelectedImage = currentlySelectedImageId === parseInt(imageId, 10);
+  predictedShapeCoordinates.forEach((shapeCoordinates) => {
+    generateNewBoundingBox(shapeCoordinates, imageDimensions, image,
+      isCurrentlySelectedImage, isUsingMachineLearning);
+  });
+  if (!isCurrentlySelectedImage) {
+    highlightImageThumbnailForML(image.thumbnailElementRef);
+  } else {
+    highlightCurrentImageThumbnailForML(image.thumbnailElementRef);
+  }
+  image.numberOfMLGeneratedShapes = predictedShapeCoordinates.length;
+}
+
+function generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
+  currentlySelectedImageId, isUsingMachineLearning) {
   Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
     const image = allImageData[key];
     const imageDimensions = getImageDimensions(image);
     const predictedShapeCoordinates = predictedShapeCoordinatesForImages[key];
     if (predictedShapeCoordinates.length > 0) {
-      const currentlySelectedImage = currentlySelectedImageId === parseInt(key, 10);
-      // place into a separate function
-      predictedShapeCoordinates.forEach((shapeCoordinates) => {
-        const boundingBoxShape = createNewBoundingBoxFromCoordinates(shapeCoordinates.bbox[0],
-          shapeCoordinates.bbox[1],
-          shapeCoordinates.bbox[2],
-          shapeCoordinates.bbox[3],
-          imageDimensions);
-        if (currentlySelectedImage) {
-          generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
-            null, isUsingMachineLearning);
-          canvas.add(boundingBoxShape);
-        } else {
-          generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
-            image, isUsingMachineLearning);
-        }
-      });
-      if (!currentlySelectedImage) {
-        highlightImageThumbnailForML(image.thumbnailElementRef);
-      } else {
-        highlightCurrentImageThumbnailForML(image.thumbnailElementRef);
-      }
+      generateNewShapes(image, key, currentlySelectedImageId,
+        predictedShapeCoordinates, imageDimensions, isUsingMachineLearning);
     }
   });
+}
+
+function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
+  const currentlySelectedImageId = getCurrentImageId();
+  const allImageData = getAllImageData();
+  captureCurrentImageData(allImageData, currentlySelectedImageId);
+  prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
+  generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
+    currentlySelectedImageId, isUsingMachineLearning);
   // only execute these two if new shapes have been created
   resetPopUpLabelOptions();
   setPopupLabelOptionsIndexToZero();
