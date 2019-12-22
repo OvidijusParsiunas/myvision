@@ -48,6 +48,7 @@ function addNewItemToImageList(imageData) {
   imageThumbnailElement.src = imageData.src;
   const colorOverlayElement = initiateDivElement();
   colorOverlayElement.classList.add('image-list-thumbnail-color-overlay');
+  colorOverlayElement.classList.add('image-list-thumbnail-default');
   const tickSVGElement = initialiseImageElement();
   tickSVGElement.classList.add('image-list-thumbnail-SVG-tick-icon');
   tickSVGElement.src = 'done-tick-highlighted.svg';
@@ -71,24 +72,36 @@ function removeTickSVGOverImageThumbnail() {
   }
 }
 
-function changeRightsideThumbnailWidth(element) {
+function changeThumbnailWidthIfOnRight(element, width) {
   if (element.childNodes[0].id % 2 === 1) {
-    element.childNodes[1].style.width = 'calc(100% - 6px)';
+    element.childNodes[1].style.width = width;
   }
 }
 
 function highlightImageThumbnailForML(element) {
   element.childNodes[1].style.display = 'block';
-  element.childNodes[1].style.border = '3px solid #58ca4b';
-  element.childNodes[1].style.background = '#0080001f';
-  changeRightsideThumbnailWidth(element);
+  element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning');
+  changeThumbnailWidthIfOnRight(element, 'calc(100% - 6px)');
 }
 
-function highlightImageThumbnail(element) {
+function setCurrentlyActiveElementToInvisible() {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
   }
-  element.style.borderColor = '#0dc7ff';
+}
+
+function setThumbnailColourOverlayBackToDefault(element) {
+  element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-default');
+  if (element.style.width === 'calc(100% - 6px') {
+    element.style.width = 'calc(100% - 4px)';
+  }
+}
+
+function highlightImageThumbnail(element) {
+  setCurrentlyActiveElementToInvisible();
+  if (element.classList.contains('image-list-thumbnail-machine-learning')) {
+    setThumbnailColourOverlayBackToDefault(element);
+  }
   element.style.display = 'block';
   currentlyActiveElement = element;
 }
