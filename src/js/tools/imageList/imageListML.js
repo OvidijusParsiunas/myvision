@@ -2,6 +2,7 @@ import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUti
 
 let allImageDataRef = null;
 
+// should use the same file as the one in the image list
 function setThumbnailColourOverlayBackToDefault(element) {
   element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-default');
   element.style.background = '';

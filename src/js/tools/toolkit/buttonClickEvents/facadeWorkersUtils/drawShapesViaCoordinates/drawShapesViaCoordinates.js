@@ -73,6 +73,7 @@ function generateNewShapesForImages(predictedShapeCoordinatesForImages, allImage
 }
 
 function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
+  predictedShapeCoordinatesForImages = {"0":[{"bbox":[16.03703498840332,194.2115306854248,1113.8134002685547,482.022762298584],"class":"car","score":0.9936941266059875},{"bbox":[1233.7510585784912,1169.7566986083984,1080.3159713745117,385.3567123413086],"class":"car","score":0.9841077327728271},{"bbox":[96.5882420539856,1009.1146469116211,1040.1406645774841,506.1511993408203],"class":"truck","score":0.9241188764572144},{"bbox":[1270.0901985168457,110.06307601928711,1079.1927337646484,524.1976737976074],"class":"car","score":0.8551244735717773}],"1":[{"bbox":[0.23196187615394592,1.3171005249023438,282.11527583003044,337.3044550418854],"class":"cat","score":0.8860134482383728}]}
   const currentlySelectedImageId = getCurrentImageId();
   const allImageData = getAllImageData();
   captureCurrentImageData(allImageData, currentlySelectedImageId);
@@ -86,6 +87,9 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   setDefaultCursorMode(canvas);
   resetCanvasEventsToDefault();
 
+  // the ML image thumbnail pallette is too high
+  // change imagelist logic to not remove the ML pallette unless hovered all shapes or moved away
+  // check bugs with label list options order after ML
   // Check if the newImageDimensions are correct using height only
 }
 

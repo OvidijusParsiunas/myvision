@@ -66,15 +66,16 @@ function downloadTensorflowJS() {
 }
 
 function startMachineLearning() {
-  if (!tfModel) {
-    downloadTensorflowJS()
-      .then(() => downloadCOCOSSD())
-      .then(() => loadModel())
-      .then(() => makePredictionsForAllImages())
-      .catch(() => errorHandler());
-  } else {
-    makePredictionsForAllImages();
-  }
+  drawShapesViaCoordinates();
+  // if (!tfModel) {
+  //   downloadTensorflowJS()
+  //     .then(() => downloadCOCOSSD())
+  //     .then(() => loadModel())
+  //     .then(() => makePredictionsForAllImages())
+  //     .catch(() => errorHandler());
+  // } else {
+  //   makePredictionsForAllImages();
+  // }
 }
 
 export { startMachineLearning as default };
