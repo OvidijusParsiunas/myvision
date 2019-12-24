@@ -227,8 +227,8 @@
 .arrow-down {
   position: absolute;
   display: none;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 8px solid rgb(228, 228, 228);
@@ -244,11 +244,11 @@
   border-color: grey;
   z-index: 3;
   height: 202px;
-  margin: auto;	
-  top: 0;	
-  left: -151px;	
-  bottom: 0;	
-  right: 0;	
+  margin: auto;
+  top: 0;
+  left: -151px;
+  bottom: 0;
+  right: 0;
   width: 180px
 }
 
@@ -536,7 +536,7 @@ body {
 .image-list-thumbnail-color-overlay {
   position: absolute;
   width: calc(100% - 4px);
-  height: 56px;
+  height: 57px;
   display: none;
 }
 
@@ -558,8 +558,8 @@ body {
   display: none;
 }
 
-.image-list-thumbnail:hover {	
-  filter: brightness(80%);	
+.image-list-thumbnail:hover {
+  filter: brightness(80%);
 }
 /*
 
@@ -581,7 +581,7 @@ body {
     */
 
 
-/*  Using panels 
+/*  Using panels
 #canvas-wrapper {
 }
 

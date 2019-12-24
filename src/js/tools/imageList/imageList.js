@@ -83,9 +83,10 @@ function highlightCurrentImageThumbnailForML(element) {
 }
 
 function highlightImageThumbnailForML(element) {
-  element.childNodes[1].style.display = 'block';
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning');
+  element.childNodes[1].style.height = '55px';
   changeThumbnailWidthIfOnRight(element, 'calc(100% - 6px)');
+  element.childNodes[1].style.display = 'block';
 }
 
 function setCurrentlyActiveElementToInvisible() {

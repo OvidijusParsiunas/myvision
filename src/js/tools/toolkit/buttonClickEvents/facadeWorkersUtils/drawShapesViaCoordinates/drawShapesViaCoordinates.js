@@ -10,7 +10,7 @@ import { getCurrentImageId } from '../stateManager';
 
 let canvas = null;
 
-function updateThumbnailStyle(isCurrentlySelectedImage, image) {
+function updateImageThumbnailStyle(isCurrentlySelectedImage, image) {
   if (!isCurrentlySelectedImage) {
     highlightImageThumbnailForML(image.thumbnailElementRef);
   } else {
@@ -69,7 +69,7 @@ function generateNewShapesForImages(predictedShapeCoordinatesForImages, allImage
     if (predictedShapeCoordinates.length > 0) {
       generateNewShapes(image, isCurrentlySelectedImage, predictedShapeCoordinates,
         imageDimensions, isUsingMachineLearning);
-      updateThumbnailStyle(isCurrentlySelectedImage, image);
+      updateImageThumbnailStyle(isCurrentlySelectedImage, image);
     }
   });
 }
