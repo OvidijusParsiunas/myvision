@@ -4,13 +4,12 @@ let allImageDataRef = null;
 
 // should use the same file as the one in the image list
 function setThumbnailColourOverlayBackToDefault(element) {
-  element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-default');
-  element.style.background = '';
-  if (element.style.width === 'calc(100% - 6px') {
-    element.style.width = 'calc(100% - 4px)';
+  if (element.classList.contains('image-list-thumbnail-machine-learning-selected')) {
+    element.classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
   }
 }
 
+// should use the same file as the one in the image list
 function updateNumberOfUncheckedMLImages() {
   const currentImageId = getCurrentImageId();
   const currentImage = allImageDataRef[currentImageId];

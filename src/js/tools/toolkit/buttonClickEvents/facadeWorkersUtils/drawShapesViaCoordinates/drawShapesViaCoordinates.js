@@ -1,4 +1,4 @@
-import { highlightCurrentImageThumbnailForML, getAllImageData, highlightImageThumbnailForML } from '../../../../imageList/imageList';
+import { setDefaultImageThumbnailHighlightToMLSelected, getAllImageData, setDefaultImageThumbnailHighlightToML } from '../../../../imageList/imageList';
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBoxesWithMachineLearning, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
@@ -12,9 +12,9 @@ let canvas = null;
 
 function updateImageThumbnailStyle(isCurrentlySelectedImage, image) {
   if (!isCurrentlySelectedImage) {
-    highlightImageThumbnailForML(image.thumbnailElementRef);
+    setDefaultImageThumbnailHighlightToML(image.thumbnailElementRef);
   } else {
-    highlightCurrentImageThumbnailForML(image.thumbnailElementRef);
+    setDefaultImageThumbnailHighlightToMLSelected(image.thumbnailElementRef);
   }
 }
 
@@ -98,7 +98,6 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   setDefaultCursorMode(canvas);
   resetCanvasEventsToDefault();
 
-  // change imagelist logic to not remove the ML pallette unless hovered all shapes or moved away
   // check bugs with label list options order after ML
   // check how fast the labelling is, what if the user cancels half way through,
   // do you undo the labels that

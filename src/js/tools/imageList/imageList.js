@@ -16,7 +16,6 @@ let currentlySelectedImageId = 0;
 let newImageId = 0;
 let firstImage = true;
 let imageListOverflowParent = null;
-let currentlySelectedImageAffectedByML = false;
 
 function findImageListElement() {
   currentImageNameElement = document.getElementById('currentImageName');
@@ -71,48 +70,54 @@ function removeTickSVGOverImageThumbnail() {
   }
 }
 
-// function changeThumbnailWidthByPositionInList(element, leftWidth, rightWidth) {
-//   // if right
-//   if (element.childNodes[0].id % 2 === 1) {
-//     element.childNodes[1].style.width = rightWidth;
-//   } else { // if left
-//     element.childNodes[1].style.width = leftWidth;
-//   }
-// }
-
-function highlightCurrentImageThumbnailForML(element) {
+function setDefaultImageThumbnailHighlightToMLSelected(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning-selected');
-  currentlySelectedImageAffectedByML = true;
 }
 
-function highlightImageThumbnailForML(element) {
+function setDefaultImageThumbnailHighlightToML(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning');
-  // comment this
-  // changeThumbnailWidthByPositionInList(element, 'calc(100% - 5px)', 'calc(100% - 6px)');
   element.childNodes[1].style.display = 'block';
 }
 
-function setMLThumbnailColourOverlayToSelected(element) {
+function setMLThumbnailOverlayToMLSelected(element) {
   if (element.classList.contains('image-list-thumbnail-machine-learning')) {
     element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-machine-learning-selected');
+  }
+}
+
+function setThumbnailColourOverlayBackToDefault(element) {
+  if (element.classList.contains('image-list-thumbnail-machine-learning-selected')) {
+    element.classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
+  }
+}
+
+function setMLGeneratedShapesToOriginalColorPallette() {
+  if (images[currentlySelectedImageId].numberOfMLGeneratedShapes > 0) {
+    console.log(images[currentlySelectedImageId].shapes);
+    Object.keys(images[currentlySelectedImageId].shapes).forEach((key) => {
+      console.log('called');
+      const shape = images[currentlySelectedImageId].shapes[key].shapeRef;
+      if (shape.isGeneratedViaML) {
+        shape.fill = shape.trueFill;
+        shape.stroke = shape.trueStroke;
+        shape.isGeneratedViaML = false;
+      }
+    });
+    images[currentlySelectedImageId].numberOfMLGeneratedShapes = 0;
   }
 }
 
 function setCurrentlyActiveElementToInvisible() {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
-    // if still green
-    // setThumbnailColourOverlayBackToDefault(currentlyActiveElement);
-    if (currentlySelectedImageAffectedByML) {
-      currentlyActiveElement.style.background = '';
-      currentlySelectedImageAffectedByML = false;
-    }
+    setThumbnailColourOverlayBackToDefault(currentlyActiveElement);
+    setMLGeneratedShapesToOriginalColorPallette();
   }
 }
 
 function highlightImageThumbnail(element) {
   setCurrentlyActiveElementToInvisible();
-  setMLThumbnailColourOverlayToSelected(element);
+  setMLThumbnailOverlayToMLSelected(element);
   element.style.display = 'block';
   currentlyActiveElement = element;
 }
@@ -222,12 +227,12 @@ function changeToExistingImage(id) {
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
     images[currentlySelectedImageId].labels, timesZoomedOut);
-  currentlySelectedImageId = id;
   setCurrentImageId(id);
   switchCanvasWrapperInnerElement();
   changeCurrentImageElementText(id);
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
   scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
+  currentlySelectedImageId = id;
 }
 
 function switchImage(direction) {
@@ -256,7 +261,8 @@ function canSwitchImage(direction) {
 
 export {
   switchImage, canSwitchImage, addImageFromMultiUploadToList,
-  initialiseImageListFunctionality, highlightImageThumbnailForML,
-  highlightCurrentImageThumbnailForML, removeTickSVGOverImageThumbnail,
+  initialiseImageListFunctionality, setDefaultImageThumbnailHighlightToML,
+  setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
   displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
+  setThumbnailColourOverlayBackToDefault,
 };
