@@ -98,7 +98,6 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   setDefaultCursorMode(canvas);
   resetCanvasEventsToDefault();
 
-  // the ML image thumbnail pallette is too high
   // change imagelist logic to not remove the ML pallette unless hovered all shapes or moved away
   // check bugs with label list options order after ML
   // check how fast the labelling is, what if the user cancels half way through,

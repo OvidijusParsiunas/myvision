@@ -71,27 +71,38 @@ function removeTickSVGOverImageThumbnail() {
   }
 }
 
-function changeThumbnailWidthIfOnRight(element, width) {
-  if (element.childNodes[0].id % 2 === 1) {
-    element.childNodes[1].style.width = width;
-  }
-}
+// function changeThumbnailWidthByPositionInList(element, leftWidth, rightWidth) {
+//   // if right
+//   if (element.childNodes[0].id % 2 === 1) {
+//     element.childNodes[1].style.width = rightWidth;
+//   } else { // if left
+//     element.childNodes[1].style.width = leftWidth;
+//   }
+// }
 
 function highlightCurrentImageThumbnailForML(element) {
-  element.childNodes[1].style.background = '#0080001f';
+  element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning-selected');
   currentlySelectedImageAffectedByML = true;
 }
 
 function highlightImageThumbnailForML(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning');
-  element.childNodes[1].style.height = '55px';
-  changeThumbnailWidthIfOnRight(element, 'calc(100% - 6px)');
+  // comment this
+  // changeThumbnailWidthByPositionInList(element, 'calc(100% - 5px)', 'calc(100% - 6px)');
   element.childNodes[1].style.display = 'block';
+}
+
+function setMLThumbnailColourOverlayToSelected(element) {
+  if (element.classList.contains('image-list-thumbnail-machine-learning')) {
+    element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-machine-learning-selected');
+  }
 }
 
 function setCurrentlyActiveElementToInvisible() {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
+    // if still green
+    // setThumbnailColourOverlayBackToDefault(currentlyActiveElement);
     if (currentlySelectedImageAffectedByML) {
       currentlyActiveElement.style.background = '';
       currentlySelectedImageAffectedByML = false;
@@ -99,18 +110,9 @@ function setCurrentlyActiveElementToInvisible() {
   }
 }
 
-function setThumbnailColourOverlayBackToDefault(element) {
-  element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-default');
-  if (element.style.width === 'calc(100% - 6px') {
-    element.style.width = 'calc(100% - 4px)';
-  }
-}
-
 function highlightImageThumbnail(element) {
   setCurrentlyActiveElementToInvisible();
-  if (element.classList.contains('image-list-thumbnail-machine-learning')) {
-    setThumbnailColourOverlayBackToDefault(element);
-  }
+  setMLThumbnailColourOverlayToSelected(element);
   element.style.display = 'block';
   currentlyActiveElement = element;
 }

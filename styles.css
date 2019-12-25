@@ -536,17 +536,28 @@ body {
 .image-list-thumbnail-color-overlay {
   position: absolute;
   width: calc(100% - 4px);
-  height: 57px;
+  height: 56px;
   display: none;
 }
 
 .image-list-thumbnail-default {
   border: 2px solid #0dc7ff;
+  width: calc(100% - 4px);
+  height: 56px;
 }
 
 .image-list-thumbnail-machine-learning {
   border: 3px solid #58ca4b;
   background: #0080001f;
+  width: calc(100% - 6px);
+  height: 54px;
+}
+
+.image-list-thumbnail-machine-learning-selected {
+  border: 2px solid #0dc7ff;
+  background: #0080001f;
+  width: calc(100% - 4px);
+  height: 56px;
 }
 
 .image-list-thumbnail-SVG-tick-icon {
