@@ -1,6 +1,6 @@
 import initiateCreateNewBndBoxEvents from './facadeWorkers/createNewBndBoxWorker';
 import initiateCreateNewPolygonEvents from './facadeWorkers/createNewPolygonWorker';
-import removeActiveShapeEvent from './facadeWorkers/removeActiveShapeWorker';
+import { removeActiveShapeEvent } from './facadeWorkers/removeActiveShapeWorker';
 import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWorker';
 import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';

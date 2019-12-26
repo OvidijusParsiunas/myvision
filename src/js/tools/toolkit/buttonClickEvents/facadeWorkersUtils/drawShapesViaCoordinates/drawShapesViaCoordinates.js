@@ -7,6 +7,8 @@ import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cu
 import { resetPopUpLabelOptions } from '../../../../labellerPopUp/style';
 import { setPopupLabelOptionsIndexToZero } from '../../../../labellerPopUp/buttonEventHandlers';
 import { getCurrentImageId } from '../stateManager';
+import { removeBoundingBox } from '../../facadeWorkers/removeActiveShapeWorker';
+import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/allShapes';
 
 let canvas = null;
 
@@ -59,8 +61,21 @@ function getImageDimensions(image) {
   return { scaleX: 1, scaleY: 1 };
 }
 
+function removeMLShapesOnImage(allImageData, id) {
+  const currentImageShapes = getAllExistingShapes();
+  Object.keys(currentImageShapes).forEach((key) => {
+    const shape = currentImageShapes[key].shapeRef;
+    if (shape.isGeneratedViaML) {
+      removeBoundingBox(canvas, shape);
+    }
+  });
+  canvas.renderAll();
+  allImageData[id].numberOfMLGeneratedShapes = 0;
+}
+
 function generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
   currentlySelectedImageId, isUsingMachineLearning) {
+  removeMLShapesOnImage(allImageData, currentlySelectedImageId);
   Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
     const image = allImageData[key];
     const imageDimensions = getImageDimensions(image);

@@ -93,9 +93,7 @@ function setThumbnailColourOverlayBackToDefault(element) {
 
 function setMLGeneratedShapesToOriginalColorPallette() {
   if (images[currentlySelectedImageId].numberOfMLGeneratedShapes > 0) {
-    console.log(images[currentlySelectedImageId].shapes);
     Object.keys(images[currentlySelectedImageId].shapes).forEach((key) => {
-      console.log('called');
       const shape = images[currentlySelectedImageId].shapes[key].shapeRef;
       if (shape.isGeneratedViaML) {
         shape.fill = shape.trueFill;
@@ -163,6 +161,7 @@ function setDefaultImageProperties(image, imageMetadata) {
   image.shapes = {};
   image.labels = {};
   image.size = imageMetadata.size;
+  image.numberOfMLGeneratedShapes = 0;
 }
 
 function addSingleImageToList(imageMetadata, imageData) {

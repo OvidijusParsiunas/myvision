@@ -24,10 +24,15 @@ function executeAndRecordPredictionResults(promisesArray) {
   });
 }
 
+// save current shapes so no need to regenerate, but will need to
+// mark the ones that have ml generated and take into consideration deleted and
+// new images (potentially handled by the imageListML)
 function makePredictionsForAllImages() {
   const predictPromises = [];
   getAllImageData().forEach((image) => {
+    // if (image.numberOfMLGeneratedShapes === 0) {
     predictPromises.push(predict(image));
+    // } else if ()
   });
   executeAndRecordPredictionResults(predictPromises);
 }

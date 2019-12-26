@@ -22,8 +22,8 @@ import { removeLabelFromListOnShapeDelete } from '../../../labelList/labelList';
 import { removeShape } from '../../../../canvas/objects/allShapes/allShapes';
 import { removeTickSVGOverImageThumbnail } from '../../../imageList/imageList';
 
-function removeBoundingBox(canvas) {
-  const activeObject = canvas.getActiveObject();
+function removeBoundingBox(canvas, mLGeneratedObject) {
+  const activeObject = mLGeneratedObject || canvas.getActiveObject();
   if (activeObject && activeObject.shapeName === 'bndBox') {
     removeShape(activeObject.id);
     removeLabel(activeObject.id, canvas);
@@ -80,4 +80,4 @@ function removeActiveShapeEvent(canvas) {
   removeTickSVGOverImageThumbnail();
 }
 
-export { removeActiveShapeEvent as default };
+export { removeActiveShapeEvent, removeBoundingBox };
