@@ -24,7 +24,7 @@ function changeSubmitButtonStyling() {
 function prepareLabelPopupElements() {
   textInputElement = document.getElementById('popup-label-input');
   popupLabelOptions = document.getElementById('popup-label-options');
-  submitButtonElement = document.getElementById('popup-submit-button');
+  submitButtonElement = document.getElementById('popup-label-submit-button');
 }
 
 function resetDrawingMode() {

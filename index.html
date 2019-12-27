@@ -31,30 +31,37 @@
             <canvas id="c"></canvas>
         </div>
       </div>
-    </div>    
+    </div>
     <!-- needs to be renamed to popup labeller -->
     <div id="popup-label-parent" hidden>
-      <div id="popup-label-title">Label name:</div>
+      <div class="popup-label-title">Label name:</div>
       <input type="text" id="popup-label-input" onpaste="popupPaste()" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="new label">
       <table id="popup-label-options">
       </table>
       <div id="popup-label-buttons">
-        <div id="popup-submit-button" class="popup-label-button" onclick="labelShape()">Submit</div>
+        <div id="popup-label-submit-button" class="popup-label-button popup-submit-button" onclick="labelShape()">Submit</div>
         <div id="popup-cancel-button" class="popup-label-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
     <div id="machine-learning-popup-parent">
-      <div id="popup-label-title">Machine Learning</div>
-      Description about AI here - the predictive model operates on your browser and no data leaves your computer
+      <div id="machine-learning-popup-title" class="popup-label-title" >Machine Learning</div>
+      <div id="machine-learning-popup-border-line" style="width: 100%; margin-top: 5px; border-top: solid 1px #e6e6e6;"> </div>
+      <div id="machine-learning-popup-description">
+        You can use a pre-trained Machine Learning model to automatically annotate objects with bounding boxes!
+        <br>
+        Click 'Start' to download the 'COCO-SSD' model and automatically begin generating bounding boxes for your images.
+        <br>
+        PS: Because this model operates locally on the browser, your data will never leave the privacy of your computer.
+      </div>
       <div id="popup-label-buttons">
-        <div id="machine-learning-popup-error-messages"></div>
-        <div id="machine-learning-popup-progress-messages"></div>
-        <div id="popup-submit-button" class="popup-label-button" onclick="startMachineLearning()">Start</div>
+        <div id="machine-learning-popup-error-messages" class="machine-learning-popup-messages"></div>
+        <div id="machine-learning-popup-progress-messages" class="machine-learning-popup-messages"></div>
+        <div id="machine-learning-popup-submit-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
         <div id="popup-cancel-button" class="popup-label-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
     <div id="export-labels-popup-parent" style="display: none; height: 155px; width: 144px;">
-      <div id="popup-label-title">Choose format:</div>
+      <div class="popup-label-title">Choose format:</div>
       <div id="parent-table-element" style="width: 140px;">
         <table style="width: inherit; padding-left: 5px;" id="settings-table" class="settings-popup-item">
           <tr><td style="padding-top: 7px;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">COCO JSON</div></td></tr>
@@ -87,11 +94,11 @@
       </div>
     </div>
 
-  
+
     <!-- strategy is, set the tools on window loadup -->
     <!-- create overflow when the window is resized -->
     <!-- make sure to leave some space for download bar appearing -->
-  
+
     <!-- the popup should align itself if it overflows, or align itself to not overflow -->
     <div id="settings-popup" class="settings-popup-item" style="position: absolute; border-radius: 3px; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
       <table id="settings-table" class="settings-popup-item">
@@ -99,7 +106,7 @@
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="continuousDrawing()"></td></tr>
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Label visibility</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" checked></td></tr>
       </table>
-      <!-- <button id="tools-button" onclick="movableObjects()">Movable Objects</button> --> 
+      <!-- <button id="tools-button" onclick="movableObjects()">Movable Objects</button> -->
       <!-- <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
       <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button> -->
     </div>
@@ -162,14 +169,14 @@
     </div>
     <div id="right-side-bar">
       <div id="right-side-bar-components">
-        <div id="labels-list-component" class="right-side-bar-component"> 
+        <div id="labels-list-component" class="right-side-bar-component">
           <div class="right-side-bar-component-title">Labels:</div>
           <div id="labels-list-overflow-parent" onscroll="labelListScroll()">
             <table id="label-list"></table>
           </div>
         </div>
         <!-- should be called images list -->
-        <div id="image-list-component" class="right-side-bar-component"> 
+        <div id="image-list-component" class="right-side-bar-component">
           <div class="right-side-bar-component-title">Uploads:</div>
           <div id="image-list-overflow-parent">
           </div>
@@ -177,7 +184,7 @@
       </div>
     </div>
     <!-- Paste the following into style to floor it -->
-    <!-- 
+    <!--
       position: fixed;
       bottom: 0;
       width: 100%;

@@ -51,7 +51,7 @@
   font-size: 15px;
 }
 
-#popup-label-title {
+.popup-label-title {
   font-family: Arial;
   font-size: 17px;
   padding-left: 5px;
@@ -157,7 +157,7 @@
   cursor: pointer;
 }
 
-#popup-submit-button {
+.popup-submit-button {
   margin-right: 3px;
 }
 
@@ -165,7 +165,7 @@
   margin-left: 3px;
 }
 
-#popup-submit-button:hover {
+.popup-submit-button:hover {
   background-color: #9ed49f !important;
 }
 
@@ -173,7 +173,7 @@
   background-color: #e2acac;
 }
 
-#popup-submit-button:active {
+.popup-submit-button:active {
   background-color: #43b543 !important;
 }
 
@@ -249,7 +249,23 @@
   left: -151px;
   bottom: 0;
   right: 0;
-  width: 180px
+  width: 450px
+}
+
+#machine-learning-popup-description {
+  margin-left: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 420px;
+}
+
+#machine-learning-popup-title {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.machine-learning-popup-messages {
+  margin-bottom: 5px;
 }
 
 #left-side-bar {
@@ -726,7 +742,7 @@ body {
   cursor: default;
 }
 
-#popup-submit-button {
+.popup-submit-button {
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 4px;
