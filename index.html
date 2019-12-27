@@ -38,9 +38,9 @@
       <input type="text" id="popup-label-input" onpaste="popupPaste()" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="new label">
       <table id="popup-label-options">
       </table>
-      <div id="popup-label-buttons">
+      <div class="popup-label-buttons">
         <div id="popup-label-submit-button" class="popup-label-button popup-submit-button" onclick="labelShape()">Submit</div>
-        <div id="popup-cancel-button" class="popup-label-button" onclick="cancelLabellingProcess()">Cancel</div>
+        <div id="popup-label-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
     <div id="machine-learning-popup-parent">
@@ -48,16 +48,17 @@
       <div id="machine-learning-popup-border-line" style="width: 100%; margin-top: 5px; border-top: solid 1px #e6e6e6;"> </div>
       <div id="machine-learning-popup-description">
         You can use a pre-trained Machine Learning model to automatically annotate objects with bounding boxes!
+        <!-- You can use a pre-trained Machine Learning model to automate the process of object annotation with bounding boxes! -->
         <br>
-        Click 'Start' to download the 'COCO-SSD' model and automatically begin generating bounding boxes for your images.
+        Click 'Start' to download the 'COCO-SSD' model and use it to generate bounding boxes for your images.
         <br>
-        PS: Because this model operates locally on the browser, your data will never leave the privacy of your computer.
+        In addition, because this model operates locally on the browser, your data will never leave the privacy of your computer.
       </div>
-      <div id="popup-label-buttons">
-        <div id="machine-learning-popup-error-messages" class="machine-learning-popup-messages"></div>
-        <div id="machine-learning-popup-progress-messages" class="machine-learning-popup-messages"></div>
+      <div id="machine-learning-popup-error-messages" class="machine-learning-popup-messages"></div>
+      <div id="machine-learning-popup-progress-messages" class="machine-learning-popup-messages"></div>
+      <div id="machine-learning-popup-buttons" class="popup-label-buttons">
         <div id="machine-learning-popup-submit-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
-        <div id="popup-cancel-button" class="popup-label-button" onclick="cancelLabellingProcess()">Cancel</div>
+        <div id="machine-learning-popup-cancel-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningPopUp()">Cancel</div>
       </div>
     </div>
     <div id="export-labels-popup-parent" style="display: none; height: 155px; width: 144px;">
@@ -158,11 +159,11 @@
     </button>
     <div class="tools-button-hover-popup" id="zoom-out-button-popup">Zoom out</div>
     <input id='uploadImage' type='file' onchange="uploadImage(this)" multiple accept="image/*" hidden/>
-    <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
+    <button id="uploadImagesButton" class="tools-button" style="text-align: center; position: relative" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="invisible-button.svg" draggable="false" class="tools-button-icon" alt="visibility">
     </button>
     <div class="tools-button-hover-popup" id="upload-images-button-popup">Upload Images</div>
-    <button id="settingsButton" class="settings-popup-item tools-button" style="text-align: center" onclick="displaySettingsPopup()" onmouseenter="mouseEnterToolkitButton(event, 'settings')" onmouseleave="mouseLeaveToolkitButton(event)">
+    <button id="settingsButton" class="settings-popup-item tools-button" style="text-align: center;" onclick="displaySettingsPopup()" onmouseenter="mouseEnterToolkitButton(event, 'settings')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="icon.svg" draggable="false" class="settings-popup-item tools-button-icon" alt="visibility">
     </button>
     <div class="tools-button-hover-popup" id="settings-button-popup">Settings</div>

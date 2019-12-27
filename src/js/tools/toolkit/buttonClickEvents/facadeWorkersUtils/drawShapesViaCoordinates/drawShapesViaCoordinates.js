@@ -117,8 +117,6 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   // check how fast the labelling is, what if the user cancels half way through,
   // do you undo the labels that
   // have been generated? You will have to. Have an option to continue.
-  // If the user forgets to check an image and then tries to regenerate shapes,
-  // don't bother with that image
   // Check if the newImageDimensions are correct using height only
 }
 

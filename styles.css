@@ -136,7 +136,7 @@
   cursor: default;
 }
 
-#popup-label-buttons {
+.popup-label-buttons {
   text-align: center;
   margin-top: 2px;
   margin-bottom: 2px;
@@ -157,28 +157,44 @@
   cursor: pointer;
 }
 
-.popup-submit-button {
-  margin-right: 3px;
+.popup-label-button-disabled {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-top: 6px;
+  width: 60px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+  display: inline-block;
+  border-radius: 2px;
+  cursor: pointer;
+  pointer-events: none;
+  background-color: rgb(230, 230, 230);
+  color: #9c9c9c;
 }
 
-#popup-cancel-button {
-  margin-left: 3px;
+.popup-submit-button {
+  margin-right: 3px;
 }
 
 .popup-submit-button:hover {
   background-color: #9ed49f !important;
 }
 
-#popup-cancel-button:hover {
-  background-color: #e2acac;
-}
-
 .popup-submit-button:active {
   background-color: #43b543 !important;
 }
 
-#popup-cancel-button:active {
-  background-color: #d65e5e;
+.popup-cancel-button {
+  margin-left: 3px;
+}
+
+.popup-cancel-button:hover {
+  background-color: #e2acac !important;
+}
+
+.popup-cancel-button:active {
+  background-color: #d65e5e !important;
 }
 
 #export-labels-popup-parent {
@@ -243,20 +259,20 @@
   border-style: solid;
   border-color: grey;
   z-index: 3;
-  height: 202px;
+  height: 250px;
   margin: auto;
   top: 0;
   left: -151px;
   bottom: 0;
   right: 0;
-  width: 450px
+  width: 392px;
 }
 
 #machine-learning-popup-description {
   margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 420px;
+  width: 360px;
 }
 
 #machine-learning-popup-title {
@@ -265,7 +281,15 @@
 }
 
 .machine-learning-popup-messages {
+  text-align: center;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  user-select: none;
   margin-bottom: 5px;
+}
+
+#machine-learning-popup-error-messages {
+  color: red;
 }
 
 #left-side-bar {

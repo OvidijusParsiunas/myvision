@@ -1,12 +1,15 @@
 import { getAllImageData } from '../imageList/imageList';
-import { displayErrorMessage, updateProgressMessage, removeStartButton } from './style';
+import {
+  displayErrorMessage, updateProgressMessage, removeStartButton,
+  disableStartButton, displayNoImagesFoundError,
+} from './style';
 import { drawShapesViaCoordinates } from '../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 let tfModel = null;
 
 function errorHandler() {
-  displayErrorMessage();
+  displayErrorMessage('ERROR! Please try again later.');
 }
 
 const predictedImageCoordinates = {};
@@ -14,6 +17,8 @@ const predictedImageCoordinates = {};
 function predict(image) {
   return tfModel.detect(image.data);
 }
+
+// two use cases to do UX for; 1 - map the names before generating, 2 - cancel, keep, continue
 
 /*
 let stopState = false;
@@ -114,6 +119,7 @@ function downloadCOCOSSD() {
 function downloadTensorflowJS() {
   return new Promise((resolve, reject) => {
     // loading spinner, maybe something funky with ML?
+    disableStartButton();
     updateProgressMessage('In Progress...');
     removeStartButton();
     const tensorflowJSScript = document.createElement('script');
@@ -125,16 +131,21 @@ function downloadTensorflowJS() {
 }
 
 function startMachineLearning() {
-  drawShapesViaCoordinates();
-  // if (!tfModel) {
-  //   downloadTensorflowJS()
-  //     .then(() => downloadCOCOSSD())
-  //     .then(() => loadModel())
-  //     .then(() => makePredictionsForAllImages())
-  //     .catch(() => errorHandler());
-  // } else {
-  //   makePredictionsForAllImages();
-  // }
+  const allImageData = getAllImageData();
+  if (allImageData.length > 0) {
+    drawShapesViaCoordinates();
+    // if (!tfModel) {
+    //   downloadTensorflowJS()
+    //     .then(() => downloadCOCOSSD())
+    //     .then(() => loadModel())
+    //     .then(() => makePredictionsForAllImages())
+    //     .catch(() => errorHandler());
+    // } else {
+    //   makePredictionsForAllImages();
+    // }
+  } else {
+    displayNoImagesFoundError();
+  }
 }
 
 export { startMachineLearning as default };
