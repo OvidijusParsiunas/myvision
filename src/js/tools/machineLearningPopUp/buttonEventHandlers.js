@@ -3,7 +3,7 @@ import { drawShapesViaCoordinates } from '../toolkit/buttonClickEvents/facadeWor
 import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeStartButton,
-  disableStartButton, displayNoImagesFoundError,
+  disableStartButton, displayNoImagesFoundError, switchToChangeGeneratedLabelsView,
 } from './style';
 
 let tfModel = null;
@@ -17,6 +17,9 @@ const predictedImageCoordinates = {};
 function predict(image) {
   return tfModel.detect(image.data);
 }
+
+// check overflow
+// paste
 
 // two use cases to do UX for; 1 - map the names before generating, 2 - cancel, keep, continue
 
@@ -49,6 +52,19 @@ function predict(image) {
 // be updated with shapes
 
 // can cancel on 2 parts, 1 in getting the script, 2 in predicting
+
+function changeGeneratedShapeLabels() {
+  switchToChangeGeneratedLabelsView();
+  const predictionsObject = {"0":[{"bbox":[0.23196187615394592,1.3171005249023438,282.11527583003044,337.3044550418854],"class":"cat","score":0.8860134482383728}],"1":[{"bbox":[16.03703498840332,194.2115306854248,1113.8134002685547,482.022762298584],"class":"car","score":0.9936941266059875},{"bbox":[1233.7510585784912,1169.7566986083984,1080.3159713745117,385.3567123413086],"class":"car","score":0.9841077327728271},{"bbox":[96.5882420539856,1009.1146469116211,1040.1406645774841,506.1511993408203],"class":"truck","score":0.9241188764572144},{"bbox":[1270.0901985168457,110.06307601928711,1079.1927337646484,524.1976737976074],"class":"car","score":0.8551244735717773}]};
+  // const objectNames = {};
+  Object.keys(predictionsObject).forEach((key) => {
+    const predictions = predictionsObject[key];
+    // objectNames[key] = {};
+    for (let i = 0; i < predictions.length; i += 1) {
+    //   objectNames[key].class = predictions[i].class
+    }
+  });
+}
 
 function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId) {
   Promise.all(promisesArray)
@@ -131,6 +147,7 @@ function downloadTensorflowJS() {
 }
 
 function startMachineLearning() {
+  changeGeneratedShapeLabels();
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
     drawShapesViaCoordinates();
@@ -144,7 +161,7 @@ function startMachineLearning() {
     //   makePredictionsForAllImages();
     // }
   } else {
-    displayNoImagesFoundError();
+    // displayNoImagesFoundError();
   }
 }
 
