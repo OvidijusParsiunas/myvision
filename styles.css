@@ -288,6 +288,10 @@
   margin-bottom: 5px;
 }
 
+#machine-learning-popup-buttons {
+  margin-top: 12px;
+}
+
 #machine-learning-popup-error-messages {
   color: red;
 }

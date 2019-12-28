@@ -3,24 +3,32 @@ let isNoImagesFoundErrorDisplayed = false;
 
 function removeErrorMessage() {
   const errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
+  const buttons = document.getElementById('machine-learning-popup-buttons');
   errorMessagesElement.innerHTML = '';
+  buttons.style.marginTop = '12px';
 }
 
 function removeProgressMessage() {
   const progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
+  const buttons = document.getElementById('machine-learning-popup-buttons');
   progressMessagesElement.innerHTML = '';
+  buttons.style.marginTop = '12px';
 }
 
 function displayErrorMessage(errorMessage) {
   removeProgressMessage();
   const errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
+  const buttons = document.getElementById('machine-learning-popup-buttons');
   errorMessagesElement.innerHTML = errorMessage;
+  buttons.style.marginTop = '5px';
 }
 
 function updateProgressMessage(progressMessage) {
   removeErrorMessage();
   const progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
+  const buttons = document.getElementById('machine-learning-popup-buttons');
   progressMessagesElement.innerHTML = progressMessage;
+  buttons.style.marginTop = '5px';
 }
 
 function removeStartButton() {

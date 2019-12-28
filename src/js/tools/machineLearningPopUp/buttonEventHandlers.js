@@ -1,10 +1,10 @@
 import { getAllImageData } from '../imageList/imageList';
+import { drawShapesViaCoordinates } from '../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeStartButton,
   disableStartButton, displayNoImagesFoundError,
 } from './style';
-import { drawShapesViaCoordinates } from '../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 let tfModel = null;
 
