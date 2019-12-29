@@ -16,6 +16,7 @@ let currentZoomState = 1;
 let doubleScrollCanvasState = false;
 let settingsPopUpOpenState = false;
 let exportDatasetsPopUpOpenState = false;
+let changingMLGeneratedLabelNamesState = false;
 let currentImageId = false;
 
 function getDefaultState() {
@@ -96,6 +97,10 @@ function getExportDatasetsPopUpOpenState() {
 
 function getCurrentImageId() {
   return currentImageId;
+}
+
+function getChangingMLGeneratedLabelNamesState() {
+  return changingMLGeneratedLabelNamesState;
 }
 
 function setDefaultState(state) {
@@ -179,6 +184,10 @@ function setCurrentImageId(id) {
   currentImageId = id;
 }
 
+function setChangingMLGeneratedLabelNamesState(state) {
+  changingMLGeneratedLabelNamesState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -220,4 +229,6 @@ export {
   setNewShapeSelectedViaLabelListState,
   getRemovingPointsAfterCancelDrawState,
   setRemovingPointsAfterCancelDrawState,
+  getChangingMLGeneratedLabelNamesState,
+  setChangingMLGeneratedLabelNamesState,
 };

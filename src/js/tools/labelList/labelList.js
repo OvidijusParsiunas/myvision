@@ -7,6 +7,7 @@ import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/a
 import {
   setEditingLabelId, getRemovingPolygonPointsState, getAddingPolygonPointsState, getDefaultState,
   getSettingsPopUpOpenState, setSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
+  getChangingMLGeneratedLabelNamesState,
 } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
@@ -28,6 +29,7 @@ import {
 } from './iconHighlightUtils';
 import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
+import { setTextElementToNotEditable } from '../machineLearningPopUp/style';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -670,6 +672,8 @@ window.onmousedown = (event) => {
       settingsPopupElement.style.display = 'none';
       setSettingsPopUpOpenState(false);
     }
+  } else if (getChangingMLGeneratedLabelNamesState()) {
+    setTextElementToNotEditable(event.target);
   }
 };
 

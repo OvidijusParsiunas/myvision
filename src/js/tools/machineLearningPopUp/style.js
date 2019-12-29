@@ -102,21 +102,26 @@ function switchToChangeGeneratedLabelsView() {
 }
 
 let editingActive = false;
+let activeTextRow = null;
+let activeTextElement = null;
 
 function displayEditLabelButton(element) {
-  if (!editingActive) {
+  if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
     element.childNodes[1].style.display = 'none';
     element.childNodes[3].style.display = '';
-    element.style.backgroundColor = '#f7f7f7';
+    if (!editingActive) {
+      element.style.backgroundColor = '#f7f7f7';
+    }
   }
-  // labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
 }
 
 function hideEditLabelButton(element) {
-  if (!editingActive) {
-    element.childNodes[1].style.display = '';
-    element.childNodes[3].style.display = 'none';
-    element.style.backgroundColor = '';
+  if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
+    if (!editingActive) {
+      element.childNodes[1].style.display = '';
+      element.childNodes[3].style.display = 'none';
+      element.style.backgroundColor = '';
+    }
   }
 }
 
@@ -133,6 +138,7 @@ function hideEditLabelButton(element) {
 //   myCanvas = null;
 // }
 
+// replicated logic should be exported to a shared service
 function setCaretPositionOnDiv(index, contentEditableElement, space) {
   let range;
   if (document.createRange) {
@@ -158,11 +164,90 @@ function setCaretPositionOnDiv(index, contentEditableElement, space) {
   // }
 }
 
+function getCaretPositionOnDiv(editableDiv, paste) {
+  const currentCaretPosition = { position: 0, highlightRangeOnPaste: 0 };
+  let range = null;
+  if (window.getSelection) {
+    const selection = window.getSelection();
+    if (selection.rangeCount) {
+      range = selection.getRangeAt(0);
+      if (range.commonAncestorContainer.parentNode === editableDiv) {
+        currentCaretPosition.position = range.endOffset;
+      }
+      if (paste) {
+        currentCaretPosition.highlightRangeOnPaste = Math.abs(selection.focusOffset
+          - selection.anchorOffset);
+      }
+    }
+  } else if (document.selection && document.selection.createRange) {
+    range = document.selection.createRange();
+    if (range.parentElement() === editableDiv) {
+      const tempElement = document.createElement('span');
+      editableDiv.insertBefore(tempElement, editableDiv.firstChild);
+      const tempRange = range.duplicate();
+      tempRange.moveToElementText(tempRange);
+      tempRange.setEndPoint('EndToEnd', range);
+      currentCaretPosition.position = tempRange.text.length;
+    }
+  }
+  return currentCaretPosition;
+}
+
+function preprocessPastedText(text) {
+  const noReturnChars = text.replace(/(\r\n|\n|\r)/gm, '');
+  const spacesToHythons = noReturnChars.replace(/\s/g, '-');
+  return spacesToHythons;
+}
+
+// contains fix for paste with spaces - check it
+function pasteHandlerOnDiv(event) {
+  event.stopPropagation();
+  event.preventDefault();
+  const clipboardData = event.clipboardData || window.clipboardData;
+  const pastedData = clipboardData.getData('Text');
+  const caretOnPaste = getCaretPositionOnDiv(activeTextElement, true);
+  const caretPositionEnd = caretOnPaste.position;
+  const caretPositionStart = caretPositionEnd - caretOnPaste.highlightRangeOnPaste;
+  const preprocessedPastedData = preprocessPastedText(pastedData);
+  activeTextElement.innerHTML = activeTextElement.innerHTML.slice(0, caretPositionStart)
+   + preprocessedPastedData + activeTextElement.innerHTML.slice(caretPositionEnd);
+  setCaretPositionOnDiv(caretPositionStart + preprocessedPastedData.length, activeTextElement);
+}
+
+function setTextElementToEditable() {
+  activeTextElement.contentEditable = true;
+}
+
+function setTextElementToNotEditable(element) {
+  if (activeTextElement && activeTextElement !== element && activeTextElement.id !== element.id) {
+    activeTextElement.contentEditable = false;
+    activeTextRow.style.backgroundColor = '';
+    activeTextRow.childNodes[1].style.display = '';
+    activeTextRow.childNodes[3].style.display = 'none';
+    activeTextRow.style.cursor = 'pointer';
+    editingActive = false;
+  }
+}
+
+// change the ids to use regex for number comparisons
+
+// question if space needs to be set to hython
 function editMachineLearningLabel(element) {
+  activeTextRow = element;
+  activeTextElement = element.childNodes[7];
+  element.style.backgroundColor = '#f7f7f7';
+  setTextElementToEditable();
+  element.childNodes[5].style.display = '';
+  element.childNodes[3].style.display = 'none';
+  // element.childNodes[1].style.display = 'none';
+  // element.childNodes[3].style.display = 'none';
+  element.childNodes[7].addEventListener('paste', pasteHandlerOnDiv);
+  // change pointer style to text edit
+  element.style.cursor = 'default';
+  if (!editingActive) {
+    setCaretPositionOnDiv(element.childNodes[7].innerHTML.length, element.childNodes[7]);
+  }
   editingActive = true;
-  element.childNodes[5].contentEditable = true;
-  element.style.backgroundColor = '';
-  setCaretPositionOnDiv(element.childNodes[5].innerHTML.length, element.childNodes[5]);
 }
 
 export {
@@ -170,4 +255,5 @@ export {
   removeStartButton, disableStartButton, enableStartButton, displayUploadImagesButton,
   removeUploadedImageAfterNoneFoundError, closeMachineLearningPopUp, displayNoImagesFoundError,
   switchToChangeGeneratedLabelsView, displayEditLabelButton, hideEditLabelButton,
+  setTextElementToNotEditable,
 };

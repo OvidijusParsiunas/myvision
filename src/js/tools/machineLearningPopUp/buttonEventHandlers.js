@@ -1,6 +1,6 @@
 import { getAllImageData } from '../imageList/imageList';
 import { drawShapesViaCoordinates } from '../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getCurrentImageId, setChangingMLGeneratedLabelNamesState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeStartButton,
   disableStartButton, displayNoImagesFoundError, switchToChangeGeneratedLabelsView,
@@ -148,6 +148,7 @@ function downloadTensorflowJS() {
 
 function startMachineLearning() {
   changeGeneratedShapeLabels();
+  setChangingMLGeneratedLabelNamesState(true);
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
     drawShapesViaCoordinates();
