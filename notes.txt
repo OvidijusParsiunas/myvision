@@ -94,5 +94,5 @@ rename labellerPopUp to labellingPopUp
 
 move facadeWorkersUtils contents to a folder outside named utils
 
-are you allowed spaces in annotations?
+are you allowed spaces in annotations? if not, we will then need to start trimming the new and changed labels (including ML)
 update labelimg

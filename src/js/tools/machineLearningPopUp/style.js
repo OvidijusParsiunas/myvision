@@ -107,10 +107,13 @@ let activeTextElement = null;
 
 function displayEditLabelButton(element) {
   if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
-    element.childNodes[1].style.display = 'none';
-    element.childNodes[3].style.display = '';
     if (!editingActive) {
       element.style.backgroundColor = '#f7f7f7';
+      element.childNodes[1].style.display = 'none';
+      element.childNodes[3].style.display = '';
+    } else if (element !== activeTextRow) {
+      element.childNodes[1].style.display = 'none';
+      element.childNodes[3].style.display = '';
     }
   }
 }
@@ -121,6 +124,9 @@ function hideEditLabelButton(element) {
       element.childNodes[1].style.display = '';
       element.childNodes[3].style.display = 'none';
       element.style.backgroundColor = '';
+    } else if (element !== activeTextRow) {
+      element.childNodes[1].style.display = '';
+      element.childNodes[3].style.display = 'none';
     }
   }
 }
@@ -218,20 +224,24 @@ function setTextElementToEditable() {
   activeTextElement.contentEditable = true;
 }
 
+function setActiveRowToDefault() {
+  activeTextElement.contentEditable = false;
+  activeTextRow.style.backgroundColor = '';
+  activeTextRow.childNodes[1].style.display = '';
+  activeTextRow.childNodes[5].style.display = 'none';
+  activeTextRow.style.cursor = 'pointer';
+  editingActive = false;
+}
+
 function setTextElementToNotEditable(element) {
-  if (activeTextElement && activeTextElement !== element && activeTextElement.id !== element.id) {
-    activeTextElement.contentEditable = false;
-    activeTextRow.style.backgroundColor = '';
-    activeTextRow.childNodes[1].style.display = '';
-    activeTextRow.childNodes[3].style.display = 'none';
-    activeTextRow.style.cursor = 'pointer';
-    editingActive = false;
+  if (activeTextElement && activeTextElement !== element
+    && activeTextRow !== element) {
+    setActiveRowToDefault();
   }
 }
 
 // change the ids to use regex for number comparisons
 
-// question if space needs to be set to hython
 function editMachineLearningLabel(element) {
   activeTextRow = element;
   activeTextElement = element.childNodes[7];
@@ -239,8 +249,6 @@ function editMachineLearningLabel(element) {
   setTextElementToEditable();
   element.childNodes[5].style.display = '';
   element.childNodes[3].style.display = 'none';
-  // element.childNodes[1].style.display = 'none';
-  // element.childNodes[3].style.display = 'none';
   element.childNodes[7].addEventListener('paste', pasteHandlerOnDiv);
   // change pointer style to text edit
   element.style.cursor = 'default';
@@ -249,6 +257,65 @@ function editMachineLearningLabel(element) {
   }
   editingActive = true;
 }
+
+function getDefaultFont() {
+  const defaultSyle = window.getComputedStyle(activeTextElement, null);
+  const size = defaultSyle.getPropertyValue('font-size');
+  const fontFamily = defaultSyle.getPropertyValue('font-family');
+  return `${size} ${fontFamily}`;
+}
+
+// function scrollHorizontallyToAppropriateWidth(text) {
+//   let myCanvas = document.createElement('canvas');
+//   const context = myCanvas.getContext('2d');
+//   context.font = getDefaultFont();
+//   const metrics = context.measureText(text);
+//   if (metrics.width > 170) {
+//     labelsListOverflowParentElement.scrollLeft = metrics.width - 165;
+//   } else {
+//     labelsListOverflowParentElement.scrollLeft = 0;
+//   }
+//   myCanvas = null;
+// }
+
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+
+  // must put it in the document, otherwise sizes will be 0
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth;
+}
+
+let maxWidthAppended = false;
+
+window.MLLabelTextKeyDown = (event) => {
+  if (event.key === 'Enter') {
+    setActiveRowToDefault();
+  }
+  window.setTimeout(() => {
+    if (event.code === 'Space') {
+      const currentCaretPosition = getCaretPositionOnDiv(activeTextElement).position;
+      activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, 'h');
+      setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
+    }
+    const parentEl = document.getElementById('machine-learning-popup-names-change');
+    parentEl.style.width = `${activeTextRow.clientWidth + getScrollWidth()}px`;
+    // append the max-width later on
+    if (!maxWidthAppended && parentEl.style.width > 360) {
+      parentEl.style.maxWidth = '360px';
+      maxWidthAppended = true;
+    } else if (maxWidthAppended && parentEl.style.width < 360) {
+      // parentEl.style.maxWidth = '';
+      maxWidthAppended = false;
+    }
+  }, 0);
+};
 
 export {
   displayErrorMessage, updateProgressMessage, highlightCancelButton, editMachineLearningLabel,

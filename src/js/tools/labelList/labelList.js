@@ -600,6 +600,8 @@ window.labelTextKeyDown = (event) => {
   }, 0);
 };
 
+// need validation for empty
+
 window.labelBtnClick = (id) => {
   if (!getDefaultState()) {
     // window.cancel();
