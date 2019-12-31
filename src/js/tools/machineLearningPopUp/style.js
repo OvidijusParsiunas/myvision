@@ -157,6 +157,11 @@ function isVerticalScrollPresent() {
   return parentEl.scrollHeight > parentEl.clientHeight;
 }
 
+function isHorizontalScrollPresent() {
+  const parentEl = document.getElementById('machine-learning-popup-names-change');
+  return parentEl.scrollWidth > parentEl.clientWidth;
+}
+
 function scrollHorizontallyToAppropriateWidth(text) {
   let myCanvas = document.createElement('canvas');
   const context = myCanvas.getContext('2d');
@@ -273,6 +278,27 @@ function setTextElementToNotEditable(element) {
 
 // change the ids to use regex for number comparisons
 
+function isElementHeightFullyVisibleInParent(childElement, parentElement) {
+  const childBoundingRect = childElement.getBoundingClientRect();
+  const parentBoundingRect = parentElement.getBoundingClientRect();
+  if (childBoundingRect.top < parentBoundingRect.top) {
+    return false;
+  }
+  if ((isHorizontalScrollPresent()
+    && childBoundingRect.bottom > parentBoundingRect.bottom - getScrollWidth())
+    || (childBoundingRect.bottom > parentBoundingRect.bottom)) {
+    return false;
+  }
+  return true;
+}
+
+function scrollIntoViewIfNeeded(childElement, parentElement) {
+  if (!isElementHeightFullyVisibleInParent(childElement, parentElement)) {
+    activeTextElement.scrollIntoView();
+  }
+}
+
+
 function editMachineLearningLabel(element) {
   activeTextRow = element;
   activeTextElement = element.childNodes[7];
@@ -281,6 +307,8 @@ function editMachineLearningLabel(element) {
   element.childNodes[5].style.display = '';
   element.childNodes[3].style.display = 'none';
   element.childNodes[7].addEventListener('paste', pasteHandlerOnDiv);
+  const parentEl = document.getElementById('machine-learning-popup-names-change');
+  scrollIntoViewIfNeeded(activeTextElement, parentEl);
   // change pointer style to text edit
   element.style.cursor = 'default';
   setCaretPositionOnDiv(element.childNodes[7].innerHTML.length, element.childNodes[7]);
