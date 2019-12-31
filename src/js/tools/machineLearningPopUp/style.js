@@ -131,19 +131,49 @@ function hideEditLabelButton(element) {
   }
 }
 
-// function scrollHorizontallyToAppropriateWidth(text) {
-//   let myCanvas = document.createElement('canvas');
-//   const context = myCanvas.getContext('2d');
-//   context.font = getDefaultFont();
-//   const metrics = context.measureText(text);
-//   if (metrics.width > 170) {
-//     labelsListOverflowParentElement.scrollLeft = metrics.width - 165;
-//   } else {
-//     labelsListOverflowParentElement.scrollLeft = 0;
-//   }
-//   myCanvas = null;
-// }
+function getDefaultFont() {
+  const defaultSyle = window.getComputedStyle(activeTextElement, null);
+  const size = defaultSyle.getPropertyValue('font-size');
+  const fontFamily = defaultSyle.getPropertyValue('font-family');
+  return `${size} ${fontFamily}`;
+}
 
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+
+  // must put it in the document, otherwise sizes will be 0
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth;
+}
+
+function isVerticalScrollPresent() {
+  const parentEl = document.getElementById('machine-learning-popup-names-change');
+  return parentEl.scrollHeight > parentEl.clientHeight;
+}
+
+function scrollHorizontallyToAppropriateWidth(text) {
+  let myCanvas = document.createElement('canvas');
+  const context = myCanvas.getContext('2d');
+  context.font = getDefaultFont();
+  const metrics = context.measureText(text);
+  const parentEl = document.getElementById('machine-learning-popup-names-change');
+  let originalParentMaxWidth = 345;
+  if (isVerticalScrollPresent()) originalParentMaxWidth -= getScrollWidth();
+  if (metrics.width > originalParentMaxWidth) {
+    parentEl.scrollLeft = metrics.width - 320;
+  } else {
+    parentEl.scrollLeft = 0;
+  }
+  myCanvas = null;
+}
+
+// need validation for empty
 // replicated logic should be exported to a shared service
 function setCaretPositionOnDiv(index, contentEditableElement, space) {
   let range;
@@ -165,9 +195,9 @@ function setCaretPositionOnDiv(index, contentEditableElement, space) {
     // make it the visible selection
     range.select();
   }
-  // if (!space) {
-  //   scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML.substring(0, index));
-  // }
+  if (!space) {
+    scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML.substring(0, index));
+  }
 }
 
 function getCaretPositionOnDiv(editableDiv, paste) {
@@ -234,8 +264,9 @@ function setActiveRowToDefault() {
 }
 
 function setTextElementToNotEditable(element) {
+  const parentEl = document.getElementById('machine-learning-popup-names-change');
   if (activeTextElement && activeTextElement !== element
-    && activeTextRow !== element) {
+    && activeTextRow !== element && element !== parentEl && element.id !== activeTextElement.id) {
     setActiveRowToDefault();
   }
 }
@@ -252,44 +283,8 @@ function editMachineLearningLabel(element) {
   element.childNodes[7].addEventListener('paste', pasteHandlerOnDiv);
   // change pointer style to text edit
   element.style.cursor = 'default';
-  if (!editingActive) {
-    setCaretPositionOnDiv(element.childNodes[7].innerHTML.length, element.childNodes[7]);
-  }
+  setCaretPositionOnDiv(element.childNodes[7].innerHTML.length, element.childNodes[7]);
   editingActive = true;
-}
-
-function getDefaultFont() {
-  const defaultSyle = window.getComputedStyle(activeTextElement, null);
-  const size = defaultSyle.getPropertyValue('font-size');
-  const fontFamily = defaultSyle.getPropertyValue('font-family');
-  return `${size} ${fontFamily}`;
-}
-
-// function scrollHorizontallyToAppropriateWidth(text) {
-//   let myCanvas = document.createElement('canvas');
-//   const context = myCanvas.getContext('2d');
-//   context.font = getDefaultFont();
-//   const metrics = context.measureText(text);
-//   if (metrics.width > 170) {
-//     labelsListOverflowParentElement.scrollLeft = metrics.width - 165;
-//   } else {
-//     labelsListOverflowParentElement.scrollLeft = 0;
-//   }
-//   myCanvas = null;
-// }
-
-function getScrollWidth() {
-  // create a div with the scroll
-  const div = document.createElement('div');
-  div.style.overflowY = 'scroll';
-  div.style.width = '50px';
-  div.style.height = '50px';
-
-  // must put it in the document, otherwise sizes will be 0
-  document.body.append(div);
-  const scrollWidth = div.offsetWidth - div.clientWidth;
-  div.remove();
-  return scrollWidth;
 }
 
 let maxWidthAppended = false;
@@ -301,20 +296,21 @@ window.MLLabelTextKeyDown = (event) => {
   window.setTimeout(() => {
     if (event.code === 'Space') {
       const currentCaretPosition = getCaretPositionOnDiv(activeTextElement).position;
-      activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, 'h');
+      activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, '-');
       setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
     }
     const parentEl = document.getElementById('machine-learning-popup-names-change');
     parentEl.style.width = `${activeTextRow.clientWidth + getScrollWidth()}px`;
-    // append the max-width later on
-    if (!maxWidthAppended && parentEl.style.width > 360) {
+    if (!maxWidthAppended && parseInt(parentEl.style.width, 10) > 360) {
       parentEl.style.maxWidth = '360px';
+      parentEl.style.overflowX = 'auto';
       maxWidthAppended = true;
-    } else if (maxWidthAppended && parentEl.style.width < 360) {
-      // parentEl.style.maxWidth = '';
+    } else if (maxWidthAppended && parseInt(parentEl.style.width, 10) < 360) {
+      parentEl.style.maxWidth = '';
+      parentEl.style.overflowX = 'hidden';
       maxWidthAppended = false;
     }
-  }, 0);
+  }, 1);
 };
 
 export {
