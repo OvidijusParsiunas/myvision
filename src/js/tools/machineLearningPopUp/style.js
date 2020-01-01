@@ -268,10 +268,17 @@ function setActiveRowToDefault() {
   editingActive = false;
 }
 
+let activeTextElementInitialText = '';
+
+// label list popup does not have empty string validation but label list does
+
 function setTextElementToNotEditable(element) {
   const parentEl = document.getElementById('machine-learning-popup-names-change');
   if (activeTextElement && activeTextElement !== element
     && activeTextRow !== element && element !== parentEl && element.id !== activeTextElement.id) {
+    if (activeTextElement.innerHTML === '') {
+      activeTextElement.innerHTML = activeTextElementInitialText;
+    }
     setActiveRowToDefault();
   }
 }
@@ -298,10 +305,10 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
-
 function editMachineLearningLabel(element) {
   activeTextRow = element;
   activeTextElement = element.childNodes[7];
+  activeTextElementInitialText = element.childNodes[7].innerHTML;
   element.style.backgroundColor = '#f7f7f7';
   setTextElementToEditable();
   element.childNodes[5].style.display = '';
