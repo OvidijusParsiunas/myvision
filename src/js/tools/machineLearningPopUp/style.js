@@ -178,7 +178,6 @@ function scrollHorizontallyToAppropriateWidth(text) {
   myCanvas = null;
 }
 
-// need validation for empty
 // replicated logic should be exported to a shared service
 function setCaretPositionOnDiv(index, contentEditableElement, space) {
   let range;
@@ -259,26 +258,58 @@ function setTextElementToEditable() {
   activeTextElement.contentEditable = true;
 }
 
+let displayingRedEditButton = false;
+
+let activeTextElementInitialText = '';
+let maxWidthAppended = false;
+
+function displayInitialTextIfEmpty() {
+  if (activeTextElement.innerHTML === '') {
+    activeTextElement.innerHTML = activeTextElementInitialText;
+    window.setTimeout(() => {
+      const parentEl = document.getElementById('machine-learning-popup-names-change');
+      parentEl.style.width = `${activeTextRow.clientWidth + getScrollWidth()}px`;
+      if (!maxWidthAppended && parseInt(parentEl.style.width, 10) > 360) {
+        parentEl.style.maxWidth = '360px';
+        parentEl.style.overflowX = 'auto';
+        maxWidthAppended = true;
+      } else if (maxWidthAppended && parseInt(parentEl.style.width, 10) < 360) {
+        parentEl.style.maxWidth = '';
+        parentEl.style.overflowX = 'hidden';
+        maxWidthAppended = false;
+      }
+      editingActive = false;
+      activeTextRow = null;
+    }, 1);
+    return true;
+  }
+  return false;
+}
+
 function setActiveRowToDefault() {
+  const textReinitialised = displayInitialTextIfEmpty();
   activeTextElement.contentEditable = false;
   activeTextRow.style.backgroundColor = '';
   activeTextRow.childNodes[1].style.display = '';
-  activeTextRow.childNodes[5].style.display = 'none';
+  if (displayingRedEditButton) {
+    activeTextRow.childNodes[7].style.display = 'none';
+    displayingRedEditButton = false;
+  } else {
+    activeTextRow.childNodes[5].style.display = 'none';
+  }
   activeTextRow.style.cursor = 'pointer';
-  editingActive = false;
+  if (!textReinitialised) {
+    editingActive = false;
+    activeTextRow = null;
+  }
 }
-
-let activeTextElementInitialText = '';
 
 // label list popup does not have empty string validation but label list does
 
 function setTextElementToNotEditable(element) {
   const parentEl = document.getElementById('machine-learning-popup-names-change');
-  if (activeTextElement && activeTextElement !== element
+  if (activeTextElement && activeTextElement !== element && activeTextRow
     && activeTextRow !== element && element !== parentEl && element.id !== activeTextElement.id) {
-    if (activeTextElement.innerHTML === '') {
-      activeTextElement.innerHTML = activeTextElementInitialText;
-    }
     setActiveRowToDefault();
   }
 }
@@ -308,46 +339,53 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
 function editMachineLearningLabel(element) {
   if (element !== activeTextRow) {
     activeTextRow = element;
-    activeTextElement = element.childNodes[7];
-    activeTextElementInitialText = element.childNodes[7].innerHTML;
+    activeTextElement = element.childNodes[9];
+    activeTextElementInitialText = element.childNodes[9].innerHTML;
     element.style.backgroundColor = '#f7f7f7';
     setTextElementToEditable();
     element.childNodes[5].style.display = '';
     element.childNodes[3].style.display = 'none';
-    element.childNodes[7].addEventListener('paste', pasteHandlerOnDiv);
+    element.childNodes[9].addEventListener('paste', pasteHandlerOnDiv);
     const parentEl = document.getElementById('machine-learning-popup-names-change');
     scrollIntoViewIfNeeded(activeTextElement, parentEl);
-    // change pointer style to text edit
-    element.style.cursor = 'default';
-    setCaretPositionOnDiv(element.childNodes[7].innerHTML.length, element.childNodes[7]);
+    element.style.cursor = 'auto';
+    setCaretPositionOnDiv(element.childNodes[9].innerHTML.length, element.childNodes[9]);
     editingActive = true;
   }
 }
 
-let maxWidthAppended = false;
+function displayRedEditButtonIfTextEmpty(text) {
+  if (text === '') {
+    activeTextRow.childNodes[5].style.display = 'none';
+    activeTextRow.childNodes[7].style.display = '';
+    displayingRedEditButton = true;
+  }
+}
 
 window.MLLabelTextKeyDown = (event) => {
   if (event.key === 'Enter') {
     setActiveRowToDefault();
+  } else {
+    window.setTimeout(() => {
+      if (event.code === 'Space') {
+        const currentCaretPosition = getCaretPositionOnDiv(activeTextElement).position;
+        activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, '-');
+        setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
+      }
+      const parentEl = document.getElementById('machine-learning-popup-names-change');
+      parentEl.style.width = `${activeTextRow.clientWidth + getScrollWidth()}px`;
+      if (!maxWidthAppended && parseInt(parentEl.style.width, 10) > 360) {
+        parentEl.style.maxWidth = '360px';
+        parentEl.style.overflowX = 'auto';
+        maxWidthAppended = true;
+      } else if (maxWidthAppended && parseInt(parentEl.style.width, 10) < 360) {
+        parentEl.style.maxWidth = '';
+        parentEl.style.overflowX = 'hidden';
+        maxWidthAppended = false;
+      }
+      displayRedEditButtonIfTextEmpty(activeTextElement.innerHTML);
+    }, 1);
   }
-  window.setTimeout(() => {
-    if (event.code === 'Space') {
-      const currentCaretPosition = getCaretPositionOnDiv(activeTextElement).position;
-      activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, '-');
-      setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
-    }
-    const parentEl = document.getElementById('machine-learning-popup-names-change');
-    parentEl.style.width = `${activeTextRow.clientWidth + getScrollWidth()}px`;
-    if (!maxWidthAppended && parseInt(parentEl.style.width, 10) > 360) {
-      parentEl.style.maxWidth = '360px';
-      parentEl.style.overflowX = 'auto';
-      maxWidthAppended = true;
-    } else if (maxWidthAppended && parseInt(parentEl.style.width, 10) < 360) {
-      parentEl.style.maxWidth = '';
-      parentEl.style.overflowX = 'hidden';
-      maxWidthAppended = false;
-    }
-  }, 1);
 };
 
 export {
