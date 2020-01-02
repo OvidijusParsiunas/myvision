@@ -306,20 +306,22 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
 }
 
 function editMachineLearningLabel(element) {
-  activeTextRow = element;
-  activeTextElement = element.childNodes[7];
-  activeTextElementInitialText = element.childNodes[7].innerHTML;
-  element.style.backgroundColor = '#f7f7f7';
-  setTextElementToEditable();
-  element.childNodes[5].style.display = '';
-  element.childNodes[3].style.display = 'none';
-  element.childNodes[7].addEventListener('paste', pasteHandlerOnDiv);
-  const parentEl = document.getElementById('machine-learning-popup-names-change');
-  scrollIntoViewIfNeeded(activeTextElement, parentEl);
-  // change pointer style to text edit
-  element.style.cursor = 'default';
-  setCaretPositionOnDiv(element.childNodes[7].innerHTML.length, element.childNodes[7]);
-  editingActive = true;
+  if (element !== activeTextRow) {
+    activeTextRow = element;
+    activeTextElement = element.childNodes[7];
+    activeTextElementInitialText = element.childNodes[7].innerHTML;
+    element.style.backgroundColor = '#f7f7f7';
+    setTextElementToEditable();
+    element.childNodes[5].style.display = '';
+    element.childNodes[3].style.display = 'none';
+    element.childNodes[7].addEventListener('paste', pasteHandlerOnDiv);
+    const parentEl = document.getElementById('machine-learning-popup-names-change');
+    scrollIntoViewIfNeeded(activeTextElement, parentEl);
+    // change pointer style to text edit
+    element.style.cursor = 'default';
+    setCaretPositionOnDiv(element.childNodes[7].innerHTML.length, element.childNodes[7]);
+    editingActive = true;
+  }
 }
 
 let maxWidthAppended = false;
