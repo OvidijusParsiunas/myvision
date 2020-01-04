@@ -1,15 +1,13 @@
-import {
-  closeMachineLearningPopUp, displayEditLabelButton,
-  hideEditLabelButton, editMachineLearningLabel,
-} from './style';
+import { closeMachineLearningPopUp } from './style';
 import startMachineLearning from './buttonEventHandlers';
+import { displayHighlightedDefaultEditLabelButton, editMachineLearningLabel, displayGreyedDefaultEditLabelButton } from './changeGeneratedLabelsView';
 
 // will be handled by eventHandlers later on for more functionality
 function initialiseMachineLearningPopUp() {
   window.startMachineLearning = startMachineLearning;
   window.closeMachineLearningPopUp = closeMachineLearningPopUp;
-  window.displayMachineLearningPopUpEditLabelButton = displayEditLabelButton;
-  window.hideMachineLearningPopUpEditLabelButton = hideEditLabelButton;
+  window.displayMachineLearningPopUpEditLabelButton = displayHighlightedDefaultEditLabelButton;
+  window.hideMachineLearningPopUpEditLabelButton = displayGreyedDefaultEditLabelButton;
   window.editMachineLearningLabel = editMachineLearningLabel;
 }
 

@@ -3,8 +3,9 @@ import { drawShapesViaCoordinates } from '../toolkit/buttonClickEvents/facadeWor
 import { getCurrentImageId, setChangingMLGeneratedLabelNamesState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeStartButton,
-  disableStartButton, displayNoImagesFoundError, switchToChangeGeneratedLabelsView,
+  disableStartButton, displayNoImagesFoundError
 } from './style';
+import { switchToChangeGeneratedLabelsView } from './changeGeneratedLabelsView';
 
 let tfModel = null;
 

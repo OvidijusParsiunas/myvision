@@ -29,7 +29,7 @@ import {
 } from './iconHighlightUtils';
 import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
-import { setTextElementToNotEditable } from '../machineLearningPopUp/style';
+import { setTextElementToNotEditable } from '../machineLearningPopUp/changeGeneratedLabelsView';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
