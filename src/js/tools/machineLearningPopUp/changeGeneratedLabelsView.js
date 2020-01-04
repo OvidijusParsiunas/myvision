@@ -171,6 +171,13 @@ function setTextElementToEditable() {
   activeTextElement.contentEditable = true;
 }
 
+function setEditingStateToFalse() {
+  setTimeout(() => {
+    editingActive = false;
+    activeTextRow = null;
+  }, 1);
+}
+
 function displayInitialTextIfEmpty() {
   if (activeTextElement.innerHTML === '') {
     activeTextElement.innerHTML = activeTextElementInitialText;
@@ -185,16 +192,12 @@ function displayInitialTextIfEmpty() {
         generatedLabelsElement.style.overflowX = 'hidden';
         maxWidthStyleAppended = false;
       }
-      editingActive = false;
-      activeTextRow = null;
     }, 1);
-    return true;
   }
-  return false;
 }
 
 function setActiveRowToDefault() {
-  const textReinitialised = displayInitialTextIfEmpty();
+  displayInitialTextIfEmpty();
   activeTextElement.contentEditable = false;
   activeTextRow.style.backgroundColor = '';
   activeTextRow.childNodes[1].style.display = '';
@@ -205,10 +208,7 @@ function setActiveRowToDefault() {
     activeTextRow.childNodes[5].style.display = 'none';
   }
   activeTextRow.style.cursor = 'pointer';
-  if (!textReinitialised) {
-    editingActive = false;
-    activeTextRow = null;
-  }
+  setEditingStateToFalse();
 }
 
 // label list popup does not have empty string validation but label list does
