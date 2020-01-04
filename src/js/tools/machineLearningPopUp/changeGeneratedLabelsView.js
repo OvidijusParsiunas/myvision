@@ -6,20 +6,7 @@ let activeTextElement = null;
 let activeTextElementInitialText = '';
 let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
-
-function changePopUpDescription() {
-  descriptionElement.innerHTML = 'The following names were automatically assigned to the generated objects, you can edit them below:';
-}
-
-function identifyViewElements() {
-  descriptionElement = document.getElementById('machine-learning-popup-description');
-  generatedLabelsElement = document.getElementById('machine-learning-popup-generated-labels');
-}
-
-function switchToChangeGeneratedLabelsView() {
-  identifyViewElements();
-  changePopUpDescription();
-}
+let overflowScrollWidth = 0;
 
 function displayHighlightedDefaultEditLabelButton(element) {
   if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
@@ -47,27 +34,6 @@ function displayGreyedDefaultEditLabelButton(element) {
   }
 }
 
-function getDefaultFont() {
-  const defaultSyle = window.getComputedStyle(activeTextElement, null);
-  const size = defaultSyle.getPropertyValue('font-size');
-  const fontFamily = defaultSyle.getPropertyValue('font-family');
-  return `${size} ${fontFamily}`;
-}
-
-function getScrollWidth() {
-  // create a div with the scroll
-  const div = document.createElement('div');
-  div.style.overflowY = 'scroll';
-  div.style.width = '50px';
-  div.style.height = '50px';
-
-  // must put it in the document, otherwise sizes will be 0
-  document.body.append(div);
-  const scrollWidth = div.offsetWidth - div.clientWidth;
-  div.remove();
-  return scrollWidth;
-}
-
 function isVerticalScrollPresent() {
   return generatedLabelsElement.scrollHeight > generatedLabelsElement.clientHeight;
 }
@@ -76,13 +42,20 @@ function isHorizontalScrollPresent() {
   return generatedLabelsElement.scrollWidth > generatedLabelsElement.clientWidth;
 }
 
+function getDefaultFont() {
+  const defaultSyle = window.getComputedStyle(activeTextElement, null);
+  const size = defaultSyle.getPropertyValue('font-size');
+  const fontFamily = defaultSyle.getPropertyValue('font-family');
+  return `${size} ${fontFamily}`;
+}
+
 function scrollHorizontallyToAppropriateWidth(text) {
   let myCanvas = document.createElement('canvas');
   const context = myCanvas.getContext('2d');
   context.font = getDefaultFont();
   const metrics = context.measureText(text);
   let originalParentMaxWidth = 345;
-  if (isVerticalScrollPresent()) originalParentMaxWidth -= getScrollWidth();
+  if (isVerticalScrollPresent()) originalParentMaxWidth -= overflowScrollWidth;
   if (metrics.width > originalParentMaxWidth) {
     generatedLabelsElement.scrollLeft = metrics.width - 320;
   } else {
@@ -152,7 +125,6 @@ function preprocessPastedText(text) {
   return spacesToHythons;
 }
 
-// contains fix for paste with spaces - check it
 function pasteHandlerOnDiv(event) {
   event.stopPropagation();
   event.preventDefault();
@@ -167,7 +139,7 @@ function pasteHandlerOnDiv(event) {
   setCaretPositionOnDiv(caretPositionStart + preprocessedPastedData.length, activeTextElement);
 }
 
-function setTextElementToEditable() {
+function setTextElementContentToEditable() {
   activeTextElement.contentEditable = true;
 }
 
@@ -178,20 +150,24 @@ function setEditingStateToFalse() {
   }, 1);
 }
 
+function updateGeneratedLabelsElementWidth() {
+  generatedLabelsElement.style.width = `${activeTextRow.clientWidth + overflowScrollWidth}px`;
+  if (!maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) > 360) {
+    generatedLabelsElement.style.maxWidth = '360px';
+    generatedLabelsElement.style.overflowX = 'auto';
+    maxWidthStyleAppended = true;
+  } else if (maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) < 360) {
+    generatedLabelsElement.style.maxWidth = '';
+    generatedLabelsElement.style.overflowX = 'hidden';
+    maxWidthStyleAppended = false;
+  }
+}
+
 function displayInitialTextIfEmpty() {
   if (activeTextElement.innerHTML === '') {
     activeTextElement.innerHTML = activeTextElementInitialText;
     window.setTimeout(() => {
-      generatedLabelsElement.style.width = `${activeTextRow.clientWidth + getScrollWidth()}px`;
-      if (!maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) > 360) {
-        generatedLabelsElement.style.maxWidth = '360px';
-        generatedLabelsElement.style.overflowX = 'auto';
-        maxWidthStyleAppended = true;
-      } else if (maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) < 360) {
-        generatedLabelsElement.style.maxWidth = '';
-        generatedLabelsElement.style.overflowX = 'hidden';
-        maxWidthStyleAppended = false;
-      }
+      updateGeneratedLabelsElementWidth();
     }, 1);
   }
 }
@@ -243,7 +219,7 @@ function isElementHeightFullyVisibleInParent(childElement, parentElement) {
     return false;
   }
   if ((isHorizontalScrollPresent()
-    && childBoundingRect.bottom > parentBoundingRect.bottom - getScrollWidth())
+    && childBoundingRect.bottom > parentBoundingRect.bottom - overflowScrollWidth)
     || (childBoundingRect.bottom > parentBoundingRect.bottom)) {
     return false;
   }
@@ -256,20 +232,29 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
+function setElementStyleToActive(element) {
+  element.style.backgroundColor = '#f7f7f7';
+  setTextElementContentToEditable();
+  element.childNodes[5].style.display = '';
+  element.childNodes[1].style.display = 'none';
+  element.childNodes[3].style.display = 'none';
+  element.childNodes[9].addEventListener('paste', pasteHandlerOnDiv);
+  element.style.cursor = 'auto';
+}
+
+function setActiveElementProperties(element) {
+  activeTextRow = element;
+  activeTextElement = element.childNodes[9];
+  activeTextElementInitialText = element.childNodes[9].innerHTML;
+}
+
 function editMachineLearningLabel(element) {
   if (element !== activeTextRow) {
-    activeTextRow = element;
-    activeTextElement = element.childNodes[9];
-    activeTextElementInitialText = element.childNodes[9].innerHTML;
-    element.style.backgroundColor = '#f7f7f7';
-    setTextElementToEditable();
-    element.childNodes[5].style.display = '';
-    element.childNodes[1].style.display = 'none';
-    element.childNodes[3].style.display = 'none';
-    element.childNodes[9].addEventListener('paste', pasteHandlerOnDiv);
-    scrollIntoViewIfNeeded(activeTextElement, generatedLabelsElement);
-    element.style.cursor = 'auto';
-    setCaretPositionOnDiv(element.childNodes[9].innerHTML.length, element.childNodes[9]);
+    const textElement = element.childNodes[9];
+    setActiveElementProperties(element);
+    setElementStyleToActive(element);
+    scrollIntoViewIfNeeded(textElement, generatedLabelsElement);
+    setCaretPositionOnDiv(textElement.innerHTML.length, textElement);
     editingActive = true;
   }
 }
@@ -282,30 +267,55 @@ function displayRedEditButtonIfTextEmpty(text) {
   }
 }
 
+function postProcessSpacesInTextElement() {
+  const currentCaretPosition = getCaretPositionOnDiv(activeTextElement).position;
+  activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, '-');
+  setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
+}
+
 window.MLLabelTextKeyDown = (event) => {
   if (event.key === 'Enter') {
     setActiveRowToDefault();
   } else {
     window.setTimeout(() => {
-      if (event.code === 'Space') {
-        const currentCaretPosition = getCaretPositionOnDiv(activeTextElement).position;
-        activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, '-');
-        setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
-      }
-      generatedLabelsElement.style.width = `${activeTextRow.clientWidth + getScrollWidth()}px`;
-      if (!maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) > 360) {
-        generatedLabelsElement.style.maxWidth = '360px';
-        generatedLabelsElement.style.overflowX = 'auto';
-        maxWidthStyleAppended = true;
-      } else if (maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) < 360) {
-        generatedLabelsElement.style.maxWidth = '';
-        generatedLabelsElement.style.overflowX = 'hidden';
-        maxWidthStyleAppended = false;
-      }
+      if (event.code === 'Space') { postProcessSpacesInTextElement(); }
+      updateGeneratedLabelsElementWidth();
       displayRedEditButtonIfTextEmpty(activeTextElement.innerHTML);
     }, 1);
   }
 };
+
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+  // must put it in the document, otherwise sizes will be 0
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth;
+}
+
+function setProperties() {
+  overflowScrollWidth = getScrollWidth();
+}
+
+function changePopUpDescription() {
+  descriptionElement.innerHTML = 'The following names were automatically assigned to the generated objects, you can edit them below:';
+}
+
+function identifyViewElements() {
+  descriptionElement = document.getElementById('machine-learning-popup-description');
+  generatedLabelsElement = document.getElementById('machine-learning-popup-generated-labels');
+}
+
+function switchToChangeGeneratedLabelsView() {
+  identifyViewElements();
+  changePopUpDescription();
+  setProperties();
+}
 
 export {
   switchToChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,

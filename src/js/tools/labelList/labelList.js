@@ -234,7 +234,7 @@ function pasteHandlerOnDiv(event) {
   const preprocessedPastedData = preprocessPastedText(pastedData);
   activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.slice(0, caretPositionStart)
    + preprocessedPastedData + activeLabelTextElement.innerHTML.slice(caretPositionEnd);
-  setCaretPositionOnDiv(caretPositionStart + pastedData.length, activeLabelTextElement);
+  setCaretPositionOnDiv(caretPositionStart + preprocessedPastedData.length, activeLabelTextElement);
 }
 
 function addNewLabelToListFromPopUp(labelText, id, labelColor) {
