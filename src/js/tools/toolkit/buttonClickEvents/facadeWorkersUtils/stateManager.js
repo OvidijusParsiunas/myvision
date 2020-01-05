@@ -1,3 +1,5 @@
+// should be exported outside
+
 let defaultState = false;
 let removingPolygonPointsState = false;
 let addingPolygonPointsState = false;
@@ -18,6 +20,7 @@ let settingsPopUpOpenState = false;
 let exportDatasetsPopUpOpenState = false;
 let changingMLGeneratedLabelNamesState = false;
 let currentImageId = false;
+let labellingPopUpDisplayed = false;
 
 function getDefaultState() {
   return defaultState;
@@ -101,6 +104,10 @@ function getCurrentImageId() {
 
 function getChangingMLGeneratedLabelNamesState() {
   return changingMLGeneratedLabelNamesState;
+}
+
+function getLabellingPopUpDisplayedState() {
+  return labellingPopUpDisplayed;
 }
 
 function setDefaultState(state) {
@@ -188,6 +195,10 @@ function setChangingMLGeneratedLabelNamesState(state) {
   changingMLGeneratedLabelNamesState = state;
 }
 
+function setLabellingPopUpDisplayedState(state) {
+  labellingPopUpDisplayed = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -223,6 +234,8 @@ export {
   setRemovingPolygonPointsState,
   getExportDatasetsPopUpOpenState,
   setExportDatasetsPopUpOpenState,
+  getLabellingPopUpDisplayedState,
+  setLabellingPopUpDisplayedState,
   getLastPolygonActionWasMoveState,
   setLastPolygonActionWasMoveState,
   getNewShapeSelectedViaLabelListState,

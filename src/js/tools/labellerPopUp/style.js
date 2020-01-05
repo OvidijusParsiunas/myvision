@@ -1,7 +1,10 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
+import { setLabellingPopUpDisplayedState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 let popupLabelParentElement = null;
+let submitButtonElement = null;
+let inputElement = null;
 let labellerPopupLabelOptionsElement = null;
 let mouseProperties = {};
 let horizontalScrollPresent = false;
@@ -76,12 +79,8 @@ function windowHasScrollbar() {
   return (contentOverflows && overflowShown) || (alwaysShowScroll);
 }
 
-function getLabelPopUp() {
-  return document.getElementById('popup-label-input');
-}
-
 function getLabelPopUpText() {
-  return document.getElementById('popup-label-input').value;
+  return inputElement.value;
 }
 
 function highlightInitialLabelOptionOnInit() {
@@ -91,6 +90,7 @@ function highlightInitialLabelOptionOnInit() {
 function hideLabelPopUp() {
   lightUpWindow();
   popupLabelParentElement.style.display = 'none';
+  setLabellingPopUpDisplayedState(false);
 }
 
 function validateFullPopUpVisibile() {
@@ -100,23 +100,6 @@ function validateFullPopUpVisibile() {
   } else {
     popupLabelParentElement.style.bottom = '';
   }
-}
-
-function showLabelPopUp() {
-  dimWindow(0.5);
-  popupLabelParentElement = document.getElementById('popup-label-parent');
-  popupLabelParentElement.style.top = `${mouseProperties.clientY}px`;
-  popupLabelParentElement.style.left = `${mouseProperties.clientX}px`;
-  getLabelOptions();
-  deleteAndAddLastRowToRefreshDiv();
-  popupLabelParentElement.style.display = 'block';
-  changeTableHeightIfHorizontalScrollPresent();
-  resetLabelOptionsListScroll();
-  validateFullPopUpVisibile();
-  window.setTimeout(() => {
-    getLabelPopUp().select();
-    highlightInitialLabelOptionOnInit();
-  }, 0);
 }
 
 function initialiseLabelPopupOptionsList() {
@@ -140,6 +123,24 @@ function purgeOptionsFromLabelElement() {
   labellerPopupLabelOptionsElement.innerHTML = '';
 }
 
+function changeStyleWhenInputEmpty() {
+  submitButtonElement.style.backgroundColor = '';
+  setTimeout(() => {
+    submitButtonElement.classList.replace('popup-label-button', 'popup-label-button-disabled');
+  });
+}
+
+function changeStyleWhenInputInvalid() {
+  submitButtonElement.style.backgroundColor = '';
+}
+
+function changeStyleToAllowSubmit() {
+  submitButtonElement.style.backgroundColor = 'rgb(205, 232, 205)';
+  setTimeout(() => {
+    submitButtonElement.classList.replace('popup-label-button-disabled', 'popup-label-button');
+  });
+}
+
 function resetPopUpLabelOptions() {
   purgeOptionsFromLabelElement();
   getLabelOptions().forEach((label) => {
@@ -151,7 +152,32 @@ window.updateMouseProperties = (event) => {
   mouseProperties = event;
 };
 
+function setLocalVariables() {
+  inputElement = document.getElementById('popup-label-input');
+  submitButtonElement = document.getElementById('popup-label-submit-button');
+  popupLabelParentElement = document.getElementById('popup-label-parent');
+}
+
+function showLabelPopUp() {
+  dimWindow(0.5);
+  setLocalVariables();
+  popupLabelParentElement.style.top = `${mouseProperties.clientY}px`;
+  popupLabelParentElement.style.left = `${mouseProperties.clientX}px`;
+  getLabelOptions();
+  deleteAndAddLastRowToRefreshDiv();
+  popupLabelParentElement.style.display = 'block';
+  changeTableHeightIfHorizontalScrollPresent();
+  resetLabelOptionsListScroll();
+  validateFullPopUpVisibile();
+  setLabellingPopUpDisplayedState(true);
+  window.setTimeout(() => {
+    inputElement.select();
+    highlightInitialLabelOptionOnInit();
+  }, 0);
+}
+
 export {
-  showLabelPopUp, getLabelPopUpText, hideLabelPopUp,
-  initialiseLabelPopupOptionsList, resetPopUpLabelOptions,
+  showLabelPopUp, hideLabelPopUp, changeStyleWhenInputEmpty,
+  changeStyleWhenInputInvalid, initialiseLabelPopupOptionsList,
+  resetPopUpLabelOptions, getLabelPopUpText, changeStyleToAllowSubmit,
 };

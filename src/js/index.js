@@ -8,6 +8,7 @@ import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEv
 import { initialiseWindowLayoutSetup } from './tools/styling/styling';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageListFunctionality } from './tools/imageList/imageList';
+import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
 constructCanvas();
 initialiseLabellerPopUp();
@@ -19,3 +20,4 @@ assignPassiveEventListeners();
 initialiseWindowLayoutSetup();
 initialiseLabelListFunctionality();
 initialiseImageListFunctionality();
+registerGlobalKeyEventHandlers();

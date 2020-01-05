@@ -1,30 +1,33 @@
 import { createLabelShape, removeTargetShape, isLabelling } from './labellingProcess';
 import { resetCanvasEventsToDefault } from '../toolkit/buttonClickEvents/facade';
-import { hideLabelPopUp } from './style';
 import { getContinuousDrawingState, getLastDrawingModeState, setHasDrawnShapeState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';
 import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
+import {
+  hideLabelPopUp, changeStyleWhenInputEmpty,
+  changeStyleWhenInputInvalid, changeStyleToAllowSubmit,
+} from './style';
 
 let textInputElement = null;
-let submitButtonElement = null;
 let popupLabelOptions = null;
 let popupLabelOptionsIndex = 1;
 let currentlySelectedLabelOption = null;
 
 function changeSubmitButtonStyling() {
-  if (textInputElement.value !== '' && textInputElement.value !== 'new label') {
-    submitButtonElement.style.backgroundColor = 'rgb(205, 232, 205)';
+  if (textInputElement.value === '') {
+    changeStyleWhenInputEmpty();
+  } else if (textInputElement.value === 'new label') {
+    changeStyleWhenInputInvalid();
   } else {
-    submitButtonElement.style.backgroundColor = '';
+    changeStyleToAllowSubmit();
   }
 }
 
 function prepareLabelPopupElements() {
   textInputElement = document.getElementById('popup-label-input');
   popupLabelOptions = document.getElementById('popup-label-options');
-  submitButtonElement = document.getElementById('popup-label-submit-button');
 }
 
 function resetDrawingMode() {
@@ -42,11 +45,13 @@ function setPopupLabelOptionsIndexToZero() {
 }
 
 function labelShape() {
-  setPopupLabelOptionsIndexToZero();
-  createLabelShape();
-  setHasDrawnShapeState(true);
-  resetDrawingMode();
-  displayTickSVGOverImageThumbnail();
+  if (textInputElement.value !== '') {
+    setPopupLabelOptionsIndexToZero();
+    createLabelShape();
+    setHasDrawnShapeState(true);
+    resetDrawingMode();
+    displayTickSVGOverImageThumbnail();
+  }
 }
 
 function cancelLabellingProcess() {
@@ -86,9 +91,7 @@ function setCaretPosition(caretPos) {
 }
 
 function inputKeyDown(event) {
-  if (event.key === 'Enter') {
-    labelShape();
-  } else {
+  if (event.key !== 'Enter') {
     window.setTimeout(() => {
       if (event.code === 'Space') {
         const initialCaretLocation = textInputElement.selectionStart;

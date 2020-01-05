@@ -187,8 +187,6 @@ function setActiveRowToDefault() {
   setEditingStateToFalse();
 }
 
-// label list popup does not have empty string validation but label list does
-
 function isElementTheCurrentlyActiveTextElement(element) {
   return activeTextElement && activeTextElement !== element;
 }
@@ -298,7 +296,7 @@ function getScrollWidth() {
   return scrollWidth;
 }
 
-function setProperties() {
+function setLocalVariables() {
   overflowScrollWidth = getScrollWidth();
 }
 
@@ -314,7 +312,7 @@ function identifyViewElements() {
 function switchToChangeGeneratedLabelsView() {
   identifyViewElements();
   changePopUpDescription();
-  setProperties();
+  setLocalVariables();
 }
 
 export {
