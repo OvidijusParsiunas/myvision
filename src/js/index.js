@@ -1,6 +1,6 @@
 import { constructCanvas } from './canvas/canvas';
 import initialiseLabellerPopUp from './tools/labellerPopUp/buttons';
-import initialiseMachineLearningPopUp from './tools/machineLearningPopUp/buttons';
+import { initialiseMachineLearningPopUp } from './tools/machineLearningPopUp/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/toolkit/buttonClickEvents/facadeWorkersUtils/exportDatasetsPopup/buttonClickEvents';
 import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/buttonClickEvents';
 import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';

@@ -4,7 +4,8 @@ module.exports = {
       "linebreak-style": 0,
       "no-underscore-dangle": 0,
       "no-param-reassign": 0,
-      "import/no-unresolved": [2, {ignore: ['fabric']}]
+      "import/no-unresolved": [2, {ignore: ['fabric']}],
+      "prefer-destructuring": ["error",{"object": true, "array": false}],
     },
     "env": {
       "browser": true

@@ -2,10 +2,9 @@ import { setDefaultImageThumbnailHighlightToMLSelected, getAllImageData, setDefa
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBoxesWithMachineLearning, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
-import { resetCanvasEventsToDefault } from '../../facade';
+import initiateResetCanvasEventsToDefaultEvent from '../../facadeWorkers/resetCanvasEventsToDefaultWorker';
 import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { resetPopUpLabelOptions } from '../../../../labellerPopUp/style';
-import { setPopupLabelOptionsIndexToZero } from '../../../../labellerPopUp/buttonEventHandlers';
 import { getCurrentImageId } from '../stateManager';
 import { removeBoundingBox } from '../../facadeWorkers/removeActiveShapeWorker';
 import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/allShapes';
@@ -106,12 +105,11 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
   generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
     currentlySelectedImageId, isUsingMachineLearning);
-  // only execute these two if new shapes have been created
+  // only execute this if new shapes have been created
   resetPopUpLabelOptions();
-  setPopupLabelOptionsIndexToZero();
 
   setDefaultCursorMode(canvas);
-  resetCanvasEventsToDefault();
+  initiateResetCanvasEventsToDefaultEvent(canvas);
 
   // check bugs with label list options order after ML
   // check how fast the labelling is, what if the user cancels half way through,

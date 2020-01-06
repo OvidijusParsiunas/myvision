@@ -1,6 +1,6 @@
 import { addSingleImageToList, addImageFromMultiUploadToList } from '../../../../imageList/imageList';
 import { onImageLoad } from './drawImageOnCanvas';
-import { removeUploadedImageAfterNoneFoundError } from '../../../../machineLearningPopUp/style';
+import { removeUploadedImageAfterNoneFoundError } from '../../../../machineLearningPopUp/views/initiateMachineLearning/style';
 
 function onFileLoad(imageMetaData, e) {
   const image = new Image();

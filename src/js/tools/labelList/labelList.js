@@ -29,7 +29,7 @@ import {
 } from './iconHighlightUtils';
 import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
-import { setTextElementToNotEditable } from '../machineLearningPopUp/changeGeneratedLabelsView';
+import { setTextElementToNotEditable } from '../machineLearningPopUp/views/changeGeneratedLabelsView/style';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -637,6 +637,7 @@ window.labelBtnClick = (id) => {
   }
 };
 
+// needs to be exported to global key events
 window.onmousedown = (event) => {
   if (isEditingLabel) {
     if (event.target.matches('.labelDropdownOption')) {
@@ -672,6 +673,7 @@ window.onmousedown = (event) => {
       settingsPopupElement.style.display = 'none';
       setSettingsPopUpOpenState(false);
     }
+    // needs to call a function in button events in the changeGeneratedLabelsView
   } else if (getChangingMLGeneratedLabelNamesState()) {
     setTextElementToNotEditable(event.target);
   }

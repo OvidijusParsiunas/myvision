@@ -1,5 +1,3 @@
-let generatedLabelsElement = null;
-let descriptionElement = null;
 let editingActive = false;
 let activeTextRow = null;
 let activeTextElement = null;
@@ -7,6 +5,9 @@ let activeTextElementInitialText = '';
 let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
+
+let generatedLabelsElement = null;
+let descriptionElement = null;
 
 function displayHighlightedDefaultEditLabelButton(element) {
   if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
@@ -257,8 +258,8 @@ function editMachineLearningLabel(element) {
   }
 }
 
-function displayRedEditButtonIfTextEmpty(text) {
-  if (text === '') {
+function displayRedEditButtonIfActiveTextEmpty() {
+  if (activeTextElement.innerHTML === '') {
     activeTextRow.childNodes[5].style.display = 'none';
     activeTextRow.childNodes[7].style.display = '';
     displayingRedEditButton = true;
@@ -270,18 +271,6 @@ function postProcessSpacesInTextElement() {
   activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, '-');
   setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
 }
-
-window.MLLabelTextKeyDown = (event) => {
-  if (event.key === 'Enter') {
-    setActiveRowToDefault();
-  } else {
-    window.setTimeout(() => {
-      if (event.code === 'Space') { postProcessSpacesInTextElement(); }
-      updateGeneratedLabelsElementWidth();
-      displayRedEditButtonIfTextEmpty(activeTextElement.innerHTML);
-    }, 1);
-  }
-};
 
 function getScrollWidth() {
   // create a div with the scroll
@@ -304,18 +293,20 @@ function changePopUpDescription() {
   descriptionElement.innerHTML = 'The following names were automatically assigned to the generated objects, you can edit them below:';
 }
 
-function identifyViewElements() {
+function assignChangeGeneratedLabelsViewLocalVariables() {
   descriptionElement = document.getElementById('machine-learning-popup-description');
   generatedLabelsElement = document.getElementById('machine-learning-popup-generated-labels');
 }
 
-function switchToChangeGeneratedLabelsView() {
-  identifyViewElements();
+function displayChangeGeneratedLabelsView() {
   changePopUpDescription();
   setLocalVariables();
 }
 
 export {
-  switchToChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,
-  displayGreyedDefaultEditLabelButton, editMachineLearningLabel, setTextElementToNotEditable,
+  setActiveRowToDefault, displayRedEditButtonIfActiveTextEmpty,
+  displayGreyedDefaultEditLabelButton, editMachineLearningLabel,
+  updateGeneratedLabelsElementWidth, postProcessSpacesInTextElement,
+  assignChangeGeneratedLabelsViewLocalVariables, setTextElementToNotEditable,
+  displayChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,
 };

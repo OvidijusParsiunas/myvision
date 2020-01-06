@@ -12,7 +12,7 @@ import {
 
 let textInputElement = null;
 let popupLabelOptions = null;
-let popupLabelOptionsIndex = 1;
+let oneOrMoreLabelsAdded = false;
 let currentlySelectedLabelOption = null;
 
 function changeSubmitButtonStyling() {
@@ -40,17 +40,13 @@ function resetDrawingMode() {
   }
 }
 
-function setPopupLabelOptionsIndexToZero() {
-  popupLabelOptionsIndex = 0;
-}
-
 function labelShape() {
   if (textInputElement.value !== '') {
-    setPopupLabelOptionsIndexToZero();
     createLabelShape();
     setHasDrawnShapeState(true);
     resetDrawingMode();
     displayTickSVGOverImageThumbnail();
+    oneOrMoreLabelsAdded = true;
   }
 }
 
@@ -90,6 +86,14 @@ function setCaretPosition(caretPos) {
   return false;
 }
 
+function getPopupLabelOptionsList() {
+  if (!oneOrMoreLabelsAdded && popupLabelOptions.childNodes[1]) {
+    oneOrMoreLabelsAdded = true;
+    return popupLabelOptions.childNodes[1].childNodes;
+  }
+  return popupLabelOptions.childNodes[0].childNodes;
+}
+
 function inputKeyDown(event) {
   if (event.key !== 'Enter') {
     window.setTimeout(() => {
@@ -102,7 +106,7 @@ function inputKeyDown(event) {
         currentlySelectedLabelOption.style.backgroundColor = '';
         currentlySelectedLabelOption.id = '';
       }
-      const popupLabelOptionsList = popupLabelOptions.childNodes[popupLabelOptionsIndex].childNodes;
+      const popupLabelOptionsList = getPopupLabelOptionsList();
       for (let i = 0; i < popupLabelOptionsList.length; i += 1) {
         if (popupLabelOptionsList[i].childNodes[0].childNodes[0].childNodes[0].innerHTML
             === textInputElement.value) {
@@ -133,6 +137,6 @@ function pasteLabelText() {
 }
 
 export {
-  selectLabelOption, prepareLabelPopupElements, cancelLabellingProcess,
-  labelShape, pasteLabelText, inputKeyDown, setPopupLabelOptionsIndexToZero,
+  labelShape, inputKeyDown, cancelLabellingProcess,
+  selectLabelOption, prepareLabelPopupElements, pasteLabelText,
 };

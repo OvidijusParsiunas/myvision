@@ -296,6 +296,23 @@
   color: red;
 }
 
+.machine-learning-popup-label-name-change-icon {
+  width: 8px;
+  margin-top: 5px;
+  float: left;
+}
+
+.machine-learning-popup-label-name-change-input {
+  margin-left: 12px;
+  outline: none;
+  white-space: pre;
+  padding-right: 5px
+}
+
+.reverse-icon {
+  transform: scale(-1, 1);
+}
+
 #left-side-bar {
   width: 57px;
   padding-top: 9px;
