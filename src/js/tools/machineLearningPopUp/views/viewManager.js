@@ -4,13 +4,18 @@ import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMa
 import registerChangeGeneratedLabelsViewButtonEventHandlers from './changeGeneratedLabelsView/buttonEvents';
 
 let currentViewNumber = 1;
+let machineLearningData = {};
 
 function hideMachineLearningPopUp() {
   // dim
   // prepare initial view
 }
 
-function nextView() {
+function setMachineLearningData(machineLearningDataArg) {
+  machineLearningData = machineLearningDataArg;
+}
+
+function displayNextView() {
   switch (currentViewNumber) {
     case 1:
       // display initial view
@@ -18,10 +23,11 @@ function nextView() {
       currentViewNumber += 1;
       break;
     case 2:
-      displayChangeGeneratedLabelsView();
+      displayChangeGeneratedLabelsView(machineLearningData);
       currentViewNumber += 1;
       break;
     case 3:
+      // call coordinates
       // displaythirdview
       currentViewNumber += 1;
       break;
@@ -31,14 +37,14 @@ function nextView() {
 }
 
 function displayMachineLearningPopUp() {
-  nextView();
+  displayNextView();
 }
 
 function initialiseMachineLearningPopUp() {
-  nextView();
-  registerInitiateMachineLearningViewButtonEventHandlers(nextView);
+  displayNextView();
+  registerInitiateMachineLearningViewButtonEventHandlers(displayNextView, setMachineLearningData);
   assignInitiateMachineLearningViewLocalVariables();
-  registerChangeGeneratedLabelsViewButtonEventHandlers(nextView);
+  registerChangeGeneratedLabelsViewButtonEventHandlers(displayNextView);
   assignChangeGeneratedLabelsViewLocalVariables();
 }
 

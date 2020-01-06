@@ -298,7 +298,8 @@ function assignChangeGeneratedLabelsViewLocalVariables() {
   generatedLabelsElement = document.getElementById('machine-learning-popup-generated-labels');
 }
 
-function displayChangeGeneratedLabelsView() {
+function displayChangeGeneratedLabelsView(generatedObjects) {
+  console.log(generatedObjects);
   changePopUpDescription();
   setLocalVariables();
 }

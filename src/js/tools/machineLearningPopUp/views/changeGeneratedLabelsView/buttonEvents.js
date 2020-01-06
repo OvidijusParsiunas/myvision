@@ -16,7 +16,13 @@ function MLLabelTextKeyDown(event) {
   }
 }
 
+// function next() {
+//   const labelsObject = getLabelsObject()
+//   nextViewCallback(labelsObject);
+// }
+
 function registerButtonEventHandlers(nextViewCallback) {
+  // need to send back the object so could start populating
   // window.next = nextViewCallback;
   window.MLLabelTextKeyDown = MLLabelTextKeyDown;
   window.displayMachineLearningPopUpEditLabelButton = displayHighlightedDefaultEditLabelButton;
