@@ -296,13 +296,34 @@
   color: red;
 }
 
-.machine-learning-popup-label-name-change-icon {
+#machine-learning-popup-generated-labels {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 97px;
+}
+
+#machine-learning-popup-generated-labels-table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.machine-learning-popup-generated-labels-row {
+  padding-left: 5px;
+  padding-right: 1px;
+  cursor: pointer;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.machine-learning-popup-generated-labels-edit-icon {
   width: 8px;
   margin-top: 5px;
   float: left;
 }
 
-.machine-learning-popup-label-name-change-input {
+.machine-learning-popup-generated-labels-input {
   margin-left: 12px;
   outline: none;
   white-space: pre;

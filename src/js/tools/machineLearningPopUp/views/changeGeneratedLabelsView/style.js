@@ -6,7 +6,8 @@ let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
 
-let generatedLabelsElement = null;
+let generatedLabelsParentElement = null;
+let generatedLabelsTableElement = null;
 let descriptionElement = null;
 
 function displayHighlightedDefaultEditLabelButton(element) {
@@ -36,11 +37,11 @@ function displayGreyedDefaultEditLabelButton(element) {
 }
 
 function isVerticalScrollPresent() {
-  return generatedLabelsElement.scrollHeight > generatedLabelsElement.clientHeight;
+  return generatedLabelsParentElement.scrollHeight > generatedLabelsParentElement.clientHeight;
 }
 
 function isHorizontalScrollPresent() {
-  return generatedLabelsElement.scrollWidth > generatedLabelsElement.clientWidth;
+  return generatedLabelsParentElement.scrollWidth > generatedLabelsParentElement.clientWidth;
 }
 
 function getDefaultFont() {
@@ -58,9 +59,9 @@ function scrollHorizontallyToAppropriateWidth(text) {
   let originalParentMaxWidth = 345;
   if (isVerticalScrollPresent()) originalParentMaxWidth -= overflowScrollWidth;
   if (metrics.width > originalParentMaxWidth) {
-    generatedLabelsElement.scrollLeft = metrics.width - 320;
+    generatedLabelsParentElement.scrollLeft = metrics.width - 320;
   } else {
-    generatedLabelsElement.scrollLeft = 0;
+    generatedLabelsParentElement.scrollLeft = 0;
   }
   myCanvas = null;
 }
@@ -152,14 +153,14 @@ function setEditingStateToFalse() {
 }
 
 function updateGeneratedLabelsElementWidth() {
-  generatedLabelsElement.style.width = `${activeTextRow.clientWidth + overflowScrollWidth}px`;
-  if (!maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) > 360) {
-    generatedLabelsElement.style.maxWidth = '360px';
-    generatedLabelsElement.style.overflowX = 'auto';
+  generatedLabelsParentElement.style.width = `${activeTextRow.clientWidth + overflowScrollWidth}px`;
+  if (!maxWidthStyleAppended && parseInt(generatedLabelsParentElement.style.width, 10) > 360) {
+    generatedLabelsParentElement.style.maxWidth = '360px';
+    generatedLabelsParentElement.style.overflowX = 'auto';
     maxWidthStyleAppended = true;
-  } else if (maxWidthStyleAppended && parseInt(generatedLabelsElement.style.width, 10) < 360) {
-    generatedLabelsElement.style.maxWidth = '';
-    generatedLabelsElement.style.overflowX = 'hidden';
+  } else if (maxWidthStyleAppended && parseInt(generatedLabelsParentElement.style.width, 10) < 360) {
+    generatedLabelsParentElement.style.maxWidth = '';
+    generatedLabelsParentElement.style.overflowX = 'hidden';
     maxWidthStyleAppended = false;
   }
 }
@@ -197,7 +198,7 @@ function isElementTheCurrentlyActiveTextRow(element) {
 }
 
 function isElementTheGeneratedLabelsElement(element) {
-  return element !== generatedLabelsElement;
+  return element !== generatedLabelsParentElement;
 }
 
 function setTextElementToNotEditable(element) {
@@ -237,7 +238,6 @@ function setElementStyleToActive(element) {
   element.childNodes[5].style.display = '';
   element.childNodes[1].style.display = 'none';
   element.childNodes[3].style.display = 'none';
-  element.childNodes[9].addEventListener('paste', pasteHandlerOnDiv);
   element.style.cursor = 'auto';
 }
 
@@ -252,7 +252,7 @@ function editMachineLearningLabel(element) {
     const textElement = element.childNodes[9];
     setActiveElementProperties(element);
     setElementStyleToActive(element);
-    scrollIntoViewIfNeeded(textElement, generatedLabelsElement);
+    scrollIntoViewIfNeeded(textElement, generatedLabelsParentElement);
     setCaretPositionOnDiv(textElement.innerHTML.length, textElement);
     editingActive = true;
   }
@@ -285,6 +285,45 @@ function getScrollWidth() {
   return scrollWidth;
 }
 
+function createLabelElementMarkup(labelText, id) {
+  return `
+    <div class="machine-learning-popup-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningPopUpEditLabelButton(this)" onMouseLeave="hideMachineLearningPopUpEditLabelButton(this)">
+      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" src="edit-disabled.svg" alt="edit">
+      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" id="MLLabelEditButton${id}" style="display: none" src="edit.svg" alt="edit">
+      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" id="MLLabelEditButton${id}" style="display: none" src="edit.svg" alt="edit">
+      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" id="MLLabelEditButton${id}" style="display: none" src="edit-red.svg" alt="edit">
+      <div id="MLLabelEditButton${id}" class="machine-learning-popup-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)">${labelText}</div>
+    </div>
+  `;
+}
+
+function generateRowsInTable(generatedObjects) {
+  for (let i = 0; i < generatedObjects.length; i += 1) {
+    const newRow = generatedLabelsTableElement.insertRow(-1);
+    const cell = newRow.insertCell(0);
+    cell.innerHTML = createLabelElementMarkup(generatedObjects[i], i);
+  }
+}
+
+function getUnqiueValue(generatedObjects) {
+  const uniqueGeneratedLabelsArray = [];
+  Object.keys(generatedObjects).forEach((key) => {
+    const predictions = generatedObjects[key];
+    for (let i = 0; i < predictions.length; i += 1) {
+      if (uniqueGeneratedLabelsArray.indexOf(predictions[i].class) === -1) {
+        uniqueGeneratedLabelsArray.push(predictions[i].class);
+      }
+    }
+  });
+  return uniqueGeneratedLabelsArray;
+}
+
+function populateGeneratedLabelsTable(generatedObjects) {
+  const uniqueValuesArray = getUnqiueValue(generatedObjects);
+  // traverse the unique names object to populate table
+  generateRowsInTable(uniqueValuesArray);
+}
+
 function setLocalVariables() {
   overflowScrollWidth = getScrollWidth();
 }
@@ -295,13 +334,14 @@ function changePopUpDescription() {
 
 function assignChangeGeneratedLabelsViewLocalVariables() {
   descriptionElement = document.getElementById('machine-learning-popup-description');
-  generatedLabelsElement = document.getElementById('machine-learning-popup-generated-labels');
+  generatedLabelsParentElement = document.getElementById('machine-learning-popup-generated-labels');
+  generatedLabelsTableElement = document.getElementById('machine-learning-popup-generated-labels-table');
 }
 
 function displayChangeGeneratedLabelsView(generatedObjects) {
-  console.log(generatedObjects);
-  changePopUpDescription();
   setLocalVariables();
+  changePopUpDescription();
+  populateGeneratedLabelsTable(generatedObjects);
 }
 
 export {

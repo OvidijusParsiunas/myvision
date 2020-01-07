@@ -18,10 +18,13 @@ function MLLabelTextKeyDown(event) {
 
 // function next() {
 //   const labelsObject = getLabelsObject()
-//   nextViewCallback(labelsObject);
+//   setMachineLearningData(labelsObject);
+//   nextViewCallback();
 // }
 
-function registerButtonEventHandlers(nextViewCallback) {
+function registerButtonEventHandlers(nextViewCallback, setMachineLearningData) {
+  // should be generatedLabelsEditView
+
   // need to send back the object so could start populating
   // window.next = nextViewCallback;
   window.MLLabelTextKeyDown = MLLabelTextKeyDown;

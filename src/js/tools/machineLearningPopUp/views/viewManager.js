@@ -44,7 +44,7 @@ function initialiseMachineLearningPopUp() {
   displayNextView();
   registerInitiateMachineLearningViewButtonEventHandlers(displayNextView, setMachineLearningData);
   assignInitiateMachineLearningViewLocalVariables();
-  registerChangeGeneratedLabelsViewButtonEventHandlers(displayNextView);
+  registerChangeGeneratedLabelsViewButtonEventHandlers(displayNextView, setMachineLearningData);
   assignChangeGeneratedLabelsViewLocalVariables();
 }
 
