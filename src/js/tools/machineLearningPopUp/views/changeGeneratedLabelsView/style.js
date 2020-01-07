@@ -5,6 +5,7 @@ let activeTextElementInitialText = '';
 let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
+let lastGeneratedUniqueLabelNames = [];
 
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
@@ -175,8 +176,23 @@ function displayInitialTextIfEmpty() {
   }
 }
 
-function setActiveRowToDefault() {
+function getLastDigitFromText(text) {
+  if (text.match(/\d+$/)) {
+    return text.match(/\d+$/)[0];
+  }
+  return -1;
+}
+
+function setNewLabelName() {
+  if (activeTextElement.innerHTML !== activeTextElementInitialText) {
+    const activeTextElementIdNumber = getLastDigitFromText(activeTextElement.id);
+    lastGeneratedUniqueLabelNames[activeTextElementIdNumber] = activeTextElement.innerHTML;
+  }
+}
+
+function stopEditingActiveTextElement() {
   displayInitialTextIfEmpty();
+  setNewLabelName();
   activeTextElement.contentEditable = false;
   activeTextRow.style.backgroundColor = '';
   activeTextRow.childNodes[1].style.display = '';
@@ -190,25 +206,28 @@ function setActiveRowToDefault() {
   setEditingStateToFalse();
 }
 
-function isElementTheCurrentlyActiveTextElement(element) {
+function isElementNotTheCurrentlyActiveTextElement(element) {
   return activeTextElement && activeTextElement !== element;
 }
 
-function isElementTheCurrentlyActiveTextRow(element) {
+function isElementNotTheCurrentlyActiveTextRow(element) {
   return activeTextRow && activeTextRow !== element;
 }
 
-function isElementIdTheGeneratedLabelsElementId(element) {
-  const elementIdNumber = element.id.match(/\d+$/)[0];
-  const activeTextElementIdNumber = activeTextElement.id.match(/\d+$/)[0];
-  return elementIdNumber !== activeTextElementIdNumber;
+function isElementIdNotTheGeneratedLabelsElementId(element) {
+  if (element.id.startsWith('MLLabel')) {
+    const elementIdNumber = getLastDigitFromText(element.id);
+    const activeTextElementIdNumber = getLastDigitFromText(activeTextElement.id);
+    return elementIdNumber !== activeTextElementIdNumber;
+  }
+  return true;
 }
 
-function setTextElementToNotEditable(element) {
-  if (isElementTheCurrentlyActiveTextElement(element)
-    && isElementTheCurrentlyActiveTextRow(element)
-    && isElementIdTheGeneratedLabelsElementId(element)) {
-    setActiveRowToDefault();
+function stopEditingMLGeneratedLabelName(element) {
+  if (isElementNotTheCurrentlyActiveTextElement(element)
+    && isElementNotTheCurrentlyActiveTextRow(element)
+    && isElementIdNotTheGeneratedLabelsElementId(element)) {
+    stopEditingActiveTextElement();
   }
 }
 
@@ -297,30 +316,30 @@ function createLabelElementMarkup(labelText, id) {
   `;
 }
 
-function generateRowsInTable(generatedObjects) {
-  for (let i = 0; i < generatedObjects.length; i += 1) {
+function generateTableRows(uniqueLabelNames) {
+  for (let i = 0; i < uniqueLabelNames.length; i += 1) {
     const newRow = generatedLabelsTableElement.insertRow(-1);
     const cell = newRow.insertCell(0);
-    cell.innerHTML = createLabelElementMarkup(generatedObjects[i], i);
+    cell.innerHTML = createLabelElementMarkup(uniqueLabelNames[i], i);
   }
 }
 
-function getUnqiueValue(generatedObjects) {
-  const uniqueGeneratedLabelsArray = [];
+function getUniqueLabelNames(generatedObjects) {
+  const uniqueLabelNames = [];
   Object.keys(generatedObjects).forEach((key) => {
     const predictions = generatedObjects[key];
     for (let i = 0; i < predictions.length; i += 1) {
-      if (uniqueGeneratedLabelsArray.indexOf(predictions[i].class) === -1) {
-        uniqueGeneratedLabelsArray.push(predictions[i].class);
+      if (uniqueLabelNames.indexOf(predictions[i].class) === -1) {
+        uniqueLabelNames.push(predictions[i].class);
       }
     }
   });
-  return uniqueGeneratedLabelsArray;
+  return uniqueLabelNames;
 }
 
 function populateGeneratedLabelsTable(generatedObjects) {
-  const uniqueValuesArray = getUnqiueValue(generatedObjects);
-  generateRowsInTable(uniqueValuesArray);
+  lastGeneratedUniqueLabelNames = getUniqueLabelNames(generatedObjects);
+  generateTableRows(lastGeneratedUniqueLabelNames);
 }
 
 function setLocalVariables() {
@@ -346,7 +365,7 @@ function displayChangeGeneratedLabelsView(generatedObjects) {
 export {
   displayGreyedDefaultEditLabelButton, editMachineLearningLabel,
   updateGeneratedLabelsElementWidth, postProcessSpacesInTextElement,
-  assignChangeGeneratedLabelsViewLocalVariables, setTextElementToNotEditable,
+  assignChangeGeneratedLabelsViewLocalVariables, stopEditingMLGeneratedLabelName,
   displayChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,
-  setActiveRowToDefault, displayRedEditButtonIfActiveTextEmpty, MLLabelTextPaste,
+  stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty, MLLabelTextPaste,
 };
