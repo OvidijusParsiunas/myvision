@@ -1,5 +1,5 @@
 import {
-  postProcessSpacesInTextElement, updateGeneratedLabelsElementWidth,
+  postProcessSpacesInTextElement, updateGeneratedLabelsElementWidth, MLLabelTextPaste,
   displayHighlightedDefaultEditLabelButton, displayRedEditButtonIfActiveTextEmpty,
   displayGreyedDefaultEditLabelButton, editMachineLearningLabel, setActiveRowToDefault,
 } from './style';
@@ -28,6 +28,7 @@ function registerButtonEventHandlers(nextViewCallback, setMachineLearningData) {
   // need to send back the object so could start populating
   // window.next = nextViewCallback;
   window.MLLabelTextKeyDown = MLLabelTextKeyDown;
+  window.MLLabelTextPaste = MLLabelTextPaste;
   window.displayMachineLearningPopUpEditLabelButton = displayHighlightedDefaultEditLabelButton;
   window.hideMachineLearningPopUpEditLabelButton = displayGreyedDefaultEditLabelButton;
   window.editMachineLearningLabel = editMachineLearningLabel;

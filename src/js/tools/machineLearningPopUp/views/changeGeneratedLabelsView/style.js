@@ -127,7 +127,7 @@ function preprocessPastedText(text) {
   return spacesToHythons;
 }
 
-function pasteHandlerOnDiv(event) {
+function MLLabelTextPaste(event) {
   event.stopPropagation();
   event.preventDefault();
   const clipboardData = event.clipboardData || window.clipboardData;
@@ -158,7 +158,8 @@ function updateGeneratedLabelsElementWidth() {
     generatedLabelsParentElement.style.maxWidth = '360px';
     generatedLabelsParentElement.style.overflowX = 'auto';
     maxWidthStyleAppended = true;
-  } else if (maxWidthStyleAppended && parseInt(generatedLabelsParentElement.style.width, 10) < 360) {
+  } else if (maxWidthStyleAppended
+    && parseInt(generatedLabelsParentElement.style.width, 10) < 360) {
     generatedLabelsParentElement.style.maxWidth = '';
     generatedLabelsParentElement.style.overflowX = 'hidden';
     maxWidthStyleAppended = false;
@@ -197,15 +198,14 @@ function isElementTheCurrentlyActiveTextRow(element) {
   return activeTextRow && activeTextRow !== element;
 }
 
-function isElementTheGeneratedLabelsElement(element) {
-  return element !== generatedLabelsParentElement;
+function isElementIdTheGeneratedLabelsElementId(element) {
+  return element.id !== activeTextElement.id;
 }
 
 function setTextElementToNotEditable(element) {
   if (isElementTheCurrentlyActiveTextElement(element)
     && isElementTheCurrentlyActiveTextRow(element)
-    && isElementTheGeneratedLabelsElement(element)
-    && element.id !== activeTextElement.id) {
+    && isElementIdTheGeneratedLabelsElementId(element)) {
     setActiveRowToDefault();
   }
 }
@@ -292,7 +292,7 @@ function createLabelElementMarkup(labelText, id) {
       <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" id="MLLabelEditButton${id}" style="display: none" src="edit.svg" alt="edit">
       <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" id="MLLabelEditButton${id}" style="display: none" src="edit.svg" alt="edit">
       <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" id="MLLabelEditButton${id}" style="display: none" src="edit-red.svg" alt="edit">
-      <div id="MLLabelEditButton${id}" class="machine-learning-popup-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)">${labelText}</div>
+      <div id="MLLabelEditButton${id}" class="machine-learning-popup-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
     </div>
   `;
 }
@@ -345,9 +345,9 @@ function displayChangeGeneratedLabelsView(generatedObjects) {
 }
 
 export {
-  setActiveRowToDefault, displayRedEditButtonIfActiveTextEmpty,
   displayGreyedDefaultEditLabelButton, editMachineLearningLabel,
   updateGeneratedLabelsElementWidth, postProcessSpacesInTextElement,
   assignChangeGeneratedLabelsViewLocalVariables, setTextElementToNotEditable,
   displayChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,
+  setActiveRowToDefault, displayRedEditButtonIfActiveTextEmpty, MLLabelTextPaste,
 };
