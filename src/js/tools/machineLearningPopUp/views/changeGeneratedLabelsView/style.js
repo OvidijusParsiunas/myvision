@@ -199,7 +199,9 @@ function isElementTheCurrentlyActiveTextRow(element) {
 }
 
 function isElementIdTheGeneratedLabelsElementId(element) {
-  return element.id !== activeTextElement.id;
+  const elementIdNumber = element.id.match(/\d+$/)[0];
+  const activeTextElementIdNumber = activeTextElement.id.match(/\d+$/)[0];
+  return elementIdNumber !== activeTextElementIdNumber;
 }
 
 function setTextElementToNotEditable(element) {
@@ -209,8 +211,6 @@ function setTextElementToNotEditable(element) {
     setActiveRowToDefault();
   }
 }
-
-// change the ids to use regex for number comparisons
 
 function isElementHeightFullyVisibleInParent(childElement, parentElement) {
   const childBoundingRect = childElement.getBoundingClientRect();
@@ -289,10 +289,10 @@ function createLabelElementMarkup(labelText, id) {
   return `
     <div class="machine-learning-popup-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningPopUpEditLabelButton(this)" onMouseLeave="hideMachineLearningPopUpEditLabelButton(this)">
       <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" src="edit-disabled.svg" alt="edit">
-      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" id="MLLabelEditButton${id}" style="display: none" src="edit.svg" alt="edit">
-      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" id="MLLabelEditButton${id}" style="display: none" src="edit.svg" alt="edit">
-      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" id="MLLabelEditButton${id}" style="display: none" src="edit-red.svg" alt="edit">
-      <div id="MLLabelEditButton${id}" class="machine-learning-popup-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
+      <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" style="display: none" src="edit.svg" alt="edit">
+      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" style="display: none" src="edit.svg" alt="edit">
+      <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-red.svg" alt="edit">
+      <div id="MLLabelText${id}" class="machine-learning-popup-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
     </div>
   `;
 }
@@ -320,7 +320,6 @@ function getUnqiueValue(generatedObjects) {
 
 function populateGeneratedLabelsTable(generatedObjects) {
   const uniqueValuesArray = getUnqiueValue(generatedObjects);
-  // traverse the unique names object to populate table
   generateRowsInTable(uniqueValuesArray);
 }
 
