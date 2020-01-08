@@ -23,7 +23,11 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 2:
-      displayChangeGeneratedLabelsView(machineLearningData);
+      if (!machineLearningData) {
+        displayChangeGeneratedLabelsView(machineLearningData);
+      } else {
+        displayChangeGeneratedLabelsView(machineLearningData);
+      }
       currentViewNumber += 1;
       break;
     case 3:
@@ -42,6 +46,7 @@ function displayMachineLearningPopUp() {
 
 function initialiseMachineLearningPopUp() {
   displayNextView();
+  // no new names generated view
   registerInitiateMachineLearningViewButtonEventHandlers(displayNextView, setMachineLearningData);
   assignInitiateMachineLearningViewLocalVariables();
   registerChangeGeneratedLabelsViewButtonEventHandlers(displayNextView, setMachineLearningData);

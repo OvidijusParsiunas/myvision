@@ -356,10 +356,17 @@ function assignChangeGeneratedLabelsViewLocalVariables() {
   generatedLabelsTableElement = document.getElementById('machine-learning-popup-generated-labels-table');
 }
 
+function updateGeneratedLabelsParentElementWidthOnStartup() {
+  activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[1].childNodes[1];
+  updateGeneratedLabelsElementWidth();
+  activeTextRow = null;
+}
+
 function displayChangeGeneratedLabelsView(generatedObjects) {
   setLocalVariables();
   changePopUpDescription();
   populateGeneratedLabelsTable(generatedObjects);
+  updateGeneratedLabelsParentElementWidthOnStartup();
 }
 
 export {

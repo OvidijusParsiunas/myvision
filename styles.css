@@ -330,6 +330,12 @@
   padding-right: 5px
 }
 
+#machine-learning-popup-generated-labels-next-button {
+  margin-top: 5px;
+  padding-top: 6px;
+  width: 46px;
+}
+
 .reverse-icon {
   transform: scale(-1, 1);
 }
