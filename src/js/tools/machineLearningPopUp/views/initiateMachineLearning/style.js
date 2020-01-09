@@ -1,33 +1,34 @@
 let isUploadImagesButtonDisplayed = false;
 let isNoImagesFoundErrorDisplayed = false;
 
-let buttonsElement = null;
 let submitButtonElement = null;
 let cancelButtonElement = null;
 let errorMessagesElement = null;
 let progressMessagesElement = null;
 let toolkitUploadImagesButton = null;
+let buttonsGroupElement = null;
+let initiateMachineLearningParentElement = null;
 
 function removeErrorMessage() {
   errorMessagesElement.innerHTML = '';
-  buttonsElement.style.marginTop = '12px';
+  buttonsGroupElement.style.marginTop = '14px';
 }
 
 function removeProgressMessage() {
   progressMessagesElement.innerHTML = '';
-  buttonsElement.style.marginTop = '12px';
+  buttonsGroupElement.style.marginTop = '14px';
 }
 
 function displayErrorMessage(errorMessage) {
   removeProgressMessage();
   errorMessagesElement.innerHTML = errorMessage;
-  buttonsElement.style.marginTop = '5px';
+  buttonsGroupElement.style.marginTop = '7px';
 }
 
 function updateProgressMessage(progressMessage) {
   removeErrorMessage();
   progressMessagesElement.innerHTML = progressMessage;
-  buttonsElement.style.marginTop = '5px';
+  buttonsGroupElement.style.marginTop = '7px';
 }
 
 function removeStartButton() {
@@ -86,11 +87,16 @@ function removeUploadedImageAfterNoneFoundError() {
 
 function assignInitiateMachineLearningViewLocalVariables() {
   toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
-  buttonsElement = document.getElementById('machine-learning-popup-buttons');
   submitButtonElement = document.getElementById('machine-learning-popup-submit-button');
   cancelButtonElement = document.getElementById('machine-learning-popup-cancel-button');
   errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
   progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
+  buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
+  initiateMachineLearningParentElement = document.getElementById('machine-learning-popup-initiate-machine-learning');
+}
+
+function hideInitiateMachineLearningViewAssets() {
+  initiateMachineLearningParentElement.style.display = 'none';
 }
 
 function prepareInstantiateMachineLearningView() {
@@ -103,4 +109,5 @@ export {
   removeUploadedImageAfterNoneFoundError, closeMachineLearningPopUp,
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
+  hideInitiateMachineLearningViewAssets,
 };

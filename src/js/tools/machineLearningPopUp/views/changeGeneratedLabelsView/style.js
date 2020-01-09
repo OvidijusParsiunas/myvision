@@ -9,7 +9,9 @@ let lastGeneratedUniqueLabelNames = [];
 
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
+let generatedLabelsOuterContainerElement = null;
 let descriptionElement = null;
+let buttonsGroupElement = null;
 
 function displayHighlightedDefaultEditLabelButton(element) {
   if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
@@ -337,6 +339,20 @@ function getUniqueLabelNames(generatedObjects) {
   return uniqueLabelNames;
 }
 
+function calculateContainerDivHeight() {
+  const numberOfRows = lastGeneratedUniqueLabelNames.length;
+  const baseHeight = numberOfRows > 1 ? 104 : 114;
+  const numberOfVisibleRows = numberOfRows > 5 ? 5 : numberOfRows;
+  const newHeight = baseHeight + numberOfVisibleRows * 10;
+  return `${newHeight}px`;
+}
+
+function displayElements() {
+  buttonsGroupElement.style.display = '';
+  generatedLabelsOuterContainerElement.style.display = '';
+  generatedLabelsOuterContainerElement.style.height = calculateContainerDivHeight();
+}
+
 function populateGeneratedLabelsTable(generatedObjects) {
   lastGeneratedUniqueLabelNames = getUniqueLabelNames(generatedObjects);
   generateTableRows(lastGeneratedUniqueLabelNames);
@@ -354,10 +370,12 @@ function assignChangeGeneratedLabelsViewLocalVariables() {
   descriptionElement = document.getElementById('machine-learning-popup-description');
   generatedLabelsParentElement = document.getElementById('machine-learning-popup-generated-labels');
   generatedLabelsTableElement = document.getElementById('machine-learning-popup-generated-labels-table');
+  buttonsGroupElement = document.getElementById('machine-learning-popup-generated-labels-buttons');
+  generatedLabelsOuterContainerElement = document.getElementById('machine-learning-popup-generated-labels-outer-container');
 }
 
 function updateGeneratedLabelsParentElementWidthOnStartup() {
-  activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[1].childNodes[1];
+  activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[1].childNodes[0];
   updateGeneratedLabelsElementWidth();
   activeTextRow = null;
 }
@@ -366,6 +384,7 @@ function displayChangeGeneratedLabelsView(generatedObjects) {
   setLocalVariables();
   changePopUpDescription();
   populateGeneratedLabelsTable(generatedObjects);
+  displayElements(generatedObjects);
   updateGeneratedLabelsParentElementWidthOnStartup();
 }
 

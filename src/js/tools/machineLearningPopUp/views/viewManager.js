@@ -1,5 +1,5 @@
 import { displayChangeGeneratedLabelsView, assignChangeGeneratedLabelsViewLocalVariables } from './changeGeneratedLabelsView/style';
-import { assignInitiateMachineLearningViewLocalVariables } from './initiateMachineLearning/style';
+import { assignInitiateMachineLearningViewLocalVariables, hideInitiateMachineLearningViewAssets } from './initiateMachineLearning/style';
 import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
 import registerChangeGeneratedLabelsViewButtonEventHandlers from './changeGeneratedLabelsView/buttonEvents';
 
@@ -26,6 +26,7 @@ function displayNextView() {
       if (!machineLearningData) {
         displayChangeGeneratedLabelsView(machineLearningData);
       } else {
+        hideInitiateMachineLearningViewAssets();
         displayChangeGeneratedLabelsView(machineLearningData);
       }
       currentViewNumber += 1;

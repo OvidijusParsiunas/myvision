@@ -296,10 +296,23 @@
   color: red;
 }
 
+#machine-learning-popup-generated-labels-outer-container {
+  position: relative;
+  height: 152px;
+}
+
+#machine-learning-popup-generated-labels-inner-container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 #machine-learning-popup-generated-labels {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 97px;
@@ -333,7 +346,12 @@
 #machine-learning-popup-generated-labels-next-button {
   margin-top: 5px;
   padding-top: 6px;
+  margin-left: 3px;
   width: 46px;
+}
+
+#machine-learning-popup-generated-labels-buttons {
+  margin-top: 8px;
 }
 
 .reverse-icon {
