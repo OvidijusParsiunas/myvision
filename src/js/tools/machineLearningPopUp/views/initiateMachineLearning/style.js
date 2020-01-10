@@ -31,6 +31,18 @@ function updateProgressMessage(progressMessage) {
   buttonsGroupElement.style.marginTop = '7px';
 }
 
+function displayContinueButton() {
+  submitButtonElement.innerHTML = 'Next';
+  submitButtonElement.style.display = '';
+  submitButtonElement.style.width = '55px';
+  submitButtonElement.style.marginLeft = '3px';
+  document.getElementById('machine-learning-popup-description').style.marginBottom = '4px';
+}
+
+function removeCancelButton() {
+  cancelButtonElement.style.display = 'none';
+}
+
 function removeStartButton() {
   submitButtonElement.style.display = 'none';
 }
@@ -97,6 +109,7 @@ function assignInitiateMachineLearningViewLocalVariables() {
 
 function hideInitiateMachineLearningViewAssets() {
   initiateMachineLearningParentElement.style.display = 'none';
+  progressMessagesElement.style.display = 'none';
 }
 
 function prepareInstantiateMachineLearningView() {
@@ -109,5 +122,5 @@ export {
   removeUploadedImageAfterNoneFoundError, closeMachineLearningPopUp,
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
-  hideInitiateMachineLearningViewAssets,
+  hideInitiateMachineLearningViewAssets, displayContinueButton, removeCancelButton,
 };

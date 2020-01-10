@@ -2,8 +2,8 @@ import { getAllImageData } from '../../../imageList/imageList';
 import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId, setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
-  displayErrorMessage, updateProgressMessage, removeStartButton,
-  disableStartButton, displayNoImagesFoundError
+  displayErrorMessage, updateProgressMessage, removeStartButton, removeCancelButton,
+  disableStartButton, displayNoImagesFoundError, displayContinueButton,
 } from './style';
 
 let tfModel = null;
@@ -67,7 +67,8 @@ function changeGeneratedShapeLabels(doneCallback, setMachineLearningData) {
   });
 }
 
-function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId, doneCallback) {
+function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
+  doneCallback, setMachineLearningData) {
   Promise.all(promisesArray)
     .catch(() => {
       // if stopstate = true
@@ -83,6 +84,12 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
       for (let i = 0; i < predictions.length; i += 1) {
         predictedImageCoordinates[predictionIdToImageId[i]] = predictions[i];
       }
+      console.log('called');
+      
+      // setMachineLearningData(predictedImageCoordinates);
+      // doneCallback();
+      displayContinueButton();
+      removeCancelButton();
       drawShapesViaCoordinates(predictedImageCoordinates);
       updateProgressMessage('Finished!');
       // timeout here and then move to next, or use a different callback to style.js and
@@ -95,7 +102,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
 
 // decided not to store generated shapes because if you have 100 images with
 // 100s of shapes, it would lead to significant memory usage
-function makePredictionsForAllImages(doneCallback) {
+function makePredictionsForAllImages(doneCallback, setMachineLearningData) {
   const predictPromises = [];
   const allImageData = getAllImageData();
   const predictionIdToImageId = [];
@@ -110,7 +117,8 @@ function makePredictionsForAllImages(doneCallback) {
       predictionIdToImageId.push(i);
     }
   }
-  executeAndRecordPredictionResults(predictPromises, predictionIdToImageId, doneCallback);
+  executeAndRecordPredictionResults(predictPromises, predictionIdToImageId,
+    doneCallback, setMachineLearningData);
 }
 
 function loadModel() {
@@ -138,7 +146,7 @@ function downloadCOCOSSD() {
 function downloadTensorflowJS() {
   return new Promise((resolve, reject) => {
     // loading spinner, maybe something funky with ML?
-    disableStartButton();
+    // disableStartButton();
     updateProgressMessage('In Progress...');
     removeStartButton();
     const tensorflowJSScript = document.createElement('script');
@@ -150,22 +158,21 @@ function downloadTensorflowJS() {
 }
 
 function startMachineLearning(doneCallback, setMachineLearningData) {
-  changeGeneratedShapeLabels(doneCallback, setMachineLearningData);
+  // changeGeneratedShapeLabels(doneCallback, setMachineLearningData);
   setChangingMLGeneratedLabelNamesState(true);
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
-    drawShapesViaCoordinates();
-    // if (!tfModel) {
-    //   downloadTensorflowJS()
-    //     .then(() => downloadCOCOSSD())
-    //     .then(() => loadModel())
-    //     .then(() => makePredictionsForAllImages(doneCallback))
-    //     .catch(() => errorHandler());
-    // } else {
-    //   makePredictionsForAllImages(doneCallback);
-    // }
+    if (!tfModel) {
+      downloadTensorflowJS()
+        .then(() => downloadCOCOSSD())
+        .then(() => loadModel())
+        .then(() => makePredictionsForAllImages(doneCallback, setMachineLearningData))
+        .catch(() => errorHandler());
+    } else {
+      makePredictionsForAllImages(doneCallback, setMachineLearningData);
+    }
   } else {
-    // displayNoImagesFoundError();
+    displayNoImagesFoundError();
   }
 }
 
