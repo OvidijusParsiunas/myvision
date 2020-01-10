@@ -3,7 +3,7 @@ import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/fac
 import { getCurrentImageId, setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeStartButton, removeCancelButton,
-  disableStartButton, displayNoImagesFoundError, displayContinueButton,
+  disableStartButton, displayNoImagesFoundError, displayContinueButton, displayLoaderWheel,
 } from './style';
 
 let tfModel = null;
@@ -147,7 +147,7 @@ function downloadTensorflowJS() {
   return new Promise((resolve, reject) => {
     // loading spinner, maybe something funky with ML?
     // disableStartButton();
-    updateProgressMessage('In Progress...');
+    displayLoaderWheel();
     removeStartButton();
     const tensorflowJSScript = document.createElement('script');
     tensorflowJSScript.onload = resolve;

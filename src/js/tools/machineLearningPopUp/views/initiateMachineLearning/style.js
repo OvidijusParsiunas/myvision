@@ -1,12 +1,15 @@
 let isUploadImagesButtonDisplayed = false;
 let isNoImagesFoundErrorDisplayed = false;
 
+let loaderWheelElement = null;
+let descriptionElement = null;
+let buttonsGroupElement = null;
 let submitButtonElement = null;
 let cancelButtonElement = null;
 let errorMessagesElement = null;
 let progressMessagesElement = null;
 let toolkitUploadImagesButton = null;
-let buttonsGroupElement = null;
+
 let initiateMachineLearningParentElement = null;
 
 function removeErrorMessage() {
@@ -27,8 +30,15 @@ function displayErrorMessage(errorMessage) {
 
 function updateProgressMessage(progressMessage) {
   removeErrorMessage();
+  progressMessagesElement.style.display = '';
   progressMessagesElement.innerHTML = progressMessage;
   buttonsGroupElement.style.marginTop = '7px';
+}
+
+function displayLoaderWheel() {
+  loaderWheelElement.style.display = '';
+  cancelButtonElement.style.marginRight = '3px';
+  descriptionElement.style.marginBottom = '0px';
 }
 
 function displayContinueButton() {
@@ -36,7 +46,7 @@ function displayContinueButton() {
   submitButtonElement.style.display = '';
   submitButtonElement.style.width = '55px';
   submitButtonElement.style.marginLeft = '3px';
-  document.getElementById('machine-learning-popup-description').style.marginBottom = '4px';
+  descriptionElement.style.marginBottom = '4px';
 }
 
 function removeCancelButton() {
@@ -99,11 +109,13 @@ function removeUploadedImageAfterNoneFoundError() {
 
 function assignInitiateMachineLearningViewLocalVariables() {
   toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
+  loaderWheelElement = document.getElementById('machinelearning-popup-loader-wheel');
+  descriptionElement = document.getElementById('machine-learning-popup-description');
   submitButtonElement = document.getElementById('machine-learning-popup-submit-button');
   cancelButtonElement = document.getElementById('machine-learning-popup-cancel-button');
+  buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
   errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
   progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
-  buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
   initiateMachineLearningParentElement = document.getElementById('machine-learning-popup-initiate-machine-learning');
 }
 
@@ -113,7 +125,8 @@ function hideInitiateMachineLearningViewAssets() {
 }
 
 function prepareInstantiateMachineLearningView() {
-
+  descriptionElement.style.marginBottom = '10px';
+  cancelButtonElement.style.marginRight = '';
 }
 
 export {
@@ -123,4 +136,5 @@ export {
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
   hideInitiateMachineLearningViewAssets, displayContinueButton, removeCancelButton,
+  displayLoaderWheel,
 };
