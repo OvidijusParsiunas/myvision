@@ -47,7 +47,7 @@ function displayLoaderWheel() {
   removeErrorMessage();
   loaderWheelElement.style.display = '';
   cancelButtonElement.style.marginRight = '3px';
-  descriptionElement.style.marginBottom = '0px';
+  descriptionElement.style.marginBottom = '3px';
 }
 
 function removeLoaderWheel() {
@@ -65,8 +65,30 @@ function removeCancelButton() {
   cancelButtonElement.style.display = 'none';
 }
 
+function displayStartButton() {
+  submitButtonElement.style.display = '';
+}
+
 function removeStartButton() {
   submitButtonElement.style.display = 'none';
+}
+
+function replaceCancelButtonGreyClassToOriginal() {
+  cancelButtonElement.classList.replace('popup-dimmed-cancel-button', 'popup-cancel-button');
+  cancelButtonElement.removeEventListener('mouseover', replaceCancelButtonGreyClassToOriginal);
+}
+
+function disableImmediateCancelButtonHoverEffect() {
+  cancelButtonElement.classList.replace('popup-cancel-button', 'popup-dimmed-cancel-button');
+  setTimeout(() => {
+    cancelButtonElement.addEventListener('mouseover', replaceCancelButtonGreyClassToOriginal);
+  }, 100);
+}
+
+function changeToLoadingStyle() {
+  disableImmediateCancelButtonHoverEffect();
+  displayLoaderWheel();
+  removeStartButton();
 }
 
 function disableStartButton() {
@@ -138,17 +160,31 @@ function hideInitiateMachineLearningViewAssets() {
   descriptionElement.style.marginBottom = '';
 }
 
+function getDefaultDescriptionMarkup() {
+  return `
+    You can use a pre-trained Machine Learning model to automatically annotate objects with bounding boxes!
+    <!-- You can use a pre-trained Machine Learning model to automate the process of object annotation with bounding boxes! -->
+    <br>
+    Click 'Start' to download the 'COCO-SSD' model and use it to generate bounding boxes for your images.
+    <br>
+    In addition, because this model operates locally on the browser, your data will never leave the privacy of your computer.`;
+}
+
 function prepareInstantiateMachineLearningView() {
   descriptionElement.style.marginBottom = '';
+  descriptionElement.innerHTML = getDefaultDescriptionMarkup();
   cancelButtonElement.style.marginRight = '';
+  displayStartButton();
+  removeLoaderWheel();
 }
 
 export {
+  displayLoaderWheel, removeLoaderWheel, displayErrorButtons,
+  hideInitiateMachineLearningViewAssets, displayContinueButton,
+  changeToLoadingStyle, removeCancelButton, removeErrorButtons,
   removeStartButton, disableStartButton, displayNoImagesFoundError,
   prepareInstantiateMachineLearningView, displayUploadImagesButton,
   removeUploadedImageAfterNoneFoundError, closeMachineLearningPopUp,
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
-  hideInitiateMachineLearningViewAssets, displayContinueButton, removeCancelButton,
-  displayLoaderWheel, removeLoaderWheel, displayErrorButtons, removeErrorButtons,
 };

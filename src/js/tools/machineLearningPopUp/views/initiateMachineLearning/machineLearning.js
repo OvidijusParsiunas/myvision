@@ -2,12 +2,16 @@ import { getAllImageData } from '../../../imageList/imageList';
 import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId, setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
-  displayErrorMessage, updateProgressMessage, removeStartButton, removeCancelButton,
-  disableStartButton, displayNoImagesFoundError, displayContinueButton, displayLoaderWheel,
+  displayErrorMessage, updateProgressMessage, removeCancelButton,
+  displayNoImagesFoundError, displayContinueButton,
   removeLoaderWheel, displayErrorButtons, removeErrorButtons,
+  changeToLoadingStyle,
 } from './style';
 
 let tfModel = null;
+let isInProgress = false;
+let isCancelled = false;
+let modelLoadingInitiated = false;
 const tensorflowJSScript = { element: document.createElement('script'), status: { download: 'waiting' } };
 const cocoSSDScript = { element: document.createElement('script'), status: { download: 'waiting' } };
 
@@ -15,6 +19,7 @@ function errorHandler() {
   removeLoaderWheel();
   displayErrorMessage('ERROR! Please try again later.');
   displayErrorButtons();
+  isInProgress = false;
 }
 
 const predictedImageCoordinates = {};
@@ -57,15 +62,6 @@ function predict(image) {
 // be updated with shapes
 
 // can cancel on 2 parts, 1 in getting the script, 2 in predicting
-
-
-
-
-// TO-DO - cancel (can test it using wrong URLS)
-
-
-
-
 
 function changeGeneratedShapeLabels(doneCallback, setMachineLearningData) {
   const predictionsObject = {"0":[{"bbox":[0.23196187615394592,1.3171005249023438,282.11527583003044,337.3044550418854],"class":"cat","score":0.8860134482383728}],"1":[{"bbox":[16.03703498840332,194.2115306854248,1113.8134002685547,482.022762298584],"class":"car","score":0.9936941266059875},{"bbox":[1233.7510585784912,1169.7566986083984,1080.3159713745117,385.3567123413086],"class":"car","score":0.9841077327728271},{"bbox":[96.5882420539856,1009.1146469116211,1040.1406645774841,506.1511993408203],"class":"truck","score":0.9241188764572144},{"bbox":[1270.0901985168457,110.06307601928711,1079.1927337646484,524.1976737976074],"class":"car","score":0.8551244735717773}]};
@@ -112,6 +108,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
         drawShapesViaCoordinates(predictedImageCoordinates);
         updateProgressMessage('Finished!');
       }
+      isInProgress = false;
       // timeout here and then move to next, or use a different callback to style.js and
       // display a button (with registered handler) to continue and call doneCallback
     });
@@ -148,17 +145,24 @@ function markScriptDownloadSuccessfull(status) {
 function loadModel(status) {
   markScriptDownloadSuccessfull(status);
   return new Promise((resolve, reject) => {
+    if (isCancelled) return;
     const { cocoSsd } = window;
-    cocoSsd.load().then((model) => {
-      tfModel = model;
-      resolve();
-    }).catch(() => {
-      reject();
-    });
+    if (!modelLoadingInitiated) {
+      modelLoadingInitiated = true;
+      cocoSsd.load().then((model) => {
+        tfModel = model;
+        if (isCancelled) return;
+        resolve();
+      }).catch(() => {
+        modelLoadingInitiated = false;
+        reject();
+      });
+    }
   });
 }
 
 function downloadScript({ element, status }, url, resolve, reject) {
+  if (isCancelled) return;
   if (status.download === 'complete') {
     resolve(status);
     return;
@@ -183,8 +187,6 @@ function downloadCOCOSSD(status) {
 
 function downloadTensorflowJS() {
   return new Promise((resolve, reject) => {
-    displayLoaderWheel();
-    removeStartButton();
     downloadScript(tensorflowJSScript, 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs',
       resolve, reject);
   });
@@ -192,11 +194,14 @@ function downloadTensorflowJS() {
 
 function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
   if (retry) { removeErrorButtons(); }
+  if (isCancelled) { isCancelled = false; }
   // changeGeneratedShapeLabels(doneCallback, setMachineLearningData);
   setChangingMLGeneratedLabelNamesState(true);
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
     if (!tfModel) {
+      changeToLoadingStyle();
+      isInProgress = true;
       downloadTensorflowJS()
         .then(resultScriptStatus => downloadCOCOSSD(resultScriptStatus))
         .then(resultScriptStatus => loadModel(resultScriptStatus))
@@ -210,4 +215,13 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
   }
 }
 
-export { startMachineLearning as default };
+function cancelMachineLearning() {
+  console.log('called');
+  isCancelled = true;
+}
+
+function getProgressStatus() {
+  return isInProgress;
+}
+
+export { startMachineLearning, getProgressStatus, cancelMachineLearning };

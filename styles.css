@@ -197,6 +197,14 @@
   background-color: #d65e5e !important;
 }
 
+.popup-dimmed-cancel-button {
+  margin-left: 3px;
+}
+
+.popup-dimmed-cancel-button:hover {
+  background-color: #e4bebe !important;
+}
+
 #export-labels-popup-parent {
   position: absolute;
   background-color: white;
