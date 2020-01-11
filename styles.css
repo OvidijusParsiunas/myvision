@@ -268,16 +268,16 @@
   width: 392px;
 }
 
+#machine-learning-popup-title {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
 #machine-learning-popup-description {
   margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
   width: 360px;
-}
-
-#machine-learning-popup-title {
-  margin-top: 5px;
-  margin-left: 10px;
 }
 
 .machine-learning-popup-messages {
@@ -288,12 +288,17 @@
   margin-bottom: 5px;
 }
 
+#machine-learning-popup-error-messages {
+  color: red;
+}
+
 #machine-learning-popup-buttons {
   margin-top: 12px;
 }
 
-#machine-learning-popup-error-messages {
-  color: red;
+#machine-learning-popup-initiate-next-button {
+  width: 57px;
+  margin-left: 3px;
 }
 
 #machine-learning-popup-generated-labels-outer-container {
@@ -343,11 +348,11 @@
   padding-right: 5px
 }
 
-#machine-learning-popup-generated-labels-next-button {
+#machine-learning-popup-generated-labels-submit-button {
   margin-top: 5px;
   padding-top: 6px;
   margin-left: 3px;
-  width: 46px;
+  width: 57px;
 }
 
 #machine-learning-popup-generated-labels-buttons {

@@ -1,6 +1,7 @@
 let isUploadImagesButtonDisplayed = false;
 let isNoImagesFoundErrorDisplayed = false;
 
+let nextButtonElement = null;
 let loaderWheelElement = null;
 let descriptionElement = null;
 let buttonsGroupElement = null;
@@ -14,12 +15,10 @@ let initiateMachineLearningParentElement = null;
 
 function removeErrorMessage() {
   errorMessagesElement.innerHTML = '';
-  buttonsGroupElement.style.marginTop = '14px';
 }
 
 function removeProgressMessage() {
   progressMessagesElement.innerHTML = '';
-  buttonsGroupElement.style.marginTop = '14px';
 }
 
 function displayErrorMessage(errorMessage) {
@@ -32,7 +31,6 @@ function updateProgressMessage(progressMessage) {
   removeErrorMessage();
   progressMessagesElement.style.display = '';
   progressMessagesElement.innerHTML = progressMessage;
-  buttonsGroupElement.style.marginTop = '7px';
 }
 
 function displayLoaderWheel() {
@@ -41,12 +39,15 @@ function displayLoaderWheel() {
   descriptionElement.style.marginBottom = '0px';
 }
 
+function removeLoaderWheel() {
+  loaderWheelElement.style.display = 'none';
+  cancelButtonElement.style.marginRight = '';
+  descriptionElement.style.marginBottom = '';
+}
+
 function displayContinueButton() {
-  submitButtonElement.innerHTML = 'Next';
-  submitButtonElement.style.display = '';
-  submitButtonElement.style.width = '55px';
-  submitButtonElement.style.marginLeft = '3px';
-  descriptionElement.style.marginBottom = '4px';
+  nextButtonElement.style.display = '';
+  descriptionElement.style.marginBottom = '5px';
 }
 
 function removeCancelButton() {
@@ -111,8 +112,9 @@ function assignInitiateMachineLearningViewLocalVariables() {
   toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
   loaderWheelElement = document.getElementById('machinelearning-popup-loader-wheel');
   descriptionElement = document.getElementById('machine-learning-popup-description');
-  submitButtonElement = document.getElementById('machine-learning-popup-submit-button');
-  cancelButtonElement = document.getElementById('machine-learning-popup-cancel-button');
+  submitButtonElement = document.getElementById('machine-learning-popup-initiate-start-button');
+  nextButtonElement = document.getElementById('machine-learning-popup-initiate-next-button');
+  cancelButtonElement = document.getElementById('machine-learning-popup-initiate-cancel-button');
   buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
   errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
   progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
@@ -122,10 +124,11 @@ function assignInitiateMachineLearningViewLocalVariables() {
 function hideInitiateMachineLearningViewAssets() {
   initiateMachineLearningParentElement.style.display = 'none';
   progressMessagesElement.style.display = 'none';
+  descriptionElement.style.marginBottom = '';
 }
 
 function prepareInstantiateMachineLearningView() {
-  descriptionElement.style.marginBottom = '10px';
+  descriptionElement.style.marginBottom = '';
   cancelButtonElement.style.marginRight = '';
 }
 
@@ -136,5 +139,5 @@ export {
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
   hideInitiateMachineLearningViewAssets, displayContinueButton, removeCancelButton,
-  displayLoaderWheel,
+  displayLoaderWheel, removeLoaderWheel,
 };

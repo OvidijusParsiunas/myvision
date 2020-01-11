@@ -54,13 +54,14 @@
         <br>
         In addition, because this model operates locally on the browser, your data will never leave the privacy of your computer.
       </div>
-      <div id="machine-learning-popup-progress-messages" class="machine-learning-popup-messages" style="display: none"></div>
-      <div id="machinelearning-popup-loader-wheel" class="loader-wheel" style="display: none"></div>
+      <div id="machine-learning-popup-progress-messages" style="display: none" class="machine-learning-popup-messages"></div>
+      <div id="machinelearning-popup-loader-wheel" style="display: none" class="loader-wheel" ></div>
       <div id="machine-learning-popup-error-messages" class="machine-learning-popup-messages"></div>
       <div id="machine-learning-popup-initiate-machine-learning">
         <div id="machine-learning-popup-initiate-machine-learning-buttons" class="popup-label-buttons">
-            <div id="machine-learning-popup-submit-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
-            <div id="machine-learning-popup-cancel-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningPopUp()">Cancel</div>
+            <div id="machine-learning-popup-initiate-start-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
+            <div id="machine-learning-popup-initiate-next-button" style="display: none" class="popup-label-button popup-submit-button" onclick="changeInitiateMLToNextView()">Next</div>
+            <div id="machine-learning-popup-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningPopUp()">Cancel</div>
           </div>
       </div>
       <div id="machine-learning-popup-generated-labels-outer-container" style="display: none">
@@ -126,7 +127,7 @@
               </table>
             </div>
             <div id="machine-learning-popup-generated-labels-buttons" class="popup-label-buttons">
-              <div id="machine-learning-popup-generated-labels-next-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Next</div>
+              <div id="machine-learning-popup-generated-labels-submit-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Submit</div>
             </div>
           </div>
         </div>
