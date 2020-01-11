@@ -4,13 +4,17 @@ import { getCurrentImageId, setChangingMLGeneratedLabelNamesState } from '../../
 import {
   displayErrorMessage, updateProgressMessage, removeStartButton, removeCancelButton,
   disableStartButton, displayNoImagesFoundError, displayContinueButton, displayLoaderWheel,
-  removeLoaderWheel,
+  removeLoaderWheel, displayErrorButtons, removeErrorButtons,
 } from './style';
 
 let tfModel = null;
+const tensorflowJSScript = { element: document.createElement('script'), status: { download: 'waiting' } };
+const cocoSSDScript = { element: document.createElement('script'), status: { download: 'waiting' } };
 
 function errorHandler() {
+  removeLoaderWheel();
   displayErrorMessage('ERROR! Please try again later.');
+  displayErrorButtons();
 }
 
 const predictedImageCoordinates = {};
@@ -54,6 +58,15 @@ function predict(image) {
 
 // can cancel on 2 parts, 1 in getting the script, 2 in predicting
 
+
+
+
+// TO-DO - cancel (can test it using wrong URLS)
+
+
+
+
+
 function changeGeneratedShapeLabels(doneCallback, setMachineLearningData) {
   const predictionsObject = {"0":[{"bbox":[0.23196187615394592,1.3171005249023438,282.11527583003044,337.3044550418854],"class":"cat","score":0.8860134482383728}],"1":[{"bbox":[16.03703498840332,194.2115306854248,1113.8134002685547,482.022762298584],"class":"car","score":0.9936941266059875},{"bbox":[1233.7510585784912,1169.7566986083984,1080.3159713745117,385.3567123413086],"class":"car","score":0.9841077327728271},{"bbox":[96.5882420539856,1009.1146469116211,1040.1406645774841,506.1511993408203],"class":"truck","score":0.9241188764572144},{"bbox":[1270.0901985168457,110.06307601928711,1079.1927337646484,524.1976737976074],"class":"car","score":0.8551244735717773}]};
   setMachineLearningData(predictionsObject);
@@ -68,9 +81,12 @@ function changeGeneratedShapeLabels(doneCallback, setMachineLearningData) {
   });
 }
 
+function isObjectEmpty(object) {
+  return Object.keys(object).length === 0 && object.constructor === Object;
+}
 
 function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
-  setMachineLearningData) {
+  nextViewCallback, setMachineLearningData) {
   Promise.all(promisesArray)
     .catch(() => {
       // if stopstate = true
@@ -86,13 +102,16 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
       for (let i = 0; i < predictions.length; i += 1) {
         predictedImageCoordinates[predictionIdToImageId[i]] = predictions[i];
       }
-      // setMachineLearningData(predictedImageCoordinates);
-      // doneCallback();
+      setMachineLearningData(predictedImageCoordinates);
       removeLoaderWheel();
       removeCancelButton();
-      displayContinueButton();
-      drawShapesViaCoordinates(predictedImageCoordinates);
-      updateProgressMessage('Finished!');
+      if (isObjectEmpty(predictedImageCoordinates)) {
+        nextViewCallback();
+      } else {
+        displayContinueButton();
+        drawShapesViaCoordinates(predictedImageCoordinates);
+        updateProgressMessage('Finished!');
+      }
       // timeout here and then move to next, or use a different callback to style.js and
       // display a button (with registered handler) to continue and call doneCallback
     });
@@ -103,7 +122,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
 
 // decided not to store generated shapes because if you have 100 images with
 // 100s of shapes, it would lead to significant memory usage
-function makePredictionsForAllImages(setMachineLearningData) {
+function makePredictionsForAllImages(nextViewCallback, setMachineLearningData) {
   const predictPromises = [];
   const allImageData = getAllImageData();
   const predictionIdToImageId = [];
@@ -119,10 +138,15 @@ function makePredictionsForAllImages(setMachineLearningData) {
     }
   }
   executeAndRecordPredictionResults(predictPromises, predictionIdToImageId,
-    setMachineLearningData);
+    nextViewCallback, setMachineLearningData);
 }
 
-function loadModel() {
+function markScriptDownloadSuccessfull(status) {
+  status.download = 'complete';
+}
+
+function loadModel(status) {
+  markScriptDownloadSuccessfull(status);
   return new Promise((resolve, reject) => {
     const { cocoSsd } = window;
     cocoSsd.load().then((model) => {
@@ -134,43 +158,52 @@ function loadModel() {
   });
 }
 
-function downloadCOCOSSD() {
+function downloadScript({ element, status }, url, resolve, reject) {
+  if (status.download === 'complete') {
+    resolve(status);
+    return;
+  }
+  if (status.download === 'in_progress') {
+    document.head.removeChild(element);
+  }
+  element.onload = resolve.bind(this, status);
+  element.onerror = reject;
+  status.download = 'in_progress';
+  element.src = url;
+  document.head.appendChild(element);
+}
+
+function downloadCOCOSSD(status) {
+  markScriptDownloadSuccessfull(status);
   return new Promise((resolve, reject) => {
-    const cocoSSDScript = document.createElement('script');
-    cocoSSDScript.onload = resolve;
-    cocoSSDScript.onerror = reject;
-    cocoSSDScript.src = 'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd';
-    document.head.appendChild(cocoSSDScript);
+    downloadScript(cocoSSDScript, 'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd',
+      resolve, reject);
   });
 }
 
 function downloadTensorflowJS() {
   return new Promise((resolve, reject) => {
-    // loading spinner, maybe something funky with ML?
-    // disableStartButton();
     displayLoaderWheel();
     removeStartButton();
-    const tensorflowJSScript = document.createElement('script');
-    tensorflowJSScript.onload = resolve;
-    tensorflowJSScript.onerror = reject;
-    tensorflowJSScript.src = 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs';
-    document.head.appendChild(tensorflowJSScript);
+    downloadScript(tensorflowJSScript, 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs',
+      resolve, reject);
   });
 }
 
-function startMachineLearning(setMachineLearningData) {
+function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
+  if (retry) { removeErrorButtons(); }
   // changeGeneratedShapeLabels(doneCallback, setMachineLearningData);
   setChangingMLGeneratedLabelNamesState(true);
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
     if (!tfModel) {
       downloadTensorflowJS()
-        .then(() => downloadCOCOSSD())
-        .then(() => loadModel())
-        .then(() => makePredictionsForAllImages(setMachineLearningData))
+        .then(resultScriptStatus => downloadCOCOSSD(resultScriptStatus))
+        .then(resultScriptStatus => loadModel(resultScriptStatus))
+        .then(() => makePredictionsForAllImages(nextViewCallback, setMachineLearningData))
         .catch(() => errorHandler());
     } else {
-      makePredictionsForAllImages(setMachineLearningData);
+      makePredictionsForAllImages(nextViewCallback, setMachineLearningData);
     }
   } else {
     displayNoImagesFoundError();

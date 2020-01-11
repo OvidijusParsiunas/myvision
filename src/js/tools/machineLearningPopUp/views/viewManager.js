@@ -1,7 +1,9 @@
 import { displayChangeGeneratedLabelsView, assignChangeGeneratedLabelsViewLocalVariables } from './changeGeneratedLabelsView/style';
 import { assignInitiateMachineLearningViewLocalVariables, hideInitiateMachineLearningViewAssets } from './initiateMachineLearning/style';
+import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView } from './noObjectsFound/style';
 import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
 import registerChangeGeneratedLabelsViewButtonEventHandlers from './changeGeneratedLabelsView/buttonEvents';
+import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
@@ -15,6 +17,10 @@ function setMachineLearningData(machineLearningDataArg) {
   machineLearningData = machineLearningDataArg;
 }
 
+function isObjectEmpty(object) {
+  return Object.keys(object).length === 0 && object.constructor === Object;
+}
+
 function displayNextView() {
   switch (currentViewNumber) {
     case 1:
@@ -23,10 +29,10 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 2:
-      if (!machineLearningData) {
-        displayChangeGeneratedLabelsView(machineLearningData);
+      hideInitiateMachineLearningViewAssets();
+      if (isObjectEmpty(machineLearningData)) {
+        displayNoObjectsFoundView(machineLearningData);
       } else {
-        hideInitiateMachineLearningViewAssets();
         displayChangeGeneratedLabelsView(machineLearningData);
       }
       currentViewNumber += 1;
@@ -45,6 +51,10 @@ function displayMachineLearningPopUp() {
   displayNextView();
 }
 
+function closePopUp() {
+  console.log('closing popup action');
+}
+
 function initialiseMachineLearningPopUp() {
   displayNextView();
   // no new names generated view
@@ -52,6 +62,8 @@ function initialiseMachineLearningPopUp() {
   assignInitiateMachineLearningViewLocalVariables();
   registerChangeGeneratedLabelsViewButtonEventHandlers(displayNextView, setMachineLearningData);
   assignChangeGeneratedLabelsViewLocalVariables();
+  registerNoObjectsFoundViewButtonEventHandlers(closePopUp);
+  assignNoObjectsFoundViewLocalVariables();
 }
 
 export { displayMachineLearningPopUp, hideMachineLearningPopUp, initialiseMachineLearningPopUp };

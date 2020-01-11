@@ -301,6 +301,10 @@
   margin-left: 3px;
 }
 
+#machine-learning-popup-no-objects-close-button {
+  margin-top: 12px;
+}
+
 #machine-learning-popup-generated-labels-outer-container {
   position: relative;
   height: 152px;

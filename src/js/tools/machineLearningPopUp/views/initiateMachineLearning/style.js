@@ -24,7 +24,17 @@ function removeProgressMessage() {
 function displayErrorMessage(errorMessage) {
   removeProgressMessage();
   errorMessagesElement.innerHTML = errorMessage;
-  buttonsGroupElement.style.marginTop = '7px';
+  buttonsGroupElement.style.marginTop = '4px';
+}
+
+function displayErrorButtons() {
+  document.getElementById('machine-learning-popup-initiate-retry-button').style.display = '';
+  descriptionElement.style.marginBottom = '6px';
+}
+
+function removeErrorButtons() {
+  document.getElementById('machine-learning-popup-initiate-retry-button').style.display = 'none';
+  descriptionElement.style.marginBottom = '';
 }
 
 function updateProgressMessage(progressMessage) {
@@ -34,6 +44,7 @@ function updateProgressMessage(progressMessage) {
 }
 
 function displayLoaderWheel() {
+  removeErrorMessage();
   loaderWheelElement.style.display = '';
   cancelButtonElement.style.marginRight = '3px';
   descriptionElement.style.marginBottom = '0px';
@@ -139,5 +150,5 @@ export {
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
   hideInitiateMachineLearningViewAssets, displayContinueButton, removeCancelButton,
-  displayLoaderWheel, removeLoaderWheel,
+  displayLoaderWheel, removeLoaderWheel, displayErrorButtons, removeErrorButtons,
 };

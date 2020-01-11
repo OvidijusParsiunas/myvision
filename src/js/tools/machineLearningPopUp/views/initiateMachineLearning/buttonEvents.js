@@ -7,7 +7,7 @@ function moveToNextView(nextViewCallback) {
 
 function registerButtonEventHandlers(nextViewCallback, setMachineLearningData) {
   window.startMachineLearning = startMachineLearning.bind(
-    this, setMachineLearningData,
+    this, nextViewCallback, setMachineLearningData,
   );
   window.closeMachineLearningPopUp = closeMachineLearningPopUp;
   window.changeInitiateMLToNextView = moveToNextView.bind(

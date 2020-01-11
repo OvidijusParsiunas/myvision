@@ -61,6 +61,7 @@
         <div id="machine-learning-popup-initiate-machine-learning-buttons" class="popup-label-buttons">
             <div id="machine-learning-popup-initiate-start-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
             <div id="machine-learning-popup-initiate-next-button" style="display: none" class="popup-label-button popup-submit-button" onclick="changeInitiateMLToNextView()">Next</div>
+            <div id="machine-learning-popup-initiate-retry-button" style="display: none" class="popup-label-button popup-submit-button" onclick="startMachineLearning(true)">Retry</div>
             <div id="machine-learning-popup-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningPopUp()">Cancel</div>
           </div>
       </div>
@@ -130,6 +131,9 @@
               <div id="machine-learning-popup-generated-labels-submit-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Submit</div>
             </div>
           </div>
+        </div>
+        <div id="machine-learning-popup-no-objects-buttons" style="display: none" class="popup-label-buttons">
+            <div id="machine-learning-popup-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningPopUp()">Close</div>
         </div>
     </div>
     <div id="export-labels-popup-parent" style="display: none; height: 155px; width: 144px;">
