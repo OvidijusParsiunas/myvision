@@ -1,6 +1,6 @@
 import { getAllImageData } from '../../../imageList/imageList';
-import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { getCurrentImageId, setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { drawShapesViaCoordinates, drawTempShapesToShowCaseMLResults } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeCancelButton,
   displayNoImagesFoundError, displayContinueButton,
@@ -105,7 +105,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
         nextViewCallback();
       } else {
         displayContinueButton();
-        drawShapesViaCoordinates(predictedImageCoordinates);
+        drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
         updateProgressMessage('Finished!');
       }
       isInProgress = false;
@@ -196,11 +196,10 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
   if (retry) { removeErrorButtons(); }
   if (isCancelled) { isCancelled = false; }
   // changeGeneratedShapeLabels(doneCallback, setMachineLearningData);
-  setChangingMLGeneratedLabelNamesState(true);
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
+    changeToLoadingStyle();
     if (!tfModel) {
-      changeToLoadingStyle();
       isInProgress = true;
       downloadTensorflowJS()
         .then(resultScriptStatus => downloadCOCOSSD(resultScriptStatus))
@@ -216,7 +215,6 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
 }
 
 function cancelMachineLearning() {
-  console.log('called');
   isCancelled = true;
 }
 

@@ -47,7 +47,7 @@ function displayLoaderWheel() {
   removeErrorMessage();
   loaderWheelElement.style.display = '';
   cancelButtonElement.style.marginRight = '3px';
-  descriptionElement.style.marginBottom = '3px';
+  descriptionElement.style.marginBottom = '2px';
 }
 
 function removeLoaderWheel() {
@@ -58,7 +58,7 @@ function removeLoaderWheel() {
 
 function displayContinueButton() {
   nextButtonElement.style.display = '';
-  descriptionElement.style.marginBottom = '5px';
+  descriptionElement.style.marginBottom = '7px';
 }
 
 function removeCancelButton() {

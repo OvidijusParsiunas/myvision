@@ -1,5 +1,5 @@
-function registerNoObjectsFoundViewButtonEventHandlers(closePopUpCallaback) {
-  window.closeMachineLearningPopUp = closePopUpCallaback;
+function registerNoObjectsFoundViewButtonEventHandlers(closePopUpCallback) {
+  window.closeMachineLearningPopUp = closePopUpCallback;
 }
 
 export { registerNoObjectsFoundViewButtonEventHandlers as default };

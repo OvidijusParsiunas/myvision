@@ -1,3 +1,5 @@
+import { setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+
 let editingActive = false;
 let activeTextRow = null;
 let activeTextElement = null;
@@ -6,12 +8,18 @@ let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
 let lastGeneratedUniqueLabelNames = [];
+let uniqueLabelPair = null;
 
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
 let generatedLabelsOuterContainerElement = null;
 let descriptionElement = null;
 let buttonsGroupElement = null;
+
+
+function getGeneratedUniqueLabelNames() {
+  return lastGeneratedUniqueLabelNames;
+}
 
 function displayHighlightedDefaultEditLabelButton(element) {
   if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
@@ -187,8 +195,11 @@ function getLastDigitFromText(text) {
 
 function setNewLabelName() {
   if (activeTextElement.innerHTML !== activeTextElementInitialText) {
-    const activeTextElementIdNumber = getLastDigitFromText(activeTextElement.id);
-    lastGeneratedUniqueLabelNames[activeTextElementIdNumber] = activeTextElement.innerHTML;
+    Object.keys(uniqueLabelPair).forEach((key) => {
+      if (uniqueLabelPair[key].new === activeTextElementInitialText) {
+        uniqueLabelPair[key].new = activeTextElement.innerHTML;
+      }
+    });
   }
 }
 
@@ -339,6 +350,19 @@ function getUniqueLabelNames(generatedObjects) {
   return uniqueLabelNames;
 }
 
+function getUniqueLabelNamesWithPrevious(generatedObjects) {
+  const beforeAfterLabelNames = {};
+  Object.keys(generatedObjects).forEach((key) => {
+    const predictions = generatedObjects[key];
+    for (let i = 0; i < predictions.length; i += 1) {
+      if (!Object.prototype.hasOwnProperty.call(beforeAfterLabelNames, predictions[i].class)) {
+        beforeAfterLabelNames[predictions[i].class] = { new: predictions[i].class };
+      }
+    }
+  });
+  return beforeAfterLabelNames;
+}
+
 function calculateContainerDivHeight() {
   const numberOfRows = lastGeneratedUniqueLabelNames.length;
   const baseHeight = numberOfRows > 1 ? 104 : 114;
@@ -353,9 +377,17 @@ function displayElements() {
   generatedLabelsOuterContainerElement.style.height = calculateContainerDivHeight();
 }
 
+function getUniqueLabelPair() {
+  return uniqueLabelPair;
+}
+
+let generatedObjectsObj = null;
+
 function populateGeneratedLabelsTable(generatedObjects) {
   lastGeneratedUniqueLabelNames = getUniqueLabelNames(generatedObjects);
+  generatedObjectsObj = generatedObjects;
   generateTableRows(lastGeneratedUniqueLabelNames);
+  uniqueLabelPair = getUniqueLabelNamesWithPrevious(generatedObjects);
 }
 
 function setLocalVariables() {
@@ -386,12 +418,18 @@ function displayChangeGeneratedLabelsView(generatedObjects) {
   populateGeneratedLabelsTable(generatedObjects);
   displayElements(generatedObjects);
   updateGeneratedLabelsParentElementWidthOnStartup();
+  setChangingMLGeneratedLabelNamesState(true);
+}
+
+function getGeneratedMachineLearningData() {
+  return generatedObjectsObj;
 }
 
 export {
-  displayGreyedDefaultEditLabelButton, editMachineLearningLabel,
   updateGeneratedLabelsElementWidth, postProcessSpacesInTextElement,
   assignChangeGeneratedLabelsViewLocalVariables, stopEditingMLGeneratedLabelName,
   displayChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,
   stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty, MLLabelTextPaste,
+  displayGreyedDefaultEditLabelButton, editMachineLearningLabel, getGeneratedUniqueLabelNames,
+  getUniqueLabelPair, getGeneratedMachineLearningData,
 };

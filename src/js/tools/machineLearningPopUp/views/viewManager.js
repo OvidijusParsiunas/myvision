@@ -4,14 +4,11 @@ import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView } fro
 import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
 import registerChangeGeneratedLabelsViewButtonEventHandlers from './changeGeneratedLabelsView/buttonEvents';
 import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
+import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
-
-function hideMachineLearningPopUp() {
-  // dim
-  // prepare initial view
-}
+let popupElement = null;
 
 function setMachineLearningData(machineLearningDataArg) {
   machineLearningData = machineLearningDataArg;
@@ -38,8 +35,6 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 3:
-      // call coordinates
-      // displaythirdview
       currentViewNumber += 1;
       break;
     default:
@@ -48,22 +43,31 @@ function displayNextView() {
 }
 
 function displayMachineLearningPopUp() {
-  displayNextView();
+  console.log('called');
 }
 
 function closePopUp() {
-  console.log('closing popup action');
+  popupElement.style.display = 'none';
+  lightUpWindow();
+}
+
+function assignViewManagerLocalVariables() {
+  popupElement = document.getElementById('machine-learning-popup-parent');
 }
 
 function initialiseMachineLearningPopUp() {
+  setTimeout(() => {
+    dimWindow(0.5);
+  }, 5000);
   displayNextView();
-  // no new names generated view
-  registerInitiateMachineLearningViewButtonEventHandlers(displayNextView, setMachineLearningData);
+  assignViewManagerLocalVariables();
+  registerInitiateMachineLearningViewButtonEventHandlers(displayNextView,
+    setMachineLearningData, closePopUp);
   assignInitiateMachineLearningViewLocalVariables();
-  registerChangeGeneratedLabelsViewButtonEventHandlers(displayNextView, setMachineLearningData);
+  registerChangeGeneratedLabelsViewButtonEventHandlers(closePopUp);
   assignChangeGeneratedLabelsViewLocalVariables();
   registerNoObjectsFoundViewButtonEventHandlers(closePopUp);
   assignNoObjectsFoundViewLocalVariables();
 }
 
-export { displayMachineLearningPopUp, hideMachineLearningPopUp, initialiseMachineLearningPopUp };
+export { displayMachineLearningPopUp, initialiseMachineLearningPopUp };

@@ -10,6 +10,7 @@ import { removeBoundingBox } from '../../facadeWorkers/removeActiveShapeWorker';
 import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/allShapes';
 
 let canvas = null;
+const tempShapes = [];
 
 function updateImageThumbnailStyle(isCurrentlySelectedImage, image) {
   if (!isCurrentlySelectedImage) {
@@ -83,7 +84,6 @@ function generateNewShapesForImages(predictedShapeCoordinatesForImages, allImage
     if (predictedShapeCoordinates.length > 0) {
       generateNewShapes(image, isCurrentlySelectedImage, predictedShapeCoordinates,
         imageDimensions, isUsingMachineLearning);
-      updateImageThumbnailStyle(isCurrentlySelectedImage, image);
     }
   });
 }
@@ -96,16 +96,62 @@ function captureCurrentImageData(allImageData, currentlySelectedImageId) {
   allImageData[currentlySelectedImageId].imageDimensions = imageDimensions;
 }
 
-function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
-  // predictedShapeCoordinatesForImages = {"0":[{"bbox":[0.23196187615394592,1.3171005249023438,282.11527583003044,337.3044550418854],"class":"cat","score":0.8860134482383728}],"1":[{"bbox":[16.03703498840332,194.2115306854248,1113.8134002685547,482.022762298584],"class":"car","score":0.9936941266059875},{"bbox":[1233.7510585784912,1169.7566986083984,1080.3159713745117,385.3567123413086],"class":"car","score":0.9841077327728271},{"bbox":[96.5882420539856,1009.1146469116211,1040.1406645774841,506.1511993408203],"class":"truck","score":0.9241188764572144},{"bbox":[1270.0901985168457,110.06307601928711,1079.1927337646484,524.1976737976074],"class":"car","score":0.8551244735717773}]};
-  isUsingMachineLearning = true;
-  const currentlySelectedImageId = getCurrentImageId();
+function updateImageThumbnails(predictedShapeCoordinatesForImages, allImageData,
+  currentlySelectedImageId) {
+  Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
+    const predictedShapeCoordinates = predictedShapeCoordinatesForImages[key];
+    if (predictedShapeCoordinates.length > 0) {
+      const isCurrentlySelectedImage = currentlySelectedImageId === parseInt(key, 10);
+      const image = allImageData[key];
+      updateImageThumbnailStyle(isCurrentlySelectedImage, image);
+    }
+  });
+}
+
+function generateTempShapes(predictedShapeCoordinates,
+  imageDimensions) {
+  predictedShapeCoordinates.forEach((shapeCoordinates) => {
+    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageDimensions);
+    tempShapes.push(boundingBox);
+    canvas.add(boundingBox);
+  });
+}
+
+function removeTempShapes() {
+  tempShapes.forEach((shape) => {
+    canvas.remove(shape);
+  });
+  canvas.renderAll();
+}
+
+function getImageData() {
   const allImageData = getAllImageData();
+  const currentlySelectedImageId = getCurrentImageId();
+  return { allImageData, currentlySelectedImageId };
+}
+
+function prepareToDrawShapes(allImageData, currentlySelectedImageId) {
   captureCurrentImageData(allImageData, currentlySelectedImageId);
   prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
+}
+
+function drawTempShapesToShowCaseMLResults(predictedShapeCoordinatesForImages) {
+  const { allImageData, currentlySelectedImageId } = getImageData();
+  prepareToDrawShapes(allImageData, currentlySelectedImageId);
+  updateImageThumbnails(predictedShapeCoordinatesForImages, allImageData,
+    currentlySelectedImageId);
+  const currentlySelectedImageShapes = predictedShapeCoordinatesForImages[currentlySelectedImageId];
+  const dimensions = getImageDimensions(allImageData[currentlySelectedImageId]);
+  generateTempShapes(currentlySelectedImageShapes, dimensions);
+}
+
+function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
+  const { allImageData, currentlySelectedImageId } = getImageData();
+  prepareToDrawShapes(allImageData, currentlySelectedImageId);
   generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
     currentlySelectedImageId, isUsingMachineLearning);
-  // only execute this if new shapes have been created
+  removeTempShapes();
+  // only execute this if new shapes have been created (not for the ML PopUp)
   resetPopUpLabelOptions();
 
   setDefaultCursorMode(canvas);
@@ -122,4 +168,7 @@ function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {
   canvas = canvasObj;
 }
 
-export { assignCanvasForDrawingShapesViaCoordinates, drawShapesViaCoordinates };
+export {
+  assignCanvasForDrawingShapesViaCoordinates, drawShapesViaCoordinates,
+  drawTempShapesToShowCaseMLResults,
+};
