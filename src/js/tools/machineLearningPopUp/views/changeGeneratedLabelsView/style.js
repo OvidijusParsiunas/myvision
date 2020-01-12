@@ -7,7 +7,6 @@ let activeTextElementInitialText = '';
 let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
-let lastGeneratedUniqueLabelNames = [];
 let uniqueLabelPair = null;
 
 let generatedLabelsParentElement = null;
@@ -15,11 +14,6 @@ let generatedLabelsTableElement = null;
 let generatedLabelsOuterContainerElement = null;
 let descriptionElement = null;
 let buttonsGroupElement = null;
-
-
-function getGeneratedUniqueLabelNames() {
-  return lastGeneratedUniqueLabelNames;
-}
 
 function displayHighlightedDefaultEditLabelButton(element) {
   if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
@@ -196,8 +190,8 @@ function getLastDigitFromText(text) {
 function setNewLabelName() {
   if (activeTextElement.innerHTML !== activeTextElementInitialText) {
     Object.keys(uniqueLabelPair).forEach((key) => {
-      if (uniqueLabelPair[key].new === activeTextElementInitialText) {
-        uniqueLabelPair[key].new = activeTextElement.innerHTML;
+      if (uniqueLabelPair[key].pendingName === activeTextElementInitialText) {
+        uniqueLabelPair[key].pendingName = activeTextElement.innerHTML;
       }
     });
   }
@@ -329,46 +323,22 @@ function createLabelElementMarkup(labelText, id) {
   `;
 }
 
-function generateTableRows(uniqueLabelNames) {
-  for (let i = 0; i < uniqueLabelNames.length; i += 1) {
-    const newRow = generatedLabelsTableElement.insertRow(-1);
-    const cell = newRow.insertCell(0);
-    cell.innerHTML = createLabelElementMarkup(uniqueLabelNames[i], i);
-  }
-}
-
-function getUniqueLabelNames(generatedObjects) {
-  const uniqueLabelNames = [];
-  Object.keys(generatedObjects).forEach((key) => {
-    const predictions = generatedObjects[key];
-    for (let i = 0; i < predictions.length; i += 1) {
-      if (uniqueLabelNames.indexOf(predictions[i].class) === -1) {
-        uniqueLabelNames.push(predictions[i].class);
-      }
-    }
+function generateTableRows() {
+  let index = 0;
+  Object.keys(uniqueLabelPair).forEach((key) => {
+    const newNameRow = generatedLabelsTableElement.insertRow(-1);
+    const cell = newNameRow.insertCell(0);
+    cell.innerHTML = createLabelElementMarkup(uniqueLabelPair[key].pendingName, index);
+    index += 1;
   });
-  return uniqueLabelNames;
-}
-
-function getUniqueLabelNamesWithPrevious(generatedObjects) {
-  const beforeAfterLabelNames = {};
-  Object.keys(generatedObjects).forEach((key) => {
-    const predictions = generatedObjects[key];
-    for (let i = 0; i < predictions.length; i += 1) {
-      if (!Object.prototype.hasOwnProperty.call(beforeAfterLabelNames, predictions[i].class)) {
-        beforeAfterLabelNames[predictions[i].class] = { new: predictions[i].class };
-      }
-    }
-  });
-  return beforeAfterLabelNames;
 }
 
 function calculateContainerDivHeight() {
-  const numberOfRows = lastGeneratedUniqueLabelNames.length;
+  const numberOfRows = Object.keys(uniqueLabelPair).length;
   const baseHeight = numberOfRows > 1 ? 104 : 114;
   const numberOfVisibleRows = numberOfRows > 5 ? 5 : numberOfRows;
-  const newHeight = baseHeight + numberOfVisibleRows * 10;
-  return `${newHeight}px`;
+  const newNameHeight = baseHeight + numberOfVisibleRows * 10;
+  return `${newNameHeight}px`;
 }
 
 function displayElements() {
@@ -383,11 +353,23 @@ function getUniqueLabelPair() {
 
 let generatedObjectsObj = null;
 
+function createObjectNamesEditingObject(generatedObjects) {
+  const beforeAfterLabelNames = {};
+  Object.keys(generatedObjects).forEach((key) => {
+    const predictions = generatedObjects[key];
+    for (let i = 0; i < predictions.length; i += 1) {
+      if (!Object.prototype.hasOwnProperty.call(beforeAfterLabelNames, predictions[i].class)) {
+        beforeAfterLabelNames[predictions[i].class] = { pendingName: predictions[i].class };
+      }
+    }
+  });
+  return beforeAfterLabelNames;
+}
+
 function populateGeneratedLabelsTable(generatedObjects) {
-  lastGeneratedUniqueLabelNames = getUniqueLabelNames(generatedObjects);
   generatedObjectsObj = generatedObjects;
-  generateTableRows(lastGeneratedUniqueLabelNames);
-  uniqueLabelPair = getUniqueLabelNamesWithPrevious(generatedObjects);
+  uniqueLabelPair = createObjectNamesEditingObject(generatedObjects);
+  generateTableRows(uniqueLabelPair);
 }
 
 function setLocalVariables() {
@@ -430,6 +412,6 @@ export {
   assignChangeGeneratedLabelsViewLocalVariables, stopEditingMLGeneratedLabelName,
   displayChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,
   stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty, MLLabelTextPaste,
-  displayGreyedDefaultEditLabelButton, editMachineLearningLabel, getGeneratedUniqueLabelNames,
+  displayGreyedDefaultEditLabelButton, editMachineLearningLabel,
   getUniqueLabelPair, getGeneratedMachineLearningData,
 };
