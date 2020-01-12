@@ -1,16 +1,17 @@
 import {
   postProcessSpacesInTextElement, updateGeneratedLabelsElementWidth, MLLabelTextPaste,
   displayHighlightedDefaultEditLabelButton, displayRedEditButtonIfActiveTextEmpty,
-  displayGreyedDefaultEditLabelButton, editMachineLearningLabel, stopEditingActiveTextElement,
-  getGeneratedUniqueLabelNames, getUniqueLabelPair, getGeneratedMachineLearningData,
+  displayGreyedDefaultEditLabelButton, changeRowToEdit, hideGeneratedLabelsViewAssets,
 } from './style';
-import { setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
-import { getAllExistingShapes } from '../../../../canvas/objects/allShapes/allShapes';
+import {
+  getGeneratedMachineLearningData, setActiveLabelProperties,
+  stopEditingMLGeneratedLabelName, submitNewLabelNames,
+} from './changeLabels';
 import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 
 function MLLabelTextKeyDown(event) {
   if (event.key === 'Enter') {
-    stopEditingActiveTextElement();
+    stopEditingMLGeneratedLabelName();
   } else {
     window.setTimeout(() => {
       if (event.code === 'Space') { postProcessSpacesInTextElement(); }
@@ -21,34 +22,24 @@ function MLLabelTextKeyDown(event) {
 }
 
 function submitMLGeneratedLabelNames(closePopUpCallback) {
-  drawShapesViaCoordinates(getGeneratedMachineLearningData(), true);
-  const allShapes = getAllExistingShapes();
-  Object.keys(allShapes).forEach((key) => {
-    const { shapeRef } = allShapes[key];
-    if (shapeRef.isGeneratedViaML) {
-      console.log('called');
-    }
-  });
-  setChangingMLGeneratedLabelNamesState(false);
+  submitNewLabelNames();
+  const generatedMachineLearningData = getGeneratedMachineLearningData();
+  drawShapesViaCoordinates(generatedMachineLearningData, true);
   closePopUpCallback();
+  hideGeneratedLabelsViewAssets();
 }
 
-// function next() {
-//   const labelsObject = getLabelsObject()
-//   setMachineLearningData(labelsObject);
-//   nextViewCallback();
-// }
+function editMachineLearningLabelButtonClick(element) {
+  setActiveLabelProperties(element);
+  changeRowToEdit(element);
+}
 
 function registerButtonEventHandlers(closePopUpCallback) {
-  // should be generatedLabelsEditView
-
-  // need to send back the object so could start populating
-  // window.next = nextViewCallback;
   window.MLLabelTextKeyDown = MLLabelTextKeyDown;
   window.MLLabelTextPaste = MLLabelTextPaste;
   window.displayMachineLearningPopUpEditLabelButton = displayHighlightedDefaultEditLabelButton;
   window.hideMachineLearningPopUpEditLabelButton = displayGreyedDefaultEditLabelButton;
-  window.editMachineLearningLabel = editMachineLearningLabel;
+  window.editMachineLearningLabel = editMachineLearningLabelButtonClick;
   window.submitMLGeneratedLabels = submitMLGeneratedLabelNames.bind(this,
     closePopUpCallback);
 }

@@ -1,19 +1,15 @@
-import { setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
-
 let editingActive = false;
 let activeTextRow = null;
 let activeTextElement = null;
-let activeTextElementInitialText = '';
 let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
-let uniqueLabelPair = null;
+let objectNames = null;
 
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
 let generatedLabelsOuterContainerElement = null;
 let descriptionElement = null;
-let buttonsGroupElement = null;
 
 function displayHighlightedDefaultEditLabelButton(element) {
   if (activeTextElement !== element && !element.classList.contains('activeLabelEditIcon')) {
@@ -146,17 +142,6 @@ function MLLabelTextPaste(event) {
   setCaretPositionOnDiv(caretPositionStart + preprocessedPastedData.length, activeTextElement);
 }
 
-function setTextElementContentToEditable() {
-  activeTextElement.contentEditable = true;
-}
-
-function setEditingStateToFalse() {
-  setTimeout(() => {
-    editingActive = false;
-    activeTextRow = null;
-  }, 1);
-}
-
 function updateGeneratedLabelsElementWidth() {
   generatedLabelsParentElement.style.width = `${activeTextRow.clientWidth + overflowScrollWidth}px`;
   if (!maxWidthStyleAppended && parseInt(generatedLabelsParentElement.style.width, 10) > 360) {
@@ -171,35 +156,21 @@ function updateGeneratedLabelsElementWidth() {
   }
 }
 
-function displayInitialTextIfEmpty() {
-  if (activeTextElement.innerHTML === '') {
-    activeTextElement.innerHTML = activeTextElementInitialText;
-    window.setTimeout(() => {
-      updateGeneratedLabelsElementWidth();
-    }, 1);
-  }
+function changeEditedLabelText(text) {
+  activeTextElement.innerHTML = text;
+  window.setTimeout(() => {
+    updateGeneratedLabelsElementWidth();
+  }, 1);
 }
 
-function getLastDigitFromText(text) {
-  if (text.match(/\d+$/)) {
-    return text.match(/\d+$/)[0];
-  }
-  return -1;
-}
-
-function setNewLabelName() {
-  if (activeTextElement.innerHTML !== activeTextElementInitialText) {
-    Object.keys(uniqueLabelPair).forEach((key) => {
-      if (uniqueLabelPair[key].pendingName === activeTextElementInitialText) {
-        uniqueLabelPair[key].pendingName = activeTextElement.innerHTML;
-      }
-    });
-  }
+function setEditingStateToFalse() {
+  setTimeout(() => {
+    editingActive = false;
+    activeTextRow = null;
+  }, 1);
 }
 
 function stopEditingActiveTextElement() {
-  displayInitialTextIfEmpty();
-  setNewLabelName();
   activeTextElement.contentEditable = false;
   activeTextRow.style.backgroundColor = '';
   activeTextRow.childNodes[1].style.display = '';
@@ -213,12 +184,11 @@ function stopEditingActiveTextElement() {
   setEditingStateToFalse();
 }
 
-function isElementNotTheCurrentlyActiveTextElement(element) {
-  return activeTextElement && activeTextElement !== element;
-}
-
-function isElementNotTheCurrentlyActiveTextRow(element) {
-  return activeTextRow && activeTextRow !== element;
+function getLastDigitFromText(text) {
+  if (text.match(/\d+$/)) {
+    return text.match(/\d+$/)[0];
+  }
+  return -1;
 }
 
 function isElementIdNotTheGeneratedLabelsElementId(element) {
@@ -230,12 +200,21 @@ function isElementIdNotTheGeneratedLabelsElementId(element) {
   return true;
 }
 
-function stopEditingMLGeneratedLabelName(element) {
+function isElementNotTheCurrentlyActiveTextRow(element) {
+  return activeTextRow && activeTextRow !== element;
+}
+
+function isElementNotTheCurrentlyActiveTextElement(element) {
+  return activeTextElement && activeTextElement !== element;
+}
+
+function canChangeRowToStopEdit(element) {
   if (isElementNotTheCurrentlyActiveTextElement(element)
     && isElementNotTheCurrentlyActiveTextRow(element)
     && isElementIdNotTheGeneratedLabelsElementId(element)) {
-    stopEditingActiveTextElement();
+    return true;
   }
+  return false;
 }
 
 function isElementHeightFullyVisibleInParent(childElement, parentElement) {
@@ -258,6 +237,10 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
+function setTextElementContentToEditable() {
+  activeTextElement.contentEditable = true;
+}
+
 function setElementStyleToActive(element) {
   element.style.backgroundColor = '#f7f7f7';
   setTextElementContentToEditable();
@@ -270,10 +253,9 @@ function setElementStyleToActive(element) {
 function setActiveElementProperties(element) {
   activeTextRow = element;
   activeTextElement = element.childNodes[9];
-  activeTextElementInitialText = element.childNodes[9].innerHTML;
 }
 
-function editMachineLearningLabel(element) {
+function changeRowToEdit(element) {
   if (element !== activeTextRow) {
     const textElement = element.childNodes[9];
     setActiveElementProperties(element);
@@ -311,6 +293,25 @@ function getScrollWidth() {
   return scrollWidth;
 }
 
+function updateGeneratedLabelsParentElementWidthOnStartup() {
+  activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[1].childNodes[0];
+  updateGeneratedLabelsElementWidth();
+  activeTextRow = null;
+}
+
+function calculateContainerDivHeight() {
+  const numberOfRows = Object.keys(objectNames).length;
+  const baseHeight = numberOfRows > 1 ? 104 : 114;
+  const numberOfVisibleRows = numberOfRows > 5 ? 5 : numberOfRows;
+  const newNameHeight = baseHeight + numberOfVisibleRows * 10;
+  return `${newNameHeight}px`;
+}
+
+function changeElementsToVisible() {
+  generatedLabelsOuterContainerElement.style.display = '';
+  generatedLabelsOuterContainerElement.style.height = calculateContainerDivHeight();
+}
+
 function createLabelElementMarkup(labelText, id) {
   return `
     <div class="machine-learning-popup-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningPopUpEditLabelButton(this)" onMouseLeave="hideMachineLearningPopUpEditLabelButton(this)">
@@ -323,95 +324,56 @@ function createLabelElementMarkup(labelText, id) {
   `;
 }
 
-function generateTableRows() {
+function populateGeneratedLabelsTable() {
   let index = 0;
-  Object.keys(uniqueLabelPair).forEach((key) => {
+  Object.keys(objectNames).forEach((key) => {
     const newNameRow = generatedLabelsTableElement.insertRow(-1);
     const cell = newNameRow.insertCell(0);
-    cell.innerHTML = createLabelElementMarkup(uniqueLabelPair[key].pendingName, index);
+    cell.innerHTML = createLabelElementMarkup(objectNames[key].pendingName, index);
     index += 1;
   });
-}
-
-function calculateContainerDivHeight() {
-  const numberOfRows = Object.keys(uniqueLabelPair).length;
-  const baseHeight = numberOfRows > 1 ? 104 : 114;
-  const numberOfVisibleRows = numberOfRows > 5 ? 5 : numberOfRows;
-  const newNameHeight = baseHeight + numberOfVisibleRows * 10;
-  return `${newNameHeight}px`;
-}
-
-function displayElements() {
-  buttonsGroupElement.style.display = '';
-  generatedLabelsOuterContainerElement.style.display = '';
-  generatedLabelsOuterContainerElement.style.height = calculateContainerDivHeight();
-}
-
-function getUniqueLabelPair() {
-  return uniqueLabelPair;
-}
-
-let generatedObjectsObj = null;
-
-function createObjectNamesEditingObject(generatedObjects) {
-  const beforeAfterLabelNames = {};
-  Object.keys(generatedObjects).forEach((key) => {
-    const predictions = generatedObjects[key];
-    for (let i = 0; i < predictions.length; i += 1) {
-      if (!Object.prototype.hasOwnProperty.call(beforeAfterLabelNames, predictions[i].class)) {
-        beforeAfterLabelNames[predictions[i].class] = { pendingName: predictions[i].class };
-      }
-    }
-  });
-  return beforeAfterLabelNames;
-}
-
-function populateGeneratedLabelsTable(generatedObjects) {
-  generatedObjectsObj = generatedObjects;
-  uniqueLabelPair = createObjectNamesEditingObject(generatedObjects);
-  generateTableRows(uniqueLabelPair);
-}
-
-function setLocalVariables() {
-  overflowScrollWidth = getScrollWidth();
 }
 
 function changePopUpDescription() {
   descriptionElement.innerHTML = 'The following names were automatically assigned to the generated objects, you can edit them below:';
 }
 
-function assignChangeGeneratedLabelsViewLocalVariables() {
+function setLocalVariables() {
+  overflowScrollWidth = getScrollWidth();
+}
+
+function displayViewElements(objectNamesArg) {
+  objectNames = objectNamesArg;
+  setLocalVariables();
+  changePopUpDescription();
+  populateGeneratedLabelsTable();
+  changeElementsToVisible();
+  updateGeneratedLabelsParentElementWidthOnStartup();
+}
+
+function removeGeneratedLabelsTableRows() {
+  const newtbody = document.createElement('tbody');
+  if (generatedLabelsTableElement.childNodes[1]) {
+    generatedLabelsTableElement.replaceChild(newtbody, generatedLabelsTableElement.childNodes[1]);
+  }
+}
+
+function hideGeneratedLabelsViewAssets() {
+  generatedLabelsOuterContainerElement.style.display = 'none';
+  removeGeneratedLabelsTableRows();
+}
+
+function assignGeneratedLabelsViewLocalVariables() {
   descriptionElement = document.getElementById('machine-learning-popup-description');
   generatedLabelsParentElement = document.getElementById('machine-learning-popup-generated-labels');
   generatedLabelsTableElement = document.getElementById('machine-learning-popup-generated-labels-table');
-  buttonsGroupElement = document.getElementById('machine-learning-popup-generated-labels-buttons');
   generatedLabelsOuterContainerElement = document.getElementById('machine-learning-popup-generated-labels-outer-container');
 }
 
-function updateGeneratedLabelsParentElementWidthOnStartup() {
-  activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[1].childNodes[0];
-  updateGeneratedLabelsElementWidth();
-  activeTextRow = null;
-}
-
-function displayChangeGeneratedLabelsView(generatedObjects) {
-  setLocalVariables();
-  changePopUpDescription();
-  populateGeneratedLabelsTable(generatedObjects);
-  displayElements(generatedObjects);
-  updateGeneratedLabelsParentElementWidthOnStartup();
-  setChangingMLGeneratedLabelNamesState(true);
-}
-
-function getGeneratedMachineLearningData() {
-  return generatedObjectsObj;
-}
-
 export {
-  updateGeneratedLabelsElementWidth, postProcessSpacesInTextElement,
-  assignChangeGeneratedLabelsViewLocalVariables, stopEditingMLGeneratedLabelName,
-  displayChangeGeneratedLabelsView, displayHighlightedDefaultEditLabelButton,
-  stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty, MLLabelTextPaste,
-  displayGreyedDefaultEditLabelButton, editMachineLearningLabel,
-  getUniqueLabelPair, getGeneratedMachineLearningData,
+  stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty,
+  postProcessSpacesInTextElement, changeRowToEdit, canChangeRowToStopEdit,
+  updateGeneratedLabelsElementWidth, displayHighlightedDefaultEditLabelButton,
+  displayGreyedDefaultEditLabelButton, changeEditedLabelText, displayViewElements,
+  assignGeneratedLabelsViewLocalVariables, MLLabelTextPaste, hideGeneratedLabelsViewAssets,
 };

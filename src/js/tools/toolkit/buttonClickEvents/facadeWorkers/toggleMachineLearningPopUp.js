@@ -1,16 +1,7 @@
-import { getLabelsVisibilityState, setLabelsVisibilityState } from '../facadeWorkersUtils/stateManager';
-import { setAllLabelsVisibilityProperty } from '../../../../canvas/objects/label/label';
+import { displayMachineLearningPopUp } from '../../../machineLearningPopUp/views/viewManager';
 
-// toggle all shapes visibility
-function toggleMachineLearning(canvas) {
-    console.log('machine learning start');
-    //   if (getLabelsVisibilityState()) {
-//     setAllLabelsVisibilityProperty(false, canvas);
-//     setLabelsVisibilityState(false);
-//   } else {
-//     setAllLabelsVisibilityProperty(true, canvas);
-//     setLabelsVisibilityState(true);
-//   }
+function toggleMachineLearning() {
+  displayMachineLearningPopUp();
 }
 
 export { toggleMachineLearning as default };

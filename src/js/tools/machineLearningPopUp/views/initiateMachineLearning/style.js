@@ -11,8 +11,6 @@ let errorMessagesElement = null;
 let progressMessagesElement = null;
 let toolkitUploadImagesButton = null;
 
-let initiateMachineLearningParentElement = null;
-
 function removeErrorMessage() {
   errorMessagesElement.innerHTML = '';
 }
@@ -141,21 +139,8 @@ function removeUploadedImageAfterNoneFoundError() {
   }
 }
 
-function assignInitiateMachineLearningViewLocalVariables() {
-  toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
-  loaderWheelElement = document.getElementById('machinelearning-popup-loader-wheel');
-  descriptionElement = document.getElementById('machine-learning-popup-description');
-  submitButtonElement = document.getElementById('machine-learning-popup-initiate-start-button');
-  nextButtonElement = document.getElementById('machine-learning-popup-initiate-next-button');
-  cancelButtonElement = document.getElementById('machine-learning-popup-initiate-cancel-button');
-  buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
-  errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
-  progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
-  initiateMachineLearningParentElement = document.getElementById('machine-learning-popup-initiate-machine-learning');
-}
-
 function hideInitiateMachineLearningViewAssets() {
-  initiateMachineLearningParentElement.style.display = 'none';
+  buttonsGroupElement.style.display = 'none';
   progressMessagesElement.style.display = 'none';
   descriptionElement.style.marginBottom = '';
 }
@@ -173,9 +158,22 @@ function getDefaultDescriptionMarkup() {
 function prepareInstantiateMachineLearningView() {
   descriptionElement.style.marginBottom = '';
   descriptionElement.innerHTML = getDefaultDescriptionMarkup();
+  buttonsGroupElement.style.display = '';
   cancelButtonElement.style.marginRight = '';
   displayStartButton();
   removeLoaderWheel();
+}
+
+function assignInitiateMachineLearningViewLocalVariables() {
+  toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
+  loaderWheelElement = document.getElementById('machinelearning-popup-loader-wheel');
+  descriptionElement = document.getElementById('machine-learning-popup-description');
+  submitButtonElement = document.getElementById('machine-learning-popup-initiate-start-button');
+  nextButtonElement = document.getElementById('machine-learning-popup-initiate-next-button');
+  cancelButtonElement = document.getElementById('machine-learning-popup-initiate-cancel-button');
+  buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
+  errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
+  progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
 }
 
 export {

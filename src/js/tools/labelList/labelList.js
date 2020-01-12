@@ -29,7 +29,7 @@ import {
 } from './iconHighlightUtils';
 import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
-import { stopEditingMLGeneratedLabelName } from '../machineLearningPopUp/views/changeGeneratedLabelsView/style';
+import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningPopUp/views/generatedLabels/changeLabels';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -675,7 +675,7 @@ window.onmousedown = (event) => {
     }
     // needs to call a function in button events in the changeGeneratedLabelsView
   } else if (getChangingMLGeneratedLabelNamesState()) {
-    stopEditingMLGeneratedLabelName(event.target);
+    stopEditingMLGeneratedLabelNameBtnClick(event.target);
   }
 };
 

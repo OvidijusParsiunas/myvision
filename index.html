@@ -43,7 +43,7 @@
         <div id="popup-label-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
-    <div id="machine-learning-popup-parent">
+    <div id="machine-learning-popup-parent" style="display: none">
       <div id="machine-learning-popup-title" class="popup-label-title">Machine Learning</div>
       <div id="machine-learning-popup-border-line" style="width: 100%; margin-top: 5px; border-top: solid 1px #e6e6e6;"> </div>
       <div id="machine-learning-popup-description">
@@ -57,14 +57,12 @@
       <div id="machine-learning-popup-progress-messages" style="display: none" class="machine-learning-popup-messages"></div>
       <div id="machinelearning-popup-loader-wheel" style="display: none" class="loader-wheel" ></div>
       <div id="machine-learning-popup-error-messages" class="machine-learning-popup-messages"></div>
-      <div id="machine-learning-popup-initiate-machine-learning">
-        <div id="machine-learning-popup-initiate-machine-learning-buttons" class="popup-label-buttons">
-            <div id="machine-learning-popup-initiate-start-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
-            <div id="machine-learning-popup-initiate-next-button" style="display: none" class="popup-label-button popup-submit-button" onclick="changeInitiateMLToNextView()">Next</div>
-            <div id="machine-learning-popup-initiate-retry-button" style="display: none" class="popup-label-button popup-submit-button" onclick="startMachineLearning(true)">Retry</div>
-            <div id="machine-learning-popup-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelInitiateMLPopUp()">Cancel</div>
-          </div>
-      </div>
+      <div id="machine-learning-popup-initiate-machine-learning-buttons" class="popup-label-buttons">
+          <div id="machine-learning-popup-initiate-start-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
+          <div id="machine-learning-popup-initiate-next-button" style="display: none" class="popup-label-button popup-submit-button" onclick="changeInitiateMLToNextView()">Next</div>
+          <div id="machine-learning-popup-initiate-retry-button" style="display: none" class="popup-label-button popup-submit-button" onclick="startMachineLearning(true)">Retry</div>
+          <div id="machine-learning-popup-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelInitiateMLPopUp()">Cancel</div>
+        </div>
       <div id="machine-learning-popup-generated-labels-outer-container" style="display: none">
           <div id="machine-learning-popup-generated-labels-inner-container">
             <div id="machine-learning-popup-generated-labels">

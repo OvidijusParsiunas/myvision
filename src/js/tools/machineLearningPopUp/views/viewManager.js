@@ -1,8 +1,13 @@
-import { displayChangeGeneratedLabelsView, assignChangeGeneratedLabelsViewLocalVariables } from './changeGeneratedLabelsView/style';
-import { assignInitiateMachineLearningViewLocalVariables, hideInitiateMachineLearningViewAssets } from './initiateMachineLearning/style';
+import {
+  assignInitiateMachineLearningViewLocalVariables,
+  hideInitiateMachineLearningViewAssets,
+  prepareInstantiateMachineLearningView,
+} from './initiateMachineLearning/style';
+import { assignGeneratedLabelsViewLocalVariables } from './generatedLabels/style';
+import { displayGeneratedLabelsView } from './generatedLabels/changeLabels';
 import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView } from './noObjectsFound/style';
 import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
-import registerChangeGeneratedLabelsViewButtonEventHandlers from './changeGeneratedLabelsView/buttonEvents';
+import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/buttonEvents';
 import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 
@@ -18,11 +23,11 @@ function isObjectEmpty(object) {
   return Object.keys(object).length === 0 && object.constructor === Object;
 }
 
+// the following architecture was prepared for more views
 function displayNextView() {
   switch (currentViewNumber) {
     case 1:
-      // display initial view
-      // prepareInstantiateMachineLearningView();
+      prepareInstantiateMachineLearningView();
       currentViewNumber += 1;
       break;
     case 2:
@@ -30,7 +35,7 @@ function displayNextView() {
       if (isObjectEmpty(machineLearningData)) {
         displayNoObjectsFoundView(machineLearningData);
       } else {
-        displayChangeGeneratedLabelsView(machineLearningData);
+        displayGeneratedLabelsView(machineLearningData);
       }
       currentViewNumber += 1;
       break;
@@ -43,12 +48,15 @@ function displayNextView() {
 }
 
 function displayMachineLearningPopUp() {
-  console.log('called');
+  popupElement.style.display = '';
+  dimWindow(0.5);
 }
 
 function closePopUp() {
   popupElement.style.display = 'none';
   lightUpWindow();
+  currentViewNumber = 1;
+  displayNextView();
 }
 
 function assignViewManagerLocalVariables() {
@@ -56,18 +64,15 @@ function assignViewManagerLocalVariables() {
 }
 
 function initialiseMachineLearningPopUp() {
-  setTimeout(() => {
-    dimWindow(0.5);
-  }, 5000);
-  displayNextView();
   assignViewManagerLocalVariables();
   registerInitiateMachineLearningViewButtonEventHandlers(displayNextView,
     setMachineLearningData, closePopUp);
   assignInitiateMachineLearningViewLocalVariables();
-  registerChangeGeneratedLabelsViewButtonEventHandlers(closePopUp);
-  assignChangeGeneratedLabelsViewLocalVariables();
+  registerGeneratedLabelsViewButtonEventHandlers(closePopUp);
+  assignGeneratedLabelsViewLocalVariables();
   registerNoObjectsFoundViewButtonEventHandlers(closePopUp);
   assignNoObjectsFoundViewLocalVariables();
+  displayNextView();
 }
 
 export { displayMachineLearningPopUp, initialiseMachineLearningPopUp };
