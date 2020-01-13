@@ -60,8 +60,11 @@
       <div id="machine-learning-popup-initiate-machine-learning-buttons" class="popup-label-buttons">
           <div id="machine-learning-popup-initiate-start-button" class="popup-label-button popup-submit-button" onclick="startMachineLearning()">Start</div>
           <div id="machine-learning-popup-initiate-next-button" style="display: none" class="popup-label-button popup-submit-button" onclick="changeInitiateMLToNextView()">Next</div>
-          <div id="machine-learning-popup-initiate-retry-button" style="display: none" class="popup-label-button popup-submit-button" onclick="startMachineLearning(true)">Retry</div>
+          <div id="machine-learning-popup-initiate-retry-button" style="display: none" class="popup-label-button popup-submit-button" onclick="retryMachineLearning()">Retry</div>
           <div id="machine-learning-popup-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelInitiateMLPopUp()">Cancel</div>
+          <div id="machine-learning-popup-initiate-all-images-button" style="display: none" class="popup-label-button popup-submit-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
+          <div id="machine-learning-popup-initiate-new-images-button" style="display: none" class="popup-label-button popup-submit-button" onclick="startMachineLearningWithCoverage('new')">New Images</div>
+         
         </div>
       <div id="machine-learning-popup-generated-labels-outer-container" style="display: none">
           <div id="machine-learning-popup-generated-labels-inner-container">

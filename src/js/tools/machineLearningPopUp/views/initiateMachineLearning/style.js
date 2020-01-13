@@ -8,6 +8,8 @@ let buttonsGroupElement = null;
 let submitButtonElement = null;
 let cancelButtonElement = null;
 let errorMessagesElement = null;
+let allImagesButtonElement = null;
+let newImagesButtonElement = null;
 let progressMessagesElement = null;
 let toolkitUploadImagesButton = null;
 
@@ -52,6 +54,16 @@ function removeLoaderWheel() {
   loaderWheelElement.style.display = 'none';
   cancelButtonElement.style.marginRight = '';
   descriptionElement.style.marginBottom = '';
+}
+
+function displayMLCoverageSelectionButtons() {
+  allImagesButtonElement.style.display = '';
+  newImagesButtonElement.style.display = '';
+}
+
+function removeMLCoverageSelectionButtons() {
+  allImagesButtonElement.style.display = 'none';
+  newImagesButtonElement.style.display = 'none';
 }
 
 function displayNextButton() {
@@ -185,6 +197,8 @@ function assignInitiateMachineLearningViewLocalVariables() {
   buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
   errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
   progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
+  allImagesButtonElement = document.getElementById('machine-learning-popup-initiate-all-images-button');
+  newImagesButtonElement = document.getElementById('machine-learning-popup-initiate-new-images-button');
 }
 
 export {
@@ -196,4 +210,5 @@ export {
   removeUploadedImageAfterNoneFoundError, closeMachineLearningPopUp,
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
+  displayMLCoverageSelectionButtons, removeMLCoverageSelectionButtons,
 };

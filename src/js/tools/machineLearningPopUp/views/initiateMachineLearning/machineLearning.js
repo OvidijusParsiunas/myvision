@@ -1,10 +1,9 @@
 import { getAllImageData } from '../../../imageList/imageList';
 import { drawTempShapesToShowCaseMLResults } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeCancelButton,
-  displayNoImagesFoundError, displayContinueButton,
-  removeLoaderWheel, displayErrorButtons, removeErrorButtons,
+  displayNoImagesFoundError, displayNextButton,
+  removeLoaderWheel, displayErrorButtons,
   changeToLoadingStyle,
 } from './style';
 
@@ -21,8 +20,6 @@ function errorHandler() {
   displayErrorButtons();
   isInProgress = false;
 }
-
-const predictedImageCoordinates = {};
 
 function predict(image) {
   return tfModel.detect(image.data);
@@ -79,6 +76,9 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
     // check to see if only the completed operations are returned and should
     // there be more work needed to match the IDs
     .then((predictions) => {
+      // opportunity for remembering the last changed label names by moving
+      // this object outside of the function
+      const predictedImageCoordinates = {};
       for (let i = 0; i < predictions.length; i += 1) {
         predictedImageCoordinates[predictionIdToImageId[i]] = predictions[i];
       }
@@ -88,7 +88,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
       if (isObjectEmpty(predictedImageCoordinates)) {
         nextViewCallback();
       } else {
-        displayContinueButton();
+        displayNextButton();
         drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
         updateProgressMessage('Finished!');
       }
@@ -103,20 +103,24 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
 
 // decided not to store generated shapes because if you have 100 images with
 // 100s of shapes, it would lead to significant memory usage
-function makePredictionsForAllImages(nextViewCallback, setMachineLearningData) {
+function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage) {
   const predictPromises = [];
   const allImageData = getAllImageData();
   const predictionIdToImageId = [];
-  const currentImageId = getCurrentImageId();
+  // optimisation for not generating shapes on untouched images taken out
+  // as when displaying the generated label names, only the new name label
+  // names were shown, but when looked at image, all of them were there
+  // this did not look right in terms of UX
+  // Optimisation description:
+  // only predicting images with no highlighted shapes and current image
+  // as it can have partial highlighting, so predicting all again
+  // 12/01/2020
+
   for (let i = 0; i < allImageData.length; i += 1) {
     const image = allImageData[i];
-    if (image.numberOfMLGeneratedShapes === 0) {
-      predictPromises.push(predict(image));
-      predictionIdToImageId.push(i);
-    } else if (i === currentImageId) {
-      predictPromises.push(predict(image));
-      predictionIdToImageId.push(i);
-    }
+    image.analysedByML = true;
+    predictPromises.push(predict(image));
+    predictionIdToImageId.push(i);
   }
   executeAndRecordPredictionResults(predictPromises, predictionIdToImageId,
     nextViewCallback, setMachineLearningData);
@@ -176,8 +180,7 @@ function downloadTensorflowJS() {
   });
 }
 
-function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
-  if (retry) { removeErrorButtons(); }
+function startMachineLearning(nextViewCallback, setMachineLearningData, coverage) {
   if (isCancelled) { isCancelled = false; }
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
@@ -187,14 +190,31 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
       downloadTensorflowJS()
         .then(resultScriptStatus => downloadCOCOSSD(resultScriptStatus))
         .then(resultScriptStatus => loadModel(resultScriptStatus))
-        .then(() => makePredictionsForAllImages(nextViewCallback, setMachineLearningData))
+        .then(() => makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage))
         .catch(() => errorHandler());
     } else {
-      makePredictionsForAllImages(nextViewCallback, setMachineLearningData);
+      makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage);
     }
   } else {
     displayNoImagesFoundError();
   }
+}
+
+function isFractionOfImagesAnalysedByML() {
+  const images = getAllImageData();
+  let imagesAnalysedByML = false;
+  let imagesNotYetAnalysedByML = false;
+  for (let i = 0; i < images.length; i += 1) {
+    if (images[i].analysedByML) {
+      imagesAnalysedByML = true;
+    } else {
+      imagesNotYetAnalysedByML = true;
+    }
+    if (imagesAnalysedByML && imagesNotYetAnalysedByML) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function cancelMachineLearning() {
@@ -206,4 +226,7 @@ function getProgressStatus() {
   return isInProgress;
 }
 
-export { startMachineLearning, getProgressStatus, cancelMachineLearning };
+export {
+  startMachineLearning, cancelMachineLearning,
+  getProgressStatus, isFractionOfImagesAnalysedByML,
+};

@@ -162,6 +162,7 @@ function setDefaultImageProperties(image, imageMetadata) {
   image.labels = {};
   image.size = imageMetadata.size;
   image.numberOfMLGeneratedShapes = 0;
+  image.analysedByML = false;
 }
 
 function addSingleImageToList(imageMetadata, imageData) {
