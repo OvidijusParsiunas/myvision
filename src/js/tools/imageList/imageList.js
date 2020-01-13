@@ -95,7 +95,7 @@ function setMLGeneratedShapesToOriginalColorPallette() {
   if (images[currentlySelectedImageId].numberOfMLGeneratedShapes > 0) {
     Object.keys(images[currentlySelectedImageId].shapes).forEach((key) => {
       const shape = images[currentlySelectedImageId].shapes[key].shapeRef;
-      if (shape.isGeneratedViaML && shape.MLPallette) {
+      if (shape.MLPallette) {
         shape.fill = shape.trueFill;
         shape.stroke = shape.trueStroke;
         shape.MLPallette = false;

@@ -93,6 +93,13 @@ function setPolygonNotEditableOnClick() {
 
 // think about adding a screen wide scrosshair and show coordinates to the user
 
+function setMLGeneratedPalletteToOriginal(shape) {
+  updateNumberOfUncheckedMLImages();
+  shape.fill = shape.trueFill;
+  shape.stroke = shape.trueStroke;
+  shape.MLPallette = false;
+}
+
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {
   mouseIsDown = true;
@@ -100,6 +107,10 @@ function polygonMouseDownEvents(event) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
       removeHighlightOfListLabel();
+      if (event.target.MLPallette) {
+        setMLGeneratedPalletteToOriginal(event.target);
+        highlightShapeFill(event.target.id);
+      }
       highlightLabelInTheList(event.target.id);
       if (getPolygonEditingStatus()) {
         setPolygonNotEditableOnClick();
@@ -202,11 +213,8 @@ function shapeMouseOutEvents(event) {
 
 function shapeMouseOverEvents(event) {
   if (event.target && event.target.shapeName !== 'point' && event.target.shapeName !== 'label') {
-    if (event.target.isGeneratedViaML && event.target.MLPallette) {
-      updateNumberOfUncheckedMLImages();
-      event.target.fill = event.target.trueFill;
-      event.target.stroke = event.target.trueStroke;
-      event.target.MLPallette = false;
+    if (event.target.MLPallette) {
+      setMLGeneratedPalletteToOriginal(event.target);
     }
     highlightShapeFill(event.target.id);
   }
