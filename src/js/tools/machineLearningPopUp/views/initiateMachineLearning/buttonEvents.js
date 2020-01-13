@@ -1,5 +1,5 @@
 import { startMachineLearning, getProgressStatus, cancelMachineLearning } from './machineLearning';
-import { prepareInstantiateMachineLearningView } from './style';
+import { prepareInstantiateMachineLearningView, hideInitiateMachineLearningViewAssets } from './style';
 
 function cancelInitiateMLPopUp(closePopUp) {
   if (getProgressStatus()) {
@@ -12,6 +12,7 @@ function cancelInitiateMLPopUp(closePopUp) {
 }
 
 function moveToNextView(nextViewCallback) {
+  hideInitiateMachineLearningViewAssets();
   nextViewCallback();
 }
 

@@ -1,8 +1,4 @@
-import {
-  assignInitiateMachineLearningViewLocalVariables,
-  hideInitiateMachineLearningViewAssets,
-  prepareInstantiateMachineLearningView,
-} from './initiateMachineLearning/style';
+import { assignInitiateMachineLearningViewLocalVariables, prepareInstantiateMachineLearningView } from './initiateMachineLearning/style';
 import { assignGeneratedLabelsViewLocalVariables } from './generatedLabels/style';
 import { displayGeneratedLabelsView } from './generatedLabels/changeLabels';
 import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView } from './noObjectsFound/style';
@@ -31,9 +27,8 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 2:
-      hideInitiateMachineLearningViewAssets();
       if (isObjectEmpty(machineLearningData)) {
-        displayNoObjectsFoundView(machineLearningData);
+        displayNoObjectsFoundView();
       } else {
         displayGeneratedLabelsView(machineLearningData);
       }

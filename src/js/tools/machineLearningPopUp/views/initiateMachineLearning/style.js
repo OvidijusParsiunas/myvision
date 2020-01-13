@@ -54,9 +54,18 @@ function removeLoaderWheel() {
   descriptionElement.style.marginBottom = '';
 }
 
-function displayContinueButton() {
+function displayNextButton() {
   nextButtonElement.style.display = '';
   descriptionElement.style.marginBottom = '7px';
+}
+
+function removeNextButton() {
+  nextButtonElement.style.display = 'none';
+  descriptionElement.style.marginBottom = '7px';
+}
+
+function displayCancelButton() {
+  cancelButtonElement.style.display = '';
 }
 
 function removeCancelButton() {
@@ -105,7 +114,7 @@ function highlightCancelButton() {
 
 function displayUploadImagesButton() {
   toolkitUploadImagesButton.style.zIndex = 3;
-  toolkitUploadImagesButton.style.border = '2px solid rgb(218, 197, 73)';
+  toolkitUploadImagesButton.style.border = '2px solid rgb(73, 178, 218)';
   isUploadImagesButtonDisplayed = true;
 }
 
@@ -140,6 +149,7 @@ function removeUploadedImageAfterNoneFoundError() {
 }
 
 function hideInitiateMachineLearningViewAssets() {
+  removeNextButton();
   buttonsGroupElement.style.display = 'none';
   progressMessagesElement.style.display = 'none';
   descriptionElement.style.marginBottom = '';
@@ -161,6 +171,7 @@ function prepareInstantiateMachineLearningView() {
   buttonsGroupElement.style.display = '';
   cancelButtonElement.style.marginRight = '';
   displayStartButton();
+  displayCancelButton();
   removeLoaderWheel();
 }
 
@@ -177,8 +188,8 @@ function assignInitiateMachineLearningViewLocalVariables() {
 }
 
 export {
+  hideInitiateMachineLearningViewAssets, displayNextButton,
   displayLoaderWheel, removeLoaderWheel, displayErrorButtons,
-  hideInitiateMachineLearningViewAssets, displayContinueButton,
   changeToLoadingStyle, removeCancelButton, removeErrorButtons,
   removeStartButton, disableStartButton, displayNoImagesFoundError,
   prepareInstantiateMachineLearningView, displayUploadImagesButton,
