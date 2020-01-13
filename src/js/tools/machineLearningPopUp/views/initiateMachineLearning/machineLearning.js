@@ -199,6 +199,7 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, retry) {
 
 function cancelMachineLearning() {
   isCancelled = true;
+  isInProgress = false;
 }
 
 function getProgressStatus() {

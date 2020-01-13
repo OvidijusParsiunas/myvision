@@ -61,22 +61,27 @@ function getImageDimensions(image) {
   return { scaleX: 1, scaleY: 1 };
 }
 
-function removeMLShapesOnImage(allImageData, id) {
-  const currentImageShapes = getAllExistingShapes();
-  Object.keys(currentImageShapes).forEach((key) => {
-    const shape = currentImageShapes[key].shapeRef;
+function removeMLShapesOnImage(imageData, currentImage) {
+  const shapes = currentImage ? getAllExistingShapes() : imageData.shapes;
+  Object.keys(shapes).forEach((key) => {
+    const shape = shapes[key].shapeRef;
     if (shape.isGeneratedViaML) {
-      removeBoundingBox(canvas, shape);
+      if (currentImage) {
+        removeBoundingBox(canvas, shape);
+      } else {
+        delete shapes[key];
+      }
     }
   });
   canvas.renderAll();
-  allImageData[id].numberOfMLGeneratedShapes = 0;
+  imageData.numberOfMLGeneratedShapes = 0;
 }
 
 function generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
   currentlySelectedImageId, isUsingMachineLearning) {
-  removeMLShapesOnImage(allImageData, currentlySelectedImageId);
+  removeMLShapesOnImage(allImageData[currentlySelectedImageId], true);
   Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
+    removeMLShapesOnImage(allImageData[key]);
     const image = allImageData[key];
     const imageDimensions = getImageDimensions(image);
     const isCurrentlySelectedImage = currentlySelectedImageId === parseInt(key, 10);

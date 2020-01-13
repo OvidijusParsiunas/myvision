@@ -38,6 +38,7 @@ function populateImageProperties(image, shapeRefObject, label, id) {
 
 function replaceCurrentShapeColourPropertiesWithMLPallette(shape) {
   shape.set('isGeneratedViaML', true);
+  shape.set('MLPallette', true);
   shape.set('trueFill', shape.fill);
   shape.set('trueStroke', shape.stroke);
   shape.set('fill', 'rgb(88, 202, 75, 0.3)');

@@ -188,6 +188,9 @@ function polygonMoveEvents(event) {
     } else if (shapeName === 'bndBox') {
       labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = event.target.top;
+      if (event.target.isGeneratedViaML) {
+        event.target.isGeneratedViaML = false;
+      }
     }
   }
 }
@@ -199,11 +202,11 @@ function shapeMouseOutEvents(event) {
 
 function shapeMouseOverEvents(event) {
   if (event.target && event.target.shapeName !== 'point' && event.target.shapeName !== 'label') {
-    if (event.target.isGeneratedViaML) {
+    if (event.target.isGeneratedViaML && event.target.MLPallette) {
       updateNumberOfUncheckedMLImages();
       event.target.fill = event.target.trueFill;
       event.target.stroke = event.target.trueStroke;
-      event.target.isGeneratedViaML = false;
+      event.target.MLPallette = false;
     }
     highlightShapeFill(event.target.id);
   }

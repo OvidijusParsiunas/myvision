@@ -47,7 +47,7 @@ function displayNextView() {
   }
 }
 
-function displayMachineLearningPopUp() {
+function displayPopUp() {
   popupElement.style.display = '';
   dimWindow(0.5);
 }
@@ -75,4 +75,4 @@ function initialiseMachineLearningPopUp() {
   displayNextView();
 }
 
-export { displayMachineLearningPopUp, initialiseMachineLearningPopUp };
+export { displayPopUp, initialiseMachineLearningPopUp };
