@@ -1,5 +1,6 @@
 import { getAllImageData } from '../../../imageList/imageList';
 import { drawTempShapesToShowCaseMLResults } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeCancelButton,
   displayNoImagesFoundError, displayNextButton,
@@ -63,7 +64,7 @@ function isObjectEmpty(object) {
 }
 
 function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
-  nextViewCallback, setMachineLearningData) {
+  nextViewCallback, setMachineLearningData, coverage) {
   Promise.all(promisesArray)
     .catch(() => {
       // if stopstate = true
@@ -89,7 +90,10 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
         nextViewCallback();
       } else {
         displayNextButton();
-        drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
+        if (coverage === 'all'
+        || (coverage === 'new' && Object.prototype.hasOwnProperty.call(predictedImageCoordinates, getCurrentImageId()))) {
+          drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
+        }
         updateProgressMessage('Finished!');
       }
       isInProgress = false;
@@ -103,6 +107,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
 
 // decided not to store generated shapes because if you have 100 images with
 // 100s of shapes, it would lead to significant memory usage
+
 function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage) {
   const predictPromises = [];
   const allImageData = getAllImageData();
@@ -115,15 +120,17 @@ function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, c
   // only predicting images with no highlighted shapes and current image
   // as it can have partial highlighting, so predicting all again
   // 12/01/2020
-
   for (let i = 0; i < allImageData.length; i += 1) {
     const image = allImageData[i];
-    image.analysedByML = true;
-    predictPromises.push(predict(image));
-    predictionIdToImageId.push(i);
+    if (coverage === 'all' || (coverage === 'new' && !image.analysedByML)) {
+      image.analysedByML = true;
+      predictPromises.push(predict(image));
+      predictionIdToImageId.push(i);
+    }
   }
+
   executeAndRecordPredictionResults(predictPromises, predictionIdToImageId,
-    nextViewCallback, setMachineLearningData);
+    nextViewCallback, setMachineLearningData, coverage);
 }
 
 function markScriptDownloadSuccessfull(status) {

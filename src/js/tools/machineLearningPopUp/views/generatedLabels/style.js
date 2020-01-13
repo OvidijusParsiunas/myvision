@@ -294,7 +294,7 @@ function getScrollWidth() {
 }
 
 function updateGeneratedLabelsParentElementWidthOnStartup() {
-  activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[1].childNodes[0];
+  activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[0].childNodes[0];
   updateGeneratedLabelsElementWidth();
   activeTextRow = null;
 }
