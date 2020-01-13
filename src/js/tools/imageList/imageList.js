@@ -88,6 +88,7 @@ function setMLThumbnailOverlayToMLSelected(element) {
 function setThumbnailColourOverlayBackToDefault(element) {
   if (element.classList.contains('image-list-thumbnail-machine-learning-selected')) {
     element.classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
+    displayTickSVGOverImageThumbnail();
   }
 }
 
@@ -109,7 +110,6 @@ function setCurrentlyActiveElementToInvisible() {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
     setThumbnailColourOverlayBackToDefault(currentlyActiveElement);
-    setMLGeneratedShapesToOriginalColorPallette();
   }
 }
 
@@ -151,6 +151,7 @@ function saveAndRemoveCurrentImageDetails() {
   const timesZoomedOut = resetZoom(false);
   zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
     images[currentlySelectedImageId].labels, timesZoomedOut);
+  setMLGeneratedShapesToOriginalColorPallette();
   currentlySelectedImageId = newImageId;
   setCurrentImageId(newImageId);
   firstImage = false;
@@ -167,9 +168,9 @@ function setDefaultImageProperties(image, imageMetadata) {
 
 function addSingleImageToList(imageMetadata, imageData) {
   addNewImage(imageMetadata.name, imageData);
+  highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   saveAndRemoveCurrentImageDetails();
   currentImageNameElement.innerHTML = imageMetadata.name;
-  highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   setDefaultImageProperties(images[newImageId], imageMetadata);
   newImageId += 1;
@@ -179,9 +180,9 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
   addNewImage(imageMetadata.name, imageData);
   setDefaultImageProperties(images[newImageId], imageMetadata);
   if (firstFromMany) {
+    highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     saveAndRemoveCurrentImageDetails();
     currentImageNameElement.innerHTML = imageMetadata.name;
-    highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     images[newImageId].thumbnailElementRef.scrollIntoView();
   }
   newImageId += 1;

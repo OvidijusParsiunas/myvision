@@ -101,8 +101,14 @@ function captureCurrentImageData(allImageData, currentlySelectedImageId) {
   allImageData[currentlySelectedImageId].imageDimensions = imageDimensions;
 }
 
-function updateImageThumbnails(predictedShapeCoordinatesForImages, allImageData,
-  currentlySelectedImageId) {
+function getImageData() {
+  const allImageData = getAllImageData();
+  const currentlySelectedImageId = getCurrentImageId();
+  return { allImageData, currentlySelectedImageId };
+}
+
+function updateImageThumbnails(predictedShapeCoordinatesForImages) {
+  const { allImageData, currentlySelectedImageId } = getImageData();
   Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
     const predictedShapeCoordinates = predictedShapeCoordinatesForImages[key];
     if (predictedShapeCoordinates.length > 0) {
@@ -129,12 +135,6 @@ function removeTempShapes() {
   canvas.renderAll();
 }
 
-function getImageData() {
-  const allImageData = getAllImageData();
-  const currentlySelectedImageId = getCurrentImageId();
-  return { allImageData, currentlySelectedImageId };
-}
-
 function prepareToDrawShapes(allImageData, currentlySelectedImageId) {
   captureCurrentImageData(allImageData, currentlySelectedImageId);
   prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
@@ -143,8 +143,6 @@ function prepareToDrawShapes(allImageData, currentlySelectedImageId) {
 function drawTempShapesToShowCaseMLResults(predictedShapeCoordinatesForImages) {
   const { allImageData, currentlySelectedImageId } = getImageData();
   prepareToDrawShapes(allImageData, currentlySelectedImageId);
-  updateImageThumbnails(predictedShapeCoordinatesForImages, allImageData,
-    currentlySelectedImageId);
   const currentlySelectedImageShapes = predictedShapeCoordinatesForImages[currentlySelectedImageId];
   const dimensions = getImageDimensions(allImageData[currentlySelectedImageId]);
   generateTempShapes(currentlySelectedImageShapes, dimensions);
@@ -175,5 +173,5 @@ function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {
 
 export {
   assignCanvasForDrawingShapesViaCoordinates, drawShapesViaCoordinates,
-  drawTempShapesToShowCaseMLResults,
+  drawTempShapesToShowCaseMLResults, updateImageThumbnails,
 };

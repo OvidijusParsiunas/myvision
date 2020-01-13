@@ -1,5 +1,5 @@
 import { getAllImageData } from '../../../imageList/imageList';
-import { drawTempShapesToShowCaseMLResults } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeCancelButton,
@@ -94,6 +94,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
         || (coverage === 'new' && Object.prototype.hasOwnProperty.call(predictedImageCoordinates, getCurrentImageId()))) {
           drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
         }
+        updateImageThumbnails(predictedImageCoordinates);
         updateProgressMessage('Finished!');
       }
       isInProgress = false;

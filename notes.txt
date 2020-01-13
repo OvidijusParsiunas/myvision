@@ -100,6 +100,6 @@ move facadeWorkersUtils contents to a folder outside named utils
 are you allowed spaces in annotations? if not, we will then need to start trimming the new and changed labels (including ML)
 update labelimg
 
-add tick when checked out an ml generated window
-
 bug found: draw bounding box, draw polygon, mouse down on nothing, mouse up on bounding box, mouse down on nothing, mouse up on polygon
+
+ML can generate bounding boxes that stretch outside of the image (example with dog picture)
