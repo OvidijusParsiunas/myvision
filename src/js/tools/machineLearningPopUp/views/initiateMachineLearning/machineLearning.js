@@ -24,12 +24,10 @@ function errorHandler() {
 
 function predict(image) {
   return tfModel.detect(image.data);
+  // return tfModel.detect(image.data);
 }
 
 // check overflow
-// paste
-
-// two use cases to do UX for; 1 - map the names before generating, 2 - cancel, keep, continue
 
 /*
 let stopState = false;
@@ -71,7 +69,8 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
       // else display an error
       console.log('error');
       // should return the completed array promises
-      return promisesArray;
+      errorHandler();
+      // return promisesArray;
     })
     // TEST
     // check to see if only the completed operations are returned and should
@@ -129,7 +128,7 @@ function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, c
       predictionIdToImageId.push(i);
     }
   }
-
+  console.log(predictPromises);
   executeAndRecordPredictionResults(predictPromises, predictionIdToImageId,
     nextViewCallback, setMachineLearningData, coverage);
 }

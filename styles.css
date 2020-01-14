@@ -60,14 +60,14 @@
 }
 
 #popup-label-options .labelDropdownOption {
-  white-space: nowrap;
+  white-space: pre;
   padding-left: 2px;
   user-select: none;
   text-decoration: none;
 }
 
 .dropdown-content .labelDropdownOption {
-  white-space: nowrap;
+  white-space: pre;
   padding-top: 2px;
   padding-bottom: 2px;
   padding-left: 5px;

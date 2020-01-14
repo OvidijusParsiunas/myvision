@@ -90,6 +90,7 @@ function highlightInitialLabelOptionOnInit() {
 function hideLabelPopUp() {
   lightUpWindow();
   popupLabelParentElement.style.display = 'none';
+  inputElement.value = inputElement.value.trim();
   setLabellingPopUpDisplayedState(false);
 }
 

@@ -1,5 +1,5 @@
 import {
-  postProcessSpacesInTextElement, updateGeneratedLabelsElementWidth, MLLabelTextPaste,
+  updateGeneratedLabelsElementWidth, MLLabelTextPaste,
   displayHighlightedDefaultEditLabelButton, displayRedEditButtonIfActiveTextEmpty,
   displayGreyedDefaultEditLabelButton, changeRowToEdit, hideGeneratedLabelsViewAssets,
 } from './style';
@@ -14,7 +14,6 @@ function MLLabelTextKeyDown(event) {
     stopEditingMLGeneratedLabelName();
   } else {
     window.setTimeout(() => {
-      if (event.code === 'Space') { postProcessSpacesInTextElement(); }
       updateGeneratedLabelsElementWidth();
       displayRedEditButtonIfActiveTextEmpty();
     }, 1);

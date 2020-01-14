@@ -43,7 +43,9 @@ function displayNextView() {
 }
 
 function displayPopUp() {
-  popupElement.style.display = '';
+  setTimeout(() => {
+    popupElement.style.display = '';
+  }, 60);
   dimWindow(0.5);
 }
 

@@ -45,11 +45,16 @@ function replaceCurrentShapeColourPropertiesWithMLPallette(shape) {
   shape.set('stroke', 'rgb(88, 202, 75)');
 }
 
+function preProcessText(text) {
+  return text.trim();
+}
+
 function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
+  const preprocessedText = preProcessText(text);
   shape.set('id', currentId);
-  shape.set('shapeLabelText', text);
+  shape.set('shapeLabelText', preprocessedText);
   const initialLocation = findInitialLabelLocation(shape);
-  const textShape = new fabric.Text(text,
+  const textShape = new fabric.Text(preprocessedText,
     labelProperties.getLabelProps(initialLocation, shape.shapeName));
   addToLabelOptions(textShape.text);
   const shapeColor = getLabelColor(textShape.text);

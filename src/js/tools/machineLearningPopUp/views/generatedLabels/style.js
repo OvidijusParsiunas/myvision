@@ -124,8 +124,9 @@ function getCaretPositionOnDiv(editableDiv, paste) {
 
 function preprocessPastedText(text) {
   const noReturnChars = text.replace(/(\r\n|\n|\r)/gm, '');
-  const spacesToHythons = noReturnChars.replace(/\s/g, '-');
-  return spacesToHythons;
+  // code for converting spaces to hythons
+  // const spacesToHythons = noReturnChars.replace(/\s/g, '-');
+  return noReturnChars;
 }
 
 function MLLabelTextPaste(event) {
@@ -167,6 +168,7 @@ function setEditingStateToFalse() {
   setTimeout(() => {
     editingActive = false;
     activeTextRow = null;
+    activeTextElement = null;
   }, 1);
 }
 
@@ -266,18 +268,21 @@ function changeRowToEdit(element) {
   }
 }
 
+function preProcessText(text) {
+  return text.trim();
+}
+
 function displayRedEditButtonIfActiveTextEmpty() {
-  if (activeTextElement.innerHTML === '') {
+  const preprocessedText = preProcessText(activeTextElement.innerHTML);
+  if (preprocessedText === '') {
     activeTextRow.childNodes[5].style.display = 'none';
     activeTextRow.childNodes[7].style.display = '';
     displayingRedEditButton = true;
+  } else if (displayingRedEditButton) {
+    activeTextRow.childNodes[5].style.display = '';
+    activeTextRow.childNodes[7].style.display = 'none';
+    displayingRedEditButton = false;
   }
-}
-
-function postProcessSpacesInTextElement() {
-  const currentCaretPosition = getCaretPositionOnDiv(activeTextElement).position;
-  activeTextElement.innerHTML = activeTextElement.innerHTML.replace(/\s/g, '-');
-  setCaretPositionOnDiv(currentCaretPosition, activeTextElement, true);
 }
 
 function getScrollWidth() {
@@ -371,9 +376,9 @@ function assignGeneratedLabelsViewLocalVariables() {
 }
 
 export {
+  hideGeneratedLabelsViewAssets, changeRowToEdit, MLLabelTextPaste,
+  assignGeneratedLabelsViewLocalVariables, canChangeRowToStopEdit,
   stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty,
-  postProcessSpacesInTextElement, changeRowToEdit, canChangeRowToStopEdit,
   updateGeneratedLabelsElementWidth, displayHighlightedDefaultEditLabelButton,
   displayGreyedDefaultEditLabelButton, changeEditedLabelText, displayViewElements,
-  assignGeneratedLabelsViewLocalVariables, MLLabelTextPaste, hideGeneratedLabelsViewAssets,
 };

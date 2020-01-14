@@ -42,14 +42,25 @@ function displayInitialTextIfEmpty() {
   }
 }
 
+function trimText() {
+  activeLabelElement.innerHTML = activeLabelElement.innerHTML.trim();
+}
+
 function saveLabelName() {
+  trimText();
   displayInitialTextIfEmpty();
   setNewLabelName();
+}
+
+function setActivePropertiesToNull() {
+  activeLabelInitialText = '';
+  activeLabelElement = null;
 }
 
 function stopEditingMLGeneratedLabelName() {
   saveLabelName();
   stopEditingActiveTextElement();
+  setActivePropertiesToNull();
 }
 
 function stopEditingMLGeneratedLabelNameBtnClick(element) {
@@ -59,9 +70,11 @@ function stopEditingMLGeneratedLabelNameBtnClick(element) {
 }
 
 function setActiveLabelProperties(element) {
-  activeLabelElement = element.childNodes[9];
-  const text = activeLabelElement.innerHTML;
-  activeLabelInitialText = text;
+  if (element.childNodes[9] !== activeLabelElement) {
+    activeLabelElement = element.childNodes[9];
+    const text = activeLabelElement.innerHTML;
+    activeLabelInitialText = text;
+  }
 }
 
 function createObjectNamesObject() {

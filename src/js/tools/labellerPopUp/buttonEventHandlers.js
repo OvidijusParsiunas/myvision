@@ -15,10 +15,15 @@ let popupLabelOptions = null;
 let oneOrMoreLabelsAdded = false;
 let currentlySelectedLabelOption = null;
 
+function preProcessText(text) {
+  return text.trim();
+}
+
 function changeSubmitButtonStyling() {
-  if (textInputElement.value === '') {
+  const prepocessedText = preProcessText(textInputElement.value);
+  if (prepocessedText === '') {
     changeStyleWhenInputEmpty();
-  } else if (textInputElement.value === 'new label') {
+  } else if (prepocessedText === 'new label') {
     changeStyleWhenInputInvalid();
   } else {
     changeStyleToAllowSubmit();
@@ -41,7 +46,8 @@ function resetDrawingMode() {
 }
 
 function labelShape() {
-  if (textInputElement.value !== '') {
+  const preprocessedText = preProcessText(textInputElement.value);
+  if (preprocessedText !== '') {
     createLabelShape();
     setHasDrawnShapeState(true);
     resetDrawingMode();
@@ -99,7 +105,8 @@ function inputKeyDown(event) {
     window.setTimeout(() => {
       if (event.code === 'Space') {
         const initialCaretLocation = textInputElement.selectionStart;
-        textInputElement.value = textInputElement.value.replace(/\s/g, '-');
+        // code for converting spaces to hythons
+        // textInputElement.value = textInputElement.value.replace(/\s/g, '-');
         setCaretPosition(initialCaretLocation);
       }
       if (currentlySelectedLabelOption) {
@@ -124,8 +131,9 @@ function inputKeyDown(event) {
 
 function preprocessPastedText(text) {
   const noReturnChars = text.replace(/\n|\r/g, '');
-  const spacesToHythons = noReturnChars.replace(/\s/g, '-');
-  return spacesToHythons;
+  // code for converting spaces to hythons
+  // const spacesToHythons = noReturnChars.replace(/\s/g, '-');
+  return noReturnChars;
 }
 
 function pasteLabelText() {

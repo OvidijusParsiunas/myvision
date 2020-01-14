@@ -97,9 +97,23 @@ rename labellerPopUp to labellingPopUp
 
 move facadeWorkersUtils contents to a folder outside named utils
 
-are you allowed spaces in annotations? if not, we will then need to start trimming the new and changed labels (including ML)
 update labelimg
 
 bug found: draw bounding box, draw polygon, mouse down on nothing, mouse up on bounding box, mouse down on nothing, mouse up on polygon
 
 ML can generate bounding boxes that stretch outside of the image (example with dog picture)
+
+Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
+
+Add a tick for the finished description of ML popup
+
+Confirm UX button border size:
+.image-list-thumbnail-default {
+  border: 3px solid #0dc7ff;
+  width: calc(100% - 6px);
+  height: 54px;
+}
+
+Pascal VOC outputs a classes file
+
+arrow keys should go down the dropdown options for a label

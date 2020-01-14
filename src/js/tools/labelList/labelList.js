@@ -219,8 +219,9 @@ function isHorizontalScrollPresent() {
 
 function preprocessPastedText(text) {
   const noReturnChars = text.replace(/(\r\n|\n|\r)/gm, '');
-  const spacesToHythons = noReturnChars.replace(/\s/g, '-');
-  return spacesToHythons;
+  // code for converting spaces to hythons
+  // const spacesToHythons = noReturnChars.replace(/\s/g, '-');
+  return noReturnChars;
 }
 
 function pasteHandlerOnDiv(event) {
@@ -491,13 +492,18 @@ function moveSelectedLabelToFrontOfLabelOptions(id, text) {
   }
 }
 
+function preprocessText(text) {
+  return text.trim();
+}
+
 function addNewLabelToLabelOptions(text) {
+  const preprocessedText = preprocessText(text);
   if (isLabelChanged) {
-    if (text === '') {
+    if (preprocessedText === '') {
       activeLabelTextElement.innerHTML = originalLabelText;
     } else {
-      addToLabelOptions(text);
-      const newLabelColor = getLabelColor(text);
+      addToLabelOptions(preprocessedText);
+      const newLabelColor = getLabelColor(preprocessedText);
       changeShapeColorById(activeLabelId, newLabelColor);
       changeLabelColor(newLabelColor.label);
       repopulateDropdown();
@@ -572,7 +578,8 @@ window.labelTextKeyDown = (event) => {
   window.setTimeout(() => {
     if (event.code === 'Space') {
       const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement).position;
-      activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.replace(/\s/g, '-');
+      // code for converting spaces to hythons
+      // activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.replace(/\s/g, '-');
       setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement, true);
     }
     if (lastSelectedLabelOption) {
