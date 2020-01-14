@@ -4,7 +4,7 @@ import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWork
 import {
   displayErrorMessage, updateProgressMessage, removeCancelButton,
   displayNoImagesFoundError, displayNextButton,
-  removeLoaderWheel, displayErrorButtons,
+  removeLoaderWheel, displayRetryButton,
   changeToLoadingStyle,
 } from './style';
 
@@ -18,7 +18,7 @@ const cocoSSDScript = { element: document.createElement('script'), status: { dow
 function errorHandler() {
   removeLoaderWheel();
   displayErrorMessage('ERROR! Please try again later.');
-  displayErrorButtons();
+  displayRetryButton();
   isInProgress = false;
 }
 

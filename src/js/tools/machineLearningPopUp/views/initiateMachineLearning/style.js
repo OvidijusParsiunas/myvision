@@ -18,6 +18,8 @@ function removeErrorMessage() {
 }
 
 function removeProgressMessage() {
+  progressMessagesElement.style.display = 'none';
+  progressMessagesElement.style.color = '';
   progressMessagesElement.innerHTML = '';
 }
 
@@ -27,12 +29,12 @@ function displayErrorMessage(errorMessage) {
   buttonsGroupElement.style.marginTop = '4px';
 }
 
-function displayErrorButtons() {
+function displayRetryButton() {
   document.getElementById('machine-learning-popup-initiate-retry-button').style.display = '';
   descriptionElement.style.marginBottom = '6px';
 }
 
-function removeErrorButtons() {
+function removeRetryButton() {
   document.getElementById('machine-learning-popup-initiate-retry-button').style.display = 'none';
   descriptionElement.style.marginBottom = '';
 }
@@ -40,6 +42,7 @@ function removeErrorButtons() {
 function updateProgressMessage(progressMessage) {
   removeErrorMessage();
   progressMessagesElement.style.display = '';
+  progressMessagesElement.style.color = '#1e6d1e';
   progressMessagesElement.innerHTML = progressMessage;
 }
 
@@ -162,8 +165,8 @@ function removeUploadedImageAfterNoneFoundError() {
 
 function hideInitiateMachineLearningViewAssets() {
   removeNextButton();
+  removeProgressMessage();
   buttonsGroupElement.style.display = 'none';
-  progressMessagesElement.style.display = 'none';
   descriptionElement.style.marginBottom = '';
 }
 
@@ -203,12 +206,13 @@ function assignInitiateMachineLearningViewLocalVariables() {
 
 export {
   hideInitiateMachineLearningViewAssets, displayNextButton,
-  displayLoaderWheel, removeLoaderWheel, displayErrorButtons,
-  changeToLoadingStyle, removeCancelButton, removeErrorButtons,
+  displayLoaderWheel, removeLoaderWheel, displayRetryButton,
+  changeToLoadingStyle, removeCancelButton, removeRetryButton,
   removeStartButton, disableStartButton, displayNoImagesFoundError,
   prepareInstantiateMachineLearningView, displayUploadImagesButton,
   removeUploadedImageAfterNoneFoundError, closeMachineLearningPopUp,
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
   displayMLCoverageSelectionButtons, removeMLCoverageSelectionButtons,
+  removeErrorMessage,
 };

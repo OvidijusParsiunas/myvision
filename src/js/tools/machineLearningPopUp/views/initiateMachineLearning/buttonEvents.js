@@ -3,8 +3,8 @@ import {
   cancelMachineLearning, isFractionOfImagesAnalysedByML,
 } from './machineLearning';
 import {
-  prepareInstantiateMachineLearningView, hideInitiateMachineLearningViewAssets,
-  removeStartButton, removeCancelButton, displayMLCoverageSelectionButtons, removeErrorButtons,
+  prepareInstantiateMachineLearningView, hideInitiateMachineLearningViewAssets, removeErrorMessage,
+  removeStartButton, removeCancelButton, displayMLCoverageSelectionButtons, removeRetryButton,
   removeMLCoverageSelectionButtons,
 } from './style';
 
@@ -14,6 +14,8 @@ function cancelInitiateMLPopUp(closePopUp) {
     prepareInstantiateMachineLearningView();
   } else {
     closePopUp();
+    removeErrorMessage();
+    removeRetryButton();
     prepareInstantiateMachineLearningView();
   }
 }
@@ -24,7 +26,7 @@ function moveToNextView(nextViewCallback) {
 }
 
 function startMachineLearningMiddleware(nextViewCallback, setMachineLearningData, retry) {
-  if (retry) { removeErrorButtons(); }
+  if (retry) { removeRetryButton(); }
   if (isFractionOfImagesAnalysedByML()) {
     removeStartButton();
     removeCancelButton();
