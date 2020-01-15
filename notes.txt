@@ -117,3 +117,9 @@ Pascal VOC outputs a classes file
 arrow keys should go down the dropdown options for a label
 
 try trashcan icon for remove image label
+
+check which one is better, the popup title with bottom border or without
+
+fix height of the settings popup and the labeller popup
+
+check whether generating ML labels once, and then again works

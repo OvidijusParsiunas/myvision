@@ -173,15 +173,15 @@
   color: #9c9c9c;
 }
 
-.popup-submit-button {
+.popup-proceed-button {
   margin-right: 3px;
 }
 
-.popup-submit-button:hover {
+.popup-proceed-button:hover {
   background-color: #9ed49f !important;
 }
 
-.popup-submit-button:active {
+.popup-proceed-button:active {
   background-color: #43b543 !important;
 }
 
@@ -223,17 +223,9 @@
   margin-right: 3px;
 }
 
-.export-button-active:hover {
-  background-color: #9ed49f !important;
-}
-
-.export-button-active:active {
-  background-color: #69bd69 !important;
-}
-
 .format-option-checkbox-popover {
   font-size: 15px;
-  margin-left: 28px;
+  margin-left: 21px;
   position: absolute;
   margin-top: -29px;
   background: rgb(239, 239, 239);
@@ -257,7 +249,7 @@
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 8px solid rgb(228, 228, 228);
-  margin-left: 145px;
+  margin-left: 135px;
   margin-top: -3px;
 }
 
@@ -875,7 +867,7 @@ body {
   cursor: default;
 }
 
-.popup-submit-button {
+.popup-proceed-button {
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 4px;

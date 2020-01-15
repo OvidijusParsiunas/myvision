@@ -1,4 +1,4 @@
-import { disableFormatOptionsTextIfNoBoundingBoxes } from '../facadeWorkersUtils/exportDatasetsPopup/style';
+import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp } from '../facadeWorkersUtils/exportDatasetsPopup/style';
 import { getExportDatasetsPopUpOpenState, setExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
 
 function windowHasScrollbar() {
@@ -32,6 +32,10 @@ function validateFullPopUpVisible(popupLabelParentElement) {
   }
 }
 
+function displayPopUp(exportLabelsPopupParentElement) {
+  exportLabelsPopupParentElement.style.display = '';
+}
+
 function calculateElementOffset(el) {
   const rect = el.getBoundingClientRect();
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -39,19 +43,23 @@ function calculateElementOffset(el) {
   return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
 }
 
+function setPopUpPosition(exportLabelsPopupParentElement, exportDatasetsButton) {
+  const divOffset = calculateElementOffset(exportDatasetsButton);
+  exportLabelsPopupParentElement.style.top = `${divOffset.top}px`;
+  exportLabelsPopupParentElement.style.left = '65px';
+}
+
 function toggleExportDatasetsPopUp() {
   const exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
   const exportDatasetsButton = document.getElementById('exportDatasetsButton');
   if (!getExportDatasetsPopUpOpenState()) {
     disableFormatOptionsTextIfNoBoundingBoxes();
-    const divOffset = calculateElementOffset(exportDatasetsButton);
-    exportLabelsPopupParentElement.style.top = `${divOffset.top}px`;
-    exportLabelsPopupParentElement.style.left = '65px';
-    exportLabelsPopupParentElement.style.display = '';
+    setPopUpPosition(exportLabelsPopupParentElement, exportDatasetsButton);
+    displayPopUp(exportLabelsPopupParentElement);
     validateFullPopUpVisible(exportLabelsPopupParentElement);
     setExportDatasetsPopUpOpenState(true);
   } else {
-    exportLabelsPopupParentElement.style.display = 'none';
+    hideExportLabelsPopUp();
     setExportDatasetsPopUpOpenState(false);
   }
 }

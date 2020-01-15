@@ -1,44 +1,71 @@
 import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';
 
-let selected = false;
-let exportButtonActive = false;
-let currentlySelectedElement = null;
-let exportLabelsPopupParent = null;
+let isCheckboxSelected = false;
+let isExportButtonActive = false;
+let currentlyHoveredPopoverId = null;
 let exportButtonElement = null;
+let exportLabelsPopupParentElement = null;
+let currentlySelectedCheckboxElement = null;
 let genericFormatOptionsTextElements = null;
 let genericFormatOptionsCheckboxElements = null;
 let boundingBoxFormatOptionsTextElements = null;
 let boundingBoxFormatOptionsCheckboxElements = null;
 
-function setExportButtonActive() {
-  if (!exportButtonActive) {
-    exportButtonElement.style.backgroundColor = 'rgb(205, 232, 205)';
-    exportButtonElement.classList.add('export-button-active');
-    exportButtonActive = true;
+function removeExportPopUpInformationPopover(id) {
+  currentlyHoveredPopoverId = null;
+  const popover = document.getElementById(`format-option-checkbox-popover-${id}`);
+  const arrow = document.getElementById(`format-option-checkbox-arrow-${id}`);
+  popover.style.display = 'none';
+  arrow.style.display = 'none';
+}
+
+function displayPopover(id) {
+  currentlyHoveredPopoverId = id;
+  setTimeout(() => {
+    if (currentlyHoveredPopoverId === id) {
+      const popover = document.getElementById(`format-option-checkbox-popover-${id}`);
+      const arrow = document.getElementById(`format-option-checkbox-arrow-${id}`);
+      popover.style.display = 'block';
+      arrow.style.display = 'block';
+    }
+  }, 400);
+}
+
+function displayExportPopUpInformationPopover(id) {
+  if (getNumberOfShapeTypes().polygons > 0) {
+    displayPopover(id);
   }
 }
 
-function setExportButtonDefault() {
-  exportButtonElement.style.backgroundColor = 'rgb(222, 222, 222)';
-  exportButtonElement.classList.remove('export-button-active');
-  exportButtonActive = false;
+function uncheckCurrentlySelectedCheckbox() {
+  currentlySelectedCheckboxElement.checked = false;
 }
 
-function uncheckCurrentlySelected() {
-  currentlySelectedElement.checked = false;
+function enableExportButton() {
+  if (!isExportButtonActive) {
+    exportButtonElement.classList.add('popup-proceed-button');
+    exportButtonElement.classList.replace('popup-label-button-disabled', 'popup-label-button');
+    isExportButtonActive = true;
+  }
 }
 
-function selectFormat(target) {
-  if (!selected) {
-    currentlySelectedElement = target;
-    setExportButtonActive();
-    selected = true;
-  } else if (target === currentlySelectedElement) {
-    selected = false;
-    setExportButtonDefault();
-  } else {
-    uncheckCurrentlySelected();
-    currentlySelectedElement = target;
+function disableExportButton() {
+  exportButtonElement.classList.remove('popup-proceed-button');
+  exportButtonElement.classList.replace('popup-label-button', 'popup-label-button-disabled');
+  isExportButtonActive = false;
+}
+
+function enableBoundingBoxFormatOptions() {
+  for (let i = 0; i < boundingBoxFormatOptionsCheckboxElements.length; i += 1) {
+    boundingBoxFormatOptionsTextElements[i].style.color = 'black';
+    boundingBoxFormatOptionsCheckboxElements[i].disabled = false;
+  }
+}
+
+function enableGenericShapeFormatOptions() {
+  for (let i = 0; i < genericFormatOptionsCheckboxElements.length; i += 1) {
+    genericFormatOptionsTextElements[i].style.color = 'black';
+    genericFormatOptionsCheckboxElements[i].disabled = false;
   }
 }
 
@@ -48,8 +75,8 @@ function disableBoundingBoxFormatOptions() {
     boundingBoxFormatOptionsCheckboxElements[i].disabled = true;
     if (boundingBoxFormatOptionsCheckboxElements[i].checked === true) {
       boundingBoxFormatOptionsCheckboxElements[i].checked = false;
-      selected = false;
-      setExportButtonDefault();
+      isCheckboxSelected = false;
+      disableExportButton();
     }
   }
 }
@@ -60,8 +87,8 @@ function disablePolygonFormatOptions() {
     genericFormatOptionsCheckboxElements[i].disabled = true;
     if (genericFormatOptionsCheckboxElements[i].checked === true) {
       genericFormatOptionsCheckboxElements[i].checked = false;
-      selected = false;
-      setExportButtonDefault();
+      isCheckboxSelected = false;
+      disableExportButton();
     }
   }
 }
@@ -72,66 +99,37 @@ function disableFormatOptionsTextIfNoBoundingBoxes() {
     disableBoundingBoxFormatOptions();
     if (polygons === 0) {
       disablePolygonFormatOptions();
-      exportButtonElement.classList.replace('popup-label-button', 'popup-label-button-disabled');
+      disableExportButton();
     } else {
-      for (let i = 0; i < genericFormatOptionsCheckboxElements.length; i += 1) {
-        genericFormatOptionsTextElements[i].style.color = 'black';
-        genericFormatOptionsCheckboxElements[i].disabled = false;
-      }
-      exportButtonElement.classList.replace('popup-label-button-disabled', 'popup-label-button');
+      enableGenericShapeFormatOptions();
     }
   } else {
-    for (let i = 0; i < boundingBoxFormatOptionsCheckboxElements.length; i += 1) {
-      boundingBoxFormatOptionsTextElements[i].style.color = 'black';
-      boundingBoxFormatOptionsCheckboxElements[i].disabled = false;
-    }
-    for (let i = 0; i < genericFormatOptionsCheckboxElements.length; i += 1) {
-      genericFormatOptionsTextElements[i].style.color = 'black';
-      genericFormatOptionsCheckboxElements[i].disabled = false;
-    }
-    exportButtonElement.classList.replace('popup-label-button-disabled', 'popup-label-button');
+    enableBoundingBoxFormatOptions();
+    enableGenericShapeFormatOptions();
+  }
+}
+
+function selectFormat(target) {
+  if (!isCheckboxSelected) {
+    currentlySelectedCheckboxElement = target;
+    enableExportButton();
+    isCheckboxSelected = true;
+  } else if (target === currentlySelectedCheckboxElement) {
+    isCheckboxSelected = false;
+    disableExportButton();
+  } else {
+    uncheckCurrentlySelectedCheckbox();
+    currentlySelectedCheckboxElement = target;
   }
 }
 
 function hideExportLabelsPopUp() {
-  exportLabelsPopupParent.style.display = 'none';
-}
-
-let readyToDisplay = null;
-
-function displayPopover(id) {
-  readyToDisplay = id;
-  setTimeout(() => {
-    if (readyToDisplay === id) {
-      const popover = document.getElementById(`format-option-checkbox-popover-${id}`);
-      const arrow = document.getElementById(`format-option-checkbox-arrow-${id}`);
-      popover.style.display = 'block';
-      arrow.style.display = 'block';
-    }
-  }, 400);
-}
-
-function displayCheckBoxInformationPopover(id, text) {
-  if (text) {
-    if (getNumberOfShapeTypes().boundingBoxes === 0) {
-      displayPopover(id);
-    }
-  } else {
-    displayPopover(id);
-  }
-}
-
-function removeCheckBoxInformationPopover(id) {
-  readyToDisplay = null;
-  const popover = document.getElementById(`format-option-checkbox-popover-${id}`);
-  const arrow = document.getElementById(`format-option-checkbox-arrow-${id}`);
-  popover.style.display = 'none';
-  arrow.style.display = 'none';
+  exportLabelsPopupParentElement.style.display = 'none';
 }
 
 function initialiseExportLabelsPopupElements() {
-  exportLabelsPopupParent = document.getElementById('export-labels-popup-parent');
   exportButtonElement = document.getElementById('export-labels-popup-export-button');
+  exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
   boundingBoxFormatOptionsTextElements = document.getElementsByClassName('bounding-box-format-option-text');
   boundingBoxFormatOptionsCheckboxElements = document.getElementsByClassName('bounding-box-format-option-checkbox');
   genericFormatOptionsTextElements = document.getElementsByClassName('generic-format-option-text');
@@ -139,6 +137,6 @@ function initialiseExportLabelsPopupElements() {
 }
 
 export {
-  selectFormat, disableFormatOptionsTextIfNoBoundingBoxes, displayCheckBoxInformationPopover,
-  hideExportLabelsPopUp, initialiseExportLabelsPopupElements, removeCheckBoxInformationPopover,
+  selectFormat, disableFormatOptionsTextIfNoBoundingBoxes, displayExportPopUpInformationPopover,
+  hideExportLabelsPopUp, initialiseExportLabelsPopupElements, removeExportPopUpInformationPopover,
 };
