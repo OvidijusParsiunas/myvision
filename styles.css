@@ -595,11 +595,6 @@ body {
 .settings-table-row-data {
   padding-top: 2px;
   padding-bottom: 2px;
-  cursor: pointer;
-}
-
-.settings-table-row-data:hover {
-  background-color: rgb(245, 243, 243);
 }
 
 #header {

@@ -59,13 +59,6 @@ function disableFormatOptionsTextIfNoBoundingBoxes() {
   }
 }
 
-function displayExportLabelsPopup() {
-  disableFormatOptionsTextIfNoBoundingBoxes();
-  setTimeout(() => {
-    exportLabelsPopupParent.style.display = 'block';
-  }, 100);
-}
-
 function hideExportLabelsPopUp() {
   exportLabelsPopupParent.style.display = 'none';
 }
@@ -110,6 +103,6 @@ function initialiseExportLabelsPopupElements() {
 }
 
 export {
-  selectFormat, displayExportLabelsPopup, displayCheckBoxInformationPopover,
+  selectFormat, disableFormatOptionsTextIfNoBoundingBoxes, displayCheckBoxInformationPopover,
   hideExportLabelsPopUp, initialiseExportLabelsPopupElements, removeCheckBoxInformationPopover,
 };

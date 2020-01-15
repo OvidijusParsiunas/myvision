@@ -1,12 +1,4 @@
-// import { dimWindow } from '../../../dimWindow/dimWindowService';
-// import { displayExportLabelsPopup } from '../../../exportLabelsPopUp/style';
-
-// function toggleExportDatasetsPopUp(canvas) {
-//   canvas.discardActiveObject();
-//   // dimWindow(0.4);
-//   displayExportLabelsPopup();
-// }
-
+import { disableFormatOptionsTextIfNoBoundingBoxes } from '../facadeWorkersUtils/exportDatasetsPopup/style';
 import { getExportDatasetsPopUpOpenState, setExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
 
 function windowHasScrollbar() {
@@ -51,6 +43,7 @@ function toggleExportDatasetsPopUp() {
   const exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
   const exportDatasetsButton = document.getElementById('exportDatasetsButton');
   if (!getExportDatasetsPopUpOpenState()) {
+    disableFormatOptionsTextIfNoBoundingBoxes();
     const divOffset = calculateElementOffset(exportDatasetsButton);
     exportLabelsPopupParentElement.style.top = `${divOffset.top}px`;
     exportLabelsPopupParentElement.style.left = '65px';
