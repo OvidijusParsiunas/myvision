@@ -207,6 +207,7 @@
 
 #export-labels-popup-parent {
   position: absolute;
+  border-radius: 3px; 
   background-color: white;
   border-width: 1px;
   border-style: solid;
