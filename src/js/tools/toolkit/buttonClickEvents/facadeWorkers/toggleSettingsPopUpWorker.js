@@ -31,6 +31,14 @@ function validateFullPopUpVisible(popupLabelParentElement) {
   }
 }
 
+function displayPopUp(settingsPopupElement) {
+  settingsPopupElement.style.display = '';
+}
+
+function hidePopUp(settingsPopupElement) {
+  settingsPopupElement.style.display = 'none';
+}
+
 function calculateElementOffset(el) {
   const rect = el.getBoundingClientRect();
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -38,18 +46,22 @@ function calculateElementOffset(el) {
   return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
 }
 
+function setPopUpPosition(settingsButton, settingsPopupElement) {
+  const divOffset = calculateElementOffset(settingsButton);
+  settingsPopupElement.style.top = `${divOffset.top}px`;
+  settingsPopupElement.style.left = '65px';
+}
+
 function toggleSettingsPopUp() {
   const settingsPopupElement = document.getElementById('settings-popup');
   const settingsButton = document.getElementById('settingsButton');
   if (!getSettingsPopUpOpenState()) {
-    const divOffset = calculateElementOffset(settingsButton);
-    settingsPopupElement.style.top = `${divOffset.top}px`;
-    settingsPopupElement.style.left = '65px';
-    settingsPopupElement.style.display = '';
+    setPopUpPosition(settingsButton, settingsPopupElement);
+    displayPopUp(settingsPopupElement);
     validateFullPopUpVisible(settingsPopupElement);
     setSettingsPopUpOpenState(true);
   } else {
-    settingsPopupElement.style.display = 'none';
+    hidePopUp(settingsPopupElement);
     setSettingsPopUpOpenState(false);
   }
 }

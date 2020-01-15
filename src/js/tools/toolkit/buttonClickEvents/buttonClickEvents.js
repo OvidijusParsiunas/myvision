@@ -20,8 +20,7 @@ function assignToolkitButtonClickEvents() {
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
   window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
-  window.exportDatasets = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
-    resetCanvasEventsToDefault, removeButtonPopIfActive, exportDatasetsBtnClick);
+  window.exportDatasets = removeButtonPopIfActive.bind(this, exportDatasetsBtnClick);
   window.displayMachineLearningPopUp = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
     resetCanvasEventsToDefault, removeButtonPopIfActive, machineLearningBtnClick);
   window.uploadImage = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,

@@ -119,6 +119,7 @@ arrow keys should go down the dropdown options for a label
 try trashcan icon for remove image label
 
 check which one is better, the popup title with bottom border or without
+when choosing the right one, make sure the export-labels-popup-item class is set for each one of the elements
 
 fix height of the settings popup and the labeller popup
 

@@ -5,9 +5,10 @@ import {
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
-  setEditingLabelId, getRemovingPolygonPointsState, getAddingPolygonPointsState, getDefaultState,
-  getSettingsPopUpOpenState, setSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
-  getChangingMLGeneratedLabelNamesState,
+  getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
+  getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState,
+  getAddingPolygonPointsState, setSettingsPopUpOpenState, setEditingLabelId,
+  getRemovingPolygonPointsState, getDefaultState, setExportDatasetsPopUpOpenState,
 } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
@@ -680,7 +681,13 @@ window.onmousedown = (event) => {
       settingsPopupElement.style.display = 'none';
       setSettingsPopUpOpenState(false);
     }
-    // needs to call a function in button events in the changeGeneratedLabelsView
+  } else if (getExportDatasetsPopUpOpenState()) {
+    if (event.target.classList[0] !== 'export-labels-popup-item') {
+      const exportPopupElement = document.getElementById('export-labels-popup-parent');
+      exportPopupElement.style.display = 'none';
+      setExportDatasetsPopUpOpenState(false);
+    }
+  // needs to call a function in button events in the changeGeneratedLabelsView
   } else if (getChangingMLGeneratedLabelNamesState()) {
     stopEditingMLGeneratedLabelNameBtnClick(event.target);
   }
