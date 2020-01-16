@@ -2,10 +2,8 @@ import { getAllImageData } from '../../../imageList/imageList';
 import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
-  displayErrorMessage, updateProgressMessage, removeCancelButton,
-  displayNoImagesFoundError, displayNextButton,
-  removeLoaderWheel, displayRetryButton,
-  changeToLoadingStyle,
+  displayErrorMessage, updateProgressMessage, removeCancelButton, displayNoImagesFoundInfo,
+  displayNextButton, removeLoaderWheel, displayRetryButton, changeToLoadingStyle,
 } from './style';
 
 let tfModel = null;
@@ -160,7 +158,7 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, coverage
       makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage);
     }
   } else {
-    displayNoImagesFoundError();
+    displayNoImagesFoundInfo();
   }
 }
 

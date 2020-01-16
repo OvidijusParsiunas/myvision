@@ -1,5 +1,4 @@
-let isUploadImagesButtonDisplayed = false;
-let isNoImagesFoundErrorDisplayed = false;
+let isNoImagesFoundInfoDisplayed = false;
 
 let nextButtonElement = null;
 let loaderWheelElement = null;
@@ -7,15 +6,12 @@ let descriptionElement = null;
 let buttonsGroupElement = null;
 let submitButtonElement = null;
 let cancelButtonElement = null;
+let infoMessagesElement = null;
 let errorMessagesElement = null;
 let allImagesButtonElement = null;
 let newImagesButtonElement = null;
 let progressMessagesElement = null;
 let toolkitUploadImagesButton = null;
-
-function removeErrorMessage() {
-  errorMessagesElement.innerHTML = '';
-}
 
 function removeProgressMessage() {
   progressMessagesElement.style.display = 'none';
@@ -27,6 +23,11 @@ function displayErrorMessage(errorMessage) {
   removeProgressMessage();
   errorMessagesElement.innerHTML = errorMessage;
   buttonsGroupElement.style.marginTop = '4px';
+}
+
+function removeErrorMessage() {
+  errorMessagesElement.innerHTML = '';
+  buttonsGroupElement.style.marginTop = '';
 }
 
 function displayRetryButton() {
@@ -44,6 +45,16 @@ function updateProgressMessage(progressMessage) {
   progressMessagesElement.style.display = '';
   progressMessagesElement.style.color = '#1e6d1e';
   progressMessagesElement.innerHTML = progressMessage;
+}
+
+function displayInfoMessage(message) {
+  infoMessagesElement.innerHTML = message;
+  buttonsGroupElement.style.marginTop = '4px';
+}
+
+function removeInfoMessage() {
+  infoMessagesElement.innerHTML = '';
+  buttonsGroupElement.style.marginTop = '';
 }
 
 function displayLoaderWheel() {
@@ -130,36 +141,26 @@ function highlightCancelButton() {
 function displayUploadImagesButton() {
   toolkitUploadImagesButton.style.zIndex = 3;
   toolkitUploadImagesButton.style.border = '2px solid rgb(73, 178, 218)';
-  isUploadImagesButtonDisplayed = true;
 }
 
 function hideUploadImagesButton() {
   toolkitUploadImagesButton.style.zIndex = 1;
   toolkitUploadImagesButton.style.border = '';
-  isUploadImagesButtonDisplayed = false;
 }
 
-function closeMachineLearningPopUp() {
-  if (isUploadImagesButtonDisplayed) {
-    setTimeout(() => {
-      hideUploadImagesButton();
-    }, 2000);
-  }
-}
-
-function displayNoImagesFoundError() {
+function displayNoImagesFoundInfo() {
   displayUploadImagesButton();
   disableStartButton();
-  displayErrorMessage('Please upload an image before using Machine Learning');
-  isNoImagesFoundErrorDisplayed = true;
+  displayInfoMessage('Please upload an image before using Machine Learning');
+  isNoImagesFoundInfoDisplayed = true;
 }
 
-function removeUploadedImageAfterNoneFoundError() {
-  if (isNoImagesFoundErrorDisplayed) {
+function removeUploadedImageAfterNoneFoundInfo() {
+  if (isNoImagesFoundInfoDisplayed) {
     hideUploadImagesButton();
-    removeErrorMessage();
+    removeInfoMessage();
     enableStartButton();
-    isNoImagesFoundErrorDisplayed = false;
+    isNoImagesFoundInfoDisplayed = false;
   }
 }
 
@@ -199,6 +200,7 @@ function assignInitiateMachineLearningViewLocalVariables() {
   cancelButtonElement = document.getElementById('machine-learning-popup-initiate-cancel-button');
   buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
   errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
+  infoMessagesElement = document.getElementById('machine-learning-popup-info-messages');
   progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
   allImagesButtonElement = document.getElementById('machine-learning-popup-initiate-all-images-button');
   newImagesButtonElement = document.getElementById('machine-learning-popup-initiate-new-images-button');
@@ -207,12 +209,11 @@ function assignInitiateMachineLearningViewLocalVariables() {
 export {
   hideInitiateMachineLearningViewAssets, displayNextButton,
   displayLoaderWheel, removeLoaderWheel, displayRetryButton,
+  removeUploadedImageAfterNoneFoundInfo, removeErrorMessage,
   changeToLoadingStyle, removeCancelButton, removeRetryButton,
-  removeStartButton, disableStartButton, displayNoImagesFoundError,
+  removeStartButton, disableStartButton, displayNoImagesFoundInfo,
   prepareInstantiateMachineLearningView, displayUploadImagesButton,
-  removeUploadedImageAfterNoneFoundError, closeMachineLearningPopUp,
   displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
   displayMLCoverageSelectionButtons, removeMLCoverageSelectionButtons,
-  removeErrorMessage,
 };

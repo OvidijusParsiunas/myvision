@@ -293,6 +293,10 @@
   color: red;
 }
 
+#machine-learning-popup-info-messages {
+  color: #0d5cad;
+}
+
 #machine-learning-popup-buttons {
   margin-top: 12px;
 }

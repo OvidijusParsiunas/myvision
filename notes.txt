@@ -122,8 +122,3 @@ check which one is better, the popup title with bottom border or without
 when choosing the right one, make sure the export-labels-popup-item class is set for each one of the elements
 
 fix height of the settings popup and the labeller popup
-
-check whether generating ML labels once, and then again works
-
-bug where attempting to do machine learning with no images, clicking cancel and clicking upload images button
-doesn't remove the highlighting overlay
