@@ -15,11 +15,20 @@ function setMachineLearningData(machineLearningDataArg) {
   machineLearningData = machineLearningDataArg;
 }
 
-function isObjectEmpty(object) {
-  return Object.keys(object).length === 0 && object.constructor === Object;
+function isMachineLearningObjectEmpty() {
+  if (Object.keys(machineLearningData).length === 0 && machineLearningData.constructor === Object) {
+    return true;
+  }
+  let isEmpty = true;
+  Object.keys(machineLearningData).forEach((key) => {
+    if (machineLearningData[key].length > 0) {
+      isEmpty = false;
+    }
+  });
+  return isEmpty;
 }
 
-// the following architecture was prepared for more views
+// the following architecture was originally prepared for more views
 function displayNextView() {
   switch (currentViewNumber) {
     case 1:
@@ -27,7 +36,7 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 2:
-      if (isObjectEmpty(machineLearningData)) {
+      if (isMachineLearningObjectEmpty()) {
         displayNoObjectsFoundView();
       } else {
         displayGeneratedLabelsView(machineLearningData);

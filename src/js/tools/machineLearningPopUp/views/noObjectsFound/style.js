@@ -2,7 +2,7 @@ let descriptionElement = null;
 let buttonGroupElement = null;
 
 function changePopUpDescription() {
-  descriptionElement.innerHTML = 'The model has not identified any objects within your images.';
+  descriptionElement.innerHTML = 'The model has not identified any objects within the uploaded images.';
 }
 
 function displayNoObjectsFoundView() {
