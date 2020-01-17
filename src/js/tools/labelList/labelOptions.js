@@ -1,4 +1,5 @@
 let defaultShapeColorIndex = 0;
+let maxUsedLabelIndex = 0;
 
 const defaultShapeColors = [
   'hsl(0, 100%, 48%',
@@ -124,9 +125,11 @@ function addToLabelOptions(text) {
     }
   }
   if (foundAtIndex !== undefined) {
+    if (maxUsedLabelIndex <= foundAtIndex) { maxUsedLabelIndex = foundAtIndex; }
     sendLabelOptionToFront(foundAtIndex);
   } else {
     const color = generateRandomHSLColor();
+    maxUsedLabelIndex += 1;
     labelOptions.unshift({ text, color });
     if (limitLabelOptions && (labelOptions.length > maxLabelOptions)) {
       labelOptions.pop();
@@ -136,6 +139,10 @@ function addToLabelOptions(text) {
       }
     }
   }
+}
+
+function getMaxUsedLabelIndex() {
+  return maxUsedLabelIndex - 1;
 }
 
 function getLabelOptions() {
@@ -158,6 +165,6 @@ function shuffle(array) {
 shuffle(defaultShapeColors);
 
 export {
-  addToLabelOptions, sendLabelOptionToFront,
-  getLabelOptions, getNewShapeColor, getLabelColor,
+  getLabelOptions, getNewShapeColor, getMaxUsedLabelIndex,
+  addToLabelOptions, sendLabelOptionToFront, getLabelColor,
 };

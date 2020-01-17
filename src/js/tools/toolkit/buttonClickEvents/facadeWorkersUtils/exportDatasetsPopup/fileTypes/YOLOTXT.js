@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
-import { getLabelOptions } from '../../../../../labelList/labelOptions';
+import { getLabelOptions, getMaxUsedLabelIndex } from '../../../../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateManager';
 
 /*
@@ -74,22 +74,23 @@ function saveCurrentImageDetails(allImageProperties) {
   allImageProperties[currentlySelectedImageId].shapes = getAllExistingShapes();
 }
 
-function buildDownloadableZip(annotatedImages) {
+function buildDownloadableZip(annotationFilesData, classesFileData) {
   const zip = new JSZip();
   const imagesFolder = zip.folder('images');
-  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
-  annotatedImages.forEach((annotatedImage) => {
-    const imageName = `${regexToFindFirstWordBeforeFullStop.exec(annotatedImage.imageName)[0]}.txt`;
-    imagesFolder.file(imageName, annotatedImage.data);
+  annotationFilesData.forEach((annotationFile) => {
+    imagesFolder.file(annotationFile.imageName, annotationFile.data);
   });
+  imagesFolder.file('classes.txt', classesFileData);
   return imagesFolder;
 }
 
 function getCategoriesData() {
   const categoriesData = {};
   const labels = getLabelOptions();
+  const maxUsedLabelIndex = getMaxUsedLabelIndex();
   let labelId = 0;
-  for (let i = labels.length - 1; i >= 0; i -= 1) {
+  // the for loop is reversed because the new labels are popped to the front
+  for (let i = maxUsedLabelIndex; i >= 0; i -= 1) {
     categoriesData[labels[i].text] = labelId;
     labelId += 1;
   }
@@ -127,12 +128,33 @@ function getImageAndAnnotationData(allImageProperties, categoriesData) {
   return imageAndAnnotationData;
 }
 
+function generateClassesFileData(categoriesData) {
+  let classesString = '';
+  Object.keys(categoriesData).forEach((key) => {
+    classesString += key;
+    classesString += '\n';
+  });
+  return classesString;
+}
+
+function generateAnnotationFilesData(allImageProperties, categoriesData) {
+  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, categoriesData);
+  const annotationsFiles = [];
+  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
+  imageAndAnnotationData.forEach((annotatedImage) => {
+    const imageName = `${regexToFindFirstWordBeforeFullStop.exec(annotatedImage.imageName)[0]}.txt`;
+    annotationsFiles.push({ imageName, data: annotatedImage.data });
+  });
+  return annotationsFiles;
+}
+
 function downloadYOLOTXT() {
   const allImageProperties = getAllImageData();
   saveCurrentImageDetails(allImageProperties);
   const categoriesData = getCategoriesData();
-  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, categoriesData);
-  const downloadableZip = buildDownloadableZip(imageAndAnnotationData);
+  const annotationFilesData = generateAnnotationFilesData(allImageProperties, categoriesData);
+  const classesFileData = generateClassesFileData(categoriesData);
+  const downloadableZip = buildDownloadableZip(annotationFilesData, classesFileData);
   downloadZip(downloadableZip);
 }
 
