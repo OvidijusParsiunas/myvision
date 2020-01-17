@@ -136,13 +136,13 @@
         <div class="export-labels-popup-item popup-label-title" style="padding-left: 10px; padding-top: 7px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
         <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px;">
           <table style="width: 162px; padding-left: 5px;" id="settings-table" class="export-labels-popup-item">
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item settings-table-row-data"><div class="export-labels-popup-item checkbox-text generic-format-option-text">COCO JSON</div>
+            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text generic-format-option-text">COCO JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON', this)">
             </td></tr>
-            <tr><td class="export-labels-popup-item settings-table-row-data"><div class="export-labels-popup-item checkbox-text generic-format-option-text">VGG JSON</div>
+            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text generic-format-option-text">VGG JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VGG JSON', this)">
             </td></tr>
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item settings-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
+            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
                 <div id="format-option-checkbox-popover-4" style="padding-top: 2px; margin-left: -4px; margin-top: -29px" class="export-labels-popup-item format-option-checkbox-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-4" style="margin-top: -6px; margin-left: 10px" class="export-labels-popup-item arrow-down"></div>
                 CSV
@@ -153,7 +153,7 @@
                 <input class="export-labels-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('CSV', this)">
               </div>
               </td></tr>
-            <tr><td class="export-labels-popup-item settings-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(5)" onmouseleave="removeExportPopUpInformationPopover(5)">
+            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(5)" onmouseleave="removeExportPopUpInformationPopover(5)">
                 <div id="format-option-checkbox-popover-5" style="padding-top: 2px; margin-left: -4px; margin-top: -29px;" class="export-labels-popup-item format-option-checkbox-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-5" style="margin-top: -6px; margin-left: 10px" class="export-labels-popup-item arrow-down"></div>
                 VOC XML
@@ -164,7 +164,7 @@
                 <input class="export-labels-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VOC XML', this)">
               </div>
               </td></tr>
-            <tr><td class="export-labels-popup-item settings-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(6)" onmouseleave="removeExportPopUpInformationPopover(6)">
+            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(6)" onmouseleave="removeExportPopUpInformationPopover(6)">
                 <div id="format-option-checkbox-popover-6" style="padding-top: 2px; margin-left: -4px; margin-top: -29px;" class="export-labels-popup-item format-option-checkbox-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-6" style="margin-top: -6px; margin-left: 10px" class="export-labels-popup-item arrow-down"></div>
                 YOLO TXT
@@ -237,7 +237,7 @@
     <!-- make sure to leave some space for download bar appearing -->
 
     <!-- the popup should align itself if it overflows, or align itself to not overflow -->
-    <div id="settings-popup" class="settings-popup-item" style="position: absolute; border-radius: 3px; z-index: 3; background: white; border-style: solid; border-width: 1px; display: none">
+    <div id="settings-popup" class="settings-popup-item" style="position: absolute; border-radius: 3px; z-index: 3; background: white; padding-top: 4px; padding-bottom: 1px; border: 1px solid grey; display: none">
       <table id="settings-table" class="settings-popup-item">
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Movable Objects</div> <input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="movableObjects()" checked></td></tr>
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="continuousDrawing()"></td></tr>

@@ -99,8 +99,6 @@ move facadeWorkersUtils contents to a folder outside named utils
 
 update labelimg
 
-bug found: draw bounding box, draw polygon, mouse down on nothing, mouse up on bounding box, mouse down on nothing, mouse up on polygon
-
 ML can generate bounding boxes that stretch outside of the image (example with dog picture)
 
 Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
