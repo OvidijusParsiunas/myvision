@@ -1,4 +1,5 @@
 import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';
+import { setExportDatasetsPopUpOpenState } from '../stateManager';
 
 let isCheckboxSelected = false;
 let isExportButtonActive = false;
@@ -123,8 +124,14 @@ function selectFormat(target) {
   }
 }
 
+function displayExportLabelsPopUp() {
+  exportLabelsPopupParentElement.style.display = '';
+  setExportDatasetsPopUpOpenState(true);
+}
+
 function hideExportLabelsPopUp() {
   exportLabelsPopupParentElement.style.display = 'none';
+  setExportDatasetsPopUpOpenState(false);
 }
 
 function initialiseExportLabelsPopupElements() {
@@ -139,4 +146,5 @@ function initialiseExportLabelsPopupElements() {
 export {
   selectFormat, disableFormatOptionsTextIfNoBoundingBoxes, displayExportPopUpInformationPopover,
   hideExportLabelsPopUp, initialiseExportLabelsPopupElements, removeExportPopUpInformationPopover,
+  displayExportLabelsPopUp,
 };

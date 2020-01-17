@@ -1,6 +1,7 @@
-import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp } from '../facadeWorkersUtils/exportDatasetsPopup/style';
-import { getExportDatasetsPopUpOpenState, setExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
+import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp, displayExportLabelsPopUp } from '../facadeWorkersUtils/exportDatasetsPopup/style';
+import { getExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
 
+// the logic here will need to be exported into a shared styles file for popups
 function windowHasScrollbar() {
   if (typeof window.innerWidth === 'number') {
     return window.innerWidth > document.documentElement.clientWidth;
@@ -32,10 +33,6 @@ function validateFullPopUpVisible(popupLabelParentElement) {
   }
 }
 
-function displayPopUp(exportLabelsPopupParentElement) {
-  exportLabelsPopupParentElement.style.display = '';
-}
-
 function calculateElementOffset(el) {
   const rect = el.getBoundingClientRect();
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -55,12 +52,10 @@ function toggleExportDatasetsPopUp() {
   if (!getExportDatasetsPopUpOpenState()) {
     disableFormatOptionsTextIfNoBoundingBoxes();
     setPopUpPosition(exportLabelsPopupParentElement, exportDatasetsButton);
-    displayPopUp(exportLabelsPopupParentElement);
+    displayExportLabelsPopUp();
     validateFullPopUpVisible(exportLabelsPopupParentElement);
-    setExportDatasetsPopUpOpenState(true);
   } else {
     hideExportLabelsPopUp();
-    setExportDatasetsPopUpOpenState(false);
   }
 }
 

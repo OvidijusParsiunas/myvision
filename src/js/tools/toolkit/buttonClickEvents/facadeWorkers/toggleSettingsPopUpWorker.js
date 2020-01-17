@@ -1,5 +1,6 @@
 import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
 
+// the logic here will need to be exported into a shared styles file for popups
 function windowHasScrollbar() {
   if (typeof window.innerWidth === 'number') {
     return window.innerWidth > document.documentElement.clientWidth;
