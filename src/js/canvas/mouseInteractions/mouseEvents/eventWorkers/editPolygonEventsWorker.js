@@ -167,7 +167,7 @@ function polygonMouseUpEvents(event) {
     resetPolygonSelectableAreaAfterPointMoved();
   } else if (event.target && event.target.shapeName === 'polygon') {
     highlightLabelInTheList(event.target.id);
-    sendPolygonPointsToFront();
+    sendPolygonPointsToFront(canvas);
   } else if (!event.target && getPolygonEditingStatus()) {
     removeHighlightOfListLabel();
     setPolygonNotEditableOnClick();

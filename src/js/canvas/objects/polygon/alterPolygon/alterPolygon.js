@@ -51,7 +51,8 @@ function getPolygonIfEditing() {
   return null;
 }
 
-function sendPolygonPointsToFront() {
+function sendPolygonPointsToFront(canvasArg) {
+  canvas = canvas || canvasArg;
   sendPolygonPointsToFrontImpl(canvas, polygonPoints);
   setPolygonEditingStatus(true);
 }
