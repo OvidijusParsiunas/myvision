@@ -42,6 +42,25 @@ function downloadZip(xml) {
   });
 }
 
+function buildDownloadableZip(annotationFilesData, classesFileData) {
+  const zip = new JSZip();
+  const imagesFolder = zip.folder('images');
+  annotationFilesData.forEach((annotationFile) => {
+    imagesFolder.file(annotationFile.imageName, annotationFile.data);
+  });
+  imagesFolder.file('classes.txt', classesFileData);
+  return imagesFolder;
+}
+
+function generateClassesFileData(classesData) {
+  let classesString = '';
+  Object.keys(classesData).forEach((key) => {
+    classesString += key;
+    classesString += '\n';
+  });
+  return classesString;
+}
+
 function getClassIdByLabelText(classes, text) {
   return classes[text];
 }
@@ -62,41 +81,6 @@ function parseBoundingBoxData(boundingBox, dimensions, classes) {
   return boundingBoxData;
 }
 
-function saveCurrentImageDetails(allImageProperties) {
-  const currentlySelectedImageId = getCurrentImageId();
-  const currentlySelectedImageProperties = getImageProperties();
-  const imageDimensions = {};
-  imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
-  imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
-  imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
-  imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
-  allImageProperties[currentlySelectedImageId].imageDimensions = imageDimensions;
-  allImageProperties[currentlySelectedImageId].shapes = getAllExistingShapes();
-}
-
-function buildDownloadableZip(annotationFilesData, classesFileData) {
-  const zip = new JSZip();
-  const imagesFolder = zip.folder('images');
-  annotationFilesData.forEach((annotationFile) => {
-    imagesFolder.file(annotationFile.imageName, annotationFile.data);
-  });
-  imagesFolder.file('classes.txt', classesFileData);
-  return imagesFolder;
-}
-
-function getClassesData() {
-  const classesData = {};
-  const labels = getLabelOptions();
-  const maxUsedLabelIndex = getMaxUsedLabelIndex();
-  let labelId = 0;
-  // the for loop is reversed because the new labels are popped to the front
-  for (let i = maxUsedLabelIndex; i >= 0; i -= 1) {
-    classesData[labels[i].text] = labelId;
-    labelId += 1;
-  }
-  return classesData;
-}
-
 function getAnnotatedString(boundingBox, imageDimensions, classesData) {
   let str = '';
   const boundingBoxData = parseBoundingBoxData(boundingBox, imageDimensions,
@@ -106,7 +90,6 @@ function getAnnotatedString(boundingBox, imageDimensions, classesData) {
   });
   return str;
 }
-
 
 function getImageAndAnnotationData(allImageProperties, classesData) {
   const imageAndAnnotationData = [];
@@ -128,15 +111,6 @@ function getImageAndAnnotationData(allImageProperties, classesData) {
   return imageAndAnnotationData;
 }
 
-function generateClassesFileData(classesData) {
-  let classesString = '';
-  Object.keys(classesData).forEach((key) => {
-    classesString += key;
-    classesString += '\n';
-  });
-  return classesString;
-}
-
 function generateAnnotationFilesData(allImageProperties, classesData) {
   const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, classesData);
   const annotationsFiles = [];
@@ -146,6 +120,32 @@ function generateAnnotationFilesData(allImageProperties, classesData) {
     annotationsFiles.push({ imageName, data: annotatedImage.data });
   });
   return annotationsFiles;
+}
+
+function getClassesData() {
+  const classesData = {};
+  const labels = getLabelOptions();
+  const maxUsedLabelIndex = getMaxUsedLabelIndex();
+  let labelId = 0;
+  // the for loop is reversed because the new labels are pushed to the front
+  for (let i = maxUsedLabelIndex; i >= 0; i -= 1) {
+    classesData[labels[i].text] = labelId;
+    labelId += 1;
+  }
+  return classesData;
+}
+
+
+function saveCurrentImageDetails(allImageProperties) {
+  const currentlySelectedImageId = getCurrentImageId();
+  const currentlySelectedImageProperties = getImageProperties();
+  const imageDimensions = {};
+  imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;
+  imageDimensions.scaleY = currentlySelectedImageProperties.scaleY;
+  imageDimensions.originalWidth = currentlySelectedImageProperties.originalWidth;
+  imageDimensions.originalHeight = currentlySelectedImageProperties.originalHeight;
+  allImageProperties[currentlySelectedImageId].imageDimensions = imageDimensions;
+  allImageProperties[currentlySelectedImageId].shapes = getAllExistingShapes();
 }
 
 function downloadYOLOTXT() {

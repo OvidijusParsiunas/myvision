@@ -83,8 +83,6 @@ delete images button
 check when editing label name on the bigger laptop and clicking paste (with vertical overflow present); does
 it scroll to appropriate width (does not on the smaller laptop, had to check for vertical overflow in ML popup functionality)
 
-check XML and YOLOTXT formats
-
 fix firefox support for checkbox popover
 
 rename exportlabels to exportdatasets

@@ -41,21 +41,37 @@ function downloadZip(xml) {
   });
 }
 
+function isShapeOnBottomRightBordersOfImage(xMax, yMax, dimensions) {
+  return xMax >= dimensions.originalWidth || yMax >= dimensions.originalHeight;
+}
+
+function isShapeOnTopLeftBordersOfImage(xMin, yMin) {
+  return xMin <= 0 || yMin <= 0;
+}
+
+function isShapeTruncated(xMin, yMin, xMax, yMax, dimensions) {
+  return isShapeOnTopLeftBordersOfImage(xMin, yMin)
+  || isShapeOnBottomRightBordersOfImage(xMax, yMax, dimensions);
+}
+
 function parseBoundingBoxData(boundingBox, dimensions) {
   const parsedShapeData = {};
+  const xMin = Math.round(boundingBox.left / dimensions.scaleX);
+  const yMin = Math.round(boundingBox.top / dimensions.scaleY);
+  const width = Math.round(boundingBox.width / dimensions.scaleX);
+  const height = Math.round(boundingBox.height / dimensions.scaleY);
+  const xMax = xMin + width;
+  const yMax = yMin + height;
+  const truncated = isShapeTruncated(xMin, yMin, xMax, yMax, dimensions) ? 1 : 0;
   parsedShapeData.name = boundingBox.shapeLabelText;
   parsedShapeData.pose = 'Unspecified';
-  parsedShapeData.truncated = 0;
+  parsedShapeData.truncated = truncated;
   parsedShapeData.difficult = 0;
   parsedShapeData.bndbox = {};
-  const topLeftX = boundingBox.left / dimensions.scaleX;
-  const topleftY = boundingBox.top / dimensions.scaleY;
-  const width = boundingBox.width / dimensions.scaleX;
-  const height = boundingBox.height / dimensions.scaleY;
-  parsedShapeData.bndbox.xmin = Math.round(topLeftX);
-  parsedShapeData.bndbox.ymin = Math.round(topleftY);
-  parsedShapeData.bndbox.xmax = Math.round(topLeftX + width);
-  parsedShapeData.bndbox.ymax = Math.round(topleftY + height);
+  parsedShapeData.bndbox.xmin = xMin;
+  parsedShapeData.bndbox.ymin = yMin;
+  parsedShapeData.bndbox.xmax = xMax;
+  parsedShapeData.bndbox.ymax = yMax;
   return parsedShapeData;
 }
 
