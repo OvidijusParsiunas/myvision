@@ -282,6 +282,7 @@ function polygonMoveEvents(event) {
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
+      labelObject.setCoords();
       if (!preventLabelHeightOverflow) {
         labelObject.top = event.target.top - event.target.labelOffsetTop;
       }
@@ -300,6 +301,7 @@ function polygonMoveEvents(event) {
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
       preventOutOfBounds(event.target);
+      labelObject.setCoords();
       if (!preventLabelHeightOverflow) {
         labelObject.top = event.target.top;
       }
