@@ -182,44 +182,49 @@ function polygonMouseUpEvents(event) {
 
 const zoomOverfloWelement = document.getElementById('zoom-overflow');
 
+let bottomPositionBeforeOverflow = 0;
+let topPositionBeforeOverflow = 0;
+let leftPositionBeforeOverflow = 0;
+let rightPositionBeforeOverflow = 0;
+// make sure to clear these when mouse up as there is a bug where these are utilised in other shapes
+
 function isBoundingBoxOutOfBounds(obj) {
-  // console.log(shape.isPartiallyOnScreen(true));
   obj.setCoords();
-  // top-left  corner
+
   const { scrollLeft, scrollTop } = zoomOverfloWelement;
-  if (obj.getBoundingRect().top < -scrollTop || obj.getBoundingRect().left < -scrollLeft) {
-    obj.top = Math.max(obj.top - scrollTop,
-      obj.top - (obj.getBoundingRect().top / getCurrentZoomState()) - scrollTop);
-    obj.left = Math.max(obj.left - scrollLeft,
-      obj.left - (obj.getBoundingRect().left / getCurrentZoomState()) - scrollLeft);
-  }
   const { height, width } = getImageProperties();
+  if (obj.getBoundingRect().top < -scrollTop) {
+    obj.top = Math.max(obj.top, topPositionBeforeOverflow);
+  } else {
+    topPositionBeforeOverflow = obj.top;
+  }
+  if (obj.getBoundingRect().left < -scrollLeft) {
+    obj.left = Math.max(obj.left, leftPositionBeforeOverflow);
+  } else {
+    leftPositionBeforeOverflow = obj.left;
+  }
+  // has to be 2 if statements because of corners
+  const imageHeight = height * getCurrentZoomState();
+  const imageWidth = width * getCurrentZoomState();
+  if (scrollTop + obj.getBoundingRect().top + obj.getBoundingRect().height > imageHeight) {
+    obj.top = Math.min(obj.top, bottomPositionBeforeOverflow);
+  } else {
+    bottomPositionBeforeOverflow = obj.top;
+  }
+  if (scrollLeft + obj.getBoundingRect().left + obj.getBoundingRect().width > imageWidth) {
+    obj.left = Math.min(obj.left, rightPositionBeforeOverflow);
+  } else {
+    rightPositionBeforeOverflow = obj.left;
+  }
   // console.log(zoomOverfloWelement.scrollTop);
   // bot-right corner
   // console.log(obj.getBoundingRect().top);
   // console.log(obj.getBoundingRect().height);
   // the first min arg is consistently changed as the user keeps scrolling past the boundary
   // the second min arg makes sure it doesn't go too far
-  const imageHeight = height * getCurrentZoomState();
-  if (scrollTop + obj.getBoundingRect().top + obj.getBoundingRect().height > imageHeight) {
-    console.log(obj.top);
-    console.log(imageHeight - (scrollTop + obj.getBoundingRect().top / getCurrentZoomState() + obj.getBoundingRect().height / getCurrentZoomState()));
-    obj.top = Math.min(obj.top, (canvas.height / getCurrentZoomState())
-     + imageHeight - (scrollTop + obj.getBoundingRect().top / getCurrentZoomState() + obj.getBoundingRect().height / getCurrentZoomState()));
-  }
+  
 
-
-
-
-//   if (obj.top - (canvas.height - (obj.getBoundingRect().top + obj.getBoundingRect().height) < (canvas.height / getCurrentZoomState())
-//   - (obj.getBoundingRect().height / getCurrentZoomState())
-//  + obj.top - (obj.getBoundingRect().top / getCurrentZoomState()))
-//  - (canvas.height - (obj.getBoundingRect().top + obj.getBoundingRect().height))) {
-//    console.log('first');
-//  } else {
-//    console.log('secomd');
-//  }
-
+  // const distanceToEndOfImage = imageHeight - canvas.height - scrollTop;
   // if (obj.getBoundingRect().top + obj.getBoundingRect().height > canvas.height) {
   //   obj.top = Math.min(obj.top, (canvas.height / getCurrentZoomState())
   //    - (obj.getBoundingRect().height / getCurrentZoomState())
@@ -235,7 +240,6 @@ function isBoundingBoxOutOfBounds(obj) {
   //   obj.top = Math.min(obj.top, (canvas.height / getCurrentZoomState())
   //    - (obj.getBoundingRect().height / getCurrentZoomState()));
   // }
-
 }
 
 // potentially refactor this by assigning individual move functions
