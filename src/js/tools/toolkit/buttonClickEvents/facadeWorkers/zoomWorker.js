@@ -583,6 +583,6 @@ function initiateZoomOverflowScroll(event) {
 }
 
 export {
-  zoomCanvas, initialiseZoomVariables, resetZoom, initiateZoomOverflowScroll,
   zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement,
+  zoomCanvas, initialiseZoomVariables, resetZoom, initiateZoomOverflowScroll,
 };

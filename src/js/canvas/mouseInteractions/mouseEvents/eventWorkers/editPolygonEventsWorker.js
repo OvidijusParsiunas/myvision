@@ -14,6 +14,7 @@ import {
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
 import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
+import { getImageProperties } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 
 let canvas = null;
 let polygonMoved = false;
@@ -177,11 +178,72 @@ function polygonMouseUpEvents(event) {
   }
 }
 
+// the zoom is not properly showing the full images
+
+const zoomOverfloWelement = document.getElementById('zoom-overflow');
+
+function isBoundingBoxOutOfBounds(obj) {
+  // console.log(shape.isPartiallyOnScreen(true));
+  obj.setCoords();
+  // top-left  corner
+  const { scrollLeft, scrollTop } = zoomOverfloWelement;
+  if (obj.getBoundingRect().top < -scrollTop || obj.getBoundingRect().left < -scrollLeft) {
+    obj.top = Math.max(obj.top - scrollTop,
+      obj.top - (obj.getBoundingRect().top / getCurrentZoomState()) - scrollTop);
+    obj.left = Math.max(obj.left - scrollLeft,
+      obj.left - (obj.getBoundingRect().left / getCurrentZoomState()) - scrollLeft);
+  }
+  const { height, width } = getImageProperties();
+  // console.log(zoomOverfloWelement.scrollTop);
+  // bot-right corner
+  // console.log(obj.getBoundingRect().top);
+  // console.log(obj.getBoundingRect().height);
+  // the first min arg is consistently changed as the user keeps scrolling past the boundary
+  // the second min arg makes sure it doesn't go too far
+  const imageHeight = height * getCurrentZoomState();
+  if (scrollTop + obj.getBoundingRect().top + obj.getBoundingRect().height > imageHeight) {
+    console.log(obj.top);
+    console.log(imageHeight - (scrollTop + obj.getBoundingRect().top / getCurrentZoomState() + obj.getBoundingRect().height / getCurrentZoomState()));
+    obj.top = Math.min(obj.top, (canvas.height / getCurrentZoomState())
+     + imageHeight - (scrollTop + obj.getBoundingRect().top / getCurrentZoomState() + obj.getBoundingRect().height / getCurrentZoomState()));
+  }
+
+
+
+
+//   if (obj.top - (canvas.height - (obj.getBoundingRect().top + obj.getBoundingRect().height) < (canvas.height / getCurrentZoomState())
+//   - (obj.getBoundingRect().height / getCurrentZoomState())
+//  + obj.top - (obj.getBoundingRect().top / getCurrentZoomState()))
+//  - (canvas.height - (obj.getBoundingRect().top + obj.getBoundingRect().height))) {
+//    console.log('first');
+//  } else {
+//    console.log('secomd');
+//  }
+
+  // if (obj.getBoundingRect().top + obj.getBoundingRect().height > canvas.height) {
+  //   obj.top = Math.min(obj.top, (canvas.height / getCurrentZoomState())
+  //    - (obj.getBoundingRect().height / getCurrentZoomState())
+  //   + obj.top - (obj.getBoundingRect().top / getCurrentZoomState()));
+  // }
+
+  // previous is changed to
+
+  // console.log(obj.top);
+  // console.log((canvas.height / getCurrentZoomState())
+  // - (obj.getBoundingRect().height / getCurrentZoomState()));
+  // if (obj.getBoundingRect().top + obj.getBoundingRect().height > canvas.height) {
+  //   obj.top = Math.min(obj.top, (canvas.height / getCurrentZoomState())
+  //    - (obj.getBoundingRect().height / getCurrentZoomState()));
+  // }
+
+}
+
 // potentially refactor this by assigning individual move functions
 function polygonMoveEvents(event) {
   if (event.target) {
     const { shapeName } = event.target;
     if (shapeName === 'polygon') {
+      isBoundingBoxOutOfBounds(event.target);
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
@@ -189,6 +251,7 @@ function polygonMoveEvents(event) {
       labelObject.top = event.target.top - event.target.labelOffsetTop;
       polygonMoved = true;
     } else if (shapeName === 'point') {
+      isBoundingBoxOutOfBounds(event.target);
       if (event.target.pointId === 0) {
         movePolygonPoint(event, labelObject);
       } else {
@@ -202,6 +265,7 @@ function polygonMoveEvents(event) {
       if (event.target.isGeneratedViaML) {
         event.target.isGeneratedViaML = false;
       }
+      isBoundingBoxOutOfBounds(event.target);
     }
   }
 }
@@ -255,15 +319,49 @@ function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   setRemovingPointsAfterCancelDrawState(false);
 }
 
+// strategy for when zoomed in
+// disable the blocking
+// readjust when zooming out (cut it)
+// find if canvas edge visible on zoom out and cut!
+
+// or change the boundaries depending on how far the scroll is
+// scale changes depending on the zoom
+
+let left1 = 0;
+let top1 = 0;
+let scale1x = 0;
+let scale1y = 0;
+let width1 = 0;
+let height1 = 0;
+
 function boundingBoxScalingEvents(event) {
   if (event.target.shapeName === 'bndBox') {
     const boundingBox = event.target;
-    boundingBox.width *= boundingBox.scaleX;
-    boundingBox.height *= boundingBox.scaleY;
-    boundingBox.scaleX = 1;
-    boundingBox.scaleY = 1;
-    labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
-    labelObject.top = event.target.top;
+    boundingBox.setCoords();
+    const brNew = boundingBox.getBoundingRect();
+    if (((brNew.width + brNew.left) >= canvas.width)
+     || ((brNew.height + brNew.top) >= boundingBox.canvas.height)
+     || ((brNew.left < 0) || (brNew.top < 0))) {
+      boundingBox.left = left1;
+      boundingBox.top = top1;
+      boundingBox.scaleX = scale1x;
+      boundingBox.scaleY = scale1y;
+      boundingBox.width = width1;
+      boundingBox.height = height1;
+    } else {
+      left1 = boundingBox.left;
+      top1 = boundingBox.top;
+      scale1x = boundingBox.scaleX;
+      scale1y = boundingBox.scaleY;
+      width1 = boundingBox.width;
+      height1 = boundingBox.height;
+      boundingBox.width *= boundingBox.scaleX;
+      boundingBox.height *= boundingBox.scaleY;
+      boundingBox.scaleX = 1;
+      boundingBox.scaleY = 1;
+      labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
+      labelObject.top = event.target.top;
+    }
   }
 }
 
@@ -384,11 +482,9 @@ function shapeScrollEvents(event) {
 }
 
 export {
-  polygonMouseDownEvents, polygonMouseUpEvents,
-  polygonMoveEvents, removeEditedPolygonId,
-  shapeMouseOutEvents, shapeMouseOverEvents,
-  setEditPolygonEventObjects, boundingBoxScalingEvents,
-  programaticallySelectBoundingBox, setShapeToInvisible,
   programaticallyDeselectBoundingBox, getLastSelectedShapeId,
-  shapeScrollEvents, removeActiveLabelObject,
+  shapeScrollEvents, removeActiveLabelObject, shapeMouseOverEvents,
+  polygonMouseDownEvents, polygonMouseUpEvents, shapeMouseOutEvents,
+  programaticallySelectBoundingBox, setShapeToInvisible, polygonMoveEvents,
+  setEditPolygonEventObjects, boundingBoxScalingEvents, removeEditedPolygonId,
 };
