@@ -45,17 +45,45 @@ function resetDrawBoundingBoxMode() {
   drawingFinished = false;
 }
 
+// know bug where the bounding box would move to a direction when
+// origin dimensions cross the pointer with fast mouse movement
+
+// check whether the results are truncated
+
+// do zoom
 function drawBoundingBox(event) {
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (boundingBoxProps.origX > pointer.x) {
-    boundingBox.set({ left: Math.abs(pointer.x) });
+    if (pointer.x < 0) {
+      boundingBox.set(({ left: 0 }));
+    } else {
+      boundingBox.set({ left: pointer.x });
+      boundingBox.set({ width: boundingBoxProps.origX - pointer.x });
+    }
+  }
+  if (boundingBoxProps.origX < pointer.x) {
+    if (pointer.x > canvas.width) {
+      boundingBox.set({ width: canvas.width - boundingBoxProps.origX - 2.5 });
+    } else {
+      boundingBox.set({ width: pointer.x - boundingBoxProps.origX });
+    }
   }
   if (boundingBoxProps.origY > pointer.y) {
-    boundingBox.set({ top: Math.abs(pointer.y) });
+    if (pointer.y < 0) {
+      boundingBox.set(({ top: 0 }));
+    } else {
+      boundingBox.set({ top: pointer.y });
+      boundingBox.set({ height: boundingBoxProps.origY - pointer.y });
+    }
   }
-  boundingBox.set({ width: Math.abs(boundingBoxProps.origX - pointer.x) });
-  boundingBox.set({ height: Math.abs(boundingBoxProps.origY - pointer.y) });
+  if (boundingBoxProps.origY < pointer.y) {
+    if (pointer.y > canvas.height) {
+      boundingBox.set({ height: canvas.height - boundingBoxProps.origY - 2 });
+    } else {
+      boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 2 });
+    }
+  }
   canvas.renderAll();
 }
 

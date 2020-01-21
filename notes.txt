@@ -120,3 +120,7 @@ will need to rename the labeller and machine learning popups naming conventions 
 try a new border styule for the uploaded images section
 
 inform the user that they are about to export without checking all of the ml generated shapes & images
+
+double click when drawing polygon throws error
+
+when the bounding box is too far right, can't scale left

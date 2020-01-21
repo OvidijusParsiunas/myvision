@@ -30,11 +30,6 @@ let lastShapeSelectedIsBoundingBox = false;
 let mouseIsDown = false;
 let zoomOverflowElement = null;
 
-let bottomPositionBeforeOverflow = 0;
-let topPositionBeforeOverflow = 0;
-let leftPositionBeforeOverflow = 0;
-let rightPositionBeforeOverflow = 0;
-
 let tempScalingLeft = 0;
 let tempScalingTop = 0;
 let tempScalingScaleX = 0;
@@ -55,13 +50,6 @@ function setDefaultScalingValues(boundingBox) {
   boundingBox.scaleY = 1;
   labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
   labelObject.top = boundingBox.top;
-}
-
-function resetShapeOverflowValues(shape) {
-  bottomPositionBeforeOverflow = shape.top;
-  topPositionBeforeOverflow = shape.top;
-  leftPositionBeforeOverflow = shape.left;
-  rightPositionBeforeOverflow = shape.left;
 }
 
 function programaticallySelectBoundingBox(boundingBoxObj) {
@@ -154,9 +142,6 @@ function polygonMouseDownEvents(event) {
         newPolygonSelected = false;
       }
       labelObject = getLabelById(event.target.id);
-      if (event.target.id !== selectedShapeId) {
-        resetShapeOverflowValues(event.target);
-      }
       selectedShapeId = event.target.id;
       lastShapeSelectedIsBoundingBox = true;
       preventActiveObjectsAppearInFront(canvas);
@@ -167,11 +152,7 @@ function polygonMouseDownEvents(event) {
           lastShapeSelectedIsBoundingBox = false;
         }
         labelObject = getLabelById(event.target.id);
-        resetShapeOverflowValues(event.target);
         newPolygonSelected = true;
-      } else if (event.target.shapeName === 'point') {
-        resetShapeOverflowValues(event.target);
-        newPolygonSelected = false;
       } else {
         newPolygonSelected = false;
       }
@@ -227,133 +208,85 @@ function polygonMouseUpEvents(event) {
 
 // the zoom is not properly showing the full images
 
-function preventOutOfBoundsZoomed(shape) {
+function preventShapesOutOfBounds(shape) {
   shape.setCoords();
-  const { scrollLeft, scrollTop } = zoomOverflowElement;
-  const { height, width } = getImageProperties();
-  const imageHeight = height * getCurrentZoomState();
-  const imageWidth = width * getCurrentZoomState();
   // multiple if statements because of corners
-  // the first min/max arg is consistently changed as the user keeps scrolling past the boundary
-  // the second min/max arg makes sure it doesn't go too far
   // top
-  if (shape.getBoundingRect().top < -scrollTop) {
-    shape.top = Math.max(shape.top, topPositionBeforeOverflow);
-  } else {
-    topPositionBeforeOverflow = shape.top;
+  if (shape.top < 0) {
+    shape.top = 0;
   }
   // left
-  if (shape.getBoundingRect().left < -scrollLeft) {
-    shape.left = Math.max(shape.left, leftPositionBeforeOverflow);
-  } else {
-    leftPositionBeforeOverflow = shape.left;
+  if (shape.left < 0) {
+    shape.left = 0;
   }
-  // bottom
-  if (scrollTop + shape.getBoundingRect().top + shape.getBoundingRect().height > imageHeight) {
-    shape.top = Math.min(shape.top, bottomPositionBeforeOverflow);
+  if (getCurrentZoomState() > 1.00001) {
+    const { height, width } = getImageProperties();
+    const imageHeight = height * getCurrentZoomState();
+    const imageWidth = width * getCurrentZoomState();
+    // right
+    if (shape.left + shape.width > imageWidth / getCurrentZoomState() - getCurrentZoomState()) {
+      shape.left = imageWidth / getCurrentZoomState() - shape.width - getCurrentZoomState();
+    }
+    // bottom
+    if (shape.top + shape.height > imageHeight / getCurrentZoomState() - getCurrentZoomState()) {
+      shape.top = imageHeight / getCurrentZoomState() - shape.height - getCurrentZoomState();
+    }
   } else {
-    bottomPositionBeforeOverflow = shape.top;
-  }
-  // right
-  if (scrollLeft + shape.getBoundingRect().left + shape.getBoundingRect().width > imageWidth) {
-    shape.left = Math.min(shape.left, rightPositionBeforeOverflow);
-  } else {
-    rightPositionBeforeOverflow = shape.left;
+    // if the right side of the bounding boxes (on the right screen edge) looks too narrow, increase
+    // the right - delta from 2 to 2.5
+    // right
+    if (shape.left + shape.width > canvas.width - 2.5) {
+      shape.left = canvas.width - shape.width - 2.5;
+    }
+    // bottom
+    if (shape.top + shape.height > canvas.height - 2) {
+      shape.top = canvas.height - shape.height - 2;
+    }
   }
 }
 
-function preventOutOfBoundsDefault(shape) {
+function preventOutOfBoundsPoints(shape) {
   shape.setCoords();
-  // top
-  if (shape.getBoundingRect().top < 0) {
-    shape.top = Math.max(shape.top, 0);
-  }
-  // left
-  if (shape.getBoundingRect().left < 0) {
-    shape.left = Math.max(shape.left, 0);
-  }
-  // bottom
-  if (shape.getBoundingRect().top + shape.getBoundingRect().height > canvas.height) {
-    shape.top = Math.min(shape.top, (canvas.height / getCurrentZoomState())
-     - (shape.getBoundingRect().height / getCurrentZoomState()));
-  }
-  // right
-  if (shape.getBoundingRect().left + shape.getBoundingRect().width > canvas.width) {
-    shape.left = Math.min(shape.left, (canvas.width / getCurrentZoomState()
-     - (shape.getBoundingRect().width / getCurrentZoomState())));
-  }
-}
-
-function preventOutOfBoundsPointsZoomed(shape) {
-  shape.setCoords();
-  const { scrollLeft, scrollTop } = zoomOverflowElement;
-  const { height, width } = getImageProperties();
-  const imageHeight = height * getCurrentZoomState();
-  const imageWidth = width * getCurrentZoomState();
   // multiple if statements because of corners
-  // the first min/max arg is consistently changed as the user keeps scrolling past the boundary
-  // the second min/max arg makes sure it doesn't go too far
   // top
-  if (shape.getBoundingRect().top + (shape.getBoundingRect().height / 2) < -scrollTop) {
-    shape.top = Math.max(shape.top, topPositionBeforeOverflow);
-  } else {
-    topPositionBeforeOverflow = shape.top;
+  if (shape.top + shape.height / 2 < 0) {
+    shape.top = 0;
   }
   // left
-  if (shape.getBoundingRect().left + (shape.getBoundingRect().width / 2) < -scrollLeft) {
-    shape.left = Math.max(shape.left, leftPositionBeforeOverflow);
+  if (shape.left + shape.width / 2 < 0) {
+    shape.left = 0;
+  }
+  if (getCurrentZoomState() > 1.00001) {
+    const { height, width } = getImageProperties();
+    const imageHeight = height * getCurrentZoomState();
+    const imageWidth = width * getCurrentZoomState();
+    // right
+    if (shape.left + shape.width / 2
+      > imageWidth / getCurrentZoomState()) {
+      shape.left = imageWidth / getCurrentZoomState() - shape.width / 2;
+    }
+    // bottom
+    if (shape.top + shape.height / 2
+      > imageHeight / getCurrentZoomState()) {
+      shape.top = imageHeight / getCurrentZoomState() - shape.height / 2;
+    }
   } else {
-    leftPositionBeforeOverflow = shape.left;
-  }
-  // bottom
-  if (scrollTop + shape.getBoundingRect().top + (shape.getBoundingRect().height / 2)
-   > imageHeight) {
-    shape.top = Math.min(shape.top, bottomPositionBeforeOverflow);
-  } else {
-    bottomPositionBeforeOverflow = shape.top;
-  }
-  // right
-  if (scrollLeft + shape.getBoundingRect().left + (shape.getBoundingRect().width / 2)
-  > imageWidth) {
-    shape.left = Math.min(shape.left, rightPositionBeforeOverflow);
-  } else {
-    rightPositionBeforeOverflow = shape.left;
-  }
-}
-
-function preventOutOfBoundsPointsDefault(shape) {
-  shape.setCoords();
-  // top
-  if (shape.getBoundingRect().top + (shape.getBoundingRect().height / 2) < 0) {
-    shape.top = Math.max(shape.top, 0);
-  }
-  // left
-  if (shape.getBoundingRect().left + (shape.getBoundingRect().width / 2) < 0) {
-    shape.left = Math.max(shape.left, 0);
-  }
-  // bottom
-  if (shape.getBoundingRect().top + (shape.getBoundingRect().height / 2) > canvas.height) {
-    shape.top = Math.min(shape.top, (canvas.height / getCurrentZoomState())
-     - (shape.getBoundingRect().height / getCurrentZoomState() / 2));
-  }
-  // right
-  if (shape.getBoundingRect().left + (shape.getBoundingRect().width / 2) > canvas.width) {
-    shape.left = Math.min(shape.left, (canvas.width / getCurrentZoomState()
-     - (shape.getBoundingRect().width / getCurrentZoomState() / 2)));
+    // right
+    if (shape.left + shape.width / 2 > canvas.width + 1.5) {
+      shape.left = canvas.width - shape.width / 2 + 1.5;
+    }
+    // bottom
+    if (shape.top + shape.height / 2 > canvas.height + 1.5) {
+      shape.top = canvas.height - shape.height / 2 + 1.5;
+    }
   }
 }
 
 function preventOutOfBounds(shape) {
-  if (getCurrentZoomState() > 1.00001) {
-    if (shape.shapeName === 'point') {
-      preventOutOfBoundsPointsZoomed(shape);
-    } else {
-      preventOutOfBoundsZoomed(shape);
-    }
-  } else if (shape.shapeName === 'point') {
-    preventOutOfBoundsPointsDefault(shape);
+  if (shape.shapeName === 'point') {
+    preventOutOfBoundsPoints(shape);
   } else {
-    preventOutOfBoundsDefault(shape);
+    preventShapesOutOfBounds(shape);
   }
 }
 
@@ -362,7 +295,7 @@ function polygonMoveEvents(event) {
   if (event.target) {
     const { shapeName } = event.target;
     if (shapeName === 'polygon') {
-      preventOutOfBounds(event.target);
+      preventOutOfBounds(event.target, event.e);
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
@@ -371,7 +304,7 @@ function polygonMoveEvents(event) {
       labelObject.left = event.target.left - event.target.labelOffsetLeft;
       polygonMoved = true;
     } else if (shapeName === 'point') {
-      preventOutOfBounds(event.target);
+      preventOutOfBounds(event.target, event.e);
       if (event.target.pointId === 0) {
         movePolygonPoint(event, labelObject);
       } else {
@@ -380,7 +313,7 @@ function polygonMoveEvents(event) {
       resetPolygonSelectableAreaAfterPointMoved();
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
-      preventOutOfBounds(event.target);
+      preventOutOfBounds(event.target, event.e);
       labelObject.setCoords();
       labelObject.top = event.target.top;
       labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
@@ -452,29 +385,28 @@ function preventScaling(boundingBox) {
 }
 
 function boundingBoxScalingEvents(event) {
-  if (event.target.shapeName === 'bndBox') {
-    const boundingBox = event.target;
-    const { scrollLeft, scrollTop } = zoomOverflowElement;
-    const { height, width } = getImageProperties();
-    const imageHeight = height * getCurrentZoomState();
-    const imageWidth = width * getCurrentZoomState();
-    boundingBox.setCoords();
-    const boxDimensions = boundingBox.getBoundingRect();
-    if (getCurrentZoomState() > 1.00001) {
-      if ((boxDimensions.left < -scrollLeft) || (boxDimensions.top < -scrollTop)
-      || (scrollTop + boxDimensions.top + boxDimensions.height > imageHeight)
-      || (scrollLeft + boxDimensions.left + boxDimensions.width > imageWidth)) {
-        preventScaling(boundingBox);
-      } else {
-        setDefaultScalingValues(boundingBox);
-      }
-    } else if (((boxDimensions.width + boxDimensions.left) > canvas.width)
-      || ((boxDimensions.height + boxDimensions.top) > boundingBox.canvas.height)
-      || ((boxDimensions.left < 0) || (boxDimensions.top < 0))) {
+  if (event.target.shapeName !== 'bndBox') return;
+  const boundingBox = event.target;
+  const { scrollLeft, scrollTop } = zoomOverflowElement;
+  const { height, width } = getImageProperties();
+  const imageHeight = height * getCurrentZoomState();
+  const imageWidth = width * getCurrentZoomState();
+  boundingBox.setCoords();
+  const boxDimensions = boundingBox.getBoundingRect();
+  if (getCurrentZoomState() > 1.00001) {
+    if ((boxDimensions.left < -scrollLeft) || (boxDimensions.top < -scrollTop)
+    || (scrollTop + boxDimensions.top + boxDimensions.height > imageHeight)
+    || (scrollLeft + boxDimensions.left + boxDimensions.width > imageWidth - 1)) {
       preventScaling(boundingBox);
     } else {
       setDefaultScalingValues(boundingBox);
     }
+  } else if (((boxDimensions.width + boxDimensions.left) > canvas.width - 0.5)
+    || ((boxDimensions.height + boxDimensions.top) > boundingBox.canvas.height)
+    || ((boxDimensions.left < 0) || (boxDimensions.top < 0))) {
+    preventScaling(boundingBox);
+  } else {
+    setDefaultScalingValues(boundingBox);
   }
 }
 
