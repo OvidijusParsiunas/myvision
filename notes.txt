@@ -124,3 +124,5 @@ inform the user that they are about to export without checking all of the ml gen
 double click when drawing polygon throws error
 
 when the bounding box is too far right, can't scale left
+
+when horizontal overflow kicks in first, the image goes over the scrollbar

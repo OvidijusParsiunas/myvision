@@ -49,6 +49,8 @@ function resetDrawBoundingBoxMode() {
 // known bug where the bounding box would move to a direction when
 // origin dimensions cross the pointer with fast mouse movement
 
+// when 0, create a new bounding box
+
 // check whether the results are truncated
 
 function drawBoundingBox(event) {
@@ -80,7 +82,7 @@ function drawBoundingBox(event) {
     if (boundingBoxProps.origX < pointer.x) {
       if (pointer.x > imageWidth / getCurrentZoomState() - getCurrentZoomState()) {
         boundingBox.set(
-          { width: imageWidth / getCurrentZoomState() - boundingBoxProps.origX - 2.5 }
+          { width: imageWidth / getCurrentZoomState() - boundingBoxProps.origX - 2 },
         );
       } else {
         boundingBox.set({ width: pointer.x - boundingBoxProps.origX });
@@ -90,7 +92,7 @@ function drawBoundingBox(event) {
     if (boundingBoxProps.origY < pointer.y) {
       if (pointer.y > imageHeight / getCurrentZoomState() - getCurrentZoomState()) {
         boundingBox.set(
-          { height: imageHeight / getCurrentZoomState() - boundingBoxProps.origY - 2 }
+          { height: imageHeight / getCurrentZoomState() - boundingBoxProps.origY - 2 },
         );
       } else {
         boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 2 });
