@@ -53,6 +53,8 @@ function resetDrawBoundingBoxMode() {
 
 // check whether the results are truncated
 
+// if the right or bottom side of the drawn bounding box look a bit too far,
+// then reduce the delta values
 function drawBoundingBox(event) {
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
@@ -60,6 +62,7 @@ function drawBoundingBox(event) {
   if (boundingBoxProps.origY > pointer.y) {
     if (pointer.y < 0) {
       boundingBox.set(({ top: 0 }));
+      boundingBox.set({ height: boundingBoxProps.origY });
     } else {
       boundingBox.set({ top: pointer.y });
       boundingBox.set({ height: boundingBoxProps.origY - pointer.y });
@@ -69,6 +72,7 @@ function drawBoundingBox(event) {
   if (boundingBoxProps.origX > pointer.x) {
     if (pointer.x < 0) {
       boundingBox.set(({ left: 0 }));
+      boundingBox.set(({ width: boundingBoxProperties.origX }));
     } else {
       boundingBox.set({ left: pointer.x });
       boundingBox.set({ width: boundingBoxProps.origX - pointer.x });
@@ -92,27 +96,27 @@ function drawBoundingBox(event) {
     if (boundingBoxProps.origY < pointer.y) {
       if (pointer.y > imageHeight / getCurrentZoomState() - getCurrentZoomState()) {
         boundingBox.set(
-          { height: imageHeight / getCurrentZoomState() - boundingBoxProps.origY - 2 },
+          { height: imageHeight / getCurrentZoomState() - boundingBoxProps.origY - 1.5 },
         );
       } else {
-        boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 2 });
+        boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 1.5 });
       }
     }
   } else {
     // right
     if (boundingBoxProps.origX < pointer.x) {
       if (pointer.x > canvas.width) {
-        boundingBox.set({ width: canvas.width - boundingBoxProps.origX - 2.5 });
+        boundingBox.set({ width: canvas.width - boundingBoxProps.origX - 2 });
       } else {
-        boundingBox.set({ width: pointer.x - boundingBoxProps.origX });
+        boundingBox.set({ width: pointer.x - boundingBoxProps.origX + 0.5 });
       }
     }
     // bottom
     if (boundingBoxProps.origY < pointer.y) {
       if (pointer.y > canvas.height) {
-        boundingBox.set({ height: canvas.height - boundingBoxProps.origY - 2 });
+        boundingBox.set({ height: canvas.height - boundingBoxProps.origY - 1.5 });
       } else {
-        boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 2 });
+        boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 1.5 });
       }
     }
   }

@@ -126,3 +126,15 @@ double click when drawing polygon throws error
 when the bounding box is too far right, can't scale left
 
 when horizontal overflow kicks in first, the image goes over the scrollbar
+
+hold ctrl to select multiple shapes
+
+when you zoom in too much, you can zoom out until the picture is no longer visible
+
+polygon size reduction when zoomed in is a little bit off
+
+delete button should remove shape
+
+when you zoom in too far, then switch image, the objects don't get reset properly
+
+when drawing a new polygon and clicking the add button shouldn't do anything
