@@ -20,11 +20,7 @@ let newCanvasHeight;
 let scrollWidth = 0;
 let timesZoomedIn = 0;
 let scrollWheelUsed = false;
-let canReduceShapeSizes = true;
-let canIncreaseShapeSizes = false;
 let movedPolygonPathOffsetReduced = false;
-let timesZoomedWithNoShapeReduction = 0;
-let timesZoomedWithNoShapeIncrease = 0;
 let usingFirstCanvasWrapperInnerElement = true;
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
@@ -47,73 +43,45 @@ function calculateNewShapeSizeRatios() {
   boundingBoxProps.setZoomInProperties(increaseShapeSizeRatios.bndBox);
 }
 
-function checkIfChangeShapeSizeOnZoomIn() {
-  if (currentZoom > 3.9) {
-    canReduceShapeSizes = false;
-    timesZoomedWithNoShapeReduction += 1;
-    return false;
-  }
-  return true;
-}
-
 function zoomInObjects() {
-  if (canReduceShapeSizes) {
-    if (timesZoomedWithNoShapeIncrease === 0) {
-      if (!checkIfChangeShapeSizeOnZoomIn()) return;
-      calculateNewShapeSizeRatios();
-      canvas.forEachObject((iteratedObj) => {
-        switch (iteratedObj.shapeName) {
-          case 'polygon':
-            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
-            iteratedObj.labelOffsetTop = iteratedObj.top
-            - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top);
-            break;
-          case 'tempPolygon':
-          case 'addPointsLine':
-            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
-            break;
-          case 'point':
-          case 'invisiblePoint':
-          case 'firstPoint':
-          case 'tempPoint':
-          case 'initialAddPoint':
-            iteratedObj.radius -= iteratedObj.radius * increaseShapeSizeRatios.point;
-            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.point;
-            if (iteratedObj.polygonMoved) {
-              iteratedObj.left -= 0.05;
-              iteratedObj.top -= 0.05;
-            }
-            break;
-          case 'label':
-            iteratedObj.fontSize -= iteratedObj.fontSize * increaseShapeSizeRatios.label;
-            if (iteratedObj.attachedShape === 'polygon') {
-              iteratedObj.top += 0.5;
-            }
-            break;
-          case 'bndBox':
-            iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.bndBox;
-            break;
-          default:
-            break;
+  calculateNewShapeSizeRatios();
+  canvas.forEachObject((iteratedObj) => {
+    switch (iteratedObj.shapeName) {
+      case 'polygon':
+        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
+        iteratedObj.labelOffsetTop = iteratedObj.top
+        - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top);
+        break;
+      case 'tempPolygon':
+      case 'addPointsLine':
+        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
+        break;
+      case 'point':
+      case 'invisiblePoint':
+      case 'firstPoint':
+      case 'tempPoint':
+      case 'initialAddPoint':
+        iteratedObj.radius -= iteratedObj.radius * increaseShapeSizeRatios.point;
+        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.point;
+        if (iteratedObj.polygonMoved) {
+          iteratedObj.left -= 0.05;
+          iteratedObj.top -= 0.05;
         }
-      });
-      canvas.renderAll();
-      canIncreaseShapeSizes = true;
-    } else {
-      timesZoomedWithNoShapeIncrease -= 1;
+        break;
+      case 'label':
+        iteratedObj.fontSize -= iteratedObj.fontSize * increaseShapeSizeRatios.label;
+        if (iteratedObj.attachedShape === 'polygon') {
+          iteratedObj.top += 0.5;
+        }
+        break;
+      case 'bndBox':
+        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.bndBox;
+        break;
+      default:
+        break;
     }
-  } else {
-    timesZoomedWithNoShapeReduction += 1;
-  }
-}
-
-function checkIfChangeShapeSizeOnZoomout() {
-  if (currentZoom < 1) {
-    canIncreaseShapeSizes = false;
-    timesZoomedWithNoShapeIncrease += 1;
-    return false;
-  }
-  return true;
+  });
+  canvas.renderAll();
 }
 
 function zoomOutLabel(label) {
@@ -158,21 +126,11 @@ function zoomOutObject(object) {
 }
 
 function zoomOutObjects() {
-  if (canIncreaseShapeSizes) {
-    if (timesZoomedWithNoShapeReduction === 0) {
-      if (!checkIfChangeShapeSizeOnZoomout()) return;
-      updateShapesPropertiesForZoomOut();
-      canvas.forEachObject((iteratedObj) => {
-        zoomOutObject(iteratedObj);
-      });
-      canvas.renderAll();
-      canReduceShapeSizes = true;
-    } else {
-      timesZoomedWithNoShapeReduction -= 1;
-    }
-  } else {
-    timesZoomedWithNoShapeIncrease += 1;
-  }
+  updateShapesPropertiesForZoomOut();
+  canvas.forEachObject((iteratedObj) => {
+    zoomOutObject(iteratedObj);
+  });
+  canvas.renderAll();
 }
 
 function zoomOutObjectsOnImageSelect(previousShapes, previousLabels) {
@@ -452,11 +410,7 @@ function resetCanvasToDefault() {
   const newFileSizeRatio = resizeCanvasAndImage();
   labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
   resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
-  timesZoomedWithNoShapeIncrease = 0;
-  timesZoomedWithNoShapeReduction = 0;
   movedPolygonPathOffsetReduced = false;
-  timesZoomedWithNoShapeReduction = 0;
-  timesZoomedWithNoShapeIncrease = 0;
 }
 
 function zoomIn() {
@@ -476,7 +430,7 @@ function zoomOut() {
     currentZoom -= 0.2;
     zoomOutObjects();
     increaseMovePolygonPathOffset();
-    if (currentZoom === 1) {
+    if (currentZoom < 1.0001) {
       const newFileSizeRatio = resizeCanvasAndImage();
       labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
       resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
@@ -500,9 +454,12 @@ function zoomCanvas(canvasObj, action, windowResize) {
     canvasProperties = getCanvasProperties();
     imageProperties = getImageProperties();
     calculateReduceShapeSizeFactor();
-    if (action === 'in') {
+    if (action === 'in' && currentZoom < 3.7) {
       zoomIn();
-    } else if (action === 'out' && currentZoom !== 1) {
+      if (currentZoom >= 3.9) {
+        console.log('should grey out the zoom in button');
+      }
+    } else if (action === 'out' && currentZoom > 1.0001) {
       zoomOut();
     }
   }

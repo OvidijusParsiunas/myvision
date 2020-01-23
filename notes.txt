@@ -125,16 +125,24 @@ double click when drawing polygon throws error
 
 when the bounding box is too far right, can't scale left
 
-when horizontal overflow kicks in first, the image goes over the scrollbar
-
 hold ctrl to select multiple shapes
-
-when you zoom in too much, you can zoom out until the picture is no longer visible
 
 polygon size reduction when zoomed in is a little bit off
 
-delete button should remove shape
-
-when you zoom in too far, then switch image, the objects don't get reset properly
+delete keyboard button should remove shape
 
 when drawing a new polygon and clicking the add button shouldn't do anything
+
+grey out the zoom button when it is above 3.9
+
+
+
+SOLUTION:
+
+firefox on open overflow is caused by the size of font in the sidebar, if that doesn't fix it, change the height of the following:
+
+#image-list-overflow-parent {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc((100vh + 118px) / 2);
+}
