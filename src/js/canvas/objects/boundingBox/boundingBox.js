@@ -55,6 +55,10 @@ function resetDrawBoundingBoxMode() {
 
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
+
+let mouseMovedLeft = false;
+let mouseMovedTop = false;
+
 function drawBoundingBox(event) {
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
@@ -66,6 +70,7 @@ function drawBoundingBox(event) {
     } else {
       boundingBox.set({ top: pointer.y });
       boundingBox.set({ height: boundingBoxProps.origY - pointer.y });
+      mouseMovedTop = true;
     }
   }
   // left
@@ -76,6 +81,7 @@ function drawBoundingBox(event) {
     } else {
       boundingBox.set({ left: pointer.x });
       boundingBox.set({ width: boundingBoxProps.origX - pointer.x });
+      mouseMovedLeft = true;
     }
   }
   if (getCurrentZoomState() > 1.00001) {
@@ -88,6 +94,10 @@ function drawBoundingBox(event) {
         boundingBox.set(
           { width: imageWidth / getCurrentZoomState() - boundingBoxProps.origX - 2 },
         );
+      } else if (mouseMovedLeft) {
+        boundingBox.set({ left: boundingBoxProps.origX });
+        boundingBox.set({ width: pointer.x - boundingBoxProps.origX });
+        mouseMovedLeft = false;
       } else {
         boundingBox.set({ width: pointer.x - boundingBoxProps.origX });
       }
@@ -98,6 +108,10 @@ function drawBoundingBox(event) {
         boundingBox.set(
           { height: imageHeight / getCurrentZoomState() - boundingBoxProps.origY - 1.5 },
         );
+      } else if (mouseMovedTop) {
+        boundingBox.set({ top: boundingBoxProps.origY });
+        boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 1.5 });
+        mouseMovedTop = false;
       } else {
         boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 1.5 });
       }
@@ -107,6 +121,10 @@ function drawBoundingBox(event) {
     if (boundingBoxProps.origX < pointer.x) {
       if (pointer.x > canvas.width) {
         boundingBox.set({ width: canvas.width - boundingBoxProps.origX - 2 });
+      } else if (mouseMovedLeft) {
+        boundingBox.set({ left: boundingBoxProps.origX });
+        boundingBox.set({ width: pointer.x - boundingBoxProps.origX + 0.5 });
+        mouseMovedLeft = false;
       } else {
         boundingBox.set({ width: pointer.x - boundingBoxProps.origX + 0.5 });
       }
@@ -115,6 +133,10 @@ function drawBoundingBox(event) {
     if (boundingBoxProps.origY < pointer.y) {
       if (pointer.y > canvas.height) {
         boundingBox.set({ height: canvas.height - boundingBoxProps.origY - 1.5 });
+      } else if (mouseMovedTop) {
+        boundingBox.set({ top: boundingBoxProps.origY });
+        boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 1.5 });
+        mouseMovedTop = false;
       } else {
         boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 1.5 });
       }
