@@ -77,7 +77,7 @@ function drawBoundingBox(event) {
   if (boundingBoxProps.origX > pointer.x) {
     if (pointer.x < 0) {
       boundingBox.set(({ left: 0 }));
-      boundingBox.set(({ width: boundingBoxProperties.origX }));
+      boundingBox.set(({ width: boundingBoxProps.origX }));
     } else {
       boundingBox.set({ left: pointer.x });
       boundingBox.set({ width: boundingBoxProps.origX - pointer.x });
