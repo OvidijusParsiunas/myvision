@@ -47,7 +47,7 @@
   color: black;
   padding-left: 5px;
   text-decoration: none;
-  font-family: sans-serif;
+  font-family: 'Pavanam', sans-serif;
   font-size: 15px;
 }
 
@@ -267,6 +267,40 @@
   margin-left: 135px;
   margin-top: -3px;
 }
+
+/*
+  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Hind Madurai', sans-serif;
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  font-family: 'IBM Plex Serif', serif;
+  font-family: 'M PLUS 1p', sans-serif;
+  font-family: 'Cantarell', sans-serif;
+  font-family: 'Yantramanav', sans-serif;
+  font-family: 'Chivo', sans-serif;
+  font-family: 'Archivo', sans-serif;
+  font-family: 'Palanquin', sans-serif;
+  font-family: 'Basic', sans-serif;
+  font-family: 'Alef', sans-serif;
+  font-family: 'Average', serif;
+  font-family: 'Mada', sans-serif;
+  font-family: 'K2D', sans-serif;
+  font-family: 'Pavanam', sans-serif;
+*/
+
+/*
+  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Barlow Semi Condensed", sans-serif;
+  font-family: Chivo, sans-serif; best
+  font-family: Archivo, sans-serif;
+  font-family: Alef, sans-serif;
+  font-family: K2D, sans-serif;
+*/
+
+/*
+  font-family: "Source Sans Pro", sans-serif;
+  font-family: Chivo, sans-serif;
+  font-family: K2D, sans-serif;
+*/
 
 #machine-learning-popup-parent {
   position: absolute;
