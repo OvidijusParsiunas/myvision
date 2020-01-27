@@ -38,6 +38,7 @@ function getFinalBoundingBoxProps() {
     perPixelTargetFind: false,
     cornerSize: 8,
     strokeWidth: finalBoundingBoxStrokeWidth,
+    lockScalingFlip: true,
   };
 }
 
@@ -56,6 +57,7 @@ function getStandaloneBoundingBoxProperties(dimensions) {
     height: dimensions.height * dimensions.scaleY,
     stroke: 'hsla(112, 57%, 50%, 1)',
     fill: 'rgba(255,0,0,0)',
+    lockScalingFlip: true,
   };
 }
 
