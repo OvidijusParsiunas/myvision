@@ -205,6 +205,9 @@ function polygonMouseDownEvents(event) {
             originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
             originalBoundingBoxLeftCoordinate = event.target.left;
             break;
+          case 'mb':
+            controlSelected.middleBottom = true;
+            break;
           case 'bl':
             controlSelected.bottomLeft = true;
             originalWidth = event.target.width;
@@ -259,12 +262,22 @@ function validateBoundingBoxFullyOnCanvas(boundingBox) {
   }
 }
 
+let flippedOnce = false;
+
 // look at this
 function polygonMouseUpEvents(event) {
   mouseIsDown = false;
   if (event.target && event.target.shapeName === 'bndBox') {
     if (boundingBoxMoved) {
       boundingBoxMoved = false;
+    }
+    // flip to original side
+    if (flippedOnce) {
+      const originalTop = event.target.top + event.target.height;
+      event.target.height = Math.abs(event.target.height);
+      event.target.top = originalTop;
+      event.target.setCoords();
+      flippedOnce = false;
     }
     canvas.bringToFront(event.target);
     canvas.bringToFront(labelObject);
@@ -619,8 +632,37 @@ function boundingBoxScalingEvents(event) {
         boundingBox.height = canvas.height - boundingBox.top - 2;
       }
     }
+    if (controlSelected.middleBottom && boundingBox.top < originalBoundingBoxTopCoordinate) {
+      changed = true;
+      boundingBox.top = originalBoundingBoxTopCoordinate;
+      boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate - 1.5;
+      // controlSelected.middleTop = true;
+      // controlSelected.middleBottom = false;
+      flippedOnce = true;
+      preventScalingTopLeft(boundingBox);
+      console.log('called');
+    }
+    if (boundingBox.flipY && boundingBox.top > originalBoundingBoxTopCoordinate) {
+      boundingBox.top = originalBoundingBoxTopCoordinate;
+      boundingBox.flipY = false;
+      console.log(boundingBox.top);
+      console.log(boundingBox.height);
+      console.log(originalBoundingBoxTopCoordinate);
+    }
+    if (flippedOnce) {
+      if (boundingBox.top + boundingBox.height < 0) {
+        if (pointer.y <= 0) {
+          boundingBox.scaleX = tempScalingScaleX;
+          boundingBox.scaleY = tempScalingScaleY;
+          boundingBox.height = tempScalingHeight;
+        }
+      }
+      if (boundingBox.height > 0) {
+        console.log('called here!!');
+      }
+    }
     if (!changed) {
-      console.log('5');
+      // console.log('5');
       setDefaultScalingValues(boundingBox);
     }
   }
