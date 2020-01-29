@@ -7,6 +7,9 @@ function purgeCanvasMouseEvents(canvas) {
     canvas.__eventListeners['mouse:up'] = [];
     canvas.__eventListeners['mouse:wheel'] = [];
     canvas.__eventListeners['object:moving'] = [];
+    if (canvas.__eventListeners['object:scaling'].length > 1) {
+      canvas.__eventListeners['object:scaling'].pop();
+    }
   }
 }
 

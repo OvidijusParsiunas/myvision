@@ -46,11 +46,6 @@ function resetDrawBoundingBoxMode() {
   drawingFinished = false;
 }
 
-// known bug where the bounding box would move to a direction when
-// origin dimensions cross the pointer with fast mouse movement
-
-// when 0, create a new bounding box
-
 // check whether the results are truncated
 
 // if the right or bottom side of the drawn bounding box look a bit too far,
