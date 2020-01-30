@@ -17,6 +17,7 @@ import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../..
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
 import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
 import { getImageProperties } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
 
 let canvas = null;
 let labelObject = null;
@@ -31,90 +32,6 @@ let finishedAddingNewPoints = false;
 let lastShapeSelectedIsBoundingBox = false;
 let mouseIsDown = false;
 let zoomOverflowElement = null;
-
-let tempScalingLeft = 0;
-let tempScalingTop = 0;
-let tempScalingScaleX = 0;
-let tempScalingScaleY = 0;
-let tempScalingWidth = 0;
-let tempScalingHeight = 0;
-
-function setDefaultScalingValues(boundingBox, pointer) {
-  tempScalingLeft = boundingBox.left;
-  tempScalingTop = boundingBox.top;
-  tempScalingScaleX = boundingBox.scaleX;
-  tempScalingScaleY = boundingBox.scaleY;
-  tempScalingWidth = boundingBox.width;
-  tempScalingHeight = boundingBox.height;
-  if (controlSelected.topLeft) {
-    if (boundingBox.width <= 0) {
-      boundingBox.left = originalBoundingBoxRightCoordinate;
-      boundingBox.width = 1;
-    } else {
-      boundingBox.left = pointer.x;
-      boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
-    }
-    if (boundingBox.height <= 0) {
-      boundingBox.top = originalBoundingBoxBottomCoordinate;
-      boundingBox.height = 1;
-    } else {
-      boundingBox.top = pointer.y;
-      boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
-    }
-  } else if (controlSelected.topRight) {
-    if (boundingBox.width <= 0) {
-      boundingBox.left = originalBoundingBoxLeftCoordinate;
-      boundingBox.width = 1;
-    } else {
-      boundingBox.left = originalBoundingBoxLeftCoordinate;
-      boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-    }
-    if (boundingBox.height <= 0) {
-      boundingBox.top = originalBoundingBoxBottomCoordinate;
-      boundingBox.height = 1;
-    } else {
-      boundingBox.top = pointer.y;
-      boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
-    }
-  } else if (controlSelected.bottomLeft) {
-    if (boundingBox.width <= 0) {
-      boundingBox.left = originalBoundingBoxRightCoordinate;
-      boundingBox.width = 1;
-    } else {
-      boundingBox.left = pointer.x;
-      boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
-    }
-    if (boundingBox.height <= 0) {
-      boundingBox.top = originalBoundingBoxTopCoordinate;
-      boundingBox.height = 1;
-    } else {
-      boundingBox.top = originalBoundingBoxTopCoordinate;
-      boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
-    }
-  } else if (controlSelected.bottomRight) {
-    if (boundingBox.width <= 0) {
-      boundingBox.left = originalBoundingBoxLeftCoordinate;
-      boundingBox.width = 1;
-    } else {
-      boundingBox.left = originalBoundingBoxLeftCoordinate;
-      boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-    }
-    if (boundingBox.height <= 0) {
-      boundingBox.top = originalBoundingBoxTopCoordinate;
-      boundingBox.height = 1;
-    } else {
-      boundingBox.top = originalBoundingBoxTopCoordinate;
-      boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
-    }
-  } else {
-    boundingBox.width *= boundingBox.scaleX;
-    boundingBox.height *= boundingBox.scaleY;
-  }
-  boundingBox.scaleX = 1;
-  boundingBox.scaleY = 1;
-  labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-  labelObject.top = boundingBox.top;
-}
 
 function programaticallySelectBoundingBox(boundingBoxObj) {
   canvas.setActiveObject(boundingBoxObj);
@@ -189,33 +106,7 @@ function setMLGeneratedPalletteToOriginal(shape) {
   shape.MLPallette = false;
 }
 
-let originalDimensions = 0;
-let originalDimensionsWidth = 0;
-let originalBoundingBoxBottomCoordinate = 0;
-let originalBoundingBoxLeftCoordinate = 0;
-let originalBoundingBoxTopCoordinate = 0;
-let originalBoundingBoxRightCoordinate = 0;
-const controlSelected = {
-  middleTop: false,
-  topRight: false,
-  middleRight: false,
-  bottomRight: false,
-  middleBottom: false,
-  bottomLeft: false,
-  middleLeft: false,
-  topLeft: false,
-};
-
-function clearControlSelectedObject() {
-  Object.keys(controlSelected).forEach((key) => {
-    controlSelected[key] = false;
-  });
-}
-
 let removeBoundingBoxFillWhenScaling = false;
-
-let originalWidth = 0;
-let originalHeight = 0;
 
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {
@@ -228,63 +119,8 @@ function polygonMouseDownEvents(event) {
         setMLGeneratedPalletteToOriginal(event.target);
         highlightShapeFill(event.target.id);
       }
-      originalDimensions = event.target.top + event.target.height;
-      originalDimensionsWidth = event.target.left + event.target.width;
-      originalBoundingBoxTopCoordinate = event.target.top;
       if (event.transform.corner) {
-        setBoundingBoxScalingState(true);
-        switch (event.transform.corner) {
-          case 'ml':
-            // should be called right coordinate
-            originalBoundingBoxLeftCoordinate = event.target.left + event.target.width;
-            controlSelected.middleLeft = true;
-            break;
-          case 'mt':
-            originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
-            controlSelected.middleTop = true;
-            break;
-          case 'tl':
-            originalHeight = event.target.height;
-            originalWidth = event.target.width;
-            originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
-            originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
-            controlSelected.topLeft = true;
-            break;
-          case 'tr':
-            originalWidth = event.target.width;
-            originalHeight = event.target.height;
-            originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
-            originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
-            originalBoundingBoxLeftCoordinate = event.target.left;
-            controlSelected.topRight = true;
-            break;
-          case 'mr':
-            controlSelected.middleRight = true;
-            originalBoundingBoxLeftCoordinate = event.target.left;
-            break;
-          case 'br':
-            originalWidth = event.target.width;
-            originalHeight = event.target.height;
-            originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
-            originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
-            originalBoundingBoxLeftCoordinate = event.target.left;
-            controlSelected.bottomRight = true;
-            break;
-          case 'mb':
-            controlSelected.middleBottom = true;
-            break;
-          case 'bl':
-            controlSelected.bottomLeft = true;
-            originalWidth = event.target.width;
-            originalHeight = event.target.height;
-            originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
-            originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
-            originalBoundingBoxLeftCoordinate = event.target.left;
-            break;
-          default:
-            clearControlSelectedObject();
-            break;
-        }
+        setInitialBoundingBoxCoordinates(event);
       }
       highlightLabelInTheList(event.target.id);
       if (getPolygonEditingStatus()) {
@@ -488,6 +324,10 @@ function polygonMoveEvents(event) {
   }
 }
 
+function boundingBoxScalingEvents(event) {
+  handleBoundingBoxScalingEvents(event, canvas, labelObject);
+}
+
 // set styling
 function shapeMouseOutEvents(event) {
   if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
@@ -550,25 +390,6 @@ function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   setRemovingPointsAfterCancelDrawState(false);
 }
 
-function preventScalingTop(boundingBox) {
-  boundingBox.top = 0;
-  boundingBox.scaleX = tempScalingScaleX;
-  boundingBox.scaleY = tempScalingScaleY;
-  boundingBox.height = originalDimensions;
-}
-
-function preventScalingLeft(boundingBox) {
-  boundingBox.left = 0;
-  boundingBox.scaleX = tempScalingScaleX;
-  boundingBox.scaleY = tempScalingScaleY;
-  boundingBox.width = originalDimensionsWidth;
-}
-
-function preventScalingTopLeft(boundingBox) {
-  boundingBox.scaleX = 1;
-  boundingBox.scaleY = 1;
-}
-
 // function validateBoundingBoxFullyOnCanvas(boundingBox) {
 //   if (boundingBox.left + boundingBox.width > canvas.width) {
 //     const surplus = boundingBox.left + boundingBox.width - canvas.width;
@@ -579,249 +400,6 @@ function preventScalingTopLeft(boundingBox) {
 //   }
 // }
 // remove this if the bug is fixed for scaling in top-right/bottom-left
-
-function boundingBoxScalingEvents(event) {
-  if (event.target.shapeName !== 'bndBox') return;
-  const boundingBox = event.target;
-  const { height, width } = getImageProperties();
-  const imageHeight = height * getCurrentZoomState();
-  const imageWidth = width * getCurrentZoomState();
-  boundingBox.setCoords();
-  const pointer = canvas.getPointer(canvas.e);
-  let changed = false;
-  let topBlocking = false;
-  let rightBlocking = false;
-  let leftBlocking = false;
-  // top
-  // make sure that the bounding box cannot be reflected when top is 0
-  if (boundingBox.top <= 0) {
-    console.log('1');
-    topBlocking = true;
-    if (controlSelected.topLeft) {
-      changed = true;
-      boundingBox.top = 0;
-      boundingBox.height = originalBoundingBoxBottomCoordinate;
-      if (boundingBox.width <= 0) {
-        boundingBox.left = originalBoundingBoxRightCoordinate - 1;
-        boundingBox.width = 1;
-      } else {
-        boundingBox.left = pointer.x;
-        boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
-      }
-      labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-      labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
-    } else if (controlSelected.topRight) {
-      changed = true;
-      boundingBox.height = originalBoundingBoxBottomCoordinate;
-      boundingBox.top = 0;
-      if (boundingBox.width <= 0) {
-        boundingBox.left = originalBoundingBoxLeftCoordinate;
-        boundingBox.width = 1;
-      } else {
-        boundingBox.left = originalBoundingBoxLeftCoordinate;
-        boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-      }
-      labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-      labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
-    } else if (controlSelected.middleTop) {
-      changed = true;
-      preventScalingTop(boundingBox);
-    }
-  } else if (controlSelected.middleTop) {
-    boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
-  }
-  // left
-  if (boundingBox.left <= 0) {
-    leftBlocking = true;
-    if (controlSelected.topLeft) {
-      changed = true;
-      if (!topBlocking) {
-        if (boundingBox.height <= 0) {
-          boundingBox.top = originalBoundingBoxBottomCoordinate - 1;
-          boundingBox.height = 1;
-        } else {
-          boundingBox.top = pointer.y;
-          boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
-        }
-      }
-      boundingBox.left = 0;
-      boundingBox.width = originalBoundingBoxRightCoordinate;
-      labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-      labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
-    } else if (controlSelected.bottomLeft) {
-      changed = true;
-      if (boundingBox.height <= 0) {
-        boundingBox.top = originalBoundingBoxTopCoordinate;
-        boundingBox.height = 1;
-      } else {
-        boundingBox.top = originalBoundingBoxTopCoordinate;
-        boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
-      }
-      boundingBox.left = 0;
-      boundingBox.width = originalBoundingBoxRightCoordinate;
-      labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-      labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
-    } else if (controlSelected.middleLeft) {
-      changed = true;
-      preventScalingLeft(boundingBox);
-    }
-  } else if (controlSelected.middleLeft) {
-    boundingBox.width = originalBoundingBoxLeftCoordinate - pointer.x;
-  }
-  if (getCurrentZoomState() > 1.00001) {
-    // right
-    console.log('3');
-    if ((boundingBox.width + boundingBox.left) > imageWidth / getCurrentZoomState()) {
-      rightBlocking = true;
-      if (controlSelected.topRight) {
-        changed = true;
-        if (!topBlocking) {
-          if (boundingBox.height <= 0) {
-            boundingBox.top = originalBoundingBoxBottomCoordinate - 1;
-            boundingBox.height = 1;
-          } else {
-            boundingBox.top = pointer.y;
-            boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
-          }
-        }
-        boundingBox.width = imageWidth / getCurrentZoomState() - boundingBox.left - 2;
-        boundingBox.left = originalBoundingBoxLeftCoordinate;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else if (controlSelected.bottomRight) {
-        changed = true;
-        if (boundingBox.height <= 0) {
-          boundingBox.top = originalBoundingBoxTopCoordinate;
-          boundingBox.height = 1;
-        } else {
-          boundingBox.top = originalBoundingBoxTopCoordinate;
-          boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
-        }
-        boundingBox.width = imageWidth / getCurrentZoomState() - boundingBox.left - 2;
-        boundingBox.left = originalBoundingBoxLeftCoordinate;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else {
-        boundingBox.width = imageWidth / getCurrentZoomState() - boundingBox.left - 2;
-      }
-    }
-    // bottom
-    if ((boundingBox.height + boundingBox.top) > imageHeight / getCurrentZoomState()) {
-      console.log('4');
-      if (controlSelected.bottomRight) {
-        changed = true;
-        if (!rightBlocking) {
-          if (boundingBox.width <= 0) {
-            boundingBox.left = originalBoundingBoxLeftCoordinate;
-            boundingBox.width = 1;
-          } else {
-            boundingBox.left = originalBoundingBoxLeftCoordinate;
-            boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-          }
-        }
-        boundingBox.height = imageHeight / getCurrentZoomState() - boundingBox.top - 2;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else if (controlSelected.bottomLeft) {
-        changed = true;
-        if (!leftBlocking) {
-          if (boundingBox.width <= 0) {
-            boundingBox.left = originalBoundingBoxRightCoordinate - 1;
-            boundingBox.width = 1;
-          } else {
-            boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
-            boundingBox.left = pointer.x;
-          }
-        }
-        boundingBox.height = imageHeight / getCurrentZoomState() - boundingBox.top - 2;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else {
-        boundingBox.height = imageHeight / getCurrentZoomState() - boundingBox.top - 2;
-      }
-    }
-  } else {
-    // right
-    console.log('5');
-    if ((boundingBox.width + boundingBox.left) > canvas.width) {
-      rightBlocking = true;
-      if (controlSelected.topRight) {
-        changed = true;
-        if (!topBlocking) {
-          if (boundingBox.height <= 0) {
-            boundingBox.top = originalBoundingBoxBottomCoordinate - 1;
-            boundingBox.height = 1;
-          } else {
-            boundingBox.top = pointer.y;
-            boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
-          }
-        }
-        boundingBox.width = canvas.width - boundingBox.left - 2;
-        boundingBox.left = originalBoundingBoxLeftCoordinate;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else if (controlSelected.bottomRight) {
-        changed = true;
-        if (boundingBox.height <= 0) {
-          boundingBox.top = originalBoundingBoxTopCoordinate;
-          boundingBox.height = 1;
-        } else {
-          boundingBox.top = originalBoundingBoxTopCoordinate;
-          boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
-        }
-        boundingBox.width = canvas.width - boundingBox.left - 2;
-        boundingBox.left = originalBoundingBoxLeftCoordinate;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else {
-        boundingBox.width = canvas.width - boundingBox.left - 2;
-      }
-    }
-    // bottom
-    if ((boundingBox.height + boundingBox.top) > canvas.height) {
-      console.log('6');
-      if (controlSelected.bottomRight) {
-        changed = true;
-        if (!rightBlocking) {
-          if (boundingBox.width <= 0) {
-            boundingBox.left = originalBoundingBoxLeftCoordinate;
-            boundingBox.width = 1;
-          } else {
-            boundingBox.left = originalBoundingBoxLeftCoordinate;
-            boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-          }
-        }
-        boundingBox.height = canvas.height - boundingBox.top;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else if (controlSelected.bottomLeft) {
-        changed = true;
-        if (!leftBlocking) {
-          if (boundingBox.width <= 0) {
-            boundingBox.left = originalBoundingBoxRightCoordinate - 1;
-            boundingBox.width = 1;
-          } else {
-            boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
-            boundingBox.left = pointer.x;
-          }
-        }
-        boundingBox.height = canvas.height - boundingBox.top - 2;
-        labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
-        labelObject.top = boundingBox.top;
-      } else {
-        boundingBox.height = canvas.height - boundingBox.top - 2;
-      }
-    }
-  }
-  if (!changed) {
-    console.log('7');
-    setDefaultScalingValues(boundingBox, pointer);
-  }
-}
 
 function getLastSelectedShapeId() {
   return selectedShapeId;
