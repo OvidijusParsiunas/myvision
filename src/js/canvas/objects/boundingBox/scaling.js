@@ -2,11 +2,6 @@ import { setBoundingBoxScalingState, getCurrentZoomState } from '../../../tools/
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import labelProperies from '../label/properties';
 
-let tempScalingScaleX = 0;
-let tempScalingScaleY = 0;
-
-let originalDimensions = 0;
-let originalDimensionsWidth = 0;
 let originalBoundingBoxBottomCoordinate = 0;
 let originalBoundingBoxLeftCoordinate = 0;
 let originalBoundingBoxTopCoordinate = 0;
@@ -30,14 +25,10 @@ function clearControlSelectedObject() {
 }
 
 function setInitialBoundingBoxCoordinates(event) {
-  originalDimensions = event.target.top + event.target.height;
-  originalDimensionsWidth = event.target.left + event.target.width;
-  originalBoundingBoxTopCoordinate = event.target.top;
   setBoundingBoxScalingState(true);
   switch (event.transform.corner) {
     case 'ml':
-    // should be called right coordinate
-      originalBoundingBoxLeftCoordinate = event.target.left + event.target.width;
+      originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
       controlSelected.middleLeft = true;
       break;
     case 'mt':
@@ -50,29 +41,25 @@ function setInitialBoundingBoxCoordinates(event) {
       controlSelected.topLeft = true;
       break;
     case 'tr':
-      originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
       originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
       originalBoundingBoxLeftCoordinate = event.target.left;
       controlSelected.topRight = true;
       break;
     case 'mr':
       controlSelected.middleRight = true;
-      originalBoundingBoxLeftCoordinate = event.target.left;
       break;
     case 'br':
-      originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
-      originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
       originalBoundingBoxLeftCoordinate = event.target.left;
+      originalBoundingBoxTopCoordinate = event.target.top;
       controlSelected.bottomRight = true;
       break;
     case 'mb':
       controlSelected.middleBottom = true;
       break;
     case 'bl':
-      controlSelected.bottomLeft = true;
       originalBoundingBoxRightCoordinate = event.target.left + event.target.width;
-      originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
-      originalBoundingBoxLeftCoordinate = event.target.left;
+      originalBoundingBoxTopCoordinate = event.target.top;
+      controlSelected.bottomLeft = true;
       break;
     default:
       clearControlSelectedObject();
@@ -80,9 +67,12 @@ function setInitialBoundingBoxCoordinates(event) {
   }
 }
 
+function setDefaultScales(boundingBox) {
+  boundingBox.scaleX = 1;
+  boundingBox.scaleY = 1;
+}
+
 function setDefaultScalingValues(boundingBox, pointer, labelObject) {
-  tempScalingScaleX = boundingBox.scaleX;
-  tempScalingScaleY = boundingBox.scaleY;
   if (controlSelected.topLeft) {
     if (boundingBox.width <= 0) {
       boundingBox.left = originalBoundingBoxRightCoordinate;
@@ -147,29 +137,9 @@ function setDefaultScalingValues(boundingBox, pointer, labelObject) {
     boundingBox.width *= boundingBox.scaleX;
     boundingBox.height *= boundingBox.scaleY;
   }
-  boundingBox.scaleX = 1;
-  boundingBox.scaleY = 1;
+  setDefaultScales(boundingBox);
   labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
   labelObject.top = boundingBox.top;
-}
-
-function preventScalingTop(boundingBox) {
-  boundingBox.top = 0;
-  boundingBox.scaleX = tempScalingScaleX;
-  boundingBox.scaleY = tempScalingScaleY;
-  boundingBox.height = originalDimensions;
-}
-
-function preventScalingLeft(boundingBox) {
-  boundingBox.left = 0;
-  boundingBox.scaleX = tempScalingScaleX;
-  boundingBox.scaleY = tempScalingScaleY;
-  boundingBox.width = originalDimensionsWidth;
-}
-
-function preventScalingTopLeft(boundingBox) {
-  boundingBox.scaleX = 1;
-  boundingBox.scaleY = 1;
 }
 
 function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
@@ -186,8 +156,11 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
   let leftBlocking = false;
   // top
   // make sure that the bounding box cannot be reflected when top is 0
+
+  // repeating boolean changes and setDefaultScales call logic due to the object potentially already
+  // being at the boundary without having to use any of the conditional controls
   if (boundingBox.top <= 0) {
-    console.log('1');
+    // console.log('1');
     topBlocking = true;
     if (controlSelected.topLeft) {
       changed = true;
@@ -202,11 +175,11 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
       }
       labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
+      setDefaultScales(boundingBox);
     } else if (controlSelected.topRight) {
       changed = true;
-      boundingBox.height = originalBoundingBoxBottomCoordinate;
       boundingBox.top = 0;
+      boundingBox.height = originalBoundingBoxBottomCoordinate;
       if (boundingBox.width <= 0) {
         boundingBox.left = originalBoundingBoxLeftCoordinate;
         boundingBox.width = 1;
@@ -216,10 +189,12 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
       }
       labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
+      setDefaultScales(boundingBox);
     } else if (controlSelected.middleTop) {
       changed = true;
-      preventScalingTop(boundingBox);
+      boundingBox.top = 0;
+      boundingBox.height = originalBoundingBoxBottomCoordinate;
+      setDefaultScales(boundingBox);
     }
   } else if (controlSelected.middleTop) {
     boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
@@ -242,7 +217,7 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
       boundingBox.width = originalBoundingBoxRightCoordinate;
       labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
+      setDefaultScales(boundingBox);
     } else if (controlSelected.bottomLeft) {
       changed = true;
       if (boundingBox.height <= 0) {
@@ -256,17 +231,19 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
       boundingBox.width = originalBoundingBoxRightCoordinate;
       labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = boundingBox.top;
-      preventScalingTopLeft(boundingBox);
+      setDefaultScales(boundingBox);
     } else if (controlSelected.middleLeft) {
       changed = true;
-      preventScalingLeft(boundingBox);
+      boundingBox.left = 0;
+      setDefaultScales(boundingBox);
+      boundingBox.width = originalBoundingBoxRightCoordinate;
     }
   } else if (controlSelected.middleLeft) {
-    boundingBox.width = originalBoundingBoxLeftCoordinate - pointer.x;
+    boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
   }
   if (getCurrentZoomState() > 1.00001) {
     // right
-    console.log('3');
+    // console.log('3');
     if ((boundingBox.width + boundingBox.left) > imageWidth / getCurrentZoomState()) {
       rightBlocking = true;
       if (controlSelected.topRight) {
@@ -303,7 +280,7 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
     }
     // bottom
     if ((boundingBox.height + boundingBox.top) > imageHeight / getCurrentZoomState()) {
-      console.log('4');
+    //   console.log('4');
       if (controlSelected.bottomRight) {
         changed = true;
         if (!rightBlocking) {
@@ -338,7 +315,7 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
     }
   } else {
     // right
-    console.log('5');
+    // console.log('5');
     if ((boundingBox.width + boundingBox.left) > canvas.width) {
       rightBlocking = true;
       if (controlSelected.topRight) {
@@ -375,7 +352,7 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
     }
     // bottom
     if ((boundingBox.height + boundingBox.top) > canvas.height) {
-      console.log('6');
+    //   console.log('6');
       if (controlSelected.bottomRight) {
         changed = true;
         if (!rightBlocking) {
@@ -410,7 +387,7 @@ function handleBoundingBoxScalingEvents(event, canvas, labelObject) {
     }
   }
   if (!changed) {
-    console.log('7');
+    // console.log('7');
     setDefaultScalingValues(boundingBox, pointer, labelObject);
   }
 }
