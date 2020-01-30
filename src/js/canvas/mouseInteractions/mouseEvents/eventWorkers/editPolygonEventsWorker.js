@@ -8,6 +8,8 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
 import {
+  getShapeMovingState, setShapeMovingState,
+  getBoundingBoxScalingState, setBoundingBoxScalingState,
   setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
   getRemovingPointsAfterCancelDrawState, getCurrentZoomState, getDoubleScrollCanvasState,
 } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
@@ -210,6 +212,8 @@ function clearControlSelectedObject() {
   });
 }
 
+let removeBoundingBoxFillWhenScaling = false;
+
 let originalWidth = 0;
 let originalHeight = 0;
 
@@ -228,6 +232,7 @@ function polygonMouseDownEvents(event) {
       originalDimensionsWidth = event.target.left + event.target.width;
       originalBoundingBoxTopCoordinate = event.target.top;
       if (event.transform.corner) {
+        setBoundingBoxScalingState(true);
         switch (event.transform.corner) {
           case 'ml':
             // should be called right coordinate
@@ -316,8 +321,13 @@ function polygonMouseDownEvents(event) {
 function polygonMouseUpEvents(event) {
   mouseIsDown = false;
   if (event.target && event.target.shapeName === 'bndBox') {
-    if (boundingBoxMoved) {
-      boundingBoxMoved = false;
+    if (boundingBoxMoved) { boundingBoxMoved = false; }
+    if (getBoundingBoxScalingState()) {
+      setBoundingBoxScalingState(false);
+      if (removeBoundingBoxFillWhenScaling) {
+        shapeMouseOutEvents(event);
+        removeBoundingBoxFillWhenScaling = false;
+      }
     }
     canvas.bringToFront(event.target);
     canvas.bringToFront(labelObject);
@@ -349,6 +359,7 @@ function polygonMouseUpEvents(event) {
     removeHighlightOfListLabel();
     shapeSetToInvisible = false;
   }
+  if (getShapeMovingState()) { setShapeMovingState(false); }
 }
 
 // the zoom is not properly showing the full images
@@ -444,6 +455,7 @@ function preventOutOfBounds(shape) {
 // potentially refactor this by assigning individual move functions
 function polygonMoveEvents(event) {
   if (event.target) {
+    setShapeMovingState(true);
     const { shapeName } = event.target;
     if (shapeName === 'polygon') {
       preventOutOfBounds(event.target, event.e);
@@ -478,7 +490,11 @@ function polygonMoveEvents(event) {
 
 // set styling
 function shapeMouseOutEvents(event) {
-  defaultShapeFill(event.target.id);
+  if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
+    defaultShapeFill(event.target.id);
+  } else {
+    removeBoundingBoxFillWhenScaling = true;
+  }
 }
 
 function shapeMouseOverEvents(event) {
@@ -575,19 +591,29 @@ function boundingBoxScalingEvents(event) {
     topBlocking = true;
     if (controlSelected.topLeft) {
       changed = true;
-      boundingBox.left = pointer.x;
       boundingBox.top = 0;
       boundingBox.height = originalBoundingBoxBottomCoordinate;
-      boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
+      if (boundingBox.width <= 0) {
+        boundingBox.left = originalBoundingBoxRightCoordinate - 1;
+        boundingBox.width = 1;
+      } else {
+        boundingBox.left = pointer.x;
+        boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
+      }
       labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = boundingBox.top;
       preventScalingTopLeft(boundingBox);
     } else if (controlSelected.topRight) {
       changed = true;
       boundingBox.height = originalBoundingBoxBottomCoordinate;
-      boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-      boundingBox.left = originalBoundingBoxLeftCoordinate;
       boundingBox.top = 0;
+      if (boundingBox.width <= 0) {
+        boundingBox.left = originalBoundingBoxLeftCoordinate;
+        boundingBox.width = 1;
+      } else {
+        boundingBox.left = originalBoundingBoxLeftCoordinate;
+        boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
+      }
       labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = boundingBox.top;
       preventScalingTopLeft(boundingBox);
@@ -604,8 +630,13 @@ function boundingBoxScalingEvents(event) {
     if (controlSelected.topLeft) {
       changed = true;
       if (!topBlocking) {
-        boundingBox.top = pointer.y;
-        boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
+        if (boundingBox.height <= 0) {
+          boundingBox.top = originalBoundingBoxBottomCoordinate - 1;
+          boundingBox.height = 1;
+        } else {
+          boundingBox.top = pointer.y;
+          boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
+        }
       }
       boundingBox.left = 0;
       boundingBox.width = originalBoundingBoxRightCoordinate;
@@ -614,9 +645,14 @@ function boundingBoxScalingEvents(event) {
       preventScalingTopLeft(boundingBox);
     } else if (controlSelected.bottomLeft) {
       changed = true;
+      if (boundingBox.height <= 0) {
+        boundingBox.top = originalBoundingBoxTopCoordinate;
+        boundingBox.height = 1;
+      } else {
+        boundingBox.top = originalBoundingBoxTopCoordinate;
+        boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
+      }
       boundingBox.left = 0;
-      boundingBox.top = originalBoundingBoxTopCoordinate;
-      boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
       boundingBox.width = originalBoundingBoxRightCoordinate;
       labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
       labelObject.top = boundingBox.top;
@@ -636,8 +672,13 @@ function boundingBoxScalingEvents(event) {
       if (controlSelected.topRight) {
         changed = true;
         if (!topBlocking) {
-          boundingBox.top = pointer.y;
-          boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
+          if (boundingBox.height <= 0) {
+            boundingBox.top = originalBoundingBoxBottomCoordinate - 1;
+            boundingBox.height = 1;
+          } else {
+            boundingBox.top = pointer.y;
+            boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
+          }
         }
         boundingBox.width = imageWidth / getCurrentZoomState() - boundingBox.left - 2;
         boundingBox.left = originalBoundingBoxLeftCoordinate;
@@ -645,13 +686,18 @@ function boundingBoxScalingEvents(event) {
         labelObject.top = boundingBox.top;
       } else if (controlSelected.bottomRight) {
         changed = true;
+        if (boundingBox.height <= 0) {
+          boundingBox.top = originalBoundingBoxTopCoordinate;
+          boundingBox.height = 1;
+        } else {
+          boundingBox.top = originalBoundingBoxTopCoordinate;
+          boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
+        }
         boundingBox.width = imageWidth / getCurrentZoomState() - boundingBox.left - 2;
-        boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
         boundingBox.left = originalBoundingBoxLeftCoordinate;
         labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
         labelObject.top = boundingBox.top;
       } else {
-        changed = true;
         boundingBox.width = imageWidth / getCurrentZoomState() - boundingBox.left - 2;
       }
     }
@@ -661,8 +707,13 @@ function boundingBoxScalingEvents(event) {
       if (controlSelected.bottomRight) {
         changed = true;
         if (!rightBlocking) {
-          boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-          boundingBox.left = originalBoundingBoxLeftCoordinate;
+          if (boundingBox.width <= 0) {
+            boundingBox.left = originalBoundingBoxLeftCoordinate;
+            boundingBox.width = 1;
+          } else {
+            boundingBox.left = originalBoundingBoxLeftCoordinate;
+            boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
+          }
         }
         boundingBox.height = imageHeight / getCurrentZoomState() - boundingBox.top - 2;
         labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
@@ -670,14 +721,18 @@ function boundingBoxScalingEvents(event) {
       } else if (controlSelected.bottomLeft) {
         changed = true;
         if (!leftBlocking) {
-          boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
-          boundingBox.left = pointer.x;
+          if (boundingBox.width <= 0) {
+            boundingBox.left = originalBoundingBoxRightCoordinate - 1;
+            boundingBox.width = 1;
+          } else {
+            boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
+            boundingBox.left = pointer.x;
+          }
         }
         boundingBox.height = imageHeight / getCurrentZoomState() - boundingBox.top - 2;
         labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
         labelObject.top = boundingBox.top;
       } else {
-        changed = true;
         boundingBox.height = imageHeight / getCurrentZoomState() - boundingBox.top - 2;
       }
     }
@@ -689,8 +744,13 @@ function boundingBoxScalingEvents(event) {
       if (controlSelected.topRight) {
         changed = true;
         if (!topBlocking) {
-          boundingBox.top = pointer.y;
-          boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
+          if (boundingBox.height <= 0) {
+            boundingBox.top = originalBoundingBoxBottomCoordinate - 1;
+            boundingBox.height = 1;
+          } else {
+            boundingBox.top = pointer.y;
+            boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
+          }
         }
         boundingBox.width = canvas.width - boundingBox.left - 2;
         boundingBox.left = originalBoundingBoxLeftCoordinate;
@@ -698,14 +758,18 @@ function boundingBoxScalingEvents(event) {
         labelObject.top = boundingBox.top;
       } else if (controlSelected.bottomRight) {
         changed = true;
+        if (boundingBox.height <= 0) {
+          boundingBox.top = originalBoundingBoxTopCoordinate;
+          boundingBox.height = 1;
+        } else {
+          boundingBox.top = originalBoundingBoxTopCoordinate;
+          boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
+        }
         boundingBox.width = canvas.width - boundingBox.left - 2;
-        boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
         boundingBox.left = originalBoundingBoxLeftCoordinate;
-        boundingBox.top = originalBoundingBoxTopCoordinate;
         labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
         labelObject.top = boundingBox.top;
       } else {
-        changed = true;
         boundingBox.width = canvas.width - boundingBox.left - 2;
       }
     }
@@ -715,23 +779,32 @@ function boundingBoxScalingEvents(event) {
       if (controlSelected.bottomRight) {
         changed = true;
         if (!rightBlocking) {
-          boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
-          boundingBox.left = originalBoundingBoxLeftCoordinate;
+          if (boundingBox.width <= 0) {
+            boundingBox.left = originalBoundingBoxLeftCoordinate;
+            boundingBox.width = 1;
+          } else {
+            boundingBox.left = originalBoundingBoxLeftCoordinate;
+            boundingBox.width = pointer.x - originalBoundingBoxLeftCoordinate;
+          }
         }
-        boundingBox.height = canvas.height - boundingBox.top - 2;
+        boundingBox.height = canvas.height - boundingBox.top;
         labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
         labelObject.top = boundingBox.top;
       } else if (controlSelected.bottomLeft) {
         changed = true;
         if (!leftBlocking) {
-          boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
-          boundingBox.left = pointer.x;
+          if (boundingBox.width <= 0) {
+            boundingBox.left = originalBoundingBoxRightCoordinate - 1;
+            boundingBox.width = 1;
+          } else {
+            boundingBox.width = originalBoundingBoxRightCoordinate - pointer.x;
+            boundingBox.left = pointer.x;
+          }
         }
         boundingBox.height = canvas.height - boundingBox.top - 2;
         labelObject.left = boundingBox.left + labelProperies.boundingBoxOffsetProperties().left;
         labelObject.top = boundingBox.top;
       } else {
-        changed = true;
         boundingBox.height = canvas.height - boundingBox.top - 2;
       }
     }

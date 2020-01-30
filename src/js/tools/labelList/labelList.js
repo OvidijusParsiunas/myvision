@@ -5,8 +5,8 @@ import {
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
-  getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
-  getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState,
+  getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState, getBoundingBoxScalingState,
+  getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState, getShapeMovingState,
   getAddingPolygonPointsState, setSettingsPopUpOpenState, setEditingLabelId,
   getRemovingPolygonPointsState, getDefaultState, setExportDatasetsPopUpOpenState,
 } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
@@ -793,11 +793,15 @@ window.labelDblClicked = (id) => {
 };
 
 window.mouseEnterLabel = (id) => {
-  highlightShapeFill(id);
+  if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
+    highlightShapeFill(id);
+  }
 };
 
 window.mouseLeaveLabel = (id) => {
-  defaultShapeFill(id);
+  if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
+    defaultShapeFill(id);
+  }
 };
 
 export {

@@ -21,6 +21,8 @@ let exportDatasetsPopUpOpenState = false;
 let changingMLGeneratedLabelNamesState = false;
 let currentImageId = false;
 let labellingPopUpDisplayed = false;
+let boundingBoxScalingState = false;
+let shapeMovingState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -108,6 +110,14 @@ function getChangingMLGeneratedLabelNamesState() {
 
 function getLabellingPopUpDisplayedState() {
   return labellingPopUpDisplayed;
+}
+
+function getBoundingBoxScalingState() {
+  return boundingBoxScalingState;
+}
+
+function getShapeMovingState() {
+  return shapeMovingState;
 }
 
 function setDefaultState(state) {
@@ -199,6 +209,14 @@ function setLabellingPopUpDisplayedState(state) {
   labellingPopUpDisplayed = state;
 }
 
+function setBoundingBoxScalingState(state) {
+  boundingBoxScalingState = state;
+}
+
+function setShapeMovingState(state) {
+  shapeMovingState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -206,6 +224,8 @@ export {
   setCurrentImageId,
   getEditingLabelId,
   setEditingLabelId,
+  getShapeMovingState,
+  setShapeMovingState,
   getCurrentZoomState,
   setCurrentZoomState,
   getHasDrawnShapeState,
@@ -222,6 +242,8 @@ export {
   setSettingsPopUpOpenState,
   getContinuousDrawingState,
   setContinuousDrawingState,
+  getBoundingBoxScalingState,
+  setBoundingBoxScalingState,
   getDoubleScrollCanvasState,
   setDoubleScrollCanvasState,
   getAddingPolygonPointsState,
