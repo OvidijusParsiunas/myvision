@@ -34,7 +34,7 @@ function assignDefaultEvents(canvas, polygonId, afterAddPoints) {
 
   // edit this
   canvas.on('mouse:out', (e) => {
-    if (e.target && e.target.shapeName !== 'point') {
+    if (e.target) {
       shapeMouseOutEvents(e);
     }
   });

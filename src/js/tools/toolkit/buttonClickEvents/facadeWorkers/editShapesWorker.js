@@ -2,8 +2,9 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
-  setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState, setAddingPolygonPointsState,
-  getDefaultState, getAddingPolygonPointsState, getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState,
+  setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
 import { cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';

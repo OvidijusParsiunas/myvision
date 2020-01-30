@@ -20,6 +20,7 @@ import {
   getEditingLabelId, getLastPolygonActionWasMoveState,
   getNewShapeSelectedViaLabelListState, setNewShapeSelectedViaLabelListState,
 } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { highlightShapeFill, defaultShapeFill } from '../../allShapes/allShapes';
 
 // this is the polygonInteractionsManager
 
@@ -198,6 +199,14 @@ function completePolygon(finalPoint) {
   setPolygonEditingStatus(false);
 }
 
+function highlightSelectedPolygonViaPoint() {
+  highlightShapeFill(polygon.id);
+}
+
+function defaultFillSelectedPolygonViaPoint() {
+  defaultShapeFill(polygon.id);
+}
+
 function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPolygon, addingPoints) {
   setSelectedObjects(canvasObj, polygonObj);
   canvasObj.discardActiveObject();
@@ -217,14 +226,14 @@ function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPoly
 
 export {
   setEditablePolygon, resetPolygonSelectableArea,
-  movePolygonPoint, sendPolygonPointsToFront,
-  removePolygonPoints, displayPolygonPointsAfterMove,
-  setEditablePolygonAfterMoving, removePolygon,
-  removePolygonPoint, getPolygonEditingStatus, getPolygonIfEditing,
   initializeAddNewPoints, addFirstPoint, addPoint,
+  removePolygonPoints, displayPolygonPointsAfterMove,
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
   resetAddPoints, isAddingPointsToPolygon, addPointsMouseOut,
   changeExistingPolygonPointsToRemovable, clearAllAddPointsData,
   changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
+  removePolygonPoint, getPolygonEditingStatus, getPolygonIfEditing,
   addPointsMouseOver, resetAddPointProperties, cleanPolygonPointsArray,
+  movePolygonPoint, sendPolygonPointsToFront, highlightSelectedPolygonViaPoint,
+  setEditablePolygonAfterMoving, removePolygon, defaultFillSelectedPolygonViaPoint,
 };

@@ -1,8 +1,8 @@
 import {
-  setEditablePolygon, movePolygonPoint,
   removePolygonPoints, displayPolygonPointsAfterMove,
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
-  sendPolygonPointsToFront, getPolygonEditingStatus,
+  setEditablePolygon, movePolygonPoint, highlightSelectedPolygonViaPoint,
+  sendPolygonPointsToFront, getPolygonEditingStatus, defaultFillSelectedPolygonViaPoint,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getLabelById } from '../../../objects/label/label';
@@ -491,18 +491,26 @@ function polygonMoveEvents(event) {
 // set styling
 function shapeMouseOutEvents(event) {
   if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
-    defaultShapeFill(event.target.id);
+    if (event.target.shapeName === 'point') {
+      defaultFillSelectedPolygonViaPoint();
+    } else {
+      defaultShapeFill(event.target.id);
+    }
   } else {
     removeBoundingBoxFillWhenScaling = true;
   }
 }
 
 function shapeMouseOverEvents(event) {
-  if (event.target && event.target.shapeName !== 'point' && event.target.shapeName !== 'label') {
+  if (event.target && event.target.shapeName !== 'label') {
     if (event.target.MLPallette) {
       setMLGeneratedPalletteToOriginal(event.target);
     }
-    highlightShapeFill(event.target.id);
+    if (event.target.shapeName === 'point') {
+      highlightSelectedPolygonViaPoint();
+    } else {
+      highlightShapeFill(event.target.id);
+    }
   }
 }
 
