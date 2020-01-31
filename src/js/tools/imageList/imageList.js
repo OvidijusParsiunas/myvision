@@ -8,6 +8,8 @@ import { setDefaultState, setCurrentImageId } from '../toolkit/buttonClickEvents
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
+import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
+import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 
 let currentImageNameElement = null;
 let currentlyActiveElement = null;
@@ -216,6 +218,13 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
+function fixForTheObjectScalingEventsBugOnCanvasSwitch() {
+  const { canvas1, canvas2 } = getCanvasReferences();
+  if (canvas1.__eventListeners['object:scaling'].length > 1) {
+    assignDefaultEvents(canvas2, null, false);
+  }
+}
+
 // the reason why we do not use scaleX/scaleY is because these are returned in
 // a promise as the image is drawn hence we do not have it at this time
 // (for the new image)
@@ -224,7 +233,6 @@ function changeToExistingImage(id) {
   // get shapes
   // zoomOutObjectOnImageSelect
   // make sure the scales are correct
-
   setDefaultState(false);
   captureCurrentImageData();
   removeAllLabelListItems();
@@ -241,6 +249,7 @@ function changeToExistingImage(id) {
   changeCurrentImageElementText(id);
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
   scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
+  fixForTheObjectScalingEventsBugOnCanvasSwitch();
   currentlySelectedImageId = id;
 }
 

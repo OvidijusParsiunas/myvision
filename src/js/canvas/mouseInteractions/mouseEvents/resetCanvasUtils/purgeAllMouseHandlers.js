@@ -1,3 +1,16 @@
+import { getCanvasReferences } from '../../../utils/fabricUtils';
+
+function setScalingEventListeners() {
+  const { canvas1, canvas2 } = getCanvasReferences();
+  if (canvas2 && canvas2.__eventListeners
+         && canvas2.__eventListeners['object:scaling'].length > 1) {
+    canvas2.__eventListeners['object:scaling'].pop();
+  }
+  if (canvas1.__eventListeners['object:scaling'].length > 1) {
+    canvas1.__eventListeners['object:scaling'].pop();
+  }
+}
+
 function purgeCanvasMouseEvents(canvas) {
   if (canvas.__eventListeners) {
     canvas.__eventListeners['mouse:down'] = [];
@@ -7,9 +20,7 @@ function purgeCanvasMouseEvents(canvas) {
     canvas.__eventListeners['mouse:up'] = [];
     canvas.__eventListeners['mouse:wheel'] = [];
     canvas.__eventListeners['object:moving'] = [];
-    if (canvas.__eventListeners['object:scaling'].length > 1) {
-      canvas.__eventListeners['object:scaling'].pop();
-    }
+    setScalingEventListeners();
   }
 }
 

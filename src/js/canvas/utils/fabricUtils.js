@@ -24,6 +24,11 @@ function reasignCanvas() {
   return canvas1;
 }
 
+function getCanvasReferences() {
+  return { canvas1, canvas2 };
+}
+
 export {
-  setBoundingBoxEditToolsToBeTransparent, createNewCanvas, reasignCanvas,
+  setBoundingBoxEditToolsToBeTransparent, createNewCanvas,
+  reasignCanvas, getCanvasReferences,
 };
