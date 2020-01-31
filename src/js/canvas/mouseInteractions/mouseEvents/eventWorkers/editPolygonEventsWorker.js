@@ -18,6 +18,7 @@ import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes
 import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
 import { getImageProperties } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
+import preventOutOfBounds from '../../../objects/sharedUtils/moveBlockers';
 
 let canvas = null;
 let labelObject = null;
@@ -51,18 +52,6 @@ function setEditablePolygonOnClickFunc(event) {
   selectedShapeId = event.target.id;
 }
 
-function assignSetEditablePolygonOnClickFunc() {
-  setEditablePolygonOnClick = setEditablePolygonOnClickFunc;
-}
-
-function skipMouseUpEvent() {
-  canvas.__eventListeners['mouse:down'] = [];
-  canvas.on('mouse:down', (e) => {
-    polygonMouseDownEvents(e);
-  });
-  assignSetEditablePolygonOnClickFunc();
-}
-
 function setEditablePolygonWhenPolygonMoved(event) {
   if (newPolygonSelected) {
     setEditablePolygonAfterMoving(canvas, event.target);
@@ -70,7 +59,6 @@ function setEditablePolygonWhenPolygonMoved(event) {
   } else {
     displayPolygonPointsAfterMove();
   }
-  polygonMoved = false;
 }
 
 function resetPolygonSelectableAreaAfterPointMoved() {
@@ -153,6 +141,35 @@ function polygonMouseDownEvents(event) {
   }
 }
 
+function handleShapeFillAfterMove(event) {
+  const pointer = canvas.getPointer(canvas.e);
+  const currentZoomState = getCurrentZoomState();
+  const { height, width } = getImageProperties();
+  const imageHeight = height * currentZoomState;
+  const imageWidth = width * currentZoomState;
+  if (pointer.x < 0 || imageWidth / currentZoomState < pointer.x
+    || pointer.y < 0 || imageHeight / currentZoomState < pointer.y) {
+    if (event.target.shapeName === 'point') {
+      defaultFillSelectedPolygonViaPoint();
+    } else {
+      defaultShapeFill(event.target.id);
+    }
+  }
+  setShapeMovingState(false);
+}
+
+function shapeMouseOutEvents(event) {
+  if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
+    if (event.target.shapeName === 'point') {
+      defaultFillSelectedPolygonViaPoint();
+    } else {
+      defaultShapeFill(event.target.id);
+    }
+  } else {
+    removeBoundingBoxFillWhenScaling = true;
+  }
+}
+
 // look at this
 function polygonMouseUpEvents(event) {
   mouseIsDown = false;
@@ -195,106 +212,18 @@ function polygonMouseUpEvents(event) {
     removeHighlightOfListLabel();
     shapeSetToInvisible = false;
   }
-  if (getShapeMovingState()) { setShapeMovingState(false); }
-}
-
-// the zoom is not properly showing the full images
-// the right and bottom boundaries may look off when zoomed in (after above fix)
-
-// have condition for if certain zoom, allow the bounding box edge to be increased
-
-// will need to look at points boundaries when the full image is shown and
-// zoom scaling is fully fixed
-
-function preventShapesOutOfBounds(shape) {
-  shape.setCoords();
-  // multiple if statements because of corners
-  // top
-  if (shape.top < 0) {
-    shape.top = 0;
-  }
-  // left
-  if (shape.left < 0) {
-    shape.left = 0;
-  }
-  if (getCurrentZoomState() > 1.00001) {
-    const { height, width } = getImageProperties();
-    const imageHeight = height * getCurrentZoomState();
-    const imageWidth = width * getCurrentZoomState();
-    // right
-    if (shape.left + shape.width > imageWidth / getCurrentZoomState()
-    - (getCurrentZoomState())) {
-      shape.left = imageWidth / getCurrentZoomState() - shape.width - 2;
-    }
-    // bottom
-    if (shape.top + shape.height > imageHeight / getCurrentZoomState()
-    - getCurrentZoomState()) {
-      shape.top = imageHeight / getCurrentZoomState() - shape.height - 2;
-    }
-  } else {
-    // right
-    if (shape.left + shape.width > canvas.width - 2.5) {
-      shape.left = canvas.width - shape.width - 2.5;
-    }
-    // bottom
-    if (shape.top + shape.height > canvas.height - 2) {
-      shape.top = canvas.height - shape.height - 2;
-    }
+  if (getShapeMovingState()) {
+    handleShapeFillAfterMove(event);
+    if (polygonMoved) { polygonMoved = false; }
   }
 }
 
-function preventOutOfBoundsPoints(shape) {
-  shape.setCoords();
-  // multiple if statements because of corners
-  // top
-  if (shape.top + shape.height / 2 < 0) {
-    shape.top = 0;
-  }
-  // left
-  if (shape.left + shape.width / 2 < 0) {
-    shape.left = 0;
-  }
-  if (getCurrentZoomState() > 1.00001) {
-    const { height, width } = getImageProperties();
-    const imageHeight = height * getCurrentZoomState();
-    const imageWidth = width * getCurrentZoomState();
-    // right
-    if (shape.left + shape.width / 2
-      > imageWidth / getCurrentZoomState() + 0.75) {
-      shape.left = imageWidth / getCurrentZoomState() - shape.width / 2;
-    }
-    // bottom
-    if (shape.top + shape.height / 2
-      > imageHeight / getCurrentZoomState() + 1) {
-      shape.top = imageHeight / getCurrentZoomState() - shape.height / 2 + 1;
-    }
-  } else {
-    // right
-    if (shape.left + shape.width / 2 > canvas.width + 1.5) {
-      shape.left = canvas.width - shape.width / 2 + 1.5;
-    }
-    // bottom
-    if (shape.top + shape.height / 2 > canvas.height + 1.5) {
-      shape.top = canvas.height - shape.height / 2 + 1.5;
-    }
-  }
-}
-
-function preventOutOfBounds(shape) {
-  if (shape.shapeName === 'point') {
-    preventOutOfBoundsPoints(shape);
-  } else {
-    preventShapesOutOfBounds(shape);
-  }
-}
-
-// potentially refactor this by assigning individual move functions
 function polygonMoveEvents(event) {
   if (event.target) {
     setShapeMovingState(true);
     const { shapeName } = event.target;
     if (shapeName === 'polygon') {
-      preventOutOfBounds(event.target, event.e);
+      preventOutOfBounds(event.target, canvas);
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
@@ -303,7 +232,7 @@ function polygonMoveEvents(event) {
       labelObject.left = event.target.left - event.target.labelOffsetLeft;
       polygonMoved = true;
     } else if (shapeName === 'point') {
-      preventOutOfBounds(event.target, event.e);
+      preventOutOfBounds(event.target, canvas);
       if (event.target.pointId === 0) {
         movePolygonPoint(event, labelObject);
       } else {
@@ -312,7 +241,7 @@ function polygonMoveEvents(event) {
       resetPolygonSelectableAreaAfterPointMoved();
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
-      preventOutOfBounds(event.target, event.e);
+      preventOutOfBounds(event.target, canvas);
       labelObject.setCoords();
       labelObject.top = event.target.top;
       labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
@@ -325,20 +254,7 @@ function polygonMoveEvents(event) {
 }
 
 function boundingBoxScalingEvents(event) {
-  handleBoundingBoxScalingEvents(event, canvas, labelObject);
-}
-
-// set styling
-function shapeMouseOutEvents(event) {
-  if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
-    if (event.target.shapeName === 'point') {
-      defaultFillSelectedPolygonViaPoint();
-    } else {
-      defaultShapeFill(event.target.id);
-    }
-  } else {
-    removeBoundingBoxFillWhenScaling = true;
-  }
+  handleBoundingBoxScalingEvents(event, labelObject, canvas);
 }
 
 function shapeMouseOverEvents(event) {
@@ -365,6 +281,18 @@ function removeActiveLabelObject() {
 function setShapeToInvisible() {
   selectedShapeId = null;
   shapeSetToInvisible = true;
+}
+
+function assignSetEditablePolygonOnClickFunc() {
+  setEditablePolygonOnClick = setEditablePolygonOnClickFunc;
+}
+
+function skipMouseUpEvent() {
+  canvas.__eventListeners['mouse:down'] = [];
+  canvas.on('mouse:down', (e) => {
+    polygonMouseDownEvents(e);
+  });
+  assignSetEditablePolygonOnClickFunc();
 }
 
 function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
