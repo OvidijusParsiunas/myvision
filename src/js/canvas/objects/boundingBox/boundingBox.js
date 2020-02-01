@@ -115,7 +115,7 @@ function drawBoundingBox(event) {
     // right
     if (boundingBoxProps.origX < pointer.x) {
       if (pointer.x > canvas.width) {
-        boundingBox.set({ width: Math.floor(canvas.width - boundingBoxProps.origX - 2.3) });
+        boundingBox.set({ width: Math.floor(canvas.width - boundingBoxProps.origX - 2.2) });
       } else if (mouseMovedLeft) {
         boundingBox.set({ left: boundingBoxProps.origX });
         boundingBox.set({ width: pointer.x - boundingBoxProps.origX + 0.5 });

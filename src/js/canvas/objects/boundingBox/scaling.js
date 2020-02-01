@@ -340,7 +340,7 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
             boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
           }
         }
-        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2);
+        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2.4);
         boundingBox.left = originalBoundingBoxLeftCoordinate;
         labelObject.left = boundingBox.left + labelLeftOffset;
         labelObject.top = boundingBox.top;
@@ -353,12 +353,12 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
           boundingBox.top = originalBoundingBoxTopCoordinate;
           boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
         }
-        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2);
+        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2.4);
         boundingBox.left = originalBoundingBoxLeftCoordinate;
         labelObject.left = boundingBox.left + labelLeftOffset;
         labelObject.top = boundingBox.top;
       } else {
-        boundingBox.width = canvas.width - boundingBox.left - 2;
+        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2.4);
       }
     }
     // bottom
