@@ -1,11 +1,17 @@
 #canvas-wrapper {
 }
 
+/*
+  font-family: "Source Sans Pro", sans-serif;
+  font-family: Chivo, sans-serif;
+  font-family: K2D, sans-serif;
+*/
+
 #popup-label-input {
   width: 162px;
   border: thin ridge rgb(177, 177, 177);
   margin: 6px 9px 9px 9px;
-  font-family: sans-serif;
+  font-family: Chivo, sans-serif;
   font-size: 15px;
   padding-top: 2px;
   padding-left: 2px;
@@ -47,12 +53,11 @@
   color: black;
   padding-left: 5px;
   text-decoration: none;
-  font-family: 'Pavanam', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 15px;
 }
 
 .popup-label-title {
-  font-family: Arial;
   font-size: 17px;
   padding-left: 8px;
   padding-top: 6px;
@@ -121,6 +126,7 @@
 }
 
 #popup-label-parent {
+  font-family: "Source Sans Pro", sans-serif;
   border-radius: 3px;
   position: absolute;
   background-color: white;
@@ -138,7 +144,7 @@
   width: 165px;
   overflow-y: auto;
   border: thin ridge rgb(177, 177, 177);
-  height: 95px;
+  height: 105px;
   margin-left: 9px;
 }
 
@@ -156,7 +162,7 @@
 .popup-label-button {
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-top: 6px;
+  padding-top: 4px;
   width: 60px;
   padding-left: 8px;
   padding-right: 8px;
@@ -304,6 +310,9 @@
 
 #machine-learning-popup-parent {
   position: absolute;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.3;
   background-color: white;
   border-width: 1px;
   border-style: solid;

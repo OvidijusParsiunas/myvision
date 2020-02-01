@@ -37,7 +37,7 @@ function deleteAndAddLastRowToRefreshDiv() {
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
     if (!horizontalScrollPresent) {
-      labellerPopupLabelOptionsElement.style.height = '114px';
+      labellerPopupLabelOptionsElement.style.height = '126px';
     }
   } else if (labelOptions.length === 7) {
     addLabelToList('temp horizontal');

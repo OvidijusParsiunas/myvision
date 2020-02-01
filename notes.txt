@@ -145,6 +145,8 @@ the mouse leaves the list
 
 mouse over in the label list should be select
 
+labeller popup behaves weirdly when opening up the console
+
 SOLUTION:
 
 firefox on open overflow is caused by the size of font in the sidebar, if that doesn't fix it, change the height of the following:

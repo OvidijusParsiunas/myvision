@@ -315,7 +315,7 @@ function deleteAndAddLastRowToRefreshDropdownDiv(dropdownLabelsElement) {
   const labelOptions = getLabelOptions();
   dropdownLabelsElement.deleteRow(labelOptions.length - 1);
   if (labelOptions.length === 6) {
-    popuplabelOptionsElement.style.height = '114px';
+    popuplabelOptionsElement.style.height = '126px';
   } else if (labelOptions.length === 7) {
     addLabelToDropdown('temp horizontal', dropdownLabelsElement);
   }
