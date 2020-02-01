@@ -138,6 +138,9 @@ grey out the zoom button when it is above 3.9
 when clicking on a label in the list, get corner of undefined error
 
 
+check if right blocking is acceptable
+
+
 SOLUTION:
 
 firefox on open overflow is caused by the size of font in the sidebar, if that doesn't fix it, change the height of the following:

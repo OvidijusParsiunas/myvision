@@ -218,7 +218,11 @@ function scrollIntoViewIfNeeded(childElement, parentElement) {
   }
 }
 
-function fixForTheObjectScalingEventsBugOnCanvasSwitch() {
+// to replicate the bug, carry out the following:
+// upload image, draw bounding box, upload new image, come back to the first
+// and use diagonal scaling to the right edge
+// NOTE: some of the code to fix a similar bug is located in the purgeAllMouseEvents.js file
+function fixForObjectScalingBugOnCanvasSwitch() {
   const { canvas1, canvas2 } = getCanvasReferences();
   if (canvas1.__eventListeners['object:scaling'].length > 1) {
     assignDefaultEvents(canvas2, null, false);
@@ -249,7 +253,7 @@ function changeToExistingImage(id) {
   changeCurrentImageElementText(id);
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
   scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
-  fixForTheObjectScalingEventsBugOnCanvasSwitch();
+  fixForObjectScalingBugOnCanvasSwitch();
   currentlySelectedImageId = id;
 }
 

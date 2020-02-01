@@ -1,13 +1,15 @@
 import { getCanvasReferences } from '../../../utils/fabricUtils';
 
+// the following is used to fix bounding box stretching bugs within a canvas
+// and when switching between older and newer ones
 function setScalingEventListeners() {
   const { canvas1, canvas2 } = getCanvasReferences();
-  if (canvas2 && canvas2.__eventListeners
-         && canvas2.__eventListeners['object:scaling'].length > 1) {
-    canvas2.__eventListeners['object:scaling'].pop();
-  }
   if (canvas1.__eventListeners['object:scaling'].length > 1) {
     canvas1.__eventListeners['object:scaling'].pop();
+  }
+  if (canvas2 && canvas2.__eventListeners
+   && canvas2.__eventListeners['object:scaling'].length > 1) {
+    canvas2.__eventListeners['object:scaling'].pop();
   }
 }
 
