@@ -28,8 +28,8 @@ function preventShapesOutOfBounds(shape, canvas) {
     }
   } else {
     // right
-    if (shape.left + shape.width > canvas.width - 2.5) {
-      shape.left = canvas.width - shape.width - 2.5;
+    if (shape.left + shape.width > canvas.width - 2.3) {
+      shape.left = Math.floor(canvas.width - shape.width - 2.3);
     }
     // bottom
     if (shape.top + shape.height > canvas.height - 2) {

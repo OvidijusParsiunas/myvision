@@ -140,6 +140,10 @@ when clicking on a label in the list, get corner of undefined error
 
 check if right blocking is acceptable
 
+when you select a label in the labeller popup with a mouse, the colour should remain on the label when
+the mouse leaves the list
+
+mouse over in the label list should be select
 
 SOLUTION:
 
