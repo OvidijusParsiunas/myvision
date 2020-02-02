@@ -1,8 +1,10 @@
 let isNoImagesFoundInfoDisplayed = false;
 
 let nextButtonElement = null;
-let loaderWheelElement = null;
+let popupParentElement = null;
 let descriptionElement = null;
+let loadingTextElement = null;
+let loadingWheelElement = null;
 let buttonsGroupElement = null;
 let submitButtonElement = null;
 let cancelButtonElement = null;
@@ -21,6 +23,7 @@ function removeProgressMessage() {
 
 function displayErrorMessage(errorMessage) {
   removeProgressMessage();
+  errorMessagesElement.style.display = '';
   errorMessagesElement.innerHTML = errorMessage;
   buttonsGroupElement.style.marginTop = '4px';
 }
@@ -57,17 +60,34 @@ function removeInfoMessage() {
   buttonsGroupElement.style.marginTop = '';
 }
 
+function removeDescription() {
+  descriptionElement.style.display = 'none';
+}
+
+function displayLoadingText() {
+  loadingTextElement.style.display = '';
+}
+
+function removeLoadingText() {
+  loadingTextElement.style.display = 'none';
+}
+
 function displayLoaderWheel() {
   removeErrorMessage();
-  loaderWheelElement.style.display = '';
+  loadingWheelElement.style.display = '';
   cancelButtonElement.style.marginRight = '3px';
   descriptionElement.style.marginBottom = '2px';
 }
 
-function removeLoaderWheel() {
-  loaderWheelElement.style.display = 'none';
+function removeLoadingWheel() {
+  loadingWheelElement.style.display = 'none';
   cancelButtonElement.style.marginRight = '';
   descriptionElement.style.marginBottom = '';
+}
+
+function removeLoadingContent() {
+  removeLoadingWheel();
+  removeLoadingText();
 }
 
 function displayMLCoverageSelectionButtons() {
@@ -119,6 +139,8 @@ function disableImmediateCancelButtonHoverEffect() {
 }
 
 function changeToLoadingStyle() {
+  displayLoadingText();
+  removeDescription();
   disableImmediateCancelButtonHoverEffect();
   displayLoaderWheel();
   removeStartButton();
@@ -148,10 +170,28 @@ function hideUploadImagesButton() {
   toolkitUploadImagesButton.style.border = '';
 }
 
+function increasePopUpHeight(height) {
+  popupParentElement.style.height = height;
+}
+
+function setDefaultPopUpHeight() {
+  popupParentElement.style.height = '';
+}
+
+function setDescriptionElementMarginBottom(height) {
+  descriptionElement.style.marginBottom = height;
+}
+
+function setDefaultDescriptionelementMarginBottom() {
+  descriptionElement.style.marginBottom = '';
+}
+
 function displayNoImagesFoundInfo() {
   displayUploadImagesButton();
   disableStartButton();
-  displayInfoMessage('Please upload an image before using Machine Learning');
+  displayInfoMessage('Please upload an image to get started.');
+  setDescriptionElementMarginBottom('3px');
+  increasePopUpHeight('260px');
   isNoImagesFoundInfoDisplayed = true;
 }
 
@@ -160,6 +200,8 @@ function removeUploadedImageAfterNoneFoundInfo() {
     hideUploadImagesButton();
     removeInfoMessage();
     enableStartButton();
+    setDefaultPopUpHeight();
+    setDefaultDescriptionelementMarginBottom();
     isNoImagesFoundInfoDisplayed = false;
   }
 }
@@ -188,13 +230,15 @@ function prepareInstantiateMachineLearningView() {
   cancelButtonElement.style.marginRight = '';
   displayStartButton();
   displayCancelButton();
-  removeLoaderWheel();
+  removeLoadingWheel();
 }
 
 function assignInitiateMachineLearningViewLocalVariables() {
   toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
-  loaderWheelElement = document.getElementById('machinelearning-popup-loader-wheel');
+  loadingWheelElement = document.getElementById('machine-learning-popup-loading-wheel');
+  loadingTextElement = document.getElementById('machine-learning-popup-loading-text');
   descriptionElement = document.getElementById('machine-learning-popup-description');
+  popupParentElement = document.getElementById('machine-learning-popup-parent');
   submitButtonElement = document.getElementById('machine-learning-popup-initiate-start-button');
   nextButtonElement = document.getElementById('machine-learning-popup-initiate-next-button');
   cancelButtonElement = document.getElementById('machine-learning-popup-initiate-cancel-button');
@@ -208,9 +252,9 @@ function assignInitiateMachineLearningViewLocalVariables() {
 
 export {
   hideInitiateMachineLearningViewAssets, displayNextButton,
-  displayLoaderWheel, removeLoaderWheel, displayRetryButton,
   removeUploadedImageAfterNoneFoundInfo, removeErrorMessage,
   changeToLoadingStyle, removeCancelButton, removeRetryButton,
+  displayLoaderWheel, removeLoadingContent, displayRetryButton,
   removeStartButton, disableStartButton, displayNoImagesFoundInfo,
   prepareInstantiateMachineLearningView, displayUploadImagesButton,
   displayErrorMessage, updateProgressMessage, highlightCancelButton,

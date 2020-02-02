@@ -343,6 +343,10 @@ function changePopUpDescription() {
   descriptionElement.innerHTML = 'The following names were automatically assigned to the generated objects, you can edit them below:';
 }
 
+function displayDescription() {
+  descriptionElement.style.display = '';
+}
+
 function setLocalVariables() {
   overflowScrollWidth = getScrollWidth();
 }
@@ -351,6 +355,7 @@ function displayViewElements(objectNamesArg) {
   objectNames = objectNamesArg;
   setLocalVariables();
   changePopUpDescription();
+  displayDescription();
   populateGeneratedLabelsTable();
   changeElementsToVisible();
   updateGeneratedLabelsParentElementWidthOnStartup();

@@ -53,7 +53,8 @@
   color: black;
   padding-left: 5px;
   text-decoration: none;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  line-height: 1.3;
   font-size: 15px;
 }
 
@@ -126,7 +127,7 @@
 }
 
 #popup-label-parent {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
   border-radius: 3px;
   position: absolute;
   background-color: white;
@@ -146,6 +147,7 @@
   border: thin ridge rgb(177, 177, 177);
   height: 105px;
   margin-left: 9px;
+  box-sizing: content-box;
 }
 
 #popup-label-options div:hover {
@@ -157,16 +159,18 @@
   margin-top: 3px;
   margin-bottom: 2px;
   user-select: none;
+  font-size: 14.5px;
+  line-height: 1.35;
 }
 
 .popup-label-button {
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-top: 4px;
+  padding-top: 6px;
   width: 60px;
   padding-left: 8px;
   padding-right: 8px;
-  padding-bottom: 4px;
+  padding-bottom: 5px;
   background-color: rgb(222, 222, 222);
   display: inline-block;
   border-radius: 2px;
@@ -180,7 +184,7 @@
   width: 60px;
   padding-left: 8px;
   padding-right: 8px;
-  padding-bottom: 4px;
+  padding-bottom: 5px;
   display: inline-block;
   border-radius: 2px;
   cursor: pointer;
@@ -311,8 +315,8 @@
 #machine-learning-popup-parent {
   position: absolute;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  line-height: 1.3;
+  font-size: 14.5px;
+  line-height: 1.35;
   background-color: white;
   border-width: 1px;
   border-style: solid;
@@ -324,7 +328,7 @@
   left: -151px;
   bottom: 0;
   right: 0;
-  width: 392px;
+  width: 381px;
 }
 
 #machine-learning-popup-title {
@@ -336,7 +340,7 @@
   margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 360px;
+  width: 350px;
 }
 
 .machine-learning-popup-messages {
@@ -348,7 +352,12 @@
 }
 
 #machine-learning-popup-error-messages {
+  margin-top: 70px;
   color: red;
+}
+
+#machine-learning-popup-progress-messages {
+  margin-top: 64px;
 }
 
 #machine-learning-popup-info-messages {
@@ -429,7 +438,7 @@
 
 #machine-learning-popup-generated-labels-submit-button {
   margin-top: 5px;
-  padding-top: 6px;
+  padding-top: 5px;
   margin-left: 3px;
   width: 57px;
 }
@@ -757,16 +766,24 @@ body {
   filter: brightness(80%);
 }
 
-.loader-wheel {
+.loading-wheel {
   border: 2px solid #f3f3f3;
   border-radius: 50%;
   border-top: 2px solid #3498db;
-  width: 20px;
-  height: 20px;
+  width: 23px;
+  height: 23px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 56px;
+}
+
+#machine-learning-popup-loading-text {
+  text-align: center;
+    margin-top: 10px;
+    margin-bottom: 7px;
+    margin-left: 5px;
 }
 
 @keyframes spin {

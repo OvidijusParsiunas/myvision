@@ -3,7 +3,7 @@ import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../
 import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
   displayErrorMessage, updateProgressMessage, removeCancelButton, displayNoImagesFoundInfo,
-  displayNextButton, removeLoaderWheel, displayRetryButton, changeToLoadingStyle,
+  displayNextButton, displayRetryButton, changeToLoadingStyle, removeLoadingContent,
 } from './style';
 
 let tfModel = null;
@@ -14,8 +14,8 @@ const tensorflowJSScript = { element: document.createElement('script'), status: 
 const cocoSSDScript = { element: document.createElement('script'), status: { download: 'waiting' } };
 
 function errorHandler() {
-  removeLoaderWheel();
-  displayErrorMessage('ERROR! Please try again later.');
+  removeLoadingContent();
+  displayErrorMessage('ERROR! Something went wrong, please try again later.');
   displayRetryButton();
   isInProgress = false;
 }
@@ -42,7 +42,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
         predictedImageCoordinates[predictionIdToImageId[i]] = predictions[i];
       }
       setMachineLearningData(predictedImageCoordinates);
-      removeLoaderWheel();
+      removeLoadingContent();
       removeCancelButton();
       if (isObjectEmpty(predictedImageCoordinates)) {
         nextViewCallback();
