@@ -111,20 +111,21 @@ function loadModel(status) {
   });
 }
 
-function downloadScript({ element, status }, url, resolve, reject) {
+function downloadScript(script, url, resolve, reject) {
   if (isCancelled) return;
-  if (status.download === 'complete') {
-    resolve(status);
+  if (script.status.download === 'complete') {
+    resolve(script.status);
     return;
   }
-  if (status.download === 'in_progress') {
-    document.head.removeChild(element);
+  if (script.status.download === 'in_progress') {
+    document.head.removeChild(script.element);
+    script.element = document.createElement('script');
   }
-  element.onload = resolve.bind(this, status);
-  element.onerror = reject;
-  status.download = 'in_progress';
-  element.src = url;
-  document.head.appendChild(element);
+  script.element.onload = resolve.bind(this, script.status);
+  script.element.onerror = reject;
+  script.status.download = 'in_progress';
+  script.element.src = url;
+  document.head.appendChild(script.element);
 }
 
 function downloadCOCOSSD(status) {

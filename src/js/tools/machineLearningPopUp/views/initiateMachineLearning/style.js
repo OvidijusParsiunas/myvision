@@ -29,6 +29,7 @@ function displayErrorMessage(errorMessage) {
 }
 
 function removeErrorMessage() {
+  errorMessagesElement.style.display = 'none';
   errorMessagesElement.innerHTML = '';
   buttonsGroupElement.style.marginTop = '';
 }
@@ -58,6 +59,10 @@ function displayInfoMessage(message) {
 function removeInfoMessage() {
   infoMessagesElement.innerHTML = '';
   buttonsGroupElement.style.marginTop = '';
+}
+
+function displayDescription() {
+  descriptionElement.style.display = '';
 }
 
 function removeDescription() {
@@ -224,13 +229,14 @@ function getDefaultDescriptionMarkup() {
 }
 
 function prepareInstantiateMachineLearningView() {
-  descriptionElement.style.marginBottom = '';
+  setDefaultDescriptionelementMarginBottom();
   descriptionElement.innerHTML = getDefaultDescriptionMarkup();
+  displayDescription();
   buttonsGroupElement.style.display = '';
   cancelButtonElement.style.marginRight = '';
   displayStartButton();
   displayCancelButton();
-  removeLoadingWheel();
+  removeLoadingContent();
 }
 
 function assignInitiateMachineLearningViewLocalVariables() {
