@@ -2,7 +2,7 @@ import { getAllImageData } from '../../../imageList/imageList';
 import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
-  displayErrorMessage, updateProgressMessage, removeCancelButton, displayNoImagesFoundInfo,
+  displayErrorMessage, changeToMLCompleteStyle, removeCancelButton, displayNoImagesFoundInfo,
   displayNextButton, displayRetryButton, changeToLoadingStyle, removeLoadingContent,
 } from './style';
 
@@ -53,7 +53,7 @@ function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
           drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
         }
         updateImageThumbnails(predictedImageCoordinates);
-        updateProgressMessage('Finished!');
+        changeToMLCompleteStyle();
       }
       isInProgress = false;
     }).catch((error) => {

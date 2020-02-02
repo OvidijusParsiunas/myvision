@@ -1,5 +1,6 @@
 let isNoImagesFoundInfoDisplayed = false;
 
+let checkmarkElement = null;
 let nextButtonElement = null;
 let popupParentElement = null;
 let descriptionElement = null;
@@ -10,6 +11,7 @@ let submitButtonElement = null;
 let cancelButtonElement = null;
 let infoMessagesElement = null;
 let errorMessagesElement = null;
+let checkmarkParentElement = null;
 let allImagesButtonElement = null;
 let newImagesButtonElement = null;
 let progressMessagesElement = null;
@@ -19,6 +21,20 @@ function removeProgressMessage() {
   progressMessagesElement.style.display = 'none';
   progressMessagesElement.style.color = '';
   progressMessagesElement.innerHTML = '';
+}
+
+function changeProgressMessageColor(colorHex) {
+  progressMessagesElement.style.color = colorHex;
+}
+
+function displayCheckMarkWthAnimation() {
+  checkmarkParentElement.style.display = '';
+  checkmarkElement.classList.toggle('checkmark');
+}
+
+function removeCheckMark() {
+  checkmarkParentElement.style.display = 'none';
+  checkmarkElement.classList.toggle('checkmark');
 }
 
 function displayErrorMessage(errorMessage) {
@@ -46,9 +62,8 @@ function removeRetryButton() {
 
 function updateProgressMessage(progressMessage) {
   removeErrorMessage();
-  progressMessagesElement.style.display = '';
-  progressMessagesElement.style.color = '#1e6d1e';
   progressMessagesElement.innerHTML = progressMessage;
+  progressMessagesElement.style.display = '';
 }
 
 function displayInfoMessage(message) {
@@ -143,14 +158,6 @@ function disableImmediateCancelButtonHoverEffect() {
   }, 100);
 }
 
-function changeToLoadingStyle() {
-  displayLoadingText();
-  removeDescription();
-  disableImmediateCancelButtonHoverEffect();
-  displayLoaderWheel();
-  removeStartButton();
-}
-
 function disableStartButton() {
   setTimeout(() => {
     submitButtonElement.classList.replace('popup-label-button', 'popup-label-button-disabled');
@@ -187,8 +194,22 @@ function setDescriptionElementMarginBottom(height) {
   descriptionElement.style.marginBottom = height;
 }
 
-function setDefaultDescriptionelementMarginBottom() {
+function setDefaultDescriptionElementMarginBottom() {
   descriptionElement.style.marginBottom = '';
+}
+
+function changeToLoadingStyle() {
+  displayLoadingText();
+  removeDescription();
+  disableImmediateCancelButtonHoverEffect();
+  displayLoaderWheel();
+  removeStartButton();
+}
+
+function changeToMLCompleteStyle() {
+  displayCheckMarkWthAnimation();
+  changeProgressMessageColor('#1e6d1e');
+  updateProgressMessage('Finished!');
 }
 
 function displayNoImagesFoundInfo() {
@@ -206,7 +227,7 @@ function removeUploadedImageAfterNoneFoundInfo() {
     removeInfoMessage();
     enableStartButton();
     setDefaultPopUpHeight();
-    setDefaultDescriptionelementMarginBottom();
+    setDefaultDescriptionElementMarginBottom();
     isNoImagesFoundInfoDisplayed = false;
   }
 }
@@ -214,6 +235,7 @@ function removeUploadedImageAfterNoneFoundInfo() {
 function hideInitiateMachineLearningViewAssets() {
   removeNextButton();
   removeProgressMessage();
+  removeCheckMark();
   buttonsGroupElement.style.display = 'none';
   descriptionElement.style.marginBottom = '';
 }
@@ -229,7 +251,7 @@ function getDefaultDescriptionMarkup() {
 }
 
 function prepareInstantiateMachineLearningView() {
-  setDefaultDescriptionelementMarginBottom();
+  setDefaultDescriptionElementMarginBottom();
   descriptionElement.innerHTML = getDefaultDescriptionMarkup();
   displayDescription();
   buttonsGroupElement.style.display = '';
@@ -241,16 +263,18 @@ function prepareInstantiateMachineLearningView() {
 
 function assignInitiateMachineLearningViewLocalVariables() {
   toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
+  popupParentElement = document.getElementById('machine-learning-popup-parent');
+  checkmarkElement = document.getElementById('machine-learning-popup-check-mark');
   loadingWheelElement = document.getElementById('machine-learning-popup-loading-wheel');
   loadingTextElement = document.getElementById('machine-learning-popup-loading-text');
   descriptionElement = document.getElementById('machine-learning-popup-description');
-  popupParentElement = document.getElementById('machine-learning-popup-parent');
   submitButtonElement = document.getElementById('machine-learning-popup-initiate-start-button');
   nextButtonElement = document.getElementById('machine-learning-popup-initiate-next-button');
   cancelButtonElement = document.getElementById('machine-learning-popup-initiate-cancel-button');
   buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
   errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
   infoMessagesElement = document.getElementById('machine-learning-popup-info-messages');
+  checkmarkParentElement = document.getElementById('machine-learning-popup-check-mark-parent');
   progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
   allImagesButtonElement = document.getElementById('machine-learning-popup-initiate-all-images-button');
   newImagesButtonElement = document.getElementById('machine-learning-popup-initiate-new-images-button');
@@ -263,7 +287,7 @@ export {
   displayLoaderWheel, removeLoadingContent, displayRetryButton,
   removeStartButton, disableStartButton, displayNoImagesFoundInfo,
   prepareInstantiateMachineLearningView, displayUploadImagesButton,
-  displayErrorMessage, updateProgressMessage, highlightCancelButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
   displayMLCoverageSelectionButtons, removeMLCoverageSelectionButtons,
+  displayErrorMessage, changeToMLCompleteStyle, highlightCancelButton,
 };
