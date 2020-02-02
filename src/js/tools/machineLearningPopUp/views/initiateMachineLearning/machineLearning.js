@@ -2,7 +2,7 @@ import { getAllImageData } from '../../../imageList/imageList';
 import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import {
-  displayErrorMessage, changeToMLCompleteStyle, removeCancelButton, displayNoImagesFoundInfo,
+  displayErrorMessage, changeToMLCompleteStyle, removeCancelButton, changeToNoImagesFoundStyle,
   displayNextButton, displayRetryButton, changeToLoadingStyle, removeLoadingContent,
 } from './style';
 
@@ -159,7 +159,7 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, coverage
       makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage);
     }
   } else {
-    displayNoImagesFoundInfo();
+    changeToNoImagesFoundStyle();
   }
 }
 

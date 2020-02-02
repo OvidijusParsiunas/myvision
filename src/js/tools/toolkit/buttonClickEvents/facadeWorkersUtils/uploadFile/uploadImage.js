@@ -1,13 +1,13 @@
 import { addSingleImageToList, addImageFromMultiUploadToList } from '../../../../imageList/imageList';
 import { onImageLoad } from './drawImageOnCanvas';
-import { removeUploadedImageAfterNoneFoundInfo } from '../../../../machineLearningPopUp/views/initiateMachineLearning/style';
+import { removeNoImagesFoundStyle } from '../../../../machineLearningPopUp/views/initiateMachineLearning/style';
 
 function onFileLoad(imageMetaData, e) {
   const image = new Image();
   image.src = e.target.result;
   image.onload = onImageLoad;
   addSingleImageToList(imageMetaData, image);
-  removeUploadedImageAfterNoneFoundInfo();
+  removeNoImagesFoundStyle();
 }
 
 function onMultiFileLoad(imageMetadata, firstImage, e) {
@@ -17,7 +17,7 @@ function onMultiFileLoad(imageMetadata, firstImage, e) {
     image.onload = onImageLoad;
   }
   addImageFromMultiUploadToList(imageMetadata, image, firstImage);
-  removeUploadedImageAfterNoneFoundInfo();
+  removeNoImagesFoundStyle();
 }
 
 // onerror?

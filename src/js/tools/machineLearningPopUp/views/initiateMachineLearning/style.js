@@ -212,7 +212,7 @@ function changeToMLCompleteStyle() {
   updateProgressMessage('Finished!');
 }
 
-function displayNoImagesFoundInfo() {
+function changeToNoImagesFoundStyle() {
   displayUploadImagesButton();
   disableStartButton();
   displayInfoMessage('Please upload an image to get started.');
@@ -221,7 +221,7 @@ function displayNoImagesFoundInfo() {
   isNoImagesFoundInfoDisplayed = true;
 }
 
-function removeUploadedImageAfterNoneFoundInfo() {
+function removeNoImagesFoundStyle() {
   if (isNoImagesFoundInfoDisplayed) {
     hideUploadImagesButton();
     removeInfoMessage();
@@ -282,10 +282,10 @@ function assignInitiateMachineLearningViewLocalVariables() {
 
 export {
   hideInitiateMachineLearningViewAssets, displayNextButton,
-  removeUploadedImageAfterNoneFoundInfo, removeErrorMessage,
+  removeNoImagesFoundStyle, removeErrorMessage,
   changeToLoadingStyle, removeCancelButton, removeRetryButton,
   displayLoaderWheel, removeLoadingContent, displayRetryButton,
-  removeStartButton, disableStartButton, displayNoImagesFoundInfo,
+  removeStartButton, disableStartButton, changeToNoImagesFoundStyle,
   prepareInstantiateMachineLearningView, displayUploadImagesButton,
   assignInitiateMachineLearningViewLocalVariables, enableStartButton,
   displayMLCoverageSelectionButtons, removeMLCoverageSelectionButtons,
