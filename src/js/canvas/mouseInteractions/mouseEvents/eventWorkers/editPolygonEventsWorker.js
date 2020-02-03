@@ -107,7 +107,7 @@ function polygonMouseDownEvents(event) {
         setMLGeneratedPalletteToOriginal(event.target);
         highlightShapeFill(event.target.id);
       }
-      if (event.transform.corner) {
+      if (event.transform && event.transform.corner) {
         setInitialBoundingBoxCoordinates(event);
       }
       highlightLabelInTheList(event.target.id);

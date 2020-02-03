@@ -135,8 +135,6 @@ when drawing a new polygon and clicking the add button shouldn't do anything
 
 grey out the zoom button when it is above 3.9
 
-when clicking on a label in the list, get corner of undefined error
-
 
 check if right blocking is acceptable
 
@@ -148,8 +146,6 @@ mouse over in the label list should be select
 labeller popup behaves weirdly when opening up the console
 
 can draw with cursor too high top
-
-ML generated images boundaries not working properly
 
 SOLUTION:
 

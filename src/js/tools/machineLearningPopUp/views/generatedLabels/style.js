@@ -58,10 +58,10 @@ function scrollHorizontallyToAppropriateWidth(text) {
   const context = myCanvas.getContext('2d');
   context.font = getDefaultFont();
   const metrics = context.measureText(text);
-  let originalParentMaxWidth = 345;
+  let originalParentMaxWidth = 337;
   if (isVerticalScrollPresent()) originalParentMaxWidth -= overflowScrollWidth;
   if (metrics.width > originalParentMaxWidth) {
-    generatedLabelsParentElement.scrollLeft = metrics.width - 320;
+    generatedLabelsParentElement.scrollLeft = metrics.width - 312;
   } else {
     generatedLabelsParentElement.scrollLeft = 0;
   }
@@ -146,12 +146,12 @@ function MLLabelTextPaste(event) {
 
 function updateGeneratedLabelsElementWidth() {
   generatedLabelsParentElement.style.width = `${activeTextRow.clientWidth + overflowScrollWidth}px`;
-  if (!maxWidthStyleAppended && parseInt(generatedLabelsParentElement.style.width, 10) > 360) {
-    generatedLabelsParentElement.style.maxWidth = '360px';
+  if (!maxWidthStyleAppended && parseInt(generatedLabelsParentElement.style.width, 10) > 352) {
+    generatedLabelsParentElement.style.maxWidth = '352px';
     generatedLabelsParentElement.style.overflowX = 'auto';
     maxWidthStyleAppended = true;
   } else if (maxWidthStyleAppended
-    && parseInt(generatedLabelsParentElement.style.width, 10) < 360) {
+    && parseInt(generatedLabelsParentElement.style.width, 10) < 352) {
     generatedLabelsParentElement.style.maxWidth = '';
     generatedLabelsParentElement.style.overflowX = 'hidden';
     maxWidthStyleAppended = false;
