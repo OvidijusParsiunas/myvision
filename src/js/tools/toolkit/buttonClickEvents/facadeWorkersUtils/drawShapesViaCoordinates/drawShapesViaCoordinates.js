@@ -11,6 +11,7 @@ import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/al
 import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';
 import { getCanvasReferences } from '../../../../../canvas/utils/fabricUtils';
 import assignDefaultEvents from '../../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
+import { repopulateDropdown } from '../../../../labelList/labelList';
 
 let canvas = null;
 const tempShapes = [];
@@ -166,6 +167,7 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   prepareToDrawShapes(allImageData, currentlySelectedImageId);
   generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
     currentlySelectedImageId, isUsingMachineLearning);
+  repopulateDropdown();
   removeTempShapes();
   // only execute this if new shapes have been created (not for the ML PopUp)
   resetPopUpLabelOptions();

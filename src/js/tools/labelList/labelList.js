@@ -817,6 +817,6 @@ window.mouseLeaveLabel = (id) => {
 
 export {
   initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
+  addExistingLabelToList, removeAllLabelListItems, repopulateDropdown,
   removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
-  addExistingLabelToList, removeAllLabelListItems,
 };

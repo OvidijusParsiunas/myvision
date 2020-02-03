@@ -135,11 +135,11 @@ when drawing a new polygon and clicking the add button shouldn't do anything
 
 grey out the zoom button when it is above 3.9
 
-
 check if right blocking is acceptable
 
 when you select a label in the labeller popup with a mouse, the colour should remain on the label when
 the mouse leaves the list
+label list
 
 mouse over in the label list should be select
 
