@@ -457,7 +457,7 @@
   margin-right: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 97px;
+  max-height: 100px;
 }
 
 #machine-learning-popup-generated-labels-table {
@@ -487,9 +487,10 @@
 
 #machine-learning-popup-generated-labels-submit-button {
   margin-top: 5px;
-  padding-top: 5px;
+  padding-top: 6px;
+  padding-bottom: 5px;
   margin-left: 3px;
-  width: 57px;
+  width: 60px;
 }
 
 #machine-learning-popup-generated-labels-buttons {

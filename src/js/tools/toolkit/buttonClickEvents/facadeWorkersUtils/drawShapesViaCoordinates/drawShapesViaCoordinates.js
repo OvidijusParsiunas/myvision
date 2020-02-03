@@ -8,6 +8,9 @@ import { resetPopUpLabelOptions } from '../../../../labellerPopUp/style';
 import { getCurrentImageId } from '../stateManager';
 import { removeBoundingBox } from '../../facadeWorkers/removeActiveShapeWorker';
 import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/allShapes';
+import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';
+import { getCanvasReferences } from '../../../../../canvas/utils/fabricUtils';
+import assignDefaultEvents from '../../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 
 let canvas = null;
 const tempShapes = [];
@@ -148,8 +151,18 @@ function drawTempShapesToShowCaseMLResults(predictedShapeCoordinatesForImages) {
   generateTempShapes(currentlySelectedImageShapes, dimensions);
 }
 
+// fix for a bug where the newly generated shapes would not adhere to
+// the boundaries when scaling
+function assignCanvasEvents() {
+  if (getNumberOfShapeTypes().boundingBoxes === 0) {
+    const { canvas1 } = getCanvasReferences();
+    assignDefaultEvents(canvas1, null, false);
+  }
+}
+
 function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
   const { allImageData, currentlySelectedImageId } = getImageData();
+  assignCanvasEvents();
   prepareToDrawShapes(allImageData, currentlySelectedImageId);
   generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
     currentlySelectedImageId, isUsingMachineLearning);

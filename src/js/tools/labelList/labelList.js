@@ -31,6 +31,7 @@ import {
 import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningPopUp/views/generatedLabels/changeLabels';
+import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -551,6 +552,13 @@ function removeAllLabelListItems() {
   }
 }
 
+function setMLGeneratedPalletteToOriginal(shape) {
+  updateNumberOfUncheckedMLImages();
+  shape.fill = shape.trueFill;
+  shape.stroke = shape.trueStroke;
+  shape.MLPallette = false;
+}
+
 function highlightLabel(currentlySelectedShapeName, idArg) {
   const id = idArg !== undefined ? idArg : activeLabelId;
   if (getRemovingPolygonPointsState() || getAddingPolygonPointsState()) {
@@ -794,6 +802,9 @@ window.labelDblClicked = (id) => {
 
 window.mouseEnterLabel = (id) => {
   if (!getBoundingBoxScalingState() && !getShapeMovingState()) {
+    if (getShapeById(id).MLPallette) {
+      setMLGeneratedPalletteToOriginal(getShapeById(id));
+    }
     highlightShapeFill(id);
   }
 };

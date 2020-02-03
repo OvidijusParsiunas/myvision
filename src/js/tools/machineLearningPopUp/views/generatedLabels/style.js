@@ -9,6 +9,7 @@ let objectNames = null;
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
 let generatedLabelsOuterContainerElement = null;
+let submitButtonElement = null;
 let descriptionElement = null;
 
 function displayHighlightedDefaultEditLabelButton(element) {
@@ -317,6 +318,18 @@ function changeElementsToVisible() {
   generatedLabelsOuterContainerElement.style.height = calculateContainerDivHeight();
 }
 
+function changeElementsToMoveListUpwards() {
+  submitButtonElement.style.marginTop = '2px';
+  submitButtonElement.style.marginBottom = '6px';
+  descriptionElement.style.marginBottom = '6px';
+}
+
+function resetElementsToMoveListToDefaultPosition() {
+  submitButtonElement.style.marginTop = '';
+  submitButtonElement.style.marginBottom = '';
+  descriptionElement.style.marginBottom = '';
+}
+
 function createLabelElementMarkup(labelText, id) {
   return `
     <div class="machine-learning-popup-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningPopUpEditLabelButton(this)" onMouseLeave="hideMachineLearningPopUpEditLabelButton(this)">
@@ -337,6 +350,11 @@ function populateGeneratedLabelsTable() {
     cell.innerHTML = createLabelElementMarkup(objectNames[key].pendingName, index);
     index += 1;
   });
+  if (index > 4) {
+    changeElementsToMoveListUpwards();
+  } else {
+    resetElementsToMoveListToDefaultPosition();
+  }
 }
 
 function changePopUpDescription() {
@@ -376,6 +394,7 @@ function hideGeneratedLabelsViewAssets() {
 function assignGeneratedLabelsViewLocalVariables() {
   descriptionElement = document.getElementById('machine-learning-popup-description');
   generatedLabelsParentElement = document.getElementById('machine-learning-popup-generated-labels');
+  submitButtonElement = document.getElementById('machine-learning-popup-generated-labels-submit-button');
   generatedLabelsTableElement = document.getElementById('machine-learning-popup-generated-labels-table');
   generatedLabelsOuterContainerElement = document.getElementById('machine-learning-popup-generated-labels-outer-container');
 }
