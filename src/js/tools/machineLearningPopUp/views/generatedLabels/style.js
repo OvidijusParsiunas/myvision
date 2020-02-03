@@ -322,7 +322,7 @@ function createLabelElementMarkup(labelText, id) {
     <div class="machine-learning-popup-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningPopUpEditLabelButton(this)" onMouseLeave="hideMachineLearningPopUpEditLabelButton(this)">
       <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" src="edit-disabled.svg" alt="edit">
       <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" style="display: none" src="edit.svg" alt="edit">
-      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" style="display: none" src="edit.svg" alt="edit">
+      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-blue.svg" alt="edit">
       <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-red.svg" alt="edit">
       <div id="MLLabelText${id}" class="machine-learning-popup-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
     </div>
