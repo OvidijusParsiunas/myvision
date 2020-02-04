@@ -599,12 +599,14 @@ window.labelTextKeyDown = (event) => {
     let found = false;
     for (let i = 0; i < availableListOptions.length - 1; i += 1) {
       if (availableListOptions[i].text === activeLabelTextElement.innerHTML) {
-        found = highlightDropdownLabelOption(i, i * 2);
-        if (found) break;
+        highlightDropdownLabelOption(i, i * 2);
+        found = true;
+        break;
       }
     }
     if (!found) {
       const lastLabelOptionIndex = availableListOptions.length - 1;
+      currentlyActiveLabelOptionIndex = null;
       if (availableListOptions[lastLabelOptionIndex].text === activeLabelTextElement.innerHTML) {
         highlightDropdownLabelOption(lastLabelOptionIndex, lastLabelOptionIndex * 2 + 1);
       }

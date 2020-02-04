@@ -101,7 +101,6 @@
 
 .labelText {
   white-space: pre;
-  font-family: Arial;
   font-size: 15px;
 }
 
@@ -554,6 +553,10 @@
   border-bottom-color: #4e4b4b26;
   border-bottom-width: 1px;
   user-select: none;
+}
+
+#labels-list-component {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
 #labels-list-overflow-parent {
