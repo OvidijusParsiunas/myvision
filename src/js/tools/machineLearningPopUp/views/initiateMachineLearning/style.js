@@ -217,7 +217,7 @@ function changeToNoImagesFoundStyle() {
   disableStartButton();
   displayInfoMessage('Please upload an image to get started.');
   setDescriptionElementMarginBottom('3px');
-  increasePopUpHeight('260px');
+  increasePopUpHeight('259px');
   isNoImagesFoundInfoDisplayed = true;
 }
 

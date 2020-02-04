@@ -46,7 +46,7 @@
 }
 
 .dropdown-content div:hover {
-  cursor: default;
+  cursor: pointer;
 }
 
 .labelDropdownOption {
@@ -322,7 +322,7 @@
   border-style: solid;
   border-color: grey;
   z-index: 3;
-  height: 250px;
+  height: 249px;
   margin: auto;
   top: 0;
   left: -151px;
@@ -332,7 +332,7 @@
 }
 
 #machine-learning-popup-title {
-  margin-top: 5px;
+  margin-top: 4px;
   margin-left: 10px;
 }
 
