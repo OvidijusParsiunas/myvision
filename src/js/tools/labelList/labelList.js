@@ -54,6 +54,7 @@ let availableListOptions = [];
 let labelsListOverflowParentElement = null;
 let horizontalScrollPresentWhenEditAndScroll = false;
 let mouseHoveredOnLabelEditButton = false;
+let currentlyActiveLabelOptionIndex = 0;
 
 // refactor label popup label options element manipulation code
 
@@ -83,7 +84,7 @@ function createNewDropdown() {
   const labelDropdownOptions = getLabelOptions();
   let dropdown = '<tbody>';
   for (let i = 0; i < labelDropdownOptions.length; i += 1) {
-    const dropdownElement = `<tr><td><div id="labelOption${i}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${labelDropdownOptions[i].color.label}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
+    const dropdownElement = `<tr><td><div id="labelOption${i}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${labelDropdownOptions[i].color.label}')" onMouseLeave="mouseLeaveLabelDropdownOption(this, true)" class="labelDropdownOption">${labelDropdownOptions[i].text}</div></td></tr>\n`;
     dropdown += dropdownElement;
   }
   dropdown += '</tbody>';
@@ -292,7 +293,7 @@ function updateAssociatedLabelObjectsText(text) {
 
 function addLabelToDropdown(labelText, dropdownLabelsElem, id, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" id="labelOption${id}" onMouseEnter="mouseEnterLabelDropdownOption(this, '${color}')" onMouseLeave="mouseLeaveLabelDropdownOption(this, true)">${labelText}</div>`;
   const newRow = dropdownLabelsElem.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
@@ -527,6 +528,7 @@ function highlightDropdownLabelOption(labelOptionsIndex, divIndex) {
   const labelColor = availableListOptions[labelOptionsIndex].color.label;
   lastSelectedLabelOption.style.backgroundColor = labelColor;
   lastSelectedLabelOption.scrollIntoViewIfNeeded();
+  currentlyActiveLabelOptionIndex = labelOptionsIndex;
 }
 
 function wasLabelListHorizontalScrollManipulated() {
@@ -716,8 +718,13 @@ window.mouseEnterLabelDropdownOption = (element, color) => {
   element.style.backgroundColor = color;
 };
 
-window.mouseLeaveLabelDropdownOption = (element) => {
-  if (element.id !== 'used') {
+window.mouseLeaveLabelDropdownOption = (element, labelOption) => {
+  if (labelOption) {
+    const idNumber = parseInt(element.id.match(/\d+$/)[0], 10);
+    if (currentlyActiveLabelOptionIndex !== idNumber) {
+      element.style.backgroundColor = '';
+    }
+  } else if (element.id !== 'used') {
     element.style.backgroundColor = '';
   }
 };

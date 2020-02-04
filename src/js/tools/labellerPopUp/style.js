@@ -16,11 +16,11 @@ function initialiseParentElement() {
 
 function addLabelToList(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this)">${labelText}</div>`;
   const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
-  cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell);
+  cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell, false);
   cell.appendChild(labelElement);
 }
 
@@ -117,11 +117,11 @@ function initialiseLabelPopupOptionsList() {
 
 function addLabelToPopupLabelOptions(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onClick="selectLabelOption(innerHTML, this)" onMouseLeave="mouseLeaveLabelDropdownOption(this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this)">${labelText}</div>`;
   const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
-  cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell);
+  cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell, false);
   cell.appendChild(labelElement);
 }
 
