@@ -8,6 +8,7 @@ let inputElement = null;
 let labellerPopupLabelOptionsElement = null;
 let mouseProperties = {};
 let horizontalScrollPresent = false;
+let labelOptionsHeightIncreased = false;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -23,10 +24,15 @@ function addLabelToList(labelText, color) {
   cell.appendChild(labelElement);
 }
 
+function increaseLabelOptionsHeight(height) {
+  labellerPopupLabelOptionsElement.style.height = height;
+  labelOptionsHeightIncreased = true;
+}
+
 function changeTableHeightIfHorizontalScrollPresent() {
   if (!horizontalScrollPresent
   && labellerPopupLabelOptionsElement.scrollWidth > labellerPopupLabelOptionsElement.clientWidth) {
-    labellerPopupLabelOptionsElement.style.height = '129px';
+    increaseLabelOptionsHeight('141px');
     horizontalScrollPresent = true;
   }
 }
@@ -35,11 +41,10 @@ function changeTableHeightIfHorizontalScrollPresent() {
 function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
-  if (labelOptions.length === 6) {
-    if (!horizontalScrollPresent) {
-      labellerPopupLabelOptionsElement.style.height = '126px';
-    }
-  } else if (labelOptions.length === 7) {
+  if (!labelOptionsHeightIncreased && labelOptions.length >= 6) {
+    increaseLabelOptionsHeight('126px');
+  }
+  if (labelOptions.length === 7) {
     addLabelToList('temp horizontal');
   }
   window.setTimeout(() => {

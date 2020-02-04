@@ -39,7 +39,7 @@
       <input type="text" id="popup-label-input" onpaste="popupPaste()" name="labelName" spellcheck="false" onkeydown="popupInputKeyDown(event, this)" value="new label">
       <table id="popup-label-options">
       </table>
-      <div class="popup-label-buttons">
+      <div class="buttons popup-label-buttons">
         <div id="popup-label-submit-button" class="popup-label-button popup-proceed-button" onclick="labelShape()">Submit</div>
         <div id="popup-label-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
@@ -63,7 +63,7 @@
       <div id="machine-learning-popup-loading-text" style="display: none">Loading...</div>
       <div id="machine-learning-popup-error-messages" style="display: none" class="machine-learning-popup-messages"></div>
       <div id="machine-learning-popup-info-messages" class="machine-learning-popup-messages"></div>
-      <div id="machine-learning-popup-initiate-machine-learning-buttons" class="popup-label-buttons">
+      <div id="machine-learning-popup-initiate-machine-learning-buttons" class="buttons popup-label-machine-learning-popup-buttons">
           <div id="machine-learning-popup-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="startMachineLearning()">Start</div>
           <div id="machine-learning-popup-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
           <div id="machine-learning-popup-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
@@ -78,12 +78,12 @@
                 <tbody></tbody>
               </table>
             </div>
-            <div id="machine-learning-popup-generated-labels-buttons" class="popup-label-buttons">
+            <div id="machine-learning-popup-generated-labels-buttons" class="buttons popup-label-machine-learning-popup-buttons">
               <div id="machine-learning-popup-generated-labels-submit-button" class="popup-label-button popup-proceed-button" onclick="submitMLGeneratedLabels()">Submit</div>
             </div>
           </div>
         </div>
-        <div id="machine-learning-popup-no-objects-buttons" style="display: none" class="popup-label-buttons">
+        <div id="machine-learning-popup-no-objects-buttons" style="display: none" class="button popup-label-machine-learning-popup-buttons">
             <div id="machine-learning-popup-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningPopUp()">Close</div>
         </div>
     </div>
@@ -181,7 +181,7 @@
               </td></tr>
           </table>
         </div>
-      <div class="export-labels-popup-item popup-label-buttons" style="margin-top: 0px">
+      <div class="export-labels-popup-item button buttons popup-label-buttons" style="margin-top: 0px">
         <div id="export-labels-popup-export-button" style="width: 50px; margin-top: 6px;" class="export-labels-popup-item popup-label-button-disabled" onclick="exportLabels()">Export</div>
       </div>
     </div>

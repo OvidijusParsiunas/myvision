@@ -67,7 +67,7 @@
 
 #popup-label-options .labelDropdownOption {
   white-space: pre;
-  padding-left: 2px;
+  padding-left: 3px;
   user-select: none;
   text-decoration: none;
 }
@@ -155,11 +155,18 @@
 }
 
 .popup-label-buttons {
+  font-size: 14.55px;
+}
+
+.popup-label-machine-learning-popup-buttons {
+  font-size: 14.5px;
+}
+
+.buttons {
   text-align: center;
   margin-top: 3px;
   margin-bottom: 2px;
   user-select: none;
-  font-size: 14.5px;
   line-height: 1.35;
 }
 
