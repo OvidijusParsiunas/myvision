@@ -568,6 +568,21 @@
   border-bottom-width: 1px;
 }
 
+@-moz-document url-prefix() {
+  #labels-list-overflow-parent {
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
+  }
+}
+ 
+#labels-list-overflow-parent::-webkit-scrollbar-track {
+  background: #ddd;
+}
+ 
+#labels-list-overflow-parent::-webkit-scrollbar-thumb {
+  background: #666; 
+}
+
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
@@ -594,6 +609,33 @@
   width: calc(100% - 270px);
   height: calc(100% - 60px);
   left: 59px;
+}
+
+/* https://codepen.io/MathieuRichard/pen/HAgnm */
+
+/* Decided not to use the thinner scrollbar as not sure if scrollbar  */
+
+#labels-list-overflow-parent::-webkit-scrollbar {
+  width: 6px;
+  height: 5px;
+}
+
+#zoom-overflow::-webkit-scrollbar {
+  width: 6px;
+  height: 5px;
+}
+ 
+#zoom-overflow::-webkit-scrollbar-track {
+  background: #ddd;
+}
+ 
+#zoom-overflow::-webkit-scrollbar-thumb {
+  background: #666; 
+}
+
+#zoom-overflow {
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
 }
 
 #window-dim {

@@ -269,7 +269,7 @@ function heightOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${Math.round(originalWidth) - 1}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
-  const stubMarginTop = `${originalHeight - scrollWidth - 3}px`;
+  const stubMarginTop = `${originalHeight - scrollWidth - 15}px`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', '', zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', '', stubMarginTop);
@@ -278,7 +278,7 @@ function heightOverflowDefault(originalWidth, originalHeight) {
 
 function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${newCanvasWidth + 1}px`;
-  const zoomOverflowMaxHeight = `${newCanvasHeight - 1}px`;
+  const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 - 1}px`;
   const stubMarginLeft = `${Math.round(originalWidth) - 1}px`;
@@ -338,7 +338,7 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
   }
   const finalImageDimensions = {
     width: newCanvasWidth,
-    height: newCanvasHeight,
+    height: newCanvasHeight - 4,
   };
   canvas.setDimensions(finalImageDimensions);
 }
@@ -466,15 +466,8 @@ function zoomCanvas(canvasObj, action, windowResize) {
 }
 
 function getScrollWidth() {
-  // create a div with the scroll
-  const div = document.createElement('div');
-  div.style.overflowY = 'scroll';
-  div.style.width = '50px';
-  div.style.height = '50px';
-  document.body.append(div);
-  const browserScrollWidth = div.offsetWidth - div.clientWidth;
-  div.remove();
-  return browserScrollWidth;
+  
+  return 6;
 }
 
 function loadCanvasElements() {
