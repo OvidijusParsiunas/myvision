@@ -137,15 +137,11 @@ grey out the zoom button when it is above 3.9
 
 check if right blocking is acceptable
 
-when you select a label in the labeller popup with a mouse, the colour should remain on the label when
-the mouse leaves the list
-label list
-
-mouse over in the label list should be select
-
 labeller popup behaves weirdly when opening up the console
 
 can draw with cursor too high top
+
+upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
 SOLUTION:
 

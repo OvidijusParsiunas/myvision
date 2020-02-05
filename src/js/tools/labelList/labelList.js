@@ -149,12 +149,33 @@ function getDefaultFont() {
   return `${size} ${fontFamily}`;
 }
 
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+
+  // must put it in the document, otherwise sizes will be 0
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth * 2;
+}
+
+function isVerticalScrollPresent() {
+  return labelsListOverflowParentElement.scrollHeight
+   > labelsListOverflowParentElement.clientHeight;
+}
+
 function scrollHorizontallyToAppropriateWidth(text) {
   let myCanvas = document.createElement('canvas');
   const context = myCanvas.getContext('2d');
   context.font = getDefaultFont();
   const metrics = context.measureText(text);
-  if (metrics.width > 170) {
+  if (isVerticalScrollPresent() && metrics.width > 170 - getScrollWidth()) {
+    labelsListOverflowParentElement.scrollLeft = metrics.width - 165 + getScrollWidth() / 2;
+  } else if (!isVerticalScrollPresent() && metrics.width > 170) {
     labelsListOverflowParentElement.scrollLeft = metrics.width - 165;
   } else {
     labelsListOverflowParentElement.scrollLeft = 0;
@@ -356,20 +377,6 @@ function prepareLabelDivForEditing(id) {
   activeDropdownElements[0].classList.toggle('show');
   activeDropdownElements[0].scrollTop = 0;
   activeDropdownElements[0].scrollLeft = 0;
-}
-
-function getScrollWidth() {
-  // create a div with the scroll
-  const div = document.createElement('div');
-  div.style.overflowY = 'scroll';
-  div.style.width = '50px';
-  div.style.height = '50px';
-
-  // must put it in the document, otherwise sizes will be 0
-  document.body.append(div);
-  const scrollWidth = div.offsetWidth - div.clientWidth;
-  div.remove();
-  return scrollWidth * 2;
 }
 
 function isElementHeightFullyVisibleInParent(childElement, parentElement) {
