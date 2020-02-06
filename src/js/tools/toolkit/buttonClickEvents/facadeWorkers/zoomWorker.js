@@ -277,14 +277,14 @@ function heightOverflowDefault(originalWidth, originalHeight) {
 }
 
 function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
-  const zoomOverflowWidth = `${newCanvasWidth + 2}px`;
+  const zoomOverflowWidth = `${newCanvasWidth}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
-  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
-  const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 - 1}px`;
-  const stubMarginLeft = `${Math.round(originalWidth) - 3}px`;
-  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 6)}px`;
-  const canvasLeft = `calc(50% - 4px)`;
-  const canvasTop = `calc(50% - 5px)`;
+  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2 + 2)}px)`;
+  const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 + 3}px`;
+  const stubMarginLeft = `${Math.round(originalWidth) - 4}px`;
+  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 6.5)}px`;
+  const canvasLeft = `calc(50% - 2px)`;
+  const canvasTop = `calc(50% - 3px)`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
@@ -337,7 +337,7 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
     console.log('set to default');
   }
   const finalImageDimensions = {
-    width: newCanvasWidth + 3,
+    width: newCanvasWidth + 1,
     height: newCanvasHeight + 1,
   };
   canvas.setDimensions(finalImageDimensions);
@@ -466,8 +466,7 @@ function zoomCanvas(canvasObj, action, windowResize) {
 }
 
 function getScrollWidth() {
-
-  return 6;
+  return 5;
 }
 
 function loadCanvasElements() {
