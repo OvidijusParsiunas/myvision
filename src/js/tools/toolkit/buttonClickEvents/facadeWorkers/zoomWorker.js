@@ -269,7 +269,7 @@ function heightOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${Math.round(originalWidth) - 1}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
-  const stubMarginTop = `${originalHeight - scrollWidth - 15}px`;
+  const stubMarginTop = `${originalHeight - scrollWidth - 3}px`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', '', zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', '', stubMarginTop);
@@ -277,14 +277,14 @@ function heightOverflowDefault(originalWidth, originalHeight) {
 }
 
 function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
-  const zoomOverflowWidth = `${newCanvasWidth + 1}px`;
+  const zoomOverflowWidth = `${newCanvasWidth + 2}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 - 1}px`;
-  const stubMarginLeft = `${Math.round(originalWidth) - 1}px`;
-  const stubMarginTop = `${Math.round(originalHeight) - 17 - (currentZoom + 1)}px`;
-  const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
-  const canvasTop = `calc(50% - ${scrollWidth / 2}px)`;
+  const stubMarginLeft = `${Math.round(originalWidth) - 3}px`;
+  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 6)}px`;
+  const canvasLeft = `calc(50% - 4px)`;
+  const canvasTop = `calc(50% - 5px)`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
@@ -337,8 +337,8 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
     console.log('set to default');
   }
   const finalImageDimensions = {
-    width: newCanvasWidth,
-    height: newCanvasHeight - 4,
+    width: newCanvasWidth + 3,
+    height: newCanvasHeight + 1,
   };
   canvas.setDimensions(finalImageDimensions);
 }
@@ -466,7 +466,7 @@ function zoomCanvas(canvasObj, action, windowResize) {
 }
 
 function getScrollWidth() {
-  
+
   return 6;
 }
 

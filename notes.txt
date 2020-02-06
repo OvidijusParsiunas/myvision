@@ -133,6 +133,8 @@ delete keyboard button should remove shape
 
 when drawing a new polygon and clicking the add button shouldn't do anything
 
+the labeller is too thick, check if can be thin at the start and resize to bigger later on
+
 grey out the zoom button when it is above 3.9
 
 check if right blocking is acceptable

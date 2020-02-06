@@ -535,6 +535,7 @@
   border-left: solid;
   border-width: 1px;
   border-color: rgb(197, 197, 197);
+  border-right-width: 0px;
 }
 
 #right-side-bar:hover {
@@ -617,12 +618,12 @@
 
 #labels-list-overflow-parent::-webkit-scrollbar {
   width: 6px;
-  height: 5px;
+  height: 6px;
 }
 
 #zoom-overflow::-webkit-scrollbar {
   width: 6px;
-  height: 5px;
+  height: 7px;
 }
  
 #zoom-overflow::-webkit-scrollbar-track {
