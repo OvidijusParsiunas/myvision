@@ -282,9 +282,9 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2 + 2)}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 + 3}px`;
   const stubMarginLeft = `${Math.round(originalWidth) - 4}px`;
-  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 6.5)}px`;
-  const canvasLeft = `calc(50% - 2px)`;
-  const canvasTop = `calc(50% - 3px)`;
+  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 4.5)}px`;
+  const canvasLeft = `calc(50% - 3.5px)`;
+  const canvasTop = `calc(50% - 4px)`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
@@ -337,8 +337,8 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
     console.log('set to default');
   }
   const finalImageDimensions = {
-    width: newCanvasWidth + 1,
-    height: newCanvasHeight + 1,
+    width: newCanvasWidth + 0.5,
+    height: newCanvasHeight - 1,
   };
   canvas.setDimensions(finalImageDimensions);
 }
