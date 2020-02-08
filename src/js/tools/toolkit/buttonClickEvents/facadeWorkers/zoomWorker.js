@@ -190,30 +190,29 @@ function setAllElementPropertiesToDefault(switchImage) {
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
-  const zoomOverflowMaxWidth = `${newCanvasWidth + 1}px`;
-  const zoomOverflowMaxHeight = `${Math.round(canvasProperties.maximumCanvasHeight) - 1}px`;
-  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2) - 1}px)`;
+  const zoomOverflowMaxWidth = `${canvasProperties.maximumCanvasWidth}px`;
+  const zoomOverflowMaxHeight = `${Math.round(canvasProperties.maximumCanvasHeight)}px`;
+  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2) - 2}px)`;
   const zoomOverflowWrapperMarginLeft = `${Math.round(scrollWidth / 2) - 2}px`;
-  const stubHeight = `${scrollWidth}px`;
   const stubMarginLeft = `${Math.round(originalWidth) - 3}px`;
-  const stubMarginTop = `${Math.round(originalHeight) - 17 - (currentZoom - 1)}px`;
+  const stubMarginTop = `${originalHeight - 18}px`;
   const canvasLeft = `calc(50% - ${scrollWidth / 2 + 1}px)`;
-  const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
+  const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2) + 1}px)`;
   const horizontalScrollOverlap = (Math.round(newCanvasHeight) + scrollWidth)
-    - canvasProperties.maximumCanvasHeight + 1;
+    - canvasProperties.maximumCanvasHeight + 1.3;
   setZoomOverFlowElementProperties('', zoomOverflowMaxWidth, zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
-  setStubElementProperties('', stubHeight, stubMarginLeft, stubMarginTop);
+  setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
-  reduceCanvasDimensionsBy(scrollWidth, horizontalScrollOverlap);
+  reduceCanvasDimensionsBy(scrollWidth + 2, horizontalScrollOverlap);
 }
 
 function widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight) {
   const zoomOverflowMaxWidth = `${newCanvasWidth - 1}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${scrollWidth / 2}px)`;
   const zoomOverflowWrapperMarginLeft = `${(scrollWidth / 2)}px`;
-  const stubWidth = `${originalWidth}px`;
-  const stubMarginTop = `${originalHeight - 17  }px`;
+  const stubWidth = `${originalWidth - 1}px`;
+  const stubMarginTop = `${originalHeight - 18}px`;
   const canvasTop = `calc(50% - ${Math.round((scrollWidth / 2)) + 1}px)`;
   const canvasLeft = `calc(50% + 1px)`;
   setZoomOverFlowElementProperties('', zoomOverflowMaxWidth, '');
@@ -224,12 +223,13 @@ function widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeig
 
 function widthOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowMaxWidth = `${newCanvasWidth - 1}px`;
+  const zoomOverflowWrapperLeft = `calc(50% + 1px)`;
   const zoomOverflowWrapperMarginTop = `${Math.round(scrollWidth / 2) - 1}px`;
   const stubMarginLeft = `${originalWidth - 5}px`;
   const stubMarginTop = `${originalHeight - 14}px`;
   const canvasLeft = `calc(50% + 1px)`;
   setZoomOverFlowElementProperties('', zoomOverflowMaxWidth, '');
-  setZoomOverFlowWrapperElementProperties('', '', '', '', zoomOverflowWrapperMarginTop);
+  setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, '', zoomOverflowWrapperMarginTop);
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, '');
 }
@@ -322,7 +322,7 @@ function changeElementProperties(heightOverflowed, widthOverflowed, originalWidt
     if (newCanvasHeight + (scrollWidth * 2) > canvasProperties.maximumCanvasHeight) {
       widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight);
       console.log('horizontal double scrollbar overlap');
-      if (newCanvasHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 3) {
+      if (newCanvasHeight + (scrollWidth) > canvasProperties.maximumCanvasHeight - 1) {
         setDoubleScrollCanvasState(true);
         widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight);
         console.log('horizontal single scrollbar overlap');
