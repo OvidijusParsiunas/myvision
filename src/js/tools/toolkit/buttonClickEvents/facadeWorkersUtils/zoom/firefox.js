@@ -8,7 +8,7 @@ let canvasElement;
 let newCanvasWidth;
 let newCanvasHeight;
 let currentZoom = 1;
-const scrollWidth = 5;
+let scrollWidth = 5;
 
 let canvasProperties = null;
 let canvas = null;
@@ -148,15 +148,15 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowMaxHeight = `${Math.round(newCanvasHeight) - 1}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2 + 2)}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 + 3}px`;
-  const stubMarginLeft = `${Math.round(originalWidth) - 3}px`;
-  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 5.5)}px`;
-  const canvasLeft = 'calc(50% - 3px)';
-  const canvasTop = 'calc(50% - 4px)';
+  const stubMarginLeft = `${Math.round(originalWidth) - 4}px`;
+  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 5.7)}px`;
+  const canvasLeft = 'calc(50% - 3.5px)';
+  const canvasTop = 'calc(50% - 3.5px)';
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
-  reduceCanvasDimensionsBy(scrollWidth + 2.5, scrollWidth + 2);
+  reduceCanvasDimensionsBy(scrollWidth + 2, scrollWidth + 2);
 }
 
 function setTempValues(newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg) {
@@ -214,6 +214,18 @@ function changeElementPropertiesFirefox(heightOverflowed, widthOverflowed, origi
   canvas.setDimensions(finalImageDimensions);
 }
 
+function getScrollWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+  document.body.append(div);
+  const browserScrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return browserScrollWidth;
+}
+
 function setDOMElementsFirefox(stubElementArg, zoomOverflowElementArg,
   zoomOverflowWrapperElementArg, canvasElementArg) {
   stubElement = stubElementArg;
@@ -224,6 +236,7 @@ function setDOMElementsFirefox(stubElementArg, zoomOverflowElementArg,
 
 function initialiseVariablesFirefox(canvasArg) {
   canvas = canvasArg;
+  scrollWidth = getScrollWidth();
 }
 
 export { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox };
