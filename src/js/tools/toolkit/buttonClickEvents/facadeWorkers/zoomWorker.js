@@ -6,7 +6,8 @@ import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/obje
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
 import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
-import { changeElementPropertiesChromium, setCanvasElementsChromium, initialiseVariablesChromium } from '../facadeWorkersUtils/zoom/chromium';
+import { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium } from '../facadeWorkersUtils/zoom/chromium';
+import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../facadeWorkersUtils/zoom/firefox';
 
 let currentZoom = null;
 let canvas = null;
@@ -166,7 +167,7 @@ function setNewCanvasDimensions(changeElements) {
     widthOverflowed = true;
   }
   if (changeElements) {
-    changeElementPropertiesChromium(heightOverflowed, widthOverflowed, originalWidth,
+    changeElementPropertiesFirefox(heightOverflowed, widthOverflowed, originalWidth,
       originalHeight, newCanvasWidth, newCanvasHeight, canvasProperties, currentZoom);
   }
   return !widthOverflowed && !heightOverflowed;
@@ -353,9 +354,10 @@ function initialiseZoomVariables(canvasObj) {
   // if firefox
   // if chromium
   // use callback here and choose the set canvas properties method
-  initialiseVariablesChromium(canvas);
+  initialiseVariablesFirefox(canvas);
   currentZoom = getCurrentZoomState();
-  loadCanvasElements(setCanvasElementsChromium);
+  // loadCanvasElements(setCanvasElementsChromium);
+  loadCanvasElements(setDOMElementsFirefox);
 }
 
 function initiateZoomOverflowScroll(event) {

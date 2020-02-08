@@ -8,7 +8,6 @@ let canvasElement;
 let newCanvasWidth;
 let newCanvasHeight;
 let currentZoom = 1;
-// should be 6, but currently the code has been optimised to work with 5
 const scrollWidth = 5;
 
 let canvasProperties = null;
@@ -146,11 +145,11 @@ function heightOverflowDefault(originalWidth, originalHeight) {
 // the use of current zoom may be the secret key for tighter zoom overflow wrap
 function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${Math.round(newCanvasWidth)}px`;
-  const zoomOverflowMaxHeight = `${Math.round(newCanvasHeight)}px`;
+  const zoomOverflowMaxHeight = `${Math.round(newCanvasHeight) - 1}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2 + 2)}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 + 3}px`;
-  const stubMarginLeft = `${Math.round(originalWidth) - 2}px`;
-  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 4.5)}px`;
+  const stubMarginLeft = `${Math.round(originalWidth) - 3}px`;
+  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 5.5)}px`;
   const canvasLeft = 'calc(50% - 3px)';
   const canvasTop = 'calc(50% - 4px)';
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
@@ -167,7 +166,7 @@ function setTempValues(newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesAr
   currentZoom = currentZoomArg;
 }
 
-function changeElementPropertiesChromium(heightOverflowed, widthOverflowed, originalWidth,
+function changeElementPropertiesFirefox(heightOverflowed, widthOverflowed, originalWidth,
   originalHeight, newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg) {
   setTempValues(newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg);
   if (heightOverflowed) {
@@ -215,7 +214,7 @@ function changeElementPropertiesChromium(heightOverflowed, widthOverflowed, orig
   canvas.setDimensions(finalImageDimensions);
 }
 
-function setDOMElementsChromium(stubElementArg, zoomOverflowElementArg,
+function setDOMElementsFirefox(stubElementArg, zoomOverflowElementArg,
   zoomOverflowWrapperElementArg, canvasElementArg) {
   stubElement = stubElementArg;
   zoomOverflowElement = zoomOverflowElementArg;
@@ -223,8 +222,8 @@ function setDOMElementsChromium(stubElementArg, zoomOverflowElementArg,
   canvasElement = canvasElementArg;
 }
 
-function initialiseVariablesChromium(canvasArg) {
+function initialiseVariablesFirefox(canvasArg) {
   canvas = canvasArg;
 }
 
-export { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium };
+export { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox };

@@ -147,6 +147,8 @@ upon drawing a bounding box (could be via ML) and the resizing the screen to sma
 
 conditionals for firefox and chrome
 
+fix no objects generated via ML view layout
+
 SOLUTION:
 
 firefox on open overflow is caused by the size of font in the sidebar, if that doesn't fix it, change the height of the following:
