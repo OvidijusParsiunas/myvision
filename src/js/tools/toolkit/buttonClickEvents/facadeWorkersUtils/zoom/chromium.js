@@ -45,6 +45,14 @@ function setStubElementProperties(width, height, marginLeft, marginTop) {
   stubElement.style.marginTop = marginTop;
 }
 
+function setDarkZoomOverflowBackground() {
+  zoomOverflowElement.style.backgroundColor = '#b1b1b1';
+}
+
+function setDefaultZoomOverflowBackground() {
+  zoomOverflowElement.style.backgroundColor = '';
+}
+
 function setAllElementPropertiesToDefault(switchImage) {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
@@ -52,6 +60,7 @@ function setAllElementPropertiesToDefault(switchImage) {
   if (!switchImage) {
     setCanvasElementProperties('', '');
   }
+  setDefaultZoomOverflowBackground();
 }
 
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -70,6 +79,7 @@ function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeig
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
   reduceCanvasDimensionsBy(scrollWidth + 2, horizontalScrollOverlap);
+  setDarkZoomOverflowBackground();
 }
 
 function widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -84,6 +94,7 @@ function widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeig
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties(stubWidth, '', '', stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
+  setDarkZoomOverflowBackground();
 }
 
 function widthOverflowDefault(originalWidth, originalHeight) {
@@ -97,6 +108,7 @@ function widthOverflowDefault(originalWidth, originalHeight) {
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, '', zoomOverflowWrapperMarginTop);
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, '');
+  setDefaultZoomOverflowBackground();
 }
 
 function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -115,6 +127,7 @@ function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHei
   setStubElementProperties(stubWidth, '', '', stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
   reduceCanvasDimensionsBy(verticalScrollOverlap, scrollWidth + 1.5);
+  setDarkZoomOverflowBackground();
 }
 
 function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight) {
@@ -130,6 +143,7 @@ function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHei
     zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', '', stubMarginTop);
   setCanvasElementProperties(canvasLeft, '');
+  setDarkZoomOverflowBackground();
 }
 
 function heightOverflowDefault(originalWidth, originalHeight) {
@@ -141,6 +155,7 @@ function heightOverflowDefault(originalWidth, originalHeight) {
   setZoomOverFlowWrapperElementProperties('', '', '', zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', '', stubMarginTop);
   setCanvasElementProperties('', '');
+  setDarkZoomOverflowBackground();
 }
 
 // the use of current zoom may be the secret key for tighter zoom overflow wrap
@@ -158,6 +173,7 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
   reduceCanvasDimensionsBy(scrollWidth + 2.5, scrollWidth + 2);
+  setDarkZoomOverflowBackground();
 }
 
 function setTempValues(newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg) {

@@ -561,6 +561,15 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+#label-list {
+  width: 100%;
+}
+
+.labelListItem {
+  padding-left: 4px;
+  padding-bottom: 1px;
+}
+
 #labels-list-overflow-parent {
   overflow-x: auto;
   overflow-y: auto;
@@ -568,13 +577,6 @@
   border-bottom: solid;
   border-bottom-color: #4e4b4b26;
   border-bottom-width: 1px;
-}
-
-@-moz-document url-prefix() {
-  #labels-list-overflow-parent {
-    scrollbar-color: rebeccapurple green;
-    scrollbar-width: thin;
-  }
 }
  
 #labels-list-overflow-parent::-webkit-scrollbar-track {
@@ -585,6 +587,11 @@
   background: #666; 
 }
 
+#labels-list-overflow-parent::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
@@ -593,51 +600,6 @@
 
 #image-list-overflow-parent div:nth-child(odd) {
   border-right: 1px solid #4e4b4b26;
-}
-
-#label-list {
-  width: 100%;
-}
-
-/* update these when changing the left side bar width */
-
-#canvas-wrapper-parent {
-  width: calc(100% - 269px);
-  height: calc(100% - 60px);
-  left: 59px;
-}
-
-#zoom-overflow-wrapper-parent {
-  width: calc(100% - 270px);
-  height: calc(100% - 60px);
-  left: 59px;
-}
-
-/* https://codepen.io/MathieuRichard/pen/HAgnm */
-
-/* Decided not to use the thinner scrollbar as not sure if scrollbar  */
-
-#labels-list-overflow-parent::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-#zoom-overflow::-webkit-scrollbar {
-  width: 6px;
-  height: 7px;
-}
- 
-#zoom-overflow::-webkit-scrollbar-track {
-  background: #ddd;
-}
- 
-#zoom-overflow::-webkit-scrollbar-thumb {
-  background: #666; 
-}
-
-#zoom-overflow {
-  scrollbar-color: rebeccapurple green;
-  scrollbar-width: thin;
 }
 
 #window-dim {
@@ -660,14 +622,39 @@
   -o-transition-timing-function: linear;
 }
 
-.labelListItem {
-  padding-left: 4px;
-  padding-bottom: 1px;
-}
-
 #zoom-overflow {
   overflow: auto;
   z-index: 1;
+  /* following only kicks in on firefox */
+  scrollbar-color: #8c8c8c #ddd;
+  scrollbar-width: thin;
+}
+
+#zoom-overflow::-webkit-scrollbar {
+  width: 6px;
+  height: 7px;
+}
+ 
+#zoom-overflow::-webkit-scrollbar-track {
+  background: #ddd;
+}
+ 
+#zoom-overflow::-webkit-scrollbar-thumb {
+  background: #8c8c8c; 
+}
+
+/* update these when changing the left side bar width */
+
+#canvas-wrapper-parent {
+  width: calc(100% - 269px);
+  height: calc(100% - 60px);
+  left: 59px;
+}
+
+#zoom-overflow-wrapper-parent {
+  width: calc(100% - 270px);
+  height: calc(100% - 60px);
+  left: 59px;
 }
 
 #stub {
