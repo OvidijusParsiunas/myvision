@@ -18,6 +18,7 @@ let stubElement;
 let canvasElement;
 let zoomOverflowElement;
 let zoomOverflowWrapperElement;
+let changeElementPropertiesOnZoomFunc = null;
 
 let timesZoomedIn = 0;
 let scrollWheelUsed = false;
@@ -167,7 +168,7 @@ function setNewCanvasDimensions(changeElements) {
     widthOverflowed = true;
   }
   if (changeElements) {
-    changeElementPropertiesFirefox(heightOverflowed, widthOverflowed, originalWidth,
+    changeElementPropertiesOnZoomFunc(heightOverflowed, widthOverflowed, originalWidth,
       originalHeight, newCanvasWidth, newCanvasHeight, canvasProperties, currentZoom);
   }
   return !widthOverflowed && !heightOverflowed;
@@ -349,15 +350,25 @@ function loadCanvasElements(browserSpecificSetterCallback) {
     zoomOverflowWrapperElement, canvasElement);
 }
 
+function isFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
+
 function initialiseZoomVariables(canvasObj) {
   canvas = canvasObj;
   // if firefox
   // if chromium
   // use callback here and choose the set canvas properties method
-  initialiseVariablesFirefox(canvas);
   currentZoom = getCurrentZoomState();
-  // loadCanvasElements(setCanvasElementsChromium);
-  loadCanvasElements(setDOMElementsFirefox);
+  if (isFirefox()) {
+    initialiseVariablesFirefox(canvas);
+    loadCanvasElements(setDOMElementsFirefox);
+    changeElementPropertiesOnZoomFunc = changeElementPropertiesFirefox;
+  } else {
+    initialiseVariablesChromium(canvas);
+    loadCanvasElements(setDOMElementsChromium);
+    changeElementPropertiesOnZoomFunc = changeElementPropertiesChromium;
+  }
 }
 
 function initiateZoomOverflowScroll(event) {
