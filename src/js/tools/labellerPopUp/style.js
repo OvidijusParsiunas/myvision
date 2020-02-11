@@ -31,6 +31,12 @@ function isHorizontalScrollPresent() {
   > labellerPopupLabelOptionsElement.clientWidth;
 }
 
+function addExtraBorders() {
+  const chromeBorderFixElement = document.getElementById('chrome-fake-border-fix');
+  chromeBorderFixElement.style.height = '138px';
+  chromeBorderFixElement.style.display = '';
+}
+
 function setLabelOptionsHeight() {
   let newHeight = listHeightPx;
   if (!heightIncreasedForHorizontalScrollbar && isHorizontalScrollPresent()) {
@@ -38,6 +44,7 @@ function setLabelOptionsHeight() {
     listHeightPx = newHeight;
     heightIncreasedForHorizontalScrollbar = true;
   }
+  addExtraBorders();
   labellerPopupLabelOptionsElement.style.height = `${newHeight}px`;
 }
 

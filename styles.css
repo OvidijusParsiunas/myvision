@@ -170,6 +170,16 @@
   height: 6px;
 }
 
+#chrome-fake-border-fix {
+  width: 1px;
+  background-color: rgb(177, 177, 177);
+  position: absolute;
+  /* table distance from the top of popup */
+  top: 63px;
+  /* table distance from the right side of popup */
+  right: 9px;
+}
+
 .popup-label-buttons {
   font-size: 14.55px;
 }
