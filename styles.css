@@ -153,6 +153,21 @@
   height: 105px;
   margin-left: 9px;
   box-sizing: content-box;
+  scrollbar-color: #8c8c8c #ddd;
+  scrollbar-width: thin;
+}
+
+#popup-label-options::-webkit-scrollbar-track {
+  background: none;
+}
+ 
+#popup-label-options::-webkit-scrollbar-thumb {
+  background: #d6d6d6;
+}
+
+#popup-label-options::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
 .popup-label-buttons {

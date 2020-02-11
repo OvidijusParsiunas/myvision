@@ -29,6 +29,34 @@ function initialiseWindowLayoutSetup() {
   findWindowElements();
 }
 
+function getFirefoxScrollBarWidth() {
+  // create a div with the scroll
+  const div = document.createElement('div');
+  div.style.overflowY = 'scroll';
+  div.style.width = '50px';
+  div.style.height = '50px';
+  document.body.append(div);
+  const browserScrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return browserScrollWidth;
+}
+
+function getChromiumScrollBarWidth() {
+  return 6;
+}
+
+function isFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
+
+function getScrollbarWidth() {
+  if (isFirefox()) {
+    return getFirefoxScrollBarWidth();
+  }
+  return getChromiumScrollBarWidth();
+}
+
 export {
-  initialiseWindowLayoutSetup, changeCanvasElementsWidth, getLeftSideBarWidth, getRightSideBarWidth,
+  initialiseWindowLayoutSetup, changeCanvasElementsWidth,
+  getLeftSideBarWidth, getRightSideBarWidth, getScrollbarWidth,
 };

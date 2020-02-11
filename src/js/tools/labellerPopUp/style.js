@@ -1,14 +1,16 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
 import { setLabellingPopUpDisplayedState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getScrollbarWidth } from '../styling/styling';
 
 let popupLabelParentElement = null;
 let submitButtonElement = null;
 let inputElement = null;
 let labellerPopupLabelOptionsElement = null;
 let mouseProperties = {};
-let horizontalScrollPresent = false;
-let labelOptionsHeightIncreased = false;
+let listHeightPx = 105;
+let heightIncreasedForNewLabel = false;
+let heightIncreasedForHorizontalScrollbar = false;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -24,25 +26,30 @@ function addLabelToList(labelText, color) {
   cell.appendChild(labelElement);
 }
 
-function increaseLabelOptionsHeight(height) {
-  labellerPopupLabelOptionsElement.style.height = height;
-  labelOptionsHeightIncreased = true;
+function isHorizontalScrollPresent() {
+  return labellerPopupLabelOptionsElement.scrollWidth
+  > labellerPopupLabelOptionsElement.clientWidth;
 }
 
-function changeTableHeightIfHorizontalScrollPresent() {
-  if (!horizontalScrollPresent
-  && labellerPopupLabelOptionsElement.scrollWidth > labellerPopupLabelOptionsElement.clientWidth) {
-    increaseLabelOptionsHeight('141px');
-    horizontalScrollPresent = true;
+function setLabelOptionsHeight() {
+  let newHeight = listHeightPx;
+  if (!heightIncreasedForHorizontalScrollbar && isHorizontalScrollPresent()) {
+    newHeight += getScrollbarWidth();
+    listHeightPx = newHeight;
+    heightIncreasedForHorizontalScrollbar = true;
   }
+  labellerPopupLabelOptionsElement.style.height = `${newHeight}px`;
 }
 
 // should be in label list
 function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
-  if (!labelOptionsHeightIncreased && labelOptions.length >= 6) {
-    increaseLabelOptionsHeight('126px');
+  if (!heightIncreasedForNewLabel && labelOptions.length >= 6) {
+    listHeightPx = 105 + 21;
+    heightIncreasedForHorizontalScrollbar = false;
+    heightIncreasedForNewLabel = true;
+    setLabelOptionsHeight();
   }
   if (labelOptions.length === 7) {
     addLabelToList('temp horizontal');
@@ -172,7 +179,7 @@ function showLabelPopUp() {
   getLabelOptions();
   deleteAndAddLastRowToRefreshDiv();
   popupLabelParentElement.style.display = 'block';
-  changeTableHeightIfHorizontalScrollPresent();
+  setLabelOptionsHeight();
   resetLabelOptionsListScroll();
   validateFullPopUpVisibile();
   setLabellingPopUpDisplayedState(true);
