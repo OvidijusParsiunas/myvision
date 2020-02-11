@@ -170,13 +170,23 @@
   height: 6px;
 }
 
-#chrome-fake-border-fix {
+#chrome-fake-right-border-fix {
   width: 1px;
   background-color: rgb(177, 177, 177);
   position: absolute;
   /* table distance from the top of popup */
   top: 63px;
   /* table distance from the right side of popup */
+  right: 9px;
+}
+
+#chrome-fake-bottom-border-fix {
+  height: 1px;
+  background-color: rgb(177, 177, 177);
+  position: absolute;
+  /* width of the table */
+  width: 167px;
+  /* table distance from the left side of popup */
   right: 9px;
 }
 

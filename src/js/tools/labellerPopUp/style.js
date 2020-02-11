@@ -26,15 +26,47 @@ function addLabelToList(labelText, color) {
   cell.appendChild(labelElement);
 }
 
+function isVerticalScrollPresent() {
+  return labellerPopupLabelOptionsElement.scrollHeight
+  > labellerPopupLabelOptionsElement.clientHeight;
+}
+
 function isHorizontalScrollPresent() {
   return labellerPopupLabelOptionsElement.scrollWidth
   > labellerPopupLabelOptionsElement.clientWidth;
 }
 
-function addExtraBorders() {
-  const chromeBorderFixElement = document.getElementById('chrome-fake-border-fix');
-  chromeBorderFixElement.style.height = '138px';
+function addFakeVerticalBorder() {
+  const chromeBorderFixElement = document.getElementById('chrome-fake-right-border-fix');
+  chromeBorderFixElement.style.height = `${listHeightPx}px`;
   chromeBorderFixElement.style.display = '';
+}
+
+function addFakeBottomBorder() {
+  const tableDistanceFromTop = 63;
+  const chromeBorderFixElement = document.getElementById('chrome-fake-bottom-border-fix');
+  chromeBorderFixElement.style.top = `${tableDistanceFromTop + listHeightPx + getScrollbarWidth() - 1}px`;
+  chromeBorderFixElement.style.display = '';
+}
+
+// should be a global variable
+function isFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
+
+// the following is a bug fix for chromium based browsers where the scroll bars
+// do not cover the edge of the table body, meaning that upon hovering on them;
+// the mouse over events would be triggered on the body below it.
+// In this case, it would be the table element highlighting and cursor change
+function addFakeBordersForChromium() {
+  if (!isFirefox()) {
+    if (isVerticalScrollPresent()) {
+      addFakeVerticalBorder();
+    }
+    if (isHorizontalScrollPresent()) {
+      addFakeBottomBorder();
+    }
+  }
 }
 
 function setLabelOptionsHeight() {
@@ -44,7 +76,6 @@ function setLabelOptionsHeight() {
     listHeightPx = newHeight;
     heightIncreasedForHorizontalScrollbar = true;
   }
-  addExtraBorders();
   labellerPopupLabelOptionsElement.style.height = `${newHeight}px`;
 }
 
@@ -187,6 +218,7 @@ function showLabelPopUp() {
   deleteAndAddLastRowToRefreshDiv();
   popupLabelParentElement.style.display = 'block';
   setLabelOptionsHeight();
+  addFakeBordersForChromium();
   resetLabelOptionsListScroll();
   validateFullPopUpVisibile();
   setLabellingPopUpDisplayedState(true);
