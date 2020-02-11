@@ -45,7 +45,7 @@ function addFakeVerticalBorder() {
 }
 
 function addFakeBottomBorder() {
-  const tableDistanceFromTop = 61;
+  const tableDistanceFromTop = 62;
   const chromeBorderFixElement = document.getElementById('chrome-fake-bottom-border-fix');
   chromeBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 1}px`;
   chromeBorderFixElement.style.display = '';

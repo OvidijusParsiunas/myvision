@@ -11,11 +11,12 @@
   width: 162px;
   border: thin ridge rgb(177, 177, 177);
   margin: 6px 9px 9px 9px;
-  font-family: Chivo, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
   padding-top: 2px;
   padding-left: 2px;
   padding-right: 1px;
+  color: black;
 }
 
 #c {
