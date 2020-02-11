@@ -161,7 +161,7 @@
 #popup-label-options::-webkit-scrollbar-track {
   background: none;
 }
- 
+
 #popup-label-options::-webkit-scrollbar-thumb {
   background: #d6d6d6;
 }
@@ -182,11 +182,11 @@
 }
 
 #chrome-fake-bottom-border-fix {
-  height: 0.5px;
+  height: 0.7px;
   background-color: rgb(177, 177, 177);
   position: absolute;
   /* width of the table */
-  width: 167px;
+  width: 166px;
   /* table distance from the left side of popup */
   right: 9px;
 }
@@ -271,7 +271,7 @@
 
 #export-labels-popup-parent {
   position: absolute;
-  border-radius: 3px; 
+  border-radius: 3px;
   background-color: white;
   border-width: 1px;
   border-style: solid;
@@ -403,7 +403,7 @@
 #machine-learning-popup-check-mark-parent {
   position: relative;
   margin-left: 137px;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 #machine-learning-popup-progress-messages {
@@ -617,13 +617,13 @@
   scrollbar-color: #d6d6d6 none;
   scrollbar-width: thin;
 }
- 
+
 #labels-list-overflow-parent::-webkit-scrollbar-track {
   background: none;
 }
- 
+
 #labels-list-overflow-parent::-webkit-scrollbar-thumb {
-  background: #d6d6d6; 
+  background: #d6d6d6;
 }
 
 #labels-list-overflow-parent::-webkit-scrollbar {
@@ -673,13 +673,13 @@
   width: 6px;
   height: 7px;
 }
- 
+
 #zoom-overflow::-webkit-scrollbar-track {
   background: #ddd;
 }
- 
+
 #zoom-overflow::-webkit-scrollbar-thumb {
-  background: #8c8c8c; 
+  background: #8c8c8c;
 }
 
 /* update these when changing the left side bar width */

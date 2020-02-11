@@ -45,10 +45,11 @@ function addFakeVerticalBorder() {
 }
 
 function addFakeBottomBorder() {
-  const tableDistanceFromTop = 63;
+  const tableDistanceFromTop = 61;
   const chromeBorderFixElement = document.getElementById('chrome-fake-bottom-border-fix');
   chromeBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 1}px`;
   chromeBorderFixElement.style.display = '';
+  labellerPopupLabelOptionsElement.style.borderBottom = 'none';
 }
 
 // should be a global variable
@@ -167,6 +168,7 @@ function setListHeightVariables() {
 }
 
 function setLocalVariables() {
+  inputElement = document.getElementById('popup-label-input');
   popupLabelParentElement = document.getElementById('popup-label-parent');
   submitButtonElement = document.getElementById('popup-label-submit-button');
   labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
