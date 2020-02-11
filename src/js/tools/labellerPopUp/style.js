@@ -8,7 +8,9 @@ let submitButtonElement = null;
 let inputElement = null;
 let labellerPopupLabelOptionsElement = null;
 let mouseProperties = {};
-let listHeightPx = 105;
+let defaultListHeightPx = 0;
+let addNewLabelDeltaHeight = 0;
+let currentListHeightPx = 105;
 let heightIncreasedForNewLabel = false;
 let heightIncreasedForHorizontalScrollbar = false;
 
@@ -38,14 +40,14 @@ function isHorizontalScrollPresent() {
 
 function addFakeVerticalBorder() {
   const chromeBorderFixElement = document.getElementById('chrome-fake-right-border-fix');
-  chromeBorderFixElement.style.height = `${listHeightPx}px`;
+  chromeBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromeBorderFixElement.style.display = '';
 }
 
 function addFakeBottomBorder() {
   const tableDistanceFromTop = 63;
   const chromeBorderFixElement = document.getElementById('chrome-fake-bottom-border-fix');
-  chromeBorderFixElement.style.top = `${tableDistanceFromTop + listHeightPx + getScrollbarWidth() - 1}px`;
+  chromeBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 1}px`;
   chromeBorderFixElement.style.display = '';
 }
 
@@ -70,10 +72,10 @@ function addFakeBordersForChromium() {
 }
 
 function setLabelOptionsHeight() {
-  let newHeight = listHeightPx;
+  let newHeight = currentListHeightPx;
   if (!heightIncreasedForHorizontalScrollbar && isHorizontalScrollPresent()) {
     newHeight += getScrollbarWidth();
-    listHeightPx = newHeight;
+    currentListHeightPx = newHeight;
     heightIncreasedForHorizontalScrollbar = true;
   }
   labellerPopupLabelOptionsElement.style.height = `${newHeight}px`;
@@ -84,7 +86,7 @@ function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
   labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
   if (!heightIncreasedForNewLabel && labelOptions.length >= 6) {
-    listHeightPx = 105 + 21;
+    currentListHeightPx = defaultListHeightPx + addNewLabelDeltaHeight;
     heightIncreasedForHorizontalScrollbar = false;
     heightIncreasedForNewLabel = true;
     setLabelOptionsHeight();
@@ -153,8 +155,26 @@ function validateFullPopUpVisibile() {
   }
 }
 
-function initialiseLabelPopupOptionsList() {
+function setListHeightVariables() {
+  if (isFirefox()) {
+    defaultListHeightPx = 105.5;
+    addNewLabelDeltaHeight = 21.5;
+  } else {
+    defaultListHeightPx = 105;
+    addNewLabelDeltaHeight = 21;
+  }
+  currentListHeightPx = defaultListHeightPx;
+}
+
+function setLocalVariables() {
+  popupLabelParentElement = document.getElementById('popup-label-parent');
+  submitButtonElement = document.getElementById('popup-label-submit-button');
   labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
+  setListHeightVariables();
+}
+
+function initialiseLabelPopupOptionsList() {
+  setLocalVariables();
   getLabelOptions().forEach((option) => {
     addLabelToList(option.text, option.color.label);
   });
@@ -203,15 +223,8 @@ window.updateMouseProperties = (event) => {
   mouseProperties = event;
 };
 
-function setLocalVariables() {
-  inputElement = document.getElementById('popup-label-input');
-  submitButtonElement = document.getElementById('popup-label-submit-button');
-  popupLabelParentElement = document.getElementById('popup-label-parent');
-}
-
 function showLabelPopUp() {
   dimWindow(0.5);
-  setLocalVariables();
   popupLabelParentElement.style.top = `${mouseProperties.clientY}px`;
   popupLabelParentElement.style.left = `${mouseProperties.clientX}px`;
   getLabelOptions();
