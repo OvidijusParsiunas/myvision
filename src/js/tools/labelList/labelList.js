@@ -32,6 +32,7 @@ import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningPopUp/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
+import { getScrollbarWidth } from '../styling/styling';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -149,20 +150,6 @@ function getDefaultFont() {
   return `${size} ${fontFamily}`;
 }
 
-function getScrollWidth() {
-  // create a div with the scroll
-  const div = document.createElement('div');
-  div.style.overflowY = 'scroll';
-  div.style.width = '50px';
-  div.style.height = '50px';
-
-  // must put it in the document, otherwise sizes will be 0
-  document.body.append(div);
-  const scrollWidth = div.offsetWidth - div.clientWidth;
-  div.remove();
-  return scrollWidth * 2;
-}
-
 function isVerticalScrollPresent() {
   return labelsListOverflowParentElement.scrollHeight
    > labelsListOverflowParentElement.clientHeight;
@@ -173,8 +160,8 @@ function scrollHorizontallyToAppropriateWidth(text) {
   const context = myCanvas.getContext('2d');
   context.font = getDefaultFont();
   const metrics = context.measureText(text);
-  if (isVerticalScrollPresent() && metrics.width > 170 - getScrollWidth()) {
-    labelsListOverflowParentElement.scrollLeft = metrics.width - 165 + getScrollWidth() / 2;
+  if (isVerticalScrollPresent() && metrics.width > 170 - getScrollbarWidth()) {
+    labelsListOverflowParentElement.scrollLeft = metrics.width - 165 + getScrollbarWidth() / 2;
   } else if (!isVerticalScrollPresent() && metrics.width > 170) {
     labelsListOverflowParentElement.scrollLeft = metrics.width - 165;
   } else {
@@ -386,7 +373,7 @@ function isElementHeightFullyVisibleInParent(childElement, parentElement) {
     return false;
   }
   if ((isHorizontalScrollPresent()
-    && childBoundingRect.bottom > parentBoundingRect.bottom - getScrollWidth())
+    && childBoundingRect.bottom > parentBoundingRect.bottom - getScrollbarWidth())
     || (childBoundingRect.bottom > parentBoundingRect.bottom)) {
     return false;
   }

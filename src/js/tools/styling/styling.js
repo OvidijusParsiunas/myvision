@@ -38,7 +38,7 @@ function getFirefoxScrollBarWidth() {
   document.body.append(div);
   const browserScrollWidth = div.offsetWidth - div.clientWidth;
   div.remove();
-  return browserScrollWidth;
+  return browserScrollWidth / 2;
 }
 
 function getChromiumScrollBarWidth() {

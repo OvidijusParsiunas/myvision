@@ -153,7 +153,8 @@
   height: 105px;
   margin-left: 9px;
   box-sizing: content-box;
-  scrollbar-color: #8c8c8c #ddd;
+  /* firefox */
+  scrollbar-color: #d6d6d6 none;
   scrollbar-width: thin;
 }
 
@@ -171,7 +172,7 @@
 }
 
 #chrome-fake-right-border-fix {
-  width: 1px;
+  width: 0.5px;
   background-color: rgb(177, 177, 177);
   position: absolute;
   /* table distance from the top of popup */
@@ -181,7 +182,7 @@
 }
 
 #chrome-fake-bottom-border-fix {
-  height: 1px;
+  height: 0.5px;
   background-color: rgb(177, 177, 177);
   position: absolute;
   /* width of the table */
@@ -612,14 +613,17 @@
   border-bottom: solid;
   border-bottom-color: #4e4b4b26;
   border-bottom-width: 1px;
+  /* firefox */
+  scrollbar-color: #d6d6d6 none;
+  scrollbar-width: thin;
 }
  
 #labels-list-overflow-parent::-webkit-scrollbar-track {
-  background: #ddd;
+  background: none;
 }
  
 #labels-list-overflow-parent::-webkit-scrollbar-thumb {
-  background: #666; 
+  background: #d6d6d6; 
 }
 
 #labels-list-overflow-parent::-webkit-scrollbar {
@@ -660,7 +664,7 @@
 #zoom-overflow {
   overflow: auto;
   z-index: 1;
-  /* following only kicks in on firefox */
+  /* firefox */
   scrollbar-color: #8c8c8c #ddd;
   scrollbar-width: thin;
 }
