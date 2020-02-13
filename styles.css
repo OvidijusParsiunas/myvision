@@ -96,7 +96,7 @@
   text-decoration: none;
   padding-top: 1px;
   padding-bottom: 1px;
-  scrollbar-color: #d6d6d6 #f9f9f9;
+  scrollbar-color: #c7c7c7 #f9f9f9;
   scrollbar-width: thin;
 }
 
@@ -105,7 +105,8 @@
 }
 
 .dropdown-content::-webkit-scrollbar-thumb {
-  background: #d6d6d6;
+  background: #c7c7c7;
+  border-radius: 10px;
 }
 
 .dropdown-content::-webkit-scrollbar {
@@ -170,7 +171,7 @@
   margin-left: 9px;
   box-sizing: content-box;
   /* firefox */
-  scrollbar-color: #d6d6d6 #f9f9f9;
+  scrollbar-color: #c7c7c7 #f9f9f9;
   scrollbar-width: thin;
 }
 
@@ -179,7 +180,8 @@
 }
 
 #popup-label-options::-webkit-scrollbar-thumb {
-  background: #d6d6d6;
+  background: #c7c7c7;
+  border-radius: 10px;
 }
 
 #popup-label-options::-webkit-scrollbar {
@@ -630,7 +632,7 @@
   border-bottom-color: #4e4b4b26;
   border-bottom-width: 1px;
   /* firefox */
-  scrollbar-color: #d6d6d6 #f9f9f9;
+  scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
 }
 
@@ -639,7 +641,8 @@
 }
 
 #labels-list-overflow-parent::-webkit-scrollbar-thumb {
-  background: #d6d6d6;
+  background: #8c8c8c;
+  border-radius: 10px;
 }
 
 #labels-list-overflow-parent::-webkit-scrollbar {
@@ -651,10 +654,26 @@
   overflow-x: hidden;
   overflow-y: auto;
   max-height: calc((100vh + 120px) / 2 - 1px);
+  scrollbar-color: #8c8c8c #f9f9f9;
+  scrollbar-width: thin;
 }
 
 #image-list-overflow-parent div:nth-child(odd) {
   border-right: 1px solid #4e4b4b26;
+}
+
+#image-list-overflow-parent::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+#image-list-overflow-parent::-webkit-scrollbar-thumb {
+  background: #8c8c8c;
+  border-radius: 10px;
+}
+
+#image-list-overflow-parent::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
 #window-dim {
@@ -681,7 +700,7 @@
   overflow: auto;
   z-index: 1;
   /* firefox */
-  scrollbar-color: #8c8c8c #ddd;
+  scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
 }
 
@@ -691,11 +710,12 @@
 }
 
 #zoom-overflow::-webkit-scrollbar-track {
-  background: #ddd;
+  background: #f9f9f9;
 }
 
 #zoom-overflow::-webkit-scrollbar-thumb {
   background: #8c8c8c;
+  border-radius: 6px;
 }
 
 /* update these when changing the left side bar width */

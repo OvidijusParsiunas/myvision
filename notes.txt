@@ -145,8 +145,6 @@ can draw with cursor too high top
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-the label list dropdown is too close to the edge
-
 SOLUTION:
 
 firefox on open overflow is caused by the size of font in the sidebar, if that doesn't fix it, change the height of the following:
