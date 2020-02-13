@@ -41,7 +41,7 @@
 }
 
 .popup-label-title {
-  font-size: 17px;
+  font-size: 16.5px;
   padding-left: 8px;
   padding-top: 6px;
   user-select: none;
@@ -96,6 +96,21 @@
   text-decoration: none;
   padding-top: 1px;
   padding-bottom: 1px;
+  scrollbar-color: #d6d6d6 #f9f9f9;
+  scrollbar-width: thin;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: #d6d6d6;
+}
+
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
 .show {display: block;}
@@ -155,12 +170,12 @@
   margin-left: 9px;
   box-sizing: content-box;
   /* firefox */
-  scrollbar-color: #d6d6d6 none;
+  scrollbar-color: #d6d6d6 #f9f9f9;
   scrollbar-width: thin;
 }
 
 #popup-label-options::-webkit-scrollbar-track {
-  background: none;
+  background: #f9f9f9;
 }
 
 #popup-label-options::-webkit-scrollbar-thumb {
@@ -615,12 +630,12 @@
   border-bottom-color: #4e4b4b26;
   border-bottom-width: 1px;
   /* firefox */
-  scrollbar-color: #d6d6d6 none;
+  scrollbar-color: #d6d6d6 #f9f9f9;
   scrollbar-width: thin;
 }
 
 #labels-list-overflow-parent::-webkit-scrollbar-track {
-  background: none;
+  background: #f9f9f9;
 }
 
 #labels-list-overflow-parent::-webkit-scrollbar-thumb {

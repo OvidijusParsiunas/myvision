@@ -52,6 +52,8 @@ let popuplabelOptionsElement = null;
 let lastSelectedLabelOption = null;
 let originalLabelText = null;
 let availableListOptions = [];
+let dropdownElementsWidthDefault = 0;
+let dropdownElementsWidthFull = 0;
 let labelsListOverflowParentElement = null;
 let horizontalScrollPresentWhenEditAndScroll = false;
 let mouseHoveredOnLabelEditButton = false;
@@ -66,6 +68,20 @@ let currentlyActiveLabelOptionIndex = 0;
 // make sure to consider label name validations
 // escape should close the popup - more on hotkeys
 
+function isFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
+
+function setDropdownElementWidthVariables() {
+  if (isFirefox()) {
+    dropdownElementsWidthDefault = 171;
+    dropdownElementsWidthFull = 206;
+  } else {
+    dropdownElementsWidthDefault = 170;
+    dropdownElementsWidthFull = 205;
+  }
+}
+
 function findLabelListElement() {
   labelListElement = document.getElementById('label-list');
   labelsListOverflowParentElement = document.getElementById('labels-list-overflow-parent');
@@ -78,6 +94,7 @@ function findPopupElement() {
 function initialiseLabelListFunctionality() {
   findLabelListElement();
   findPopupElement();
+  setDropdownElementWidthVariables();
   setLabelListElementForHighlights(labelListElement);
 }
 
@@ -343,8 +360,8 @@ function deleteAndAddLastRowToRefreshDropdownDiv(dropdownLabelsElement) {
 function changeActiveDropdownElementStyling() {
   const labelListElementScrollLeftVSDropdownMarginLeft = Math.max(-4,
     31 - labelsListOverflowParentElement.scrollLeft);
-  const labelListElementScrollLeftVSDropdownWidth = Math.min(206,
-    171 + labelsListOverflowParentElement.scrollLeft);
+  const labelListElementScrollLeftVSDropdownWidth = Math.min(dropdownElementsWidthFull,
+    dropdownElementsWidthDefault + labelsListOverflowParentElement.scrollLeft);
   activeDropdownElements[0].style.marginLeft = `${labelListElementScrollLeftVSDropdownMarginLeft}px`;
   activeDropdownElements[0].style.width = `${labelListElementScrollLeftVSDropdownWidth}px`;
 }
