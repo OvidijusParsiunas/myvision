@@ -371,6 +371,10 @@ function isDropdownHorizontalScrollPresent() {
   return activeDropdownElements[0].scrollWidth > activeDropdownElements[0].clientWidth;
 }
 
+// the following is a bug fix for chromium based browsers where the scroll bars
+// do not cover the edge of the table body, meaning that upon hovering on them;
+// the mouse over events would be triggered on the body below it.
+// In this case, it would be the table element highlighting and cursor change
 function setFakeDropdownBorderFixForChromium(id) {
   if (!isFirefox()) {
     const fakeBorderElements = document.getElementById(`chromium-fake-dropdown-border-fix${id}`);
@@ -378,9 +382,9 @@ function setFakeDropdownBorderFixForChromium(id) {
     if (isDropdownHorizontalScrollPresent()) {
       chromiumFakeDrodownBottomBorderElement = fakeBorderElements.childNodes[3];
       chromiumFakeDrodownBottomBorderElement.style.width = activeDropdownElements[0].style.width;
-      const dropDownOffset = activeDropdownElementPosition.height
+      const activeDropDownBottomBorderOffset = activeDropdownElementPosition.height
        + activeDropdownElementPosition.top - 1;
-      chromiumFakeDrodownBottomBorderElement.style.top = `${dropDownOffset}px`;
+      chromiumFakeDrodownBottomBorderElement.style.top = `${activeDropDownBottomBorderOffset}px`;
       chromiumFakeDrodownBottomBorderElement.style.display = '';
     } else if (chromiumFakeDrodownBottomBorderElement) {
       chromiumFakeDrodownBottomBorderElement.style.display = 'none';

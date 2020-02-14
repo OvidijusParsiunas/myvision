@@ -39,16 +39,16 @@ function isHorizontalScrollPresent() {
 }
 
 function addFakeVerticalBorder() {
-  const chromeBorderFixElement = document.getElementById('chrome-fake-right-border-fix');
-  chromeBorderFixElement.style.height = `${currentListHeightPx}px`;
-  chromeBorderFixElement.style.display = '';
+  const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
+  chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
+  chromiumFakeRightBorderFixElement.style.display = '';
 }
 
 function addFakeBottomBorder() {
   const tableDistanceFromTop = 62;
-  const chromeBorderFixElement = document.getElementById('chrome-fake-bottom-border-fix');
-  chromeBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 1}px`;
-  chromeBorderFixElement.style.display = '';
+  const chromiumFakeBottomBorderFixElement = document.getElementById('chromium-fake-popup-table-bottom-border-fix');
+  chromiumFakeBottomBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 1}px`;
+  chromiumFakeBottomBorderFixElement.style.display = '';
   labellerPopupLabelOptionsElement.style.borderBottom = 'none';
 }
 
