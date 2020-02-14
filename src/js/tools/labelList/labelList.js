@@ -60,6 +60,9 @@ let mouseHoveredOnLabelEditButton = false;
 let currentlyActiveLabelOptionIndex = 0;
 let chromiumFakeDropdownRightBorderElement = null;
 let chromiumFakeDrodownBottomBorderElement = null;
+let chromiumFakeDropdownBorderElementTopDelta = 0;
+let newFakeDropdownBottomBorderDeltaGenerated = false;
+let originalActiveDropdownHeight = 0;
 
 // refactor label popup label options element manipulation code
 
@@ -153,7 +156,7 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
       <table class="dropdown-content labelDropdown${id}">
       </table>
       <div id="chromium-fake-dropdown-border-fix${id}">
-        <div class="chromium-fake-dropdown-border-fix chromium-right-border-fix" style="display: none"></div>
+        <div class="chromium-fake-dropdown-border-fix chromium-fake-dropdown-border-fix-width chromium-right-border-fix" style="display: none"></div>
         <div class="chromium-fake-dropdown-border-fix chromium-bottom-border-fix" style="display: none"></div>
       </div>
     </div>
@@ -371,6 +374,46 @@ function isDropdownHorizontalScrollPresent() {
   return activeDropdownElements[0].scrollWidth > activeDropdownElements[0].clientWidth;
 }
 
+function addFakeRightBorder(activeDropdownElementPosition) {
+  chromiumFakeDropdownRightBorderElement.style.top = `${activeDropdownElementPosition.top}px`;
+  chromiumFakeDropdownRightBorderElement.style.height = `${activeDropdownElementPosition.height}px`;
+  chromiumFakeDropdownRightBorderElement.style.display = '';
+}
+
+function removeFakeBottomBorderOnExistingDropdown() {
+  chromiumFakeDrodownBottomBorderElement.style.display = 'none';
+  activeDropdownElements[0].style.borderBottom = '';
+  // the following do not need to be refreshed on removeChromiumFakeBorderFix() because
+  // once the delta has been generated, it is used the same for all the dropdowns that
+  // have the horizontal dropdown
+  chromiumFakeDropdownBorderElementTopDelta = 0;
+  newFakeDropdownBottomBorderDeltaGenerated = false;
+}
+
+function addFakeBottomBorder(activeDropdownElementPosition) {
+  // the reason why we have a delta here is because activeDropdownElements remembers the height
+  // before the bottom border is removed, hence when getBoundingClientRect is called
+  // the next time, the height presented is smaller
+  if (activeDropdownElements[0].style.borderBottom === 'none') {
+    if (!newFakeDropdownBottomBorderDeltaGenerated) {
+      chromiumFakeDropdownBorderElementTopDelta = originalActiveDropdownHeight
+        - activeDropdownElementPosition.height;
+      if (isDropdownVerticalScrollPresent()) {
+        chromiumFakeDropdownBorderElementTopDelta *= 2;
+      }
+      newFakeDropdownBottomBorderDeltaGenerated = true;
+    }
+  }
+  const dropdownElementWidthInt = parseInt(activeDropdownElements[0].style.width, 10);
+  chromiumFakeDrodownBottomBorderElement.style.width = `${dropdownElementWidthInt + 1.5}px`;
+  const activeDropDownBottomBorderOffsetFromTop = activeDropdownElementPosition.height
+   + activeDropdownElementPosition.top + chromiumFakeDropdownBorderElementTopDelta - 0.5;
+  chromiumFakeDrodownBottomBorderElement.style.top = `${activeDropDownBottomBorderOffsetFromTop}px`;
+  originalActiveDropdownHeight = parseInt(activeDropdownElementPosition.height, 10);
+  activeDropdownElements[0].style.borderBottom = 'none';
+  chromiumFakeDrodownBottomBorderElement.style.display = '';
+}
+
 // the following is a bug fix for chromium based browsers where the scroll bars
 // do not cover the edge of the table body, meaning that upon hovering on them;
 // the mouse over events would be triggered on the body below it.
@@ -379,21 +422,15 @@ function setFakeDropdownBorderFixForChromium(id) {
   if (!isFirefox()) {
     const fakeBorderElements = document.getElementById(`chromium-fake-dropdown-border-fix${id}`);
     const activeDropdownElementPosition = activeDropdownElements[0].getBoundingClientRect();
-    if (isDropdownHorizontalScrollPresent()) {
-      chromiumFakeDrodownBottomBorderElement = fakeBorderElements.childNodes[3];
-      chromiumFakeDrodownBottomBorderElement.style.width = activeDropdownElements[0].style.width;
-      const activeDropDownBottomBorderOffset = activeDropdownElementPosition.height
-       + activeDropdownElementPosition.top - 1;
-      chromiumFakeDrodownBottomBorderElement.style.top = `${activeDropDownBottomBorderOffset}px`;
-      chromiumFakeDrodownBottomBorderElement.style.display = '';
-    } else if (chromiumFakeDrodownBottomBorderElement) {
-      chromiumFakeDrodownBottomBorderElement.style.display = 'none';
-    }
     if (isDropdownVerticalScrollPresent()) {
       chromiumFakeDropdownRightBorderElement = fakeBorderElements.childNodes[1];
-      chromiumFakeDropdownRightBorderElement.style.top = `${activeDropdownElementPosition.top}px`;
-      chromiumFakeDropdownRightBorderElement.style.height = `${activeDropdownElementPosition.height}px`;
-      chromiumFakeDropdownRightBorderElement.style.display = '';
+      addFakeRightBorder(activeDropdownElementPosition);
+    }
+    if (isDropdownHorizontalScrollPresent()) {
+      chromiumFakeDrodownBottomBorderElement = fakeBorderElements.childNodes[3];
+      addFakeBottomBorder(activeDropdownElementPosition);
+    } else if (chromiumFakeDrodownBottomBorderElement) {
+      removeFakeBottomBorderOnExistingDropdown();
     }
   }
 }

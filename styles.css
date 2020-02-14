@@ -218,7 +218,11 @@
 .chromium-fake-dropdown-border-fix {
   background-color: grey;
   z-index: 2;
-  right: 1px;
+  right: 1.5px;
+}
+
+.chromium-fake-dropdown-border-fix-width {
+  width: 0.7px;
 }
 
 .popup-label-buttons {

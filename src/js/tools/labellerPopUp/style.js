@@ -38,7 +38,7 @@ function isHorizontalScrollPresent() {
   > labellerPopupLabelOptionsElement.clientWidth;
 }
 
-function addFakeVerticalBorder() {
+function addFakeRightBorder() {
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
@@ -47,9 +47,10 @@ function addFakeVerticalBorder() {
 function addFakeBottomBorder() {
   const tableDistanceFromTop = 62;
   const chromiumFakeBottomBorderFixElement = document.getElementById('chromium-fake-popup-table-bottom-border-fix');
-  chromiumFakeBottomBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 1}px`;
+  chromiumFakeBottomBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 4}px`;
   chromiumFakeBottomBorderFixElement.style.display = '';
   labellerPopupLabelOptionsElement.style.borderBottom = 'none';
+  labellerPopupLabelOptionsElement.style.paddingBottom = '0px';
 }
 
 // should be a global variable
@@ -64,7 +65,7 @@ function isFirefox() {
 function addFakeBordersForChromium() {
   if (!isFirefox()) {
     if (isVerticalScrollPresent()) {
-      addFakeVerticalBorder();
+      addFakeRightBorder();
     }
     if (isHorizontalScrollPresent()) {
       addFakeBottomBorder();
