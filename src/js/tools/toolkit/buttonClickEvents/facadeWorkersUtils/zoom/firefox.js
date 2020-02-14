@@ -251,8 +251,15 @@ function setDOMElementsFirefox(stubElementArg, zoomOverflowElementArg,
   canvasElement = canvasElementArg;
 }
 
+function setCanvasElementFirefox(newCanvasElement) {
+  canvasElement = newCanvasElement;
+}
+
 function initialiseVariablesFirefox(canvasArg) {
   canvas = canvasArg;
 }
 
-export { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox };
+export {
+  initialiseVariablesFirefox, setCanvasElementFirefox,
+  changeElementPropertiesFirefox, setDOMElementsFirefox,
+};

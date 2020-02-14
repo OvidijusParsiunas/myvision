@@ -6,8 +6,14 @@ import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/obje
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } from '../facadeWorkersUtils/stateManager';
 import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
-import { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium } from '../facadeWorkersUtils/zoom/chromium';
-import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../facadeWorkersUtils/zoom/firefox';
+import {
+  changeElementPropertiesChromium, setDOMElementsChromium,
+  initialiseVariablesChromium, setCanvasElementChromium,
+} from '../facadeWorkersUtils/zoom/chromium';
+import {
+  changeElementPropertiesFirefox, setDOMElementsFirefox,
+  initialiseVariablesFirefox, setCanvasElementFirefox,
+} from '../facadeWorkersUtils/zoom/firefox';
 
 let currentZoom = null;
 let canvas = null;
@@ -18,6 +24,7 @@ let stubElement;
 let canvasElement;
 let zoomOverflowElement;
 let zoomOverflowWrapperElement;
+let setNewCanvasElementForZoomFunc = null;
 let changeElementPropertiesOnZoomFunc = null;
 
 let timesZoomedIn = 0;
@@ -339,6 +346,7 @@ function switchCanvasWrapperInnerElement() {
     canvasElement = document.getElementById('canvas-wrapper-inner');
     usingFirstCanvasWrapperInnerElement = true;
   }
+  setNewCanvasElementForZoomFunc(canvasElement);
 }
 
 function loadCanvasElements(browserSpecificSetterCallback) {
@@ -363,10 +371,12 @@ function initialiseZoomVariables(canvasObj) {
   if (isFirefox()) {
     initialiseVariablesFirefox(canvas);
     loadCanvasElements(setDOMElementsFirefox);
+    setNewCanvasElementForZoomFunc = setCanvasElementFirefox;
     changeElementPropertiesOnZoomFunc = changeElementPropertiesFirefox;
   } else {
     initialiseVariablesChromium(canvas);
     loadCanvasElements(setDOMElementsChromium);
+    setNewCanvasElementForZoomFunc = setCanvasElementChromium;
     changeElementPropertiesOnZoomFunc = changeElementPropertiesChromium;
   }
 }

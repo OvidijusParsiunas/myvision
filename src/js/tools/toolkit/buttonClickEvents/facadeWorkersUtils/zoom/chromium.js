@@ -232,15 +232,22 @@ function changeElementPropertiesChromium(heightOverflowed, widthOverflowed, orig
 }
 
 function setDOMElementsChromium(stubElementArg, zoomOverflowElementArg,
-  zoomOverflowWrapperElementArg, canvasElementArg) {
+  zoomOverflowWrapperElementArg, initialCanvasElement) {
   stubElement = stubElementArg;
   zoomOverflowElement = zoomOverflowElementArg;
   zoomOverflowWrapperElement = zoomOverflowWrapperElementArg;
-  canvasElement = canvasElementArg;
+  canvasElement = initialCanvasElement;
+}
+
+function setCanvasElementChromium(newCanvasElement) {
+  canvasElement = newCanvasElement;
 }
 
 function initialiseVariablesChromium(canvasArg) {
   canvas = canvasArg;
 }
 
-export { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium };
+export {
+  initialiseVariablesChromium, setCanvasElementChromium,
+  changeElementPropertiesChromium, setDOMElementsChromium,
+};
