@@ -209,6 +209,22 @@
   right: 9px;
 }
 
+.chromium-right-border-fix {
+  width: 0.5px;
+  position: absolute;
+}
+
+.chromium-bottom-border-fix {
+  height: 0.7px;
+  position: absolute;
+}
+
+.chromium-fake-dropdown-border-fix {
+  background-color: grey;
+  z-index: 2;
+  right: 1px;
+}
+
 .popup-label-buttons {
   font-size: 14.55px;
 }

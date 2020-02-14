@@ -58,6 +58,8 @@ let labelsListOverflowParentElement = null;
 let horizontalScrollPresentWhenEditAndScroll = false;
 let mouseHoveredOnLabelEditButton = false;
 let currentlyActiveLabelOptionIndex = 0;
+let chromiumFakeDropdownRightBorderElement = null;
+let chromiumFakeDrodownBottomBorderElement = null;
 
 // refactor label popup label options element manipulation code
 
@@ -146,10 +148,14 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
       <img class="highlightedLabelEditIcon" id="editButton${id}" src="edit-highlighted.svg" style="display: none" alt="edit">
       <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
       <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
-  </div>
+    </div>
     <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: grid;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
+      <div id="chromium-fake-dropdown-border-fix${id}">
+        <div class="chromium-fake-dropdown-border-fix chromium-right-border-fix" style="display: none"></div>
+        <div class="chromium-fake-dropdown-border-fix chromium-bottom-border-fix" style="display: none"></div>
+      </div>
     </div>
   </div>
   `;
@@ -357,6 +363,37 @@ function deleteAndAddLastRowToRefreshDropdownDiv(dropdownLabelsElement) {
   }, 0);
 }
 
+function isDropdownVerticalScrollPresent() {
+  return activeDropdownElements[0].scrollHeight > activeDropdownElements[0].clientHeight;
+}
+
+function isDropdownHorizontalScrollPresent() {
+  return activeDropdownElements[0].scrollWidth > activeDropdownElements[0].clientWidth;
+}
+
+function setFakeDropdownBorderFixForChromium(id) {
+  if (!isFirefox()) {
+    const fakeBorderElements = document.getElementById(`chromium-fake-dropdown-border-fix${id}`);
+    const activeDropdownElementPosition = activeDropdownElements[0].getBoundingClientRect();
+    if (isDropdownHorizontalScrollPresent()) {
+      chromiumFakeDrodownBottomBorderElement = fakeBorderElements.childNodes[3];
+      chromiumFakeDrodownBottomBorderElement.style.width = activeDropdownElements[0].style.width;
+      const dropDownOffset = activeDropdownElementPosition.height
+       + activeDropdownElementPosition.top - 1;
+      chromiumFakeDrodownBottomBorderElement.style.top = `${dropDownOffset}px`;
+      chromiumFakeDrodownBottomBorderElement.style.display = '';
+    } else if (chromiumFakeDrodownBottomBorderElement) {
+      chromiumFakeDrodownBottomBorderElement.style.display = 'none';
+    }
+    if (isDropdownVerticalScrollPresent()) {
+      chromiumFakeDropdownRightBorderElement = fakeBorderElements.childNodes[1];
+      chromiumFakeDropdownRightBorderElement.style.top = `${activeDropdownElementPosition.top}px`;
+      chromiumFakeDropdownRightBorderElement.style.height = `${activeDropdownElementPosition.height}px`;
+      chromiumFakeDropdownRightBorderElement.style.display = '';
+    }
+  }
+}
+
 function changeActiveDropdownElementStyling() {
   const labelListElementScrollLeftVSDropdownMarginLeft = Math.max(-4,
     31 - labelsListOverflowParentElement.scrollLeft);
@@ -364,6 +401,7 @@ function changeActiveDropdownElementStyling() {
     dropdownElementsWidthDefault + labelsListOverflowParentElement.scrollLeft);
   activeDropdownElements[0].style.marginLeft = `${labelListElementScrollLeftVSDropdownMarginLeft}px`;
   activeDropdownElements[0].style.width = `${labelListElementScrollLeftVSDropdownWidth}px`;
+  setFakeDropdownBorderFixForChromium(activeLabelId);
 }
 
 function prepareLabelDivForEditing(id) {
@@ -476,10 +514,20 @@ function selectShapeBeforeLabelEdit(id) {
   activeLabelElementId = `labelId${id}`;
 }
 
+function removeChromiumFakeBorderFix() {
+  if (chromiumFakeDropdownRightBorderElement) {
+    chromiumFakeDropdownRightBorderElement.style.display = 'none';
+  }
+  if (chromiumFakeDrodownBottomBorderElement) {
+    chromiumFakeDrodownBottomBorderElement.style.display = 'none';
+  }
+}
+
 function removeLabelDropDownContent() {
   if (activeDropdownElements[0].classList.contains('show')) {
     activeDropdownElements[0].classList.remove('show');
   }
+  removeChromiumFakeBorderFix();
   isEditingLabel = false;
 }
 
@@ -680,7 +728,8 @@ window.onmousedown = (event) => {
       stopEditing();
       moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
       highlightLabel(currentlySelectedShapeName, activeLabelId);
-    } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')) {
+    } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')
+      || event.target.matches('.chromium-fake-dropdown-border-fix')) {
       // do nothing
     } else if (event.target.id === `editButton${activeLabelId}`) {
       if (!labelHasBeenDeselected) {
