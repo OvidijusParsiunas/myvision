@@ -398,8 +398,8 @@ function addFakeBottomBorder(activeDropdownElementPosition) {
     if (!newFakeDropdownBottomBorderDeltaGenerated) {
       chromiumFakeDropdownBorderElementTopDelta = originalActiveDropdownHeight
         - activeDropdownElementPosition.height;
-      if (isDropdownVerticalScrollPresent()) {
-        chromiumFakeDropdownBorderElementTopDelta *= 2;
+      if (isDropdownVerticalScrollPresent() && chromiumFakeDropdownBorderElementTopDelta < 1) {
+        chromiumFakeDropdownBorderElementTopDelta = 1;
       }
       newFakeDropdownBottomBorderDeltaGenerated = true;
     }
@@ -407,7 +407,7 @@ function addFakeBottomBorder(activeDropdownElementPosition) {
   const dropdownElementWidthInt = parseInt(activeDropdownElements[0].style.width, 10);
   chromiumFakeDrodownBottomBorderElement.style.width = `${dropdownElementWidthInt + 1.5}px`;
   const activeDropDownBottomBorderOffsetFromTop = activeDropdownElementPosition.height
-   + activeDropdownElementPosition.top + chromiumFakeDropdownBorderElementTopDelta - 0.5;
+   + activeDropdownElementPosition.top + chromiumFakeDropdownBorderElementTopDelta - 0.6;
   chromiumFakeDrodownBottomBorderElement.style.top = `${activeDropDownBottomBorderOffsetFromTop}px`;
   originalActiveDropdownHeight = parseInt(activeDropdownElementPosition.height, 10);
   activeDropdownElements[0].style.borderBottom = 'none';

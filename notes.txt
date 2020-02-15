@@ -145,12 +145,11 @@ can draw with cursor too high top
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-SOLUTION:
+firefox labeller popup bottom padding on horizontal scroll
+potentially make the dropdown higher when horizontal overflow
 
-firefox on open overflow is caused by the size of font in the sidebar, if that doesn't fix it, change the height of the following:
+Things to check on chrome browsers on other pcs:
 
-#image-list-overflow-parent {
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: calc((100vh + 118px) / 2);
-}
+labeller popup horizontal and vertical overflow fake borders
+label list dropdown horizontal and vertical overflow fake borders
+machine learning generated labels horizontal and vertical overflow fake borders
