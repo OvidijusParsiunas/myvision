@@ -82,6 +82,9 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 2;
   max-height: 147px;
+  /* firefox */
+  scrollbar-color: #c7c7c7 #f9f9f9;
+  scrollbar-width: thin;
 }
 
 .dropdown-content tbody {
@@ -96,8 +99,6 @@
   text-decoration: none;
   padding-top: 1px;
   padding-bottom: 1px;
-  scrollbar-color: #c7c7c7 #f9f9f9;
-  scrollbar-width: thin;
 }
 
 .dropdown-content::-webkit-scrollbar-track {
@@ -536,6 +537,23 @@
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 100px;
+  /* firefox */
+  scrollbar-color: #8c8c8c #f9f9f9;
+  scrollbar-width: thin;
+}
+
+#machine-learning-popup-generated-labels::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+#machine-learning-popup-generated-labels::-webkit-scrollbar-thumb {
+  background: #8c8c8c;
+  border-radius: 10px;
+}
+
+#machine-learning-popup-generated-labels::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
 #machine-learning-popup-generated-labels-table {

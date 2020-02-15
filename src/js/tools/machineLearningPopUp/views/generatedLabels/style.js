@@ -1,3 +1,5 @@
+import { getScrollbarWidth } from '../../../styling/styling';
+
 let editingActive = false;
 let activeTextRow = null;
 let activeTextElement = null;
@@ -286,19 +288,6 @@ function displayRedEditButtonIfActiveTextEmpty() {
   }
 }
 
-function getScrollWidth() {
-  // create a div with the scroll
-  const div = document.createElement('div');
-  div.style.overflowY = 'scroll';
-  div.style.width = '50px';
-  div.style.height = '50px';
-  // must put it in the document, otherwise sizes will be 0
-  document.body.append(div);
-  const scrollWidth = div.offsetWidth - div.clientWidth;
-  div.remove();
-  return scrollWidth;
-}
-
 function updateGeneratedLabelsParentElementWidthOnStartup() {
   activeTextRow = generatedLabelsTableElement.childNodes[1].childNodes[0].childNodes[0];
   updateGeneratedLabelsElementWidth();
@@ -366,7 +355,7 @@ function displayDescription() {
 }
 
 function setLocalVariables() {
-  overflowScrollWidth = getScrollWidth();
+  overflowScrollWidth = getScrollbarWidth();
 }
 
 function displayViewElements(objectNamesArg) {
