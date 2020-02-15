@@ -391,10 +391,10 @@ function removeFakeBottomBorderOnExistingDropdown() {
 }
 
 function addFakeBottomBorder(activeDropdownElementPosition) {
+  if (activeDropdownElements[0].style.borderBottom === 'none') {
   // the reason why we have a delta here is because activeDropdownElements remembers the height
   // before the bottom border is removed, hence when getBoundingClientRect is called
   // the next time, the height presented is smaller
-  if (activeDropdownElements[0].style.borderBottom === 'none') {
     if (!newFakeDropdownBottomBorderDeltaGenerated) {
       chromiumFakeDropdownBorderElementTopDelta = originalActiveDropdownHeight
         - activeDropdownElementPosition.height;

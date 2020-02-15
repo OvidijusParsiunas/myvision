@@ -145,9 +145,6 @@ can draw with cursor too high top
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-firefox labeller popup bottom padding on horizontal scroll
-potentially make the dropdown higher when horizontal overflow
-
 Things to check on chrome browsers on other pcs:
 
 labeller popup horizontal and vertical overflow fake borders
