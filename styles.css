@@ -876,11 +876,33 @@ body {
   padding: 2px;
 }
 
-#imageSwitch {
+#image-switch-parent {
   border-bottom: solid;
   border-color: rgb(197, 197, 197);
   border-width: 1px;
+  background-color: white;
+  margin-left: 59px;
+  margin-right: 209px;
+  height: 29px;
+  text-align: center;
   user-select: none;
+}
+
+#image-switch-contents {
+  padding-top: 6.25px;
+}
+
+#currentImageName {
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+}
+
+.image-switch-button {
+  font-size: 14px;
+  color: #464646;
 }
 
 #tools-drawing-section {
@@ -1354,7 +1376,7 @@ body {
   padding: 2px;
 }
 
-#imageSwitch {
+#image-switch-parent {
   border-bottom: solid;
   border-color: rgb(197, 197, 197);
   border-width: 1px;

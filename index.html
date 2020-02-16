@@ -333,15 +333,15 @@
       width: 100%;
     -->
     <!-- make sure to center it properly -->
-    <div id="imageSwitch" style="background-color: white; height: 29px; margin-left: 59px; margin-right: 209px; text-align: center">
-      <div id="imageSwitchContents" style="padding-top: 5px">
+    <div id="image-switch-parent">
+      <div id="image-switch-contents">
         <!-- grey out everything on startup -->
-        <button id="tools-button" onclick="switchImage('previous')"> < </button>
+        <button class="tools-button image-switch-button" onclick="switchImage('previous')"> < </button>
         <!-- grey out buttons when 1 image -->
-        <div id="currentImageName" style="display: inline-block; padding-left: 20px; padding-right: 20px">
+        <div id="currentImageName">
           Image name
         </div>
-        <button id="tools-button" onclick="switchImage('next')"> > </button>
+        <button class="tools-button image-switch-button" onclick="switchImage('next')"> > </button>
       </div>
     </div>
   </div>
