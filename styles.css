@@ -638,7 +638,7 @@
 
 .right-side-bar-component-title {
   height: 18px;
-  font-size: 15px;
+  font-size: 16px;
   padding-left: 5px;
   border-bottom: solid;
   border-bottom-color: #4e4b4b26;
@@ -685,10 +685,20 @@
   height: 6px;
 }
 
+#image-list-title-parent {
+  position: relative;
+  height: 20px;
+}
+
+#image-list-title-text {
+  position: absolute;
+  bottom: 0.5px;
+}
+
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: calc((100vh + 120px) / 2 - 1px);
+  max-height: calc((100vh + 119px) / 2 - 1px);
   scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
 }
