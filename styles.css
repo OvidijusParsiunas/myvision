@@ -638,7 +638,7 @@
 
 .right-side-bar-component-title {
   height: 18px;
-  font-size: 16px;
+  font-size: 15px;
   padding-left: 5px;
   border-bottom: solid;
   border-bottom-color: #4e4b4b26;
@@ -905,7 +905,7 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
+  font-size: 14.7px;
 }
 
 .image-switch-button {
@@ -928,14 +928,16 @@ body {
   margin-top: -35px;
   background: black;
   color: white;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 4.5px;
+  padding-bottom: 5px;
   display: none;
   z-index: 2;
   border-radius: 4px;
   user-select: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14.5px;
 }
 
 .image-list-thumbnail {
