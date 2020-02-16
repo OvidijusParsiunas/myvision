@@ -20,7 +20,7 @@ let firstImage = true;
 let imageListOverflowParent = null;
 
 function findImageListElement() {
-  currentImageNameElement = document.getElementById('currentImageName');
+  currentImageNameElement = document.getElementById('current-image-name');
   imageListOverflowParent = document.getElementById('image-list-overflow-parent');
 }
 

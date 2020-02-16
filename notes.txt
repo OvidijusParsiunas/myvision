@@ -145,6 +145,8 @@ can draw with cursor too high top
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
+swtch image greying functionality
+
 Things to check on chrome browsers on other pcs:
 
 labeller popup horizontal and vertical overflow fake borders
