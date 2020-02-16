@@ -331,22 +331,30 @@
   line-height: 18px;
 }
 
-.format-option-checkbox-popover {
-  font-size: 15px;
-  margin-left: 21px;
+.format-option-popover {
+  font-size: 13.5px;
   position: absolute;
-  margin-top: -29px;
   background: rgb(239, 239, 239);
   color: #272727;
   padding-left: 5px;
   padding-right: 5px;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 2.5px;
+  padding-bottom: 2px;
   display: none;
   z-index: 2;
   border-radius: 4px;
   user-select: none;
   border: solid 1px rgb(228, 228, 228);
+}
+
+.format-option-checkbox-popover {
+  margin-top: -26px;
+  margin-left: 21px;
+}
+
+.format-option-text-popover {
+  margin-top: -27px;
+  margin-left: -4px;
 }
 
 .arrow-down {
@@ -357,8 +365,16 @@
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 8px solid rgb(228, 228, 228);
+}
+
+.text-arrow-down {
+  margin-top: -5px;
+  margin-left: 10px;
+}
+
+.checkbox-arrow-down {
+  margin-top: -4px;
   margin-left: 135px;
-  margin-top: -3px;
 }
 
 /*
@@ -870,6 +886,9 @@ body {
   input.checkbox {
     margin-top: 2px;
     margin-bottom: 2px;
+  }
+  .format-option-popover {
+    padding-top: 1px;
   }
 }
 

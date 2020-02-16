@@ -147,8 +147,14 @@ upon drawing a bounding box (could be via ML) and the resizing the screen to sma
 
 swtch image greying functionality
 
+button height in firefox - check if can increase line height for export label popup options for higher resolutions
+
 Things to check on chrome browsers on other pcs:
 
 labeller popup horizontal and vertical overflow fake borders
 label list dropdown horizontal and vertical overflow fake borders
 machine learning generated labels horizontal and vertical overflow fake borders
+
+Things to check on firefox browsers on larger screens:
+
+does the export labels popup look valid
