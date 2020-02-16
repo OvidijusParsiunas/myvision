@@ -314,6 +314,9 @@
   z-index: 3;
   height: 202px;
   width: 180px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.2;
 }
 
 /* repeating code for the submit buttons */
@@ -325,6 +328,7 @@
 .export-labels-table-row-data {
   padding-top: 2px;
   padding-bottom: 2px;
+  line-height: 18px;
 }
 
 .format-option-checkbox-popover {
@@ -860,6 +864,13 @@ body {
   float: right;
   margin-left: 10px;
   margin-right: 7px;
+}
+
+@-moz-document url-prefix() {
+  input.checkbox {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
 }
 
 .checkbox-text {
