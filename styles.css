@@ -331,6 +331,11 @@
   line-height: 18px;
 }
 
+.format-option-text {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 16.5px;
+}
+
 .format-option-popover {
   font-size: 13.5px;
   position: absolute;
@@ -338,8 +343,8 @@
   color: #272727;
   padding-left: 5px;
   padding-right: 5px;
-  padding-top: 2.5px;
-  padding-bottom: 2px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   display: none;
   z-index: 2;
   border-radius: 4px;
@@ -888,7 +893,7 @@ body {
     margin-bottom: 2px;
   }
   .format-option-popover {
-    padding-top: 1px;
+    padding-top: 1.5px;
   }
 }
 

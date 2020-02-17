@@ -6,7 +6,16 @@
   <meta name="description" content="mylabel">
   <script src="fabricjs/fabric.js" type="text/javascript"></script>
   <link rel="stylesheet" href="styles.css?v=1.0">
+  <!-- Code snippet to speed up Google Fonts rendering: googlefonts.3perf.com -->
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" as="fetch" crossorigin="anonymous">
+  <script type="text/javascript">
+    !function(e,n,t){"use strict";var o="https://fonts.googleapis.com/css?family=Source+Sans+Pro",r="__3perf_googleFonts_2e980";function c(e){(n.head||n.body).appendChild(e)}function a(){var e=n.createElement("link");e.href=o,e.rel="stylesheet",c(e)}function f(e){if(!n.getElementById(r)){var t=n.createElement("style");t.id=r,c(t)}n.getElementById(r).innerHTML=e}e.FontFace&&e.FontFace.prototype.hasOwnProperty("display")?(t[r]&&f(t[r]),fetch(o).then(function(e){return e.text()}).then(function(e){return e.replace(/@font-face {/g,"@font-face{font-display:swap;")}).then(function(e){return t[r]=e}).then(f).catch(a)):a()}(window,document,localStorage);
+  </script>
+  <!-- End of code snippet for Google Fonts -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Alef|Archivo|Average|Barlow+Semi+Condensed|Basic|Cantarell|Chivo|Hind+Madurai|IBM+Plex+Serif|K2D|M+PLUS+1p|Mada|Palanquin|Pavanam|Source+Sans+Pro|Yantramanav&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 </head>
 <!-- this will need to be set to margin-top: 0, and the rest of the elements vertical alignments will need to be changed -->
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243);">
@@ -142,13 +151,13 @@
         <div class="export-labels-popup-item popup-label-title" style="padding-left: 10px; padding-top: 7px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
         <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px;">
           <table style="width: 162px; padding-left: 5px;" id="settings-table" class="export-labels-popup-item">
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text generic-format-option-text">COCO JSON</div>
+            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON', this)">
             </td></tr>
-            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text generic-format-option-text">VGG JSON</div>
+            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">VGG JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VGG JSON', this)">
             </td></tr>
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
+            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
                 <div id="format-option-checkbox-popover-4" class="export-labels-popup-item format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-4" class="export-labels-popup-item arrow-down text-arrow-down"></div>
                 CSV
@@ -159,7 +168,7 @@
                 <input class="export-labels-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('CSV', this)">
               </div>
               </td></tr>
-            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(5)" onmouseleave="removeExportPopUpInformationPopover(5)">
+            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(5)" onmouseleave="removeExportPopUpInformationPopover(5)">
                 <div id="format-option-checkbox-popover-5" class="export-labels-popup-item format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-5" class="export-labels-popup-item arrow-down text-arrow-down"></div>
                 VOC XML
@@ -170,7 +179,7 @@
                 <input class="export-labels-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VOC XML', this)">
               </div>
               </td></tr>
-            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(6)" onmouseleave="removeExportPopUpInformationPopover(6)">
+            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(6)" onmouseleave="removeExportPopUpInformationPopover(6)">
                 <div id="format-option-checkbox-popover-6" class="export-labels-popup-item format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-6" class="export-labels-popup-item arrow-down text-arrow-down"></div>
                 YOLO TXT

@@ -60,6 +60,7 @@ function enableBoundingBoxFormatOptions() {
   for (let i = 0; i < boundingBoxFormatOptionsCheckboxElements.length; i += 1) {
     boundingBoxFormatOptionsTextElements[i].style.color = 'black';
     boundingBoxFormatOptionsCheckboxElements[i].disabled = false;
+    boundingBoxFormatOptionsCheckboxElements[i].style.cursor = 'pointer';
   }
 }
 
@@ -67,6 +68,7 @@ function enableGenericShapeFormatOptions() {
   for (let i = 0; i < genericFormatOptionsCheckboxElements.length; i += 1) {
     genericFormatOptionsTextElements[i].style.color = 'black';
     genericFormatOptionsCheckboxElements[i].disabled = false;
+    genericFormatOptionsCheckboxElements[i].style.cursor = 'pointer';
   }
 }
 
@@ -74,6 +76,7 @@ function disableBoundingBoxFormatOptions() {
   for (let i = 0; i < boundingBoxFormatOptionsTextElements.length; i += 1) {
     boundingBoxFormatOptionsTextElements[i].style.color = '#bfbfbf';
     boundingBoxFormatOptionsCheckboxElements[i].disabled = true;
+    boundingBoxFormatOptionsCheckboxElements[i].style.cursor = '';
     if (boundingBoxFormatOptionsCheckboxElements[i].checked === true) {
       boundingBoxFormatOptionsCheckboxElements[i].checked = false;
       isCheckboxSelected = false;
@@ -86,6 +89,7 @@ function disablePolygonFormatOptions() {
   for (let i = 0; i < genericFormatOptionsTextElements.length; i += 1) {
     genericFormatOptionsTextElements[i].style.color = '#bfbfbf';
     genericFormatOptionsCheckboxElements[i].disabled = true;
+    genericFormatOptionsCheckboxElements[i].style.cursor = '';
     if (genericFormatOptionsCheckboxElements[i].checked === true) {
       genericFormatOptionsCheckboxElements[i].checked = false;
       isCheckboxSelected = false;
