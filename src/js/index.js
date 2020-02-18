@@ -5,7 +5,7 @@ import initialiseExportLabelsPopUp from './tools/toolkit/buttonClickEvents/facad
 import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/buttonClickEvents';
 import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
-import { initialiseWindowLayoutSetup } from './tools/styling/styling';
+import { initialiseGlobalStyleSetup } from './tools/globalStyle/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageListFunctionality } from './tools/imageList/imageList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
@@ -18,7 +18,7 @@ initialiseExportLabelsPopUp();
 assignToolkitButtonClickEvents();
 assignToolkitButtonHoverEvents();
 assignPassiveEventListeners();
-initialiseWindowLayoutSetup();
+initialiseGlobalStyleSetup();
 initialiseLabelListFunctionality();
 initialiseImageListFunctionality();
 initialiseImageSwitchPanelFunctionality();

@@ -145,9 +145,10 @@ can draw with cursor too high top
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-swtch image greying functionality
-
 button height in firefox - check if can increase line height for export label popup options for higher resolutions
+
+export datasets not labels
+export popover not popup
 
 Things to check on chrome browsers on other pcs:
 

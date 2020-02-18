@@ -1,4 +1,4 @@
-import { getScrollbarWidth } from '../../../styling/styling';
+import { getScrollbarWidth } from '../../../globalStyle/style';
 
 let editingActive = false;
 let activeTextRow = null;

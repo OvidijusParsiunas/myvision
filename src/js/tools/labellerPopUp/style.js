@@ -1,7 +1,7 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
 import { setLabellingPopUpDisplayedState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
-import { getScrollbarWidth } from '../styling/styling';
+import { getScrollbarWidth } from '../globalStyle/style';
 
 let popupLabelParentElement = null;
 let submitButtonElement = null;

@@ -1,3 +1,5 @@
+import downloadFonts from './fonts';
+
 let canvasWrapperParentElement = null;
 let zoomOverflowWrapperParentElement = null;
 let leftSideBar = null;
@@ -25,8 +27,9 @@ function findWindowElements() {
   rightSideBar = document.getElementById('left-side-bar');
 }
 
-function initialiseWindowLayoutSetup() {
+function initialiseGlobalStyleSetup() {
   findWindowElements();
+  downloadFonts();
 }
 
 function getFirefoxScrollBarWidth() {
@@ -57,6 +60,6 @@ function getScrollbarWidth() {
 }
 
 export {
-  initialiseWindowLayoutSetup, changeCanvasElementsWidth,
+  initialiseGlobalStyleSetup, changeCanvasElementsWidth,
   getLeftSideBarWidth, getRightSideBarWidth, getScrollbarWidth,
 };

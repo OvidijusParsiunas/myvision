@@ -32,7 +32,7 @@ import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningPopUp/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
-import { getScrollbarWidth } from '../styling/styling';
+import { getScrollbarWidth } from '../globalStyle/style';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;

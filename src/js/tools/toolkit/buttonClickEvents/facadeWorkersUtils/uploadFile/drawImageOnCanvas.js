@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import { getLeftSideBarWidth, getRightSideBarWidth } from '../../../../styling/styling';
+import { getLeftSideBarWidth, getRightSideBarWidth } from '../../../../globalStyle/style';
 
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
