@@ -147,6 +147,10 @@ upon drawing a bounding box (could be via ML) and the resizing the screen to sma
 
 button height in firefox - check if can increase line height for export label popup options for higher resolutions
 
+was not able to check ML generated label list overflow
+not able to check export labels popover as font not downloaded
+fix image width overflow for broad ones
+
 export datasets not labels
 export popover not popup
 

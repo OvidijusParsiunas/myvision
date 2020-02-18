@@ -791,13 +791,13 @@
 /* update these when changing the left side bar width */
 
 #canvas-wrapper-parent {
-  width: calc(100% - 269px);
+  width: calc(100% - 268px);
   height: calc(100% - 60px);
   left: 59px;
 }
 
 #zoom-overflow-wrapper-parent {
-  width: calc(100% - 270px);
+  width: calc(100% - 269px);
   height: calc(100% - 60px);
   left: 59px;
 }
