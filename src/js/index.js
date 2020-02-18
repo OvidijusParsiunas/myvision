@@ -8,6 +8,7 @@ import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEv
 import { initialiseWindowLayoutSetup } from './tools/styling/styling';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageListFunctionality } from './tools/imageList/imageList';
+import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
 constructCanvas();
@@ -20,4 +21,5 @@ assignPassiveEventListeners();
 initialiseWindowLayoutSetup();
 initialiseLabelListFunctionality();
 initialiseImageListFunctionality();
+initialiseImageSwitchPanelFunctionality();
 registerGlobalKeyEventHandlers();

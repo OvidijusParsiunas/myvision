@@ -985,11 +985,13 @@ body {
   padding-right: 20px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14.7px;
+  color: #adadad;
 }
 
 .image-switch-button {
   font-size: 14px;
-  color: #464646;
+  color: #adadad;
+  cursor: default;
 }
 
 #tools-drawing-section {

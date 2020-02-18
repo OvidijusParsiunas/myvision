@@ -10,8 +10,8 @@ import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
 import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
 import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
+import { changeCurrentImageName } from '../imageSwitchPanel/style';
 
-let currentImageNameElement = null;
 let currentlyActiveElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
@@ -20,7 +20,6 @@ let firstImage = true;
 let imageListOverflowParent = null;
 
 function findImageListElement() {
-  currentImageNameElement = document.getElementById('current-image-name');
   imageListOverflowParent = document.getElementById('image-list-overflow-parent');
 }
 
@@ -176,11 +175,15 @@ function setDefaultImageProperties(image, imageMetadata) {
   image.analysedByML = false;
 }
 
+function changeCurrentImageElementText(imageName, firstFromMany) {
+  changeCurrentImageName(imageName, images, currentlySelectedImageId, firstFromMany);
+}
+
 function addSingleImageToList(imageMetadata, imageData) {
   addNewImage(imageMetadata.name, imageData);
   highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   saveAndRemoveCurrentImageDetails();
-  currentImageNameElement.innerHTML = imageMetadata.name;
+  changeCurrentImageElementText(imageMetadata.name);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   setDefaultImageProperties(images[newImageId], imageMetadata);
   newImageId += 1;
@@ -192,14 +195,10 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
   if (firstFromMany) {
     highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     saveAndRemoveCurrentImageDetails();
-    currentImageNameElement.innerHTML = imageMetadata.name;
+    changeCurrentImageElementText(imageMetadata.name, firstFromMany);
     images[newImageId].thumbnailElementRef.scrollIntoView();
   }
   newImageId += 1;
-}
-
-function changeCurrentImageElementText(id) {
-  currentImageNameElement.innerHTML = images[id].name;
 }
 
 function isElementHeightFullyVisibleInParent(childElement, parentElement) {
@@ -250,11 +249,11 @@ function changeToExistingImage(id) {
     images[currentlySelectedImageId].labels, timesZoomedOut);
   setCurrentImageId(id);
   switchCanvasWrapperInnerElement();
-  changeCurrentImageElementText(id);
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
   scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
   fixForObjectScalingBugOnCanvasSwitch();
   currentlySelectedImageId = id;
+  changeCurrentImageElementText(images[currentlySelectedImageId].name);
 }
 
 function switchImage(direction) {

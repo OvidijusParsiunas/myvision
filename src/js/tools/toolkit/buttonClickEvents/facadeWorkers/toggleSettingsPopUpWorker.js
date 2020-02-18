@@ -33,7 +33,7 @@ function validateFullPopUpVisible(popupLabelParentElement) {
 }
 
 function displayPopUp(settingsPopupElement) {
-  settingsPopupElement.style.display = '';
+  settingsPopupElement.style.display = 'block';
 }
 
 function hidePopUp(settingsPopupElement) {
