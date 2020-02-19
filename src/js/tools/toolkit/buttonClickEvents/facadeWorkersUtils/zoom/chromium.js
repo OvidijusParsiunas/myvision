@@ -14,6 +14,10 @@ const scrollWidth = 5;
 let canvasProperties = null;
 let canvas = null;
 
+function isHorizontalScrollPresent(element) {
+  return element.scrollWidth > element.clientWidth;
+}
+
 function reduceCanvasDimensionsBy(width, height) {
   newCanvasWidth -= width;
   newCanvasHeight -= height;
@@ -111,18 +115,19 @@ function widthOverflowDefault(originalWidth, originalHeight) {
 }
 
 function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
-  // const zoomOverflowWidth = `${canvasProperties.maximumCanvasWidth + 1}px`;
-  const zoomOverflowMaxWidth = `${newCanvasWidth + 5}px`;
+  const zoomOverflowWidth = `${canvasProperties.maximumCanvasWidth + 1}px`;
   const zoomOverflowMaxHeight = `${canvasProperties.maximumCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${scrollWidth}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth}px`;
-  const stubWidth = `${Math.round(originalWidth) + 3}px`;
+  const stubWidth = `${Math.round(originalWidth) + 2}px`;
   const stubMarginTop = `${originalHeight - 18}px`;
   const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
   const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2) + 1}px)`;
   const verticalScrollOverlap = originalWidth + scrollWidth
-    - canvasProperties.maximumCanvasWidth + 1.3;
-  setZoomOverFlowElementProperties('', zoomOverflowMaxWidth, zoomOverflowMaxHeight);
+    - canvasProperties.maximumCanvasWidth + 2.3;
+  // bug fix for Chrome as sometimes the horizontal scroll does not render
+  isHorizontalScrollPresent(zoomOverflowElement);
+  setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties(stubWidth, '', '', stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
@@ -131,7 +136,7 @@ function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHei
 }
 
 function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight) {
-  const zoomOverflowWidth = `${Math.round(originalWidth) + 0.3}px`;
+  const zoomOverflowWidth = `${Math.round(originalWidth) + 0.5}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${scrollWidth / 2}px)`;
   const zoomOverflowWrapperWidth = `${originalWidth - 1}px`;
@@ -147,7 +152,7 @@ function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHei
 }
 
 function heightOverflowDefault(originalWidth, originalHeight) {
-  const zoomOverflowWidth = `${originalWidth}px`;
+  const zoomOverflowWidth = `${originalWidth + 0.5}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 2}px`;
   const stubMarginTop = `${originalHeight - scrollWidth - 13}px`;
