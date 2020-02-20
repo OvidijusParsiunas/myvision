@@ -70,19 +70,19 @@ function setAllElementPropertiesToDefault(switchImage) {
 function widthOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
   const zoomOverflowMaxWidth = `${canvasProperties.maximumCanvasWidth}px`;
   const zoomOverflowMaxHeight = `${Math.round(canvasProperties.maximumCanvasHeight)}px`;
-  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2) - 2.5}px)`;
+  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2) - 2}px)`;
   const zoomOverflowWrapperMarginLeft = `${Math.round(scrollWidth / 2) - 2}px`;
-  const stubMarginLeft = `${Math.round(originalWidth) - 2.5}px`;
-  const stubMarginTop = `${originalHeight - 18}px`;
+  const stubMarginLeft = `${Math.round(originalWidth) - 1.5}px`;
+  const stubMarginTop = `${originalHeight - 17}px`;
   const canvasLeft = `calc(50% - ${scrollWidth / 2 + 0.5}px)`;
   const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2) + 0.5}px)`;
   const horizontalScrollOverlap = (Math.round(newCanvasHeight) + scrollWidth)
-    - canvasProperties.maximumCanvasHeight + 1.5;
+    - canvasProperties.maximumCanvasHeight + 2;
   setZoomOverFlowElementProperties('', zoomOverflowMaxWidth, zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
-  reduceCanvasDimensionsBy(scrollWidth + 2, horizontalScrollOverlap);
+  reduceCanvasDimensionsBy(scrollWidth + 3, horizontalScrollOverlap);
   setDarkZoomOverflowBackground();
 }
 
@@ -117,11 +117,11 @@ function widthOverflowDefault(originalWidth, originalHeight) {
 function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${canvasProperties.maximumCanvasWidth + 1}px`;
   const zoomOverflowMaxHeight = `${canvasProperties.maximumCanvasHeight}px`;
-  const zoomOverflowWrapperLeft = `calc(50% - ${scrollWidth}px)`;
+  const zoomOverflowWrapperLeft = `calc(50% - ${scrollWidth + 0.5}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth}px`;
   const stubWidth = `${Math.round(originalWidth) + 2}px`;
   const stubMarginTop = `${originalHeight - 18}px`;
-  const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
+  const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2) + 0.5}px)`;
   const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2) + 1}px)`;
   const verticalScrollOverlap = originalWidth + scrollWidth
     - canvasProperties.maximumCanvasWidth + 2.3;
@@ -136,13 +136,13 @@ function heightOverlapWithOneVerticalScrollBarOverlap(originalWidth, originalHei
 }
 
 function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeight) {
-  const zoomOverflowWidth = `${Math.round(originalWidth) + 0.5}px`;
+  const zoomOverflowWidth = `${Math.round(originalWidth) + 0.3}px`;
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${scrollWidth / 2}px)`;
   const zoomOverflowWrapperWidth = `${originalWidth - 1}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth}px`;
   const canvasLeft = `calc(50% - ${(scrollWidth / 2) + 1.5}px)`;
-  const stubMarginTop = `${originalHeight - 17 - 1}px`;
+  const stubMarginTop = `${originalHeight - 18}px`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties(zoomOverflowWrapperWidth, '', zoomOverflowWrapperLeft,
     zoomOverflowWrapperMarginLeft, '');
@@ -167,11 +167,11 @@ function heightOverflowDefault(originalWidth, originalHeight) {
 function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${Math.round(newCanvasWidth + 1)}px`;
   const zoomOverflowMaxHeight = `${Math.round(newCanvasHeight)}px`;
-  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2 + 2)}px)`;
+  const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2 + 3)}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 + 3}px`;
   const stubMarginLeft = `${Math.round(originalWidth) - 2}px`;
   const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 4.5)}px`;
-  const canvasLeft = 'calc(50% - 3px)';
+  const canvasLeft = 'calc(50% - 3.5px)';
   const canvasTop = 'calc(50% - 4px)';
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');

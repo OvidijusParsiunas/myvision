@@ -76,7 +76,7 @@ function setCanvasWrapperMaximumDimensions() {
 function setCanvasProperties() {
   canvasProperties.maximumCanvasHeight = window.innerHeight - 60;
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
-  canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 1;
+  canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth;
 }
 
 function draw() {
