@@ -1,12 +1,12 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
-import { setLabellingPopUpDisplayedState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { setShapeLabellerModalDisplayedState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { getScrollbarWidth } from '../globalStyle/style';
 
-let popupLabelParentElement = null;
+let parentElement = null;
+let optionsElement = null;
 let submitButtonElement = null;
 let inputElement = null;
-let labellerPopupLabelOptionsElement = null;
 let mouseProperties = {};
 let defaultListHeightPx = 0;
 let addNewLabelDeltaHeight = 0;
@@ -21,7 +21,7 @@ function initialiseParentElement() {
 function addLabelToList(labelText, color) {
   const labelElement = initialiseParentElement();
   labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this)">${labelText}</div>`;
-  const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
+  const newRow = optionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
   cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell, false);
@@ -29,13 +29,13 @@ function addLabelToList(labelText, color) {
 }
 
 function isVerticalScrollPresent() {
-  return labellerPopupLabelOptionsElement.scrollHeight
-  > labellerPopupLabelOptionsElement.clientHeight;
+  return optionsElement.scrollHeight
+  > optionsElement.clientHeight;
 }
 
 function isHorizontalScrollPresent() {
-  return labellerPopupLabelOptionsElement.scrollWidth
-  > labellerPopupLabelOptionsElement.clientWidth;
+  return optionsElement.scrollWidth
+  > optionsElement.clientWidth;
 }
 
 function addFakeRightBorder() {
@@ -49,8 +49,8 @@ function addFakeBottomBorder() {
   const chromiumFakeBottomBorderFixElement = document.getElementById('chromium-fake-popup-table-bottom-border-fix');
   chromiumFakeBottomBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 4}px`;
   chromiumFakeBottomBorderFixElement.style.display = '';
-  labellerPopupLabelOptionsElement.style.borderBottom = 'none';
-  labellerPopupLabelOptionsElement.style.paddingBottom = '0px';
+  optionsElement.style.borderBottom = 'none';
+  optionsElement.style.paddingBottom = '0px';
 }
 
 // should be a global variable
@@ -80,13 +80,13 @@ function setLabelOptionsHeight() {
     currentListHeightPx = newHeight;
     heightIncreasedForHorizontalScrollbar = true;
   }
-  labellerPopupLabelOptionsElement.style.height = `${newHeight}px`;
+  optionsElement.style.height = `${newHeight}px`;
 }
 
 // should be in label list
 function deleteAndAddLastRowToRefreshDiv() {
   const labelOptions = getLabelOptions();
-  labellerPopupLabelOptionsElement.deleteRow(labelOptions.length - 1);
+  optionsElement.deleteRow(labelOptions.length - 1);
   if (!heightIncreasedForNewLabel && labelOptions.length >= 6) {
     currentListHeightPx = defaultListHeightPx + addNewLabelDeltaHeight;
     heightIncreasedForHorizontalScrollbar = false;
@@ -100,14 +100,14 @@ function deleteAndAddLastRowToRefreshDiv() {
     const label = labelOptions[labelOptions.length - 1];
     addLabelToList(label.text, label.color.label);
     if (labelOptions.length === 7) {
-      labellerPopupLabelOptionsElement.deleteRow(6);
+      optionsElement.deleteRow(6);
     }
   }, 0);
 }
 
 function resetLabelOptionsListScroll() {
-  labellerPopupLabelOptionsElement.scrollTop = 0;
-  labellerPopupLabelOptionsElement.scrollLeft = 0;
+  optionsElement.scrollTop = 0;
+  optionsElement.scrollLeft = 0;
 }
 
 function windowHasScrollbar() {
@@ -133,27 +133,27 @@ function windowHasScrollbar() {
   return (contentOverflows && overflowShown) || (alwaysShowScroll);
 }
 
-function getLabelPopUpText() {
+function getShapeLabellerModalInputText() {
   return inputElement.value;
 }
 
 function highlightInitialLabelOptionOnInit() {
-  window.popupInputKeyDown({ key: 'stub' });
+  window.shapeLabellerModalKeyDown({ key: 'stub' });
 }
 
-function hideLabelPopUp() {
+function hideShapeLabellerModal() {
   lightUpWindow();
-  popupLabelParentElement.style.display = 'none';
+  parentElement.style.display = 'none';
   inputElement.value = inputElement.value.trim();
-  setLabellingPopUpDisplayedState(false);
+  setShapeLabellerModalDisplayedState(false);
 }
 
-function validateFullPopUpVisibile() {
+function validateFullModalVisibile() {
   if (windowHasScrollbar()) {
-    popupLabelParentElement.style.top = '';
-    popupLabelParentElement.style.bottom = '5px';
+    parentElement.style.top = '';
+    parentElement.style.bottom = '5px';
   } else {
-    popupLabelParentElement.style.bottom = '';
+    parentElement.style.bottom = '';
   }
 }
 
@@ -169,24 +169,24 @@ function setListHeightVariables() {
 }
 
 function setLocalVariables() {
-  inputElement = document.getElementById('popup-label-input');
-  popupLabelParentElement = document.getElementById('popup-label-parent');
-  submitButtonElement = document.getElementById('popup-label-submit-button');
-  labellerPopupLabelOptionsElement = document.getElementById('popup-label-options');
+  inputElement = document.getElementById('shape-labeller-modal-input');
+  parentElement = document.getElementById('shape-labeller-modal-parent');
+  submitButtonElement = document.getElementById('shape-labeller-modal-submit-button');
+  optionsElement = document.getElementById('shape-labeller-modal-options');
   setListHeightVariables();
 }
 
-function initialiseLabelPopupOptionsList() {
+function initialiseShapeLabellerModalOptionsList() {
   setLocalVariables();
   getLabelOptions().forEach((option) => {
     addLabelToList(option.text, option.color.label);
   });
 }
 
-function addLabelToPopupLabelOptions(labelText, color) {
+function addLabelToshapeLabellerModalOptions(labelText, color) {
   const labelElement = initialiseParentElement();
   labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this)">${labelText}</div>`;
-  const newRow = labellerPopupLabelOptionsElement.insertRow(-1);
+  const newRow = optionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
   cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell, false);
@@ -194,7 +194,7 @@ function addLabelToPopupLabelOptions(labelText, color) {
 }
 
 function purgeOptionsFromLabelElement() {
-  labellerPopupLabelOptionsElement.innerHTML = '';
+  optionsElement.innerHTML = '';
 }
 
 function changeStyleWhenInputEmpty() {
@@ -215,10 +215,10 @@ function changeStyleToAllowSubmit() {
   });
 }
 
-function resetPopUpLabelOptions() {
+function resetShapeLabellerModalOptions() {
   purgeOptionsFromLabelElement();
   getLabelOptions().forEach((label) => {
-    addLabelToPopupLabelOptions(label.text, label.color.label);
+    addLabelToshapeLabellerModalOptions(label.text, label.color.label);
   });
 }
 
@@ -226,18 +226,18 @@ window.updateMouseProperties = (event) => {
   mouseProperties = event;
 };
 
-function showLabelPopUp() {
+function showShapeLabellerModal() {
   dimWindow(0.5);
-  popupLabelParentElement.style.top = `${mouseProperties.clientY}px`;
-  popupLabelParentElement.style.left = `${mouseProperties.clientX}px`;
+  parentElement.style.top = `${mouseProperties.clientY}px`;
+  parentElement.style.left = `${mouseProperties.clientX}px`;
   getLabelOptions();
   deleteAndAddLastRowToRefreshDiv();
-  popupLabelParentElement.style.display = 'block';
+  parentElement.style.display = 'block';
   setLabelOptionsHeight();
   addFakeBordersForChromium();
   resetLabelOptionsListScroll();
-  validateFullPopUpVisibile();
-  setLabellingPopUpDisplayedState(true);
+  validateFullModalVisibile();
+  setShapeLabellerModalDisplayedState(true);
   window.setTimeout(() => {
     inputElement.select();
     highlightInitialLabelOptionOnInit();
@@ -245,7 +245,7 @@ function showLabelPopUp() {
 }
 
 export {
-  showLabelPopUp, hideLabelPopUp, changeStyleWhenInputEmpty,
-  changeStyleWhenInputInvalid, initialiseLabelPopupOptionsList,
-  resetPopUpLabelOptions, getLabelPopUpText, changeStyleToAllowSubmit,
+  showShapeLabellerModal, hideShapeLabellerModal, changeStyleWhenInputEmpty,
+  changeStyleWhenInputInvalid, initialiseShapeLabellerModalOptionsList,
+  resetShapeLabellerModalOptions, getShapeLabellerModalInputText, changeStyleToAllowSubmit,
 };

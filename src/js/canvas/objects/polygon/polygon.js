@@ -1,8 +1,8 @@
 import fabric from 'fabric';
 import polygonProperties from './properties';
 import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode';
-import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
-import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
+import { showShapeLabellerModal } from '../../../tools/shapeLabellerModal/style';
+import { prepareLabelShape } from '../../../tools/shapeLabellerModal/labellingProcess';
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
@@ -154,7 +154,7 @@ function generatePolygon(pointer) {
   polygonMode = false;
   drawingFinished = true;
   prepareLabelShape(polygon, canvas);
-  showLabelPopUp(pointer.x, pointer.y);
+  showShapeLabellerModal(pointer.x, pointer.y);
 }
 
 /* initial point should begin with one color and switch when there are 3

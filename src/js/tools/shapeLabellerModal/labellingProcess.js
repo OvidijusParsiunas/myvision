@@ -1,5 +1,5 @@
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
-import { getLabelPopUpText, hideLabelPopUp, resetPopUpLabelOptions } from './style';
+import { getShapeLabellerModalInputText, hideShapeLabellerModal, resetShapeLabellerModalOptions } from './style';
 import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 
 let labellingState = false;
@@ -19,10 +19,10 @@ function removeTargetShape() {
 }
 
 function createLabelShape() {
-  hideLabelPopUp();
-  generateLabelShapeGroup(targetShape, getLabelPopUpText());
+  hideShapeLabellerModal();
+  generateLabelShapeGroup(targetShape, getShapeLabellerModalInputText());
   resetObjectCursors(canvas);
-  resetPopUpLabelOptions();
+  resetShapeLabellerModalOptions();
   labellingState = false;
 }
 

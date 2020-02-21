@@ -7,7 +7,7 @@
   font-family: K2D, sans-serif;
 */
 
-#popup-label-input {
+#shape-labeller-modal-input {
   width: 161px;
   border: thin ridge rgb(177, 177, 177);
   margin: 6px 9px 9px 9px;
@@ -36,7 +36,7 @@
   font-size: 15px;
 }
 
-#popup-label-options tbody {
+#shape-labeller-modal-options tbody {
   cursor: pointer;
 }
 
@@ -47,20 +47,20 @@
   user-select: none;
 }
 
-#popup-label-options .labelDropdownOption {
+#shape-labeller-modal-options .labelDropdownOption {
   white-space: pre;
   padding-left: 3px;
   user-select: none;
   text-decoration: none;
 }
 
-#popup-label-submit-button {
+#shape-labeller-modal-submit-button {
   width: 61px;
   margin-right: 4px;
   padding-bottom: 4px;
 }
 
-#popup-label-cancel-button {
+#shape-labeller-modal-cancel-button {
   width: 61px;
   padding-bottom: 4px;
 }
@@ -149,7 +149,7 @@
   width: 10px;
 }
 
-#popup-label-parent {
+#shape-labeller-modal-parent {
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 3px;
   position: absolute;
@@ -160,7 +160,7 @@
   z-index: 3;
 }
 
-#popup-label-options {
+#shape-labeller-modal-options {
   padding-top: 2px;
   padding-bottom: 2px;
   display: block;
@@ -176,16 +176,16 @@
   scrollbar-width: thin;
 }
 
-#popup-label-options::-webkit-scrollbar-track {
+#shape-labeller-modal-options::-webkit-scrollbar-track {
   background: #f9f9f9;
 }
 
-#popup-label-options::-webkit-scrollbar-thumb {
+#shape-labeller-modal-options::-webkit-scrollbar-thumb {
   background: #c7c7c7;
   border-radius: 10px;
 }
 
-#popup-label-options::-webkit-scrollbar {
+#shape-labeller-modal-options::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
@@ -817,7 +817,7 @@ td {
   width: inherit;
 }
 
-#popup-label-options td {
+#shape-labeller-modal-options td {
   padding-top: 1px;
   padding-bottom: 1px;
   width: inherit;
@@ -1130,7 +1130,7 @@ body {
 #canvas-wrapper {
 }
 
-#popup-label-input {
+#shape-labeller-modal-input {
   width: 150px;
   border: thin ridge grey;
   margin: 5px 5px 5px 5px;
@@ -1184,7 +1184,7 @@ body {
   padding-top: 3px;
 }
 
-#popup-label-options .labelDropdownOption {
+#shape-labeller-modal-options .labelDropdownOption {
   padding-left: 2px;
   user-select: none;
   text-decoration: none;
@@ -1234,7 +1234,7 @@ body {
   width: 10px;
 }
 
-#popup-label-parent {
+#shape-labeller-modal-parent {
   position: absolute;
   background-color: white;
   border-width: 1px;
@@ -1243,7 +1243,7 @@ body {
   z-index: 3;
 }
 
-#popup-label-options {
+#shape-labeller-modal-options {
   padding-top: 2px;
   padding-bottom: 2px;
   margin-top: 3px;
@@ -1256,7 +1256,7 @@ body {
   margin-left: 5px;
 }
 
-#popup-label-options div:hover {
+#shape-labeller-modal-options div:hover {
   cursor: default;
 }
 
@@ -1394,7 +1394,7 @@ td {
   width: inherit;
 }
 
-#popup-label-options td {
+#shape-labeller-modal-options td {
   padding-top: 1px;
   padding-bottom: 1px;
   width: inherit;

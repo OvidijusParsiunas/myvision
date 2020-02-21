@@ -28,7 +28,7 @@ import {
   highlightActiveIcon, highlightDefaultIcon, switchToHighlightedActiveIcon,
   switchToHighlightedDefaultIcon, switchToHighlightedDefaultVisibilityIcon,
 } from './iconHighlightUtils';
-import { resetPopUpLabelOptions } from '../labellerPopUp/style';
+import { resetShapeLabellerModalOptions } from '../shapeLabellerModal/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
@@ -93,7 +93,7 @@ function findLabelListElement() {
 }
 
 function findPopupElement() {
-  popuplabelOptionsElement = document.getElementById('popup-label-options');
+  popuplabelOptionsElement = document.getElementById('shape-labeller-modal-options');
 }
 
 function initialiseLabelListFunctionality() {
@@ -591,7 +591,7 @@ function moveSelectedLabelToFrontOfLabelOptions(id, text) {
     changeShapeColorById(activeLabelId, newLabelColor);
     changeLabelColor(newLabelColor.label);
     repopulateDropdown();
-    resetPopUpLabelOptions();
+    resetShapeLabellerModalOptions();
   }
 }
 
@@ -610,7 +610,7 @@ function addNewLabelToLabelOptions(text) {
       changeShapeColorById(activeLabelId, newLabelColor);
       changeLabelColor(newLabelColor.label);
       repopulateDropdown();
-      resetPopUpLabelOptions();
+      resetShapeLabellerModalOptions();
     }
   }
 }

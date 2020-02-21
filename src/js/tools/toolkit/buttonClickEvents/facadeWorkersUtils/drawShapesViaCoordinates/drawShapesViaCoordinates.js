@@ -4,7 +4,7 @@ import { prepareCanvasForNewBoundingBoxesWithMachineLearning, createNewBoundingB
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
 import initiateResetCanvasEventsToDefaultEvent from '../../facadeWorkers/resetCanvasEventsToDefaultWorker';
 import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
-import { resetPopUpLabelOptions } from '../../../../labellerPopUp/style';
+import { resetShapeLabellerModalOptions } from '../../../../shapeLabellerModal/style';
 import { getCurrentImageId } from '../stateManager';
 import { removeBoundingBox } from '../../facadeWorkers/removeActiveShapeWorker';
 import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/allShapes';
@@ -170,7 +170,7 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   repopulateDropdown();
   removeTempShapes();
   // only execute this if new shapes have been created (not for the ML PopUp)
-  resetPopUpLabelOptions();
+  resetShapeLabellerModalOptions();
 
   setDefaultCursorMode(canvas);
   initiateResetCanvasEventsToDefaultEvent(canvas);

@@ -14,8 +14,8 @@ import {
   getAddingPolygonPointsState, getContinuousDrawingState, getCurrentImageId,
   getRemovingPolygonPointsState, setRemovingPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
-import { isLabelling, removeTargetShape } from '../../../labellerPopUp/labellingProcess';
-import { hideLabelPopUp } from '../../../labellerPopUp/style';
+import { isLabelling, removeTargetShape } from '../../../shapeLabellerModal/labellingProcess';
+import { hideShapeLabellerModal } from '../../../shapeLabellerModal/style';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { removeLabel } from '../../../../canvas/objects/label/label';
 import { removeLabelFromListOnShapeDelete } from '../../../labelList/labelList';
@@ -39,11 +39,11 @@ function removeIfContinuousDrawing(canvas) {
   if (getContinuousDrawingState()) {
     if (isLabelling()) {
       if (isPolygonDrawingFinished()) {
-        hideLabelPopUp();
+        hideShapeLabellerModal();
         removeTargetShape();
         resetDrawPolygonMode();
       } else if (isBoundingBoxDrawingFinished()) {
-        hideLabelPopUp();
+        hideShapeLabellerModal();
         removeTargetShape();
         resetDrawBoundingBoxMode();
       }

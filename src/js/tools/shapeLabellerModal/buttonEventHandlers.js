@@ -6,12 +6,12 @@ import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/bound
 import { getLabelOptions } from '../labelList/labelOptions';
 import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
 import {
-  hideLabelPopUp, changeStyleWhenInputEmpty,
+  hideShapeLabellerModal, changeStyleWhenInputEmpty,
   changeStyleWhenInputInvalid, changeStyleToAllowSubmit,
 } from './style';
 
 let textInputElement = null;
-let popupLabelOptions = null;
+let optionsElement = null;
 let oneOrMoreLabelsAdded = false;
 let currentlySelectedLabelOption = null;
 
@@ -30,9 +30,9 @@ function changeSubmitButtonStyling() {
   }
 }
 
-function prepareLabelPopupElements() {
-  textInputElement = document.getElementById('popup-label-input');
-  popupLabelOptions = document.getElementById('popup-label-options');
+function prepareShapeLabellerModalElements() {
+  textInputElement = document.getElementById('shape-labeller-modal-input');
+  optionsElement = document.getElementById('shape-labeller-modal-options');
 }
 
 function resetDrawingMode() {
@@ -58,7 +58,7 @@ function labelShape() {
 
 function cancelLabellingProcess() {
   if (isLabelling()) {
-    hideLabelPopUp();
+    hideShapeLabellerModal();
     removeTargetShape();
     resetDrawingMode();
   }
@@ -92,12 +92,12 @@ function setCaretPosition(caretPos) {
   return false;
 }
 
-function getPopupLabelOptionsList() {
-  if (!oneOrMoreLabelsAdded && popupLabelOptions.childNodes[1]) {
+function getOptionsElementList() {
+  if (!oneOrMoreLabelsAdded && optionsElement.childNodes[1]) {
     oneOrMoreLabelsAdded = true;
-    return popupLabelOptions.childNodes[1].childNodes;
+    return optionsElement.childNodes[1].childNodes;
   }
-  return popupLabelOptions.childNodes[0].childNodes;
+  return optionsElement.childNodes[0].childNodes;
 }
 
 function inputKeyDown(event) {
@@ -113,11 +113,11 @@ function inputKeyDown(event) {
         currentlySelectedLabelOption.style.backgroundColor = '';
         currentlySelectedLabelOption.id = '';
       }
-      const popupLabelOptionsList = getPopupLabelOptionsList();
-      for (let i = 0; i < popupLabelOptionsList.length; i += 1) {
-        if (popupLabelOptionsList[i].childNodes[0].childNodes[0].childNodes[0].innerHTML
+      const optionsElementList = getOptionsElementList();
+      for (let i = 0; i < optionsElementList.length; i += 1) {
+        if (optionsElementList[i].childNodes[0].childNodes[0].childNodes[0].innerHTML
             === textInputElement.value) {
-          [currentlySelectedLabelOption] = popupLabelOptionsList[i].childNodes;
+          [currentlySelectedLabelOption] = optionsElementList[i].childNodes;
           currentlySelectedLabelOption.style.backgroundColor = getLabelOptions()[i].color.label;
           currentlySelectedLabelOption.id = 'used';
           currentlySelectedLabelOption.scrollIntoViewIfNeeded();
@@ -146,5 +146,5 @@ function pasteLabelText() {
 
 export {
   labelShape, inputKeyDown, cancelLabellingProcess,
-  selectLabelOption, prepareLabelPopupElements, pasteLabelText,
+  selectLabelOption, prepareShapeLabellerModalElements, pasteLabelText,
 };

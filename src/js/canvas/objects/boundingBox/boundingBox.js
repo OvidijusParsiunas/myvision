@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import boundingBoxProperties from './properties';
-import { prepareLabelShape } from '../../../tools/labellerPopUp/labellingProcess';
-import { showLabelPopUp } from '../../../tools/labellerPopUp/style';
+import { prepareLabelShape } from '../../../tools/shapeLabellerModal/labellingProcess';
+import { showShapeLabellerModal } from '../../../tools/shapeLabellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
@@ -166,7 +166,7 @@ function finishDrawingBoundingBoxFunc(event) {
     setReadyToDrawShapeState(false);
     prepareLabelShape(boundingBox, canvas);
     const pointer = canvas.getPointer(event.e);
-    showLabelPopUp(pointer.x, pointer.y);
+    showShapeLabellerModal(pointer.x, pointer.y);
   }
 }
 

@@ -1,8 +1,8 @@
-import { labelShape } from '../tools/labellerPopUp/buttonEventHandlers';
-import { getLabellingPopUpDisplayedState } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { labelShape } from '../tools/shapeLabellerModal/buttonEventHandlers';
+import { getShapeLabellerModalDisplayedState } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 
 function keyDownEventHandler(event) {
-  if (getLabellingPopUpDisplayedState() && event.key === 'Enter') {
+  if (getShapeLabellerModalDisplayedState() && event.key === 'Enter') {
     labelShape();
   }
 }

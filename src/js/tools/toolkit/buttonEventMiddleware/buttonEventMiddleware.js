@@ -1,4 +1,4 @@
-import { isLabelling } from '../../labellerPopUp/labellingProcess';
+import { isLabelling } from '../../shapeLabellerModal/labellingProcess';
 import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';

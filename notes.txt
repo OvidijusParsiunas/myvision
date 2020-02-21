@@ -33,7 +33,7 @@ Really like a light green / blue and white color theme
 
 Toolkit button functionality for getting smaller with the screen should be done when we know all of the buttons
 
-Escape button should close the settings popup and cancel the labeller popup
+Escape button should close the settings popup and cancel the shape labeller modal
 
 Things to check for optimal UX:
 Should the switch images section be located at the top or bot of the screen:
@@ -43,7 +43,7 @@ Should the canvas fill up the entire screen when displaying images:
 Should there be a hover dim effect on image thumbnails
     styles.css
 
-set labelling popup height relative to text or label option height
+set shape labeller modal popup height relative to text or label option height
 
 make sure to use the custom scrollIntoViewIfNeeded in the labelList instead of element.scrollIntoViewIfNeeded
 which is currently present in many files as it is not supported by FireFox
@@ -89,7 +89,7 @@ rename exportlabels to exportdatasets
 
 rename uploadFile to uploadImage
 
-rename labellerPopUp to labellingPopUp
+rename shapeLabellerModal to labellingPopUp
 
 move facadeWorkersUtils contents to a folder outside named utils
 
@@ -115,7 +115,7 @@ try trashcan icon for remove image label
 check which one is better, the popup title with bottom border or without
 when choosing the right one, make sure the export-labels-popup-item class is set for each one of the elements
 
-will need to rename the labeller and machine learning popups naming conventions to modals
+will need to rename the shape labeller modal and machine learning popups naming conventions to modals
 
 try a new border styule for the uploaded images section
 
@@ -133,13 +133,13 @@ delete keyboard button should remove shape
 
 when drawing a new polygon and clicking the add button shouldn't do anything
 
-the labeller is too thick, check if can be thin at the start and resize to bigger later on
+the shape labeller modal is too thick, check if can be thin at the start and resize to bigger later on
 
 grey out the zoom button when it is above 3.9
 
 check if right blocking is acceptable
 
-labeller popup behaves weirdly when opening up the console
+shape labeller modal  behaves weirdly when opening up the console
 
 can draw with cursor too high top
 
@@ -151,12 +151,9 @@ was not able to check ML generated label list overflow
 not able to check export labels popover as font not downloaded
 fix image width overflow for broad ones
 
-export datasets not labels
-export popover not popup
-
 Things to check on chrome browsers on other pcs:
 
-labeller popup horizontal and vertical overflow fake borders
+shape labeller modal  horizontal and vertical overflow fake borders
 label list dropdown horizontal and vertical overflow fake borders
 machine learning generated labels horizontal and vertical overflow fake borders
 
