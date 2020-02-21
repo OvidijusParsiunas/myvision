@@ -9,7 +9,7 @@ import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
-let popupElement = null;
+let modalElement = null;
 
 function setMachineLearningData(machineLearningDataArg) {
   machineLearningData = machineLearningDataArg;
@@ -51,34 +51,34 @@ function displayNextView() {
   }
 }
 
-function displayPopUp() {
+function displayModal() {
   setTimeout(() => {
-    popupElement.style.display = '';
+    modalElement.style.display = '';
   }, 60);
   dimWindow(0.5);
 }
 
-function closePopUp() {
-  popupElement.style.display = 'none';
+function closeModal() {
+  modalElement.style.display = 'none';
   lightUpWindow();
   currentViewNumber = 1;
   displayNextView();
 }
 
 function assignViewManagerLocalVariables() {
-  popupElement = document.getElementById('machine-learning-popup-parent');
+  modalElement = document.getElementById('machine-learning-modal-parent');
 }
 
-function initialiseMachineLearningPopUp() {
+function initialiseMachineLearningModal() {
   assignViewManagerLocalVariables();
   registerInitiateMachineLearningViewButtonEventHandlers(displayNextView,
-    setMachineLearningData, closePopUp);
+    setMachineLearningData, closeModal);
   assignInitiateMachineLearningViewLocalVariables();
-  registerGeneratedLabelsViewButtonEventHandlers(closePopUp);
+  registerGeneratedLabelsViewButtonEventHandlers(closeModal);
   assignGeneratedLabelsViewLocalVariables();
-  registerNoObjectsFoundViewButtonEventHandlers(closePopUp);
+  registerNoObjectsFoundViewButtonEventHandlers(closeModal);
   assignNoObjectsFoundViewLocalVariables();
   displayNextView();
 }
 
-export { displayPopUp, initialiseMachineLearningPopUp };
+export { displayModal, initialiseMachineLearningModal };

@@ -1,7 +1,7 @@
 let descriptionElement = null;
 let buttonGroupElement = null;
 
-function changePopUpDescription() {
+function changeModalDescription() {
   descriptionElement.innerHTML = 'The model has not identified any objects within the uploaded images.';
 }
 
@@ -23,7 +23,7 @@ function displayButtonGroupElement() {
 
 function displayNoObjectsFoundView() {
   setDescriptionElementMarginBottom('15px');
-  changePopUpDescription();
+  changeModalDescription();
   displayDescription();
   displayButtonGroupElement();
 }
@@ -35,8 +35,8 @@ function hideNoObjectsFoundViewAssets() {
 
 
 function assignNoObjectsFoundViewLocalVariables() {
-  descriptionElement = document.getElementById('machine-learning-popup-description');
-  buttonGroupElement = document.getElementById('machine-learning-popup-no-objects-buttons');
+  descriptionElement = document.getElementById('machine-learning-modal-description');
+  buttonGroupElement = document.getElementById('machine-learning-modal-no-objects-buttons');
 }
 
 export {

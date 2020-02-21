@@ -21,7 +21,7 @@ function assignToolkitButtonClickEvents() {
   window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
   window.exportDatasets = removeButtonPopIfActive.bind(this, exportDatasetsBtnClick);
-  window.displayMachineLearningPopUp = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
+  window.displayMachineLearningModal = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
     resetCanvasEventsToDefault, removeButtonPopIfActive, machineLearningBtnClick);
   window.uploadImage = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
     { uploadImageInputClick, resetCanvasEventsToDefault });

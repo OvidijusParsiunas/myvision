@@ -45,10 +45,10 @@
         <div id="popup-label-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
-    <div id="machine-learning-popup-parent" style="display: none">
-      <div id="machine-learning-popup-title" class="popup-label-title">Machine Learning</div>
-      <div id="machine-learning-popup-border-line" style="width: 100%; margin-top: 5px; border-top: solid 1px #e6e6e6;"> </div>
-      <div id="machine-learning-popup-description">
+    <div id="machine-learning-modal-parent" style="display: none">
+      <div id="machine-learning-modal-title" class="popup-label-title">Machine Learning</div>
+      <div id="machine-learning-modal-border-line" style="width: 100%; margin-top: 5px; border-top: solid 1px #e6e6e6;"> </div>
+      <div id="machine-learning-modal-description">
         You can use a pre-trained Machine Learning model to automatically annotate objects with bounding boxes!
         <!-- You can use a pre-trained Machine Learning model to automate the process of object annotation with bounding boxes! -->
         <br>
@@ -56,36 +56,36 @@
         <br>
         In addition, because this model operates locally on the browser, your data will never leave the privacy of your computer.
       </div>
-      <div id="machine-learning-popup-check-mark-parent" style="display: none">
-          <div id="machine-learning-popup-check-mark" class="draw"></div>
+      <div id="machine-learning-modal-check-mark-parent" style="display: none">
+          <div id="machine-learning-modal-check-mark" class="draw"></div>
       </div>
-      <div id="machine-learning-popup-progress-messages" style="display: none" class="machine-learning-popup-messages"></div>
-      <div id="machine-learning-popup-loading-wheel" style="display: none" class="loading-wheel" ></div>
-      <div id="machine-learning-popup-loading-text" style="display: none">Loading...</div>
-      <div id="machine-learning-popup-error-messages" style="display: none" class="machine-learning-popup-messages"></div>
-      <div id="machine-learning-popup-info-messages" class="machine-learning-popup-messages"></div>
-      <div id="machine-learning-popup-initiate-machine-learning-buttons" class="buttons popup-label-machine-learning-popup-buttons">
-          <div id="machine-learning-popup-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="startMachineLearning()">Start</div>
-          <div id="machine-learning-popup-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
-          <div id="machine-learning-popup-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
-          <div id="machine-learning-popup-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelInitiateMLPopUp()">Cancel</div>
-          <div id="machine-learning-popup-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
-          <div id="machine-learning-popup-initiate-new-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')">New Images</div>
+      <div id="machine-learning-modal-progress-messages" style="display: none" class="machine-learning-modal-messages"></div>
+      <div id="machine-learning-modal-loading-wheel" style="display: none" class="loading-wheel" ></div>
+      <div id="machine-learning-modal-loading-text" style="display: none">Loading...</div>
+      <div id="machine-learning-modal-error-messages" style="display: none" class="machine-learning-modal-messages"></div>
+      <div id="machine-learning-modal-info-messages" class="machine-learning-modal-messages"></div>
+      <div id="machine-learning-modal-initiate-machine-learning-buttons" class="buttons machine-learning-modal-buttons">
+          <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="startMachineLearning()">Start</div>
+          <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
+          <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
+          <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelInitiateMLModal()">Cancel</div>
+          <div id="machine-learning-modal-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
+          <div id="machine-learning-modal-initiate-new-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')">New Images</div>
         </div>
-      <div id="machine-learning-popup-generated-labels-outer-container" style="display: none">
-          <div id="machine-learning-popup-generated-labels-inner-container">
-            <div id="machine-learning-popup-generated-labels">
-              <table id="machine-learning-popup-generated-labels-table">
+      <div id="machine-learning-modal-generated-labels-outer-container" style="display: none">
+          <div id="machine-learning-modal-generated-labels-inner-container">
+            <div id="machine-learning-modal-generated-labels">
+              <table id="machine-learning-modal-generated-labels-table">
                 <tbody></tbody>
               </table>
             </div>
-            <div id="machine-learning-popup-generated-labels-buttons" class="buttons popup-label-machine-learning-popup-buttons">
-              <div id="machine-learning-popup-generated-labels-submit-button" class="popup-label-button popup-proceed-button" onclick="submitMLGeneratedLabels()">Submit</div>
+            <div id="machine-learning-modal-generated-labels-buttons" class="buttons machine-learning-modal-buttons">
+              <div id="machine-learning-modal-generated-labels-submit-button" class="popup-label-button popup-proceed-button" onclick="submitMLGeneratedLabels()">Submit</div>
             </div>
           </div>
         </div>
-        <div id="machine-learning-popup-no-objects-buttons" style="display: none" class="buttons popup-label-machine-learning-popup-buttons">
-            <div id="machine-learning-popup-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningPopUp()">Close</div>
+        <div id="machine-learning-modal-no-objects-buttons" style="display: none" class="buttons machine-learning-modal-buttons">
+            <div id="machine-learning-modal-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningModal()">Close</div>
         </div>
     </div>
     <!-- <div id="export-labels-popup-parent" style="display: none; width: 173px">
@@ -287,10 +287,10 @@
       <img src="check-box.svg" draggable="false" class="export-labels-popup-item tools-button-icon" alt="visibility">
     </button>
     <div class="tools-button-hover-popup" id="export-datasets-button-popup">Export Datasets</div>
-    <button id="exportDatasetsButton" class="tools-button" style="text-align: center" onclick="displayMachineLearningPopUp()" onmouseenter="mouseEnterToolkitButton(event, 'machineLearning')" onmouseleave="mouseLeaveToolkitButton(event)">
+    <button id="exportDatasetsButton" class="tools-button" style="text-align: center" onclick="displayMachineLearningModal()" onmouseenter="mouseEnterToolkitButton(event, 'machineLearning')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="check-box.svg" draggable="false" class="tools-button-icon" alt="visibility">
     </button>
-    <div class="tools-button-hover-popup" id="machine-learning-button-popup">Machine Learning</div>
+    <div class="tools-button-hover-popup" id="machine-learning-button-modal">Machine Learning</div>
     <button class="tools-button" style="text-align: center" onclick="zoom('in')" onmouseenter="mouseEnterToolkitButton(event, 'zoomIn')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="bounding-box.svg" draggable="false" class="tools-button-icon" alt="visibility">
     </button>

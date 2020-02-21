@@ -321,12 +321,12 @@ function resetElementsToMoveListToDefaultPosition() {
 
 function createLabelElementMarkup(labelText, id) {
   return `
-    <div class="machine-learning-popup-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningPopUpEditLabelButton(this)" onMouseLeave="hideMachineLearningPopUpEditLabelButton(this)">
-      <img class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" src="edit-disabled.svg" alt="edit">
-      <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon" style="display: none" src="edit.svg" alt="edit">
-      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-blue.svg" alt="edit">
-      <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-popup-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-red.svg" alt="edit">
-      <div id="MLLabelText${id}" class="machine-learning-popup-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
+    <div class="machine-learning-modal-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningModalEditLabelButton(this)" onMouseLeave="hideMachineLearningModalEditLabelButton(this)">
+      <img class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" src="edit-disabled.svg" alt="edit">
+      <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" style="display: none" src="edit.svg" alt="edit">
+      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-blue.svg" alt="edit">
+      <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-red.svg" alt="edit">
+      <div id="MLLabelText${id}" class="machine-learning-modal-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
     </div>
   `;
 }
@@ -346,7 +346,7 @@ function populateGeneratedLabelsTable() {
   }
 }
 
-function changePopUpDescription() {
+function changeModalDescription() {
   descriptionElement.innerHTML = 'The following names were automatically assigned to the generated objects, you can edit them below:';
 }
 
@@ -361,7 +361,7 @@ function setLocalVariables() {
 function displayViewElements(objectNamesArg) {
   objectNames = objectNamesArg;
   setLocalVariables();
-  changePopUpDescription();
+  changeModalDescription();
   displayDescription();
   populateGeneratedLabelsTable();
   changeElementsToVisible();
@@ -381,11 +381,11 @@ function hideGeneratedLabelsViewAssets() {
 }
 
 function assignGeneratedLabelsViewLocalVariables() {
-  descriptionElement = document.getElementById('machine-learning-popup-description');
-  generatedLabelsParentElement = document.getElementById('machine-learning-popup-generated-labels');
-  submitButtonElement = document.getElementById('machine-learning-popup-generated-labels-submit-button');
-  generatedLabelsTableElement = document.getElementById('machine-learning-popup-generated-labels-table');
-  generatedLabelsOuterContainerElement = document.getElementById('machine-learning-popup-generated-labels-outer-container');
+  descriptionElement = document.getElementById('machine-learning-modal-description');
+  generatedLabelsParentElement = document.getElementById('machine-learning-modal-generated-labels');
+  submitButtonElement = document.getElementById('machine-learning-modal-generated-labels-submit-button');
+  generatedLabelsTableElement = document.getElementById('machine-learning-modal-generated-labels-table');
+  generatedLabelsOuterContainerElement = document.getElementById('machine-learning-modal-generated-labels-outer-container');
 }
 
 export {

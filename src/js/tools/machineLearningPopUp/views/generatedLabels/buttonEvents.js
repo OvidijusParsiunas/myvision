@@ -20,11 +20,11 @@ function MLLabelTextKeyDown(event) {
   }
 }
 
-function submitMLGeneratedLabelNames(closePopUpCallback) {
+function submitMLGeneratedLabelNames(closeModalCallback) {
   submitNewLabelNames();
   const generatedMachineLearningData = getGeneratedMachineLearningData();
   drawShapesViaCoordinates(generatedMachineLearningData, true);
-  closePopUpCallback();
+  closeModalCallback();
   hideGeneratedLabelsViewAssets();
 }
 
@@ -33,14 +33,14 @@ function editMachineLearningLabelButtonClick(element) {
   changeRowToEdit(element);
 }
 
-function registerButtonEventHandlers(closePopUpCallback) {
+function registerButtonEventHandlers(closeModalCallback) {
   window.MLLabelTextKeyDown = MLLabelTextKeyDown;
   window.MLLabelTextPaste = MLLabelTextPaste;
-  window.displayMachineLearningPopUpEditLabelButton = displayHighlightedDefaultEditLabelButton;
-  window.hideMachineLearningPopUpEditLabelButton = displayGreyedDefaultEditLabelButton;
+  window.displayMachineLearningModalEditLabelButton = displayHighlightedDefaultEditLabelButton;
+  window.hideMachineLearningModalEditLabelButton = displayGreyedDefaultEditLabelButton;
   window.editMachineLearningLabel = editMachineLearningLabelButtonClick;
   window.submitMLGeneratedLabels = submitMLGeneratedLabelNames.bind(this,
-    closePopUpCallback);
+    closeModalCallback);
 }
 
 export { registerButtonEventHandlers as default };

@@ -2,7 +2,7 @@ let isNoImagesFoundInfoDisplayed = false;
 
 let checkmarkElement = null;
 let nextButtonElement = null;
-let popupParentElement = null;
+let modalParentElement = null;
 let descriptionElement = null;
 let loadingTextElement = null;
 let loadingWheelElement = null;
@@ -51,12 +51,12 @@ function removeErrorMessage() {
 }
 
 function displayRetryButton() {
-  document.getElementById('machine-learning-popup-initiate-retry-button').style.display = '';
+  document.getElementById('machine-learning-modal-initiate-retry-button').style.display = '';
   descriptionElement.style.marginBottom = '6px';
 }
 
 function removeRetryButton() {
-  document.getElementById('machine-learning-popup-initiate-retry-button').style.display = 'none';
+  document.getElementById('machine-learning-modal-initiate-retry-button').style.display = 'none';
   descriptionElement.style.marginBottom = '';
 }
 
@@ -183,11 +183,11 @@ function hideUploadImagesButton() {
 }
 
 function increasePopUpHeight(height) {
-  popupParentElement.style.height = height;
+  modalParentElement.style.height = height;
 }
 
 function setDefaultPopUpHeight() {
-  popupParentElement.style.height = '';
+  modalParentElement.style.height = '';
 }
 
 function setDescriptionElementMarginBottom(height) {
@@ -263,21 +263,21 @@ function prepareInstantiateMachineLearningView() {
 
 function assignInitiateMachineLearningViewLocalVariables() {
   toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
-  popupParentElement = document.getElementById('machine-learning-popup-parent');
-  checkmarkElement = document.getElementById('machine-learning-popup-check-mark');
-  loadingWheelElement = document.getElementById('machine-learning-popup-loading-wheel');
-  loadingTextElement = document.getElementById('machine-learning-popup-loading-text');
-  descriptionElement = document.getElementById('machine-learning-popup-description');
-  submitButtonElement = document.getElementById('machine-learning-popup-initiate-start-button');
-  nextButtonElement = document.getElementById('machine-learning-popup-initiate-next-button');
-  cancelButtonElement = document.getElementById('machine-learning-popup-initiate-cancel-button');
-  buttonsGroupElement = document.getElementById('machine-learning-popup-initiate-machine-learning-buttons');
-  errorMessagesElement = document.getElementById('machine-learning-popup-error-messages');
-  infoMessagesElement = document.getElementById('machine-learning-popup-info-messages');
-  checkmarkParentElement = document.getElementById('machine-learning-popup-check-mark-parent');
-  progressMessagesElement = document.getElementById('machine-learning-popup-progress-messages');
-  allImagesButtonElement = document.getElementById('machine-learning-popup-initiate-all-images-button');
-  newImagesButtonElement = document.getElementById('machine-learning-popup-initiate-new-images-button');
+  modalParentElement = document.getElementById('machine-learning-modal-parent');
+  checkmarkElement = document.getElementById('machine-learning-modal-check-mark');
+  loadingWheelElement = document.getElementById('machine-learning-modal-loading-wheel');
+  loadingTextElement = document.getElementById('machine-learning-modal-loading-text');
+  descriptionElement = document.getElementById('machine-learning-modal-description');
+  submitButtonElement = document.getElementById('machine-learning-modal-initiate-start-button');
+  nextButtonElement = document.getElementById('machine-learning-modal-initiate-next-button');
+  cancelButtonElement = document.getElementById('machine-learning-modal-initiate-cancel-button');
+  buttonsGroupElement = document.getElementById('machine-learning-modal-initiate-machine-learning-buttons');
+  errorMessagesElement = document.getElementById('machine-learning-modal-error-messages');
+  infoMessagesElement = document.getElementById('machine-learning-modal-info-messages');
+  checkmarkParentElement = document.getElementById('machine-learning-modal-check-mark-parent');
+  progressMessagesElement = document.getElementById('machine-learning-modal-progress-messages');
+  allImagesButtonElement = document.getElementById('machine-learning-modal-initiate-all-images-button');
+  newImagesButtonElement = document.getElementById('machine-learning-modal-initiate-new-images-button');
 }
 
 export {

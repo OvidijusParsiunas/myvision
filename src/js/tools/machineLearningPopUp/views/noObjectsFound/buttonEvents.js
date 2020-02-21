@@ -1,12 +1,12 @@
 import { hideNoObjectsFoundViewAssets } from './style';
 
-function closePopUp(closePopUpCallback) {
-  closePopUpCallback();
+function closeModal(closeModalCallback) {
+  closeModalCallback();
   hideNoObjectsFoundViewAssets();
 }
 
-function registerButtonEventHandlers(closePopUpCallback) {
-  window.closeMachineLearningPopUp = closePopUp.bind(this, closePopUpCallback);
+function registerButtonEventHandlers(closeModalCallback) {
+  window.closeMachineLearningModal = closeModal.bind(this, closeModalCallback);
 }
 
 export { registerButtonEventHandlers as default };

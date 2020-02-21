@@ -8,12 +8,12 @@ import {
   removeMLCoverageSelectionButtons,
 } from './style';
 
-function cancelInitiateMLPopUp(closePopUp) {
+function cancelInitiateMLModal(closeModal) {
   if (getProgressStatus()) {
     cancelMachineLearning();
     prepareInstantiateMachineLearningView();
   } else {
-    closePopUp();
+    closeModal();
     removeErrorMessage();
     removeRetryButton();
     prepareInstantiateMachineLearningView();
@@ -41,13 +41,13 @@ function machineLearningCoverageMiddleware(nextViewCallback, setMachineLearningD
   startMachineLearning(nextViewCallback, setMachineLearningData, coverage);
 }
 
-function registerButtonEventHandlers(nextViewCallback, setMachineLearningData, closePopUp) {
+function registerButtonEventHandlers(nextViewCallback, setMachineLearningData, closeModal) {
   window.startMachineLearning = startMachineLearningMiddleware.bind(this,
     nextViewCallback, setMachineLearningData, false);
   window.changeInitiateMLToNextView = moveToNextView.bind(
     this, nextViewCallback,
   );
-  window.cancelInitiateMLPopUp = cancelInitiateMLPopUp.bind(this, closePopUp);
+  window.cancelInitiateMLModal = cancelInitiateMLModal.bind(this, closeModal);
   window.retryMachineLearning = startMachineLearningMiddleware.bind(this,
     nextViewCallback, setMachineLearningData, true);
   window.startMachineLearningWithCoverage = machineLearningCoverageMiddleware.bind(this,

@@ -230,7 +230,7 @@
   font-size: 14.55px;
 }
 
-.popup-label-machine-learning-popup-buttons {
+.machine-learning-modal-buttons {
   font-size: 14.5px;
 }
 
@@ -416,7 +416,7 @@
   font-family: K2D, sans-serif;
 */
 
-#machine-learning-popup-parent {
+#machine-learning-modal-parent {
   position: absolute;
 	font-family: Arial, Helvetica, sans-serif;
   font-size: 14.5px;
@@ -435,19 +435,19 @@
   width: 381px;
 }
 
-#machine-learning-popup-title {
+#machine-learning-modal-title {
   margin-top: 4px;
   margin-left: 10px;
 }
 
-#machine-learning-popup-description {
+#machine-learning-modal-description {
   margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
   width: 350px;
 }
 
-.machine-learning-popup-messages {
+.machine-learning-modal-messages {
   text-align: center;
   margin-top: 2px;
   margin-bottom: 2px;
@@ -455,23 +455,23 @@
   margin-bottom: 5px;
 }
 
-#machine-learning-popup-error-messages {
+#machine-learning-modal-error-messages {
   margin-top: 70px;
   color: red;
 }
 
-#machine-learning-popup-check-mark-parent {
+#machine-learning-modal-check-mark-parent {
   position: relative;
   margin-left: 137px;
   margin-top: 20px;
 }
 
-#machine-learning-popup-progress-messages {
+#machine-learning-modal-progress-messages {
   margin-top: 93px;
   margin-bottom: 7px;
 }
 
-#machine-learning-popup-info-messages {
+#machine-learning-modal-info-messages {
   color: #0d5cad;
 }
 
@@ -517,37 +517,37 @@
   }
 }
 
-#machine-learning-popup-buttons {
+#machine-learning-modal-buttons {
   margin-top: 12px;
 }
 
-#machine-learning-popup-initiate-next-button {
+#machine-learning-modal-initiate-next-button {
   width: 60px;
   margin-left: 3px;
 }
 
-#machine-learning-popup-initiate-all-images-button {
+#machine-learning-modal-initiate-all-images-button {
   margin-right: 3px;
   padding-left: 5px;
   padding-right: 5px;
   width: 81px;
 }
 
-#machine-learning-popup-initiate-new-images-button {
+#machine-learning-modal-initiate-new-images-button {
   margin-left: 3px;
   width: 81px;
 }
 
-#machine-learning-popup-no-objects-close-button {
+#machine-learning-modal-no-objects-close-button {
   margin-top: 5px;
 }
 
-#machine-learning-popup-generated-labels-outer-container {
+#machine-learning-modal-generated-labels-outer-container {
   position: relative;
   height: 152px;
 }
 
-#machine-learning-popup-generated-labels-inner-container {
+#machine-learning-modal-generated-labels-inner-container {
   margin: 0;
   position: absolute;
   top: 50%;
@@ -556,7 +556,7 @@
   transform: translate(-50%, -50%);
 }
 
-#machine-learning-popup-generated-labels {
+#machine-learning-modal-generated-labels {
   margin-left: auto;
   margin-right: auto;
   overflow-y: auto;
@@ -567,46 +567,46 @@
   scrollbar-width: thin;
 }
 
-#machine-learning-popup-generated-labels::-webkit-scrollbar-track {
+#machine-learning-modal-generated-labels::-webkit-scrollbar-track {
   background: #f9f9f9;
 }
 
-#machine-learning-popup-generated-labels::-webkit-scrollbar-thumb {
+#machine-learning-modal-generated-labels::-webkit-scrollbar-thumb {
   background: #8c8c8c;
   border-radius: 10px;
 }
 
-#machine-learning-popup-generated-labels::-webkit-scrollbar {
+#machine-learning-modal-generated-labels::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-#machine-learning-popup-generated-labels-table {
+#machine-learning-modal-generated-labels-table {
   margin-left: auto;
   margin-right: auto;
 }
 
-.machine-learning-popup-generated-labels-row {
+.machine-learning-modal-generated-labels-row {
   padding-left: 5px;
   padding-right: 1px;
   cursor: pointer;
   border-bottom: 1px solid #f7f7f7;
 }
 
-.machine-learning-popup-generated-labels-edit-icon {
+.machine-learning-modal-generated-labels-edit-icon {
   width: 8px;
   margin-top: 5px;
   float: left;
 }
 
-.machine-learning-popup-generated-labels-input {
+.machine-learning-modal-generated-labels-input {
   margin-left: 12px;
   outline: none;
   white-space: pre;
   padding-right: 5px
 }
 
-#machine-learning-popup-generated-labels-submit-button {
+#machine-learning-modal-generated-labels-submit-button {
   margin-top: 5px;
   padding-top: 6px;
   padding-bottom: 5px;
@@ -614,7 +614,7 @@
   width: 60px;
 }
 
-#machine-learning-popup-generated-labels-buttons {
+#machine-learning-modal-generated-labels-buttons {
   margin-top: 8px;
 }
 
@@ -1094,7 +1094,7 @@ body {
   margin-top: 56px;
 }
 
-#machine-learning-popup-loading-text {
+#machine-learning-modal-loading-text {
   text-align: center;
     margin-top: 10px;
     margin-bottom: 7px;
