@@ -1,4 +1,4 @@
-import { displayModal } from '../../../machineLearningPopUp/views/viewManager';
+import { displayModal } from '../../../machineLearningModal/views/viewManager';
 
 function displayMachineLearningModal() {
   displayModal();

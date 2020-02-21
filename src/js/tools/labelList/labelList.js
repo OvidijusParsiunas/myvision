@@ -30,7 +30,7 @@ import {
 } from './iconHighlightUtils';
 import { resetPopUpLabelOptions } from '../labellerPopUp/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
-import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningPopUp/views/generatedLabels/changeLabels';
+import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyle/style';
 
