@@ -629,7 +629,7 @@
   float: left;
   background-color: white;
   height: 100vh;
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 44px);
   overflow-y: auto;
   overflow-x: hidden;
   border-right: solid;
@@ -643,7 +643,7 @@
   padding-top: 8px;
   float: right;
   background-color: white;
-  height: calc(100vh - 38px);
+  height: calc(100vh - 43px);
   border-right: solid;
   border-left: solid;
   border-width: 1px;
@@ -792,13 +792,13 @@
 
 #canvas-wrapper-parent {
   width: calc(100% - 268px);
-  height: calc(100% - 60px);
+  height: calc(100% - 65px);
   left: 59px;
 }
 
 #zoom-overflow-wrapper-parent {
   width: calc(100% - 269px);
-  height: calc(100% - 60px);
+  height: calc(100% - 65px);
   left: 59px;
 }
 

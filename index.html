@@ -9,11 +9,11 @@
 </head>
 <!-- this will need to be set to margin-top: 0, and the rest of the elements vertical alignments will need to be changed -->
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243);">
-  <div id="header" style="height: 29px; background-color: white">
-    <div id="app-title" style="font-size: 24px">MyLabel</div>
+  <div id="header" style="height: 34px; background-color: white">
+    <div id="app-title" style="font-size: 26px">MyLabel</div>
   </div>
   <div id="base">
-    <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 60px; display: table; text-align: center; z-index: 1">
+    <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 65px; display: table; text-align: center; z-index: 1">
       <div style="vertical-align: middle; display: contents; position: relative; overflow: auto;">
         <div id="zoom-overflow-wrapper" style="position: absolute; left: 50%; transform: translate(-50%, -50%); top: 50%">
           <div id="zoom-overflow" onScroll="zoomOverflowScroll(this)">
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" style="position: absolute; top: 60px; display: table; background-color: rgb(243, 243, 243); text-align: center;">
+    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" style="position: absolute; top: 65px; display: table; background-color: rgb(243, 243, 243); text-align: center;">
       <div id="canvas-wrapper" style="vertical-align: middle; display: contents; position: relative; overflow: auto">
         <div id="canvas-wrapper-inner2" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
           <canvas id="d"></canvas>
