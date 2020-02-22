@@ -19,8 +19,8 @@ function assignTimeoutMillisecondsDependingOnBrowser() {
 function assignCanvasForUtils(canvasObj) {
   canvas = canvasObj;
   canvas.randomProperty = 'test';
-  canvasElement1 = document.getElementById('canvas-wrapper-inner');
-  canvasElement2 = document.getElementById('canvas-wrapper-inner2');
+  canvasElement1 = document.getElementById('canvas-absolute-container-1');
+  canvasElement2 = document.getElementById('canvas-absolute-container-2');
   assignTimeoutMillisecondsDependingOnBrowser();
 }
 

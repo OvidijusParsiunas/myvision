@@ -340,10 +340,10 @@ function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomO
 
 function switchCanvasWrapperInnerElement() {
   if (usingFirstCanvasWrapperInnerElement) {
-    canvasElement = document.getElementById('canvas-wrapper-inner2');
+    canvasElement = document.getElementById('canvas-absolute-container-2');
     usingFirstCanvasWrapperInnerElement = false;
   } else {
-    canvasElement = document.getElementById('canvas-wrapper-inner');
+    canvasElement = document.getElementById('canvas-absolute-container-1');
     usingFirstCanvasWrapperInnerElement = true;
   }
   setNewCanvasElementForZoomFunc(canvasElement);
@@ -352,7 +352,7 @@ function switchCanvasWrapperInnerElement() {
 function loadCanvasElements(browserSpecificSetterCallback) {
   stubElement = document.getElementById('stub');
   zoomOverflowElement = document.getElementById('zoom-overflow');
-  canvasElement = document.getElementById('canvas-wrapper-inner');
+  canvasElement = document.getElementById('canvas-absolute-container-1');
   zoomOverflowWrapperElement = document.getElementById('zoom-overflow-wrapper');
   browserSpecificSetterCallback(stubElement, zoomOverflowElement,
     zoomOverflowWrapperElement, canvasElement);

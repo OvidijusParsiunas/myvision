@@ -1,6 +1,3 @@
-#canvas-wrapper {
-}
-
 /*
   font-family: "Source Sans Pro", sans-serif;
   font-family: Chivo, sans-serif;
@@ -794,13 +791,52 @@
 #canvas-wrapper-parent {
   width: calc(100% - 268px);
   height: calc(100% - 65px);
+  top: 65px;
   left: 59px;
+  position: absolute;
+  display: table;
+  background-color: rgb(243, 243, 243);
+  text-align: center;
+}
+
+#canvas-wrapper {
+  vertical-align: middle;
+  position: relative;
+  display: contents;
+  overflow: auto;
+}
+
+.canvas-absolute-container {
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #zoom-overflow-wrapper-parent {
   width: calc(100% - 269px);
   height: calc(100% - 65px);
   left: 59px;
+  top: 65px;
+  position: absolute;
+  display: table;
+  text-align: center;
+  z-index: 1
+}
+
+#zoom-overflow-wrapper-inner-container {
+  vertical-align: middle;
+  display: contents;
+  position: relative;
+  overflow: auto;
+}
+
+#zoom-overflow-wrapper {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 #stub {

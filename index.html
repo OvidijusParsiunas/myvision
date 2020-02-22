@@ -20,21 +20,21 @@
     </a>
   </div>
   <div id="base">
-    <div id="zoom-overflow-wrapper-parent" style="position: absolute; top: 65px; display: table; text-align: center; z-index: 1">
-      <div style="vertical-align: middle; display: contents; position: relative; overflow: auto;">
-        <div id="zoom-overflow-wrapper" style="position: absolute; left: 50%; transform: translate(-50%, -50%); top: 50%">
+    <div id="zoom-overflow-wrapper-parent">
+      <div id="zoom-overflow-wrapper-inner-container">
+        <div id="zoom-overflow-wrapper">
           <div id="zoom-overflow" onScroll="zoomOverflowScroll(this)">
             <div id="stub">.</div>
           </div>
         </div>
       </div>
     </div>
-    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)" style="position: absolute; top: 65px; display: table; background-color: rgb(243, 243, 243); text-align: center;">
-      <div id="canvas-wrapper" style="vertical-align: middle; display: contents; position: relative; overflow: auto">
-        <div id="canvas-wrapper-inner2" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)">
+      <div id="canvas-wrapper">
+        <div id="canvas-absolute-container-2" class="canvas-absolute-container">
           <canvas id="d"></canvas>
         </div>
-        <div id="canvas-wrapper-inner" style="z-index: 2; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+        <div id="canvas-absolute-container-1" class="canvas-absolute-container">
             <canvas id="c"></canvas>
         </div>
       </div>
@@ -305,7 +305,7 @@
     <button class="tools-button" style="text-align: center" onclick="zoom('out')" onmouseenter="mouseEnterToolkitButton(event, 'zoomOut')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="done.svg" draggable="false" class="tools-button-icon" alt="visibility">
     </button>
-    <div class="tools-button-hover-popup" id="zoom-out-button-popup">Zoom out</div>
+    <div class="tools-button-hover-popup" id="zoom-out-button-popup">Zoom Out</div>
     <input id='uploadImage' type='file' onchange="uploadImage(this)" multiple accept="image/*" hidden/>
     <button id="uploadImagesButton" class="tools-button" style="text-align: center; position: relative" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="invisible-button.svg" draggable="false" class="tools-button-icon" alt="visibility">
