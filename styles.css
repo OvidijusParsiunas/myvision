@@ -950,10 +950,19 @@ body {
   border-right: 0;
   border-bottom-width: 1px;
   border-color: #80808026;
-  height: 32px;
-  /* height: 34px; */
+  /* height: 32px; */
+  /* height: 33px; */
+  height: 34px;
   background-color: white;
 }
+
+/* #title-text {
+  padding-top: 3px;
+  padding-left: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  float: left;
+} */
 
 /* #title-text {
   padding-top: 4px;
@@ -963,8 +972,8 @@ body {
 } */
 
 #title-text {
-  padding-top: 3px;
-  padding-left: 12px;
+  padding-top: 3.5px;
+  padding-left: 4px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 22px;
   float: left;
@@ -976,6 +985,7 @@ body {
   max-width: 22px;
   max-height: 22px;
   float: right;
+  cursor: pointer;
 }
 
 #settings-table {
