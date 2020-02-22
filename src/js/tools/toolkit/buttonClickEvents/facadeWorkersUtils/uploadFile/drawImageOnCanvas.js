@@ -73,10 +73,19 @@ function setCanvasWrapperMaximumDimensions() {
   canvasWrapper.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
 }
 
+// should be a global variable
+function isFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
+
 function setCanvasProperties() {
   canvasProperties.maximumCanvasHeight = window.innerHeight - 65;
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
-  canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth;
+  if (isFirefox()) {
+    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 1;
+  } else {
+    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth;
+  }
 }
 
 function draw() {
