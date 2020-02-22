@@ -634,7 +634,8 @@
   overflow-x: hidden;
   border-right: solid;
   border-left: solid;
-  border-color: rgb(197, 197, 197);
+  border-left-color: #80808026;
+  border-right-color: rgb(197, 197, 197);
   border-width: 1px;
 }
 
@@ -942,14 +943,39 @@ body {
   cursor: pointer;
 }
 
-#header {
+#title-panel {
   border: solid;
-  /* background-color: white; */
   border-top: 0;
   border-left: 0;
   border-right: 0;
   border-bottom-width: 1px;
   border-color: #80808026;
+  height: 32px;
+  /* height: 34px; */
+  background-color: white;
+}
+
+/* #title-text {
+  padding-top: 4px;
+  padding-left: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+} */
+
+#title-text {
+  padding-top: 3px;
+  padding-left: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  float: left;
+}
+
+#title-github-mark {
+  padding-top: 7px;
+  padding-right: 20px;
+  max-width: 22px;
+  max-height: 22px;
+  float: right;
 }
 
 #settings-table {
