@@ -79,7 +79,7 @@ function isFirefox() {
 }
 
 function setCanvasProperties() {
-  canvasProperties.maximumCanvasHeight = window.innerHeight - 65;
+  canvasProperties.maximumCanvasHeight = window.innerHeight - 64;
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
   if (isFirefox()) {
     canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 1;

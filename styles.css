@@ -790,8 +790,8 @@
 
 #canvas-wrapper-parent {
   width: calc(100% - 268px);
-  height: calc(100% - 65px);
-  top: 65px;
+  height: calc(100% - 63px);
+  top: 63px;
   left: 59px;
   position: absolute;
   display: table;
@@ -816,9 +816,9 @@
 
 #zoom-overflow-wrapper-parent {
   width: calc(100% - 269px);
-  height: calc(100% - 65px);
+  height: calc(100% - 63px);
   left: 59px;
-  top: 65px;
+  top: 63px;
   position: absolute;
   display: table;
   text-align: center;
@@ -989,9 +989,9 @@ body {
   border-right: 0;
   border-bottom-width: 1px;
   border-color: #80808026;
-  /* height: 32px; */
+  height: 33px;
   /* height: 33px; */
-  height: 34px;
+  /* height: 34px; */
   background-color: white;
 }
 
@@ -1011,7 +1011,7 @@ body {
 } */
 
 #title-text {
-  padding-top: 4.5px;
+  padding-top: 3.5px;
   padding-left: 4px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 22px;
