@@ -790,9 +790,9 @@
 
 #canvas-wrapper-parent {
   width: calc(100% - 268px);
-  height: calc(100% - 63px);
-  top: 63px;
+  height: calc(100% - 65px);
   left: 59px;
+  top: 64px;
   position: absolute;
   display: table;
   background-color: rgb(243, 243, 243);
@@ -816,9 +816,9 @@
 
 #zoom-overflow-wrapper-parent {
   width: calc(100% - 269px);
-  height: calc(100% - 63px);
+  height: calc(100% - 64px);
   left: 59px;
-  top: 63px;
+  top: 64px;
   position: absolute;
   display: table;
   text-align: center;
@@ -958,6 +958,12 @@ body {
   }
   #canvas-wrapper-parent {
     width: calc(100% - 268.5px);
+    height: calc(100% - 63px);
+    top: 63px;
+  }
+  #zoom-overflow-wrapper-parent {
+    height: calc(100% - 63px);
+    top: 63px;
   }
 }
 
