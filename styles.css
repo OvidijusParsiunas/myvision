@@ -790,7 +790,7 @@
 
 #canvas-wrapper-parent {
   width: calc(100% - 268px);
-  height: calc(100% - 65px);
+  height: calc(100% - 64.5px);
   left: 59px;
   top: 64px;
   position: absolute;
