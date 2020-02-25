@@ -3,6 +3,7 @@ import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/obje
 import labelProperies from '../../../../canvas/objects/label/properties';
 import { zoomCanvas } from '../facadeWorkers/zoomWorker';
 import { getCurrentZoomState } from './stateManager';
+import { validateFullModalVisibile } from '../../../shapeLabellerModal/style';
 
 let canvas = null;
 
@@ -15,6 +16,8 @@ window.windowResize = () => {
     labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
     resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
   }
+  const isWindowResized = true;
+  validateFullModalVisibile(isWindowResized);
 };
 
 function assignCanvasForResizeWhenWindowResize(canvasObj) {

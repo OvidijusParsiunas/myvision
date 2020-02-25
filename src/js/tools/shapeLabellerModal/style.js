@@ -148,11 +148,11 @@ function hideShapeLabellerModal() {
   setShapeLabellerModalDisplayedState(false);
 }
 
-function validateFullModalVisibile() {
+function validateFullModalVisibile(isWindowResized) {
   if (windowHasScrollbar()) {
     parentElement.style.top = '';
     parentElement.style.bottom = '5px';
-  } else {
+  } else if (!isWindowResized) {
     parentElement.style.bottom = '';
   }
 }
@@ -171,8 +171,8 @@ function setListHeightVariables() {
 function setLocalVariables() {
   inputElement = document.getElementById('shape-labeller-modal-input');
   parentElement = document.getElementById('shape-labeller-modal-parent');
-  submitButtonElement = document.getElementById('shape-labeller-modal-submit-button');
   optionsElement = document.getElementById('shape-labeller-modal-options');
+  submitButtonElement = document.getElementById('shape-labeller-modal-submit-button');
   setListHeightVariables();
 }
 
@@ -246,6 +246,6 @@ function showShapeLabellerModal() {
 
 export {
   showShapeLabellerModal, hideShapeLabellerModal, changeStyleWhenInputEmpty,
-  changeStyleWhenInputInvalid, initialiseShapeLabellerModalOptionsList,
   resetShapeLabellerModalOptions, getShapeLabellerModalInputText, changeStyleToAllowSubmit,
+  changeStyleWhenInputInvalid, initialiseShapeLabellerModalOptionsList, validateFullModalVisibile,
 };
