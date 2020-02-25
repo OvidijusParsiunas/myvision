@@ -103,7 +103,7 @@ function widthOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHeig
 function widthOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowMaxWidth = `${newCanvasWidth - 1}px`;
   const zoomOverflowWrapperLeft = 'calc(50% + 1px)';
-  const zoomOverflowWrapperMarginTop = `${Math.round(scrollWidth / 2) - 1}px`;
+  const zoomOverflowWrapperMarginTop = `${Math.round(scrollWidth / 2) - 0.5}px`;
   const stubMarginLeft = `${originalWidth - 5}px`;
   const stubMarginTop = `${originalHeight - 14}px`;
   const canvasLeft = 'calc(50% + 0.5px)';

@@ -21,8 +21,8 @@ function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked) {
     leftMouseBtnDown = true;
     const pointer = canvas.getPointer(canvas.e);
-    boundingBoxProps.origX = pointer.x;
-    boundingBoxProps.origY = pointer.y;
+    boundingBoxProps.origX = pointer.x < 0 ? 0 : pointer.x;
+    boundingBoxProps.origY = pointer.y < 0 ? 0 : pointer.y;
     boundingBox = new fabric.Rect(boundingBoxProperties.tempBoundingBoxProps(boundingBoxProps));
     canvas.add(boundingBox);
   }

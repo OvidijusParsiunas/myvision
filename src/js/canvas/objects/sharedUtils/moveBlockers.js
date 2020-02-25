@@ -1,6 +1,18 @@
 import { getCurrentZoomState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 
+function validateAndFixOutOfBoundsPolygonShapePoints(polygon) {
+  polygon.points.forEach((point) => {
+    if (point.x < 0) { point.x = 0; }
+    if (point.y < 0) { point.y = 0; }
+  });
+}
+
+function validateAndFixOutOfBoundsPolygonPoint(polygonPoint) {
+  if (polygonPoint.top < 0) { polygonPoint.top = 0; }
+  if (polygonPoint.left < 0) { polygonPoint.left = 0; }
+}
+
 function preventShapesOutOfBounds(shape, canvas) {
   shape.setCoords();
   // multiple if statements because of corners
@@ -83,4 +95,8 @@ function preventOutOfBounds(shape, canvas) {
   }
 }
 
-export { preventOutOfBounds as default };
+export {
+  preventOutOfBounds,
+  validateAndFixOutOfBoundsPolygonPoint,
+  validateAndFixOutOfBoundsPolygonShapePoints,
+};

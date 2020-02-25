@@ -18,7 +18,7 @@ import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes
 import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
 import { getImageProperties } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
-import preventOutOfBounds from '../../../objects/sharedUtils/moveBlockers';
+import { preventOutOfBounds, validateAndFixOutOfBoundsPolygonShapePoints } from '../../../objects/sharedUtils/moveBlockers';
 
 let canvas = null;
 let labelObject = null;
@@ -187,6 +187,7 @@ function polygonMouseUpEvents(event) {
     clearControlSelectedObject();
   } else if (polygonMoved) {
     highlightLabelInTheList(event.target.id);
+    validateAndFixOutOfBoundsPolygonShapePoints(event.target);
     setEditablePolygonWhenPolygonMoved(event);
     highlightShapeFill(event.target.id);
     canvas.bringToFront(labelObject);

@@ -8,6 +8,7 @@ import {
   setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { validateAndFixOutOfBoundsPolygonPoint } from '../sharedUtils/moveBlockers';
 
 let canvas = null;
 let pointArray = [];
@@ -199,6 +200,7 @@ function addPoint(pointer) {
     canvas.add(invisiblePoint);
     point.set(polygonProperties.firstPoint());
   }
+  validateAndFixOutOfBoundsPolygonPoint(point);
   pointArray.push(point);
   activeShape.sendToBack();
   canvas.selection = false;
