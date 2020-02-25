@@ -18,7 +18,7 @@ import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes
 import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
 import { getImageProperties } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
-import { preventOutOfBounds, validateAndFixOutOfBoundsPolygonShapePoints } from '../../../objects/sharedUtils/moveBlockers';
+import { preventOutOfBoundsPoints, preventOutOfBoundsShapes, validateAndFixOutOfBoundsPolygonShapePoints } from '../../../objects/sharedUtils/moveBlockers';
 
 let canvas = null;
 let labelObject = null;
@@ -224,7 +224,7 @@ function polygonMoveEvents(event) {
     setShapeMovingState(true);
     const { shapeName } = event.target;
     if (shapeName === 'polygon') {
-      preventOutOfBounds(event.target, canvas);
+      preventOutOfBoundsShapes(event.target, canvas);
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
@@ -233,7 +233,7 @@ function polygonMoveEvents(event) {
       labelObject.left = event.target.left - event.target.labelOffsetLeft;
       polygonMoved = true;
     } else if (shapeName === 'point') {
-      preventOutOfBounds(event.target, canvas);
+      preventOutOfBoundsPoints(event.target, canvas);
       if (event.target.pointId === 0) {
         movePolygonPoint(event, labelObject);
       } else {
@@ -242,7 +242,7 @@ function polygonMoveEvents(event) {
       resetPolygonSelectableAreaAfterPointMoved();
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
-      preventOutOfBounds(event.target, canvas);
+      preventOutOfBoundsShapes(event.target, canvas);
       labelObject.setCoords();
       labelObject.top = event.target.top;
       labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;
