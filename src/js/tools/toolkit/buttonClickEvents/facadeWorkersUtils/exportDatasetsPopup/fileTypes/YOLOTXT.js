@@ -4,6 +4,7 @@ import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions, getMaxUsedLabelIndex } from '../../../../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateManager';
+import adjustBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
 
 /*
 If there is an error on generating zips - try to use a file receiver
@@ -61,6 +62,20 @@ function generateClassesFileData(classesData) {
   return classesString;
 }
 
+function adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions) {
+  const left = Math.round(boundingBox.left / dimensions.scaleX);
+  const top = Math.round(boundingBox.top / dimensions.scaleY);
+  const width = Math.round(boundingBox.width / dimensions.scaleX);
+  const height = Math.round(boundingBox.height / dimensions.scaleY);
+  const returnedCoordinates = adjustBoundingBoxCoordinates(left, top, width, height, dimensions);
+  return {
+    xMin: returnedCoordinates.newLeft,
+    yMin: returnedCoordinates.newTop,
+    newWidth: returnedCoordinates.newWidth,
+    newHeight: returnedCoordinates.newHeight,
+  };
+}
+
 function getClassIdByLabelText(classes, text) {
   return classes[text];
 }
@@ -68,12 +83,13 @@ function getClassIdByLabelText(classes, text) {
 function parseBoundingBoxData(boundingBox, dimensions, classes) {
   const boundingBoxData = {};
   boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText);
-  const width = (boundingBox.width / dimensions.scaleX) / dimensions.originalWidth;
-  const height = (boundingBox.height / dimensions.scaleY) / dimensions.originalHeight;
-  const xmiddle = ((boundingBox.left + (boundingBox.width / 2)) / dimensions.scaleX)
-    / dimensions.originalWidth;
-  const ymiddle = ((boundingBox.top + (boundingBox.height / 2)) / dimensions.scaleY)
-    / dimensions.originalHeight;
+  const {
+    xMin, yMin, newWidth, newHeight,
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions);
+  const width = newWidth / dimensions.originalWidth;
+  const height = newHeight / dimensions.originalHeight;
+  const xmiddle = (xMin + (newWidth / 2)) / dimensions.originalWidth;
+  const ymiddle = (yMin + (newHeight / 2)) / dimensions.originalHeight;
   boundingBoxData.xmiddle = xmiddle.toFixed(6);
   boundingBoxData.ymiddle = ymiddle.toFixed(6);
   boundingBoxData.width = width.toFixed(6);
