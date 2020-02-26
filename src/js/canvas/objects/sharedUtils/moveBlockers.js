@@ -88,8 +88,6 @@ function preventOutOfBoundsPoints(shape, canvas) {
 }
 
 export {
-  preventOutOfBoundsShapes,
-  preventOutOfBoundsPoints,
-  validateAndFixOutOfBoundsPolygonPoint,
-  validateAndFixOutOfBoundsPolygonShapePoints,
+  preventOutOfBoundsPoints, validateAndFixOutOfBoundsPolygonPoint,
+  preventOutOfBoundsShapes, validateAndFixOutOfBoundsPolygonShapePoints,
 };

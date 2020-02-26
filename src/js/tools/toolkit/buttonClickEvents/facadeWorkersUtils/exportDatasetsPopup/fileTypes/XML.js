@@ -3,6 +3,7 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getCurrentImageId } from '../../stateManager';
+import adjustBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
 
 /*
 If there is an error on generating zips - try to use a file receiver
@@ -54,12 +55,25 @@ function isShapeTruncated(xMin, yMin, xMax, yMax, dimensions) {
   || isShapeOnBottomRightBordersOfImage(xMax, yMax, dimensions);
 }
 
-function parseBoundingBoxData(boundingBox, dimensions) {
-  const parsedShapeData = {};
-  const xMin = Math.round(boundingBox.left / dimensions.scaleX);
-  const yMin = Math.round(boundingBox.top / dimensions.scaleY);
+function adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions) {
+  const left = Math.round(boundingBox.left / dimensions.scaleX);
+  const top = Math.round(boundingBox.top / dimensions.scaleY);
   const width = Math.round(boundingBox.width / dimensions.scaleX);
   const height = Math.round(boundingBox.height / dimensions.scaleY);
+  const returnedCoordinates = adjustBoundingBoxCoordinates(left, top, width, height, dimensions);
+  return {
+    xMin: returnedCoordinates.newLeft,
+    yMin: returnedCoordinates.newTop,
+    width: returnedCoordinates.newWidth,
+    height: returnedCoordinates.newHeight,
+  };
+}
+
+function parseBoundingBoxData(boundingBox, dimensions) {
+  const parsedShapeData = {};
+  const {
+    xMin, yMin, width, height,
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions);
   const xMax = xMin + width;
   const yMax = yMin + height;
   const truncated = isShapeTruncated(xMin, yMin, xMax, yMax, dimensions) ? 1 : 0;

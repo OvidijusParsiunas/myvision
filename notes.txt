@@ -139,6 +139,8 @@ grey out the zoom button when it is above 3.9
 
 check whether horizontal overflow scrollbar looks ok
 
+remove unused export labels files
+
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
 was not able to check ML generated label list overflow
