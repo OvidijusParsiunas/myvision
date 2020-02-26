@@ -4,7 +4,7 @@ import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions, getMaxUsedLabelIndex } from '../../../../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateManager';
-import adjustBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
+import adjustIncorrectBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
 
 /*
 If there is an error on generating zips - try to use a file receiver
@@ -62,38 +62,24 @@ function generateClassesFileData(classesData) {
   return classesString;
 }
 
-function adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions) {
-  const left = Math.round(boundingBox.left / dimensions.scaleX);
-  const top = Math.round(boundingBox.top / dimensions.scaleY);
-  const width = Math.round(boundingBox.width / dimensions.scaleX);
-  const height = Math.round(boundingBox.height / dimensions.scaleY);
-  const returnedCoordinates = adjustBoundingBoxCoordinates(left, top, width, height, dimensions);
-  return {
-    xMin: returnedCoordinates.newLeft,
-    yMin: returnedCoordinates.newTop,
-    newWidth: returnedCoordinates.newWidth,
-    newHeight: returnedCoordinates.newHeight,
-  };
-}
-
 function getClassIdByLabelText(classes, text) {
   return classes[text];
 }
 
-function parseBoundingBoxData(boundingBox, dimensions, classes) {
+function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   const boundingBoxData = {};
   boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText);
   const {
-    xMin, yMin, newWidth, newHeight,
-  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions);
-  const width = newWidth / dimensions.originalWidth;
-  const height = newHeight / dimensions.originalHeight;
-  const xmiddle = (xMin + (newWidth / 2)) / dimensions.originalWidth;
-  const ymiddle = (yMin + (newHeight / 2)) / dimensions.originalHeight;
-  boundingBoxData.xmiddle = xmiddle.toFixed(6);
-  boundingBoxData.ymiddle = ymiddle.toFixed(6);
-  boundingBoxData.width = width.toFixed(6);
-  boundingBoxData.height = height.toFixed(6);
+    left, top, width, height,
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
+  const shapeWidthToImageWidth = width / imageDimensions.originalWidth;
+  const shapeHeightToImageHeight = height / imageDimensions.originalHeight;
+  const xmiddleToImageWidth = (left + (width / 2)) / imageDimensions.originalWidth;
+  const ymiddleToImageHeight = (top + (height / 2)) / imageDimensions.originalHeight;
+  boundingBoxData.xmiddle = xmiddleToImageWidth.toFixed(6);
+  boundingBoxData.ymiddle = ymiddleToImageHeight.toFixed(6);
+  boundingBoxData.width = shapeWidthToImageWidth.toFixed(6);
+  boundingBoxData.height = shapeHeightToImageHeight.toFixed(6);
   return boundingBoxData;
 }
 
@@ -150,7 +136,6 @@ function getClassesData() {
   }
   return classesData;
 }
-
 
 function saveCurrentImageDetails(allImageProperties) {
   const currentlySelectedImageId = getCurrentImageId();

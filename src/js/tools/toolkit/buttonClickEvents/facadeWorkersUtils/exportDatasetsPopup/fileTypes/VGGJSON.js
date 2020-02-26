@@ -2,15 +2,16 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getCurrentImageId } from '../../stateManager';
+import adjustIncorrectBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
 
-function getJSONPolygonPointsCoordinates(polygon, dimensions) {
+function getJSONPolygonPointsCoordinates(polygon, imageDimensions) {
   const coordinatesObj = {
     all_points_x: [],
     all_points_y: [],
   };
   polygon.points.forEach((point) => {
-    coordinatesObj.all_points_x.push(Math.round(point.x / dimensions.scaleX));
-    coordinatesObj.all_points_y.push(Math.round(point.y / dimensions.scaleY));
+    coordinatesObj.all_points_x.push(Math.round(point.x / imageDimensions.scaleX));
+    coordinatesObj.all_points_y.push(Math.round(point.y / imageDimensions.scaleY));
   });
   return coordinatesObj;
 }
@@ -31,12 +32,46 @@ function generateTempDownloadableJSONElement(json) {
   return pom;
 }
 
-function getShapesData(shapes, dimensions) {
+// function parseBoundingBoxData(boundingBox, dimensions) {
+//   const {
+//     xMin, yMin, newWidth, newHeight,
+//   } = adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions);
+//   const shapeCoordinatesObject = {};
+//   shapeCoordinatesObject.shape_attributes = {};
+//   shapeCoordinatesObject.shape_attributes.name = 'rect';
+//   shapeCoordinatesObject.shape_attributes.x = xMin;
+//   shapeCoordinatesObject.shape_attributes.y = yMin;
+//   shapeCoordinatesObject.shape_attributes.width = newWidth;
+//   shapeCoordinatesObject.shape_attributes.height = newHeight;
+//   shapeCoordinatesObject.region_attributes = {};
+//   shapeCoordinatesObject.region_attributes.name = boundingBox.shapeLabelText;
+//   return shapeCoordinatesObject;
+// }
+
+function parseBoundingBoxData(boundingBox, imageDimensions) {
+  const {
+    left, top, width, height,
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
+  return {
+    shape_attributes: {
+      name: 'rect',
+      x: left,
+      y: top,
+      width,
+      height,
+    },
+    region_attributes: {
+      name: boundingBox.shapeLabelText,
+    },
+  };
+}
+
+function parseShapesData(shapes, imageDimensions) {
   const shapesCoordinates = [];
   Object.keys(shapes).forEach((key) => {
     const shape = shapes[key].shapeRef;
     if (shape.shapeName === 'polygon') {
-      const coordinatesObj = getJSONPolygonPointsCoordinates(shape, dimensions);
+      const coordinatesObj = getJSONPolygonPointsCoordinates(shape, imageDimensions);
       shapesCoordinates.push({
         shape_attributes: {
           name: 'polygon',
@@ -48,18 +83,7 @@ function getShapesData(shapes, dimensions) {
         },
       });
     } else if (shape.shapeName === 'bndBox') {
-      shapesCoordinates.push({
-        shape_attributes: {
-          name: 'rect',
-          x: Math.round(shape.left / dimensions.scaleX),
-          y: Math.round(shape.top / dimensions.scaleY),
-          width: Math.round(shape.width / dimensions.scaleX),
-          height: Math.round(shape.height / dimensions.scaleY),
-        },
-        region_attributes: {
-          name: shape.shapeLabelText,
-        },
-      });
+      shapesCoordinates.push(parseBoundingBoxData(shape, imageDimensions));
     }
   });
   return shapesCoordinates;
@@ -69,7 +93,7 @@ function parseImageData(image) {
   const parsedImageData = {};
   parsedImageData.filename = image.name;
   parsedImageData.size = image.size;
-  parsedImageData.regions = getShapesData(image.shapes, image.imageDimensions);
+  parsedImageData.regions = parseShapesData(image.shapes, image.imageDimensions);
   return parsedImageData;
 }
 

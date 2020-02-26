@@ -3,7 +3,7 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getCurrentImageId } from '../../stateManager';
-import adjustBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
+import adjustIncorrectBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
 
 /*
 If there is an error on generating zips - try to use a file receiver
@@ -42,48 +42,34 @@ function downloadZip(xml) {
   });
 }
 
-function isShapeOnBottomRightBordersOfImage(xMax, yMax, dimensions) {
-  return xMax >= dimensions.originalWidth || yMax >= dimensions.originalHeight;
+function isShapeOnBottomRightBordersOfImage(xMax, yMax, imageDimensions) {
+  return xMax >= imageDimensions.originalWidth || yMax >= imageDimensions.originalHeight;
 }
 
 function isShapeOnTopLeftBordersOfImage(xMin, yMin) {
   return xMin <= 0 || yMin <= 0;
 }
 
-function isShapeTruncated(xMin, yMin, xMax, yMax, dimensions) {
+function isShapeTruncated(xMin, yMin, xMax, yMax, imageDimensions) {
   return isShapeOnTopLeftBordersOfImage(xMin, yMin)
-  || isShapeOnBottomRightBordersOfImage(xMax, yMax, dimensions);
+  || isShapeOnBottomRightBordersOfImage(xMax, yMax, imageDimensions);
 }
 
-function adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions) {
-  const left = Math.round(boundingBox.left / dimensions.scaleX);
-  const top = Math.round(boundingBox.top / dimensions.scaleY);
-  const width = Math.round(boundingBox.width / dimensions.scaleX);
-  const height = Math.round(boundingBox.height / dimensions.scaleY);
-  const returnedCoordinates = adjustBoundingBoxCoordinates(left, top, width, height, dimensions);
-  return {
-    xMin: returnedCoordinates.newLeft,
-    yMin: returnedCoordinates.newTop,
-    width: returnedCoordinates.newWidth,
-    height: returnedCoordinates.newHeight,
-  };
-}
-
-function parseBoundingBoxData(boundingBox, dimensions) {
+function parseBoundingBoxData(boundingBox, imageDimensions) {
   const parsedShapeData = {};
   const {
-    xMin, yMin, width, height,
-  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, dimensions);
-  const xMax = xMin + width;
-  const yMax = yMin + height;
-  const truncated = isShapeTruncated(xMin, yMin, xMax, yMax, dimensions) ? 1 : 0;
+    left, top, width, height,
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
+  const xMax = left + width;
+  const yMax = top + height;
+  const truncated = isShapeTruncated(left, top, xMax, yMax, imageDimensions) ? 1 : 0;
   parsedShapeData.name = boundingBox.shapeLabelText;
   parsedShapeData.pose = 'Unspecified';
   parsedShapeData.truncated = truncated;
   parsedShapeData.difficult = 0;
   parsedShapeData.bndbox = {};
-  parsedShapeData.bndbox.xmin = xMin;
-  parsedShapeData.bndbox.ymin = yMin;
+  parsedShapeData.bndbox.xmin = left;
+  parsedShapeData.bndbox.ymin = top;
   parsedShapeData.bndbox.xmax = xMax;
   parsedShapeData.bndbox.ymax = yMax;
   return parsedShapeData;

@@ -2,6 +2,7 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getCurrentImageId } from '../../stateManager';
+import adjustIncorrectBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
 
 const columnHeaders = {
   filename: 'filename',
@@ -50,17 +51,16 @@ function buildCSVRowObj(imageData, boundingBoxData) {
   return { ...imageData, ...boundingBoxData };
 }
 
-function getBoundingBoxData(boundingBox, dimensions) {
+function parseBoundingBoxData(boundingBox, imageDimensions) {
   const boundingBoxData = {};
   boundingBoxData.class = boundingBox.shapeLabelText;
-  const topLeftX = boundingBox.left / dimensions.scaleX;
-  const topleftY = boundingBox.top / dimensions.scaleY;
-  const width = boundingBox.width / dimensions.scaleX;
-  const height = boundingBox.height / dimensions.scaleY;
-  boundingBoxData.xmin = Math.round(topLeftX);
-  boundingBoxData.ymin = Math.round(topleftY);
-  boundingBoxData.xmax = Math.round(topLeftX + width);
-  boundingBoxData.ymax = Math.round(topleftY + height);
+  const {
+    left, top, width, height,
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
+  boundingBoxData.xmin = Math.round(left);
+  boundingBoxData.ymin = Math.round(top);
+  boundingBoxData.xmax = Math.round(left + width);
+  boundingBoxData.ymax = Math.round(top + height);
   return boundingBoxData;
 }
 
@@ -80,7 +80,7 @@ function getImageAndAnnotationData(allImageProperties) {
       Object.keys(image.shapes).forEach((key) => {
         const shape = image.shapes[key].shapeRef;
         if (shape.shapeName === 'bndBox') {
-          const boundingBoxData = getBoundingBoxData(shape, image.imageDimensions);
+          const boundingBoxData = parseBoundingBoxData(shape, image.imageDimensions);
           const csvRow = buildCSVRowObj(imageData, boundingBoxData);
           imageAndAnnotationData.push(csvRow);
         }
@@ -112,11 +112,6 @@ function downloadCSV() {
   const csvString = constructCsvString(csvArray);
   const downloadableElement = generateTempDownloadableJSONElement(csvString);
   downloadableElement.click();
-  // VGG16
-  // VGG19
-  // InceptionV3
-  // MobileNet
-  // ResNet50dimensions
 }
 
 export { downloadCSV as default };

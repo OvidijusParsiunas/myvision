@@ -3,6 +3,7 @@ import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions } from '../../../../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateManager';
+import adjustIncorrectBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
 
 function getJSONFileName() {
   const currentDate = new Date();
@@ -20,15 +21,15 @@ function generateTempDownloadableJSONElement(json) {
   return pom;
 }
 
-function getPolygonProperties(polygon, dimensions) {
+function getPolygonProperties(polygon, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
   let minX = 999999999999;
   let minY = 999999999999;
   let maxX = 0;
   let maxY = 0;
   polygon.points.forEach((point) => {
-    const pointX = Math.round(point.x / dimensions.scaleX);
-    const pointY = Math.round(point.y / dimensions.scaleY);
+    const pointX = Math.round(point.x / imageDimensions.scaleX);
+    const pointY = Math.round(point.y / imageDimensions.scaleY);
     properties.segmentation.push(pointX);
     properties.segmentation.push(pointY);
     if (pointX < minX) { minX = pointX; }
@@ -46,22 +47,21 @@ function getPolygonProperties(polygon, dimensions) {
   return properties;
 }
 
-function getBoundingBoxProperties(boundingBox, dimensions) {
+function getBoundingBoxProperties(boundingBox, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
-  const topLeftX = boundingBox.left / dimensions.scaleX;
-  const topleftY = boundingBox.top / dimensions.scaleY;
-  const width = boundingBox.width / dimensions.scaleX;
-  const height = boundingBox.height / dimensions.scaleY;
-  properties.segmentation.push(Math.round(topLeftX));
-  properties.segmentation.push(Math.round(topleftY));
-  properties.segmentation.push(Math.round(topLeftX + width));
-  properties.segmentation.push(Math.round(topleftY));
-  properties.segmentation.push(Math.round(topLeftX + width));
-  properties.segmentation.push(Math.round(topleftY + height));
-  properties.segmentation.push(Math.round(topLeftX));
-  properties.segmentation.push(Math.round(topleftY + height));
-  properties.bbox.push(Math.round(topLeftX));
-  properties.bbox.push(Math.round(topleftY));
+  const {
+    left, top, width, height,
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
+  properties.segmentation.push(Math.round(left));
+  properties.segmentation.push(Math.round(top));
+  properties.segmentation.push(Math.round(left + width));
+  properties.segmentation.push(Math.round(top));
+  properties.segmentation.push(Math.round(left + width));
+  properties.segmentation.push(Math.round(top + height));
+  properties.segmentation.push(Math.round(left));
+  properties.segmentation.push(Math.round(top + height));
+  properties.bbox.push(Math.round(left));
+  properties.bbox.push(Math.round(top));
   properties.bbox.push(Math.round(width));
   properties.bbox.push(Math.round(height));
   properties.area = Math.round(width * height);
@@ -72,22 +72,22 @@ function getCategoryIdByLabelText(categories, text) {
   return categories[text];
 }
 
-function getShapeProperties(shape, dimensions) {
+function getShapeProperties(shape, imageDimensions) {
   if (shape.shapeName === 'polygon') {
-    return getPolygonProperties(shape, dimensions);
+    return getPolygonProperties(shape, imageDimensions);
   }
   if (shape.shapeName === 'bndBox') {
-    return getBoundingBoxProperties(shape, dimensions);
+    return getBoundingBoxProperties(shape, imageDimensions);
   }
   return { segmentation: [], bbox: [], area: 0 };
 }
 
-function parseImageShapeData(shape, imageId, shapeId, dimensions, categories) {
+function parseImageShapeData(shape, imageId, shapeId, imageDimensions, categories) {
   const parsedImageShapeData = {};
   parsedImageShapeData.id = shapeId;
   parsedImageShapeData.image_id = imageId;
   parsedImageShapeData.category_id = getCategoryIdByLabelText(categories, shape.shapeLabelText);
-  const shapeProperties = getShapeProperties(shape, dimensions);
+  const shapeProperties = getShapeProperties(shape, imageDimensions);
   parsedImageShapeData.segmentation = shapeProperties.segmentation;
   parsedImageShapeData.area = shapeProperties.area;
   parsedImageShapeData.bbox = shapeProperties.bbox;
