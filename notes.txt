@@ -139,8 +139,6 @@ grey out the zoom button when it is above 3.9
 
 check whether horizontal overflow scrollbar looks ok
 
-remove unused export labels files
-
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
 bug where you can draw a bounding box, but upon stretching slowly to the right, the blocking edge does not work
