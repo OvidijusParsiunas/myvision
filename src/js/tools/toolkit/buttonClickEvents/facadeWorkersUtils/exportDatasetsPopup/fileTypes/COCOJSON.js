@@ -3,7 +3,7 @@ import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions } from '../../../../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateManager';
-import adjustIncorrectBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
+import { adjustIncorrectBoundingBoxCoordinates, adjustIncorrectPolygonPointCoordinates } from '../sharedUtils/adjustShapeCoordinates';
 
 function getJSONFileName() {
   const currentDate = new Date();
@@ -21,15 +21,16 @@ function generateTempDownloadableJSONElement(json) {
   return pom;
 }
 
-function getPolygonProperties(polygon, imageDimensions) {
+function parsePolygonProperties(polygon, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
   let minX = 999999999999;
   let minY = 999999999999;
   let maxX = 0;
   let maxY = 0;
   polygon.points.forEach((point) => {
-    const pointX = Math.round(point.x / imageDimensions.scaleX);
-    const pointY = Math.round(point.y / imageDimensions.scaleY);
+    const {
+      pointX, pointY,
+    } = adjustIncorrectPolygonPointCoordinates(point, imageDimensions);
     properties.segmentation.push(pointX);
     properties.segmentation.push(pointY);
     if (pointX < minX) { minX = pointX; }
@@ -47,7 +48,7 @@ function getPolygonProperties(polygon, imageDimensions) {
   return properties;
 }
 
-function getBoundingBoxProperties(boundingBox, imageDimensions) {
+function parseBoundingBoxProperties(boundingBox, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
   const {
     left, top, width, height,
@@ -72,12 +73,12 @@ function getCategoryIdByLabelText(categories, text) {
   return categories[text];
 }
 
-function getShapeProperties(shape, imageDimensions) {
+function parseShapeProperties(shape, imageDimensions) {
   if (shape.shapeName === 'polygon') {
-    return getPolygonProperties(shape, imageDimensions);
+    return parsePolygonProperties(shape, imageDimensions);
   }
   if (shape.shapeName === 'bndBox') {
-    return getBoundingBoxProperties(shape, imageDimensions);
+    return parseBoundingBoxProperties(shape, imageDimensions);
   }
   return { segmentation: [], bbox: [], area: 0 };
 }
@@ -87,7 +88,7 @@ function parseImageShapeData(shape, imageId, shapeId, imageDimensions, categorie
   parsedImageShapeData.id = shapeId;
   parsedImageShapeData.image_id = imageId;
   parsedImageShapeData.category_id = getCategoryIdByLabelText(categories, shape.shapeLabelText);
-  const shapeProperties = getShapeProperties(shape, imageDimensions);
+  const shapeProperties = parseShapeProperties(shape, imageDimensions);
   parsedImageShapeData.segmentation = shapeProperties.segmentation;
   parsedImageShapeData.area = shapeProperties.area;
   parsedImageShapeData.bbox = shapeProperties.bbox;

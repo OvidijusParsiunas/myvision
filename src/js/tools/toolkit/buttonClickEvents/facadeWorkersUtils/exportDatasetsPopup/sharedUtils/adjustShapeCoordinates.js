@@ -1,3 +1,5 @@
+import boundingBoxProps from '../../../../../../canvas/objects/boundingBox/properties';
+
 const widthDelta = 3.5;
 const heightDelta = 2;
 
@@ -7,9 +9,17 @@ function adjustBoundingBoxCoordinates(left, top, width, height, imageDimensions)
   } = imageDimensions;
   if (left + width > originalWidth - widthDelta / scaleX) {
     width = originalWidth - left;
+  } else {
+    width += Math.round(
+      boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth,
+    );
   }
   if (top + height > originalHeight - heightDelta / scaleY) {
     height = originalHeight - top;
+  } else {
+    height += Math.round(
+      boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth,
+    );
   }
   return {
     finalLeft: left,
@@ -44,4 +54,22 @@ function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions) {
   };
 }
 
-export { adjustIncorrectBoundingBoxCoordinates as default };
+function adjustIncorrectPolygonPointCoordinates(polygonPoint, imageDimensions) {
+  let pointX = Math.round(polygonPoint.x / imageDimensions.scaleX);
+  let pointY = Math.round(polygonPoint.y / imageDimensions.scaleY);
+  const {
+    scaleX, scaleY, originalWidth, originalHeight,
+  } = imageDimensions;
+  if (pointX > originalWidth - widthDelta / scaleX) {
+    pointX = originalWidth;
+  }
+  if (pointY > originalHeight - heightDelta / scaleY) {
+    pointY = originalHeight;
+  }
+  return {
+    pointX,
+    pointY,
+  };
+}
+
+export { adjustIncorrectBoundingBoxCoordinates, adjustIncorrectPolygonPointCoordinates };

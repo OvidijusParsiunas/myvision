@@ -143,6 +143,11 @@ remove unused export labels files
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
+bug where you can draw a bounding box, but upon stretching slowly to the right, the blocking edge does not work
+(probably not an error but a side-effect from reducing the canvas width)
+
+bug where drawing a new polygon and then clicking default events does not remove the polygon
+
 was not able to check ML generated label list overflow
 not able to check export labels popover as font not downloaded
 fix image width overflow for broad ones

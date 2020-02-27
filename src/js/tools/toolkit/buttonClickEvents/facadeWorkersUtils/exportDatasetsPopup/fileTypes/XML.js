@@ -3,7 +3,7 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getCurrentImageId } from '../../stateManager';
-import adjustIncorrectBoundingBoxCoordinates from '../sharedUtils/adjustShapeCoordinates';
+import { adjustIncorrectBoundingBoxCoordinates } from '../sharedUtils/adjustShapeCoordinates';
 
 /*
 If there is an error on generating zips - try to use a file receiver

@@ -42,7 +42,7 @@ function getFinalBoundingBoxProps() {
   };
 }
 
-function getStandaloneBoundingBoxProperties(dimensions) {
+function getStandaloneBoundingBoxProperties(imageDimensions) {
   return {
     shapeName: 'bndBox',
     objectCaching: false,
@@ -51,10 +51,10 @@ function getStandaloneBoundingBoxProperties(dimensions) {
     perPixelTargetFind: false,
     cornerSize: 8,
     strokeWidth: finalBoundingBoxStrokeWidth,
-    left: dimensions.left * dimensions.scaleX,
-    top: dimensions.top * dimensions.scaleY,
-    width: dimensions.width * dimensions.scaleX,
-    height: dimensions.height * dimensions.scaleY,
+    left: imageDimensions.left * imageDimensions.scaleX,
+    top: imageDimensions.top * imageDimensions.scaleY,
+    width: imageDimensions.width * imageDimensions.scaleX,
+    height: imageDimensions.height * imageDimensions.scaleY,
     stroke: 'hsla(112, 57%, 50%, 1)',
     fill: 'rgba(255,0,0,0)',
     lockScalingFlip: true,
