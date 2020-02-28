@@ -254,7 +254,7 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
   }
   if (currentZoomState > 1.00001) {
     // right
-    if ((boundingBox.width + boundingBox.left) > imageWidth / currentZoomState) {
+    if ((boundingBox.width + boundingBox.left) > imageWidth / currentZoomState - 1) {
       // console.log('3');
       blockingRight = true;
       if (controlSelected.topRight) {
@@ -290,7 +290,7 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
       }
     }
     // bottom
-    if ((boundingBox.height + boundingBox.top) > imageHeight / currentZoomState) {
+    if ((boundingBox.height + boundingBox.top) > imageHeight / currentZoomState - 2) {
     //   console.log('4');
       if (controlSelected.bottomRight) {
         blocking = true;
@@ -326,7 +326,7 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
     }
   } else {
     // right
-    if ((boundingBox.width + boundingBox.left) > canvas.width) {
+    if ((boundingBox.width + boundingBox.left) > canvas.width - 2.4) {
       // console.log('5');
       blockingRight = true;
       if (controlSelected.topRight) {
