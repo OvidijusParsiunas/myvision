@@ -4,7 +4,7 @@ import {
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { isPolygonDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
 import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
-import { getContinuousDrawingState } from '../buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getContinuousDrawingState } from '../buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { canSwitchImage } from '../../imageList/imageList';
 import { removeActiveButtonPopup } from '../buttonHoverEvents/buttonHoverEvents';
 

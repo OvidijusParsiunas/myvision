@@ -6,7 +6,7 @@ import { prepareLabelShape } from '../../../tools/shapeLabellerModal/labellingPr
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
-} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { preventOutOfBoundsPoints } from '../sharedUtils/moveBlockers';
 
 let canvas = null;

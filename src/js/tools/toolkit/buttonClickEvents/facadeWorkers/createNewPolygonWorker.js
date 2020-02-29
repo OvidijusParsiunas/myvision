@@ -3,7 +3,7 @@ import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseE
 import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
-} from '../facadeWorkersUtils/stateManager';
+} from '../facadeWorkersUtils/stateMachine';
 
 function initiateCreateNewPolygonEvents(canvas) {
   purgeCanvasMouseEvents(canvas);

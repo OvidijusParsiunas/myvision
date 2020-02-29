@@ -1,4 +1,4 @@
-import { getMovableObjectsState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getMovableObjectsState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { setPolygonLabelOffsetProps } from '../label/label';
 
 function prepareObjectsForEditablePolygonPoints(object, isDrawing) {

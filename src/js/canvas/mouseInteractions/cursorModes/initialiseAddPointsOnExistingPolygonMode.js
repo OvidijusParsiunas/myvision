@@ -1,5 +1,5 @@
 import polygonProperties from '../../objects/polygon/properties';
-import { getDefaultState, getAddingPolygonPointsState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getDefaultState, getAddingPolygonPointsState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 
 // change - objectsProperties
 // follow pattern used in remove points

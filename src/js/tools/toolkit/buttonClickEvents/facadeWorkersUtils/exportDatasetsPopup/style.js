@@ -1,5 +1,5 @@
 import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';
-import { setExportDatasetsPopUpOpenState } from '../stateManager';
+import { setExportDatasetsPopUpOpenState } from '../stateMachine';
 
 let isCheckboxSelected = false;
 let isExportButtonActive = false;

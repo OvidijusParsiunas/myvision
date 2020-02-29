@@ -1,7 +1,7 @@
 import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
-import { getCurrentImageId } from '../../stateManager';
+import { getCurrentImageId } from '../../stateMachine';
 import { adjustIncorrectBoundingBoxCoordinates, adjustIncorrectPolygonPointCoordinates } from '../sharedUtils/adjustShapeCoordinates';
 
 function getJSONPolygonPointsCoordinates(polygon, imageDimensions) {

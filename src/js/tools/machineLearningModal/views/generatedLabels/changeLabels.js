@@ -1,4 +1,4 @@
-import { setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { setChangingMLGeneratedLabelNamesState } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import {
   changeEditedLabelText, displayViewElements,
   canChangeRowToStopEdit, stopEditingActiveTextElement,

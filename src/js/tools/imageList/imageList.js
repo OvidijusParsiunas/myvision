@@ -4,7 +4,7 @@ import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label'
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
-import { setDefaultState, setCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { setDefaultState, setCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';

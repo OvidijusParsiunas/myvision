@@ -141,8 +141,6 @@ check whether horizontal overflow scrollbar looks ok
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-rename state manager to state machine
-
 need better point highlighting (on hover) when adding points
 
 was not able to check ML generated label list overflow

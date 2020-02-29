@@ -1,4 +1,4 @@
-import { getExportDatasetsPopUpOpenState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getExportDatasetsPopUpOpenState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 
 function refreshExportLabelsPopover() {
   if (!getExportDatasetsPopUpOpenState()) {

@@ -9,7 +9,7 @@ import {
   getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState, getShapeMovingState,
   getAddingPolygonPointsState, setSettingsPopUpOpenState, setEditingLabelId,
   getRemovingPolygonPointsState, getDefaultState, setExportDatasetsPopUpOpenState,
-} from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+} from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,

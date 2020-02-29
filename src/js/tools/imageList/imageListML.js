@@ -1,4 +1,4 @@
-import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getCurrentImageId } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 
 let allImageDataRef = null;
 

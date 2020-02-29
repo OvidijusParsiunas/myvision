@@ -19,7 +19,7 @@ import {
 import {
   getEditingLabelId, getLastPolygonActionWasMoveState,
   getNewShapeSelectedViaLabelListState, setNewShapeSelectedViaLabelListState,
-} from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+} from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { highlightShapeFill, defaultShapeFill } from '../../allShapes/allShapes';
 
 // this is the polygonInteractionsManager

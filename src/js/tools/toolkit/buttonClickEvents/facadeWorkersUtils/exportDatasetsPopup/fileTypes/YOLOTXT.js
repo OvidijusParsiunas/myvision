@@ -3,7 +3,7 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions, getMaxUsedLabelIndex } from '../../../../../labelList/labelOptions';
-import { getCurrentImageId } from '../../stateManager';
+import { getCurrentImageId } from '../../stateMachine';
 import { adjustIncorrectBoundingBoxCoordinates } from '../sharedUtils/adjustShapeCoordinates';
 
 /*

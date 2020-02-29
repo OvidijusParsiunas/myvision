@@ -1,4 +1,4 @@
-import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
+import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from '../facadeWorkersUtils/stateMachine';
 
 // the logic here will need to be exported into a shared styles file for popups
 function windowHasScrollbar() {

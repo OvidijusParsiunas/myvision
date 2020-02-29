@@ -6,7 +6,7 @@ import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode'
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
-} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 
 let canvas = null;

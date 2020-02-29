@@ -1,5 +1,5 @@
 import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp, displayExportLabelsPopUp } from '../facadeWorkersUtils/exportDatasetsPopup/style';
-import { getExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateManager';
+import { getExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateMachine';
 
 // the logic here will need to be exported into a shared styles file for popups
 function windowHasScrollbar() {

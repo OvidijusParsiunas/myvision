@@ -1,6 +1,6 @@
 import { getAllImageData } from '../../../imageList/imageList';
 import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getCurrentImageId } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import {
   displayErrorMessage, changeToMLCompleteStyle, removeCancelButton, changeToNoImagesFoundStyle,
   displayNextButton, displayRetryButton, changeToLoadingStyle, removeLoadingContent,

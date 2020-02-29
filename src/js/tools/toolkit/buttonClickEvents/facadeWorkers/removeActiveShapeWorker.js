@@ -13,7 +13,7 @@ import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/
 import {
   getAddingPolygonPointsState, getContinuousDrawingState, getCurrentImageId,
   getRemovingPolygonPointsState, setRemovingPolygonPointsState,
-} from '../facadeWorkersUtils/stateManager';
+} from '../facadeWorkersUtils/stateMachine';
 import { isLabelling, removeTargetShape } from '../../../shapeLabellerModal/labellingProcess';
 import { hideShapeLabellerModal } from '../../../shapeLabellerModal/style';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';

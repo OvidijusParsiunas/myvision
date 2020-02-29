@@ -1,5 +1,5 @@
 /* import { getMovableObjectsState } from
- '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+ '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
  should be done here */
 
 const boundingBoxProps = {};

@@ -2,7 +2,7 @@ import { resizeCanvasAndImage, resizeCanvas } from './uploadFile/drawImageOnCanv
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../../../canvas/objects/label/properties';
 import { zoomCanvas } from '../facadeWorkers/zoomWorker';
-import { getCurrentZoomState } from './stateManager';
+import { getCurrentZoomState } from './stateMachine';
 import { validateFullModalVisibile } from '../../../shapeLabellerModal/style';
 
 let canvas = null;

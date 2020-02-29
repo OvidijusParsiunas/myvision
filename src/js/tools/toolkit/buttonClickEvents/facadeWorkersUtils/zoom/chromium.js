@@ -1,4 +1,4 @@
-import { setDoubleScrollCanvasState } from '../stateManager';
+import { setDoubleScrollCanvasState } from '../stateMachine';
 
 let zoomOverflowWrapperElement;
 let zoomOverflowElement;

@@ -1,6 +1,6 @@
 import setDrawingMode from './setDrawingMode';
 import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
-import { getLastDrawingModeState } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
+import { getLastDrawingModeState } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 
 let resetCanvasEventsFunc = null;
 let canvas = null;
