@@ -146,6 +146,10 @@ bug where you can draw a bounding box, but upon stretching slowly to the right, 
 
 bug where drawing a new polygon and then clicking default events does not remove the polygon
 
+bug where attempting to add polygon points, click on canvas to remove visible points and hit default events
+
+need better point highlighting (on hover) when adding points
+
 was not able to check ML generated label list overflow
 not able to check export labels popover as font not downloaded
 fix image width overflow for broad ones

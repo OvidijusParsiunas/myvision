@@ -100,6 +100,7 @@ function addPointImpl(pointer) {
   const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
   canvas.add(point);
   pointsArray.push(point);
+  preventOutOfBoundsPoints(point, canvas);
   tempPointIndex += 1;
 }
 

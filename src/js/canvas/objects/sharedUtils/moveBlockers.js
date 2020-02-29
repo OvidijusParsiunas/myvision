@@ -8,11 +8,6 @@ function validateAndFixOutOfBoundsPolygonShapePoints(polygon) {
   });
 }
 
-function validateAndFixOutOfBoundsPolygonPoint(polygonPoint) {
-  if (polygonPoint.top < 0) { polygonPoint.top = 0; }
-  if (polygonPoint.left < 0) { polygonPoint.left = 0; }
-}
-
 function preventOutOfBoundsShapes(shape, canvas) {
   shape.setCoords();
   // multiple if statements because of corners
@@ -88,6 +83,5 @@ function preventOutOfBoundsPoints(shape, canvas) {
 }
 
 export {
-  preventOutOfBoundsPoints, validateAndFixOutOfBoundsPolygonPoint,
-  preventOutOfBoundsShapes, validateAndFixOutOfBoundsPolygonShapePoints,
+  preventOutOfBoundsPoints, validateAndFixOutOfBoundsPolygonShapePoints, preventOutOfBoundsShapes,
 };

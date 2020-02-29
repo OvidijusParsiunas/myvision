@@ -7,7 +7,7 @@ import {
   getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateManager';
-import { preventOutOfBoundsPoints, validateAndFixOutOfBoundsPolygonPoint } from '../sharedUtils/moveBlockers';
+import { preventOutOfBoundsPoints } from '../sharedUtils/moveBlockers';
 
 let canvas = null;
 let pointArray = [];
@@ -162,7 +162,7 @@ function addPoint(pointer) {
     canvas.add(invisiblePoint);
     point.set(polygonProperties.firstPoint());
   }
-  validateAndFixOutOfBoundsPolygonPoint(point);
+  preventOutOfBoundsPoints(point, canvas);
   pointArray.push(point);
   activeShape.sendToBack();
   canvas.selection = false;
