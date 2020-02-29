@@ -141,12 +141,7 @@ check whether horizontal overflow scrollbar looks ok
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-bug where you can draw a bounding box, but upon stretching slowly to the right, the blocking edge does not work
-(probably not an error but a side-effect from reducing the canvas width)
-
 bug where drawing a new polygon and then clicking default events does not remove the polygon
-
-bug where attempting to add polygon points, click on canvas to remove visible points and hit default events
 
 need better point highlighting (on hover) when adding points
 

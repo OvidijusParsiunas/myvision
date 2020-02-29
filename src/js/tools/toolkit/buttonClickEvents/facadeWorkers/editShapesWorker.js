@@ -6,7 +6,9 @@ import {
   setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState,
   setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
 } from '../facadeWorkersUtils/stateManager';
-import { cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import {
+  cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon,
+} from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import { getSelectedPolygonIdForAddPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
@@ -15,7 +17,6 @@ import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInte
 function initiateEditShapesEvent(canvas) {
   canvas.discardActiveObject();
   if (!getDefaultState()) {
-    purgeCanvasMouseEvents(canvas);
     if (getAddingPolygonPointsState()) {
       if (isAddingPointsToPolygon()) {
         assignAddPointsOnExistingPolygonEvents(canvas);
@@ -28,19 +29,18 @@ function initiateEditShapesEvent(canvas) {
       setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
       const currentlySelectedPolygonId = getSelectedPolygonIdForAddPoints();
       assignDefaultEvents(canvas, currentlySelectedPolygonId);
-      setDefaultState(true);
     } else if (getRemovingPolygonPointsState()) {
       purgeCanvasMouseEvents(canvas);
       cleanPolygonPointsArray();
       setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
       const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
       assignDefaultEvents(canvas, currentlySelectedPolygonId);
-      setDefaultState(true);
       setRemovingPolygonPointsState(false);
     } else {
+      purgeCanvasMouseEvents(canvas);
+      assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
       setDefaultCursorMode(canvas);
     }
-    assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
     if (getAlteringPolygonPointsState()) {
       setAlteringPolygonPointsState(false);
     }

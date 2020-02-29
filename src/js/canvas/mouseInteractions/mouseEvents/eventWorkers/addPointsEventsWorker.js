@@ -135,6 +135,7 @@ function mouseOutEvents(event) {
 function getSelectedPolygonIdForAddPoints() {
   return selectedPolygonId;
 }
+
 function getScrollWidth() {
   // create a div with the scroll
   const div = document.createElement('div');
