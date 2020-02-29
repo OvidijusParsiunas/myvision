@@ -141,7 +141,7 @@ check whether horizontal overflow scrollbar looks ok
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-bug where drawing a new polygon and then clicking default events does not remove the polygon
+rename state manager to state machine
 
 need better point highlighting (on hover) when adding points
 

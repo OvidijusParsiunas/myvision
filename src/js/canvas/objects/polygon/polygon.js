@@ -177,6 +177,7 @@ function getTempPolygon() {
   return null;
 }
 
+// should be a global state
 function isPolygonDrawingInProgress() {
   return activeShape !== null;
 }
