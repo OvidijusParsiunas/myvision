@@ -141,8 +141,7 @@ check whether horizontal overflow scrollbar looks ok
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-was not able to check ML generated label list overflow
-not able to check export labels popover as font not downloaded
+was not able to check ML generated label list overflow border chrome fix on smaller screens
 fix image width overflow for broad ones
 
 check new drawing blockers
