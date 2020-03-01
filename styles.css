@@ -742,7 +742,7 @@
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: calc((100vh + 119px) / 2 - 1px);
+  max-height: calc((100vh + 111px) / 2 - 1px);
   scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
 }
