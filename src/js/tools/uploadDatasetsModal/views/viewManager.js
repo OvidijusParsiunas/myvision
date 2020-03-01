@@ -4,43 +4,44 @@
 // import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView } from './noObjectsFound/style';
 // import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
 // import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/buttonEvents';
-// import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
+import registerDescriptionViewButtonEventHandlers from './description/buttonEvents';
+import { assignDescriptionViewLocalVariables, prepareDescriptionView } from './description/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 
 let currentViewNumber = 1;
-let machineLearningData = {};
+// let machineLearningData = {};
 let modalElement = null;
 
-function setMachineLearningData(machineLearningDataArg) {
-  machineLearningData = machineLearningDataArg;
-}
+// function setMachineLearningData(machineLearningDataArg) {
+//   machineLearningData = machineLearningDataArg;
+// }
 
-function isMachineLearningObjectEmpty() {
-  if (Object.keys(machineLearningData).length === 0 && machineLearningData.constructor === Object) {
-    return true;
-  }
-  let isEmpty = true;
-  Object.keys(machineLearningData).forEach((key) => {
-    if (machineLearningData[key].length > 0) {
-      isEmpty = false;
-    }
-  });
-  return isEmpty;
-}
+// function isMachineLearningObjectEmpty() {
+//   if (Object.keys(machineLearningData).length === 0 && machineLearningData.constructor === Object) {
+//     return true;
+//   }
+//   let isEmpty = true;
+//   Object.keys(machineLearningData).forEach((key) => {
+//     if (machineLearningData[key].length > 0) {
+//       isEmpty = false;
+//     }
+//   });
+//   return isEmpty;
+// }
 
 // the following architecture was originally prepared for more views
 function displayNextView() {
   switch (currentViewNumber) {
     case 1:
-    //   prepareInstantiateMachineLearningView();
+      prepareDescriptionView();
       currentViewNumber += 1;
       break;
     case 2:
-      if (isMachineLearningObjectEmpty()) {
-        // displayNoObjectsFoundView();
-      } else {
-        // displayGeneratedLabelsView(machineLearningData);
-      }
+      // if (isMachineLearningObjectEmpty()) {
+      // displayNoObjectsFoundView();
+      // } else {
+      // displayGeneratedLabelsView(machineLearningData);
+      // }
       currentViewNumber += 1;
       break;
     case 3:
@@ -71,14 +72,9 @@ function assignViewManagerLocalVariables() {
 
 function initialiseUploadDatasetsModal() {
   assignViewManagerLocalVariables();
-//   registerInitiateMachineLearningViewButtonEventHandlers(displayNextView,
-//     setMachineLearningData, closeModal);
-//   assignInitiateMachineLearningViewLocalVariables();
-//   registerGeneratedLabelsViewButtonEventHandlers(closeModal);
-//   assignGeneratedLabelsViewLocalVariables();
-//   registerNoObjectsFoundViewButtonEventHandlers(closeModal);
-//   assignNoObjectsFoundViewLocalVariables();
-//   displayNextView();
+  registerDescriptionViewButtonEventHandlers(displayNextView);
+  assignDescriptionViewLocalVariables();
+  window.cancelUploadDatasetsModal = closeModal;
 }
 
 export { displayModal, initialiseUploadDatasetsModal };
