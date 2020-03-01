@@ -15,6 +15,7 @@ import switchImages from './facadeWorkers/switchImageWorker';
 import toggleSettingsPopUp from './facadeWorkers/toggleSettingsPopUpWorker';
 import triggerImageUpload from './facadeWorkers/uploadImageButtonWorker';
 import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
+import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker';
 
 let canvas = null;
 
@@ -48,6 +49,10 @@ function assignCanvasMouseEvents(canvasObj) {
 
 function exportDatasetsBtnClick() {
   toggleExportDatasetsPopUp(canvas);
+}
+
+function uploadDatasetsBtnClick() {
+  displayUploadDatasetsModal();
 }
 
 function machineLearningBtnClick() {
@@ -101,6 +106,7 @@ export {
   movableObjectsBtnClick,
   toggleLabelsVisibilityBtnClick,
   exportDatasetsBtnClick,
+  uploadDatasetsBtnClick,
   machineLearningBtnClick,
   uploadImageInputClick,
   addPointsBtnClick,

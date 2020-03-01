@@ -145,6 +145,8 @@ was not able to check ML generated label list overflow
 not able to check export labels popover as font not downloaded
 fix image width overflow for broad ones
 
+check new drawing blockers
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders

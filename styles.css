@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 
-.popup-label-title {
+.small-title {
   font-size: 16.5px;
   padding-left: 8px;
   padding-top: 6px;
@@ -415,7 +415,7 @@
   font-family: K2D, sans-serif;
 */
 
-#machine-learning-modal-parent {
+.modal-parent {
   position: absolute;
 	font-family: Arial, Helvetica, sans-serif;
   font-size: 14.5px;
@@ -425,25 +425,34 @@
   border-style: solid;
   border-color: grey;
   z-index: 3;
-  height: 249px;
   margin: auto;
   top: 0;
-  left: -151px;
   bottom: 0;
   right: 0;
-  width: 381px;
 }
 
-#machine-learning-modal-title {
+.modal-title {
   margin-top: 4px;
   margin-left: 10px;
 }
 
-#machine-learning-modal-description {
+.modal-title-border-line {
+  width: 100%;
+  margin-top: 5px;
+  border-top: solid 1px #e6e6e6;
+}
+
+.modal-description {
   margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
   width: 350px;
+}
+
+#machine-learning-modal-parent {
+  height: 249px;
+  width: 381px;
+  left: -151px;
 }
 
 .machine-learning-modal-messages {
@@ -619,6 +628,16 @@
 
 .reverse-icon {
   transform: scale(-1, 1);
+}
+
+#upload-datasets-modal-parent {
+  height: 249px;
+  width: 381px;
+  left: -151px;
+}
+
+.upload-datasets-description-break {
+  padding-top: 4px;
 }
 
 #left-side-bar {
@@ -1264,7 +1283,7 @@ body {
   font-size: 15px;
 }
 
-#popup-label-title {
+#small-title {
   font-family: Arial;
   font-size: 15px;
   padding-left: 5px;

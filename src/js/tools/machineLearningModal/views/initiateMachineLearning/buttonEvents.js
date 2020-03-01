@@ -8,7 +8,7 @@ import {
   removeMLCoverageSelectionButtons,
 } from './style';
 
-function cancelInitiateMLModal(closeModal) {
+function cancelMLModal(closeModal) {
   if (getProgressStatus()) {
     cancelMachineLearning();
     prepareInstantiateMachineLearningView();
@@ -47,7 +47,7 @@ function registerButtonEventHandlers(nextViewCallback, setMachineLearningData, c
   window.changeInitiateMLToNextView = moveToNextView.bind(
     this, nextViewCallback,
   );
-  window.cancelInitiateMLModal = cancelInitiateMLModal.bind(this, closeModal);
+  window.cancelMLModal = cancelMLModal.bind(this, closeModal);
   window.retryMachineLearning = startMachineLearningMiddleware.bind(this,
     nextViewCallback, setMachineLearningData, true);
   window.startMachineLearningWithCoverage = machineLearningCoverageMiddleware.bind(this,

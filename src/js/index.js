@@ -1,5 +1,6 @@
 import { constructCanvas } from './canvas/canvas';
 import initialiseShapeLabellerModal from './tools/shapeLabellerModal/buttons';
+import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/toolkit/buttonClickEvents/facadeWorkersUtils/exportDatasetsPopup/buttonClickEvents';
 import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/buttonClickEvents';
@@ -13,6 +14,7 @@ import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers'
 
 constructCanvas();
 initialiseShapeLabellerModal();
+initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();
 initialiseExportLabelsPopUp();
 assignToolkitButtonClickEvents();
