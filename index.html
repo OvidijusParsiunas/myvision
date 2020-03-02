@@ -102,7 +102,7 @@
       <div id="upload-datasets-modal-description" class="modal-description">
         Upload existing images/datasets from your computer and continue working on them in MyLabel.
         <br>
-        <div class="upload-datasets-description-break"></div>
+        <div class="upload-datasets-modal-description-break"></div>
         It is important to note that everything you upload here will never leave the privacy of your computer.
       </div>
       <div id="machine-learning-modal-check-mark-parent" style="display: none">
@@ -113,14 +113,19 @@
       <div id="machine-learning-modal-loading-text" style="display: none">Loading...</div>
       <div id="machine-learning-modal-error-messages" style="display: none" class="machine-learning-modal-messages"></div>
       <div id="machine-learning-modal-info-messages" class="machine-learning-modal-messages"></div>
-      <div id="upload-datasets-buttons" class="buttons modal-buttons">
-          <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="startUploadDatasets()">Start</div>
-          <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
-          <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
-          <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
-          <div id="machine-learning-modal-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
-          <div id="machine-learning-modal-initiate-new-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')">New Images</div>
-        </div>
+      <div id="upload-datsets-modal-upload-datasets-outer-container" style="display: none">
+        <div id="upload-datsets-modal-upload-datasets-title"></div>
+       </div>
+      <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
+        <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="startUploadDatasets()">Start</div>
+        <input id='uploadImage' type='file' onchange="uploadImage(this)" multiple accept="image/*" hidden/>
+        <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerImageUpload()">Upload</div>
+        <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
+        <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
+        <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
+        <div id="machine-learning-modal-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
+        <div id="machine-learning-modal-initiate-new-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')">New Images</div>
+      </div>
       <div id="machine-learning-modal-generated-labels-outer-container" style="display: none">
           <div id="machine-learning-modal-generated-labels-inner-container">
             <div id="machine-learning-modal-generated-labels">

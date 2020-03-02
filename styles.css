@@ -632,12 +632,18 @@
   left: -151px;
 }
 
-#upload-datasets-buttons {
+#upload-datasets-modal-buttons {
   margin-top: 23px;
 }
 
-.upload-datasets-description-break {
+.upload-datasets-modal-description-break {
   padding-top: 4px;
+}
+
+#upload-datsets-modal-upload-datasets-title {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 16px;
 }
 
 #left-side-bar {

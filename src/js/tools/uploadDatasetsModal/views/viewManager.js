@@ -6,6 +6,8 @@
 // import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/buttonEvents';
 import registerDescriptionViewButtonEventHandlers from './description/buttonEvents';
 import { assignDescriptionViewLocalVariables, prepareDescriptionView } from './description/style';
+import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
+import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 
 let currentViewNumber = 1;
@@ -34,7 +36,8 @@ function displayNextView() {
   switch (currentViewNumber) {
     case 1:
       prepareDescriptionView();
-      currentViewNumber += 1;
+      // jumping to upload datasets
+      currentViewNumber += 2;
       break;
     case 2:
       // if (isMachineLearningObjectEmpty()) {
@@ -45,6 +48,7 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 3:
+      prepareUploadDatasetsView();
       currentViewNumber += 1;
       break;
     default:
@@ -74,6 +78,8 @@ function initialiseUploadDatasetsModal() {
   assignViewManagerLocalVariables();
   registerDescriptionViewButtonEventHandlers(displayNextView);
   assignDescriptionViewLocalVariables();
+  registerUploadDatasetsViewButtonEventHandlers(displayNextView);
+  assignUploadDatasetsViewLocalVariables();
   displayNextView();
   window.cancelUploadDatasetsModal = closeModal;
 }

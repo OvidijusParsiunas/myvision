@@ -1,9 +1,8 @@
 let isNoImagesFoundInfoDisplayed = false;
 
-let descriptionElement = null;
-let startButtonElement = null;
-let cancelButtonElement = null;
-let buttonsGroupElement = null;
+let titleElement = null;
+let uploadButton = null;
+let uploadDatasetsOuterContainerElement = null;
 
 // function displayUploadImagesButton() {
 //   toolkitUploadImagesButton.style.zIndex = 3;
@@ -73,64 +72,43 @@ let buttonsGroupElement = null;
 //   descriptionElement.style.marginBottom = '';
 // }
 
-function displayCancelButtonElement() {
-  cancelButtonElement.style.display = '';
+function setTitleElement(title) {
+  titleElement.innerHTML = title;
 }
 
-function displayStartButtonElement() {
-  startButtonElement.style.display = '';
+function displayUploadButtonElement() {
+  uploadButton.style.display = '';
 }
 
-function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = '21px';
+function hideUploadButtonElement() {
+  uploadButton.style.display = '';
 }
 
-function hideStartButtonElement() {
-  startButtonElement.style.display = 'none';
+function displayUploadDatasetsOuterContainerElement() {
+  uploadDatasetsOuterContainerElement.style.display = '';
 }
 
-function displayDescription() {
-  descriptionElement.style.display = '';
+function hideUploadDatasetsOuterContainerElement() {
+  uploadDatasetsOuterContainerElement.style.display = 'none';
 }
 
-function hideDescriptionElement() {
-  descriptionElement.style.display = 'none';
+function prepareUploadDatasetsView() {
+  setTitleElement('COCO JSON');
+  displayUploadButtonElement();
+  displayUploadDatasetsOuterContainerElement();
 }
 
-function moveDescriptionToLowerPosition() {
-  descriptionElement.style.marginTop = '18px';
+function hideUploadDatasetsViewAssets() {
+  hideUploadButtonElement();
+  hideUploadDatasetsOuterContainerElement();
 }
 
-function getDefaultDescriptionMarkup() {
-  return `
-    Upload existing images/datasets from your computer and continue working on them in MyLabel.
-    <br>
-    <div class="upload-datasets-modal-description-break"></div>
-    It is important to note that everything you upload here will never leave the privacy of your computer.`;
-}
-
-function prepareDescriptionView() {
-  descriptionElement.innerHTML = getDefaultDescriptionMarkup();
-  displayDescription();
-  moveDescriptionToLowerPosition();
-  displayStartButtonElement();
-  moveButtonsGroupElementToLowerPosition();
-  displayCancelButtonElement();
-}
-
-function hideDescriptionViewAssets() {
-  hideStartButtonElement();
-  // this is temporary to fit the upload datasets view
-  hideDescriptionElement();
-}
-
-function assignDescriptionViewLocalVariables() {
-  descriptionElement = document.getElementById('upload-datasets-modal-description');
-  startButtonElement = document.getElementById('upload-datasets-modal-start-button');
-  cancelButtonElement = document.getElementById('upload-datasets-modal-cancel-button');
-  buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
+function assignUploadDatasetsViewLocalVariables() {
+  titleElement = document.getElementById('upload-datsets-modal-upload-datasets-title');
+  uploadDatasetsOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-outer-container');
+  uploadButton = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
 }
 
 export {
-  assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescriptionViewAssets,
+  assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets,
 };
