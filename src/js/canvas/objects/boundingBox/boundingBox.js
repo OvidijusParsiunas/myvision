@@ -16,6 +16,7 @@ const boundingBoxProps = {};
 let boundingBox = null;
 let drawingFinished = false;
 let finishDrawingBoundingBoxClick = null;
+let rightBoundingBoxDelta = 0;
 
 function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked) {
@@ -114,8 +115,10 @@ function drawBoundingBox(event) {
   } else {
     // right
     if (boundingBoxProps.origX < pointer.x) {
-      if (pointer.x > canvas.width - 2.5) {
-        boundingBox.set({ width: Math.floor(canvas.width - boundingBoxProps.origX - 2.5) });
+      if (pointer.x > canvas.width - rightBoundingBoxDelta) {
+        boundingBox.set({
+          width: Math.floor(canvas.width - boundingBoxProps.origX - rightBoundingBoxDelta),
+        });
       } else if (mouseMovedLeft) {
         boundingBox.set({ left: boundingBoxProps.origX });
         boundingBox.set({ width: pointer.x - boundingBoxProps.origX + 0.5 });
@@ -184,6 +187,10 @@ function skipMouseUpEvent() {
     instantiateNewBoundingBox();
   });
   assignSetEditablePolygonOnClickFunc();
+}
+
+function setRightBoundingBoxDrawingDelta(delta) {
+  rightBoundingBoxDelta = delta;
 }
 
 function prepareCanvasForNewBoundingBox(canvasObj) {
@@ -303,6 +310,7 @@ export {
   instantiateNewBoundingBox,
   isBoundingBoxDrawingFinished,
   prepareCanvasForNewBoundingBox,
+  setRightBoundingBoxDrawingDelta,
   createNewBoundingBoxFromCoordinates,
   prepareCanvasForNewBoundingBoxesWithMachineLearning,
 };

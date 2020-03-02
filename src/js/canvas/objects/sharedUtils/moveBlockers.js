@@ -1,11 +1,25 @@
 import { getCurrentZoomState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 
+let rightBoundingBoxDelta = 0;
+
 function validateAndFixOutOfBoundsPolygonShapePoints(polygon) {
   polygon.points.forEach((point) => {
     if (point.x < 0) { point.x = 0; }
     if (point.y < 0) { point.y = 0; }
   });
+}
+
+function preventRightOutOfBoundsBoundingBox(shape, canvas) {
+  if (shape.left + shape.width > canvas.width - rightBoundingBoxDelta) {
+    shape.left = Math.floor(canvas.width - shape.width - rightBoundingBoxDelta);
+  }
+}
+
+function preventRightOutOfBoundsPolygon(shape, canvas) {
+  if (shape.left + shape.width > canvas.width - 1.8) {
+    shape.left = Math.floor(canvas.width - shape.width - 1.8);
+  }
 }
 
 function preventOutOfBoundsShapes(shape, canvas) {
@@ -35,8 +49,10 @@ function preventOutOfBoundsShapes(shape, canvas) {
     }
   } else {
     // right
-    if (shape.left + shape.width > canvas.width - 2.3) {
-      shape.left = Math.floor(canvas.width - shape.width - 2.3);
+    if (shape.shapeName === 'bndBox') {
+      preventRightOutOfBoundsBoundingBox(shape, canvas);
+    } else if (shape.shapeName === 'polygon') {
+      preventRightOutOfBoundsPolygon(shape, canvas);
     }
     // bottom
     if (shape.top + shape.height > canvas.height - 2) {
@@ -82,6 +98,11 @@ function preventOutOfBoundsPoints(shape, canvas) {
   }
 }
 
+function setRightBoundingBoxMovingDelta(delta) {
+  rightBoundingBoxDelta = delta;
+}
+
 export {
-  preventOutOfBoundsPoints, validateAndFixOutOfBoundsPolygonShapePoints, preventOutOfBoundsShapes,
+  setRightBoundingBoxMovingDelta, preventOutOfBoundsShapes,
+  validateAndFixOutOfBoundsPolygonShapePoints, preventOutOfBoundsPoints,
 };

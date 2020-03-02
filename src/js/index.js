@@ -6,6 +6,7 @@ import initialiseExportLabelsPopUp from './tools/toolkit/buttonClickEvents/facad
 import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/buttonClickEvents';
 import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
+import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import { initialiseGlobalStyleSetup } from './tools/globalStyle/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageListFunctionality } from './tools/imageList/imageList';
@@ -25,3 +26,4 @@ initialiseLabelListFunctionality();
 initialiseImageListFunctionality();
 initialiseImageSwitchPanelFunctionality();
 registerGlobalKeyEventHandlers();
+initialiseShapeManipulationDeltas();

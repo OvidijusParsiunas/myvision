@@ -137,14 +137,9 @@ the shape labeller modal is too thick, check if can be thin at the start and res
 
 grey out the zoom button when it is above 3.9
 
-check whether horizontal overflow scrollbar looks ok
-
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
 was not able to check ML generated label list overflow border chrome fix on smaller screens
-fix image width overflow for broad ones
-
-check new drawing blockers
 
 Things to check on chrome browsers on other pcs:
 

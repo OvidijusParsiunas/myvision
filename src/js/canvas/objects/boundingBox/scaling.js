@@ -6,6 +6,7 @@ let originalBoundingBoxBottomCoordinate = 0;
 let originalBoundingBoxLeftCoordinate = 0;
 let originalBoundingBoxTopCoordinate = 0;
 let originalBoundingBoxRightCoordinate = 0;
+let rightBoundingBoxDelta = 0;
 
 const controlSelected = {
   middleTop: false,
@@ -26,6 +27,10 @@ function prepareBoundingBoxToBeEdited(boundingBox) {
   } else if (boundingBox.left + boundingBox.width > width * currentZoomState - 2) {
     boundingBox.width = (width * currentZoomState - 2) - boundingBox.left;
   }
+}
+
+function setRightBoundingBoxScalingDelta(delta) {
+  rightBoundingBoxDelta = delta;
 }
 
 function clearControlSelectedObject() {
@@ -326,7 +331,7 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
     }
   } else {
     // right
-    if ((boundingBox.width + boundingBox.left) > canvas.width - 2.4) {
+    if ((boundingBox.width + boundingBox.left) > canvas.width - rightBoundingBoxDelta) {
       // console.log('5');
       blockingRight = true;
       if (controlSelected.topRight) {
@@ -340,7 +345,7 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
             boundingBox.height = originalBoundingBoxBottomCoordinate - pointer.y;
           }
         }
-        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2.4);
+        boundingBox.width = Math.floor(canvas.width - boundingBox.left - rightBoundingBoxDelta);
         boundingBox.left = originalBoundingBoxLeftCoordinate;
         labelObject.left = boundingBox.left + labelLeftOffset;
         labelObject.top = boundingBox.top;
@@ -353,12 +358,12 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
           boundingBox.top = originalBoundingBoxTopCoordinate;
           boundingBox.height = pointer.y - originalBoundingBoxTopCoordinate;
         }
-        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2.4);
+        boundingBox.width = Math.floor(canvas.width - boundingBox.left - rightBoundingBoxDelta);
         boundingBox.left = originalBoundingBoxLeftCoordinate;
         labelObject.left = boundingBox.left + labelLeftOffset;
         labelObject.top = boundingBox.top;
       } else {
-        boundingBox.width = Math.floor(canvas.width - boundingBox.left - 2.4);
+        boundingBox.width = Math.floor(canvas.width - boundingBox.left - rightBoundingBoxDelta);
       }
     }
     // bottom
@@ -404,5 +409,6 @@ function handleBoundingBoxScalingEvents(event, labelObject, canvas) {
 }
 
 export {
-  setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject,
+  setRightBoundingBoxScalingDelta, clearControlSelectedObject,
+  setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents,
 };
