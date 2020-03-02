@@ -3,6 +3,7 @@ let isNoImagesFoundInfoDisplayed = false;
 let descriptionElement = null;
 let startButtonElement = null;
 let cancelButtonElement = null;
+let buttonsGroupElement = null;
 
 // function displayUploadImagesButton() {
 //   toolkitUploadImagesButton.style.zIndex = 3;
@@ -88,6 +89,10 @@ function displayDescription() {
   descriptionElement.style.display = '';
 }
 
+function moveButtonsGroupElementToLowerPosition() {
+  buttonsGroupElement.style.marginTop = '23px';
+}
+
 function getDefaultDescriptionMarkup() {
   return `
     Upload existing images/datasets from your computer and continue working on them in MyLabel.
@@ -97,14 +102,11 @@ function getDefaultDescriptionMarkup() {
 }
 
 function prepareDescriptionView() {
-//   setDefaultDescriptionElementMarginBottom();
   descriptionElement.innerHTML = getDefaultDescriptionMarkup();
   displayDescription();
   displayStartButtonElement();
+  moveButtonsGroupElementToLowerPosition();
   displayCancelButtonElement();
-//   displayStartButton();
-//   displayCancelButton();
-//   removeLoadingContent();
 }
 
 function hideDescriptionViewAssets() {
@@ -115,6 +117,7 @@ function assignDescriptionViewLocalVariables() {
   descriptionElement = document.getElementById('upload-datasets-modal-description');
   startButtonElement = document.getElementById('upload-datasets-modal-start-button');
   cancelButtonElement = document.getElementById('upload-datasets-modal-cancel-button');
+  buttonsGroupElement = document.getElementById('upload-datasets-buttons');
 }
 
 export {

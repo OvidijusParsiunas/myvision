@@ -227,10 +227,6 @@
   font-size: 14.55px;
 }
 
-.machine-learning-modal-buttons {
-  font-size: 14.5px;
-}
-
 .buttons {
   text-align: center;
   margin-top: 3px;
@@ -449,6 +445,10 @@
   width: 350px;
 }
 
+.modal-buttons {
+  font-size: 14.5px;
+}
+
 #machine-learning-modal-parent {
   height: 249px;
   width: 381px;
@@ -523,10 +523,6 @@
     width: 0.75em;
     opacity: 1;
   }
-}
-
-#machine-learning-modal-buttons {
-  margin-top: 12px;
 }
 
 #machine-learning-modal-initiate-next-button {
@@ -634,6 +630,10 @@
   height: 249px;
   width: 381px;
   left: -151px;
+}
+
+#upload-datasets-buttons {
+  margin-top: 23px;
 }
 
 .upload-datasets-description-break {
