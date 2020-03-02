@@ -26,8 +26,6 @@ would really want from the get-go as the rest of the polygon edit tools would en
 when editing label and clicking scroll, should not close the editing process, however not able to fix it
 as click event on the horizontal scroll identifies the target as the label list parent (required)
 
-consider using pretrained models to auto-lab`el the images
-
 Really like a light green / blue and white color theme
 
 
@@ -76,8 +74,6 @@ delete button does not set to a default mode when in continuous mode
 
 add points mode should not delete the currently being drawn polygon and should instead remain in that same mode
 
-shapes should not be out of bounds for the image
-
 delete images button
 
 check when editing label name on the bigger laptop and clicking paste (with vertical overflow present); does
@@ -106,18 +102,11 @@ Confirm UX button border size:
   height: 54px;
 }
 
-Pascal VOC outputs a classes file
-
 arrow keys should go down the dropdown options for a label
 
 try trashcan icon for remove image label
 
-check which one is better, the popup title with bottom border or without
-when choosing the right one, make sure the export-labels-popup-item class is set for each one of the elements
-
-will need to rename the shape labeller modal and machine learning popups naming conventions to modals
-
-try a new border styule for the uploaded images section
+try a new border style for the uploaded images section
 
 inform the user that they are about to export without checking all of the ml generated shapes & images
 
@@ -139,7 +128,11 @@ grey out the zoom button when it is above 3.9
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
+should not be able to upload image with the same name twice
+
 was not able to check ML generated label list overflow border chrome fix on smaller screens
+
+check ml generated modal's initial view buttons group height is nice and acceptable
 
 Things to check on chrome browsers on other pcs:
 

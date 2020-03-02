@@ -81,6 +81,10 @@ function displayStartButtonElement() {
   startButtonElement.style.display = '';
 }
 
+function moveButtonsGroupElementToLowerPosition() {
+  buttonsGroupElement.style.marginTop = '22px';
+}
+
 function hideStartButtonElement() {
   startButtonElement.style.display = 'none';
 }
@@ -89,8 +93,8 @@ function displayDescription() {
   descriptionElement.style.display = '';
 }
 
-function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = '23px';
+function moveDescriptionToLowerPosition() {
+  descriptionElement.style.marginTop = '15px';
 }
 
 function getDefaultDescriptionMarkup() {
@@ -104,6 +108,7 @@ function getDefaultDescriptionMarkup() {
 function prepareDescriptionView() {
   descriptionElement.innerHTML = getDefaultDescriptionMarkup();
   displayDescription();
+  moveDescriptionToLowerPosition();
   displayStartButtonElement();
   moveButtonsGroupElementToLowerPosition();
   displayCancelButtonElement();
