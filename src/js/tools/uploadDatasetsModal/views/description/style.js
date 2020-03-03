@@ -82,7 +82,7 @@ function displayStartButtonElement() {
 }
 
 function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = '21px';
+  buttonsGroupElement.style.marginTop = '18px';
 }
 
 function hideStartButtonElement() {
