@@ -1,7 +1,8 @@
 let isNoImagesFoundInfoDisplayed = false;
 
 let titleElement = null;
-let uploadButton = null;
+let backButtonElement = null;
+let uploadButtonElement = null;
 let uploadDatasetsOuterContainerElement = null;
 
 // function displayUploadImagesButton() {
@@ -77,11 +78,19 @@ function setTitleElement(title) {
 }
 
 function displayUploadButtonElement() {
-  uploadButton.style.display = '';
+  uploadButtonElement.style.display = '';
 }
 
 function hideUploadButtonElement() {
-  uploadButton.style.display = '';
+  uploadButtonElement.style.display = 'none';
+}
+
+function displayBackButton() {
+  backButtonElement.style.display = '';
+}
+
+function hideBackButton() {
+  backButtonElement.style.display = 'none';
 }
 
 function displayUploadDatasetsOuterContainerElement() {
@@ -94,11 +103,13 @@ function hideUploadDatasetsOuterContainerElement() {
 
 function prepareUploadDatasetsView() {
   setTitleElement('COCO JSON');
+  displayBackButton();
   displayUploadButtonElement();
   displayUploadDatasetsOuterContainerElement();
 }
 
 function hideUploadDatasetsViewAssets() {
+  hideBackButton();
   hideUploadButtonElement();
   hideUploadDatasetsOuterContainerElement();
 }
@@ -106,7 +117,8 @@ function hideUploadDatasetsViewAssets() {
 function assignUploadDatasetsViewLocalVariables() {
   titleElement = document.getElementById('upload-datsets-modal-upload-datasets-title');
   uploadDatasetsOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-outer-container');
-  uploadButton = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
+  uploadButtonElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
+  backButtonElement = document.getElementById('upload-datasets-modal-back-button');
 }
 
 export {

@@ -5,14 +5,15 @@
 // import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
 // import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/buttonEvents';
 import registerDescriptionViewButtonEventHandlers from './description/buttonEvents';
-import { assignDescriptionViewLocalVariables, prepareDescriptionView } from './description/style';
+import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescriptionViewAssets } from './description/style';
 import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
-import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView } from './uploadDatasets/style';
+import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 
 let currentViewNumber = 1;
 // let machineLearningData = {};
 let modalElement = null;
+let hideViewFunc = null;
 
 // function setMachineLearningData(machineLearningDataArg) {
 //   machineLearningData = machineLearningDataArg;
@@ -36,6 +37,7 @@ function displayNextView() {
   switch (currentViewNumber) {
     case 1:
       prepareDescriptionView();
+      hideViewFunc = hideDescriptionViewAssets;
       // jumping to upload datasets
       currentViewNumber += 2;
       break;
@@ -49,6 +51,7 @@ function displayNextView() {
       break;
     case 3:
       prepareUploadDatasetsView();
+      hideViewFunc = hideUploadDatasetsViewAssets;
       currentViewNumber += 1;
       break;
     default:
@@ -66,6 +69,7 @@ function displayModal() {
 function closeModal() {
   modalElement.style.display = 'none';
   lightUpWindow();
+  hideViewFunc();
   currentViewNumber = 1;
   displayNextView();
 }
