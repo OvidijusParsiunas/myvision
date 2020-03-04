@@ -3,6 +3,7 @@ let isNoImagesFoundInfoDisplayed = false;
 let titleElement = null;
 let backButtonElement = null;
 let uploadButtonElement = null;
+let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 
 // function displayUploadImagesButton() {
@@ -54,7 +55,7 @@ let uploadDatasetsOuterContainerElement = null;
 //   isNoImagesFoundInfoDisplayed = true;
 // }
 
-// function removeNoImagesFoundStyle() {
+// function removeNoImagesFoundOnMLModalStyle() {
 //   if (isNoImagesFoundInfoDisplayed) {
 //     hideUploadImagesButton();
 //     removeInfoMessage();
@@ -101,8 +102,14 @@ function hideUploadDatasetsOuterContainerElement() {
   uploadDatasetsOuterContainerElement.style.display = 'none';
 }
 
+function setTriggerAcceptedFileFormat(format) {
+  uploadDatasetFilesTriggerElement.accept = format;
+}
+
+// will later take an object argument with relevant input attributes
 function prepareUploadDatasetsView() {
   setTitleElement('COCO JSON');
+  setTriggerAcceptedFileFormat('.csv');
   displayBackButton();
   displayUploadButtonElement();
   displayUploadDatasetsOuterContainerElement();
@@ -118,6 +125,7 @@ function assignUploadDatasetsViewLocalVariables() {
   titleElement = document.getElementById('upload-datsets-modal-upload-datasets-title');
   uploadDatasetsOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-outer-container');
   uploadButtonElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
+  uploadDatasetFilesTriggerElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger');
   backButtonElement = document.getElementById('upload-datasets-modal-back-button');
 }
 

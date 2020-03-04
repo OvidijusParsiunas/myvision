@@ -221,7 +221,7 @@ function changeToNoImagesFoundStyle() {
   isNoImagesFoundInfoDisplayed = true;
 }
 
-function removeNoImagesFoundStyle() {
+function removeNoImagesFoundOnMLModalStyle() {
   if (isNoImagesFoundInfoDisplayed) {
     hideUploadImagesButton();
     removeInfoMessage();
@@ -282,7 +282,7 @@ function assignInitiateMachineLearningViewLocalVariables() {
 
 export {
   hideInitiateMachineLearningViewAssets, displayNextButton,
-  removeNoImagesFoundStyle, removeErrorMessage,
+  removeNoImagesFoundOnMLModalStyle, removeErrorMessage,
   changeToLoadingStyle, removeCancelButton, removeRetryButton,
   displayLoaderWheel, removeLoadingContent, displayRetryButton,
   removeStartButton, disableStartButton, changeToNoImagesFoundStyle,

@@ -119,8 +119,8 @@
       <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
         <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="startUploadDatasets()">Start</div>
         <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-proceed-button">Back</div>
-        <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadImage(this)" multiple accept="image/*" hidden/>
-        <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerDatasetUpload()">Upload</div>
+        <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
+        <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
         <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
         <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
@@ -346,7 +346,7 @@
       <img src="bounding-box.svg" draggable="false" class="tools-button-icon" alt="visibility">
     </button>
     <div class="tools-button-hover-popup" id="upload-datasets-button-popup">Upload Datasets</div>
-    <button id="exportDatasetsButton" class="tools-button" style="text-align: center" onclick="displayMachineLearningModal()" onmouseenter="mouseEnterToolkitButton(event, 'machineLearning')" onmouseleave="mouseLeaveToolkitButton(event)">
+    <button class="tools-button" style="text-align: center" onclick="displayMachineLearningModal()" onmouseenter="mouseEnterToolkitButton(event, 'machineLearning')" onmouseleave="mouseLeaveToolkitButton(event)">
       <img src="check-box.svg" draggable="false" class="tools-button-icon" alt="visibility">
     </button>
     <div class="tools-button-hover-popup" id="machine-learning-button-modal">Machine Learning</div>

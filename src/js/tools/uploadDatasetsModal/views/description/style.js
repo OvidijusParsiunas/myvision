@@ -54,7 +54,7 @@ let buttonsGroupElement = null;
 //   isNoImagesFoundInfoDisplayed = true;
 // }
 
-// function removeNoImagesFoundStyle() {
+// function removeNoImagesFoundOnMLModalStyle() {
 //   if (isNoImagesFoundInfoDisplayed) {
 //     hideUploadImagesButton();
 //     removeInfoMessage();

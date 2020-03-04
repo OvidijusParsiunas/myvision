@@ -13,7 +13,7 @@ import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 let currentViewNumber = 1;
 // let machineLearningData = {};
 let modalElement = null;
-let hideViewFunc = null;
+let hideViewOnCancelFunc = null;
 
 // function setMachineLearningData(machineLearningDataArg) {
 //   machineLearningData = machineLearningDataArg;
@@ -37,7 +37,7 @@ function displayNextView() {
   switch (currentViewNumber) {
     case 1:
       prepareDescriptionView();
-      hideViewFunc = hideDescriptionViewAssets;
+      hideViewOnCancelFunc = hideDescriptionViewAssets;
       // jumping to upload datasets
       currentViewNumber += 2;
       break;
@@ -51,7 +51,7 @@ function displayNextView() {
       break;
     case 3:
       prepareUploadDatasetsView();
-      hideViewFunc = hideUploadDatasetsViewAssets;
+      hideViewOnCancelFunc = hideUploadDatasetsViewAssets;
       currentViewNumber += 1;
       break;
     default:
@@ -69,7 +69,7 @@ function displayModal() {
 function closeModal() {
   modalElement.style.display = 'none';
   lightUpWindow();
-  hideViewFunc();
+  hideViewOnCancelFunc();
   currentViewNumber = 1;
   displayNextView();
 }
