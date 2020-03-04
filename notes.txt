@@ -134,6 +134,8 @@ was not able to check ML generated label list overflow border chrome fix on smal
 
 check ml generated modal's initial view buttons group height is nice and acceptable
 
+change upload datasets view to upload files view
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders
