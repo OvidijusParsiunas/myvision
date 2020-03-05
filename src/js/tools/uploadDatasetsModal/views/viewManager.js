@@ -9,11 +9,14 @@ import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescri
 import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
+import parseCOCOJSONFiles from './uploadDatasets/fileParsers/COCOJSONParser';
+import { setFileParser } from './uploadDatasets/uploadDatasetFilesHandler';
 
 let currentViewNumber = 1;
 // let machineLearningData = {};
 let modalElement = null;
 let hideViewOnCancelFunc = null;
+let datasetsObject = null;
 
 // function setMachineLearningData(machineLearningDataArg) {
 //   machineLearningData = machineLearningDataArg;
@@ -31,6 +34,19 @@ let hideViewOnCancelFunc = null;
 //   });
 //   return isEmpty;
 // }
+
+function getFileParserFunc(format) {
+  switch (format) {
+    case 'COCO JSON':
+      return parseCOCOJSONFiles;
+    default:
+      return null;
+  }
+}
+
+function setDatasetObject(newDatasetsObject) {
+  datasetsObject = newDatasetsObject;
+}
 
 // the following architecture was originally prepared for more views
 function displayNextView() {
@@ -51,6 +67,7 @@ function displayNextView() {
       break;
     case 3:
       prepareUploadDatasetsView();
+      setFileParser(getFileParserFunc('COCO JSON'));
       hideViewOnCancelFunc = hideUploadDatasetsViewAssets;
       currentViewNumber += 1;
       break;
@@ -82,7 +99,7 @@ function initialiseUploadDatasetsModal() {
   assignViewManagerLocalVariables();
   registerDescriptionViewButtonEventHandlers(displayNextView);
   assignDescriptionViewLocalVariables();
-  registerUploadDatasetsViewButtonEventHandlers(displayNextView);
+  registerUploadDatasetsViewButtonEventHandlers(displayNextView, setDatasetObject);
   assignUploadDatasetsViewLocalVariables();
   displayNextView();
   window.cancelUploadDatasetsModal = closeModal;

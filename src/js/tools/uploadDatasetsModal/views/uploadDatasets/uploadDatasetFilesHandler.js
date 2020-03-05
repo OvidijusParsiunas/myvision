@@ -1,6 +1,15 @@
+let fileParserFunc = null;
+let setDatasetObjectFunc = null;
+const datasetObject = {};
+
+function setFileParser(fileParserFuncArg) {
+  fileParserFunc = fileParserFuncArg;
+}
+
 function onFileLoad(imageMetaData, event) {
-  console.log(imageMetaData);
-  console.log(event);
+  const returnedObj = fileParserFunc(event);
+  const { fileFormat, body } = returnedObj;
+  datasetObject[fileFormat] = body;
   // const image = new Image();
   // image.src = event.target.result;
   // addImageFromMultiUploadToList(imageMetadata, image);
@@ -14,6 +23,11 @@ function uploadDatasetFilesHandler(uploadData) {
       reader.readAsDataURL(uploadData.files[i]);
     }
   }
+  setDatasetObjectFunc(datasetObject);
 }
 
-export { uploadDatasetFilesHandler as default };
+function initialiseSetDatasetObjectFunc(setDatasetObjectFuncArg) {
+  setDatasetObjectFunc = setDatasetObjectFuncArg;
+}
+
+export { uploadDatasetFilesHandler, setFileParser, initialiseSetDatasetObjectFunc };

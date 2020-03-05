@@ -6,72 +6,31 @@ let uploadButtonElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 
-// function displayUploadImagesButton() {
-//   toolkitUploadImagesButton.style.zIndex = 3;
-//   toolkitUploadImagesButton.style.border = '2px solid rgb(73, 178, 218)';
-// }
+function createLabelElementMarkup(labelText, id) {
+  return `
+    <div class="machine-learning-modal-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningModalEditLabelButton(this)" onMouseLeave="hideMachineLearningModalEditLabelButton(this)">
+      <img class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" src="edit-disabled.svg" alt="edit">
+      <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" style="display: none" src="edit.svg" alt="edit">
+      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-blue.svg" alt="edit">
+      <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-red.svg" alt="edit">
+      <div id="MLLabelText${id}" class="machine-learning-modal-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
+    </div>
+  `;
+}
 
-// function hideUploadImagesButton() {
-//   toolkitUploadImagesButton.style.zIndex = 1;
-//   toolkitUploadImagesButton.style.border = '';
-// }
-
-// function increasePopUpHeight(height) {
-//   modalParentElement.style.height = height;
-// }
-
-// function setDefaultPopUpHeight() {
-//   modalParentElement.style.height = '';
-// }
-
-// function setDescriptionElementMarginBottom(height) {
-//   descriptionElement.style.marginBottom = height;
-// }
-
-// function setDefaultDescriptionElementMarginBottom() {
-//   descriptionElement.style.marginBottom = '';
-// }
-
-// function changeToLoadingStyle() {
-//   displayLoadingText();
-//   removeDescription();
-//   disableImmediateCancelButtonHoverEffect();
-//   displayLoaderWheel();
-//   removeStartButton();
-// }
-
-// function changeToMLCompleteStyle() {
-//   displayCheckMarkWthAnimation();
-//   changeProgressMessageColor('#1e6d1e');
-//   updateProgressMessage('Finished!');
-// }
-
-// function changeToNoImagesFoundStyle() {
-//   displayUploadImagesButton();
-//   disableStartButton();
-//   displayInfoMessage('Please upload an image to get started.');
-//   setDescriptionElementMarginBottom('3px');
-//   increasePopUpHeight('259px');
-//   isNoImagesFoundInfoDisplayed = true;
-// }
-
-// function removeNoImagesFoundOnMLModalStyle() {
-//   if (isNoImagesFoundInfoDisplayed) {
-//     hideUploadImagesButton();
-//     removeInfoMessage();
-//     enableStartButton();
-//     setDefaultPopUpHeight();
-//     setDefaultDescriptionElementMarginBottom();
-//     isNoImagesFoundInfoDisplayed = false;
+// function populateGeneratedLabelsTable() {
+//   let index = 0;
+//   Object.keys(objectNames).forEach((key) => {
+//     const newNameRow = generatedLabelsTableElement.insertRow(-1);
+//     const cell = newNameRow.insertCell(0);
+//     cell.innerHTML = createLabelElementMarkup(objectNames[key].pendingName, index);
+//     index += 1;
+//   });
+//   if (index > 4) {
+//     changeElementsToMoveListUpwards();
+//   } else {
+//     resetElementsToMoveListToDefaultPosition();
 //   }
-// }
-
-// function hideInitiateMachineLearningViewAssets() {
-//   removeNextButton();
-//   removeProgressMessage();
-//   removeCheckMark();
-//   buttonsGroupElement.style.display = 'none';
-//   descriptionElement.style.marginBottom = '';
 // }
 
 function setTitleElement(title) {
@@ -109,7 +68,7 @@ function setTriggerAcceptedFileFormat(format) {
 // will later take an object argument with relevant input attributes
 function prepareUploadDatasetsView() {
   setTitleElement('COCO JSON');
-  setTriggerAcceptedFileFormat('.csv');
+  setTriggerAcceptedFileFormat('.csv, image/*');
   displayBackButton();
   displayUploadButtonElement();
   displayUploadDatasetsOuterContainerElement();
