@@ -2,36 +2,30 @@ let isNoImagesFoundInfoDisplayed = false;
 
 let titleElement = null;
 let backButtonElement = null;
+let imagesTableElement = null;
+let latestImageTableIndex = 0;
 let uploadButtonElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 
-function createLabelElementMarkup(labelText, id) {
+function createImageElementMarkup(imageName, id) {
   return `
-    <div class="machine-learning-modal-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningModalEditLabelButton(this)" onMouseLeave="hideMachineLearningModalEditLabelButton(this)">
-      <img class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" src="edit-disabled.svg" alt="edit">
-      <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" style="display: none" src="edit.svg" alt="edit">
-      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-blue.svg" alt="edit">
-      <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="edit-red.svg" alt="edit">
-      <div id="MLLabelText${id}" class="machine-learning-modal-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
+    <div class="machine-learning-modal-generated-labels-row">
+      <div id="MLLabelText${id}" class="machine-learning-modal-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${imageName}</div>
     </div>
   `;
 }
 
-// function populateGeneratedLabelsTable() {
-//   let index = 0;
-//   Object.keys(objectNames).forEach((key) => {
-//     const newNameRow = generatedLabelsTableElement.insertRow(-1);
-//     const cell = newNameRow.insertCell(0);
-//     cell.innerHTML = createLabelElementMarkup(objectNames[key].pendingName, index);
-//     index += 1;
-//   });
-//   if (index > 4) {
-//     changeElementsToMoveListUpwards();
-//   } else {
-//     resetElementsToMoveListToDefaultPosition();
-//   }
-// }
+function insertRowToImagesTable(imageName) {
+  const newNameRow = imagesTableElement.insertRow(-1);
+  const cell = newNameRow.insertCell(0);
+  cell.innerHTML = createImageElementMarkup(imageName, latestImageTableIndex);
+  // if (index > 4) {
+  //   changeElementsToMoveListUpwards();
+  // } else {
+  //   resetElementsToMoveListToDefaultPosition();
+  // }
+}
 
 function setTitleElement(title) {
   titleElement.innerHTML = title;
@@ -86,8 +80,10 @@ function assignUploadDatasetsViewLocalVariables() {
   uploadButtonElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
   uploadDatasetFilesTriggerElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger');
   backButtonElement = document.getElementById('upload-datasets-modal-back-button');
+  imagesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table');
 }
 
 export {
-  assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets,
+  hideUploadDatasetsViewAssets, insertRowToImagesTable,
+  assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView,
 };

@@ -1,18 +1,15 @@
+import { insertRowToImagesTable } from './style';
+
 let fileParserFunc = null;
 let setDatasetObjectFunc = null;
 const datasetObject = {};
-
-function setFileParser(fileParserFuncArg) {
-  fileParserFunc = fileParserFuncArg;
-}
+let fileIndex = 0;
 
 function onFileLoad(imageMetaData, event) {
-  const returnedObj = fileParserFunc(event);
-  const { fileFormat, body } = returnedObj;
-  datasetObject[fileFormat] = body;
-  // const image = new Image();
-  // image.src = event.target.result;
-  // addImageFromMultiUploadToList(imageMetadata, image);
+  const returnedObj = fileParserFunc(imageMetaData, event);
+  datasetObject[fileIndex] = returnedObj;
+  insertRowToImagesTable(datasetObject[fileIndex].body.fileMetaData.name);
+  fileIndex += 1;
 }
 
 function uploadDatasetFilesHandler(uploadData) {
@@ -22,8 +19,12 @@ function uploadDatasetFilesHandler(uploadData) {
       reader.onload = onFileLoad.bind(this, uploadData.files[i]);
       reader.readAsDataURL(uploadData.files[i]);
     }
+    setDatasetObjectFunc(datasetObject);
   }
-  setDatasetObjectFunc(datasetObject);
+}
+
+function setFileParser(fileParserFuncArg) {
+  fileParserFunc = fileParserFuncArg;
 }
 
 function initialiseSetDatasetObjectFunc(setDatasetObjectFuncArg) {
