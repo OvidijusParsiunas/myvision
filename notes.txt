@@ -138,6 +138,11 @@ change upload datasets view to upload dataset files view
 
 fix the cursor remaining as select after clicking a button in upload datasets
 
+in the upload datasets modal tables, when there is vertical overflow, some of the text can be hidden behind the scroll and the horizontal
+overflow doesn't kick in automatically
+
+labeller modal causes vertical window overflow on the tablet
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders

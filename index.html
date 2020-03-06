@@ -115,10 +115,24 @@
       <div id="machine-learning-modal-info-messages" class="machine-learning-modal-messages"></div>
       <div id="upload-datsets-modal-upload-datasets-outer-container" style="display: none">
         <div id="upload-datsets-modal-upload-datasets-title"></div>
-        <table id="upload-datsets-modal-upload-datasets-images-table">
-          <tbody></tbody>
-        </table>
+        <div id="upload-datsets-modal-upload-datasets-annotations-container" style="float: left; width: 50%; text-align: center;  min-height: 138px;">
+          <div style="font-size: 15px; margin-top: 5px">Annotations (.json)</div>
+          <div id="upload-datsets-modal-upload-datasets-annotations-table-outer-container" class="upload-datasets-table" style="max-width: 180px; overflow-x: auto; display: inline-block;">
+            <table id="upload-datsets-modal-upload-datasets-annotations-table" style="margin-top: 5px">
+              <tbody></tbody>
+            </table>
+         </div>
        </div>
+       <div id="upload-datasets-modal-vertical-break-line" style="width: 0.5px; height: 126px; background-color: #ececec; float: left; margin-top: 8px;"></div>
+       <div id="upload-datsets-modal-upload-datasets-images-container" style="margin-left: 50%; width: 50%; text-align: center; min-height: 138px;">
+         <div style="font-size: 15px; margin-top: 5px">Images</div>
+         <div id="upload-datsets-modal-upload-datasets-images-table-outer-container" class="upload-datasets-table" style="max-width: 180px; overflow-x: auto; display: inline-block;">
+           <table id="upload-datsets-modal-upload-datasets-images-table" style="margin-top: 5px">
+             <tbody></tbody>
+           </table>
+        </div>
+      </div>
+     </div>
       <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
         <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="startUploadDatasets()">Start</div>
         <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-proceed-button">Back</div>

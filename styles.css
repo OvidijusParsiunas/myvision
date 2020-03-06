@@ -112,6 +112,24 @@
   height: 6px;
 }
 
+.upload-datasets-table {
+  max-height: 110px;
+}
+
+.upload-datasets-table::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+.upload-datasets-table::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 10px;
+}
+
+.upload-datasets-table::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
 .show {display: block;}
 
 .labelText {
@@ -644,6 +662,18 @@
   text-align: center;
   margin-top: 18px;
   font-size: 16px;
+}
+
+.upload-datasets-modal-upload-datasets-table-row {
+  padding-left: 1px;
+  padding-right: 1px;
+  cursor: default;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.upload-datasets-modal-upload-datasets-table-row-text {
+  white-space: pre;
+  text-align: left;
 }
 
 #left-side-bar {
