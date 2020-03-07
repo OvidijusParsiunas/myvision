@@ -91,7 +91,7 @@ function prepareUploadDatasetsView() {
   displayUploadButtonElement();
   displayUploadDatasetsOuterContainerElement();
   document.getElementById('upload-datasets-modal-parent').style.width = '420px';
-  document.getElementById('upload-datasets-modal-parent').style.height = '260px';
+  document.getElementById('upload-datasets-modal-parent').style.height = '270px';
 }
 
 function hideUploadDatasetsViewAssets() {
