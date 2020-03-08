@@ -1,5 +1,3 @@
-let isNoImagesFoundInfoDisplayed = false;
-
 let titleElement = null;
 let backButtonElement = null;
 let imagesTableElement = null;
@@ -7,8 +5,11 @@ let latestImageTableIndex = 0;
 let buttonsGroupElement = null;
 let uploadButtonElement = null;
 let annotationsTableElement = null;
+let uploadDatasetsModalElement = null;
+let imagesTableOuterContainerElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
+let annotationsTableOuterContainerElement = null;
 
 function createImageElementMarkup(imageName, id) {
   return `
@@ -26,6 +27,7 @@ function insertRowToImagesTable(imageName) {
   const newNameRow2 = annotationsTableElement.insertRow(-1);
   const cell2 = newNameRow2.insertCell(0);
   cell2.innerHTML = createImageElementMarkup(imageName, latestImageTableIndex);
+  latestImageTableIndex += 1;
   // if (index > 4) {
   //   changeElementsToMoveListUpwards();
   // } else {
@@ -81,6 +83,24 @@ function setTriggerAcceptedFileFormat(format) {
   uploadDatasetFilesTriggerElement.accept = format;
 }
 
+function changeUploadDatasetsModalElementDimensions(widthPixels, heightPixels) {
+  uploadDatasetsModalElement.style.width = widthPixels;
+  uploadDatasetsModalElement.style.height = heightPixels;
+}
+
+function resetUploadDatasetsModalElementDimensions() {
+  uploadDatasetsModalElement.style.width = '';
+  uploadDatasetsModalElement.style.height = '';
+}
+
+window.uploadDatasetsModalImagesTableScroll = () => {
+  annotationsTableOuterContainerElement.scrollTo(0, imagesTableOuterContainerElement.scrollTop);
+};
+
+window.uploadDatasetsModalAnnotationsTableScroll = () => {
+  imagesTableOuterContainerElement.scrollTo(0, annotationsTableOuterContainerElement.scrollTop);
+};
+
 // will later take an object argument with relevant input attributes
 function prepareUploadDatasetsView() {
   setTitleElementMarginTop('8px');
@@ -90,8 +110,7 @@ function prepareUploadDatasetsView() {
   displayBackButton();
   displayUploadButtonElement();
   displayUploadDatasetsOuterContainerElement();
-  document.getElementById('upload-datasets-modal-parent').style.width = '420px';
-  document.getElementById('upload-datasets-modal-parent').style.height = '270px';
+  changeUploadDatasetsModalElementDimensions('420px', '270px');
 }
 
 function hideUploadDatasetsViewAssets() {
@@ -100,6 +119,7 @@ function hideUploadDatasetsViewAssets() {
   resetTitleElementMarginTop();
   resetButtonGroupElementMarginTop();
   hideUploadDatasetsOuterContainerElement();
+  resetUploadDatasetsModalElementDimensions();
 }
 
 function assignUploadDatasetsViewLocalVariables() {
@@ -110,7 +130,10 @@ function assignUploadDatasetsViewLocalVariables() {
   uploadDatasetFilesTriggerElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger');
   backButtonElement = document.getElementById('upload-datasets-modal-back-button');
   imagesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table');
+  imagesTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table-outer-container');
+  annotationsTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table-outer-container');
   annotationsTableElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table');
+  uploadDatasetsModalElement = document.getElementById('upload-datasets-modal-parent');
 }
 
 export {

@@ -114,6 +114,9 @@
 
 .upload-datasets-table {
   max-height: 112px;
+  /* firefox */
+  scrollbar-color: #c7c7c7 #f9f9f9;
+  scrollbar-width: thin;
 }
 
 .upload-datasets-table::-webkit-scrollbar-track {
@@ -1025,6 +1028,9 @@ body {
   #export-labels-popup-export-button {
     padding-top: 4.5px;
     margin-top: 8px;
+  }
+  .upload-datasets-table {
+    max-height: 113px;
   }
 }
 

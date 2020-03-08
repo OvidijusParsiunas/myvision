@@ -1,77 +1,7 @@
-let isNoImagesFoundInfoDisplayed = false;
-
 let descriptionElement = null;
 let startButtonElement = null;
 let cancelButtonElement = null;
 let buttonsGroupElement = null;
-
-// function displayUploadImagesButton() {
-//   toolkitUploadImagesButton.style.zIndex = 3;
-//   toolkitUploadImagesButton.style.border = '2px solid rgb(73, 178, 218)';
-// }
-
-// function hideUploadImagesButton() {
-//   toolkitUploadImagesButton.style.zIndex = 1;
-//   toolkitUploadImagesButton.style.border = '';
-// }
-
-// function increasePopUpHeight(height) {
-//   modalParentElement.style.height = height;
-// }
-
-// function setDefaultPopUpHeight() {
-//   modalParentElement.style.height = '';
-// }
-
-// function setDescriptionElementMarginBottom(height) {
-//   descriptionElement.style.marginBottom = height;
-// }
-
-// function setDefaultDescriptionElementMarginBottom() {
-//   descriptionElement.style.marginBottom = '';
-// }
-
-// function changeToLoadingStyle() {
-//   displayLoadingText();
-//   removeDescription();
-//   disableImmediateCancelButtonHoverEffect();
-//   displayLoaderWheel();
-//   removeStartButton();
-// }
-
-// function changeToMLCompleteStyle() {
-//   displayCheckMarkWthAnimation();
-//   changeProgressMessageColor('#1e6d1e');
-//   updateProgressMessage('Finished!');
-// }
-
-// function changeToNoImagesFoundStyle() {
-//   displayUploadImagesButton();
-//   disableStartButton();
-//   displayInfoMessage('Please upload an image to get started.');
-//   setDescriptionElementMarginBottom('3px');
-//   increasePopUpHeight('259px');
-//   isNoImagesFoundInfoDisplayed = true;
-// }
-
-// function removeNoImagesFoundOnMLModalStyle() {
-//   if (isNoImagesFoundInfoDisplayed) {
-//     hideUploadImagesButton();
-//     removeInfoMessage();
-//     enableStartButton();
-//     setDefaultPopUpHeight();
-//     setDefaultDescriptionElementMarginBottom();
-//     isNoImagesFoundInfoDisplayed = false;
-//   }
-// }
-
-// function hideInitiateMachineLearningViewAssets() {
-//   removeNextButton();
-//   removeProgressMessage();
-//   removeCheckMark();
-//   buttonsGroupElement.style.display = 'none';
-//   descriptionElement.style.marginBottom = '';
-// }
 
 function displayCancelButtonElement() {
   cancelButtonElement.style.display = '';
