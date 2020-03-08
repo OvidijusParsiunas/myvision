@@ -112,8 +112,43 @@
   height: 6px;
 }
 
+#upload-datasets-modal-parent {
+  height: 249px;
+  width: 381px;
+  left: -151px;
+}
+
+#upload-datasets-modal-buttons {
+  margin-top: 23px;
+}
+
+.upload-datasets-modal-description-break {
+  padding-top: 4px;
+}
+
+#upload-datsets-modal-upload-datasets-title {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 16px;
+  user-select: none;
+}
+
+.upload-datsets-modal-upload-datasets-section {
+  width: 50%;
+  text-align: center;
+  min-height: 216px;
+}
+
+#upload-datsets-modal-upload-datasets-left-section {
+  float: left;
+}
+
+#upload-datsets-modal-upload-datasets-right-section {
+  margin-left: 50%;
+}
+
 .upload-datasets-table {
-  max-height: 112px;
+  max-height: 191px;
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
   scrollbar-width: thin;
@@ -131,6 +166,27 @@
 .upload-datasets-table::-webkit-scrollbar {
   width: 6px;
   height: 6px;
+}
+
+.upload-datasets-modal-upload-datasets-table-row {
+  padding-left: 1px;
+  padding-right: 1px;
+  cursor: default;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.upload-datasets-modal-upload-datasets-table-row-text {
+  white-space: pre;
+  text-align: left;
+  user-select: none;
+}
+
+#upload-datasets-modal-vertical-break-line {
+  width: 0.5px;
+  height: 195px;
+  background-color: #ececec;
+  float: left;
+  margin-top: 11px;
 }
 
 .show {display: block;}
@@ -647,38 +703,6 @@
   transform: scale(-1, 1);
 }
 
-#upload-datasets-modal-parent {
-  height: 249px;
-  width: 381px;
-  left: -151px;
-}
-
-#upload-datasets-modal-buttons {
-  margin-top: 23px;
-}
-
-.upload-datasets-modal-description-break {
-  padding-top: 4px;
-}
-
-#upload-datsets-modal-upload-datasets-title {
-  text-align: center;
-  margin-top: 18px;
-  font-size: 16px;
-}
-
-.upload-datasets-modal-upload-datasets-table-row {
-  padding-left: 1px;
-  padding-right: 1px;
-  cursor: default;
-  border-bottom: 1px solid #f7f7f7;
-}
-
-.upload-datasets-modal-upload-datasets-table-row-text {
-  white-space: pre;
-  text-align: left;
-}
-
 #left-side-bar {
   width: 57px;
   padding-top: 9px;
@@ -1029,8 +1053,14 @@ body {
     padding-top: 4.5px;
     margin-top: 8px;
   }
+  .upload-datsets-modal-upload-datasets-section {
+    min-height: 218px;
+  }
   .upload-datasets-table {
-    max-height: 113px;
+    max-height: 196px;
+  }
+  #upload-datasets-modal-vertical-break-line {
+    height: 200px;
   }
 }
 

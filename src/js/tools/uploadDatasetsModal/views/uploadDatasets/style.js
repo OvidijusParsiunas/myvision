@@ -46,6 +46,19 @@ function setButtonGroupElementMarginTop(pixels) {
   buttonsGroupElement.style.marginTop = pixels;
 }
 
+// should be a global variable
+function isFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
+
+function setButtonGroupElementMarginTopByBrowser() {
+  if (!isFirefox()) {
+    setButtonGroupElementMarginTop('3px');
+  } else {
+    setButtonGroupElementMarginTop('1px');
+  }
+}
+
 function resetButtonGroupElementMarginTop() {
   buttonsGroupElement.style.marginTop = '';
 }
@@ -101,11 +114,11 @@ function prepareUploadDatasetsView() {
   setTitleElementMarginTop('8px');
   setTitleElement('COCO JSON');
   setTriggerAcceptedFileFormat('.json, image/*');
-  setButtonGroupElementMarginTop('6px');
   displayBackButton();
   displayUploadButtonElement();
+  setButtonGroupElementMarginTopByBrowser();
   displayUploadDatasetsOuterContainerElement();
-  changeUploadDatasetsModalElementDimensions('420px', '270px');
+  changeUploadDatasetsModalElementDimensions('420px', '340px');
 }
 
 function hideUploadDatasetsViewAssets() {
