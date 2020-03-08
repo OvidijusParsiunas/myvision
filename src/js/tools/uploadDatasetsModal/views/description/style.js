@@ -98,7 +98,7 @@ function hideDescriptionElement() {
 }
 
 function moveDescriptionToLowerPosition() {
-  descriptionElement.style.marginTop = '18px';
+  descriptionElement.style.marginTop = '20px';
 }
 
 function getDefaultDescriptionMarkup() {
