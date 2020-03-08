@@ -1,14 +1,13 @@
-import { insertRowToImagesTable } from './style';
-
 let fileParserFunc = null;
+let tableUpdaterFunc = null;
 let setDatasetObjectFunc = null;
 const datasetObject = {};
 let fileIndex = 0;
 
-function onFileLoad(imageMetaData, event) {
-  const returnedObj = fileParserFunc(imageMetaData, event);
+function onFileLoad(fileMetaData, event) {
+  const returnedObj = fileParserFunc(fileMetaData, event);
   datasetObject[fileIndex] = returnedObj;
-  insertRowToImagesTable(datasetObject[fileIndex].body.fileMetaData.name);
+  tableUpdaterFunc(fileMetaData);
   fileIndex += 1;
 }
 
@@ -23,6 +22,10 @@ function uploadDatasetFilesHandler(uploadData) {
   }
 }
 
+function setTableUpdater(tableUpdaterFuncArg) {
+  tableUpdaterFunc = tableUpdaterFuncArg;
+}
+
 function setFileParser(fileParserFuncArg) {
   fileParserFunc = fileParserFuncArg;
 }
@@ -31,4 +34,7 @@ function initialiseSetDatasetObjectFunc(setDatasetObjectFuncArg) {
   setDatasetObjectFunc = setDatasetObjectFuncArg;
 }
 
-export { uploadDatasetFilesHandler, setFileParser, initialiseSetDatasetObjectFunc };
+export {
+  uploadDatasetFilesHandler, setTableUpdater,
+  initialiseSetDatasetObjectFunc, setFileParser,
+};

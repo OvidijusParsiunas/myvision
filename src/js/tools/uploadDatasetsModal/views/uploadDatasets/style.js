@@ -1,7 +1,6 @@
 let titleElement = null;
 let backButtonElement = null;
 let imagesTableElement = null;
-let latestImageTableIndex = 0;
 let buttonsGroupElement = null;
 let uploadButtonElement = null;
 let annotationsTableElement = null;
@@ -11,28 +10,24 @@ let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 let annotationsTableOuterContainerElement = null;
 
-function createImageElementMarkup(imageName, id) {
+function createTableRowElementMarkup(imageName) {
   return `
     <div class="upload-datasets-modal-upload-datasets-table-row">
-      <div id="MLLabelText${id}" class="upload-datasets-modal-upload-datasets-table-row-text">${imageName}</div>
+      <div class="upload-datasets-modal-upload-datasets-table-row-text">${imageName}</div>
     </div>
   `;
 }
 
-function insertRowToImagesTable(imageName) {
-  const newNameRow = imagesTableElement.insertRow(-1);
-  const cell = newNameRow.insertCell(0);
-  cell.innerHTML = createImageElementMarkup(imageName, latestImageTableIndex);
+function insertRowToImagesTable(fileName) {
+  const row = imagesTableElement.insertRow(-1);
+  const cell = row.insertCell(0);
+  cell.innerHTML = createTableRowElementMarkup(fileName);
+}
 
-  const newNameRow2 = annotationsTableElement.insertRow(-1);
-  const cell2 = newNameRow2.insertCell(0);
-  cell2.innerHTML = createImageElementMarkup(imageName, latestImageTableIndex);
-  latestImageTableIndex += 1;
-  // if (index > 4) {
-  //   changeElementsToMoveListUpwards();
-  // } else {
-  //   resetElementsToMoveListToDefaultPosition();
-  // }
+function insertRowToAnnotationsTable(fileName) {
+  const row = annotationsTableElement.insertRow(-1);
+  const cell = row.insertCell(0);
+  cell.innerHTML = createTableRowElementMarkup(fileName);
 }
 
 function setTitleElement(title) {
@@ -105,7 +100,7 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
 function prepareUploadDatasetsView() {
   setTitleElementMarginTop('8px');
   setTitleElement('COCO JSON');
-  setTriggerAcceptedFileFormat('.csv, image/*');
+  setTriggerAcceptedFileFormat('.json, image/*');
   setButtonGroupElementMarginTop('6px');
   displayBackButton();
   displayUploadButtonElement();
@@ -137,6 +132,6 @@ function assignUploadDatasetsViewLocalVariables() {
 }
 
 export {
-  hideUploadDatasetsViewAssets, insertRowToImagesTable,
   assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView,
+  hideUploadDatasetsViewAssets, insertRowToImagesTable, insertRowToAnnotationsTable,
 };

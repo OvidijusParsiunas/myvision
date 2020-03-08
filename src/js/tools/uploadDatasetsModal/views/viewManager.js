@@ -10,7 +10,8 @@ import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/butt
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import parseCOCOJSONFiles from './uploadDatasets/fileParsers/COCOJSONParser';
-import { setFileParser } from './uploadDatasets/uploadDatasetFilesHandler';
+import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
+import { setFileParser, setTableUpdater } from './uploadDatasets/uploadDatasetFilesHandler';
 
 let currentViewNumber = 1;
 // let machineLearningData = {};
@@ -35,12 +36,14 @@ let datasetsObject = null;
 //   return isEmpty;
 // }
 
-function getFileParserFunc(format) {
+function setUpdateDatasetFileHandlerFunctions(format) {
   switch (format) {
     case 'COCO JSON':
-      return parseCOCOJSONFiles;
+      setFileParser(parseCOCOJSONFiles);
+      setTableUpdater(updateCOCOJSONTables);
+      break;
     default:
-      return null;
+      break;
   }
 }
 
@@ -67,7 +70,7 @@ function displayNextView() {
       break;
     case 3:
       prepareUploadDatasetsView();
-      setFileParser(getFileParserFunc('COCO JSON'));
+      setUpdateDatasetFileHandlerFunctions('COCO JSON');
       hideViewOnCancelFunc = hideUploadDatasetsViewAssets;
       currentViewNumber += 1;
       break;

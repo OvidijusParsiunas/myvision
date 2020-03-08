@@ -8,7 +8,7 @@ function parseCOCOJSONFiles(fileMetaData, event) {
   if (fileMetaData.type.startsWith('image/')) {
     return parseImageData(fileMetaData, event);
   }
-  if (fileMetaData.name.endsWith('.csv')) {
+  if (fileMetaData.name.endsWith('.json')) {
     return 'dfsdf';
   }
   return {};
