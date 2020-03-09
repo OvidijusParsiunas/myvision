@@ -136,7 +136,6 @@
 .upload-datsets-modal-upload-datasets-section {
   width: 50%;
   text-align: center;
-  min-height: 216px;
 }
 
 #upload-datsets-modal-upload-datasets-left-section {
@@ -149,6 +148,7 @@
 
 .upload-datasets-table {
   max-height: 191px;
+  min-height: 191px;
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
   scrollbar-width: thin;
@@ -1053,11 +1053,9 @@ body {
     padding-top: 4.5px;
     margin-top: 8px;
   }
-  .upload-datsets-modal-upload-datasets-section {
-    min-height: 218px;
-  }
   .upload-datasets-table {
     max-height: 196px;
+    min-height: 196px;
   }
   #upload-datasets-modal-vertical-break-line {
     height: 200px;
