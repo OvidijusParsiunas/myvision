@@ -11,12 +11,20 @@ function onFileLoad(fileMetaData, event) {
   fileIndex += 1;
 }
 
+function readFile(reader, file) {
+  if (file.name.endsWith('.json')) {
+    reader.readAsText(file);
+  } else {
+    reader.readAsDataURL(file);
+  }
+}
+
 function uploadDatasetFilesHandler(uploadData) {
   if (uploadData.files && uploadData.files.length > 0) {
     for (let i = 0; i < uploadData.files.length; i += 1) {
       const reader = new FileReader();
       reader.onload = onFileLoad.bind(this, uploadData.files[i]);
-      reader.readAsDataURL(uploadData.files[i]);
+      readFile(reader, uploadData.files[i]);
     }
     setDatasetObjectFunc(datasetObject);
   }
