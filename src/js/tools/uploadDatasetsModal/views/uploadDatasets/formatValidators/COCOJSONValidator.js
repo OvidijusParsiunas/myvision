@@ -7,9 +7,39 @@ function nextFunction() {
   return true;
 }
 
+function checkAnnotationsMapToCategories() {
+    
+}
+
+function checkAnnotationsMapToImages() {
+    
+}
+
+function checkImagesProperties() {
+    
+}
+
+function checkAnnotationsProperties() {
+
+}
+
+function checkCategoriesProperties(parsedObj) {
+  const requiredProperties = ['id', 'name'];
+  const { categories } = parsedObj;
+  for (let i = 0; i < categories.length; i += 1) {
+    const nullProperties = requiredProperties.filter(
+      property => categories[i][property] === undefined,
+    );
+    if (nullProperties.length > 0) {
+      return { error: true, message: '' };
+    }
+  }
+  return { error: false, message: '' };
+}
+
 function checkParentProperties(parsedObj) {
   const requiredProperties = ['images', 'annotations', 'categories'];
-  const nullProperties = requiredProperties.filter(property => !parsedObj[property]);
+  const nullProperties = requiredProperties.filter(property => parsedObj[property] === undefined);
   if (nullProperties.length === 0) {
     return { error: false, message: '' };
   }
@@ -28,7 +58,8 @@ function checkJONObject(JSONObject, validators) {
 
 function validateCOCOJSONFormat(parsedObj) {
   if (parsedObj.fileFormat === 'annotations') {
-    checkJONObject(parsedObj.body, [checkParentProperties, nextFunction]);
+    console.log(parsedObj);
+    checkJONObject(parsedObj.body, [checkParentProperties, checkCategoriesProperties]);
   }
 }
 
