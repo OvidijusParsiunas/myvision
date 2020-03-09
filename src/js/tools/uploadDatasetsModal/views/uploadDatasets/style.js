@@ -118,7 +118,7 @@ function prepareUploadDatasetsView() {
   displayUploadButtonElement();
   setButtonGroupElementMarginTopByBrowser();
   displayUploadDatasetsOuterContainerElement();
-  changeUploadDatasetsModalElementDimensions('420px', '340px');
+  changeUploadDatasetsModalElementDimensions('505px', '340px');
 }
 
 function hideUploadDatasetsViewAssets() {
