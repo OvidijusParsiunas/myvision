@@ -11,7 +11,8 @@ import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hide
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import parseCOCOJSONFiles from './uploadDatasets/fileParsers/COCOJSONParser';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
-import { setFileParser, setTableUpdater } from './uploadDatasets/uploadDatasetFilesHandler';
+import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
+import { setFileParser, setTableUpdater, setFormatValidator } from './uploadDatasets/uploadDatasetFilesHandler';
 
 let currentViewNumber = 1;
 // let machineLearningData = {};
@@ -41,6 +42,7 @@ function setUpdateDatasetFileHandlerFunctions(format) {
     case 'COCO JSON':
       setFileParser(parseCOCOJSONFiles);
       setTableUpdater(updateCOCOJSONTables);
+      setFormatValidator(validateCOCOJSONFormat);
       break;
     default:
       break;

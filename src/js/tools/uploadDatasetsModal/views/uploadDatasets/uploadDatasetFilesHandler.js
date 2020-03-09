@@ -1,12 +1,14 @@
 let fileParserFunc = null;
 let tableUpdaterFunc = null;
+let formatValidatorFunc = null;
 let setDatasetObjectFunc = null;
 const datasetObject = {};
 let fileIndex = 0;
 
 function onFileLoad(fileMetaData, event) {
-  const returnedObj = fileParserFunc(fileMetaData, event);
-  datasetObject[fileIndex] = returnedObj;
+  const parsedFileObj = fileParserFunc(fileMetaData, event);
+  formatValidatorFunc(parsedFileObj, fileMetaData);
+  datasetObject[fileIndex] = parsedFileObj;
   tableUpdaterFunc(fileMetaData);
   fileIndex += 1;
 }
@@ -30,6 +32,10 @@ function uploadDatasetFilesHandler(uploadData) {
   }
 }
 
+function setFormatValidator(formatValidatorFuncArg) {
+  formatValidatorFunc = formatValidatorFuncArg;
+}
+
 function setTableUpdater(tableUpdaterFuncArg) {
   tableUpdaterFunc = tableUpdaterFuncArg;
 }
@@ -43,6 +49,6 @@ function initialiseSetDatasetObjectFunc(setDatasetObjectFuncArg) {
 }
 
 export {
-  uploadDatasetFilesHandler, setTableUpdater,
-  initialiseSetDatasetObjectFunc, setFileParser,
+  setFileParser, setTableUpdater, setFormatValidator,
+  initialiseSetDatasetObjectFunc, uploadDatasetFilesHandler,
 };

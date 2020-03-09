@@ -5,7 +5,8 @@ function parseImageData(fileMetaData, event) {
 }
 
 function parseJSON(fileMetaData, event) {
-  return { fileFormat: 'image', body: { fileMetaData, annotationData: JSON.parse(event.target.result) } };
+  const JSONObject = JSON.parse(event.target.result);
+  return { fileFormat: 'annotations', body: { fileMetaData, annotationData: JSONObject } };
 }
 
 function parseCOCOJSONFiles(fileMetaData, event) {
