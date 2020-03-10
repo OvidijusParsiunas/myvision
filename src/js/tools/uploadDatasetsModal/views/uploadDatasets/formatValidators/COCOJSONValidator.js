@@ -15,10 +15,6 @@ function checkAnnotationsMapToImages() {
     
 }
 
-function checkImagesProperties() {
-    
-}
-
 function checkProperties(requiredProperties, subjectObject) {
   const nullProperties = requiredProperties.filter(
     property => subjectObject[property] === undefined,
@@ -29,7 +25,23 @@ function checkProperties(requiredProperties, subjectObject) {
   return { error: false, message: '' };
 }
 
-function checkAnnotationsProperties(parsedObj) {
+function checkImagesProperty(parsedObj) {
+  const requiredProperties = ['id', 'file_name'];
+  const { images } = parsedObj;
+  if (!Array.isArray(images)) {
+    return { error: true, message: 'images property is not an array' };
+  }
+  for (let i = 0; i < images.length; i += 1) {
+    const result = checkProperties(requiredProperties, images[i]);
+    if (result.error) {
+      result.message += ' -> in images';
+      return result;
+    }
+  }
+  return { error: false, message: '' };
+}
+
+function checkAnnotationsProperty(parsedObj) {
   const requiredProperties = ['id', 'image_id', 'category_id', 'segmentation', 'area', 'bbox'];
   const { annotations } = parsedObj;
   if (!Array.isArray(annotations)) {
@@ -50,7 +62,7 @@ function checkAnnotationsProperties(parsedObj) {
   return { error: false, message: '' };
 }
 
-function checkCategoriesProperties(parsedObj) {
+function checkCategoriesProperty(parsedObj) {
   const requiredProperties = ['id', 'name'];
   const { categories } = parsedObj;
   if (!Array.isArray(categories)) {
@@ -84,7 +96,13 @@ function checkJONObject(JSONObject, validators) {
 function validateCOCOJSONFormat(parsedObj) {
   if (parsedObj.fileFormat === 'annotations') {
     console.log(parsedObj);
-    checkJONObject(parsedObj.body, [checkParentProperties, checkCategoriesProperties, checkAnnotationsProperties]);
+    const validators = [
+      checkParentProperties,
+      checkCategoriesProperty,
+      checkAnnotationsProperty,
+      checkImagesProperty,
+    ];
+    checkJONObject(parsedObj.body, validators);
   }
 }
 
