@@ -42,6 +42,7 @@ function checkAnnotationsProperties(parsedObj) {
       return result;
     }
     if (!Array.isArray(annotations[i].bbox)
+      || annotations[i].bbox.length !== 4
       || annotations[i].bbox.filter(entry => typeof entry !== 'number').length > 0) {
       return { error: true, message: 'bbox array is incorrect -> in annotations' };
     }
