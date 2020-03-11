@@ -3,12 +3,23 @@ function showError(fileName, errorMessage) {
   console.error(`${fileName} validation failure. Reason: ${errorMessage}`);
 }
 
-function nextFunction() {
-  return true;
-}
-
-function checkAnnotationsMapToCategories() {
-    
+function checkAnnotationsMapToCategories(parsedObj) {
+  const { annotations, categories } = parsedObj;
+  for (let i = 0; i < annotations.length; i += 1) {
+    const annotation = annotations[i];
+    let categoryIdValid = false;
+    for (let y = 0; y < categories.length; y += 1) {
+      const category = categories[y];
+      if (annotation.category_id === category.id) {
+        categoryIdValid = true;
+        break;
+      }
+    }
+    if (!categoryIdValid) {
+      return { error: true, message: `The following category_id has not been found: ${annotation.category_id} -> in categories` };
+    }
+  }
+  return { error: false, message: '' };
 }
 
 function checkAnnotationsMapToImages(parsedObj) {
@@ -117,6 +128,7 @@ function validateCOCOJSONFormat(parsedObj) {
       checkAnnotationsProperty,
       checkImagesProperty,
       checkAnnotationsMapToImages,
+      checkAnnotationsMapToCategories,
     ];
     checkJONObject(parsedObj.body, validators);
   }
