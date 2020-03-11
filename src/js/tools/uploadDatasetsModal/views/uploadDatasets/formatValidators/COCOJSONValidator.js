@@ -11,8 +11,23 @@ function checkAnnotationsMapToCategories() {
     
 }
 
-function checkAnnotationsMapToImages() {
-    
+function checkAnnotationsMapToImages(parsedObj) {
+  const { annotations, images } = parsedObj;
+  for (let i = 0; i < annotations.length; i += 1) {
+    const annotation = annotations[i];
+    let imageIdValid = false;
+    for (let y = 0; y < images.length; y += 1) {
+      const image = images[y];
+      if (annotation.image_id === image.id) {
+        imageIdValid = true;
+        break;
+      }
+    }
+    if (!imageIdValid) {
+      return { error: true, message: `The following image_id has not been found: ${annotation.image_id} -> in annotations` };
+    }
+  }
+  return { error: false, message: '' };
 }
 
 function checkProperties(requiredProperties, subjectObject) {
@@ -101,6 +116,7 @@ function validateCOCOJSONFormat(parsedObj) {
       checkCategoriesProperty,
       checkAnnotationsProperty,
       checkImagesProperty,
+      checkAnnotationsMapToImages,
     ];
     checkJONObject(parsedObj.body, validators);
   }
