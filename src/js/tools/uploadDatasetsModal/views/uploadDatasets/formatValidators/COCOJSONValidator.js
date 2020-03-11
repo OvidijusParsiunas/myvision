@@ -1,4 +1,3 @@
-
 function showError(fileName, errorMessage) {
   console.error(`${fileName} validation failure. Reason: ${errorMessage}`);
 }
@@ -41,22 +40,56 @@ function checkAnnotationsMapToImages(parsedObj) {
   return { error: false, message: '' };
 }
 
+function isObject(variable) {
+  return typeof variable === 'object';
+}
+
+function isArray(variable) {
+  return Array.isArray(variable);
+}
+
+function isStringOrNumber(variable) {
+  const variableType = typeof variable;
+  return typeof variableType === 'string' || variableType === 'number';
+}
+
+function typeCheck(expectedType, subjectVariable) {
+}
+
 function checkProperties(requiredProperties, subjectObject) {
-  const nullProperties = requiredProperties.filter(
-    property => subjectObject[property] === undefined,
-  );
-  if (nullProperties.length > 0) {
-    return { error: true, message: `The following properties have not been found: ${nullProperties}` };
+  const undefinedProperties = [];
+  Object.keys(requiredProperties).forEach((property) => {
+    if (subjectObject[property] === undefined) {
+      undefinedProperties.push(property);
+    }
+  });
+  if (undefinedProperties.length > 0) {
+    return { error: true, message: `The following properties have not been found: ${undefinedProperties}` };
   }
+  const nullProperties = [];
+  Object.keys(requiredProperties).forEach((property) => {
+    if (subjectObject[property] === null) {
+      nullProperties.push(property);
+    }
+  });
+  if (nullProperties.length > 0) {
+    return { error: true, message: `The following properties are null: ${nullProperties}` };
+  }
+  // const incorrectType = [];
+  // Object.keys(requiredProperties).forEach((property) => {
+  //   if (!typeCheck(requiredProperties[property], subjectObject[property])) {
+  //     incorrectType.push(property);
+  //   }
+  // });
+  // if (nullProperties.length > 0) {
+  //   return { error: true, message: `The following properties are null: ${nullProperties}` };
+  // }
   return { error: false, message: '' };
 }
 
 function checkImagesProperty(parsedObj) {
-  const requiredProperties = ['id', 'file_name'];
+  const requiredProperties = { id: 'number|string', file_name: 'string' };
   const { images } = parsedObj;
-  if (!Array.isArray(images)) {
-    return { error: true, message: 'images property is not an array' };
-  }
   for (let i = 0; i < images.length; i += 1) {
     const result = checkProperties(requiredProperties, images[i]);
     if (result.error) {
@@ -68,18 +101,17 @@ function checkImagesProperty(parsedObj) {
 }
 
 function checkAnnotationsProperty(parsedObj) {
-  const requiredProperties = ['id', 'image_id', 'category_id', 'segmentation', 'area', 'bbox'];
+  const requiredProperties = {
+    id: 'number|string', image_id: 'number|string', category_id: 'number|string', bbox: 'array',
+  };
   const { annotations } = parsedObj;
-  if (!Array.isArray(annotations)) {
-    return { error: true, message: 'annotations property is not an array' };
-  }
   for (let i = 0; i < annotations.length; i += 1) {
     const result = checkProperties(requiredProperties, annotations[i]);
     if (result.error) {
       result.message += ' -> in annotations';
       return result;
     }
-    if (!Array.isArray(annotations[i].bbox)
+    if (!isArray(annotations[i].bbox)
       || annotations[i].bbox.length !== 4
       || annotations[i].bbox.filter(entry => typeof entry !== 'number').length > 0) {
       return { error: true, message: 'bbox array is incorrect -> in annotations' };
@@ -89,11 +121,8 @@ function checkAnnotationsProperty(parsedObj) {
 }
 
 function checkCategoriesProperty(parsedObj) {
-  const requiredProperties = ['id', 'name'];
+  const requiredProperties = { id: 'number', name: 'string' };
   const { categories } = parsedObj;
-  if (!Array.isArray(categories)) {
-    return { error: true, message: 'categories property is not an array' };
-  }
   for (let i = 0; i < categories.length; i += 1) {
     const result = checkProperties(requiredProperties, categories[i]);
     if (result.error) {
@@ -105,7 +134,7 @@ function checkCategoriesProperty(parsedObj) {
 }
 
 function checkParentProperties(parsedObj) {
-  const requiredProperties = ['images', 'annotations', 'categories'];
+  const requiredProperties = { images: 'array', annotations: 'array', categories: 'array' };
   return checkProperties(requiredProperties, parsedObj);
 }
 
