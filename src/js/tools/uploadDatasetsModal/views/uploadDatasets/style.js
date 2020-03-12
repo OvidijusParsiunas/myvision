@@ -9,6 +9,8 @@ let imagesTableOuterContainerElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 let annotationsTableOuterContainerElement = null;
+const modalWidth = 505;
+const modalHeight = 340;
 
 function createTableRowElementMarkup(fileName) {
   return `
@@ -20,7 +22,9 @@ function createTableRowElementMarkup(fileName) {
 
 function createTableRowElementMarkupWthError(fileName, message) {
   return `
-    <div class="upload-datasets-modal-upload-datasets-table-row">
+  <div id="format-option-checkbox-popover-1" style="display: block; background: #ffe1e1; color: red; border-color: #fbd0d0;" class="export-labels-popup-item format-option-popover format-option-checkbox-popover">${message}</div>
+  <div id="format-option-checkbox-arrow-1" style="display: block; margin-left: ${modalWidth / 2 / 2}px;" class="export-labels-popup-item arrow-down checkbox-arrow-down"></div>
+  <div class="upload-datasets-modal-upload-datasets-table-row">
       <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error">${fileName}</div>
     </div>
   `;
@@ -103,9 +107,9 @@ function setTriggerAcceptedFileFormat(format) {
   uploadDatasetFilesTriggerElement.accept = format;
 }
 
-function changeUploadDatasetsModalElementDimensions(widthPixels, heightPixels) {
-  uploadDatasetsModalElement.style.width = widthPixels;
-  uploadDatasetsModalElement.style.height = heightPixels;
+function changeUploadDatasetsModalElementDimensions(width, height) {
+  uploadDatasetsModalElement.style.width = `${width}px`;
+  uploadDatasetsModalElement.style.height = `${height}px`;
 }
 
 function resetUploadDatasetsModalElementDimensions() {
@@ -130,7 +134,7 @@ function prepareUploadDatasetsView() {
   displayUploadButtonElement();
   setButtonGroupElementMarginTopByBrowser();
   displayUploadDatasetsOuterContainerElement();
-  changeUploadDatasetsModalElementDimensions('505px', '340px');
+  changeUploadDatasetsModalElementDimensions(modalWidth, modalHeight);
 }
 
 function hideUploadDatasetsViewAssets() {
