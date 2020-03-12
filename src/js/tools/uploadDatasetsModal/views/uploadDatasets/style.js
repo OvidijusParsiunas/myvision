@@ -10,10 +10,18 @@ let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 let annotationsTableOuterContainerElement = null;
 
-function createTableRowElementMarkup(imageName) {
+function createTableRowElementMarkup(fileName) {
   return `
     <div class="upload-datasets-modal-upload-datasets-table-row">
-      <div class="upload-datasets-modal-upload-datasets-table-row-text">${imageName}</div>
+      <div class="upload-datasets-modal-upload-datasets-table-row-text">${fileName}</div>
+    </div>
+  `;
+}
+
+function createTableRowElementMarkupWthError(fileName, message) {
+  return `
+    <div class="upload-datasets-modal-upload-datasets-table-row">
+      <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error">${fileName}</div>
     </div>
   `;
 }
@@ -24,10 +32,14 @@ function insertRowToImagesTable(fileName) {
   cell.innerHTML = createTableRowElementMarkup(fileName);
 }
 
-function insertRowToAnnotationsTable(fileName) {
+function insertRowToAnnotationsTable(fileName, validationResult) {
   const row = annotationsTableElement.insertRow(-1);
   const cell = row.insertCell(0);
-  cell.innerHTML = createTableRowElementMarkup(fileName);
+  if (validationResult.error) {
+    cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message);
+  } else {
+    cell.innerHTML = createTableRowElementMarkup(fileName);
+  }
 }
 
 function setTitleElement(title) {

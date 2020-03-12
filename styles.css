@@ -181,6 +181,11 @@
   user-select: none;
 }
 
+.upload-datasets-modal-upload-datasets-table-row-text-error {
+  color: red;
+  cursor: pointer;
+}
+
 #upload-datasets-modal-vertical-break-line {
   width: 0.5px;
   height: 195px;
@@ -526,18 +531,18 @@
   font-size: 14.5px;
 }
 
-#machine-learning-modal-parent {
-  height: 249px;
-  width: 381px;
-  left: -151px;
-}
-
-.machine-learning-modal-messages {
+.modal-messages {
   text-align: center;
   margin-top: 2px;
   margin-bottom: 2px;
   user-select: none;
   margin-bottom: 5px;
+}
+
+#machine-learning-modal-parent {
+  height: 249px;
+  width: 381px;
+  left: -151px;
 }
 
 #machine-learning-modal-error-messages {

@@ -1,7 +1,3 @@
-function showError(fileName, errorMessage) {
-  console.error(`${fileName} validation failure. Reason: ${errorMessage}`);
-}
-
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;
   for (let i = 0; i < annotations.length; i += 1) {
@@ -141,10 +137,10 @@ function checkJONObject(JSONObject, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](JSONObject.annotationData);
     if (result.error) {
-      showError(JSONObject.fileMetaData.name, result.message);
-      break;
+      return result;
     }
   }
+  return { error: false, message: '' };
 }
 
 function validateCOCOJSONFormat(parsedObj) {
@@ -158,8 +154,9 @@ function validateCOCOJSONFormat(parsedObj) {
       checkAnnotationsMapToImages,
       checkAnnotationsMapToCategories,
     ];
-    checkJONObject(parsedObj.body, validators);
+    return checkJONObject(parsedObj.body, validators);
   }
+  return { error: false, message: '' };
 }
 
 export { validateCOCOJSONFormat as default };

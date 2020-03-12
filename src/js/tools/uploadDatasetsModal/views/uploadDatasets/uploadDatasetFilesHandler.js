@@ -7,9 +7,9 @@ let fileIndex = 0;
 
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
-  formatValidatorFunc(parsedFileObj, fileMetaData);
+  const validationResult = formatValidatorFunc(parsedFileObj, fileMetaData);
   datasetObject[fileIndex] = parsedFileObj;
-  tableUpdaterFunc(fileMetaData);
+  tableUpdaterFunc(fileMetaData, validationResult);
   fileIndex += 1;
 }
 
