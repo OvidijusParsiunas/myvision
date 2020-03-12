@@ -40,20 +40,21 @@ function checkAnnotationsMapToImages(parsedObj) {
   return { error: false, message: '' };
 }
 
-function isObject(variable) {
-  return typeof variable === 'object';
-}
-
-function isArray(variable) {
-  return Array.isArray(variable);
-}
-
-function isStringOrNumber(variable) {
-  const variableType = typeof variable;
-  return typeof variableType === 'string' || variableType === 'number';
-}
-
-function typeCheck(expectedType, subjectVariable) {
+function assertType(expectedType, subjectVariable) {
+  switch (expectedType) {
+    case 'number':
+      return typeof subjectVariable === 'number';
+    case 'string':
+      return typeof subjectVariable === 'string';
+    case 'number|string':
+      return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
+    case 'array:number':
+      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'number').length === 0;
+    case 'array:object':
+      return Array.isArray(subjectVariable) && typeof subjectVariable === 'object';
+    default:
+      return true;
+  }
 }
 
 function checkProperties(requiredProperties, subjectObject) {
@@ -75,15 +76,15 @@ function checkProperties(requiredProperties, subjectObject) {
   if (nullProperties.length > 0) {
     return { error: true, message: `The following properties are null: ${nullProperties}` };
   }
-  // const incorrectType = [];
-  // Object.keys(requiredProperties).forEach((property) => {
-  //   if (!typeCheck(requiredProperties[property], subjectObject[property])) {
-  //     incorrectType.push(property);
-  //   }
-  // });
-  // if (nullProperties.length > 0) {
-  //   return { error: true, message: `The following properties are null: ${nullProperties}` };
-  // }
+  const incorrectTypeProperties = [];
+  Object.keys(requiredProperties).forEach((property) => {
+    if (!assertType(requiredProperties[property], subjectObject[property])) {
+      incorrectTypeProperties.push(property);
+    }
+  });
+  if (incorrectTypeProperties.length > 0) {
+    return { error: true, message: `The following properties contain an incorrect type: ${incorrectTypeProperties}` };
+  }
   return { error: false, message: '' };
 }
 
@@ -102,7 +103,7 @@ function checkImagesProperty(parsedObj) {
 
 function checkAnnotationsProperty(parsedObj) {
   const requiredProperties = {
-    id: 'number|string', image_id: 'number|string', category_id: 'number|string', bbox: 'array',
+    id: 'number|string', image_id: 'number|string', category_id: 'number|string', bbox: 'array:number',
   };
   const { annotations } = parsedObj;
   for (let i = 0; i < annotations.length; i += 1) {
@@ -111,17 +112,15 @@ function checkAnnotationsProperty(parsedObj) {
       result.message += ' -> in annotations';
       return result;
     }
-    if (!isArray(annotations[i].bbox)
-      || annotations[i].bbox.length !== 4
-      || annotations[i].bbox.filter(entry => typeof entry !== 'number').length > 0) {
-      return { error: true, message: 'bbox array is incorrect -> in annotations' };
+    if (annotations[i].bbox.length !== 4) {
+      return { error: true, message: 'bbox array should contain four numbers -> in annotations' };
     }
   }
   return { error: false, message: '' };
 }
 
 function checkCategoriesProperty(parsedObj) {
-  const requiredProperties = { id: 'number', name: 'string' };
+  const requiredProperties = { id: 'number|string', name: 'number|string' };
   const { categories } = parsedObj;
   for (let i = 0; i < categories.length; i += 1) {
     const result = checkProperties(requiredProperties, categories[i]);
@@ -134,7 +133,7 @@ function checkCategoriesProperty(parsedObj) {
 }
 
 function checkParentProperties(parsedObj) {
-  const requiredProperties = { images: 'array', annotations: 'array', categories: 'array' };
+  const requiredProperties = { images: 'array:object', annotations: 'array:object', categories: 'array:object' };
   return checkProperties(requiredProperties, parsedObj);
 }
 
