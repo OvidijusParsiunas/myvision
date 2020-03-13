@@ -12,6 +12,8 @@ let annotationsTableOuterContainerElement = null;
 let errorRowIndex = 0;
 const modalWidth = 505;
 const modalHeight = 340;
+const ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-left';
+const IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-right'
 
 function createTableRowElementMarkup(fileName) {
   return `
@@ -21,10 +23,10 @@ function createTableRowElementMarkup(fileName) {
   `;
 }
 
-function createTableRowElementMarkupWthError(fileName, message) {
+function createTableRowElementMarkupWthError(fileName, message, popoverPositionClass) {
   return `
-  <div id="upload-datasets-modal-annotation-file-error-popover-${errorRowIndex}" class="upload-datasets-modal-upload-datasets-table-error-row-popover popover">${message}</div>
-  <div id="upload-datasets-modal-annotation-file-popover-arrow-${errorRowIndex}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-color "></div>
+  <div id="upload-datasets-modal-file-error-popover-${errorRowIndex}" class="popover upload-datasets-modal-upload-datasets-table-error-row-popover ${popoverPositionClass}">${message}</div>
+  <div id="upload-datasets-modal-file-error-popover-arrow-${errorRowIndex}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-color "></div>
   <div class="upload-datasets-modal-upload-datasets-table-row">
       <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})">${fileName}</div>
     </div>
@@ -32,26 +34,33 @@ function createTableRowElementMarkupWthError(fileName, message) {
 }
 
 window.displayUploadDatasetsAnnotationFileErrorPopover = (id) => {
-  document.getElementById(`upload-datasets-modal-annotation-file-error-popover-${id}`).style.display = 'block';
-  document.getElementById(`upload-datasets-modal-annotation-file-popover-arrow-${id}`).style.display = 'block';
+  document.getElementById(`upload-datasets-modal-file-error-popover-${id}`).style.display = 'block';
+  document.getElementById(`upload-datasets-modal-file-error-popover-arrow-${id}`).style.display = 'block';
 };
 
 window.removeUploadDatasetsAnnotationFileErrorPopover = (id) => {
-  document.getElementById(`upload-datasets-modal-annotation-file-error-popover-${id}`).style.display = 'none';
-  document.getElementById(`upload-datasets-modal-annotation-file-popover-arrow-${id}`).style.display = 'none';
+  document.getElementById(`upload-datasets-modal-file-error-popover-${id}`).style.display = 'none';
+  document.getElementById(`upload-datasets-modal-file-error-popover-arrow-${id}`).style.display = 'none';
 };
 
-function insertRowToImagesTable(fileName) {
+function insertRowToImagesTable(fileName, validationResult) {
   const row = imagesTableElement.insertRow(-1);
   const cell = row.insertCell(0);
-  cell.innerHTML = createTableRowElementMarkup(fileName);
+  if (validationResult.error) {
+    cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
+      IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS);
+    errorRowIndex += 1;
+  } else {
+    cell.innerHTML = createTableRowElementMarkup(fileName);
+  }
 }
 
 function insertRowToAnnotationsTable(fileName, validationResult) {
   const row = annotationsTableElement.insertRow(-1);
   const cell = row.insertCell(0);
   if (validationResult.error) {
-    cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message);
+    cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
+      ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS);
     errorRowIndex += 1;
   } else {
     cell.innerHTML = createTableRowElementMarkup(fileName);

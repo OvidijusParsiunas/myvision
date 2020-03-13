@@ -143,9 +143,8 @@ function checkJONObject(JSONObject, validators) {
   return { error: false, message: '' };
 }
 
-function validateCOCOJSONFormat(parsedObj) {
+function validateCOCOJSONFormat(parsedObj, datasetObject) {
   if (parsedObj.fileFormat === 'annotations') {
-    console.log(parsedObj);
     const validators = [
       checkParentProperties,
       checkCategoriesProperty,
@@ -155,6 +154,15 @@ function validateCOCOJSONFormat(parsedObj) {
       checkAnnotationsMapToCategories,
     ];
     return checkJONObject(parsedObj.body, validators);
+  }
+  if (parsedObj.fileFormat === 'image' && datasetObject.annotationFiles.length > 0) {
+    const { annotationData } = datasetObject.annotationFiles[0];
+    for (let i = 0; i < annotationData.images.length; i += 1) {
+      if (parsedObj.body.fileMetaData.name === annotationData.images[0].file_name) {
+        return { error: false, message: '' };
+      }
+    }
+    return { error: true, message: 'This image is not specified in the annotations file(s)' };
   }
   return { error: false, message: '' };
 }

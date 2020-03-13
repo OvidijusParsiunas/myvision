@@ -2,14 +2,18 @@ let fileParserFunc = null;
 let tableUpdaterFunc = null;
 let formatValidatorFunc = null;
 let setDatasetObjectFunc = null;
-const datasetObject = {};
+const datasetObject = { annotationFiles: [], imageFiles: [] };
 let fileIndex = 0;
 
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
-  const validationResult = formatValidatorFunc(parsedFileObj, fileMetaData);
-  datasetObject[fileIndex] = parsedFileObj;
+  const validationResult = formatValidatorFunc(parsedFileObj, datasetObject);
   tableUpdaterFunc(fileMetaData, validationResult);
+  if (parsedFileObj.fileFormat === 'image') {
+    datasetObject.imageFiles[fileIndex] = parsedFileObj.body;
+  } else {
+    datasetObject.annotationFiles[fileIndex] = parsedFileObj.body;
+  }
   fileIndex += 1;
 }
 

@@ -205,8 +205,16 @@
   padding-top: 4px;
   padding-bottom: 3px;
   margin-top: -30px;
+}
+
+.upload-datasets-modal-upload-datasets-table-error-row-popover-left {
   left: 5px;
   margin-left: 0px;
+}
+
+.upload-datasets-modal-upload-datasets-table-error-row-popover-right {
+  right: 5px;
+  margin-right: 0px;
 }
 
 .upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-color {
