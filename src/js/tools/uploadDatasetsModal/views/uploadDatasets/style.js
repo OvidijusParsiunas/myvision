@@ -9,6 +9,7 @@ let imagesTableOuterContainerElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 let annotationsTableOuterContainerElement = null;
+let errorRowIndex = 0;
 const modalWidth = 505;
 const modalHeight = 340;
 
@@ -22,13 +23,23 @@ function createTableRowElementMarkup(fileName) {
 
 function createTableRowElementMarkupWthError(fileName, message) {
   return `
-  <div id="format-option-checkbox-popover-1" style="display: block; background: #ffe1e1; color: red; border-color: #fbd0d0;" class="export-labels-popup-item format-option-popover format-option-checkbox-popover">${message}</div>
-  <div id="format-option-checkbox-arrow-1" style="display: block; margin-left: ${modalWidth / 2 / 2}px;" class="export-labels-popup-item arrow-down checkbox-arrow-down"></div>
+  <div id="upload-datasets-modal-annotation-file-error-popover-${errorRowIndex}" class="upload-datasets-modal-upload-datasets-table-error-row-popover popover">${message}</div>
+  <div id="upload-datasets-modal-annotation-file-popover-arrow-${errorRowIndex}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-color "></div>
   <div class="upload-datasets-modal-upload-datasets-table-row">
-      <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error">${fileName}</div>
+      <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})">${fileName}</div>
     </div>
   `;
 }
+
+window.displayUploadDatasetsAnnotationFileErrorPopover = (id) => {
+  document.getElementById(`upload-datasets-modal-annotation-file-error-popover-${id}`).style.display = 'block';
+  document.getElementById(`upload-datasets-modal-annotation-file-popover-arrow-${id}`).style.display = 'block';
+};
+
+window.removeUploadDatasetsAnnotationFileErrorPopover = (id) => {
+  document.getElementById(`upload-datasets-modal-annotation-file-error-popover-${id}`).style.display = 'none';
+  document.getElementById(`upload-datasets-modal-annotation-file-popover-arrow-${id}`).style.display = 'none';
+};
 
 function insertRowToImagesTable(fileName) {
   const row = imagesTableElement.insertRow(-1);
@@ -41,6 +52,7 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
   const cell = row.insertCell(0);
   if (validationResult.error) {
     cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message);
+    errorRowIndex += 1;
   } else {
     cell.innerHTML = createTableRowElementMarkup(fileName);
   }

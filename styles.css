@@ -112,6 +112,17 @@
   height: 6px;
 }
 
+.popover {
+  display: none;
+  z-index: 2;
+  position: absolute;
+  font-size: 13.5px;
+  border-radius: 4px;
+  user-select: none;
+  border-style: solid;
+  border-width: 1px;
+}
+
 #upload-datasets-modal-parent {
   height: 249px;
   width: 381px;
@@ -183,7 +194,23 @@
 
 .upload-datasets-modal-upload-datasets-table-row-text-error {
   color: red;
-  cursor: pointer;
+}
+
+.upload-datasets-modal-upload-datasets-table-error-row-popover {
+  padding-left: 6px;
+  padding-right: 6px;
+  background: #ffe1e1;
+  color: #e00000;
+  border-color: #fbd0d0;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  margin-top: -30px;
+  left: 5px;
+  margin-left: 0px;
+}
+
+.upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-color {
+ border-top-color: rgb(255, 226, 226);
 }
 
 #upload-datasets-modal-vertical-break-line {
@@ -414,19 +441,14 @@
 }
 
 .format-option-popover {
-  font-size: 13.5px;
-  position: absolute;
   background: rgb(239, 239, 239);
   color: #272727;
   padding-left: 5px;
   padding-right: 5px;
   padding-top: 3px;
   padding-bottom: 3px;
-  display: none;
-  z-index: 2;
-  border-radius: 4px;
-  user-select: none;
-  border: solid 1px rgb(228, 228, 228);
+  border-color: rgb(228, 228, 228);
+
 }
 
 .format-option-checkbox-popover {
@@ -439,22 +461,27 @@
   margin-left: -4px;
 }
 
-.arrow-down {
+.arrow {
   position: absolute;
   display: none;
   width: 0;
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 8px solid rgb(228, 228, 228);
+  border-top-style: solid;
+  border-top-width: 8px;
 }
 
-.text-arrow-down {
+.text-arrow-position {
   margin-top: -5px;
   margin-left: 10px;
 }
 
-.checkbox-arrow-down {
+.default-arrow-color {
+  border-top-color: rgb(228, 228, 228);
+}
+
+.default-arrow-position {
   margin-top: -4px;
   margin-left: 135px;
 }
