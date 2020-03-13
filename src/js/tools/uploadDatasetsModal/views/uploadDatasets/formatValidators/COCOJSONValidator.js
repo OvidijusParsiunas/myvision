@@ -61,7 +61,7 @@ function checkProperties(requiredProperties, subjectObject) {
     }
   });
   if (undefinedProperties.length > 0) {
-    return { error: true, message: `The following properties have not been found: ${undefinedProperties}` };
+    return { error: true, message: `The following properties have not been found: ${undefinedProperties.join(', ')}` };
   }
   const nullProperties = [];
   Object.keys(requiredProperties).forEach((property) => {
