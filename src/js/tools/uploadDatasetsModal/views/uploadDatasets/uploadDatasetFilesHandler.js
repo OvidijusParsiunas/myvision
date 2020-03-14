@@ -7,8 +7,11 @@ let fileIndex = 0;
 
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
-  const validationResult = formatValidatorFunc(parsedFileObj, datasetObject);
-  tableUpdaterFunc(fileMetaData, validationResult);
+  let { errorObj } = parsedFileObj;
+  if (!errorObj) {
+    errorObj = formatValidatorFunc(parsedFileObj, datasetObject);
+  }
+  tableUpdaterFunc(fileMetaData, errorObj);
   if (parsedFileObj.fileFormat === 'image') {
     datasetObject.imageFiles[fileIndex] = parsedFileObj.body;
   } else {
