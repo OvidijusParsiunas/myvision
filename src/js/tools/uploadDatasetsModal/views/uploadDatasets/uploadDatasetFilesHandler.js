@@ -2,8 +2,16 @@ let fileParserFunc = null;
 let tableUpdaterFunc = null;
 let formatValidatorFunc = null;
 let setDatasetObjectFunc = null;
-const datasetObject = { annotationFiles: [], imageFiles: [] };
+const datasetObject = { annotationFiles: [], imageFiles: [], imagesValidated: false };
 let fileIndex = 0;
+
+function validateExistingImages() {
+  datasetObject.imageFiles.forEach((imageFile) => {
+    const validationResult = formatValidatorFunc(imageFile, datasetObject);
+    const { fileMetaData } = imageFile.body;
+    tableUpdaterFunc(fileMetaData, validationResult);
+  });
+}
 
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
@@ -13,9 +21,10 @@ function onFileLoad(fileMetaData, event) {
   }
   tableUpdaterFunc(fileMetaData, errorObj);
   if (parsedFileObj.fileFormat === 'image') {
-    datasetObject.imageFiles[fileIndex] = parsedFileObj.body;
-  } else {
-    datasetObject.annotationFiles[fileIndex] = parsedFileObj.body;
+    datasetObject.imageFiles[fileIndex] = parsedFileObj;
+  } else if (!errorObj.error) {
+    datasetObject.annotationFiles[fileIndex] = parsedFileObj;
+    validateExistingImages();
   }
   fileIndex += 1;
 }

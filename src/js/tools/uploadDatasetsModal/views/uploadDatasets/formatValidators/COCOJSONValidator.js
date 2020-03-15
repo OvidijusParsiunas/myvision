@@ -156,7 +156,9 @@ function validateCOCOJSONFormat(parsedObj, datasetObject) {
     return checkJONObject(parsedObj.body, validators);
   }
   if (parsedObj.fileFormat === 'image' && datasetObject.annotationFiles.length > 0) {
-    const { annotationData } = datasetObject.annotationFiles[0];
+    const { annotationData } = datasetObject.annotationFiles[
+      datasetObject.annotationFiles.length - 1
+    ].body;
     for (let i = 0; i < annotationData.images.length; i += 1) {
       if (parsedObj.body.fileMetaData.name === annotationData.images[0].file_name) {
         return { error: false, message: '' };
