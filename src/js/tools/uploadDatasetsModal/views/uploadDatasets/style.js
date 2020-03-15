@@ -47,9 +47,11 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement, er
   const tableBody = tableElement.childNodes[1];
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     let fileName = '';
+    let currentRowHasError = false;
     if (tableBody.childNodes[i].childNodes[0].childNodes[1].id.startsWith('upload-datasets-modal-file-error-popover-')) {
       fileName = tableBody.childNodes[i].childNodes[0].childNodes[5]
         .childNodes[1].innerHTML;
+      currentRowHasError = true;
     } else {
       fileName = tableBody.childNodes[i].childNodes[0].childNodes[1].childNodes[1].innerHTML;
     }
@@ -60,6 +62,9 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement, er
           newFileName, validationResult.message, errorClass,
         );
         errorRowIndex += 1;
+      } else if (currentRowHasError && !validationResult.error) {
+        const rowParentElement = tableBody.childNodes[i].childNodes[0];
+        rowParentElement.innerHTML = createTableRowElementMarkup(newFileName);
       }
       return true;
     }
@@ -69,7 +74,7 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement, er
 
 function insertRowToImagesTable(fileName, validationResult) {
   if (!checkFileAlreadyInTable(fileName, validationResult,
-    imagesTableElement, ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS)) {
+    imagesTableElement, IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS)) {
     const row = imagesTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
@@ -84,7 +89,7 @@ function insertRowToImagesTable(fileName, validationResult) {
 
 function insertRowToAnnotationsTable(fileName, validationResult) {
   if (!checkFileAlreadyInTable(fileName, validationResult,
-    annotationsTableElement, IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS)) {
+    annotationsTableElement, ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS)) {
     const row = annotationsTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
