@@ -1,8 +1,11 @@
+import {
+  addAnnotationFile, addFaltyAnnotationFile, addImageFile,
+  getAnnotationFiles, getImageFiles,
+} from './datasetObjectManager';
+
 let fileParserFunc = null;
 let tableUpdaterFunc = null;
 let formatValidatorFunc = null;
-let setDatasetObjectFunc = null;
-const datasetObject = { annotationFiles: [], faltyAnnotationFiles: [], imageFiles: [] };
 
 // delete file
 // search for file name in the arrays and remove it (if present) + remove from the table
@@ -13,18 +16,18 @@ function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
   let { errorObj } = parsedFileObj;
   if (!errorObj) {
-    errorObj = formatValidatorFunc(parsedFileObj, datasetObject);
+    errorObj = formatValidatorFunc(parsedFileObj, getAnnotationFiles());
   }
   if (parsedFileObj.fileFormat === 'image') {
-    datasetObject.imageFiles.push(parsedFileObj);
+    addImageFile(parsedFileObj);
   } else if (parsedFileObj.fileFormat === 'annotation') {
     if (!errorObj.error) {
-      datasetObject.annotationFiles.push(parsedFileObj);
+      addAnnotationFile(parsedFileObj);
     } else {
-      datasetObject.faltyAnnotationFiles.push(parsedFileObj);
+      addFaltyAnnotationFile(parsedFileObj);
     }
   }
-  tableUpdaterFunc(fileMetaData, errorObj, datasetObject);
+  tableUpdaterFunc(fileMetaData, errorObj, getAnnotationFiles(), getImageFiles());
 }
 
 function readFile(reader, file) {
@@ -42,7 +45,6 @@ function uploadDatasetFilesHandler(uploadData) {
       reader.onload = onFileLoad.bind(this, uploadData.files[i]);
       readFile(reader, uploadData.files[i]);
     }
-    setDatasetObjectFunc(datasetObject);
   }
 }
 
@@ -58,11 +60,6 @@ function setFileParser(fileParserFuncArg) {
   fileParserFunc = fileParserFuncArg;
 }
 
-function initialiseSetDatasetObjectFunc(setDatasetObjectFuncArg) {
-  setDatasetObjectFunc = setDatasetObjectFuncArg;
-}
-
 export {
-  setFileParser, setTableUpdater, setFormatValidator,
-  initialiseSetDatasetObjectFunc, uploadDatasetFilesHandler,
+  setFileParser, setTableUpdater, setFormatValidator, uploadDatasetFilesHandler,
 };

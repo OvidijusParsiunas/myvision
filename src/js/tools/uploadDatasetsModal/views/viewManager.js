@@ -49,10 +49,6 @@ function setUpdateDatasetFileHandlerFunctions(format) {
   }
 }
 
-function setDatasetObject(newDatasetsObject) {
-  datasetsObject = newDatasetsObject;
-}
-
 // the following architecture was originally prepared for more views
 function displayNextView() {
   switch (currentViewNumber) {
@@ -75,6 +71,10 @@ function displayNextView() {
       setUpdateDatasetFileHandlerFunctions('COCO JSON');
       hideViewOnCancelFunc = hideUploadDatasetsViewAssets;
       currentViewNumber += 1;
+      break;
+    case 4:
+      // get marshalled object
+      // generate objects
       break;
     default:
       break;
@@ -104,7 +104,7 @@ function initialiseUploadDatasetsModal() {
   assignViewManagerLocalVariables();
   registerDescriptionViewButtonEventHandlers(displayNextView);
   assignDescriptionViewLocalVariables();
-  registerUploadDatasetsViewButtonEventHandlers(displayNextView, setDatasetObject);
+  registerUploadDatasetsViewButtonEventHandlers(displayNextView);
   assignUploadDatasetsViewLocalVariables();
   displayNextView();
   window.cancelUploadDatasetsModal = closeModal;

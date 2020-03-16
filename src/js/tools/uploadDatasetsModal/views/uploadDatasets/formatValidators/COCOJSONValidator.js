@@ -143,8 +143,8 @@ function checkJONObject(JSONObject, validators) {
   return { error: false, message: '' };
 }
 
-function validateCOCOJSONFormat(parsedObj, datasetObject) {
-  if (parsedObj.fileFormat === 'annotations') {
+function validateCOCOJSONFormat(parsedObj, annotationFiles) {
+  if (parsedObj.fileFormat === 'annotation') {
     const validators = [
       checkParentProperties,
       checkCategoriesProperty,
@@ -155,9 +155,9 @@ function validateCOCOJSONFormat(parsedObj, datasetObject) {
     ];
     return checkJONObject(parsedObj.body, validators);
   }
-  if (parsedObj.fileFormat === 'image' && datasetObject.annotationFiles.length > 0) {
-    const { annotationData } = datasetObject.annotationFiles[
-      datasetObject.annotationFiles.length - 1
+  if (parsedObj.fileFormat === 'image' && annotationFiles.length > 0) {
+    const { annotationData } = annotationFiles[
+      annotationFiles.length - 1
     ].body;
     for (let i = 0; i < annotationData.images.length; i += 1) {
       if (parsedObj.body.fileMetaData.name === annotationData.images[0].file_name) {

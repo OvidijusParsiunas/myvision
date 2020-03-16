@@ -7,7 +7,7 @@ function parseImageData(fileMetaData, event) {
 function parseJSON(fileMetaData, event) {
   try {
     const JSONObject = JSON.parse(event.target.result);
-    return { fileFormat: 'annotations', body: { fileMetaData, annotationData: JSONObject } };
+    return { fileFormat: 'annotation', body: { fileMetaData, annotationData: JSONObject } };
   } catch (errorMessage) {
     return { errorObj: { error: true, message: `Invalid JSON - ${errorMessage}` } };
   }

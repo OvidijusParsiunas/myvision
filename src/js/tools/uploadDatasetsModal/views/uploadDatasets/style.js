@@ -19,12 +19,12 @@ const IMAGE_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upl
 const ANNOTAIONS_TABLE_INDICATOR = 'annotations';
 const IMAGES_TABLE_INDICATOR = 'images';
 
-function createTableRowElementMarkup(fileName) {
+function createTableRowElementMarkup(fileName, tableName) {
   return `
     <div class="upload-datasets-modal-upload-datasets-table-row">
-    <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)">
-          <img src="x-icon-default.svg" class="upload-datasets-modal-delete-file-button"  alt="remove">
-          <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-delete-file-button" alt="remove">
+        <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
+          <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
+          <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
       <div class="upload-datasets-modal-upload-datasets-table-row-text">${fileName}</div>
     </div>
@@ -37,9 +37,9 @@ function createTableRowElementMarkupWthError(fileName, message, popoverPositionC
     <div id="upload-datasets-modal-file-error-popover-${index}" class="popover upload-datasets-modal-upload-datasets-table-error-row-popover ${popoverPositionClass}">${message}</div>
     <div id="upload-datasets-modal-file-error-popover-arrow-${index}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position ${popoverArrowClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
-        <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)">
-          <img src="x-icon-default.svg" class="upload-datasets-modal-delete-file-button"  alt="remove">
-          <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-delete-file-button" alt="remove">
+        <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
+          <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
+          <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
         <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFileErrorPopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})">${fileName}</div>
     </div>
@@ -73,12 +73,12 @@ window.displayDefaultRemoveFileIcon = (element) => {
 function getFileName(tableBody, rowIndex) {
   if (tableBody.childNodes[rowIndex].childNodes[0].childNodes[1].id.startsWith('upload-datasets-modal-file-error-popover-')) {
     return {
-      fileName: tableBody.childNodes[rowIndex].childNodes[0].childNodes[5].childNodes[1].innerHTML,
+      fileName: tableBody.childNodes[rowIndex].childNodes[0].childNodes[5].childNodes[3].innerHTML,
       currentRowHasError: true,
     };
   }
   return {
-    fileName: tableBody.childNodes[rowIndex].childNodes[0].childNodes[1].childNodes[1].innerHTML,
+    fileName: tableBody.childNodes[rowIndex].childNodes[0].childNodes[1].childNodes[3].innerHTML,
     currentRowHasError: false,
   };
 }
@@ -89,8 +89,8 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     const { fileName, currentRowHasError } = getFileName(tableBody, i);
     if (newFileName === fileName) {
+      const tableName = tableElement.id === 'upload-datsets-modal-upload-datasets-annotations-table' ? ANNOTAIONS_TABLE_INDICATOR : IMAGES_TABLE_INDICATOR;
       if (validationResult.error) {
-        const tableName = tableElement.id === 'upload-datsets-modal-upload-datasets-annotations-table' ? ANNOTAIONS_TABLE_INDICATOR : IMAGES_TABLE_INDICATOR;
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkupWthError(
           newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
@@ -98,7 +98,7 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
         );
       } else if (currentRowHasError && !validationResult.error) {
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
-        rowParentElement.innerHTML = createTableRowElementMarkup(newFileName);
+        rowParentElement.innerHTML = createTableRowElementMarkup(newFileName, tableName);
       }
       return true;
     }
@@ -117,7 +117,7 @@ function insertRowToImagesTable(fileName, validationResult) {
         IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS, IMAGE_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
         IMAGES_TABLE_INDICATOR, errorRowIndex += 1);
     } else {
-      cell.innerHTML = createTableRowElementMarkup(fileName);
+      cell.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
     }
   }
 }
@@ -147,7 +147,7 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
         ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
         ANNOTAIONS_TABLE_INDICATOR, errorRowIndex += 1);
     } else {
-      cell.innerHTML = createTableRowElementMarkup(fileName);
+      cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTAIONS_TABLE_INDICATOR);
     }
   }
 }
