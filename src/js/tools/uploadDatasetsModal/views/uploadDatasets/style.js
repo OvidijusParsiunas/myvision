@@ -22,6 +22,10 @@ const IMAGES_TABLE_INDICATOR = 'images';
 function createTableRowElementMarkup(fileName) {
   return `
     <div class="upload-datasets-modal-upload-datasets-table-row">
+    <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)">
+          <img src="x-icon-default.svg" class="upload-datasets-modal-delete-file-button"  alt="remove">
+          <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-delete-file-button" alt="remove">
+        </div>
       <div class="upload-datasets-modal-upload-datasets-table-row-text">${fileName}</div>
     </div>
   `;
@@ -33,6 +37,10 @@ function createTableRowElementMarkupWthError(fileName, message, popoverPositionC
     <div id="upload-datasets-modal-file-error-popover-${index}" class="popover upload-datasets-modal-upload-datasets-table-error-row-popover ${popoverPositionClass}">${message}</div>
     <div id="upload-datasets-modal-file-error-popover-arrow-${index}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position ${popoverArrowClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
+        <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)">
+          <img src="x-icon-default.svg" class="upload-datasets-modal-delete-file-button"  alt="remove">
+          <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-delete-file-button" alt="remove">
+        </div>
         <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFileErrorPopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})">${fileName}</div>
     </div>
   `;
@@ -50,6 +58,16 @@ window.displayUploadDatasetsAnnotationFileErrorPopover = (id, tableName) => {
 window.removeUploadDatasetsAnnotationFileErrorPopover = (id) => {
   document.getElementById(`upload-datasets-modal-file-error-popover-${id}`).style.display = 'none';
   document.getElementById(`upload-datasets-modal-file-error-popover-arrow-${id}`).style.display = 'none';
+};
+
+window.displayActiveRemoveFileIcon = (element) => {
+  element.childNodes[1].style.display = 'none';
+  element.childNodes[3].style.display = '';
+};
+
+window.displayDefaultRemoveFileIcon = (element) => {
+  element.childNodes[1].style.display = '';
+  element.childNodes[3].style.display = 'none';
 };
 
 function getFileName(tableBody, rowIndex) {

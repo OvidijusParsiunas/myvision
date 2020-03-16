@@ -190,10 +190,12 @@
   white-space: pre;
   text-align: left;
   user-select: none;
+  padding-right: 12px;
 }
 
 .upload-datasets-modal-upload-datasets-table-row-text-error {
   color: red;
+  padding-right: 12px;
 }
 
 .upload-datasets-modal-upload-datasets-table-error-row-popover {
@@ -225,6 +227,15 @@
 .upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-right {
   right: 125px;
   border-top-color: rgb(255, 226, 226);
+}
+
+.upload-datasets-modal-delete-file-button {
+  float: left;
+  padding-top: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  width: 8px;
+  padding-bottom: 6px;
 }
 
 #upload-datasets-modal-vertical-break-line {
