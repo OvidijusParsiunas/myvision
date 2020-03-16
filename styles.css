@@ -217,8 +217,14 @@
   margin-right: 0px;
 }
 
-.upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-color {
- border-top-color: rgb(255, 226, 226);
+.upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-left {
+  left: 5px;
+  border-top-color: rgb(255, 226, 226);
+}
+
+.upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-right {
+  right: 125px;
+  border-top-color: rgb(255, 226, 226);
 }
 
 #upload-datasets-modal-vertical-break-line {

@@ -2,8 +2,12 @@ let fileParserFunc = null;
 let tableUpdaterFunc = null;
 let formatValidatorFunc = null;
 let setDatasetObjectFunc = null;
-const datasetObject = { annotationFiles: [], imageFiles: [] };
-let fileIndex = 0;
+const datasetObject = { annotationFiles: [], faltyAnnotationFiles: [], imageFiles: [] };
+
+// delete file
+// search for file name in the arrays and remove it (if present) + remove from the table
+// upon deleting an annotation, switch back to the last one that was working, if none working ->
+// reparse all of the broken ones (use splice) and set all images to not have an error
 
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
@@ -12,9 +16,13 @@ function onFileLoad(fileMetaData, event) {
     errorObj = formatValidatorFunc(parsedFileObj, datasetObject);
   }
   if (parsedFileObj.fileFormat === 'image') {
-    datasetObject.imageFiles[fileIndex += 1] = parsedFileObj;
-  } else if (!errorObj.error) {
-    datasetObject.annotationFiles[fileIndex += 1] = parsedFileObj;
+    datasetObject.imageFiles.push(parsedFileObj);
+  } else if (parsedFileObj.fileFormat === 'annotation') {
+    if (!errorObj.error) {
+      datasetObject.annotationFiles.push(parsedFileObj);
+    } else {
+      datasetObject.faltyAnnotationFiles.push(parsedFileObj);
+    }
   }
   tableUpdaterFunc(fileMetaData, errorObj, datasetObject);
 }

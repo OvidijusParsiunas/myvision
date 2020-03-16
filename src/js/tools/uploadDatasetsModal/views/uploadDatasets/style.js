@@ -13,7 +13,9 @@ let errorRowIndex = 0;
 const modalWidth = 505;
 const modalHeight = 340;
 const ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-left';
+const ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-left';
 const IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-right';
+const IMAGE_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-right';
 const ANNOTAIONS_TABLE_INDICATOR = 'annotations';
 const IMAGES_TABLE_INDICATOR = 'images';
 
@@ -26,10 +28,10 @@ function createTableRowElementMarkup(fileName) {
 }
 
 function createTableRowElementMarkupWthError(fileName, message, popoverPositionClass,
-  tableName, index) {
+  popoverArrowClass, tableName, index) {
   return `
     <div id="upload-datasets-modal-file-error-popover-${index}" class="popover upload-datasets-modal-upload-datasets-table-error-row-popover ${popoverPositionClass}">${message}</div>
-    <div id="upload-datasets-modal-file-error-popover-arrow-${index}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-color "></div>
+    <div id="upload-datasets-modal-file-error-popover-arrow-${index}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position ${popoverArrowClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
         <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFileErrorPopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})">${fileName}</div>
     </div>
@@ -37,7 +39,8 @@ function createTableRowElementMarkupWthError(fileName, message, popoverPositionC
 }
 
 window.displayUploadDatasetsAnnotationFileErrorPopover = (id, tableName) => {
-  const tableOuterContainerElement = tableName === ANNOTAIONS_TABLE_INDICATOR ? annotationsTableOuterContainerElement : imagesTableOuterContainerElement;
+  const tableOuterContainerElement = tableName === ANNOTAIONS_TABLE_INDICATOR
+    ? annotationsTableOuterContainerElement : imagesTableOuterContainerElement;
   document.getElementById(`upload-datasets-modal-file-error-popover-${id}`).style.display = 'block';
   document.getElementById(`upload-datasets-modal-file-error-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 30}px`;
   document.getElementById(`upload-datasets-modal-file-error-popover-arrow-${id}`).style.display = 'block';
@@ -62,7 +65,8 @@ function getFileName(tableBody, rowIndex) {
   };
 }
 
-function checkFileAlreadyInTable(newFileName, validationResult, tableElement, errorClass) {
+function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
+  popoverPositionClass, popoverArrowPositionClass) {
   const tableBody = tableElement.childNodes[1];
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     const { fileName, currentRowHasError } = getFileName(tableBody, i);
@@ -71,7 +75,8 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement, er
         const tableName = tableElement.id === 'upload-datsets-modal-upload-datasets-annotations-table' ? ANNOTAIONS_TABLE_INDICATOR : IMAGES_TABLE_INDICATOR;
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkupWthError(
-          newFileName, validationResult.message, errorClass, tableName, errorRowIndex += 1,
+          newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
+          tableName, errorRowIndex += 1,
         );
       } else if (currentRowHasError && !validationResult.error) {
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
@@ -85,12 +90,14 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement, er
 
 function insertRowToImagesTable(fileName, validationResult) {
   if (!checkFileAlreadyInTable(fileName, validationResult,
-    imagesTableElement, IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS)) {
+    imagesTableElement, IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS,
+    IMAGE_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS)) {
     const row = imagesTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS, IMAGES_TABLE_INDICATOR, errorRowIndex += 1);
+        IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS, IMAGE_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
+        IMAGES_TABLE_INDICATOR, errorRowIndex += 1);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName);
     }
@@ -104,6 +111,7 @@ function changeAllAnnotationsTableRowsToHaveError(errorMessage) {
     const { fileName } = getFileName(tableBody, i);
     rowParentElement.innerHTML = createTableRowElementMarkupWthError(
       fileName, errorMessage, ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS,
+      ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
       ANNOTAIONS_TABLE_INDICATOR, errorRowIndex += 1,
     );
   }
@@ -111,12 +119,14 @@ function changeAllAnnotationsTableRowsToHaveError(errorMessage) {
 
 function insertRowToAnnotationsTable(fileName, validationResult) {
   if (!checkFileAlreadyInTable(fileName, validationResult,
-    annotationsTableElement, ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS)) {
+    annotationsTableElement, ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS,
+    ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS)) {
     const row = annotationsTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
         ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS,
+        ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
         ANNOTAIONS_TABLE_INDICATOR, errorRowIndex += 1);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName);
