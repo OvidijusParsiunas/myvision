@@ -1,9 +1,9 @@
-import { removeAnnotationFile } from './datasetObjectManager';
+import { removeFile } from './datasetObjectManager';
 
-function removeFile(fileName, tableName) {
+function removeFileHandler(fileName, tableName) {
   if (tableName === 'annotations') {
-    removeAnnotationFile(fileName);
+    removeFile(fileName, 'annotationFiles');
   }
 }
 
-export { removeFile as default };
+export { removeFileHandler as default };

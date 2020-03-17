@@ -1,16 +1,33 @@
 const datasetObject = { annotationFiles: [], faltyAnnotationFiles: [], imageFiles: [] };
 
-function addAnnotationFile(annotationFileObj) {
-  datasetObject.annotationFiles.push(annotationFileObj);
+// should valid ones that have become falty due to a new one be inserted into falty (preferrably not)
+// what happens when the valid one becomes invalid and there are other valid ones out there
+
+function removeFile(fileName, arrayName) {
+  const subjectArray = datasetObject[arrayName];
+  let foundIndex;
+  for (let i = 0; i < subjectArray.length; i += 1) {
+    if (subjectArray[i].body.fileMetaData.name === fileName) {
+      foundIndex = i;
+      break;
+    }
+  }
+  if (foundIndex !== undefined) {
+    subjectArray.splice(
+      foundIndex, 1,
+    );
+  }
 }
 
-function removeAnnotationFile(fileName) {
-  console.log(datasetObject.annotationFiles);
-  // list.splice( list.indexOf('foo'), 1 );
-}
-
-function addFaltyAnnotationFile(faltyAnnotationFileObj) {
-  datasetObject.faltyAnnotationFiles.push(faltyAnnotationFileObj);
+function addAnnotationFile(annotationFileObj, error) {
+  const { name } = annotationFileObj.body.fileMetaData;
+  if (!error) {
+    datasetObject.annotationFiles.push(annotationFileObj);
+    removeFile(name, 'faltyAnnotationFiles');
+  } else {
+    datasetObject.faltyAnnotationFiles.push(annotationFileObj);
+    removeFile(name, 'annotationFiles');
+  }
 }
 
 function addImageFile(imageFileObj) {
@@ -30,6 +47,6 @@ function getImageFiles() {
 }
 
 export {
-  getAnnotationFiles, getFaltyAnnotationFiles, getImageFiles,
-  addAnnotationFile, addFaltyAnnotationFile, addImageFile, removeAnnotationFile,
+  getAnnotationFiles, getImageFiles, removeFile,
+  addAnnotationFile, addImageFile, getFaltyAnnotationFiles,
 };

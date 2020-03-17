@@ -1,6 +1,5 @@
 import {
-  addAnnotationFile, addFaltyAnnotationFile, addImageFile,
-  getAnnotationFiles, getImageFiles,
+  addAnnotationFile, addImageFile, getAnnotationFiles, getImageFiles,
 } from './datasetObjectManager';
 
 let fileParserFunc = null;
@@ -21,11 +20,7 @@ function onFileLoad(fileMetaData, event) {
   if (parsedFileObj.fileFormat === 'image') {
     addImageFile(parsedFileObj);
   } else if (parsedFileObj.fileFormat === 'annotation') {
-    if (!errorObj.error) {
-      addAnnotationFile(parsedFileObj);
-    } else {
-      addFaltyAnnotationFile(parsedFileObj);
-    }
+    addAnnotationFile(parsedFileObj, errorObj.error);
   }
   tableUpdaterFunc(fileMetaData, errorObj, getAnnotationFiles(), getImageFiles());
 }

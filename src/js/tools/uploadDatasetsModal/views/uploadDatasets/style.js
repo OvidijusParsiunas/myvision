@@ -16,7 +16,7 @@ const ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS = 'upload-datasets-modal-uplo
 const ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-left';
 const IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-right';
 const IMAGE_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-arrow-right';
-const ANNOTAIONS_TABLE_INDICATOR = 'annotations';
+const ANNOTATIONS_TABLE_INDICATOR = 'annotations';
 const IMAGES_TABLE_INDICATOR = 'images';
 
 function createTableRowElementMarkup(fileName, tableName) {
@@ -47,7 +47,7 @@ function createTableRowElementMarkupWthError(fileName, message, popoverPositionC
 }
 
 window.displayUploadDatasetsAnnotationFileErrorPopover = (id, tableName) => {
-  const tableOuterContainerElement = tableName === ANNOTAIONS_TABLE_INDICATOR
+  const tableOuterContainerElement = tableName === ANNOTATIONS_TABLE_INDICATOR
     ? annotationsTableOuterContainerElement : imagesTableOuterContainerElement;
   document.getElementById(`upload-datasets-modal-file-error-popover-${id}`).style.display = 'block';
   document.getElementById(`upload-datasets-modal-file-error-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 30}px`;
@@ -89,7 +89,7 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     const { fileName, currentRowHasError } = getFileName(tableBody, i);
     if (newFileName === fileName) {
-      const tableName = tableElement.id === 'upload-datsets-modal-upload-datasets-annotations-table' ? ANNOTAIONS_TABLE_INDICATOR : IMAGES_TABLE_INDICATOR;
+      const tableName = tableElement.id === 'upload-datsets-modal-upload-datasets-annotations-table' ? ANNOTATIONS_TABLE_INDICATOR : IMAGES_TABLE_INDICATOR;
       if (validationResult.error) {
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkupWthError(
@@ -122,16 +122,12 @@ function insertRowToImagesTable(fileName, validationResult) {
   }
 }
 
-function changeAllAnnotationsTableRowsToHaveError(errorMessage) {
-  const tableBody = annotationsTableElement.childNodes[1];
+function changeAllImagesTableRowsToDefault() {
+  const tableBody = imagesTableElement.childNodes[1];
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     const rowParentElement = tableBody.childNodes[i].childNodes[0];
     const { fileName } = getFileName(tableBody, i);
-    rowParentElement.innerHTML = createTableRowElementMarkupWthError(
-      fileName, errorMessage, ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS,
-      ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
-      ANNOTAIONS_TABLE_INDICATOR, errorRowIndex += 1,
-    );
+    rowParentElement.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
   }
 }
 
@@ -145,9 +141,9 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
         ANNOTATION_FILE_ERROR_POPOVER_POSITION_CLASS,
         ANNOTATION_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
-        ANNOTAIONS_TABLE_INDICATOR, errorRowIndex += 1);
+        ANNOTATIONS_TABLE_INDICATOR, errorRowIndex += 1);
     } else {
-      cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTAIONS_TABLE_INDICATOR);
+      cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
     }
   }
 }
@@ -267,7 +263,6 @@ function assignUploadDatasetsViewLocalVariables() {
 }
 
 export {
-  hideUploadDatasetsViewAssets, insertRowToImagesTable,
-  assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView,
-  changeAllAnnotationsTableRowsToHaveError, insertRowToAnnotationsTable,
+  hideUploadDatasetsViewAssets, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
+  assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, insertRowToAnnotationsTable,
 };

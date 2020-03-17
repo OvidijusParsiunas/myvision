@@ -9,7 +9,11 @@ function parseJSON(fileMetaData, event) {
     const JSONObject = JSON.parse(event.target.result);
     return { fileFormat: 'annotation', body: { fileMetaData, annotationData: JSONObject } };
   } catch (errorMessage) {
-    return { errorObj: { error: true, message: `Invalid JSON - ${errorMessage}` } };
+    return {
+      fileFormat: 'annotation',
+      body: { fileMetaData },
+      errorObj: { error: true, message: `Invalid JSON - ${errorMessage}` },
+    };
   }
 }
 
