@@ -1,17 +1,41 @@
-const datasetObject = { annotationFiles: [], faltyAnnotationFiles: [], imageFiles: [] };
+const datasetObject = { validAnnotationFiles: [], faltyAnnotationFiles: [], imageFiles: [] };
 
 // should valid ones that have become falty due to a new one be inserted into falty (preferrably not)
-// what happens when the valid one becomes invalid and there are other valid ones out there
+// what happens when the valid one becomes invalid and there are other valid ones out there (delete)
+// check x being smaller
+/*
+  float: left;
+  padding-top: 6px;
+  margin-right: 5px;
+  cursor: pointer;
+  width: 7px;
+  padding-bottom: 7px;
+*/
+
+function getIndexOfFileInArray(fileName, subjectArray) {
+  for (let i = 0; i < subjectArray.length; i += 1) {
+    if (subjectArray[i].body.fileMetaData.name === fileName) {
+      return i;
+    }
+  }
+  return undefined;
+}
+
+function addFaltyAnnotationsFile(fileName, annotationFileObj) {
+  if (getIndexOfFileInArray(fileName, datasetObject.faltyAnnotationFiles) === undefined) {
+    datasetObject.faltyAnnotationFiles.push(annotationFileObj);
+  }
+}
+
+function addValidAnnotationFile(fileName, annotationFileObj) {
+  if (getIndexOfFileInArray(fileName, datasetObject.validAnnotationFiles) === undefined) {
+    datasetObject.validAnnotationFiles.push(annotationFileObj);
+  }
+}
 
 function removeFile(fileName, arrayName) {
   const subjectArray = datasetObject[arrayName];
-  let foundIndex;
-  for (let i = 0; i < subjectArray.length; i += 1) {
-    if (subjectArray[i].body.fileMetaData.name === fileName) {
-      foundIndex = i;
-      break;
-    }
-  }
+  const foundIndex = getIndexOfFileInArray(fileName, subjectArray);
   if (foundIndex !== undefined) {
     subjectArray.splice(
       foundIndex, 1,
@@ -22,11 +46,11 @@ function removeFile(fileName, arrayName) {
 function addAnnotationFile(annotationFileObj, error) {
   const { name } = annotationFileObj.body.fileMetaData;
   if (!error) {
-    datasetObject.annotationFiles.push(annotationFileObj);
+    addValidAnnotationFile(name, annotationFileObj);
     removeFile(name, 'faltyAnnotationFiles');
   } else {
-    datasetObject.faltyAnnotationFiles.push(annotationFileObj);
-    removeFile(name, 'annotationFiles');
+    addFaltyAnnotationsFile(name, annotationFileObj);
+    removeFile(name, 'validAnnotationFiles');
   }
 }
 
@@ -35,7 +59,7 @@ function addImageFile(imageFileObj) {
 }
 
 function getAnnotationFiles() {
-  return datasetObject.annotationFiles;
+  return datasetObject.validAnnotationFiles;
 }
 
 function getFaltyAnnotationFiles() {

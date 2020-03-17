@@ -231,11 +231,11 @@
 
 .upload-datasets-modal-remove-file-button {
   float: left;
-  padding-top: 5px;
+  padding-top: 5.5px;
   margin-right: 5px;
   cursor: pointer;
-  width: 8px;
-  padding-bottom: 6px;
+  width: 7.5px;
+  padding-bottom: 6.5px;
 }
 
 #upload-datasets-modal-vertical-break-line {
