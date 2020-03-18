@@ -38,9 +38,7 @@ function checkAnnotationAlreadyInTable(validationResult, fileName, datasetObject
     if (activeAnnotationFile && activeAnnotationFile.newlyActive) {
       changeAnnotationRowToDefault(activeAnnotationFile.body.fileMetaData.name);
       activeAnnotationFile.newlyActive = false;
-      // re-evaluate the existing images
-      // try to create a test case for another json object to make sure this is cascaded correctly
-      // see when two valid ones are turned into null, all objects should be set to default
+      validateExistingImages(datasetObject);
     }
     return { error: true, message: validationResult.message };
   }
