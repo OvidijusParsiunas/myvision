@@ -3,8 +3,8 @@ import {
   changeAllImagesTableRowsToDefault, changeAnnotationRowToDefault,
 } from '../style';
 import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
+import { ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE } from '../sharedConsts/consts';
 
-const ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE = 'Only one annotation file is allowed per dataset (app version 1.0)';
 let allImagesValidated = true;
 
 function validateExistingImages(datasetObject) {
@@ -22,7 +22,6 @@ function reValidateExistingAnnotations(annotationFiles, datasetObject) {
     if (!validationResult.error) {
       validationResult.error = true;
       validationResult.message = ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE;
-      annotationFile.body.redundancy = true;
     }
     insertRowToAnnotationsTable(name, validationResult);
   });
