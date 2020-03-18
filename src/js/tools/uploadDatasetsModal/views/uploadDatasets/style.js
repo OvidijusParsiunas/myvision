@@ -127,7 +127,20 @@ function changeAllImagesTableRowsToDefault() {
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     const rowParentElement = tableBody.childNodes[i].childNodes[0];
     const { fileName } = getFileName(tableBody, i);
-    rowParentElement.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
+    rowParentElement.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
+  }
+}
+
+function changeAnnotationRowToDefault(annotationFileName) {
+  const tableBody = annotationsTableElement.childNodes[1];
+  for (let i = 0; i < tableBody.childNodes.length; i += 1) {
+    const rowParentElement = tableBody.childNodes[i].childNodes[0];
+    const { fileName } = getFileName(tableBody, i);
+    if (annotationFileName === fileName) {
+      rowParentElement.innerHTML = createTableRowElementMarkup(
+        annotationFileName, ANNOTATIONS_TABLE_INDICATOR,
+      );
+    }
   }
 }
 
@@ -265,4 +278,5 @@ function assignUploadDatasetsViewLocalVariables() {
 export {
   hideUploadDatasetsViewAssets, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, insertRowToAnnotationsTable,
+  changeAnnotationRowToDefault,
 };

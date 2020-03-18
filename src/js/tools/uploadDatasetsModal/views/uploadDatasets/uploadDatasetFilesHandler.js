@@ -1,6 +1,4 @@
-import {
-  addAnnotationFile, addImageFile, getAnnotationFiles, getImageFiles,
-} from './datasetObjectManager';
+import { addAnnotationFile, addImageFile, getDatasetObject } from './datasetObjectManagers/COCOJSONDatasetObjectManager';
 
 let fileParserFunc = null;
 let tableUpdaterFunc = null;
@@ -13,16 +11,17 @@ let formatValidatorFunc = null;
 
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
+  const datasetObject = getDatasetObject();
   let { errorObj } = parsedFileObj;
   if (!errorObj) {
-    errorObj = formatValidatorFunc(parsedFileObj, getAnnotationFiles());
+    errorObj = formatValidatorFunc(parsedFileObj, datasetObject);
   }
   if (parsedFileObj.fileFormat === 'image') {
     addImageFile(parsedFileObj);
   } else if (parsedFileObj.fileFormat === 'annotation') {
     addAnnotationFile(parsedFileObj, errorObj.error);
   }
-  tableUpdaterFunc(fileMetaData, errorObj, getAnnotationFiles(), getImageFiles());
+  tableUpdaterFunc(fileMetaData, errorObj, datasetObject);
 }
 
 function readFile(reader, file) {
