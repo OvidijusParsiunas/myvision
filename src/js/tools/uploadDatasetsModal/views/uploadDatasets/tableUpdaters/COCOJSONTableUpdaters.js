@@ -3,9 +3,11 @@ import {
   changeAllImagesTableRowsToDefault, changeAnnotationRowToDefault,
 } from '../style';
 import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
-import { ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_ARRAY } from '../sharedConsts/consts';
-
-let allImagesValidated = true;
+import {
+  ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
+  IMAGE_FILES_ARRAY, ACTIVE_ANNOTATION_FILE,
+} from '../sharedConsts/consts';
+import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {
   datasetObject[IMAGE_FILES_ARRAY].forEach((imageFile) => {
@@ -28,10 +30,11 @@ function reValidateExistingAnnotations(annotationFiles, datasetObject) {
 }
 
 function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
-  const { activeAnnotationFile } = datasetObject;
+  const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
   const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
   if (!validationResult.error) {
     reValidateExistingAnnotations(validAnnotationFiles, datasetObject);
+    validateExistingImages(datasetObject);
     return validationResult;
   }
   if (validAnnotationFiles.length > 0) {
@@ -42,14 +45,12 @@ function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
     }
     return { error: true, message: validationResult.message };
   }
-  if (allImagesValidated) {
-    changeAllImagesTableRowsToDefault();
-    allImagesValidated = false;
-  }
+  changeAllImagesTableRowsToDefault();
   return validationResult;
 }
 
-function updateCOCOJSONTables(fileMetaData, validationResult, datasetObject) {
+function updateCOCOJSONTables(fileMetaData, validationResult) {
+  const datasetObject = getDatasetObject();
   const fileType = fileMetaData.type;
   const fileName = fileMetaData.name;
   if (fileType.startsWith('image/')) {
@@ -59,11 +60,9 @@ function updateCOCOJSONTables(fileMetaData, validationResult, datasetObject) {
     const newValidationResult = checkAnnotationAlreadyInTable(
       validationResult, datasetObject,
     );
+    // whilst the reValidateExistingAnnotations inserts the new annotation,
+    // this overwrights it if it has been incorrectly set with an error
     insertRowToAnnotationsTable(fileName, newValidationResult);
-    if (!validationResult.error) {
-      validateExistingImages(datasetObject);
-      allImagesValidated = true;
-    }
   }
 }
 

@@ -12,7 +12,10 @@ import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import parseCOCOJSONFiles from './uploadDatasets/fileParsers/COCOJSONParser';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
-import { setFileParser, setTableUpdater, setFormatValidator } from './uploadDatasets/uploadDatasetFilesHandler';
+import { addFile as addCOCOJSONFile } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
+import {
+  setFileParser, setTableUpdater, setFormatValidator, setAddFile,
+} from './uploadDatasets/uploadDatasetFilesHandler';
 
 let currentViewNumber = 1;
 // let machineLearningData = {};
@@ -40,6 +43,7 @@ let datasetsObject = null;
 function setUpdateDatasetFileHandlerFunctions(format) {
   switch (format) {
     case 'COCO JSON':
+      setAddFile(addCOCOJSONFile);
       setFileParser(parseCOCOJSONFiles);
       setTableUpdater(updateCOCOJSONTables);
       setFormatValidator(validateCOCOJSONFormat);

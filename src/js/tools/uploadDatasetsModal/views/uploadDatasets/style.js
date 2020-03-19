@@ -7,6 +7,7 @@ let buttonsGroupElement = null;
 let uploadButtonElement = null;
 let annotationsTableElement = null;
 let uploadDatasetsModalElement = null;
+let allImagesStyleSetToDefault = null;
 let imagesTableOuterContainerElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
@@ -109,6 +110,9 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
           newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
           tableName, errorRowIndex += 1,
         );
+        if (tableName === IMAGES_TABLE_INDICATOR) {
+          allImagesStyleSetToDefault = false;
+        }
       } else if (currentRowHasError && !validationResult.error) {
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkup(newFileName, tableName);
@@ -129,6 +133,7 @@ function insertRowToImagesTable(fileName, validationResult) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
         IMAGE_FILE_ERROR_POPOVER_POSITION_CLASS, IMAGE_FILE_ERROR_POPOVER_ARROW_POSITION_CLASS,
         IMAGES_TABLE_INDICATOR, errorRowIndex += 1);
+      allImagesStyleSetToDefault = false;
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
     }
@@ -136,12 +141,15 @@ function insertRowToImagesTable(fileName, validationResult) {
 }
 
 function changeAllImagesTableRowsToDefault() {
-  const tableBody = imagesTableElement.childNodes[1];
-  for (let i = 0; i < tableBody.childNodes.length; i += 1) {
-    const rowParentElement = tableBody.childNodes[i].childNodes[0];
-    const { fileName } = getFileName(tableBody, i);
-    rowParentElement.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
+  if (!allImagesStyleSetToDefault) {
+    const tableBody = imagesTableElement.childNodes[1];
+    for (let i = 0; i < tableBody.childNodes.length; i += 1) {
+      const rowParentElement = tableBody.childNodes[i].childNodes[0];
+      const { fileName } = getFileName(tableBody, i);
+      rowParentElement.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
+    }
   }
+  allImagesStyleSetToDefault = true;
 }
 
 function changeAnnotationRowToDefault(annotationFileName) {

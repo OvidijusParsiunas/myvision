@@ -1,27 +1,16 @@
-import { addAnnotationFile, addImageFile, getDatasetObject } from './datasetObjectManagers/COCOJSONDatasetObjectManager';
-
+let addFileFunc = null;
 let fileParserFunc = null;
 let tableUpdaterFunc = null;
 let formatValidatorFunc = null;
 
-// delete file
-// search for file name in the arrays and remove it (if present) + remove from the table
-// upon deleting an annotation, switch back to the last one that was working, if none working ->
-// reparse all of the broken ones (use splice) and set all images to not have an error
-
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
-  const datasetObject = getDatasetObject();
   let { errorObj } = parsedFileObj;
   if (!errorObj) {
-    errorObj = formatValidatorFunc(parsedFileObj, datasetObject);
+    errorObj = formatValidatorFunc(parsedFileObj);
   }
-  if (parsedFileObj.fileFormat === 'image') {
-    addImageFile(parsedFileObj);
-  } else if (parsedFileObj.fileFormat === 'annotation') {
-    addAnnotationFile(parsedFileObj, errorObj.error);
-  }
-  tableUpdaterFunc(fileMetaData, errorObj, datasetObject);
+  addFileFunc(parsedFileObj, errorObj.error);
+  tableUpdaterFunc(fileMetaData, errorObj);
 }
 
 function readFile(reader, file) {
@@ -50,10 +39,14 @@ function setTableUpdater(tableUpdaterFuncArg) {
   tableUpdaterFunc = tableUpdaterFuncArg;
 }
 
+function setAddFile(addFileFuncArg) {
+  addFileFunc = addFileFuncArg;
+}
+
 function setFileParser(fileParserFuncArg) {
   fileParserFunc = fileParserFuncArg;
 }
 
 export {
-  setFileParser, setTableUpdater, setFormatValidator, uploadDatasetFilesHandler,
+  setFileParser, setTableUpdater, setFormatValidator, uploadDatasetFilesHandler, setAddFile,
 };

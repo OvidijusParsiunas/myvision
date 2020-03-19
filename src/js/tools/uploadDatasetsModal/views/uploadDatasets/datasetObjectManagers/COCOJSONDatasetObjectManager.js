@@ -1,6 +1,10 @@
-import { VALID_ANNOTATION_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, IMAGE_FILES_ARRAY } from '../sharedConsts/consts';
+import {
+  VALID_ANNOTATION_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY,
+  IMAGE_FILES_ARRAY, ACTIVE_ANNOTATION_FILE,
+} from '../sharedConsts/consts';
 
-const datasetObject = { activeAnnotationFile: null };
+const datasetObject = { };
+datasetObject[ACTIVE_ANNOTATION_FILE] = null;
 datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
 datasetObject[FALTY_ANNOTATION_FILES_ARRAY] = [];
 datasetObject[IMAGE_FILES_ARRAY] = [];
@@ -26,9 +30,9 @@ function addValidAnnotationFile(fileName, annotationFileObj) {
   if (existingFileIndex === undefined) {
     const annotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
     annotationFiles.push(annotationFileObj);
-    datasetObject.activeAnnotationFile = annotationFiles[annotationFiles.length - 1];
+    datasetObject[ACTIVE_ANNOTATION_FILE] = annotationFiles[annotationFiles.length - 1];
   } else {
-    datasetObject.activeAnnotationFile = datasetObject[
+    datasetObject[ACTIVE_ANNOTATION_FILE] = datasetObject[
       VALID_ANNOTATION_FILES_ARRAY][existingFileIndex];
   }
 }
@@ -44,18 +48,18 @@ function removeFile(fileName, arrayName) {
   return foundIndex;
 }
 
-function replaceActiveAnnotationFileIfSame(fileName) {
-  if (datasetObject.activeAnnotationFile
-    && datasetObject.activeAnnotationFile.body.fileMetaData.name === fileName) {
+function replaceActiveAnnotationFileIfRemoving(fileName) {
+  if (datasetObject[ACTIVE_ANNOTATION_FILE]
+    && datasetObject[ACTIVE_ANNOTATION_FILE].body.fileMetaData.name === fileName) {
     let newActiveAnnotationFile = null;
     for (let i = datasetObject[VALID_ANNOTATION_FILES_ARRAY].length - 1; i > -1; i -= 1) {
       if (datasetObject[VALID_ANNOTATION_FILES_ARRAY][i].body.fileMetaData.name !== fileName) {
         newActiveAnnotationFile = datasetObject[VALID_ANNOTATION_FILES_ARRAY][i];
       }
     }
-    datasetObject.activeAnnotationFile = newActiveAnnotationFile;
-    if (datasetObject.activeAnnotationFile) {
-      datasetObject.activeAnnotationFile.newlyActive = true;
+    datasetObject[ACTIVE_ANNOTATION_FILE] = newActiveAnnotationFile;
+    if (datasetObject[ACTIVE_ANNOTATION_FILE]) {
+      datasetObject[ACTIVE_ANNOTATION_FILE].newlyActive = true;
     }
   }
 }
@@ -66,7 +70,7 @@ function addAnnotationFile(annotationFileObj, error) {
     addValidAnnotationFile(name, annotationFileObj);
     removeFile(name, FALTY_ANNOTATION_FILES_ARRAY);
   } else {
-    replaceActiveAnnotationFileIfSame(name);
+    replaceActiveAnnotationFileIfRemoving(name);
     removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
     addFaltyAnnotationsFile(name, annotationFileObj);
   }
@@ -74,6 +78,18 @@ function addAnnotationFile(annotationFileObj, error) {
 
 function addImageFile(imageFileObj) {
   datasetObject[IMAGE_FILES_ARRAY].push(imageFileObj);
+}
+
+function addFile(file, error) {
+  if (file.fileFormat === 'image') {
+    addImageFile(file);
+  } else if (file.fileFormat === 'annotation') {
+    addAnnotationFile(file, error);
+  }
+}
+
+function getActiveAnnotationFile() {
+  return datasetObject[ACTIVE_ANNOTATION_FILE];
 }
 
 function getAnnotationFiles() {
@@ -93,6 +109,6 @@ function getDatasetObject() {
 }
 
 export {
-  getAnnotationFiles, getImageFiles, removeFile, getDatasetObject,
-  addAnnotationFile, addImageFile, getFaltyAnnotationFiles,
+  getAnnotationFiles, getImageFiles, removeFile, getDatasetObject, getActiveAnnotationFile, addFile,
+  addAnnotationFile, addImageFile, getFaltyAnnotationFiles, replaceActiveAnnotationFileIfRemoving,
 };

@@ -1,4 +1,5 @@
-import { VALID_ANNOTATION_FILES_ARRAY } from '../sharedConsts/consts';
+import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE } from '../sharedConsts/consts';
+import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;
@@ -151,8 +152,9 @@ function setCurrentAnnotationFilesToInactive(annotationFiles) {
   });
 }
 
-function validateCOCOJSONFormat(parsedObj, datasetObject) {
-  const { activeAnnotationFile } = datasetObject;
+function validateCOCOJSONFormat(parsedObj) {
+  const datasetObject = getDatasetObject();
+  const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
   const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
   if (parsedObj.fileFormat === 'annotation') {
     const validators = [
@@ -173,7 +175,7 @@ function validateCOCOJSONFormat(parsedObj, datasetObject) {
   if (parsedObj.fileFormat === 'image' && validAnnotationFiles.length > 0) {
     const { annotationData } = activeAnnotationFile.body;
     for (let i = 0; i < annotationData.images.length; i += 1) {
-      if (parsedObj.body.fileMetaData.name === annotationData.images[0].file_name) {
+      if (parsedObj.body.fileMetaData.name === annotationData.images[i].file_name) {
         return { error: false, message: '' };
       }
     }
