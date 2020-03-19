@@ -1,3 +1,5 @@
+import { VALID_ANNOTATION_FILES_ARRAY } from '../sharedConsts/consts';
+
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;
   for (let i = 0; i < annotations.length; i += 1) {
@@ -150,7 +152,8 @@ function setCurrentAnnotationFilesToInactive(annotationFiles) {
 }
 
 function validateCOCOJSONFormat(parsedObj, datasetObject) {
-  const { validAnnotationFiles, activeAnnotationFile } = datasetObject;
+  const { activeAnnotationFile } = datasetObject;
+  const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
   if (parsedObj.fileFormat === 'annotation') {
     const validators = [
       checkParentProperties,

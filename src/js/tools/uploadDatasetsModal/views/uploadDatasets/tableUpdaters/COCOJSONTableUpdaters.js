@@ -3,12 +3,12 @@ import {
   changeAllImagesTableRowsToDefault, changeAnnotationRowToDefault,
 } from '../style';
 import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
-import { ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE } from '../sharedConsts/consts';
+import { ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_ARRAY } from '../sharedConsts/consts';
 
 let allImagesValidated = true;
 
 function validateExistingImages(datasetObject) {
-  datasetObject.imageFiles.forEach((imageFile) => {
+  datasetObject[IMAGE_FILES_ARRAY].forEach((imageFile) => {
     const validationResult = validateCOCOJSONFormat(imageFile, datasetObject);
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
@@ -27,8 +27,9 @@ function reValidateExistingAnnotations(annotationFiles, datasetObject) {
   });
 }
 
-function checkAnnotationAlreadyInTable(validationResult, fileName, datasetObject) {
-  const { validAnnotationFiles, activeAnnotationFile } = datasetObject;
+function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
+  const { activeAnnotationFile } = datasetObject;
+  const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
   if (!validationResult.error) {
     reValidateExistingAnnotations(validAnnotationFiles, datasetObject);
     return validationResult;
@@ -56,7 +57,7 @@ function updateCOCOJSONTables(fileMetaData, validationResult, datasetObject) {
   }
   if (fileName.endsWith('.json')) {
     const newValidationResult = checkAnnotationAlreadyInTable(
-      validationResult, fileName, datasetObject,
+      validationResult, datasetObject,
     );
     insertRowToAnnotationsTable(fileName, newValidationResult);
     if (!validationResult.error) {
