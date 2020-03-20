@@ -27,17 +27,19 @@ function parsePolygonProperties(polygon, imageDimensions) {
   let minY = 999999999999;
   let maxX = 0;
   let maxY = 0;
+  const pointsArray = [];
   polygon.points.forEach((point) => {
     const {
       pointX, pointY,
     } = adjustIncorrectPolygonPointCoordinates(point, imageDimensions);
-    properties.segmentation.push(pointX);
-    properties.segmentation.push(pointY);
+    pointsArray.push(pointX);
+    pointsArray.push(pointY);
     if (pointX < minX) { minX = pointX; }
     if (pointY < minY) { minY = pointY; }
     if (pointX > maxX) { maxX = pointX; }
     if (pointY > maxY) { maxY = pointY; }
   });
+  properties.segmentation = [pointsArray];
   const bboxWidth = maxX - minX;
   const bboxHeight = maxY - minY;
   properties.bbox.push(minX);

@@ -55,8 +55,8 @@ function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions) {
 }
 
 function adjustIncorrectPolygonPointCoordinates(polygonPoint, imageDimensions) {
-  let pointX = Math.round(polygonPoint.x / imageDimensions.scaleX);
-  let pointY = Math.round(polygonPoint.y / imageDimensions.scaleY);
+  let pointX = Math.round((polygonPoint.x / imageDimensions.scaleX) * 100) / 100;
+  let pointY = Math.round((polygonPoint.y / imageDimensions.scaleY) * 100) / 100;
   const {
     scaleX, scaleY, originalWidth, originalHeight,
   } = imageDimensions;

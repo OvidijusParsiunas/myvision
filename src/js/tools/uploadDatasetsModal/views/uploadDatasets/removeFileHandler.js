@@ -29,6 +29,9 @@ function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject) {
   }
 }
 
+// functionality here cannot be used for all, will need
+// to be moved to aromic COCOJSON file
+
 function removeFileHandler(fileName, tableName, errorMessage) {
   let dataObjectArrayName;
   if (tableName === 'annotations') {
