@@ -21,6 +21,7 @@ function generateTempDownloadableJSONElement(json) {
   return pom;
 }
 
+// adjustIncorrectPolygonPointCoordinates does the round
 function parsePolygonProperties(polygon, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
   let minX = 999999999999;
@@ -42,12 +43,16 @@ function parsePolygonProperties(polygon, imageDimensions) {
   properties.segmentation = [pointsArray];
   const bboxWidth = maxX - minX;
   const bboxHeight = maxY - minY;
-  properties.bbox.push(minX);
-  properties.bbox.push(minY);
-  properties.bbox.push(bboxWidth);
-  properties.bbox.push(bboxHeight);
+  properties.bbox.push((minX));
+  properties.bbox.push((minY));
+  properties.bbox.push((bboxWidth));
+  properties.bbox.push((bboxHeight));
   properties.area = bboxWidth * bboxHeight;
   return properties;
+}
+
+function round2Decimals(number) {
+  return Math.round(number * 100) / 100;
 }
 
 function parseBoundingBoxProperties(boundingBox, imageDimensions) {
@@ -55,19 +60,19 @@ function parseBoundingBoxProperties(boundingBox, imageDimensions) {
   const {
     left, top, width, height,
   } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
-  properties.segmentation.push(Math.round(left));
-  properties.segmentation.push(Math.round(top));
-  properties.segmentation.push(Math.round(left + width));
-  properties.segmentation.push(Math.round(top));
-  properties.segmentation.push(Math.round(left + width));
-  properties.segmentation.push(Math.round(top + height));
-  properties.segmentation.push(Math.round(left));
-  properties.segmentation.push(Math.round(top + height));
-  properties.bbox.push(Math.round(left));
-  properties.bbox.push(Math.round(top));
-  properties.bbox.push(Math.round(width));
-  properties.bbox.push(Math.round(height));
-  properties.area = Math.round(width * height);
+  properties.segmentation.push(round2Decimals(left));
+  properties.segmentation.push(round2Decimals(top));
+  properties.segmentation.push(round2Decimals(left + width));
+  properties.segmentation.push(round2Decimals(top));
+  properties.segmentation.push(round2Decimals(left + width));
+  properties.segmentation.push(round2Decimals(top + height));
+  properties.segmentation.push(round2Decimals(left));
+  properties.segmentation.push(round2Decimals(top + height));
+  properties.bbox.push(round2Decimals(left));
+  properties.bbox.push(round2Decimals(top));
+  properties.bbox.push(round2Decimals(width));
+  properties.bbox.push(round2Decimals(height));
+  properties.area = round2Decimals(width * height);
   return properties;
 }
 
