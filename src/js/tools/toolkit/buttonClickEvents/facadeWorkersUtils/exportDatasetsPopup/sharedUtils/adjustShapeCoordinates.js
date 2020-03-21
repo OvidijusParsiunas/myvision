@@ -10,16 +10,12 @@ function adjustBoundingBoxCoordinates(left, top, width, height, imageDimensions)
   if (left + width > originalWidth - widthDelta / scaleX) {
     width = originalWidth - left;
   } else {
-    width += Math.round(
-      boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth,
-    );
+    width += boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth;
   }
   if (top + height > originalHeight - heightDelta / scaleY) {
     height = originalHeight - top;
   } else {
-    height += Math.round(
-      boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth,
-    );
+    height += boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth;
   }
   return {
     finalLeft: left,
@@ -30,33 +26,53 @@ function adjustBoundingBoxCoordinates(left, top, width, height, imageDimensions)
 }
 
 function calculateBoundingBoxCoordinates(boundingBox, imageDimensions) {
-  const left = Math.round(boundingBox.left / imageDimensions.scaleX);
-  const top = Math.round(boundingBox.top / imageDimensions.scaleY);
-  const width = Math.round(boundingBox.width / imageDimensions.scaleX);
-  const height = Math.round(boundingBox.height / imageDimensions.scaleY);
+  const left = boundingBox.left / imageDimensions.scaleX;
+  const top = boundingBox.top / imageDimensions.scaleY;
+  const width = boundingBox.width / imageDimensions.scaleX;
+  const height = boundingBox.height / imageDimensions.scaleY;
   return {
     left, top, width, height,
   };
 }
 
-function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions) {
+function floorNumber(number, roundingValue) {
+  return Math.floor(number * roundingValue) / roundingValue;
+}
+
+function getRoundingValue(decimalPlaces) {
+  let roundingValue = 1;
+  while (decimalPlaces > 0) {
+    roundingValue *= 10;
+    decimalPlaces -= 1;
+  }
+  return roundingValue;
+}
+
+function roundNumberToDecimalPlaces(number, decimalPlaces) {
+  const roundingValue = getRoundingValue(decimalPlaces);
+  return floorNumber(number, roundingValue);
+}
+
+function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces) {
+  const roundingValue = getRoundingValue(decimalPlaces);
   const {
     left, top, width, height,
-  } = { ...calculateBoundingBoxCoordinates(boundingBox, imageDimensions) };
+  } = { ...calculateBoundingBoxCoordinates(boundingBox, imageDimensions, roundingValue) };
   const finalCoordinates = adjustBoundingBoxCoordinates(
-    left, top, width, height, imageDimensions,
+    left, top, width, height, imageDimensions, roundingValue,
   );
   return {
-    left: finalCoordinates.finalLeft,
-    top: finalCoordinates.finalTop,
-    width: finalCoordinates.finalWidth,
-    height: finalCoordinates.finalHeight,
+    left: floorNumber(finalCoordinates.finalLeft, decimalPlaces),
+    top: floorNumber(finalCoordinates.finalTop, decimalPlaces),
+    width: floorNumber(finalCoordinates.finalWidth, decimalPlaces),
+    height: floorNumber(finalCoordinates.finalHeight, decimalPlaces),
   };
 }
 
-function adjustIncorrectPolygonPointCoordinates(polygonPoint, imageDimensions) {
-  let pointX = Math.round((polygonPoint.x / imageDimensions.scaleX) * 100) / 100;
-  let pointY = Math.round((polygonPoint.y / imageDimensions.scaleY) * 100) / 100;
+function adjustIncorrectPolygonPointCoordinates(polygonPoint, imageDimensions, decimalPlaces) {
+  const roundingValue = getRoundingValue(decimalPlaces);
+  let pointX = polygonPoint.x / imageDimensions.scaleX;
+  let pointY = polygonPoint.y / imageDimensions.scaleY;
   const {
     scaleX, scaleY, originalWidth, originalHeight,
   } = imageDimensions;
@@ -67,9 +83,13 @@ function adjustIncorrectPolygonPointCoordinates(polygonPoint, imageDimensions) {
     pointY = originalHeight;
   }
   return {
-    pointX,
-    pointY,
+    pointX: floorNumber(pointX, roundingValue),
+    pointY: floorNumber(pointY, roundingValue),
   };
 }
 
-export { adjustIncorrectBoundingBoxCoordinates, adjustIncorrectPolygonPointCoordinates };
+export {
+  roundNumberToDecimalPlaces,
+  adjustIncorrectBoundingBoxCoordinates,
+  adjustIncorrectPolygonPointCoordinates,
+};

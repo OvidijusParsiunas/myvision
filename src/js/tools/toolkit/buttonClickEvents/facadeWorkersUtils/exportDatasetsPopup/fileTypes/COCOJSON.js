@@ -3,7 +3,13 @@ import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions } from '../../../../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateMachine';
-import { adjustIncorrectBoundingBoxCoordinates, adjustIncorrectPolygonPointCoordinates } from '../sharedUtils/adjustShapeCoordinates';
+import {
+  roundNumberToDecimalPlaces,
+  adjustIncorrectBoundingBoxCoordinates,
+  adjustIncorrectPolygonPointCoordinates,
+} from '../sharedUtils/adjustShapeCoordinates';
+
+const decimalPlaces = 2;
 
 function getJSONFileName() {
   const currentDate = new Date();
@@ -21,7 +27,21 @@ function generateTempDownloadableJSONElement(json) {
   return pom;
 }
 
-// adjustIncorrectPolygonPointCoordinates does the round
+function calculatePolygonArea(coordinatesArg) {
+  const coordinates = [...coordinatesArg];
+  if (coordinatesArg[0] !== coordinatesArg[coordinatesArg.length - 2]
+    || coordinatesArg[1] !== coordinatesArg[coordinatesArg.length - 1]) {
+    coordinates.push(coordinates[0]);
+    coordinates.push(coordinates[1]);
+  }
+  let area = 0;
+  for (let i = 0; i < coordinates.length - 2; i += 2) {
+    area += coordinates[i] * coordinates[i + 3] - coordinates[i + 2] * coordinates[i + 1];
+  }
+  return area / 2;
+}
+
+
 function parsePolygonProperties(polygon, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
   let minX = 999999999999;
@@ -32,7 +52,7 @@ function parsePolygonProperties(polygon, imageDimensions) {
   polygon.points.forEach((point) => {
     const {
       pointX, pointY,
-    } = adjustIncorrectPolygonPointCoordinates(point, imageDimensions);
+    } = adjustIncorrectPolygonPointCoordinates(point, imageDimensions, decimalPlaces);
     pointsArray.push(pointX);
     pointsArray.push(pointY);
     if (pointX < minX) { minX = pointX; }
@@ -41,38 +61,36 @@ function parsePolygonProperties(polygon, imageDimensions) {
     if (pointY > maxY) { maxY = pointY; }
   });
   properties.segmentation = [pointsArray];
-  const bboxWidth = maxX - minX;
-  const bboxHeight = maxY - minY;
-  properties.bbox.push((minX));
-  properties.bbox.push((minY));
-  properties.bbox.push((bboxWidth));
-  properties.bbox.push((bboxHeight));
-  properties.area = bboxWidth * bboxHeight;
+  const bboxWidth = roundNumberToDecimalPlaces(maxX - minX, decimalPlaces);
+  const bboxHeight = roundNumberToDecimalPlaces(maxY - minY, decimalPlaces);
+  properties.bbox.push(minX);
+  properties.bbox.push(minY);
+  properties.bbox.push(bboxWidth);
+  properties.bbox.push(bboxHeight);
+  properties.area = roundNumberToDecimalPlaces(calculatePolygonArea(pointsArray), decimalPlaces);
   return properties;
-}
-
-function round2Decimals(number) {
-  return Math.round(number * 100) / 100;
 }
 
 function parseBoundingBoxProperties(boundingBox, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
   const {
     left, top, width, height,
-  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
-  properties.segmentation.push(round2Decimals(left));
-  properties.segmentation.push(round2Decimals(top));
-  properties.segmentation.push(round2Decimals(left + width));
-  properties.segmentation.push(round2Decimals(top));
-  properties.segmentation.push(round2Decimals(left + width));
-  properties.segmentation.push(round2Decimals(top + height));
-  properties.segmentation.push(round2Decimals(left));
-  properties.segmentation.push(round2Decimals(top + height));
-  properties.bbox.push(round2Decimals(left));
-  properties.bbox.push(round2Decimals(top));
-  properties.bbox.push(round2Decimals(width));
-  properties.bbox.push(round2Decimals(height));
-  properties.area = round2Decimals(width * height);
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces);
+  const rightCoordinate = roundNumberToDecimalPlaces(left + width, decimalPlaces);
+  const bottomCoordinate = roundNumberToDecimalPlaces(top + height, decimalPlaces);
+  properties.segmentation.push(left);
+  properties.segmentation.push(top);
+  properties.segmentation.push(rightCoordinate);
+  properties.segmentation.push(top);
+  properties.segmentation.push(rightCoordinate);
+  properties.segmentation.push(bottomCoordinate);
+  properties.segmentation.push(left);
+  properties.segmentation.push(bottomCoordinate);
+  properties.bbox.push(left);
+  properties.bbox.push(top);
+  properties.bbox.push(width);
+  properties.bbox.push(height);
+  properties.area = roundNumberToDecimalPlaces(width * height, decimalPlaces);
   return properties;
 }
 
