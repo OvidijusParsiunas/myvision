@@ -7,6 +7,10 @@ function displayCancelButtonElement() {
   cancelButtonElement.style.display = '';
 }
 
+function hideCancelButtonElement() {
+  cancelButtonElement.style.display = 'none';
+}
+
 function displayStartButtonElement() {
   startButtonElement.style.display = '';
 }
@@ -52,6 +56,7 @@ function hideDescriptionViewAssets() {
   hideStartButtonElement();
   // this is temporary to fit the upload datasets view
   hideDescriptionElement();
+  hideCancelButtonElement();
 }
 
 function assignDescriptionViewLocalVariables() {

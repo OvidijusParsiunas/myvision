@@ -3,6 +3,7 @@ import { ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR } from './sharedCon
 let titleElement = null;
 let backButtonElement = null;
 let imagesTableElement = null;
+let finishButtonElement = null;
 let buttonsGroupElement = null;
 let uploadButtonElement = null;
 let annotationsTableElement = null;
@@ -215,6 +216,10 @@ function resetButtonGroupElementMarginTop() {
   buttonsGroupElement.style.marginTop = '';
 }
 
+function displayFinishButtonElement() {
+  finishButtonElement.style.display = '';
+}
+
 function displayUploadButtonElement() {
   uploadButtonElement.style.display = '';
 }
@@ -268,6 +273,7 @@ function prepareUploadDatasetsView() {
   setTriggerAcceptedFileFormat('.json, image/*');
   displayBackButton();
   displayUploadButtonElement();
+  displayFinishButtonElement();
   setButtonGroupElementMarginTopByBrowser();
   displayUploadDatasetsOuterContainerElement();
   changeUploadDatasetsModalElementDimensions(modalWidth, modalHeight);
@@ -286,9 +292,10 @@ function assignUploadDatasetsViewLocalVariables() {
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
   titleElement = document.getElementById('upload-datsets-modal-upload-datasets-title');
   uploadDatasetsOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-outer-container');
+  backButtonElement = document.getElementById('upload-datasets-modal-back-button');
   uploadButtonElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
   uploadDatasetFilesTriggerElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger');
-  backButtonElement = document.getElementById('upload-datasets-modal-back-button');
+  finishButtonElement = document.getElementById('upload-datasets-modal-finish-button');
   imagesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table');
   imagesTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table-outer-container');
   annotationsTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table-outer-container');

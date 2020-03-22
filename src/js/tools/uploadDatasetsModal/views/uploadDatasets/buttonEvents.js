@@ -1,22 +1,16 @@
 import { hideUploadDatasetsViewAssets } from './style';
 import { uploadDatasetFilesHandler } from './uploadDatasetFilesHandler';
 import removeFile from './removeFileHandler';
-
-// function moveToNextView(nextViewCallback) {
-//   hideUploadDatasetsViewAssets();
-//   nextViewCallback();
-// }
+import { drawShapesAndImages } from './drawShapesAndImages';
 
 function triggerUploadDatasetFiles() {
   document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger').click();
 }
 
 function registerButtonEventHandlers(nextViewCallback) {
-  // window.startUploadDatasets = moveToNextView.bind(
-  //   this, nextViewCallback,
-  // );
   window.triggerUploadDatasetFiles = triggerUploadDatasetFiles;
   window.uploadDatasetFilesHandler = uploadDatasetFilesHandler;
+  window.drawShapesAndImages = drawShapesAndImages;
   window.removeFileFromUploadDatasetFiles = removeFile;
 }
 

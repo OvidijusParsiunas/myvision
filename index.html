@@ -135,14 +135,14 @@
      </div>
       <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
         <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="startUploadDatasets()">Start</div>
-        <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-proceed-button">Back</div>
+        <!-- needs to have a different grey color on hover and click -->
+        <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button">Back</div>
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
         <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
         <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
-        <div id="machine-learning-modal-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
-        <div id="machine-learning-modal-initiate-new-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')">New Images</div>
+        <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="drawShapesAndImages()">Finish</div>
       </div>
       <div id="machine-learning-modal-generated-labels-outer-container" style="display: none">
           <div id="machine-learning-modal-generated-labels-inner-container">
@@ -160,55 +160,6 @@
             <div id="machine-learning-modal-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningModal()">Close</div>
         </div>
     </div>
-    <!-- <div id="export-labels-popup-parent" style="display: none; width: 173px">
-      <div class="small-title" style="margin-left: 5px">Choose format:</div>
-      <div id="parent-table-element" style="width: 172px;">
-        <table style="width: 162px;; padding-left: 5px;" id="settings-table" class="settings-popup-item">
-          <tr><td style="padding-top: 7px;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text generic-format-option-text">COCO JSON</div>
-            <input class="settings-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON', this)">
-          </td></tr>
-          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text generic-format-option-text">VGG JSON</div>
-            <input class="settings-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VGG JSON', this)">
-          </td></tr>
-          <tr><td style="padding-top: 7px;" class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
-              <div id="format-option-checkbox-popover-4" style="padding-top: 2px; margin-left: -4px; margin-top: -29px" class="format-option-checkbox-popover">Bounding boxes only</div>
-              <div id="format-option-checkbox-arrow-4" style="margin-top: -6px; margin-left: 10px" class="arrow"></div>
-              CSV
-            </div>
-            <div id="format-option-checkbox-popover-1" class="format-option-checkbox-popover">Bounding boxes only</div>
-            <div id="format-option-checkbox-arrow-1" class="arrow"></div>
-            <div onmouseenter="displayExportPopUpInformationPopover(1)" onmouseleave="removeExportPopUpInformationPopover(1)">
-              <input class="settings-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('CSV', this)">
-            </div>
-            </td></tr>
-          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(5)" onmouseleave="removeExportPopUpInformationPopover(5)">
-              <div id="format-option-checkbox-popover-5" style="padding-top: 2px; margin-left: -4px; margin-top: -29px;" class="format-option-checkbox-popover">Bounding boxes only</div>
-              <div id="format-option-checkbox-arrow-5" style="margin-top: -6px; margin-left: 10px" class="arrow"></div>
-              VOC XML
-            </div>
-            <div id="format-option-checkbox-popover-2" class="format-option-checkbox-popover">Bounding boxes only</div>
-            <div id="format-option-checkbox-arrow-2" class="arrow"></div>
-            <div onmouseenter="displayExportPopUpInformationPopover(2)" onmouseleave="removeExportPopUpInformationPopover(2)">
-              <input class="settings-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VOC XML', this)">
-            </div>
-            </td></tr>
-          <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(6)" onmouseleave="removeExportPopUpInformationPopover(6)">
-              <div id="format-option-checkbox-popover-6" style="padding-top: 2px; margin-left: -4px; margin-top: -29px;" class="format-option-checkbox-popover">Bounding boxes only</div>
-              <div id="format-option-checkbox-arrow-6" style="margin-top: -6px; margin-left: 10px" class="arrow"></div>
-              YOLO TXT
-            </div>
-            <div id="format-option-checkbox-popover-3" class="format-option-checkbox-popover">Bounding boxes only</div>
-            <div id="format-option-checkbox-arrow-3" class="arrow"></div>
-            <div onmouseenter="displayExportPopUpInformationPopover(3)" onmouseleave="removeExportPopUpInformationPopover(3)">
-                <input class="settings-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('YOLO TXT', this)">
-            </div>
-            </td></tr>
-        </table>
-      </div>
-      <div class="popup-label-buttons" style="margin-top: 4px">
-        <div id="export-labels-popup-export-button" style="width: 50px; margin-top: 5px;" class="popup-label-button-disabled" onclick="exportLabels()">Export</div>
-      </div>
-    </div> -->
       <div id="export-labels-popup-parent" class="export-labels-popup-item" style="display: none; width: 173px; height: 203px">
         <div class="export-labels-popup-item small-title" style="padding-left: 10px; padding-top: 7px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
         <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px;">

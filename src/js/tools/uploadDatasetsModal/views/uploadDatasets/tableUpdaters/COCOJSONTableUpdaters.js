@@ -61,7 +61,7 @@ function updateCOCOJSONTables(fileMetaData, validationResult) {
       validationResult, datasetObject,
     );
     // whilst the reValidateExistingAnnotations inserts the new annotation,
-    // this overwrights it if it has been incorrectly set with an error
+    // this overwrites it if it has been incorrectly set with an error
     insertRowToAnnotationsTable(fileName, newValidationResult);
   }
 }

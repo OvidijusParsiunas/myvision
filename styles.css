@@ -157,6 +157,19 @@
   margin-left: 50%;
 }
 
+#upload-datasets-modal-back-button {
+  margin-right: 3px;
+}
+
+#upload-datasets-modal-upload-datasets-upload-button {
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+#upload-datasets-modal-finish-button {
+  margin-left: 3px;
+}
+
 .upload-datasets-table {
   max-height: 191px;
   min-height: 191px;
