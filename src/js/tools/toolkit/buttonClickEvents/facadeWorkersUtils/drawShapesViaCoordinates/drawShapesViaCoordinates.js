@@ -1,6 +1,6 @@
 import { setDefaultImageThumbnailHighlightToMLSelected, getAllImageData, setDefaultImageThumbnailHighlightToML } from '../../../../imageList/imageList';
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
-import { prepareCanvasForNewBoundingBoxesWithMachineLearning, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
+import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
 import initiateResetCanvasEventsToDefaultEvent from '../../facadeWorkers/resetCanvasEventsToDefaultWorker';
 import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
@@ -50,8 +50,7 @@ function generateNewBoundingBox(shapeCoordinates, imageDimensions) {
 function generateNewShapes(image, isCurrentlySelectedImage, predictedShapeCoordinates,
   imageDimensions, isUsingMachineLearning) {
   predictedShapeCoordinates.forEach((shapeCoordinates) => {
-    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageDimensions, image,
-      isCurrentlySelectedImage, isUsingMachineLearning);
+    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageDimensions);
     newLabelShapeGroup(boundingBox, shapeCoordinates, isCurrentlySelectedImage,
       isUsingMachineLearning, image);
   });
@@ -139,14 +138,10 @@ function removeTempShapes() {
   canvas.renderAll();
 }
 
-function prepareToDrawShapes(allImageData, currentlySelectedImageId) {
-  captureCurrentImageData(allImageData, currentlySelectedImageId);
-  prepareCanvasForNewBoundingBoxesWithMachineLearning(canvas);
-}
-
 function drawTempShapesToShowCaseMLResults(predictedShapeCoordinatesForImages) {
   const { allImageData, currentlySelectedImageId } = getImageData();
-  prepareToDrawShapes(allImageData, currentlySelectedImageId);
+  captureCurrentImageData(allImageData, currentlySelectedImageId);
+  prepareCanvasForNewBoundingBoxesFromExternalSources(canvas);
   const currentlySelectedImageShapes = predictedShapeCoordinatesForImages[currentlySelectedImageId];
   const dimensions = getImageDimensions(allImageData[currentlySelectedImageId]);
   generateTempShapes(currentlySelectedImageShapes, dimensions);
@@ -164,7 +159,8 @@ function assignCanvasEvents() {
 function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMachineLearning) {
   const { allImageData, currentlySelectedImageId } = getImageData();
   assignCanvasEvents();
-  prepareToDrawShapes(allImageData, currentlySelectedImageId);
+  captureCurrentImageData(allImageData, currentlySelectedImageId);
+  prepareCanvasForNewBoundingBoxesFromExternalSources(canvas);
   generateNewShapesForImages(predictedShapeCoordinatesForImages, allImageData,
     currentlySelectedImageId, isUsingMachineLearning);
   repopulateDropdown();
@@ -182,9 +178,34 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   // Check if the newImageDimensions are correct using height only
 }
 
+function generateNewShapesForImagesFileUpload(shapes, allImageData,
+  currentlySelectedImageId, shapeType) {
+  for (let i = 0; i < shapes.length; i += 1) {
+    for (let y = 0; y < allImageData.length; y += 1) {
+      if (shapes[i].imageName === allImageData[y].name) {
+        const imageDimensions = getImageDimensions(allImageData[y]);
+        const isCurrentlySelectedImage = currentlySelectedImageId === y;
+        const shape = generateNewBoundingBox(shapes[i].coordinates, imageDimensions);
+        newLabelShapeGroup(shape, shapes[i].coordinates, isCurrentlySelectedImage,
+          false, allImageData[y]);
+      }
+    }
+  }
+}
+
 function drawShapesCoordinatesFileUpload(shapes) {
-  console.log(shapes);
-  console.log(shapes);
+  const { allImageData, currentlySelectedImageId } = getImageData();
+  assignCanvasEvents();
+  captureCurrentImageData(allImageData, currentlySelectedImageId);
+  if (shapes.boundingBoxes.length > 0) {
+    prepareCanvasForNewBoundingBoxesFromExternalSources(canvas);
+    generateNewShapesForImagesFileUpload(shapes.boundingBoxes, allImageData,
+      currentlySelectedImageId, 'boundingBoxes');
+  }
+  repopulateDropdown();
+  resetShapeLabellerModalOptions();
+  setDefaultCursorMode(canvas);
+  initiateResetCanvasEventsToDefaultEvent(canvas);
 }
 
 function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {

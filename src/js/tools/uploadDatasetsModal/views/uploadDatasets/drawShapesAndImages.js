@@ -5,6 +5,7 @@ import { onImageLoad } from '../../../toolkit/buttonClickEvents/facadeWorkersUti
 
 let finalObjectAssemblerFunc = null;
 
+// drawing new images regardless if they exist at the moment
 function drawImages(images) {
   for (let i = 0; i < images.length; i += 1) {
     const { fileMetaData, imageElement } = images[i];
@@ -18,7 +19,9 @@ function drawImages(images) {
 function drawShapesAndImages() {
   const { images, shapes } = finalObjectAssemblerFunc();
   drawImages(images);
-  // console.log(finalObject);
+  setTimeout(() => {
+    drawShapesCoordinatesFileUpload(shapes);
+  }, 0);
 }
 
 function setFinalObjectAssembler(finalObjectAssemblerFuncArg) {

@@ -1,15 +1,10 @@
 import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { getNamesOfImagesWithNoErrors } from '../style';
 
-function assembleNewFinalShape(annotationData, datasetObject) {
-  const shapeObj = { type: null, labelName: null, coordinates: {} };
-  if (annotationData.segmentation.length === 1) {
-    shapeObj.type = 'polygon';
-    shapeObj.coordinates.points = annotationData.segmentation[0];
-  } else {
-    shapeObj.type = 'bbox';
-    shapeObj.coordinates = annotationData.bbox;
-  }
+function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes) {
+  const shapeObj = {
+    type: null, labelName: null, coordinates: {}, imageName,
+  };
   const { categories } = datasetObject.activeAnnotationFile.body.annotationData;
   for (let i = 0; i < categories.length; i += 1) {
     if (annotationData.category_id === categories[i].id) {
@@ -17,21 +12,33 @@ function assembleNewFinalShape(annotationData, datasetObject) {
       break;
     }
   }
-  return shapeObj;
+  if (annotationData.segmentation.length === 1) {
+    shapeObj.coordinates.class = 'polygon';
+    shapeObj.coordinates.points = annotationData.segmentation[0];
+    shapes.polygons.push(shapeObj);
+  } else {
+    shapeObj.coordinates.class = 'bbox';
+    shapeObj.coordinates.bbox = annotationData.bbox;
+    shapes.boundingBoxes.push(shapeObj);
+  }
+}
+
+function addShapeToShapesArray(imageId, annotations, shapes, datasetObject, imageName) {
+  for (let i = 0; i < annotations.length; i += 1) {
+    if (imageId === annotations[i].image_id) {
+      assembleNewFinalShape(annotations[i], datasetObject, imageName, shapes);
+    }
+  }
 }
 
 function getShapes(datasetObject, validImages) {
-  const shapes = [];
+  const shapes = { boundingBoxes: [], polygons: [] };
   const { annotations, images } = datasetObject.activeAnnotationFile.body.annotationData;
   validImages.forEach((validImage) => {
     for (let i = 0; i < images.length; i += 1) {
-      if (validImage.fileMetaData.name === images[i].file_name) {
-        const imageId = images[i].id;
-        annotations.forEach((annotation) => {
-          if (imageId === annotation.image_id) {
-            shapes.push(assembleNewFinalShape(annotation, datasetObject));
-          }
-        });
+      const imageName = validImage.fileMetaData.name;
+      if (imageName === images[i].file_name) {
+        addShapeToShapesArray(images[i].id, annotations, shapes, datasetObject, imageName);
       }
     }
   });

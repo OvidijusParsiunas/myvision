@@ -208,7 +208,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
   }
 }
 
-function prepareCanvasForNewBoundingBoxesWithMachineLearning(canvasObj) {
+function prepareCanvasForNewBoundingBoxesFromExternalSources(canvasObj) {
   canvas = canvasObj;
   setDrawCursorMode(canvas);
 }
@@ -312,5 +312,5 @@ export {
   prepareCanvasForNewBoundingBox,
   setRightBoundingBoxDrawingDelta,
   createNewBoundingBoxFromCoordinates,
-  prepareCanvasForNewBoundingBoxesWithMachineLearning,
+  prepareCanvasForNewBoundingBoxesFromExternalSources,
 };
