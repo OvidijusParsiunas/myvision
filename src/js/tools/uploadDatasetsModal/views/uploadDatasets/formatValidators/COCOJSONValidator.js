@@ -51,9 +51,8 @@ function assertType(expectedType, subjectVariable) {
       return Array.isArray(subjectVariable);
     case 'array:number':
       return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'number').length === 0;
-      // check the following type
     case 'array:object':
-      return Array.isArray(subjectVariable) && typeof subjectVariable === 'object';
+      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'object').length === 0;
     default:
       return true;
   }
@@ -106,23 +105,20 @@ function checkImagesProperty(parsedObj) {
 function checkArrayElements(array, name, type, {
   length, maxLength, minLength, evenOdd,
 }) {
-  console.log(array);
   if (length && array.length !== length) {
-    return { error: true, message: `${name} array must contain ${length} or more elements but instead has: ${array.length}` };
+    return { error: true, message: `${name} array must contain ${length} elements but instead found ${array.length}` };
   }
   if (maxLength && array.length > maxLength) {
-    return { error: true, message: `${name} array must contain ${maxLength} elements at most but instead has: ${array.length}` };
+    return { error: true, message: `${name} array must contain ${maxLength} elements at most but instead found ${array.length}` };
   }
   if (minLength && array.length < minLength) {
-    return { error: true, message: `${name} array must contain at least ${minLength} elements but instead has: ${array.length}` };
+    return { error: true, message: `${name} array must contain at least ${minLength} elements but instead found ${array.length}` };
   }
   if (evenOdd && ((evenOdd === 'even' && array.length % 2 === 1) || (evenOdd === 'odd' && array.length % 2 === 0))) {
-    return { error: true, message: `${name} array must contain an even number of elements but instead has: ${array.length}` };
+    return { error: true, message: `${name} array must contain an even number of elements but instead found ${array.length}` };
   }
-  const result = assertType(array, type);
-  if (result.error) {
-    result.message += ` -> in ${name.toLowerCase()} array`;
-    return result;
+  if (!assertType(type, array)) {
+    return { error: true, message: `${name} array contains elements of incorrect type` };
   }
   return { error: false, message: '' };
 }
@@ -138,11 +134,9 @@ function checkSegmentationArray(segmentationArray) {
     const polygonCoordinatesArray = segmentationArray[0];
     let result = {};
     result = checkArrayElements(polygonCoordinatesArray, arrayName, 'array', {});
-    console.log(result.error);
     if (result.error) { return result; }
     result = checkArrayElements(polygonCoordinatesArray, arrayName, arrayElementsType,
       { minLength: 6, evenOdd: 'even' });
-    console.log(result.error);
     if (result.error) { return result; }
   }
   if (segmentationArray.length < 1) {
@@ -164,10 +158,14 @@ function checkAnnotationsProperty(parsedObj) {
       return result;
     }
     result = checkSegmentationArray(annotation.segmentation);
-    if (result.error) { return result; }
-    // work needs here
-    if (annotation.bbox.length !== 4) {
-      return { error: true, message: 'bbox array should contain four numbers -> in annotations' };
+    if (result.error) {
+      result.message += ' -> in annotations';
+      return result;
+    }
+    result = checkArrayElements(annotation.bbox, 'bbox', null, { length: 4 });
+    if (result.error) {
+      result.message += ' -> in annotations';
+      return result;
     }
   }
   return { error: false, message: '' };

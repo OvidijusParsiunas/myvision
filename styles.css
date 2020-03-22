@@ -207,6 +207,7 @@
   padding-top: 4px;
   padding-bottom: 3px;
   margin-top: -30px;
+  width: max-content;
 }
 
 .upload-datasets-modal-upload-datasets-table-error-row-popover-left {
@@ -236,6 +237,7 @@
   cursor: pointer;
   width: 7.5px;
   padding-bottom: 6.5px;
+  user-select: none;
 }
 
 #upload-datasets-modal-vertical-break-line {
@@ -577,6 +579,7 @@
   margin-top: 10px;
   margin-bottom: 6px;
   width: 350px;
+  user-select: none;
 }
 
 .modal-buttons {

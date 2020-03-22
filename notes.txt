@@ -142,10 +142,14 @@ fix left and right padding of the export format popovers
 
 increase the size of machine learning modal
 
+export button in chrome has padding top that is too high
+
+in firefox, the upload datasets modal (upload stage) buttons are too low
+
+in firefox, the upload datasets modal (upload stage) errors padding top is too high
+
 in the upload datasets modal tables, when there is vertical overflow, some of the text can be hidden behind the scroll and the horizontal
 overflow doesn't kick in automatically
-
-remove selectable text
 
 labeller modal causes vertical window overflow on the tablet
 
