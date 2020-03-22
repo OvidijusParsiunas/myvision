@@ -182,11 +182,16 @@ function drawShapesViaCoordinates(predictedShapeCoordinatesForImages, isUsingMac
   // Check if the newImageDimensions are correct using height only
 }
 
+function drawShapesCoordinatesFileUpload(shapes) {
+  console.log(shapes);
+  console.log(shapes);
+}
+
 function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {
   canvas = canvasObj;
 }
 
 export {
   assignCanvasForDrawingShapesViaCoordinates, drawShapesViaCoordinates,
-  drawTempShapesToShowCaseMLResults, updateImageThumbnails,
+  drawTempShapesToShowCaseMLResults, updateImageThumbnails, drawShapesCoordinatesFileUpload,
 };

@@ -153,6 +153,18 @@ function changeAllImagesTableRowsToDefault() {
   allImagesStyleSetToDefault = true;
 }
 
+function getNamesOfImagesWithNoErrors() {
+  const imageNames = [];
+  const tableBody = imagesTableElement.childNodes[1];
+  for (let i = 0; i < tableBody.childNodes.length; i += 1) {
+    const { fileName, currentRowHasError } = getFileName(tableBody, i);
+    if (!currentRowHasError) {
+      imageNames.push(fileName);
+    }
+  }
+  return imageNames;
+}
+
 function changeAnnotationRowToDefault(annotationFileName) {
   const tableBody = annotationsTableElement.childNodes[1];
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
@@ -306,5 +318,5 @@ function assignUploadDatasetsViewLocalVariables() {
 export {
   hideUploadDatasetsViewAssets, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, insertRowToAnnotationsTable,
-  changeAnnotationRowToDefault, removeRow,
+  changeAnnotationRowToDefault, removeRow, getNamesOfImagesWithNoErrors,
 };

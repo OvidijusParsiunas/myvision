@@ -115,9 +115,9 @@ function drawImageFromList(selectedImage) {
   draw();
 }
 
-function onImageLoad() {
+function onImageLoad(arg) {
   newFileStatus.uploaded = true;
-  currentImage = this;
+  currentImage = this ? this : arg;
   draw();
   canvas.setZoom(1);
 }

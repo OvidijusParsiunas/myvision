@@ -148,6 +148,10 @@ in firefox, the upload datasets modal (upload stage) buttons are too low
 
 in firefox, the upload datasets modal (upload stage) errors padding top is too high
 
+fix the back button to be more grey on hover
+
+have an option on choosing format to use already uploaded images
+
 in the upload datasets modal tables, when there is vertical overflow, some of the text can be hidden behind the scroll and the horizontal
 overflow doesn't kick in automatically
 

@@ -77,7 +77,7 @@ function initialiseUploadDatasetsModal() {
   assignViewManagerLocalVariables();
   registerDescriptionViewButtonEventHandlers(displayNextView);
   assignDescriptionViewLocalVariables();
-  registerUploadDatasetsViewButtonEventHandlers(displayNextView);
+  registerUploadDatasetsViewButtonEventHandlers(closeModal);
   assignUploadDatasetsViewLocalVariables();
   displayNextView();
   window.cancelUploadDatasetsModal = closeModal;
