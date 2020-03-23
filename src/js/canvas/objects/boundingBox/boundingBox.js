@@ -8,6 +8,7 @@ import {
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { preventOutOfBoundsShapes } from '../sharedUtils/moveBlockers';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -296,6 +297,7 @@ function createNewBoundingBoxFromCoordinates(left, top, width, height, imageDime
   const newBoundingBox = new fabric.Rect(
     boundingBoxProperties.getStandaloneBoundingBoxProperties(boundingBoxProps),
   );
+  preventOutOfBoundsShapes(newBoundingBox, canvas);
   lockMovementIfAssertedByState(newBoundingBox);
   return newBoundingBox;
 }
