@@ -1,4 +1,4 @@
-import { drawShapesCoordinatesFileUpload } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { addImageFromMultiUploadToList } from '../../../imageList/imageList';
 import { removeNoImagesFoundOnMLModalStyle } from '../../../machineLearningModal/views/initiateMachineLearning/style';
 import { onImageLoad } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
@@ -20,7 +20,7 @@ function drawShapesAndImages() {
   const { images, shapes } = finalObjectAssemblerFunc();
   drawImages(images);
   setTimeout(() => {
-    drawShapesCoordinatesFileUpload(shapes);
+    drawShapesViaCoordinates(shapes);
   }, 0);
 }
 

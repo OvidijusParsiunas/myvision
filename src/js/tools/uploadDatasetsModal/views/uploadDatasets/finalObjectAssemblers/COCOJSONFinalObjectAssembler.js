@@ -14,9 +14,11 @@ function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes)
   }
   if (annotationData.segmentation.length === 1) {
     shapeObj.coordinates.points = annotationData.segmentation[0];
+    shapeObj.type = 'polygon';
     shapes.polygons.push(shapeObj);
   } else {
     shapeObj.coordinates.bbox = annotationData.bbox;
+    shapeObj.type = 'boundingBox';
     shapes.boundingBoxes.push(shapeObj);
   }
 }
