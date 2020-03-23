@@ -8,7 +8,7 @@ import {
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
-import { preventOutOfBoundsShapes } from '../sharedUtils/moveBlockers';
+import { preventOutOfBoundsOnExternalSourceObject } from '../sharedUtils/moveBlockers';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -287,17 +287,19 @@ function shapeScrollEvents(event) {
   }
 }
 
-function createNewBoundingBoxFromCoordinates(left, top, width, height, imageDimensions) {
+function createNewBoundingBoxFromCoordinates(left, top, width, height,
+  imageScalingDimensions, imageParameterDimensions) {
   boundingBoxProps.left = left;
   boundingBoxProps.top = top;
   boundingBoxProps.width = width;
   boundingBoxProps.height = height;
-  boundingBoxProps.scaleX = imageDimensions.scaleX;
-  boundingBoxProps.scaleY = imageDimensions.scaleY;
+  boundingBoxProps.scaleX = imageScalingDimensions.scaleX;
+  boundingBoxProps.scaleY = imageScalingDimensions.scaleY;
   const newBoundingBox = new fabric.Rect(
     boundingBoxProperties.getStandaloneBoundingBoxProperties(boundingBoxProps),
   );
-  preventOutOfBoundsShapes(newBoundingBox, canvas);
+  preventOutOfBoundsOnExternalSourceObject(newBoundingBox, imageScalingDimensions,
+    imageParameterDimensions);
   lockMovementIfAssertedByState(newBoundingBox);
   return newBoundingBox;
 }

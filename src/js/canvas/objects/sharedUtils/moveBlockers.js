@@ -61,6 +61,88 @@ function preventOutOfBoundsShapes(shape, canvas) {
   }
 }
 
+function preventTopOutOfBoundsBoundingBoxOnExternalObject(shape) {
+  if (shape.top < 0) {
+    shape.top = 0;
+  }
+}
+
+function preventTopOutOfBoundsPolygonOnExternalObject(shape) {
+  if (shape.top < 0) {
+    shape.points.forEach((point) => {
+      if (point.y < 0) {
+        point.y = 0;
+      }
+    });
+  }
+}
+
+function preventLeftOutOfBoundsBoundingBoxOnExternalObject(shape) {
+  if (shape.left < 0) {
+    shape.left = 0;
+  }
+}
+
+function preventLeftOutOfBoundsPolygonOnExternalObject(shape) {
+  if (shape.left < 0) {
+    shape.points.forEach((point) => {
+      if (point.x < 0) {
+        point.x = 0;
+      }
+    });
+  }
+}
+
+function preventRightOutOfBoundsBoundingBoxOnExternalObject(shape, imageWidth) {
+  if (shape.left + shape.width > imageWidth - rightBoundingBoxDelta) {
+    shape.width = imageWidth - shape.left - 2.4;
+  }
+}
+
+function preventRightOutOfBoundsPolygonOnExternalObject(shape, imageWidth) {
+  if (shape.left + shape.width > imageWidth - 1.8) {
+    shape.points.forEach((point) => {
+      if (point.x + 1 > imageWidth - 1.8) {
+        point.x -= 1.8;
+      }
+    });
+  }
+}
+
+function preventBottomOutOfBoundsBoundingBoxOnExternalObject(shape, imageHeight) {
+  if (shape.top + shape.height > imageHeight - 2) {
+    shape.height = imageHeight - shape.top - 2;
+  }
+}
+
+function preventBottomOutOfBoundsPolygonOnExternalObject(shape, imageHeight) {
+  if (shape.top + shape.height > imageHeight - 2) {
+    shape.points.forEach((point) => {
+      if (point.y + 1 > imageHeight - 2) {
+        point.y -= 1.8;
+      }
+    });
+  }
+}
+
+function preventOutOfBoundsOnExternalSourceObject(shape, imageScalingDimensions,
+  imageParameterDimensions) {
+  const imageHeight = imageParameterDimensions.height * imageScalingDimensions.scaleY;
+  const imageWidth = imageParameterDimensions.width * imageScalingDimensions.scaleX;
+  shape.setCoords();
+  if (shape.shapeName === 'bndBox') {
+    preventTopOutOfBoundsBoundingBoxOnExternalObject(shape);
+    preventLeftOutOfBoundsBoundingBoxOnExternalObject(shape);
+    preventRightOutOfBoundsBoundingBoxOnExternalObject(shape, imageWidth);
+    preventBottomOutOfBoundsBoundingBoxOnExternalObject(shape, imageHeight);
+  } else if (shape.shapeName === 'polygon') {
+    preventTopOutOfBoundsPolygonOnExternalObject(shape);
+    preventLeftOutOfBoundsPolygonOnExternalObject(shape);
+    preventRightOutOfBoundsPolygonOnExternalObject(shape, imageWidth);
+    preventBottomOutOfBoundsPolygonOnExternalObject(shape, imageHeight);
+  }
+}
+
 function preventOutOfBoundsPoints(shape, canvas) {
   shape.setCoords();
   // multiple if statements because of corners
@@ -103,6 +185,6 @@ function setRightBoundingBoxMovingDelta(delta) {
 }
 
 export {
-  setRightBoundingBoxMovingDelta, preventOutOfBoundsShapes,
-  validateAndFixOutOfBoundsPolygonShapePoints, preventOutOfBoundsPoints,
+  setRightBoundingBoxMovingDelta, preventOutOfBoundsShapes, preventOutOfBoundsPoints,
+  preventOutOfBoundsOnExternalSourceObject, validateAndFixOutOfBoundsPolygonShapePoints,
 };

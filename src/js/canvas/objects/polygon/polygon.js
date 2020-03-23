@@ -7,7 +7,7 @@ import {
   getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
-import { preventOutOfBoundsPoints, preventOutOfBoundsShapes } from '../sharedUtils/moveBlockers';
+import { preventOutOfBoundsPoints, preventOutOfBoundsOnExternalSourceObject } from '../sharedUtils/moveBlockers';
 
 let canvas = null;
 let pointArray = [];
@@ -447,9 +447,10 @@ function moveDrawCrosshair() {
   }
 }
 
-function createNewPolygonFromCoordinates(points) {
+function createNewPolygonFromCoordinates(points, imageScalingDimensions, imageParameterDimensions) {
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon());
-  preventOutOfBoundsShapes(polygon, canvas);
+  preventOutOfBoundsOnExternalSourceObject(polygon, imageScalingDimensions,
+    imageParameterDimensions);
   lockMovementIfAssertedByState(polygon);
   return polygon;
 }

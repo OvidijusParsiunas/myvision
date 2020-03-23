@@ -1,4 +1,3 @@
-import { setDefaultImageThumbnailHighlightToMLSelected, getAllImageData, setDefaultImageThumbnailHighlightToML } from '../../../../imageList/imageList';
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
 import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoordinates } from '../../../../../canvas/objects/polygon/polygon';
@@ -13,6 +12,13 @@ import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatis
 import { getCanvasReferences } from '../../../../../canvas/utils/fabricUtils';
 import assignDefaultEvents from '../../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { repopulateDropdown } from '../../../../labelList/labelList';
+import {
+  getAllImageData,
+  getImageIdByName,
+  displayTickSVGOverImageThumbnail,
+  setDefaultImageThumbnailHighlightToML,
+  setDefaultImageThumbnailHighlightToMLSelected,
+} from '../../../../imageList/imageList';
 
 let canvas = null;
 const tempShapes = [];
@@ -29,39 +35,41 @@ function newLabelShapeGroup(shape, shapeCoordinates, isCurrentlySelectedImage,
   }
 }
 
-function generateNewBoundingBox(shapeCoordinates, imageDimensions) {
+function generateNewBoundingBox(shapeCoordinates, imageScalingDimensions,
+  imageParameterDimensions) {
   const boundingBoxShape = createNewBoundingBoxFromCoordinates(
     shapeCoordinates.bbox[0],
     shapeCoordinates.bbox[1],
     shapeCoordinates.bbox[2],
     shapeCoordinates.bbox[3],
-    imageDimensions,
+    imageScalingDimensions,
+    imageParameterDimensions,
   );
   return boundingBoxShape;
 }
 
-function generateNewPolygon(shapeCoordinates, imageDimensions) {
+function generateNewPolygon(shapeCoordinates, imageScalingDimensions, imageParameterDimensions) {
   const points = [];
   for (let i = 0; i < shapeCoordinates.points.length; i += 2) {
     points.push({
-      x: shapeCoordinates.points[i] * imageDimensions.scaleX,
-      y: shapeCoordinates.points[i + 1] * imageDimensions.scaleY,
+      x: shapeCoordinates.points[i] * imageScalingDimensions.scaleX,
+      y: shapeCoordinates.points[i + 1] * imageScalingDimensions.scaleY,
     });
   }
-  return createNewPolygonFromCoordinates(points);
+  return createNewPolygonFromCoordinates(points, imageScalingDimensions, imageParameterDimensions);
 }
 
 function generateImageShapesForML(image, isCurrentlySelectedImage, predictedShapeCoordinates,
-  imageDimensions, isUsingMachineLearning) {
+  imageScalingDimensions, isUsingMachineLearning) {
   predictedShapeCoordinates.forEach((shapeCoordinates) => {
-    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageDimensions);
+    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageScalingDimensions);
     newLabelShapeGroup(boundingBox, shapeCoordinates, isCurrentlySelectedImage,
       isUsingMachineLearning, image);
   });
   image.numberOfMLGeneratedShapes = predictedShapeCoordinates.length;
 }
 
-function getImageDimensions(image) {
+function getImageScalingDimensions(image) {
   if (image && image.imageDimensions && Object.keys(image.imageDimensions).length > 0) {
     return image.imageDimensions;
   }
@@ -90,12 +98,12 @@ function generateNewShapesForML(predictedShapeCoordinatesForImages, allImageData
   Object.keys(predictedShapeCoordinatesForImages).forEach((key) => {
     removeMLShapesOnImage(allImageData[key]);
     const image = allImageData[key];
-    const imageDimensions = getImageDimensions(image);
+    const imageScalingDimensions = getImageScalingDimensions(image);
     const isCurrentlySelectedImage = currentlySelectedImageId === parseInt(key, 10);
     const predictedShapeCoordinates = predictedShapeCoordinatesForImages[key];
     if (predictedShapeCoordinates.length > 0) {
       generateImageShapesForML(image, isCurrentlySelectedImage, predictedShapeCoordinates,
-        imageDimensions, isUsingMachineLearning);
+        imageScalingDimensions, isUsingMachineLearning);
     }
   });
 }
@@ -135,9 +143,9 @@ function updateImageThumbnails(predictedShapeCoordinatesForImages) {
 }
 
 function generateTempShapes(predictedShapeCoordinates,
-  imageDimensions) {
+  imageScalingDimensions) {
   predictedShapeCoordinates.forEach((shapeCoordinates) => {
-    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageDimensions);
+    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageScalingDimensions);
     tempShapes.push(boundingBox);
     canvas.add(boundingBox);
   });
@@ -155,18 +163,21 @@ function drawTempShapesToShowCaseMLResults(predictedShapeCoordinatesForImages) {
   captureCurrentImageData(allImageData, currentlySelectedImageId);
   prepareCanvasForNewBoundingBoxesFromExternalSources(canvas);
   const currentlySelectedImageShapes = predictedShapeCoordinatesForImages[currentlySelectedImageId];
-  const dimensions = getImageDimensions(allImageData[currentlySelectedImageId]);
-  generateTempShapes(currentlySelectedImageShapes, dimensions);
+  const imageScalingDimensions = getImageScalingDimensions(allImageData[currentlySelectedImageId]);
+  generateTempShapes(currentlySelectedImageShapes, imageScalingDimensions);
 }
 
 function generateShapeForFileUpload(shapeData, imageData, isCurrentlySelectedImage) {
-  const imageDimensions = getImageDimensions(imageData);
+  const imageScalingDimensions = getImageScalingDimensions(imageData);
+  const imageParameterDimensions = { height: imageData.data.height, width: imageData.data.width };
   if (shapeData.type === 'boundingBox') {
-    const shape = generateNewBoundingBox(shapeData.coordinates, imageDimensions);
+    const shape = generateNewBoundingBox(shapeData.coordinates, imageScalingDimensions,
+      imageParameterDimensions);
     newLabelShapeGroup(shape, shapeData.coordinates, isCurrentlySelectedImage,
       false, imageData);
   } else if (shapeData.type === 'polygon') {
-    const shape = generateNewPolygon(shapeData.coordinates, imageDimensions);
+    const shape = generateNewPolygon(shapeData.coordinates, imageScalingDimensions,
+      imageParameterDimensions);
     newLabelShapeGroup(shape, shapeData.coordinates, isCurrentlySelectedImage,
       false, imageData);
   }
@@ -178,6 +189,7 @@ function generateNewShapesForFileUpload(shapes, allImageData, currentlySelectedI
       if (shapes[i].imageName === allImageData[y].name) {
         const isCurrentlySelectedImage = currentlySelectedImageId === y;
         generateShapeForFileUpload(shapes[i], allImageData[y], isCurrentlySelectedImage);
+        displayTickSVGOverImageThumbnail(getImageIdByName(allImageData[y].name));
       }
     }
   }
@@ -217,7 +229,6 @@ function assignCanvasEvents() {
 }
 
 function drawShapesViaCoordinates(shapesData, isUsingMachineLearning) {
-  // test if works with no shapes
   const { allImageData, currentlySelectedImageId } = getImageData();
   assignCanvasEvents();
   captureCurrentImageData(allImageData, currentlySelectedImageId);

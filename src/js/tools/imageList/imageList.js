@@ -32,6 +32,16 @@ function getAllImageData() {
   return images;
 }
 
+// will need to be used more and completely switched over to be a map with image names as keys
+function getImageIdByName(imageName) {
+  for (let i = 0; i < images.length; i += 1) {
+    if (imageName === images[i].name) {
+      return i;
+    }
+  }
+  return null;
+}
+
 function initialiseImageElement() {
   return document.createElement('img');
 }
@@ -61,8 +71,9 @@ function addNewItemToImageList(imageData) {
   return parentThumbnailDivElement;
 }
 
-function displayTickSVGOverImageThumbnail() {
-  images[currentlySelectedImageId].thumbnailElementRef.childNodes[2].style.display = 'block';
+function displayTickSVGOverImageThumbnail(id) {
+  const imageId = id || currentlySelectedImageId;
+  images[imageId].thumbnailElementRef.childNodes[2].style.display = 'block';
 }
 
 function removeTickSVGOverImageThumbnail(id) {
@@ -285,5 +296,5 @@ export {
   initialiseImageListFunctionality, setDefaultImageThumbnailHighlightToML,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
   displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
-  setThumbnailColourOverlayBackToDefault,
+  setThumbnailColourOverlayBackToDefault, getImageIdByName,
 };
