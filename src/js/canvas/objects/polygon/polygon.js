@@ -268,6 +268,11 @@ function prepareCanvasForNewPolygon(canvasObj) {
   }
 }
 
+function prepareCanvasForNewPolygonsFromExternalSources(canvasObj) {
+  canvas = canvasObj;
+  setDrawCursorMode(canvas);
+}
+
 function resetDrawPolygonMode() {
   polygonMode = true;
   setReadyToDrawShapeState(true);
@@ -442,6 +447,12 @@ function moveDrawCrosshair() {
   }
 }
 
+function createNewPolygonFromCoordinates(points) {
+  const polygon = new fabric.Polygon(points, polygonProperties.newPolygon());
+  lockMovementIfAssertedByState(polygon);
+  return polygon;
+}
+
 export {
   movePoints,
   drawPolygon,
@@ -458,4 +469,6 @@ export {
   isPolygonDrawingInProgress,
   resumeDrawingAfterRemovePoints,
   placeholderToAddMouseDownEvents,
+  createNewPolygonFromCoordinates,
+  prepareCanvasForNewPolygonsFromExternalSources,
 };

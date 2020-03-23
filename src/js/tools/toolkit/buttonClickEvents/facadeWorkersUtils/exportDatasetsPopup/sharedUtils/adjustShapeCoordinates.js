@@ -36,10 +36,13 @@ function calculateBoundingBoxCoordinates(boundingBox, imageDimensions) {
 }
 
 function floorNumber(number, roundingValue) {
+  if (roundingValue === null) { return number; }
   return Math.floor(number * roundingValue) / roundingValue;
 }
 
 function getRoundingValue(decimalPlaces) {
+  if (decimalPlaces === 0) { return 1; }
+  if (decimalPlaces === null || decimalPlaces === undefined) { return null; }
   let roundingValue = 1;
   while (decimalPlaces > 0) {
     roundingValue *= 10;
@@ -62,10 +65,10 @@ function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, dec
     left, top, width, height, imageDimensions, roundingValue,
   );
   return {
-    left: floorNumber(finalCoordinates.finalLeft, decimalPlaces),
-    top: floorNumber(finalCoordinates.finalTop, decimalPlaces),
-    width: floorNumber(finalCoordinates.finalWidth, decimalPlaces),
-    height: floorNumber(finalCoordinates.finalHeight, decimalPlaces),
+    left: floorNumber(finalCoordinates.finalLeft, roundingValue),
+    top: floorNumber(finalCoordinates.finalTop, roundingValue),
+    width: floorNumber(finalCoordinates.finalWidth, roundingValue),
+    height: floorNumber(finalCoordinates.finalHeight, roundingValue),
   };
 }
 

@@ -1,6 +1,7 @@
 import { setDefaultImageThumbnailHighlightToMLSelected, getAllImageData, setDefaultImageThumbnailHighlightToML } from '../../../../imageList/imageList';
 import { getImageProperties } from '../uploadFile/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
+import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoordinates } from '../../../../../canvas/objects/polygon/polygon';
 import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
 import initiateResetCanvasEventsToDefaultEvent from '../../facadeWorkers/resetCanvasEventsToDefaultWorker';
 import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
@@ -24,14 +25,14 @@ function updateImageThumbnailStyle(isCurrentlySelectedImage, image) {
   }
 }
 
-function newLabelShapeGroup(boundingBoxShape, shapeCoordinates,
-  isCurrentlySelectedImage, isUsingMachineLearning, image) {
+function newLabelShapeGroup(shape, shapeCoordinates, isCurrentlySelectedImage,
+  isUsingMachineLearning, image) {
   if (isCurrentlySelectedImage) {
-    generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
+    generateLabelShapeGroup(shape, shapeCoordinates.class,
       null, isUsingMachineLearning);
-    canvas.add(boundingBoxShape);
+    canvas.add(shape);
   } else {
-    generateLabelShapeGroup(boundingBoxShape, shapeCoordinates.class,
+    generateLabelShapeGroup(shape, shapeCoordinates.class,
       image, isUsingMachineLearning);
   }
 }
@@ -45,6 +46,17 @@ function generateNewBoundingBox(shapeCoordinates, imageDimensions) {
     imageDimensions,
   );
   return boundingBoxShape;
+}
+
+function generateNewPolygon(shapeCoordinates, imageDimensions) {
+  const points = [];
+  for (let i = 0; i < shapeCoordinates.points.length; i += 2) {
+    points.push({
+      x: shapeCoordinates.points[i] * imageDimensions.scaleX,
+      y: shapeCoordinates.points[i + 1] * imageDimensions.scaleY,
+    });
+  }
+  return createNewPolygonFromCoordinates(points);
 }
 
 function generateNewShapes(image, isCurrentlySelectedImage, predictedShapeCoordinates,
@@ -185,13 +197,21 @@ function generateNewShapesForImagesFileUpload(shapes, allImageData,
       if (shapes[i].imageName === allImageData[y].name) {
         const imageDimensions = getImageDimensions(allImageData[y]);
         const isCurrentlySelectedImage = currentlySelectedImageId === y;
-        const shape = generateNewBoundingBox(shapes[i].coordinates, imageDimensions);
-        newLabelShapeGroup(shape, shapes[i].coordinates, isCurrentlySelectedImage,
-          false, allImageData[y]);
+        if (shapeType === 'boundingBox') {
+          const shape = generateNewBoundingBox(shapes[i].coordinates, imageDimensions);
+          newLabelShapeGroup(shape, shapes[i].coordinates, isCurrentlySelectedImage,
+            false, allImageData[y]);
+        } else if (shapeType === 'polygon') {
+          const shape = generateNewPolygon(shapes[i].coordinates, imageDimensions);
+          newLabelShapeGroup(shape, shapes[i].coordinates, isCurrentlySelectedImage,
+            false, allImageData[y]);
+        }
       }
     }
   }
 }
+
+// multi-image
 
 function drawShapesCoordinatesFileUpload(shapes) {
   const { allImageData, currentlySelectedImageId } = getImageData();
@@ -200,7 +220,12 @@ function drawShapesCoordinatesFileUpload(shapes) {
   if (shapes.boundingBoxes.length > 0) {
     prepareCanvasForNewBoundingBoxesFromExternalSources(canvas);
     generateNewShapesForImagesFileUpload(shapes.boundingBoxes, allImageData,
-      currentlySelectedImageId, 'boundingBoxes');
+      currentlySelectedImageId, 'boundingBox');
+  }
+  if (shapes.polygons.length > 0) {
+    prepareCanvasForNewPolygonsFromExternalSources(canvas);
+    generateNewShapesForImagesFileUpload(shapes.polygons, allImageData,
+      currentlySelectedImageId, 'polygon');
   }
   repopulateDropdown();
   resetShapeLabellerModalOptions();

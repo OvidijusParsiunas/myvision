@@ -3,21 +3,19 @@ import { getNamesOfImagesWithNoErrors } from '../style';
 
 function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes) {
   const shapeObj = {
-    type: null, labelName: null, coordinates: {}, imageName,
+    type: null, coordinates: {}, imageName,
   };
   const { categories } = datasetObject.activeAnnotationFile.body.annotationData;
   for (let i = 0; i < categories.length; i += 1) {
     if (annotationData.category_id === categories[i].id) {
-      shapeObj.labelName = categories[i].name;
+      shapeObj.coordinates.class = categories[i].name;
       break;
     }
   }
   if (annotationData.segmentation.length === 1) {
-    shapeObj.coordinates.class = 'polygon';
     shapeObj.coordinates.points = annotationData.segmentation[0];
     shapes.polygons.push(shapeObj);
   } else {
-    shapeObj.coordinates.class = 'bbox';
     shapeObj.coordinates.bbox = annotationData.bbox;
     shapes.boundingBoxes.push(shapeObj);
   }
