@@ -4,7 +4,7 @@ import labelProperties from '../../label/properties';
 import setAddPointsMode from '../../../mouseInteractions/cursorModes/addPointsMode';
 import { changePolygonPointsToAddImpl } from './changePointsStyle';
 import { getLabelById } from '../../label/label';
-import { preventOutOfBoundsPoints } from '../../sharedUtils/moveBlockers';
+import { preventOutOfBoundsPointsOnMove } from '../../sharedUtils/moveBlockers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 
 let canvas = null;
@@ -40,7 +40,7 @@ function addPointsMouseOutImpl(event) {
 }
 
 function moveAddablePointImpl(event) {
-  preventOutOfBoundsPoints(event.target, canvas);
+  preventOutOfBoundsPointsOnMove(event.target, canvas);
   const xCenterPoint = event.target.getCenterPoint().x;
   const yCenterPoint = event.target.getCenterPoint().y;
   const { pointId } = event.target;
@@ -88,7 +88,7 @@ function addPointImpl(pointer) {
   const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
   canvas.add(point);
   pointsArray.push(point);
-  preventOutOfBoundsPoints(point, canvas);
+  preventOutOfBoundsPointsOnMove(point, canvas);
   tempPointIndex += 1;
 }
 

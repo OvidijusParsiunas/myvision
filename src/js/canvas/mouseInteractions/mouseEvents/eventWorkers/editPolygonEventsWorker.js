@@ -18,7 +18,7 @@ import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes
 import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
 import { getImageProperties } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
 import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
-import { preventOutOfBoundsPoints, preventOutOfBoundsShapes, validateAndFixOutOfBoundsPolygonShapePoints } from '../../../objects/sharedUtils/moveBlockers';
+import { preventOutOfBoundsPointsOnMove, preventOutOfBoundsShapesOnMove, validateAndFixOutOfBoundsPolygonShapePointsAfterMove } from '../../../objects/sharedUtils/moveBlockers';
 
 let canvas = null;
 let labelObject = null;
@@ -187,7 +187,7 @@ function polygonMouseUpEvents(event) {
     clearControlSelectedObject();
   } else if (polygonMoved) {
     highlightLabelInTheList(event.target.id);
-    validateAndFixOutOfBoundsPolygonShapePoints(event.target);
+    validateAndFixOutOfBoundsPolygonShapePointsAfterMove(event.target);
     setEditablePolygonWhenPolygonMoved(event);
     highlightShapeFill(event.target.id);
     canvas.bringToFront(labelObject);
@@ -224,7 +224,7 @@ function polygonMoveEvents(event) {
     setShapeMovingState(true);
     const { shapeName } = event.target;
     if (shapeName === 'polygon') {
-      preventOutOfBoundsShapes(event.target, canvas);
+      preventOutOfBoundsShapesOnMove(event.target, canvas);
       if (getPolygonEditingStatus()) {
         removePolygonPoints();
       }
@@ -233,7 +233,7 @@ function polygonMoveEvents(event) {
       labelObject.left = event.target.left - event.target.labelOffsetLeft;
       polygonMoved = true;
     } else if (shapeName === 'point') {
-      preventOutOfBoundsPoints(event.target, canvas);
+      preventOutOfBoundsPointsOnMove(event.target, canvas);
       if (event.target.pointId === 0) {
         movePolygonPoint(event, labelObject);
       } else {
@@ -242,7 +242,7 @@ function polygonMoveEvents(event) {
       resetPolygonSelectableAreaAfterPointMoved();
       polygonPointMoved = true;
     } else if (shapeName === 'bndBox') {
-      preventOutOfBoundsShapes(event.target, canvas);
+      preventOutOfBoundsShapesOnMove(event.target, canvas);
       labelObject.setCoords();
       labelObject.top = event.target.top;
       labelObject.left = event.target.left + labelProperies.boundingBoxOffsetProperties().left;

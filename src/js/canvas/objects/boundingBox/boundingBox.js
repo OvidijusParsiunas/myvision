@@ -8,7 +8,7 @@ import {
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
-import { preventOutOfBoundsOnExternalSourceObject } from '../sharedUtils/moveBlockers';
+import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -59,28 +59,6 @@ let mouseMovedTop = false;
 function drawBoundingBox(event) {
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
-  // top
-  if (boundingBoxProps.origY > pointer.y) {
-    if (pointer.y < 0) {
-      boundingBox.set(({ top: 0 }));
-      boundingBox.set({ height: boundingBoxProps.origY });
-    } else {
-      boundingBox.set({ top: pointer.y });
-      boundingBox.set({ height: boundingBoxProps.origY - pointer.y });
-      mouseMovedTop = true;
-    }
-  }
-  // left
-  if (boundingBoxProps.origX > pointer.x) {
-    if (pointer.x < 0) {
-      boundingBox.set(({ left: 0 }));
-      boundingBox.set(({ width: boundingBoxProps.origX }));
-    } else {
-      boundingBox.set({ left: pointer.x });
-      boundingBox.set({ width: boundingBoxProps.origX - pointer.x });
-      mouseMovedLeft = true;
-    }
-  }
   if (getCurrentZoomState() > 1.00001) {
     const { height, width } = getImageProperties();
     const imageHeight = height * getCurrentZoomState();
@@ -139,6 +117,28 @@ function drawBoundingBox(event) {
       } else {
         boundingBox.set({ height: pointer.y - boundingBoxProps.origY - 1.5 });
       }
+    }
+  }
+  // top
+  if (boundingBoxProps.origY > pointer.y) {
+    if (pointer.y < 0) {
+      boundingBox.set(({ top: 0 }));
+      boundingBox.set({ height: boundingBoxProps.origY });
+    } else {
+      boundingBox.set({ top: pointer.y });
+      boundingBox.set({ height: boundingBoxProps.origY - pointer.y });
+      mouseMovedTop = true;
+    }
+  }
+  // left
+  if (boundingBoxProps.origX > pointer.x) {
+    if (pointer.x < 0) {
+      boundingBox.set(({ left: 0 }));
+      boundingBox.set(({ width: boundingBoxProps.origX }));
+    } else {
+      boundingBox.set({ left: pointer.x });
+      boundingBox.set({ width: boundingBoxProps.origX - pointer.x });
+      mouseMovedLeft = true;
     }
   }
   canvas.renderAll();
@@ -298,8 +298,7 @@ function createNewBoundingBoxFromCoordinates(left, top, width, height,
   const newBoundingBox = new fabric.Rect(
     boundingBoxProperties.getStandaloneBoundingBoxProperties(boundingBoxProps),
   );
-  preventOutOfBoundsOnExternalSourceObject(newBoundingBox, imageScalingDimensions,
-    imageParameterDimensions);
+  preventOutOfBoundsOnNewObject(newBoundingBox, imageScalingDimensions, imageParameterDimensions);
   lockMovementIfAssertedByState(newBoundingBox);
   return newBoundingBox;
 }

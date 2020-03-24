@@ -7,7 +7,8 @@ import {
   getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
-import { preventOutOfBoundsPoints, preventOutOfBoundsOnExternalSourceObject } from '../sharedUtils/moveBlockers';
+import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
+import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 
 let canvas = null;
 let pointArray = [];
@@ -29,7 +30,7 @@ function isRightMouseButtonClicked(pointer) {
 
 function movePoints(event) {
   if (activeShape) {
-    preventOutOfBoundsPoints(event.target, canvas);
+    preventOutOfBoundsPointsOnMove(event.target, canvas);
     const xCenterPoint = event.target.getCenterPoint().x;
     const yCenterPoint = event.target.getCenterPoint().y;
     activeShape.points[event.target.pointId] = {
@@ -162,7 +163,7 @@ function addPoint(pointer) {
     canvas.add(invisiblePoint);
     point.set(polygonProperties.firstPoint());
   }
-  preventOutOfBoundsPoints(point, canvas);
+  preventOutOfBoundsPointsOnMove(point, canvas);
   pointArray.push(point);
   activeShape.sendToBack();
   canvas.selection = false;
@@ -449,8 +450,7 @@ function moveDrawCrosshair() {
 
 function createNewPolygonFromCoordinates(points, imageScalingDimensions, imageParameterDimensions) {
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon());
-  preventOutOfBoundsOnExternalSourceObject(polygon, imageScalingDimensions,
-    imageParameterDimensions);
+  preventOutOfBoundsOnNewObject(polygon, imageScalingDimensions, imageParameterDimensions);
   lockMovementIfAssertedByState(polygon);
   return polygon;
 }
