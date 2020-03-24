@@ -32,9 +32,17 @@ function getAllImageData() {
   return images;
 }
 
-// will need to be used more and completely switched over to be a map with image names as keys
 function getImageIdByName(imageName) {
   for (let i = 0; i < images.length; i += 1) {
+    if (imageName === images[i].name) {
+      return i;
+    }
+  }
+  return null;
+}
+
+function getLastImageIdByName(imageName) {
+  for (let i = images.length - 1; i >= 0; i -= 1) {
     if (imageName === images[i].name) {
       return i;
     }
@@ -294,7 +302,7 @@ function canSwitchImage(direction) {
 export {
   switchImage, canSwitchImage, addImageFromMultiUploadToList,
   initialiseImageListFunctionality, setDefaultImageThumbnailHighlightToML,
-  setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
   displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
-  setThumbnailColourOverlayBackToDefault, getImageIdByName,
+  setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
+  setThumbnailColourOverlayBackToDefault, getImageIdByName, getLastImageIdByName,
 };

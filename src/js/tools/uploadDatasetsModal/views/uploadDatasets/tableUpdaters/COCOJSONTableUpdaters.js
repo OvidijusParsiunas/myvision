@@ -5,15 +5,17 @@ import {
 import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
 import {
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
-  IMAGE_FILES_ARRAY, ACTIVE_ANNOTATION_FILE,
+  ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT,
 } from '../sharedConsts/consts';
-import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
+import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {
-  datasetObject[IMAGE_FILES_ARRAY].forEach((imageFile) => {
+  Object.keys(datasetObject[IMAGE_FILES_OBJECT]).forEach((key) => {
+    const imageFile = datasetObject[IMAGE_FILES_OBJECT][key];
     const validationResult = validateCOCOJSONFormat(imageFile);
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
+    updateImageFileErrorStatus(name, validationResult.error);
   });
 }
 

@@ -1,11 +1,11 @@
 import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { getNamesOfImagesWithNoErrors } from '../style';
+import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../sharedConsts/consts';
 
 function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes) {
   const shapeObj = {
     type: null, coordinates: {}, imageName,
   };
-  const { categories } = datasetObject.activeAnnotationFile.body.annotationData;
+  const { categories } = datasetObject[ACTIVE_ANNOTATION_FILE].body.annotationData;
   for (let i = 0; i < categories.length; i += 1) {
     if (annotationData.category_id === categories[i].id) {
       shapeObj.coordinates.class = categories[i].name;
@@ -33,7 +33,7 @@ function addShapeToShapesArray(imageId, annotations, shapes, datasetObject, imag
 
 function getShapes(datasetObject, validImages) {
   const shapes = { boundingBoxes: [], polygons: [] };
-  const { annotations, images } = datasetObject.activeAnnotationFile.body.annotationData;
+  const { annotations, images } = datasetObject[ACTIVE_ANNOTATION_FILE].body.annotationData;
   validImages.forEach((validImage) => {
     for (let i = 0; i < images.length; i += 1) {
       const imageName = validImage.fileMetaData.name;
@@ -45,16 +45,11 @@ function getShapes(datasetObject, validImages) {
   return shapes;
 }
 
-function getImages(datasetObject) {
+function getImages(imageFiles) {
   const images = [];
-  const validImageNames = getNamesOfImagesWithNoErrors();
-  validImageNames.forEach((validImageName) => {
-    for (let i = 0; i < datasetObject.imageFiles.length; i += 1) {
-      const imageFileName = datasetObject.imageFiles[i].body.fileMetaData.name;
-      if (imageFileName === validImageName) {
-        images.push(datasetObject.imageFiles[i].body);
-        break;
-      }
+  Object.keys(imageFiles).forEach((key) => {
+    if (!imageFiles[key].body.error) {
+      images.push(imageFiles[key].body);
     }
   });
   return images;
@@ -62,9 +57,9 @@ function getImages(datasetObject) {
 
 function assembleFinalObjectFromCOCOJSON() {
   const finalObject = { images: [], shapes: [] };
-  const COCOJSONDatasetObject = getDatasetObject();
-  finalObject.images = getImages(COCOJSONDatasetObject);
-  finalObject.shapes = getShapes(COCOJSONDatasetObject, finalObject.images);
+  const datasetObject = getDatasetObject();
+  finalObject.images = getImages(datasetObject[IMAGE_FILES_OBJECT]);
+  finalObject.shapes = getShapes(datasetObject, finalObject.images);
   return finalObject;
 }
 

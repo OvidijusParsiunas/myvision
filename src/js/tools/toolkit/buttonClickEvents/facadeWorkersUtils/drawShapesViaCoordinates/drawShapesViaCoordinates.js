@@ -14,7 +14,7 @@ import assignDefaultEvents from '../../../../../canvas/mouseInteractions/mouseEv
 import { repopulateDropdown } from '../../../../labelList/labelList';
 import {
   getAllImageData,
-  getImageIdByName,
+  getLastImageIdByName,
   displayTickSVGOverImageThumbnail,
   setDefaultImageThumbnailHighlightToML,
   setDefaultImageThumbnailHighlightToMLSelected,
@@ -189,7 +189,7 @@ function generateNewShapesForFileUpload(shapes, allImageData, currentlySelectedI
       if (shapes[i].imageName === allImageData[y].name) {
         const isCurrentlySelectedImage = currentlySelectedImageId === y;
         generateShapeForFileUpload(shapes[i], allImageData[y], isCurrentlySelectedImage);
-        displayTickSVGOverImageThumbnail(getImageIdByName(allImageData[y].name));
+        displayTickSVGOverImageThumbnail(getLastImageIdByName(allImageData[y].name));
       }
     }
   }
