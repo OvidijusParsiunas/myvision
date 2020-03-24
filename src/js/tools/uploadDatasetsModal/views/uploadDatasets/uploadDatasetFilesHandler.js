@@ -6,9 +6,7 @@ let formatValidatorFunc = null;
 function onFileLoad(fileMetaData, event) {
   const parsedFileObj = fileParserFunc(fileMetaData, event);
   let { errorObj } = parsedFileObj;
-  if (!errorObj) {
-    errorObj = formatValidatorFunc(parsedFileObj);
-  }
+  errorObj = formatValidatorFunc(parsedFileObj, errorObj);
   addFileFunc(parsedFileObj, errorObj);
   tableUpdaterFunc(fileMetaData, errorObj);
 }

@@ -216,43 +216,60 @@ function isImageAlreadyUploaded(newImageName) {
   return false;
 }
 
-function validateCOCOJSONFormat(parsedObj) {
-  const datasetObject = getDatasetObject();
-  const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
-  const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
-  if (parsedObj.fileFormat === 'annotation') {
-    const validators = [
-      checkParentProperties,
-      checkCategoriesProperty,
-      checkAnnotationsProperty,
-      checkImagesProperty,
-      checkAnnotationsMapToImages,
-      checkAnnotationsMapToCategories,
-    ];
-    const validationResult = checkJONObject(parsedObj.body, validators);
-    if (!validationResult.error) {
-      setCurrentAnnotationFilesToInactive(validAnnotationFiles);
-      parsedObj.active = true;
-    }
-    return validationResult;
+function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile) {
+  const imageName = parsedObj.body.fileMetaData.name;
+  if (isImageAlreadyUploaded(imageName)) {
+    return { error: false, message: '', alreadyUploaded: true };
   }
-  if (parsedObj.fileFormat === 'image') {
-    const imageName = parsedObj.body.fileMetaData.name;
-
-    if (validAnnotationFiles.length > 0) {
-      const { annotationData } = activeAnnotationFile.body;
-      for (let i = 0; i < annotationData.images.length; i += 1) {
-        if (imageName === annotationData.images[i].file_name) {
-          return { error: false, message: '' };
-        }
+  if (validAnnotationFiles.length > 0) {
+    const { annotationData } = activeAnnotationFile.body;
+    for (let i = 0; i < annotationData.images.length; i += 1) {
+      if (imageName === annotationData.images[i].file_name) {
+        return { error: false, message: '' };
       }
-      return { error: true, message: 'This image is not specified in the annotations file(s)' };
     }
-    if (isImageAlreadyUploaded(imageName)) {
-      return { error: false, message: 'This image has already been uploaded', alreadyUploaded: true };
-    }
+    return { error: true, message: 'This image is not specified in the annotations file(s)' };
   }
   return { error: false, message: '' };
+}
+
+function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
+  const validators = [
+    checkParentProperties,
+    checkCategoriesProperty,
+    checkAnnotationsProperty,
+    checkImagesProperty,
+    checkAnnotationsMapToImages,
+    checkAnnotationsMapToCategories,
+  ];
+  const validationResult = checkJONObject(parsedObj.body, validators);
+  if (!validationResult.error) {
+    setCurrentAnnotationFilesToInactive(validAnnotationFiles);
+    parsedObj.active = true;
+  }
+  return validationResult;
+}
+
+function validateCOCOJSONFormat(parsedObj, errorObj) {
+  if (!errorObj) {
+    const datasetObject = getDatasetObject();
+    const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
+    const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
+    if (parsedObj.fileFormat === 'annotation') {
+      return validateAnnotationsFile(parsedObj, validAnnotationFiles);
+    }
+    if (parsedObj.fileFormat === 'image') {
+      return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
+    }
+  }
+  // !!!!!!!!!!!! only when allow the use of existing images is enabled
+  if (parsedObj.fileFormat === 'image') {
+    const imageName = parsedObj.body.fileMetaData.name;
+    if (isImageAlreadyUploaded(imageName)) {
+      return { error: false, message: '', alreadyUploaded: true };
+    }
+  }
+  return errorObj;
 }
 
 export { validateCOCOJSONFormat as default };

@@ -11,15 +11,15 @@ import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObject
 
 function validateExistingImages(datasetObject) {
   datasetObject[IMAGE_FILES_ARRAY].forEach((imageFile) => {
-    const validationResult = validateCOCOJSONFormat(imageFile, datasetObject);
+    const validationResult = validateCOCOJSONFormat(imageFile);
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
   });
 }
 
-function reValidateExistingAnnotations(annotationFiles, datasetObject) {
+function reValidateExistingAnnotations(annotationFiles) {
   annotationFiles.forEach((annotationFile) => {
-    const validationResult = validateCOCOJSONFormat(annotationFile, datasetObject);
+    const validationResult = validateCOCOJSONFormat(annotationFile);
     const { name } = annotationFile.body.fileMetaData;
     if (!validationResult.error) {
       validationResult.error = true;
@@ -33,7 +33,7 @@ function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
   const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
   const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
   if (!validationResult.error) {
-    reValidateExistingAnnotations(validAnnotationFiles, datasetObject);
+    reValidateExistingAnnotations(validAnnotationFiles);
     validateExistingImages(datasetObject);
     return validationResult;
   }
@@ -45,7 +45,7 @@ function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
     }
     return { error: true, message: validationResult.message };
   }
-  changeAllImagesTableRowsToDefault(datasetObject[IMAGE_FILES_ARRAY]);
+  changeAllImagesTableRowsToDefault();
   return validationResult;
 }
 
@@ -54,8 +54,6 @@ function updateCOCOJSONTables(fileMetaData, validationResult) {
   const fileType = fileMetaData.type;
   const fileName = fileMetaData.name;
   if (fileType.startsWith('image/')) {
-    // when manually uploading and already uploaded
-    // when uploading or changing new annotations file
     insertRowToImagesTable(fileName, validationResult);
   }
   if (fileName.endsWith('.json')) {

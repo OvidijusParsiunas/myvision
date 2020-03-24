@@ -85,19 +85,16 @@ function isInImagesList(name) {
   return false;
 }
 
-function addImageFile(imageFileObj, errorObject) {
+function addImageFile(imageFileObj, alreadyUploaded) {
   if (!isInImagesList(imageFileObj.body.fileMetaData.name)) {
-    if (errorObject.alreadyUploaded) {
-      imageFileObj.body.fileMetaData.alreadyUploaded = true;
-      imageFileObj.body.fileMetaData.message = errorObject.message;
-    }
+    if (alreadyUploaded) { imageFileObj.body.alreadyUploaded = true; }
     datasetObject[IMAGE_FILES_ARRAY].push(imageFileObj);
   }
 }
 
 function addFile(file, errorObject) {
   if (file.fileFormat === 'image') {
-    addImageFile(file, errorObject);
+    addImageFile(file, errorObject.alreadyUploaded);
   } else if (file.fileFormat === 'annotation') {
     addAnnotationFile(file, errorObject.error);
   }

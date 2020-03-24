@@ -231,6 +231,8 @@
   border-color: #fbd0d0;
 }
 
+/* information ones are no longer being used */
+
 .information-popover-color-theme {
   background: #ebf2ff;
   color: #30229e;
