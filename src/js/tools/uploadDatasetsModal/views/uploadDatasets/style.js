@@ -13,7 +13,7 @@ let imagesTableOuterContainerElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 let annotationsTableOuterContainerElement = null;
-let errorRowIndex = 0;
+let popoverIndex = 0;
 const modalWidth = 505;
 const modalHeight = 340;
 const ANNOTATION_FILE_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-left';
@@ -43,7 +43,7 @@ function createTableRowElementMarkupWthError(fileName, message, popoverPositionC
           <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
           <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
-        <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})">${fileName}</div>
+        <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${popoverIndex})">${fileName}</div>
     </div>
   `;
 }
@@ -58,8 +58,7 @@ function createTableRowElementMarkupWthInformation(fileName, message, popoverPos
           <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
           <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
-        <!-- insert padding instead -->
-        <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-information" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${errorRowIndex})">${fileName}</div>
+        <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-information" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFileErrorPopover(${popoverIndex})">${fileName}</div>
     </div>
   `;
 }
@@ -89,15 +88,21 @@ window.displayDefaultRemoveFileIcon = (element) => {
 };
 
 function getFileName(tableBody, rowIndex) {
-  if (tableBody.childNodes[rowIndex].childNodes[0].childNodes[1].id.startsWith('upload-datasets-modal-file-popover-')) {
+  if (tableBody.childNodes[rowIndex].childNodes[0].childNodes[1].classList[1] === 'upload-datasets-modal-upload-datasets-table-row-popover') {
+    const currentRowStatusType = { currentRowHasError: false, currentRowHasInformation: false };
+    if (tableBody.childNodes[rowIndex].childNodes[0].childNodes[1].classList[2] === 'error-popover-color-theme') {
+      currentRowStatusType.currentRowHasError = true;
+    } else {
+      // this functionality can be used in the future
+      currentRowStatusType.currentRowHasInformation = true;
+    }
     return {
       fileName: tableBody.childNodes[rowIndex].childNodes[0].childNodes[5].childNodes[3].innerHTML,
-      currentRowHasError: true,
+      ...currentRowStatusType,
     };
   }
   return {
     fileName: tableBody.childNodes[rowIndex].childNodes[0].childNodes[1].childNodes[3].innerHTML,
-    currentRowHasError: false,
   };
 }
 
@@ -125,7 +130,7 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkupWthError(
           newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
-          tableName, errorRowIndex += 1,
+          tableName, popoverIndex += 1,
         );
         if (tableName === IMAGES_TABLE_INDICATOR) {
           allImagesStyleSetToDefault = false;
@@ -149,11 +154,11 @@ function insertRowToImagesTable(fileName, validationResult) {
     if (validationResult.alreadyUploaded) {
       cell.innerHTML = createTableRowElementMarkupWthInformation(fileName, validationResult.message,
         IMAGE_FILE_POPOVER_POSITION_CLASS, IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS,
-        IMAGES_TABLE_INDICATOR, errorRowIndex += 1);
+        IMAGES_TABLE_INDICATOR, popoverIndex += 1);
     } else if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
         IMAGE_FILE_POPOVER_POSITION_CLASS, IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS,
-        IMAGES_TABLE_INDICATOR, errorRowIndex += 1);
+        IMAGES_TABLE_INDICATOR, popoverIndex += 1);
       allImagesStyleSetToDefault = false;
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
@@ -161,30 +166,19 @@ function insertRowToImagesTable(fileName, validationResult) {
   }
 }
 
-function insertAlreadyExistingRowToImagesTable(fileName, validationResult) {
-  if (!checkFileAlreadyInTable(fileName, validationResult,
-    imagesTableElement, IMAGE_FILE_POPOVER_POSITION_CLASS,
-    IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS)) {
-    const row = imagesTableElement.insertRow(-1);
-    const cell = row.insertCell(0);
-    if (validationResult.error) {
-      cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        IMAGE_FILE_POPOVER_POSITION_CLASS, IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS,
-        IMAGES_TABLE_INDICATOR, errorRowIndex += 1);
-      allImagesStyleSetToDefault = false;
-    } else {
-      cell.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
-    }
-  }
-}
-
-function changeAllImagesTableRowsToDefault() {
+function changeAllImagesTableRowsToDefault(images) {
   if (!allImagesStyleSetToDefault) {
     const tableBody = imagesTableElement.childNodes[1];
     for (let i = 0; i < tableBody.childNodes.length; i += 1) {
       const rowParentElement = tableBody.childNodes[i].childNodes[0];
-      const { fileName } = getFileName(tableBody, i);
-      rowParentElement.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
+      const { name, alreadyUploaded, message } = images[i].body.fileMetaData;
+      if (!alreadyUploaded) {
+        rowParentElement.innerHTML = createTableRowElementMarkup(name, IMAGES_TABLE_INDICATOR);
+      } else {
+        rowParentElement.innerHTML = createTableRowElementMarkupWthInformation(name,
+          message, IMAGE_FILE_POPOVER_POSITION_CLASS, IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS,
+          IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS, popoverIndex += 1);
+      }
     }
   }
   allImagesStyleSetToDefault = true;
@@ -225,7 +219,7 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
         ANNOTATION_FILE_POPOVER_POSITION_CLASS,
         ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS,
-        ANNOTATIONS_TABLE_INDICATOR, errorRowIndex += 1);
+        ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
     }
@@ -356,5 +350,4 @@ export {
   hideUploadDatasetsViewAssets, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, insertRowToAnnotationsTable,
   changeAnnotationRowToDefault, removeRow, getNamesOfImagesWithNoErrors,
-  insertAlreadyExistingRowToImagesTable,
 };

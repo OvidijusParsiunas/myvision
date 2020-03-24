@@ -9,7 +9,7 @@ function onFileLoad(fileMetaData, event) {
   if (!errorObj) {
     errorObj = formatValidatorFunc(parsedFileObj);
   }
-  addFileFunc(parsedFileObj, errorObj.error);
+  addFileFunc(parsedFileObj, errorObj);
   tableUpdaterFunc(fileMetaData, errorObj);
 }
 

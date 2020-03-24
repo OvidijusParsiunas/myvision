@@ -1,5 +1,6 @@
 import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE } from '../sharedConsts/consts';
 import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
+import { getAllImageData } from '../../../../imageList/imageList';
 
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;
@@ -205,6 +206,16 @@ function setCurrentAnnotationFilesToInactive(annotationFiles) {
   });
 }
 
+function isImageAlreadyUploaded(newImageName) {
+  const images = getAllImageData();
+  for (let i = 0; i < images.length; i += 1) {
+    if (newImageName === images[i].name) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function validateCOCOJSONFormat(parsedObj) {
   const datasetObject = getDatasetObject();
   const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
@@ -225,14 +236,21 @@ function validateCOCOJSONFormat(parsedObj) {
     }
     return validationResult;
   }
-  if (parsedObj.fileFormat === 'image' && validAnnotationFiles.length > 0) {
-    const { annotationData } = activeAnnotationFile.body;
-    for (let i = 0; i < annotationData.images.length; i += 1) {
-      if (parsedObj.body.fileMetaData.name === annotationData.images[i].file_name) {
-        return { error: false, message: '' };
+  if (parsedObj.fileFormat === 'image') {
+    const imageName = parsedObj.body.fileMetaData.name;
+
+    if (validAnnotationFiles.length > 0) {
+      const { annotationData } = activeAnnotationFile.body;
+      for (let i = 0; i < annotationData.images.length; i += 1) {
+        if (imageName === annotationData.images[i].file_name) {
+          return { error: false, message: '' };
+        }
       }
+      return { error: true, message: 'This image is not specified in the annotations file(s)' };
     }
-    return { error: true, message: 'This image is not specified in the annotations file(s)' };
+    if (isImageAlreadyUploaded(imageName)) {
+      return { error: false, message: 'This image has already been uploaded', alreadyUploaded: true };
+    }
   }
   return { error: false, message: '' };
 }

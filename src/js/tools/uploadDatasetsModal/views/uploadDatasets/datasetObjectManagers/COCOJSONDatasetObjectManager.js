@@ -76,15 +76,30 @@ function addAnnotationFile(annotationFileObj, error) {
   }
 }
 
-function addImageFile(imageFileObj) {
-  datasetObject[IMAGE_FILES_ARRAY].push(imageFileObj);
+function isInImagesList(name) {
+  for (let i = 0; i < datasetObject[IMAGE_FILES_ARRAY].length; i += 1) {
+    if (name === datasetObject[IMAGE_FILES_ARRAY][i].body.fileMetaData.name) {
+      return true;
+    }
+  }
+  return false;
 }
 
-function addFile(file, error) {
+function addImageFile(imageFileObj, errorObject) {
+  if (!isInImagesList(imageFileObj.body.fileMetaData.name)) {
+    if (errorObject.alreadyUploaded) {
+      imageFileObj.body.fileMetaData.alreadyUploaded = true;
+      imageFileObj.body.fileMetaData.message = errorObject.message;
+    }
+    datasetObject[IMAGE_FILES_ARRAY].push(imageFileObj);
+  }
+}
+
+function addFile(file, errorObject) {
   if (file.fileFormat === 'image') {
-    addImageFile(file);
+    addImageFile(file, errorObject);
   } else if (file.fileFormat === 'annotation') {
-    addAnnotationFile(file, error);
+    addAnnotationFile(file, errorObject.error);
   }
 }
 
