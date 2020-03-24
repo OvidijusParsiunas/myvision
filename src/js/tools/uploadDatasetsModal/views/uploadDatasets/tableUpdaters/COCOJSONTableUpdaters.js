@@ -8,6 +8,7 @@ import {
   IMAGE_FILES_ARRAY, ACTIVE_ANNOTATION_FILE,
 } from '../sharedConsts/consts';
 import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
+import { getAllImageData } from '../../../../imageList/imageList';
 
 function validateExistingImages(datasetObject) {
   datasetObject[IMAGE_FILES_ARRAY].forEach((imageFile) => {
@@ -49,11 +50,27 @@ function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
   return validationResult;
 }
 
+function isImageAlreadyUploaded(newImageName) {
+  const images = getAllImageData();
+  for (let i = 0; i < images.length; i += 1) {
+    if (newImageName === images[i].name) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function updateCOCOJSONTables(fileMetaData, validationResult) {
   const datasetObject = getDatasetObject();
   const fileType = fileMetaData.type;
   const fileName = fileMetaData.name;
   if (fileType.startsWith('image/')) {
+    if (isImageAlreadyUploaded(fileName)) {
+      console.log('already present');
+      validationResult.alreadyUploaded = true;
+      validationResult.message = 'Image has already been uploaded';
+      validationResult.error = false;
+    }
     insertRowToImagesTable(fileName, validationResult);
   }
   if (fileName.endsWith('.json')) {
