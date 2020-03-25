@@ -13,14 +13,21 @@ import {
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
+import { COCO_JSON_FORMAT } from '../consts';
+import {
+  setFormatState,
+  getFormatState,
+  setReuseAlreadyUploadedImagesState,
+  getReuseAlreadyUploadedImagesState,
+} from './uploadDatasets/stateManager';
 
 let currentViewNumber = 1;
 let modalElement = null;
 let hideViewOnCancelFunc = null;
 
-function setUpdateDatasetFileHandlerFunctions(format) {
-  switch (format) {
-    case 'COCO JSON':
+function setUpdateDatasetFileHandlerFunctions() {
+  switch (getFormatState()) {
+    case COCO_JSON_FORMAT:
       setAddFile(addCOCOJSONFile);
       setFileParser(parseCOCOJSONFiles);
       setTableUpdater(updateCOCOJSONTables);
@@ -44,9 +51,14 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 3:
+      // will be done in previous view in future
+      setFormatState(COCO_JSON_FORMAT);
+      setReuseAlreadyUploadedImagesState(true);
       prepareUploadDatasetsView();
-      setUpdateDatasetFileHandlerFunctions('COCO JSON');
-      addAlreadyUploadedImages(getAllImageData());
+      setUpdateDatasetFileHandlerFunctions();
+      if (getReuseAlreadyUploadedImagesState()) {
+        addAlreadyUploadedImages(getAllImageData());
+      }
       hideViewOnCancelFunc = hideUploadDatasetsViewAssets;
       currentViewNumber += 1;
       break;

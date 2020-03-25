@@ -1,6 +1,7 @@
-import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE } from '../sharedConsts/consts';
+import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE } from '../../../consts';
 import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
+import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;
@@ -218,7 +219,8 @@ function isImageAlreadyUploaded(newImageName) {
 
 function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile) {
   const imageName = parsedObj.body.fileMetaData.name;
-  const alreadyUploaded = isImageAlreadyUploaded(imageName);
+  const alreadyUploaded = getReuseAlreadyUploadedImagesState()
+    ? isImageAlreadyUploaded(imageName) : false;
   if (validAnnotationFiles.length > 0) {
     const { annotationData } = activeAnnotationFile.body;
     for (let i = 0; i < annotationData.images.length; i += 1) {
@@ -260,8 +262,7 @@ function validateCOCOJSONFormat(parsedObj, errorObj) {
       return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
     }
   }
-  // !!!!!!!!!!!! only when allow the use of existing images is enabled
-  if (parsedObj.fileFormat === 'image') {
+  if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === 'image') {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };

@@ -6,7 +6,7 @@ import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
 import {
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
   ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT,
-} from '../sharedConsts/consts';
+} from '../../../consts';
 import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {

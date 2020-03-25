@@ -1,5 +1,5 @@
 import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../sharedConsts/consts';
+import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
 
 function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes) {
   const shapeObj = {

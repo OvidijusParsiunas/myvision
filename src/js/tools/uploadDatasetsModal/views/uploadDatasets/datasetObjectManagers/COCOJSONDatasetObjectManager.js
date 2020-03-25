@@ -1,7 +1,7 @@
 import {
   VALID_ANNOTATION_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY,
   ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT,
-} from '../sharedConsts/consts';
+} from '../../../consts';
 
 const datasetObject = { };
 datasetObject[ACTIVE_ANNOTATION_FILE] = null;

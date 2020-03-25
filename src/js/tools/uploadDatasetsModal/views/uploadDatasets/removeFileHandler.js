@@ -12,7 +12,7 @@ import {
   VALID_ANNOTATION_FILES_ARRAY,
   FALTY_ANNOTATION_FILES_ARRAY,
   IMAGE_FILES_OBJECT,
-} from './sharedConsts/consts';
+} from '../../consts';
 
 function validateExistingImages(datasetObject) {
   Object.keys(datasetObject[IMAGE_FILES_OBJECT]).forEach((key) => {

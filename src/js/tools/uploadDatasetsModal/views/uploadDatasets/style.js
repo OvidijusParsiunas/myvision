@@ -1,4 +1,4 @@
-import { ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR } from './sharedConsts/consts';
+import { ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR } from '../../consts';
 
 let titleElement = null;
 let backButtonElement = null;

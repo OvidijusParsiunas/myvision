@@ -5,3 +5,4 @@ export const ACTIVE_ANNOTATION_FILE = 'activeAnnotationFile';
 export const VALID_ANNOTATION_FILES_ARRAY = 'validAnnotationFiles';
 export const FALTY_ANNOTATION_FILES_ARRAY = 'faltyAnnotationFiles';
 export const IMAGE_FILES_OBJECT = 'imageFiles';
+export const COCO_JSON_FORMAT = 'COCO JSON';
