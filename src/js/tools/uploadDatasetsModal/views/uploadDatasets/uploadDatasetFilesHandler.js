@@ -8,7 +8,7 @@ function onFileLoad(fileMetaData, event) {
   let { errorObj } = parsedFileObj;
   errorObj = formatValidatorFunc(parsedFileObj, errorObj);
   addFileFunc(parsedFileObj, errorObj);
-  tableUpdaterFunc(fileMetaData, errorObj);
+  tableUpdaterFunc(parsedFileObj, errorObj);
 }
 
 function readFile(reader, file) {
@@ -29,6 +29,15 @@ function uploadDatasetFilesHandler(uploadData) {
   }
 }
 
+function addAlreadyUploadedImages(images) {
+  images.forEach((image) => {
+    const parsedFileObj = { fileFormat: 'image', body: { fileMetaData: { name: image.name } } };
+    const errorObj = { error: false, message: '', alreadyUploaded: true };
+    addFileFunc(parsedFileObj, errorObj);
+    tableUpdaterFunc(parsedFileObj, errorObj);
+  });
+}
+
 function setFormatValidator(formatValidatorFuncArg) {
   formatValidatorFunc = formatValidatorFuncArg;
 }
@@ -46,5 +55,6 @@ function setFileParser(fileParserFuncArg) {
 }
 
 export {
-  setFileParser, setTableUpdater, setFormatValidator, uploadDatasetFilesHandler, setAddFile,
+  uploadDatasetFilesHandler, addAlreadyUploadedImages,
+  setFileParser, setTableUpdater, setFormatValidator, setAddFile,
 };

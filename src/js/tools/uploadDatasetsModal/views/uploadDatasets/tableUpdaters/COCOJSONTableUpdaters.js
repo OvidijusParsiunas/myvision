@@ -51,14 +51,13 @@ function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
   return validationResult;
 }
 
-function updateCOCOJSONTables(fileMetaData, validationResult) {
+function updateCOCOJSONTables(parsedObj, validationResult) {
   const datasetObject = getDatasetObject();
-  const fileType = fileMetaData.type;
-  const fileName = fileMetaData.name;
-  if (fileType.startsWith('image/')) {
+  const fileName = parsedObj.body.fileMetaData.name;
+  if (parsedObj.fileFormat === 'image') {
     insertRowToImagesTable(fileName, validationResult);
   }
-  if (fileName.endsWith('.json')) {
+  if (parsedObj.fileFormat === 'annotation') {
     const newValidationResult = checkAnnotationAlreadyInTable(
       validationResult, datasetObject,
     );

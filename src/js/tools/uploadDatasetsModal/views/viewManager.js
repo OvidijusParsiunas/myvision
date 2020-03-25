@@ -8,10 +8,11 @@ import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUp
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import { addFile as addCOCOJSONFile } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
 import {
-  setFileParser, setTableUpdater, setFormatValidator, setAddFile,
+  setFileParser, setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
 } from './uploadDatasets/uploadDatasetFilesHandler';
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
+import { getAllImageData } from '../../imageList/imageList';
 
 let currentViewNumber = 1;
 let modalElement = null;
@@ -31,7 +32,6 @@ function setUpdateDatasetFileHandlerFunctions(format) {
   }
 }
 
-// the following architecture was originally prepared for more views
 function displayNextView() {
   switch (currentViewNumber) {
     case 1:
@@ -46,6 +46,7 @@ function displayNextView() {
     case 3:
       prepareUploadDatasetsView();
       setUpdateDatasetFileHandlerFunctions('COCO JSON');
+      addAlreadyUploadedImages(getAllImageData());
       hideViewOnCancelFunc = hideUploadDatasetsViewAssets;
       currentViewNumber += 1;
       break;

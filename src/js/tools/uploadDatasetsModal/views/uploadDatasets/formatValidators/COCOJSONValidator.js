@@ -218,19 +218,17 @@ function isImageAlreadyUploaded(newImageName) {
 
 function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile) {
   const imageName = parsedObj.body.fileMetaData.name;
-  if (isImageAlreadyUploaded(imageName)) {
-    return { error: false, message: '', alreadyUploaded: true };
-  }
+  const alreadyUploaded = isImageAlreadyUploaded(imageName);
   if (validAnnotationFiles.length > 0) {
     const { annotationData } = activeAnnotationFile.body;
     for (let i = 0; i < annotationData.images.length; i += 1) {
       if (imageName === annotationData.images[i].file_name) {
-        return { error: false, message: '' };
+        return { error: false, message: '', alreadyUploaded };
       }
     }
-    return { error: true, message: 'This image is not specified in the annotations file(s)' };
+    return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };
   }
-  return { error: false, message: '' };
+  return { error: false, message: '', alreadyUploaded };
 }
 
 function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
