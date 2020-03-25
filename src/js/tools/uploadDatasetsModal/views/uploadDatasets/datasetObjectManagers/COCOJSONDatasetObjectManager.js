@@ -84,7 +84,7 @@ function isInImagesList(name) {
 }
 
 function updateImageFileErrorStatus(name, errorStatus) {
-  datasetObject[IMAGE_FILES_OBJECT][name].body.error = errorStatus;
+  datasetObject[IMAGE_FILES_OBJECT][name].error = errorStatus;
 }
 
 function addImageFile(imageFileObj, errorObject) {

@@ -80,7 +80,7 @@ function addNewItemToImageList(imageData) {
 }
 
 function displayTickSVGOverImageThumbnail(id) {
-  const imageId = id || currentlySelectedImageId;
+  const imageId = id !== undefined ? id : currentlySelectedImageId;
   images[imageId].thumbnailElementRef.childNodes[2].style.display = 'block';
 }
 

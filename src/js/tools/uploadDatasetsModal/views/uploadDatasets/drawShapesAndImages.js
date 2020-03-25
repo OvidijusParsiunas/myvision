@@ -5,14 +5,16 @@ import { onImageLoad } from '../../../toolkit/buttonClickEvents/facadeWorkersUti
 
 let finalObjectAssemblerFunc = null;
 
-// drawing new images regardless if they exist at the moment
 function drawImages(images) {
   for (let i = 0; i < images.length; i += 1) {
-    const { fileMetaData, imageElement } = images[i];
-    const firstImage = i === 0;
-    addImageFromMultiUploadToList(fileMetaData, imageElement, firstImage);
-    removeNoImagesFoundOnMLModalStyle();
-    if (firstImage) { onImageLoad(imageElement); }
+    // !! this will have to be used by a trigger
+    if (!images[i].alreadyUploaded) {
+      const { fileMetaData, imageElement } = images[i].body;
+      const firstImage = i === 0;
+      addImageFromMultiUploadToList(fileMetaData, imageElement, firstImage);
+      removeNoImagesFoundOnMLModalStyle();
+      if (firstImage) { onImageLoad(imageElement); }
+    }
   }
 }
 

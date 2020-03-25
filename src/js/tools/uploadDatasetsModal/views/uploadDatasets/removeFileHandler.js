@@ -33,7 +33,7 @@ function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject) {
 }
 
 // functionality here cannot be used for all, will need
-// to be moved to aromic COCOJSON file
+// to be moved to atomic COCOJSON file
 
 function removeFileHandler(fileName, tableName, errorMessage) {
   if (tableName === 'annotations') {

@@ -36,7 +36,7 @@ function getShapes(datasetObject, validImages) {
   const { annotations, images } = datasetObject[ACTIVE_ANNOTATION_FILE].body.annotationData;
   validImages.forEach((validImage) => {
     for (let i = 0; i < images.length; i += 1) {
-      const imageName = validImage.fileMetaData.name;
+      const imageName = validImage.body.fileMetaData.name;
       if (imageName === images[i].file_name) {
         addShapeToShapesArray(images[i].id, annotations, shapes, datasetObject, imageName);
       }
@@ -48,8 +48,8 @@ function getShapes(datasetObject, validImages) {
 function getImages(imageFiles) {
   const images = [];
   Object.keys(imageFiles).forEach((key) => {
-    if (!imageFiles[key].body.error) {
-      images.push(imageFiles[key].body);
+    if (!imageFiles[key].error) {
+      images.push(imageFiles[key]);
     }
   });
   return images;
