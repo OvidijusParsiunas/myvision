@@ -220,6 +220,10 @@ function displayFinishButtonElement() {
   finishButtonElement.style.display = '';
 }
 
+function hideFinishButtonElement() {
+  finishButtonElement.style.display = 'none';
+}
+
 function displayUploadButtonElement() {
   uploadButtonElement.style.display = '';
 }
@@ -282,6 +286,7 @@ function prepareUploadDatasetsView() {
 function hideUploadDatasetsViewAssets() {
   hideBackButton();
   hideUploadButtonElement();
+  hideFinishButtonElement();
   resetTitleElementMarginTop();
   resetButtonGroupElementMarginTop();
   hideUploadDatasetsOuterContainerElement();

@@ -157,10 +157,6 @@
   margin-left: 50%;
 }
 
-#upload-datasets-modal-back-button {
-  margin-right: 3px;
-}
-
 #upload-datasets-modal-upload-datasets-upload-button {
   margin-right: 2px;
   margin-left: 2px;
@@ -446,6 +442,18 @@
 
 .popup-proceed-button:active {
   background-color: #43b543 !important;
+}
+
+.popup-back-button {
+  margin-right: 3px;
+}
+
+.popup-back-button:hover {
+  background-color: #e8e397 !important;
+}
+
+.popup-back-button:active {
+  background-color: #e0d639 !important;
 }
 
 .popup-cancel-button {
