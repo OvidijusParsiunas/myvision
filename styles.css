@@ -164,6 +164,7 @@
 
 #upload-datasets-modal-finish-button {
   margin-left: 3px;
+  margin-right: 0px;
 }
 
 .upload-datasets-table {
@@ -449,11 +450,11 @@
 }
 
 .popup-back-button:hover {
-  background-color: #e8e397 !important;
+  background-color: #e2d297 !important;
 }
 
 .popup-back-button:active {
-  background-color: #e0d639 !important;
+  background-color: #e0bc39 !important;
 }
 
 .popup-cancel-button {

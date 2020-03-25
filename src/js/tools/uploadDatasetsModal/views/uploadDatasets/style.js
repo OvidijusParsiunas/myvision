@@ -20,6 +20,7 @@ const ANNOTATION_FILE_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-dat
 const ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-left';
 const IMAGE_FILE_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-right';
 const IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-right';
+let finishButtonEnabled = false;
 
 function createTableRowElementMarkup(fileName, tableName) {
   return `
@@ -224,6 +225,20 @@ function hideFinishButtonElement() {
   finishButtonElement.style.display = 'none';
 }
 
+function enableFinishButton() {
+  if (!finishButtonEnabled) {
+    finishButtonElement.classList.add('popup-proceed-button');
+    finishButtonElement.classList.replace('popup-label-button-disabled', 'popup-label-button');
+    finishButtonEnabled = true;
+  }
+}
+
+function disableFinishButton() {
+  finishButtonElement.classList.remove('popup-proceed-button');
+  finishButtonElement.classList.replace('popup-label-button', 'popup-label-button-disabled');
+  finishButtonEnabled = false;
+}
+
 function displayUploadButtonElement() {
   uploadButtonElement.style.display = '';
 }
@@ -287,6 +302,7 @@ function hideUploadDatasetsViewAssets() {
   hideBackButton();
   hideUploadButtonElement();
   hideFinishButtonElement();
+  disableFinishButton();
   resetTitleElementMarginTop();
   resetButtonGroupElementMarginTop();
   hideUploadDatasetsOuterContainerElement();
@@ -311,5 +327,5 @@ function assignUploadDatasetsViewLocalVariables() {
 export {
   hideUploadDatasetsViewAssets, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, insertRowToAnnotationsTable,
-  changeAnnotationRowToDefault, removeRow,
+  changeAnnotationRowToDefault, removeRow, enableFinishButton, disableFinishButton,
 };

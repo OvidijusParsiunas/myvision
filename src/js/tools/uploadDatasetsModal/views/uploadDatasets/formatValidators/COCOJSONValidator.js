@@ -225,7 +225,9 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
     const { annotationData } = activeAnnotationFile.body;
     for (let i = 0; i < annotationData.images.length; i += 1) {
       if (imageName === annotationData.images[i].file_name) {
-        return { error: false, message: '', alreadyUploaded };
+        return {
+          error: false, message: '', alreadyUploaded, valid: true,
+        };
       }
     }
     return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };

@@ -3,8 +3,8 @@ import {
   getActiveAnnotationFile, updateImageFileErrorStatus,
 } from './datasetObjectManagers/COCOJSONDatasetObjectManager';
 import {
-  removeRow, changeAnnotationRowToDefault,
-  insertRowToImagesTable, changeAllImagesTableRowsToDefault,
+  removeRow, changeAnnotationRowToDefault, disableFinishButton,
+  insertRowToImagesTable, changeAllImagesTableRowsToDefault, enableFinishButton,
 } from './style';
 import validateCOCOJSONFormat from './formatValidators/COCOJSONValidator';
 import {
@@ -15,13 +15,20 @@ import {
 } from '../../consts';
 
 function validateExistingImages(datasetObject) {
+  let foundValid = false;
   Object.keys(datasetObject[IMAGE_FILES_OBJECT]).forEach((key) => {
     const imageFile = datasetObject[IMAGE_FILES_OBJECT][key];
     const validationResult = validateCOCOJSONFormat(imageFile);
+    if (!validationResult.error) { foundValid = true; }
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
     updateImageFileErrorStatus(name, validationResult.error);
   });
+  if (foundValid) {
+    enableFinishButton();
+  } else {
+    disableFinishButton();
+  }
 }
 
 function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject) {
@@ -36,6 +43,7 @@ function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject) {
 // to be moved to atomic COCOJSON file
 
 function removeFileHandler(fileName, tableName, errorMessage) {
+  const datasetObject = getDatasetObject();
   if (tableName === 'annotations') {
     if (errorMessage) {
       let annotationsArrayName;
@@ -49,13 +57,17 @@ function removeFileHandler(fileName, tableName, errorMessage) {
       replaceActiveAnnotationFileIfRemoving(fileName);
       removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
       if (getActiveAnnotationFile() !== null) {
-        setNewActiveAnnotationFileRow(getActiveAnnotationFile(), getDatasetObject());
+        setNewActiveAnnotationFileRow(getActiveAnnotationFile(), datasetObject);
       } else {
+        disableFinishButton();
         changeAllImagesTableRowsToDefault();
       }
     }
   } else if (tableName === 'images') {
     removeFile(fileName, IMAGE_FILES_OBJECT);
+    if (Object.keys(datasetObject[IMAGE_FILES_OBJECT]).length === 0) {
+      disableFinishButton();
+    }
   }
   removeRow(fileName, tableName);
 }
