@@ -184,6 +184,18 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
   }
 }
 
+function clearTable(tableElement) {
+  const newTbody = document.createElement('tbody');
+  if (tableElement.childNodes[1]) {
+    tableElement.replaceChild(newTbody, tableElement.childNodes[1]);
+  }
+}
+
+function clearAllTables() {
+  clearTable(annotationsTableElement);
+  clearTable(imagesTableElement);
+}
+
 function setTitleElement(title) {
   titleElement.innerHTML = title;
 }
@@ -307,6 +319,8 @@ function hideUploadDatasetsViewAssets() {
   resetButtonGroupElementMarginTop();
   hideUploadDatasetsOuterContainerElement();
   resetUploadDatasetsModalElementDimensions();
+  clearAllTables();
+  popoverIndex = 0;
 }
 
 function assignUploadDatasetsViewLocalVariables() {

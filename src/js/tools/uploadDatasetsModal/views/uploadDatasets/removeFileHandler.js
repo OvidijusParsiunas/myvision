@@ -14,6 +14,8 @@ import {
   IMAGE_FILES_OBJECT,
 } from '../../consts';
 
+// pontential to move this out into shared validate logic
+// can't at the moment because validate is just one default function
 function validateExistingImages(datasetObject) {
   let foundValid = false;
   Object.keys(datasetObject[IMAGE_FILES_OBJECT]).forEach((key) => {

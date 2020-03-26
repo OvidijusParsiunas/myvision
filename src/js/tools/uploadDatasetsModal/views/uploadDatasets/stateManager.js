@@ -17,9 +17,15 @@ function getReuseAlreadyUploadedImagesState() {
   return reuseAlreadyUploadedImages;
 }
 
+function setAllStatesToDefault() {
+  format = '';
+  reuseAlreadyUploadedImages = false;
+}
+
 export {
   setFormatState,
   getFormatState,
+  setAllStatesToDefault,
   setReuseAlreadyUploadedImagesState,
   getReuseAlreadyUploadedImagesState,
 };
