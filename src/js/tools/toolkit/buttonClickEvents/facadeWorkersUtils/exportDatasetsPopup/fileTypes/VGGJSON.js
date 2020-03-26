@@ -106,7 +106,9 @@ function downloadVGGJSON() {
   const marshalledObject = {};
   saveCurrentImageDetails(allImageProperties);
   allImageProperties.forEach((image) => {
-    marshalledObject[image.name] = parseImageData(image);
+    const parsedImageData = parseImageData(image);
+    const objectName = `${parsedImageData.filename}${parsedImageData.size}`;
+    marshalledObject[objectName] = parsedImageData;
   });
   const downloadableElement = generateTempDownloadableJSONElement(marshalledObject);
   downloadableElement.click();

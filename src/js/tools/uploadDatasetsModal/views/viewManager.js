@@ -3,17 +3,19 @@ import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescri
 import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
-import parseCOCOJSONFiles from './uploadDatasets/fileParsers/COCOJSONParser';
+import parseAllFiles from './uploadDatasets/fileParsers/sharedFileParser';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
+import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
 import { addFile as addCOCOJSONFile } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
+import { addFile as addVGGJSONFile } from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
 import {
   setFileParser, setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
 } from './uploadDatasets/uploadDatasetFilesHandler';
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
-import { COCO_JSON_FORMAT } from '../consts';
+import { COCO_JSON_FORMAT, VGG_JSON_FORMAT } from '../consts';
 import {
   setFormatState,
   getFormatState,
@@ -29,9 +31,16 @@ function setUpdateDatasetFileHandlerFunctions() {
   switch (getFormatState()) {
     case COCO_JSON_FORMAT:
       setAddFile(addCOCOJSONFile);
-      setFileParser(parseCOCOJSONFiles);
+      setFileParser(parseAllFiles);
       setTableUpdater(updateCOCOJSONTables);
       setFormatValidator(validateCOCOJSONFormat);
+      setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
+      break;
+    case VGG_JSON_FORMAT:
+      setAddFile(addVGGJSONFile);
+      setFileParser(parseAllFiles);
+      setTableUpdater(updateCOCOJSONTables);
+      setFormatValidator(validateVGGJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
       break;
     default:
@@ -52,7 +61,7 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(COCO_JSON_FORMAT);
+      setFormatState(VGG_JSON_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
       prepareUploadDatasetsView();
       setUpdateDatasetFileHandlerFunctions();

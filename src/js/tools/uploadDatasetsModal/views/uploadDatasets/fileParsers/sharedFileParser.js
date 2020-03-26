@@ -17,7 +17,7 @@ function parseJSON(fileMetaData, event) {
   }
 }
 
-function parseCOCOJSONFiles(fileMetaData, event) {
+function parseAllFiles(fileMetaData, event) {
   if (fileMetaData.type.startsWith('image/')) {
     return parseImageData(fileMetaData, event);
   }
@@ -27,4 +27,4 @@ function parseCOCOJSONFiles(fileMetaData, event) {
   return {};
 }
 
-export { parseCOCOJSONFiles as default };
+export { parseAllFiles as default };
