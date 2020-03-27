@@ -70,9 +70,9 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(COCO_JSON_FORMAT);
+      setFormatState(VGG_JSON_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
-      prepareUploadDatasetsView(COCO_JSON_FORMAT);
+      prepareUploadDatasetsView(VGG_JSON_FORMAT);
       setUpdateDatasetFileHandlerFunctions();
       if (getReuseAlreadyUploadedImagesState()) {
         addAlreadyUploadedImages(getAllImageData());

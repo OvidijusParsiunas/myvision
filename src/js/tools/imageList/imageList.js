@@ -186,7 +186,7 @@ function saveAndRemoveCurrentImageDetails() {
 }
 
 function setDefaultImageProperties(image, imageMetadata) {
-  image.imageDimensions = {};
+  image.imageDimensions = { scaleX: 1, scaleY: 1 };
   image.shapes = {};
   image.labels = {};
   image.size = imageMetadata.size;
