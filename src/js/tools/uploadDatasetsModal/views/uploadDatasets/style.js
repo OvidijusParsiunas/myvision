@@ -40,7 +40,7 @@ function createTableRowElementMarkupWthError(fileName, message, popoverPositionC
     <div id="upload-datasets-modal-file-popover-${index}" class="popover upload-datasets-modal-upload-datasets-table-row-popover error-popover-color-theme ${popoverPositionClass}">${message}</div>
     <div id="upload-datasets-modal-file-popover-arrow-${index}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position upload-datasets-modal-upload-datasets-table-error-row-popover-arrow ${popoverArrowClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
-        <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}', '${message}')">
+        <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
           <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
           <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
@@ -275,7 +275,7 @@ function hideUploadDatasetsOuterContainerElement() {
   uploadDatasetsOuterContainerElement.style.display = 'none';
 }
 
-function setTriggerAcceptedFileFormat(format) {
+function setAcceptedFileFormatTrigger(format) {
   uploadDatasetFilesTriggerElement.accept = format;
 }
 
@@ -301,7 +301,7 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
 function prepareUploadDatasetsView(formatName) {
   setTitleElementMarginTop('8px');
   setTitleElement(formatName);
-  setTriggerAcceptedFileFormat('.json, image/*');
+  setAcceptedFileFormatTrigger('.json, image/*');
   displayBackButton();
   displayUploadButtonElement();
   displayFinishButtonElement();

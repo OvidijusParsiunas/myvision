@@ -1,27 +1,30 @@
 import { hideUploadDatasetsViewAssets } from './style';
 import { uploadDatasetFilesHandler } from './uploadDatasetFilesHandler';
-import removeFile from './removeFileHandler';
 import { drawShapesAndImages } from './drawShapesAndImages';
-import { clearDatasetObject } from './datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { setAllStatesToDefault } from './stateManager';
 
 function triggerUploadDatasetFiles() {
   document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger').click();
 }
 
-function moveToNextView(nextViewCallback) {
+function removeFile(removeFileHandlerFunc, fileName, objectName) {
+  removeFileHandlerFunc(fileName, objectName);
+}
+
+function moveToNextView(nextViewCallback, clearDatasetObjectFunc) {
   drawShapesAndImages();
   hideUploadDatasetsViewAssets();
-  clearDatasetObject();
+  clearDatasetObjectFunc();
   setAllStatesToDefault();
   nextViewCallback();
 }
 
-function registerButtonEventHandlers(nextViewCallback) {
+function registerButtonEventHandlers(nextViewCallback, removeFileHandlerFunc,
+  clearDatasetObjectFunc) {
   window.triggerUploadDatasetFiles = triggerUploadDatasetFiles;
   window.uploadDatasetFilesHandler = uploadDatasetFilesHandler;
-  window.drawShapesAndImages = moveToNextView.bind(this, nextViewCallback);
-  window.removeFileFromUploadDatasetFiles = removeFile;
+  window.drawShapesAndImages = moveToNextView.bind(this, nextViewCallback, clearDatasetObjectFunc);
+  window.removeFileFromUploadDatasetFiles = removeFile.bind(this, removeFileHandlerFunc);
 }
 
 export { registerButtonEventHandlers as default };

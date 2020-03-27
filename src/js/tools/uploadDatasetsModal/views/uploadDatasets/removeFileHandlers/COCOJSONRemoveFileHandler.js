@@ -1,18 +1,18 @@
 import {
   removeFile, replaceActiveAnnotationFileIfRemoving, getDatasetObject,
   getActiveAnnotationFile, updateImageFileErrorStatus,
-} from './datasetObjectManagers/COCOJSONDatasetObjectManager';
+} from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import {
   removeRow, changeAnnotationRowToDefault, disableFinishButton,
   insertRowToImagesTable, changeAllImagesTableRowsToDefault, enableFinishButton,
-} from './style';
-import validateCOCOJSONFormat from './formatValidators/COCOJSONValidator';
+} from '../style';
+import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
 import {
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE,
   VALID_ANNOTATION_FILES_ARRAY,
   FALTY_ANNOTATION_FILES_ARRAY,
   IMAGE_FILES_OBJECT,
-} from '../../consts';
+} from '../../../consts';
 
 // pontential to move this out into shared validate logic
 // can't at the moment because validate is just one default function

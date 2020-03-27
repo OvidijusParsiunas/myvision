@@ -25,8 +25,10 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
     ? isImageAlreadyUploaded(imageName) : false;
   if (validAnnotationFiles.length > 0) {
     const { annotationData } = activeAnnotationFile.body;
-    for (let i = 0; i < annotationData.images.length; i += 1) {
-      if (imageName === annotationData.images[i].file_name) {
+    const annotationDataKeys = Object.keys(annotationData);
+    for (let i = 0; i < annotationDataKeys.length; i += 1) {
+      const { filename } = annotationData[annotationDataKeys[i]];
+      if (imageName === filename) {
         return {
           error: false, message: '', alreadyUploaded, valid: true,
         };

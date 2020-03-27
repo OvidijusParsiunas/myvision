@@ -5,14 +5,18 @@ import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hide
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import parseAllFiles from './uploadDatasets/fileParsers/sharedFileParser';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
+import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdaters';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
-import { addFile as addCOCOJSONFile } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { addFile as addVGGJSONFile } from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
+import removeCOCOJSONFileHandler from './uploadDatasets/removeFileHandlers/COCOJSONRemoveFileHandler';
+import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSONRemoveFileHandler';
+import { addFile as addCOCOJSONFile, clearDatasetObject as clearCOCOJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
+import { addFile as addVGGJSONFile, clearDatasetObject as clearVGGJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
 import {
   setFileParser, setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
 } from './uploadDatasets/uploadDatasetFilesHandler';
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
+import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
 import { COCO_JSON_FORMAT, VGG_JSON_FORMAT } from '../consts';
@@ -26,6 +30,7 @@ import {
 let currentViewNumber = 1;
 let modalElement = null;
 let hideViewOnCancelFunc = null;
+let closeModalFunc = null;
 
 function setUpdateDatasetFileHandlerFunctions() {
   switch (getFormatState()) {
@@ -35,13 +40,17 @@ function setUpdateDatasetFileHandlerFunctions() {
       setTableUpdater(updateCOCOJSONTables);
       setFormatValidator(validateCOCOJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
+      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
+        clearCOCOJSONDatasetObject);
       break;
     case VGG_JSON_FORMAT:
       setAddFile(addVGGJSONFile);
       setFileParser(parseAllFiles);
-      setTableUpdater(updateCOCOJSONTables);
+      setTableUpdater(updateVGGJSONTables);
       setFormatValidator(validateVGGJSONFormat);
-      setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
+      setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
+      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
+        clearVGGJSONDatasetObject);
       break;
     default:
       break;
@@ -61,9 +70,9 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(VGG_JSON_FORMAT);
+      setFormatState(COCO_JSON_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
-      prepareUploadDatasetsView(VGG_JSON_FORMAT);
+      prepareUploadDatasetsView(COCO_JSON_FORMAT);
       setUpdateDatasetFileHandlerFunctions();
       if (getReuseAlreadyUploadedImagesState()) {
         addAlreadyUploadedImages(getAllImageData());
@@ -99,10 +108,10 @@ function initialiseUploadDatasetsModal() {
   assignViewManagerLocalVariables();
   registerDescriptionViewButtonEventHandlers(displayNextView);
   assignDescriptionViewLocalVariables();
-  registerUploadDatasetsViewButtonEventHandlers(closeModal);
   assignUploadDatasetsViewLocalVariables();
   displayNextView();
   window.cancelUploadDatasetsModal = closeModal;
+  closeModalFunc = closeModal;
 }
 
 export { displayModal, initialiseUploadDatasetsModal };
