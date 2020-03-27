@@ -3,6 +3,40 @@ import { getDatasetObject } from '../datasetObjectManagers/VGGJSONDatasetObjectM
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
+function setCurrentAnnotationFilesToInactive(annotationFiles) {
+  annotationFiles.forEach((annotationFile) => {
+    annotationFile.active = false;
+  });
+}
+
+function isImageAlreadyUploaded(newImageName) {
+  const images = getAllImageData();
+  for (let i = 0; i < images.length; i += 1) {
+    if (newImageName === images[i].name) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile) {
+  const imageName = parsedObj.body.fileMetaData.name;
+  const alreadyUploaded = getReuseAlreadyUploadedImagesState()
+    ? isImageAlreadyUploaded(imageName) : false;
+  if (validAnnotationFiles.length > 0) {
+    const { annotationData } = activeAnnotationFile.body;
+    for (let i = 0; i < annotationData.images.length; i += 1) {
+      if (imageName === annotationData.images[i].file_name) {
+        return {
+          error: false, message: '', alreadyUploaded, valid: true,
+        };
+      }
+    }
+    return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };
+  }
+  return { error: false, message: '', alreadyUploaded };
+}
+
 function assertType(expectedType, subjectVariable) {
   switch (expectedType) {
     case 'number':
@@ -56,7 +90,7 @@ function checkObjectProperties(requiredProperties, subjectObject) {
 }
 
 function checkObjectHasProperties(object, objectName) {
-  if (Object.keys(object).length > 1) {
+  if (Object.keys(object).length > 0) {
     return { error: false, message: '' };
   }
   return { error: true, message: `The ${objectName} object does not contain any properties` };
@@ -188,27 +222,15 @@ function checkRegionsProperty(parsedObj) {
   return { error: false, message: '' };
 }
 
-function checkAnnotationObjectPropertyName(name, size) {
-  const regexToFindFirstWordBeforeFullStop = new RegExp(/-?\d+$/);
-  const stringArray = regexToFindFirstWordBeforeFullStop.exec(name);
-  if (stringArray && parseInt(stringArray[0], 10) === size) {
-    return { error: false, message: '' };
-  }
-  return { error: true, message: `End of object name: ${name} does not match its size: ${size}` };
-}
-
 function checkAnnotationObjectsProperties(parsedObj) {
-  const requiredProperties = { filename: 'string', size: 'number', regions: 'array:object' };
+  const requiredProperties = { filename: 'string', regions: 'array:object' };
   const objectKeyNames = Object.keys(parsedObj);
   for (let i = 0; i < objectKeyNames.length; i += 1) {
-    let result = checkObjectProperties(requiredProperties, parsedObj[objectKeyNames[i]]);
+    const result = checkObjectProperties(requiredProperties, parsedObj[objectKeyNames[i]]);
     if (result.error) {
       result.message += ' -> in annotation object';
       return result;
     }
-    result = checkAnnotationObjectPropertyName(objectKeyNames[i],
-      parsedObj[objectKeyNames[i]].size);
-    if (result.error) { return result; }
   }
   return { error: false, message: '' };
 }
@@ -225,40 +247,6 @@ function checkJSONObject(JSONObject, validators) {
     }
   }
   return { error: false, message: '' };
-}
-
-function setCurrentAnnotationFilesToInactive(annotationFiles) {
-  annotationFiles.forEach((annotationFile) => {
-    annotationFile.active = false;
-  });
-}
-
-function isImageAlreadyUploaded(newImageName) {
-  const images = getAllImageData();
-  for (let i = 0; i < images.length; i += 1) {
-    if (newImageName === images[i].name) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile) {
-  const imageName = parsedObj.body.fileMetaData.name;
-  const alreadyUploaded = getReuseAlreadyUploadedImagesState()
-    ? isImageAlreadyUploaded(imageName) : false;
-  if (validAnnotationFiles.length > 0) {
-    const { annotationData } = activeAnnotationFile.body;
-    for (let i = 0; i < annotationData.images.length; i += 1) {
-      if (imageName === annotationData.images[i].file_name) {
-        return {
-          error: false, message: '', alreadyUploaded, valid: true,
-        };
-      }
-    }
-    return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };
-  }
-  return { error: false, message: '', alreadyUploaded };
 }
 
 function validateAnnotationsFile(parsedObj, validAnnotationFiles) {

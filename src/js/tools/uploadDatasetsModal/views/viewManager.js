@@ -63,7 +63,7 @@ function displayNextView() {
       // will be done in previous view in future
       setFormatState(VGG_JSON_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
-      prepareUploadDatasetsView();
+      prepareUploadDatasetsView(VGG_JSON_FORMAT);
       setUpdateDatasetFileHandlerFunctions();
       if (getReuseAlreadyUploadedImagesState()) {
         addAlreadyUploadedImages(getAllImageData());

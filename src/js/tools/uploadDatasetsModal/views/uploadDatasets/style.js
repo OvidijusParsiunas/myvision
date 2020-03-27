@@ -298,9 +298,9 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
 };
 
 // will later take an object argument with relevant input attributes
-function prepareUploadDatasetsView() {
+function prepareUploadDatasetsView(formatName) {
   setTitleElementMarginTop('8px');
-  setTitleElement('COCO JSON');
+  setTitleElement(formatName);
   setTriggerAcceptedFileFormat('.json, image/*');
   displayBackButton();
   displayUploadButtonElement();
