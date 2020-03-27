@@ -3,44 +3,6 @@ import { getDatasetObject } from '../datasetObjectManagers/VGGJSONDatasetObjectM
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
-function checkAnnotationsMapToCategories(parsedObj) {
-  const { annotations, categories } = parsedObj;
-  for (let i = 0; i < annotations.length; i += 1) {
-    const annotation = annotations[i];
-    let categoryIdValid = false;
-    for (let y = 0; y < categories.length; y += 1) {
-      const category = categories[y];
-      if (annotation.category_id === category.id) {
-        categoryIdValid = true;
-        break;
-      }
-    }
-    if (!categoryIdValid) {
-      return { error: true, message: `The following category_id has not been found: ${annotation.category_id} -> in categories` };
-    }
-  }
-  return { error: false, message: '' };
-}
-
-function checkAnnotationsMapToImages(parsedObj) {
-  const { annotations, images } = parsedObj;
-  for (let i = 0; i < annotations.length; i += 1) {
-    const annotation = annotations[i];
-    let imageIdValid = false;
-    for (let y = 0; y < images.length; y += 1) {
-      const image = images[y];
-      if (annotation.image_id === image.id) {
-        imageIdValid = true;
-        break;
-      }
-    }
-    if (!imageIdValid) {
-      return { error: true, message: `The following image_id has not been found: ${annotation.image_id} -> in annotations` };
-    }
-  }
-  return { error: false, message: '' };
-}
-
 function assertType(expectedType, subjectVariable) {
   switch (expectedType) {
     case 'number':
@@ -100,19 +62,6 @@ function checkObjectHasProperties(object, objectName) {
   return { error: true, message: `The ${objectName} object does not contain any properties` };
 }
 
-function checkImagesProperty(parsedObj) {
-  const requiredProperties = { id: 'number|string', file_name: 'string' };
-  const { images } = parsedObj;
-  for (let i = 0; i < images.length; i += 1) {
-    const result = checkObjectProperties(requiredProperties, images[i]);
-    if (result.error) {
-      result.message += ' -> in images';
-      return result;
-    }
-  }
-  return { error: false, message: '' };
-}
-
 function checkArrayElements(array, name, type, {
   length, maxLength, minLength, evenOdd,
 }) {
@@ -134,62 +83,17 @@ function checkArrayElements(array, name, type, {
   return { error: false, message: '' };
 }
 
-function checkSegmentationArray(segmentationArray) {
-  const arrayName = 'Segmentation';
-  const arrayElementsType = 'array:number';
-  if (segmentationArray.length > 1) {
-    const result = checkArrayElements(segmentationArray, arrayName, arrayElementsType,
-      { length: 8 });
-    if (result.error) { return result; }
-  } else if (segmentationArray.length === 1) {
-    const polygonCoordinatesArray = segmentationArray[0];
-    let result = {};
-    result = checkArrayElements(polygonCoordinatesArray, arrayName, 'array', {});
-    if (result.error) { return result; }
-    result = checkArrayElements(polygonCoordinatesArray, arrayName, arrayElementsType,
-      { minLength: 6, evenOdd: 'even' });
-    if (result.error) { return result; }
-  }
-  if (segmentationArray.length < 1) {
-    return { error: true, message: `${arrayName} array is empty` };
-  }
-  return { error: false, message: '' };
-}
-
-function checkAnnotationsProperty(parsedObj) {
-  const requiredProperties = {
-    id: 'number|string', image_id: 'number|string', category_id: 'number|string', segmentation: 'array', bbox: 'array:number',
-  };
-  const { annotations } = parsedObj;
-  for (let i = 0; i < annotations.length; i += 1) {
-    const annotation = annotations[i];
-    let result = checkObjectProperties(requiredProperties, annotation);
-    if (result.error) {
-      result.message += ' -> in annotations';
-      return result;
-    }
-    result = checkSegmentationArray(annotation.segmentation);
-    if (result.error) {
-      result.message += ' -> in annotations';
-      return result;
-    }
-    result = checkArrayElements(annotation.bbox, 'bbox', null, { length: 4 });
-    if (result.error) {
-      result.message += ' -> in annotations';
-      return result;
-    }
-  }
-  return { error: false, message: '' };
-}
-
-function checkCategoriesProperty(parsedObj) {
-  const requiredProperties = { shape_attributes: 'number|string', name: 'number|string' };
-  const { categories } = parsedObj;
-  for (let i = 0; i < categories.length; i += 1) {
-    const result = checkObjectProperties(requiredProperties, categories[i]);
-    if (result.error) {
-      result.message += ' -> in categories';
-      return result;
+function checkRegionAttributesProperty(parsedObj) {
+  const objectKeyNames = Object.keys(parsedObj);
+  for (let i = 0; i < objectKeyNames.length; i += 1) {
+    const { regions } = parsedObj[objectKeyNames[i]];
+    for (let y = 0; y < regions.length; y += 1) {
+      const requiredProperties = { name: 'string' };
+      const result = checkObjectProperties(requiredProperties, regions[y].region_attributes);
+      if (result.error) {
+        result.message += ' -> in region_attributes';
+        return result;
+      }
     }
   }
   return { error: false, message: '' };
@@ -202,7 +106,7 @@ function checkShapeAttributesPolygonProperty(region) {
   };
   let result = checkObjectProperties(requiredProperties, region.shape_attributes);
   if (result.error) {
-    result.message += ' -> in regions';
+    result.message += ' -> in shape_attributes';
     return result;
   }
   if (region.shape_attributes.all_points_x.length
@@ -211,10 +115,16 @@ function checkShapeAttributesPolygonProperty(region) {
   }
   result = checkArrayElements(region.shape_attributes.all_points_x, 'all_points_x', arrayType,
     { minLength: 3 });
-  if (result.error) { return result; }
+  if (result.error) {
+    result.message += ' -> in shape_attributes';
+    return result;
+  }
   result = checkArrayElements(region.shape_attributes.all_points_y, 'all_points_y', arrayType,
     { minLength: 3 });
-  if (result.error) { return result; }
+  if (result.error) {
+    result.message += ' -> in shape_attributes';
+    return result;
+  }
   return { error: false, message: '' };
 }
 
@@ -237,16 +147,25 @@ function checkShapeAttributesProperty(parsedObj) {
     for (let y = 0; y < regions.length; y += 1) {
       const region = regions[y];
       const requiredProperties = { name: 'string' };
-      const result = checkObjectProperties(requiredProperties, region.shape_attributes);
+      let result = checkObjectProperties(requiredProperties, region.shape_attributes);
       if (result.error) {
         result.message += ' -> in regions';
         return result;
       }
       if (region.shape_attributes.name === 'rect') {
-        return checkShapeAttributesRectProperty(region);
-      }
-      if (region.shape_attributes.name === 'polygon') {
-        return checkShapeAttributesPolygonProperty(region);
+        result = checkShapeAttributesRectProperty(region);
+        if (result.error) {
+          result.message += ' -> in regions';
+          return result;
+        }
+      } else if (region.shape_attributes.name === 'polygon') {
+        result = checkShapeAttributesPolygonProperty(region);
+        if (result.error) {
+          result.message += ' -> in regions';
+          return result;
+        }
+      } else {
+        return { error: true, message: `The following shape type is not supported: ${region.shape_attributes.name} -> in shape_attributes` };
       }
     }
   }
@@ -269,15 +188,27 @@ function checkRegionsProperty(parsedObj) {
   return { error: false, message: '' };
 }
 
+function checkAnnotationObjectPropertyName(name, size) {
+  const regexToFindFirstWordBeforeFullStop = new RegExp(/-?\d+$/);
+  const stringArray = regexToFindFirstWordBeforeFullStop.exec(name);
+  if (stringArray && parseInt(stringArray[0], 10) === size) {
+    return { error: false, message: '' };
+  }
+  return { error: true, message: `End of object name: ${name} does not match its size: ${size}` };
+}
+
 function checkAnnotationObjectsProperties(parsedObj) {
-  const requiredProperties = { filename: 'string', regions: 'array:object' };
+  const requiredProperties = { filename: 'string', size: 'number', regions: 'array:object' };
   const objectKeyNames = Object.keys(parsedObj);
   for (let i = 0; i < objectKeyNames.length; i += 1) {
-    const result = checkObjectProperties(requiredProperties, parsedObj[objectKeyNames[i]]);
+    let result = checkObjectProperties(requiredProperties, parsedObj[objectKeyNames[i]]);
     if (result.error) {
       result.message += ' -> in annotation object';
       return result;
     }
+    result = checkAnnotationObjectPropertyName(objectKeyNames[i],
+      parsedObj[objectKeyNames[i]].size);
+    if (result.error) { return result; }
   }
   return { error: false, message: '' };
 }
@@ -286,7 +217,7 @@ function checkParentProperties(parsedObj) {
   return checkObjectHasProperties(parsedObj, 'parent');
 }
 
-function checkJONObject(JSONObject, validators) {
+function checkJSONObject(JSONObject, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](JSONObject.annotationData);
     if (result.error) {
@@ -336,13 +267,9 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
     checkAnnotationObjectsProperties,
     checkRegionsProperty,
     checkShapeAttributesProperty,
-    // checkCategoriesProperty,
-    // checkAnnotationsProperty,
-    // checkImagesProperty,
-    // checkAnnotationsMapToImages,
-    // checkAnnotationsMapToCategories,
+    checkRegionAttributesProperty,
   ];
-  const validationResult = checkJONObject(parsedObj.body, validators);
+  const validationResult = checkJSONObject(parsedObj.body, validators);
   if (!validationResult.error) {
     setCurrentAnnotationFilesToInactive(validAnnotationFiles);
     parsedObj.active = true;

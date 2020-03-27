@@ -191,7 +191,7 @@ function checkParentProperties(parsedObj) {
   return checkObjectProperties(requiredProperties, parsedObj);
 }
 
-function checkJONObject(JSONObject, validators) {
+function checkJSONObject(JSONObject, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](JSONObject.annotationData);
     if (result.error) {
@@ -244,7 +244,7 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
     checkAnnotationsMapToImages,
     checkAnnotationsMapToCategories,
   ];
-  const validationResult = checkJONObject(parsedObj.body, validators);
+  const validationResult = checkJSONObject(parsedObj.body, validators);
   if (!validationResult.error) {
     setCurrentAnnotationFilesToInactive(validAnnotationFiles);
     parsedObj.active = true;
