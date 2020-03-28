@@ -53,7 +53,7 @@ function buildCSVRowObj(imageData, boundingBoxData) {
 
 function parseBoundingBoxData(boundingBox, imageDimensions) {
   const boundingBoxData = {};
-  boundingBoxData.class = boundingBox.shapeLabelText;
+  boundingBoxData.class = boundingBox.shapeLabelText.replace(',', '');
   const {
     left, top, width, height,
   } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
@@ -66,7 +66,7 @@ function parseBoundingBoxData(boundingBox, imageDimensions) {
 
 function getImageData(image) {
   const imageData = {};
-  imageData.filename = image.name;
+  imageData.filename = image.name.replace(',', '');
   imageData.width = image.imageDimensions.originalWidth;
   imageData.height = image.imageDimensions.originalHeight;
   return imageData;

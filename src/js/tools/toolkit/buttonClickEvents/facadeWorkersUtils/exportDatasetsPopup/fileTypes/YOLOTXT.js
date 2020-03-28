@@ -68,7 +68,7 @@ function getClassIdByLabelText(classes, text) {
 
 function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   const boundingBoxData = {};
-  boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText);
+  boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText).replace(',', '');
   const {
     left, top, width, height,
   } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
@@ -106,7 +106,7 @@ function getImageAndAnnotationData(allImageProperties, classesData) {
         }
       });
       if (imageString.length > 0) {
-        imageAndAnnotationData.push({ imageName: image.name, data: imageString });
+        imageAndAnnotationData.push({ imageName: image.name.replace(',', ''), data: imageString });
       }
     }
   });
