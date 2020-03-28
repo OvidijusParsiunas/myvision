@@ -17,12 +17,44 @@ function parseJSON(fileMetaData, event) {
   }
 }
 
+function parseCSV(fileMetaData, event) {
+  // var reader = new FileReader();
+
+  //           reader.onload = function (e) {
+	// 		   processData(reader.result);
+  //           }
+
+  //           reader.readAsText(xmlFile);
+
+  //           function processData(csv) {
+  //       var allTextLines = csv.split(/\r\n|\n/);
+  //       var lines = [];
+  //       for (var i=0; i<allTextLines.length; i++) {
+  //               var tarr = allTextLines[i].split(',')
+  //               lines.push(tarr);
+  //       }
+  //     console.log(lines);
+  //   }
+
+    
+    // var allTextLines = event.target.result.split(/\r\n|\n/);
+    //     var lines = [];
+    //     for (var i=0; i<allTextLines.length; i++) {
+    //             var tarr = allTextLines[i].split(',')
+    //             lines.push(tarr);
+    //     }
+    //   console.log(lines);
+}
+
 function parseAllFiles(fileMetaData, event) {
   if (fileMetaData.type.startsWith('image/')) {
     return parseImageData(fileMetaData, event);
   }
   if (fileMetaData.name.endsWith('.json')) {
     return parseJSON(fileMetaData, event);
+  }
+  if (fileMetaData.name.endsWith('.csv')) {
+    return parseCSV(fileMetaData, event);
   }
   return {};
 }

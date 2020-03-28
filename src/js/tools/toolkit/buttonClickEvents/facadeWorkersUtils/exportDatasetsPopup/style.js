@@ -11,6 +11,7 @@ let genericFormatOptionsTextElements = null;
 let genericFormatOptionsCheckboxElements = null;
 let boundingBoxFormatOptionsTextElements = null;
 let boundingBoxFormatOptionsCheckboxElements = null;
+const POPOVER_DISPLAY_LAG_MILLISECONDS = 200;
 
 function removeExportPopUpInformationPopover(id) {
   currentlyHoveredPopoverId = null;
@@ -29,7 +30,7 @@ function displayPopover(id) {
       popover.style.display = 'block';
       arrow.style.display = 'block';
     }
-  }, 400);
+  }, POPOVER_DISPLAY_LAG_MILLISECONDS);
 }
 
 function displayExportPopUpInformationPopover(id) {

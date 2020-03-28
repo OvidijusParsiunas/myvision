@@ -19,7 +19,7 @@ import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssembl
 import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
-import { COCO_JSON_FORMAT, VGG_JSON_FORMAT } from '../consts';
+import { COCO_JSON_FORMAT, VGG_JSON_FORMAT, ACCEPT_CSV_AND_IMG_FILES } from '../consts';
 import {
   setFormatState,
   getFormatState,
@@ -72,7 +72,7 @@ function displayNextView() {
       // will be done in previous view in future
       setFormatState(COCO_JSON_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
-      prepareUploadDatasetsView(COCO_JSON_FORMAT);
+      prepareUploadDatasetsView(COCO_JSON_FORMAT, ACCEPT_CSV_AND_IMG_FILES);
       setUpdateDatasetFileHandlerFunctions();
       if (getReuseAlreadyUploadedImagesState()) {
         addAlreadyUploadedImages(getAllImageData());

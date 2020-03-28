@@ -6,4 +6,7 @@ export const VALID_ANNOTATION_FILES_ARRAY = 'validAnnotationFiles';
 export const FALTY_ANNOTATION_FILES_ARRAY = 'faltyAnnotationFiles';
 export const IMAGE_FILES_OBJECT = 'imageFiles';
 export const COCO_JSON_FORMAT = 'COCO JSON';
+export const ACCEPT_JSON_AND_IMG_FILES = '.json, image/*';
+export const ACCEPT_CSV_AND_IMG_FILES = '.csv, image/*';
 export const VGG_JSON_FORMAT = 'VGG JSON';
+export const CSV_FORMAT = 'CSV';

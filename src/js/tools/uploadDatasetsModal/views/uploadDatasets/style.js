@@ -298,10 +298,10 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
 };
 
 // will later take an object argument with relevant input attributes
-function prepareUploadDatasetsView(formatName) {
+function prepareUploadDatasetsView(formatName, acceptedFileFormats) {
   setTitleElementMarginTop('8px');
   setTitleElement(formatName);
-  setAcceptedFileFormatTrigger('.json, image/*');
+  setAcceptedFileFormatTrigger(acceptedFileFormats);
   displayBackButton();
   displayUploadButtonElement();
   displayFinishButtonElement();
