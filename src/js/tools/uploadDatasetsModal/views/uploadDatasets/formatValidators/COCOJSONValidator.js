@@ -41,6 +41,7 @@ function checkAnnotationsMapToImages(parsedObj) {
   return { error: false, message: '' };
 }
 
+// important - does not check for length
 function assertType(expectedType, subjectVariable) {
   switch (expectedType) {
     case 'number':
@@ -104,8 +105,8 @@ function checkImagesProperty(parsedObj) {
   return { error: false, message: '' };
 }
 
-function checkArrayElements(array, name, type, {
-  length, maxLength, minLength, evenOdd,
+function checkArrayElements(array, name, {
+  elementsType, length, maxLength, minLength, evenOdd,
 }) {
   if (length && array.length !== length) {
     return { error: true, message: `${name} array must contain ${length} elements but instead found ${array.length}` };
@@ -119,7 +120,7 @@ function checkArrayElements(array, name, type, {
   if (evenOdd && ((evenOdd === 'even' && array.length % 2 === 1) || (evenOdd === 'odd' && array.length % 2 === 0))) {
     return { error: true, message: `${name} array must contain an even number of elements but instead found ${array.length}` };
   }
-  if (!assertType(type, array)) {
+  if (elementsType && !assertType(elementsType, array)) {
     return { error: true, message: `${name} array contains elements of incorrect type` };
   }
   return { error: false, message: '' };
@@ -127,18 +128,20 @@ function checkArrayElements(array, name, type, {
 
 function checkSegmentationArray(segmentationArray) {
   const arrayName = 'Segmentation';
-  const arrayElementsType = 'array:number';
+  const elementsType = 'array:number';
   if (segmentationArray.length > 1) {
-    const result = checkArrayElements(segmentationArray, arrayName, arrayElementsType,
-      { length: 8 });
+    const result = checkArrayElements(segmentationArray, arrayName,
+      { elementsType, length: 8 });
     if (result.error) { return result; }
   } else if (segmentationArray.length === 1) {
     const polygonCoordinatesArray = segmentationArray[0];
     let result = {};
-    result = checkArrayElements(polygonCoordinatesArray, arrayName, 'array', {});
+    result = checkArrayElements(polygonCoordinatesArray, arrayName, {
+      elementsType: 'array',
+    });
     if (result.error) { return result; }
-    result = checkArrayElements(polygonCoordinatesArray, arrayName, arrayElementsType,
-      { minLength: 6, evenOdd: 'even' });
+    result = checkArrayElements(polygonCoordinatesArray, arrayName,
+      { elementsType, minLength: 6, evenOdd: 'even' });
     if (result.error) { return result; }
   }
   if (segmentationArray.length < 1) {
@@ -164,7 +167,7 @@ function checkAnnotationsProperty(parsedObj) {
       result.message += ' -> in annotations';
       return result;
     }
-    result = checkArrayElements(annotation.bbox, 'bbox', null, { length: 4 });
+    result = checkArrayElements(annotation.bbox, 'bbox', { length: 4 });
     if (result.error) {
       result.message += ' -> in annotations';
       return result;
@@ -188,7 +191,16 @@ function checkCategoriesProperty(parsedObj) {
 
 function checkParentProperties(parsedObj) {
   const requiredProperties = { images: 'array:object', annotations: 'array:object', categories: 'array:object' };
-  return checkObjectProperties(requiredProperties, parsedObj);
+  let result = {};
+  result = checkObjectProperties(requiredProperties, parsedObj);
+  if (result.error) { return result; }
+  result = checkArrayElements(parsedObj.images, 'images', { minLength: 1 });
+  if (result.error) { return result; }
+  result = checkArrayElements(parsedObj.annotations, 'annotations', { minLength: 1 });
+  if (result.error) { return result; }
+  result = checkArrayElements(parsedObj.categories, 'categories', { minLength: 1 });
+  if (result.error) { return result; }
+  return { error: false, message: '' };
 }
 
 function checkJSONObject(JSONObject, validators) {

@@ -39,6 +39,7 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
   return { error: false, message: '', alreadyUploaded };
 }
 
+// important - does not check for length
 function assertType(expectedType, subjectVariable) {
   switch (expectedType) {
     case 'number':
@@ -98,8 +99,8 @@ function checkObjectHasProperties(object, objectName) {
   return { error: true, message: `The ${objectName} object does not contain any properties` };
 }
 
-function checkArrayElements(array, name, type, {
-  length, maxLength, minLength, evenOdd,
+function checkArrayElements(array, name, {
+  elementsType, length, maxLength, minLength, evenOdd,
 }) {
   if (length && array.length !== length) {
     return { error: true, message: `${name} array must contain ${length} elements but instead found ${array.length}` };
@@ -113,7 +114,7 @@ function checkArrayElements(array, name, type, {
   if (evenOdd && ((evenOdd === 'even' && array.length % 2 === 1) || (evenOdd === 'odd' && array.length % 2 === 0))) {
     return { error: true, message: `${name} array must contain an even number of elements but instead found ${array.length}` };
   }
-  if (!assertType(type, array)) {
+  if (elementsType && !assertType(elementsType, array)) {
     return { error: true, message: `${name} array contains elements of incorrect type` };
   }
   return { error: false, message: '' };
@@ -136,31 +137,22 @@ function checkRegionAttributesProperty(parsedObj) {
 }
 
 function checkShapeAttributesPolygonProperty(region) {
-  const arrayType = 'array:number';
+  const elementsType = 'array:number';
   const requiredProperties = {
-    all_points_x: arrayType, all_points_y: arrayType,
+    all_points_x: elementsType, all_points_y: elementsType,
   };
   let result = checkObjectProperties(requiredProperties, region.shape_attributes);
-  if (result.error) {
-    result.message += ' -> in shape_attributes';
-    return result;
-  }
+  if (result.error) { return result; }
   if (region.shape_attributes.all_points_x.length
       !== region.shape_attributes.all_points_y.length) {
-    return { error: true, message: 'all_points_x and all_points_y arrays must have equal size -> in regions' };
+    return { error: true, message: 'all_points_x and all_points_y arrays must have equal size' };
   }
-  result = checkArrayElements(region.shape_attributes.all_points_x, 'all_points_x', arrayType,
-    { minLength: 3 });
-  if (result.error) {
-    result.message += ' -> in shape_attributes';
-    return result;
-  }
-  result = checkArrayElements(region.shape_attributes.all_points_y, 'all_points_y', arrayType,
-    { minLength: 3 });
-  if (result.error) {
-    result.message += ' -> in shape_attributes';
-    return result;
-  }
+  result = checkArrayElements(region.shape_attributes.all_points_x, 'all_points_x',
+    { elementsType, minLength: 3 });
+  if (result.error) { return result; }
+  result = checkArrayElements(region.shape_attributes.all_points_y, 'all_points_y',
+    { elementsType, minLength: 3 });
+  if (result.error) { return result; }
   return { error: false, message: '' };
 }
 
@@ -169,10 +161,7 @@ function checkShapeAttributesRectProperty(region) {
     x: 'number', y: 'number', width: 'number', height: 'number',
   };
   const result = checkObjectProperties(requiredProperties, region.shape_attributes);
-  if (result.error) {
-    result.message += ' -> in regions';
-    return result;
-  }
+  if (result.error) { return result; }
   return { error: false, message: '' };
 }
 
@@ -185,19 +174,19 @@ function checkShapeAttributesProperty(parsedObj) {
       const requiredProperties = { name: 'string' };
       let result = checkObjectProperties(requiredProperties, region.shape_attributes);
       if (result.error) {
-        result.message += ' -> in regions';
+        result.message += ' -> in shape_attributes';
         return result;
       }
       if (region.shape_attributes.name === 'rect') {
         result = checkShapeAttributesRectProperty(region);
         if (result.error) {
-          result.message += ' -> in regions';
+          result.message += ' -> in shape_attributes';
           return result;
         }
       } else if (region.shape_attributes.name === 'polygon') {
         result = checkShapeAttributesPolygonProperty(region);
         if (result.error) {
-          result.message += ' -> in regions';
+          result.message += ' -> in shape_attributes';
           return result;
         }
       } else {
