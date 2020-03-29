@@ -1,13 +1,7 @@
-import { VALID_ANNOTATION_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT } from '../../../consts';
-
-// potentiall shared with COCO JSON and VGG
-// : no active file
-
-// questioning the need for faly annotation files array
+import { VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT } from '../../../consts';
 
 const datasetObject = { };
 datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
-datasetObject[FALTY_ANNOTATION_FILES_ARRAY] = [];
 datasetObject[IMAGE_FILES_OBJECT] = {};
 
 function getIndexOfFileInArray(fileName, subjectArray) {
@@ -17,12 +11,6 @@ function getIndexOfFileInArray(fileName, subjectArray) {
     }
   }
   return undefined;
-}
-
-function addFaltyAnnotationsFile(fileName, annotationFileObj) {
-  if (getIndexOfFileInArray(fileName, datasetObject[FALTY_ANNOTATION_FILES_ARRAY]) === undefined) {
-    datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(annotationFileObj);
-  }
 }
 
 function addValidAnnotationFile(fileName, annotationFileObj) {
@@ -50,7 +38,6 @@ function removeFile(fileName, objectName) {
 
 function clearDatasetObject() {
   datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
-  datasetObject[FALTY_ANNOTATION_FILES_ARRAY] = [];
   datasetObject[IMAGE_FILES_OBJECT] = {};
 }
 
@@ -58,19 +45,13 @@ function addAnnotationFile(annotationFileObj, error) {
   const { name } = annotationFileObj.body.fileMetaData;
   if (!error) {
     addValidAnnotationFile(name, annotationFileObj);
-    removeFile(name, FALTY_ANNOTATION_FILES_ARRAY);
   } else {
     removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
-    addFaltyAnnotationsFile(name, annotationFileObj);
   }
 }
 
 function isInImagesList(name) {
   return datasetObject[IMAGE_FILES_OBJECT][name];
-}
-
-function updateImageFileErrorStatus(name, errorStatus) {
-  datasetObject[IMAGE_FILES_OBJECT][name].error = errorStatus;
 }
 
 function addImageFile(imageFileObj, errorObject) {
@@ -93,10 +74,6 @@ function getAnnotationFiles() {
   return datasetObject[VALID_ANNOTATION_FILES_ARRAY];
 }
 
-function getFaltyAnnotationFiles() {
-  return datasetObject[FALTY_ANNOTATION_FILES_ARRAY];
-}
-
 function getImageFiles() {
   return datasetObject[IMAGE_FILES_OBJECT];
 }
@@ -106,6 +83,6 @@ function getDatasetObject() {
 }
 
 export {
-  addAnnotationFile, addImageFile, getFaltyAnnotationFiles, updateImageFileErrorStatus,
-  getAnnotationFiles, getImageFiles, removeFile, getDatasetObject, addFile, clearDatasetObject,
+  addAnnotationFile, addImageFile, clearDatasetObject, addFile,
+  getAnnotationFiles, getImageFiles, removeFile, getDatasetObject,
 };

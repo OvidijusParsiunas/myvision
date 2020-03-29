@@ -4,7 +4,7 @@ import {
 } from '../style';
 import validateVGGJSONFormat from '../formatValidators/VOCXMLValidator';
 import { IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY } from '../../../consts';
-import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import { getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
@@ -15,7 +15,6 @@ function validateExistingImages(datasetObject) {
       if (!validationResult.error) { foundValid = true; }
       const { name } = imageFile.body.fileMetaData;
       insertRowToImagesTable(name, validationResult);
-      updateImageFileErrorStatus(name, validationResult.error);
     });
     if (foundValid) {
       enableFinishButton();

@@ -1,14 +1,9 @@
-import {
-  removeFile, getDatasetObject, updateImageFileErrorStatus,
-} from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import { removeFile, getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
 } from '../style';
 import validateVOCXMLFormat from '../formatValidators/VOCXMLValidator';
-import {
-  VALID_ANNOTATION_FILES_ARRAY,
-  IMAGE_FILES_OBJECT,
-} from '../../../consts';
+import { VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT } from '../../../consts';
 
 // functionality here cannot be used for all, will need
 // to be moved to atomic COCOJSON file
@@ -21,7 +16,6 @@ function validateExistingImages(datasetObject) {
     if (!validationResult.error) { foundValid = true; }
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
-    updateImageFileErrorStatus(name, validationResult.error);
   });
   if (!foundValid) {
     disableFinishButton();
