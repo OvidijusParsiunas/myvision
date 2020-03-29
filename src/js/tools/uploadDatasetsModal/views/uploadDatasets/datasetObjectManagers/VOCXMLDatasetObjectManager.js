@@ -54,8 +54,13 @@ function isInImagesList(name) {
   return datasetObject[IMAGE_FILES_OBJECT][name];
 }
 
+function updateImageFileErrorStatus(name, errorStatus) {
+  datasetObject[IMAGE_FILES_OBJECT][name].error = errorStatus;
+}
+
 function addImageFile(imageFileObj, errorObject) {
   if (!isInImagesList(imageFileObj.body.fileMetaData.name)) {
+    // the error property is used to draw shapes on valid images only
     imageFileObj.error = errorObject.error;
     imageFileObj.alreadyUploaded = errorObject.alreadyUploaded;
     datasetObject[IMAGE_FILES_OBJECT][imageFileObj.body.fileMetaData.name] = imageFileObj;
@@ -83,6 +88,6 @@ function getDatasetObject() {
 }
 
 export {
-  addAnnotationFile, addImageFile, clearDatasetObject, addFile,
-  getAnnotationFiles, getImageFiles, removeFile, getDatasetObject,
+  addAnnotationFile, getImageFiles, removeFile, getDatasetObject, addFile,
+  getAnnotationFiles, addImageFile, clearDatasetObject, updateImageFileErrorStatus,
 };

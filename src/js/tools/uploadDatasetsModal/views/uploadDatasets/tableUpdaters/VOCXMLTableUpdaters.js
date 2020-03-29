@@ -2,19 +2,20 @@ import {
   insertRowToAnnotationsTable, insertRowToImagesTable, enableFinishButton, disableFinishButton,
   changeAllImagesTableRowsToDefault,
 } from '../style';
-import validateVGGJSONFormat from '../formatValidators/VOCXMLValidator';
+import validateVOCXMLFormat from '../formatValidators/VOCXMLValidator';
 import { IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY } from '../../../consts';
-import { getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
     let foundValid = false;
     Object.keys(datasetObject[IMAGE_FILES_OBJECT]).forEach((key) => {
       const imageFile = datasetObject[IMAGE_FILES_OBJECT][key];
-      const validationResult = validateVGGJSONFormat(imageFile);
+      const validationResult = validateVOCXMLFormat(imageFile);
       if (!validationResult.error) { foundValid = true; }
       const { name } = imageFile.body.fileMetaData;
       insertRowToImagesTable(name, validationResult);
+      updateImageFileErrorStatus(name, validationResult.error);
     });
     if (foundValid) {
       enableFinishButton();

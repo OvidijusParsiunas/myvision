@@ -1,4 +1,4 @@
-import { removeFile, getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import { removeFile, getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
 } from '../style';
@@ -16,6 +16,7 @@ function validateExistingImages(datasetObject) {
     if (!validationResult.error) { foundValid = true; }
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
+    updateImageFileErrorStatus(name, validationResult.error);
   });
   if (!foundValid) {
     disableFinishButton();

@@ -30,9 +30,6 @@ function assembleShapes(regions, shapes, imageName) {
   }
 }
 
-// function addShapeToShapesArray(annotations, shapes, datasetObject, imageName) {
-//   assembleNewFinalShape(annotations, datasetObject, imageName, shapes);
-// }
 
 function getShapes(datasetObject, validImages) {
   const shapes = { boundingBoxes: [], polygons: [] };

@@ -21,6 +21,7 @@ import {
 } from './uploadDatasets/uploadDatasetFilesHandler';
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
 import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
+import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssemblers/VOCXMLFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
 import {
@@ -63,7 +64,7 @@ function setUpdateDatasetFileHandlerFunctions() {
       setFileParser(parseAllFiles);
       setTableUpdater(updateVOCXMLTables);
       setFormatValidator(validateVOCXMLFormat);
-      setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
+      setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
         clearVOCXMLDatasetObject);
       break;
