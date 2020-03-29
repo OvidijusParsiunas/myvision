@@ -6,11 +6,13 @@ import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import parseAllFiles from './uploadDatasets/fileParsers/sharedFileParser';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
 import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdaters';
+import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdaters';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
 import validateVOCXMLFormat from './uploadDatasets/formatValidators/VOCXMLValidator';
 import removeCOCOJSONFileHandler from './uploadDatasets/removeFileHandlers/COCOJSONRemoveFileHandler';
 import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSONRemoveFileHandler';
+import removeVOCXMLFileHandler from './uploadDatasets/removeFileHandlers/VOCXMLRemoveFileHandler';
 import { addFile as addCOCOJSONFile, clearDatasetObject as clearCOCOJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { addFile as addVGGJSONFile, clearDatasetObject as clearVGGJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
 import { addFile as addVOCXMLFile, clearDatasetObject as clearVOCXMLDatasetObject } from './uploadDatasets/datasetObjectManagers/VOCXMLDatasetObjectManager';
@@ -59,10 +61,10 @@ function setUpdateDatasetFileHandlerFunctions() {
     case VOC_XML_FORMAT:
       setAddFile(addVOCXMLFile);
       setFileParser(parseAllFiles);
-      setTableUpdater(updateVGGJSONTables);
+      setTableUpdater(updateVOCXMLTables);
       setFormatValidator(validateVOCXMLFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
-      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
+      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
         clearVOCXMLDatasetObject);
       break;
     default:

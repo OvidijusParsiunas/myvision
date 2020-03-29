@@ -19,22 +19,22 @@ function isImageAlreadyUploaded(newImageName) {
   return false;
 }
 
-function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile) {
+function validateImageFile(parsedObj, validAnnotationFiles) {
   const imageName = parsedObj.body.fileMetaData.name;
+  const parsedImageName = imageName.substring(0, imageName.indexOf('.'));
   const alreadyUploaded = getReuseAlreadyUploadedImagesState()
     ? isImageAlreadyUploaded(imageName) : false;
   if (validAnnotationFiles.length > 0) {
-    const { annotationData } = activeAnnotationFile.body;
-    const annotationDataKeys = Object.keys(annotationData);
-    for (let i = 0; i < annotationDataKeys.length; i += 1) {
-      const { filename } = annotationData[annotationDataKeys[i]];
-      if (imageName === filename) {
+    for (let i = 0; i < validAnnotationFiles.length; i += 1) {
+      const annotationName = validAnnotationFiles[i].body.fileMetaData.name;
+      const parsedAnnotationName = annotationName.substring(0, annotationName.indexOf('.xml'));
+      if (parsedImageName === parsedAnnotationName) {
         return {
           error: false, message: '', alreadyUploaded, valid: true,
         };
       }
     }
-    return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };
+    return { error: true, message: 'This image is not specified in any of the valid annotations file(s)', alreadyUploaded };
   }
   return { error: false, message: '', alreadyUploaded };
 }
@@ -128,9 +128,9 @@ function checkParentTag(parsedObj) {
   return checkObjectProperties(requiredProperties, parsedObj);
 }
 
-function checkXMLObject(JSONObject, validators) {
+function checkXMLObject(object, validators) {
   for (let i = 0; i < validators.length; i += 1) {
-    const result = validators[i](JSONObject.annotationData);
+    const result = validators[i](object.annotationData);
     if (result.error) {
       return result;
     }
