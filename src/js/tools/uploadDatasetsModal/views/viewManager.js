@@ -8,10 +8,12 @@ import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUp
 import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdaters';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
+import validateVOCXMLFormat from './uploadDatasets/formatValidators/VOCXMLValidator';
 import removeCOCOJSONFileHandler from './uploadDatasets/removeFileHandlers/COCOJSONRemoveFileHandler';
 import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSONRemoveFileHandler';
 import { addFile as addCOCOJSONFile, clearDatasetObject as clearCOCOJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { addFile as addVGGJSONFile, clearDatasetObject as clearVGGJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
+import { addFile as addVOCXMLFile, clearDatasetObject as clearVOCXMLDatasetObject } from './uploadDatasets/datasetObjectManagers/VOCXMLDatasetObjectManager';
 import {
   setFileParser, setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
 } from './uploadDatasets/uploadDatasetFilesHandler';
@@ -19,7 +21,9 @@ import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssembl
 import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
-import { COCO_JSON_FORMAT, VGG_JSON_FORMAT, ACCEPT_CSV_AND_IMG_FILES } from '../consts';
+import {
+  COCO_JSON_FORMAT, VGG_JSON_FORMAT, VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX,
+} from '../consts';
 import {
   setFormatState,
   getFormatState,
@@ -52,6 +56,15 @@ function setUpdateDatasetFileHandlerFunctions() {
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
         clearVGGJSONDatasetObject);
       break;
+    case VOC_XML_FORMAT:
+      setAddFile(addVOCXMLFile);
+      setFileParser(parseAllFiles);
+      setTableUpdater(updateVGGJSONTables);
+      setFormatValidator(validateVOCXMLFormat);
+      setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
+      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
+        clearVOCXMLDatasetObject);
+      break;
     default:
       break;
   }
@@ -70,9 +83,9 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(COCO_JSON_FORMAT);
+      setFormatState(VOC_XML_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
-      prepareUploadDatasetsView(COCO_JSON_FORMAT, ACCEPT_CSV_AND_IMG_FILES);
+      prepareUploadDatasetsView(VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX);
       setUpdateDatasetFileHandlerFunctions();
       if (getReuseAlreadyUploadedImagesState()) {
         addAlreadyUploadedImages(getAllImageData());

@@ -6,6 +6,7 @@ let imagesTableElement = null;
 let finishButtonElement = null;
 let buttonsGroupElement = null;
 let uploadButtonElement = null;
+let annotationsTableTitle = null;
 let annotationsTableElement = null;
 let uploadDatasetsModalElement = null;
 let allImagesStyleSetToDefault = null;
@@ -208,6 +209,10 @@ function resetTitleElementMarginTop() {
   titleElement.style.marginTop = '';
 }
 
+function setAnnotationsTableTitle(format) {
+  annotationsTableTitle.innerHTML = `Annotations (${format})`;
+}
+
 function setButtonGroupElementMarginTop(pixels) {
   buttonsGroupElement.style.marginTop = pixels;
 }
@@ -298,9 +303,10 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
 };
 
 // will later take an object argument with relevant input attributes
-function prepareUploadDatasetsView(formatName, acceptedFileFormats) {
+function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFileFormat) {
   setTitleElementMarginTop('8px');
   setTitleElement(formatName);
+  setAnnotationsTableTitle(annotationFileFormat);
   setAcceptedFileFormatTrigger(acceptedFileFormats);
   displayBackButton();
   displayUploadButtonElement();
@@ -333,6 +339,7 @@ function assignUploadDatasetsViewLocalVariables() {
   finishButtonElement = document.getElementById('upload-datasets-modal-finish-button');
   imagesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table');
   imagesTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table-outer-container');
+  annotationsTableTitle = document.getElementById('upload-datasets-modal-upload=datasets-annotations-table-title');
   annotationsTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table-outer-container');
   annotationsTableElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table');
   uploadDatasetsModalElement = document.getElementById('upload-datasets-modal-parent');
