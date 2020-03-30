@@ -93,15 +93,38 @@ function parseXML(fileMetaData, event) {
 }
 
 function parseTXT(fileMetaData, event) {
-  const lines = event.target.result.split('\n');
-  const results = [];
-  lines.forEach((line) => {
-    const entries = line.split(' ');
-    if (entries.length === 6) {
-      results.push(entries);
+  try {
+    const lines = event.target.result.split('\n');
+    const annotationData = [];
+    for (let i = 0; i < lines.length; i += 1) {
+      const entries = lines[i].split(' ');
+      if (entries.length === 5) {
+        const annotation = {
+          class: entries[0],
+          xmiddle: entries[1],
+          ymiddle: entries[2],
+          width: entries[3],
+          height: entries[4],
+        };
+        annotationData.push(annotation);
+      } else if (entries.length === 0 || (entries.length === 1 && entries[0].trim() === '')) {
+        break;
+      } else {
+        return {
+          fileFormat: 'annotation',
+          body: { fileMetaData },
+          errorObj: { error: true, message: `Each line should contain 5 attribues: class, x, y, width, height. Line ${i + 1} contains ${entries.length}` },
+        };
+      }
     }
-  });
-  console.log(lines);
+    return { fileFormat: 'annotation', body: { fileMetaData, annotationData } };
+  } catch (errorMessage) {
+    return {
+      fileFormat: 'annotation',
+      body: { fileMetaData },
+      errorObj: { error: true, message: `Invalid XML - ${errorMessage}` },
+    };
+  }
 }
 
 function parseAllFiles(fileMetaData, event) {
