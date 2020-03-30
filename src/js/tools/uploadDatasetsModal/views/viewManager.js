@@ -25,7 +25,9 @@ import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssembler
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
 import {
-  COCO_JSON_FORMAT, VGG_JSON_FORMAT, VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX,
+  COCO_JSON_FORMAT, VGG_JSON_FORMAT, VOC_XML_FORMAT,
+  ACCEPT_JSON_AND_IMG_FILES, ACCEPT_XML_AND_IMG_FILES,
+  XML_POSTFIX, JSON_POSTFIX,
 } from '../consts';
 import {
   setFormatState,
@@ -39,7 +41,7 @@ let modalElement = null;
 let hideViewOnCancelFunc = null;
 let closeModalFunc = null;
 
-function setUpdateDatasetFileHandlerFunctions() {
+function prepareChosenFormatFunctionality() {
   switch (getFormatState()) {
     case COCO_JSON_FORMAT:
       setAddFile(addCOCOJSONFile);
@@ -49,6 +51,7 @@ function setUpdateDatasetFileHandlerFunctions() {
       setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
         clearCOCOJSONDatasetObject);
+      prepareUploadDatasetsView(COCO_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX);
       break;
     case VGG_JSON_FORMAT:
       setAddFile(addVGGJSONFile);
@@ -58,6 +61,7 @@ function setUpdateDatasetFileHandlerFunctions() {
       setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
         clearVGGJSONDatasetObject);
+      prepareUploadDatasetsView(VGG_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX);
       break;
     case VOC_XML_FORMAT:
       setAddFile(addVOCXMLFile);
@@ -67,6 +71,7 @@ function setUpdateDatasetFileHandlerFunctions() {
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
         clearVOCXMLDatasetObject);
+      prepareUploadDatasetsView(VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX);
       break;
     default:
       break;
@@ -88,8 +93,7 @@ function displayNextView() {
       // will be done in previous view in future
       setFormatState(VOC_XML_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
-      prepareUploadDatasetsView(VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX);
-      setUpdateDatasetFileHandlerFunctions();
+      prepareChosenFormatFunctionality();
       if (getReuseAlreadyUploadedImagesState()) {
         addAlreadyUploadedImages(getAllImageData());
       }
