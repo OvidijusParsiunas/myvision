@@ -43,20 +43,20 @@ function downloadZip(xml) {
   });
 }
 
-function buildDownloadableZip(annotationFilesData, classesFileData) {
+function buildDownloadableZip(annotationFilesData, namesFileData) {
   const zip = new JSZip();
   const imagesFolder = zip.folder('images');
   annotationFilesData.forEach((annotationFile) => {
     imagesFolder.file(annotationFile.imageName, annotationFile.data);
   });
-  imagesFolder.file('classes.txt', classesFileData);
+  imagesFolder.file('classes.txt', namesFileData);
   return imagesFolder;
 }
 
-function generateClassesFileData(classesData) {
+function generateNamesFileData(namesData) {
   let classesString = '';
-  Object.keys(classesData).forEach((key) => {
-    classesString += key;
+  Object.keys(namesData).forEach((key) => {
+    classesString += key.replace(',', '');
     classesString += '\n';
   });
   return classesString;
@@ -68,7 +68,7 @@ function getClassIdByLabelText(classes, text) {
 
 function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   const boundingBoxData = {};
-  boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText).replace(',', '');
+  boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText);
   const {
     left, top, width, height,
   } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
@@ -83,17 +83,17 @@ function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   return boundingBoxData;
 }
 
-function getAnnotatedString(boundingBox, imageDimensions, classesData) {
+function getAnnotatedString(boundingBox, imageDimensions, namesData) {
   let str = '';
   const boundingBoxData = parseBoundingBoxData(boundingBox, imageDimensions,
-    classesData);
+    namesData);
   Object.keys(boundingBoxData).forEach((boundingBoxKey) => {
     str += `${boundingBoxData[boundingBoxKey]} `;
   });
   return str;
 }
 
-function getImageAndAnnotationData(allImageProperties, classesData) {
+function getImageAndAnnotationData(allImageProperties, namesData) {
   const imageAndAnnotationData = [];
   allImageProperties.forEach((image) => {
     if (image.imageDimensions) {
@@ -101,7 +101,7 @@ function getImageAndAnnotationData(allImageProperties, classesData) {
       Object.keys(image.shapes).forEach((key) => {
         const shape = image.shapes[key].shapeRef;
         if (shape.shapeName === 'bndBox') {
-          imageString += getAnnotatedString(shape, image.imageDimensions, classesData);
+          imageString += getAnnotatedString(shape, image.imageDimensions, namesData);
           imageString = `${imageString.trim()}\n`;
         }
       });
@@ -113,8 +113,8 @@ function getImageAndAnnotationData(allImageProperties, classesData) {
   return imageAndAnnotationData;
 }
 
-function generateAnnotationFilesData(allImageProperties, classesData) {
-  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, classesData);
+function generateAnnotationFilesData(allImageProperties, namesData) {
+  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, namesData);
   const annotationsFiles = [];
   const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
   imageAndAnnotationData.forEach((annotatedImage) => {
@@ -124,17 +124,17 @@ function generateAnnotationFilesData(allImageProperties, classesData) {
   return annotationsFiles;
 }
 
-function getClassesData() {
-  const classesData = {};
+function getNamesData() {
+  const namesData = {};
   const labels = getLabelOptions();
   const maxUsedLabelIndex = getMaxUsedLabelIndex();
   let labelId = 0;
   // the for loop is reversed because the new labels are pushed to the front
   for (let i = maxUsedLabelIndex; i >= 0; i -= 1) {
-    classesData[labels[i].text] = labelId;
+    namesData[labels[i].text] = labelId;
     labelId += 1;
   }
-  return classesData;
+  return namesData;
 }
 
 function saveCurrentImageDetails(allImageProperties) {
@@ -152,10 +152,10 @@ function saveCurrentImageDetails(allImageProperties) {
 function downloadYOLOTXT() {
   const allImageProperties = getAllImageData();
   saveCurrentImageDetails(allImageProperties);
-  const classesData = getClassesData();
-  const annotationFilesData = generateAnnotationFilesData(allImageProperties, classesData);
-  const classesFileData = generateClassesFileData(classesData);
-  const downloadableZip = buildDownloadableZip(annotationFilesData, classesFileData);
+  const namesData = getNamesData();
+  const annotationFilesData = generateAnnotationFilesData(allImageProperties, namesData);
+  const namesFileData = generateNamesFileData(namesData);
+  const downloadableZip = buildDownloadableZip(annotationFilesData, namesFileData);
   downloadZip(downloadableZip);
 }
 

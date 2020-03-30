@@ -12,7 +12,8 @@ function onFileLoad(fileMetaData, event) {
 }
 
 function readFile(reader, file) {
-  if (file.name.endsWith('.json') || file.name.endsWith('.csv') || file.name.endsWith('.xml')) {
+  if (file.name.endsWith('.json') || file.name.endsWith('.csv')
+    || file.name.endsWith('.xml') || file.name.endsWith('.txt')) {
     reader.readAsText(file);
   } else {
     reader.readAsDataURL(file);

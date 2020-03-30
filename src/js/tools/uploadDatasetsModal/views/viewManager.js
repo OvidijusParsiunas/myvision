@@ -27,7 +27,8 @@ import { getAllImageData } from '../../imageList/imageList';
 import {
   COCO_JSON_FORMAT, VGG_JSON_FORMAT, VOC_XML_FORMAT,
   ACCEPT_JSON_AND_IMG_FILES, ACCEPT_XML_AND_IMG_FILES,
-  XML_POSTFIX, JSON_POSTFIX,
+  XML_POSTFIX, JSON_POSTFIX, YOLO_TXT_FORMAT,
+  ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX,
 } from '../consts';
 import {
   setFormatState,
@@ -73,6 +74,16 @@ function prepareChosenFormatFunctionality() {
         clearVOCXMLDatasetObject);
       prepareUploadDatasetsView(VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX);
       break;
+    case YOLO_TXT_FORMAT:
+      setAddFile(addVOCXMLFile);
+      setFileParser(parseAllFiles);
+      setTableUpdater(updateVOCXMLTables);
+      setFormatValidator(validateVOCXMLFormat);
+      setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
+      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
+        clearVOCXMLDatasetObject);
+      prepareUploadDatasetsView(YOLO_TXT_FORMAT, ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX);
+      break;
     default:
       break;
   }
@@ -91,7 +102,7 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(VOC_XML_FORMAT);
+      setFormatState(YOLO_TXT_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
       prepareChosenFormatFunctionality();
       if (getReuseAlreadyUploadedImagesState()) {

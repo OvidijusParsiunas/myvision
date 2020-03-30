@@ -92,6 +92,18 @@ function parseXML(fileMetaData, event) {
   }
 }
 
+function parseTXT(fileMetaData, event) {
+  const lines = event.target.result.split('\n');
+  const results = [];
+  lines.forEach((line) => {
+    const entries = line.split(' ');
+    if (entries.length === 6) {
+      results.push(entries);
+    }
+  });
+  console.log(lines);
+}
+
 function parseAllFiles(fileMetaData, event) {
   if (fileMetaData.type.startsWith('image/')) {
     return parseImageData(fileMetaData, event);
@@ -104,6 +116,9 @@ function parseAllFiles(fileMetaData, event) {
   }
   if (fileMetaData.name.endsWith('.xml')) {
     return parseXML(fileMetaData, event);
+  }
+  if (fileMetaData.name.endsWith('.txt')) {
+    return parseTXT(fileMetaData, event);
   }
   return {};
 }
