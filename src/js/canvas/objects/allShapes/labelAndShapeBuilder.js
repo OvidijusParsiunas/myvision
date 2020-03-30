@@ -6,6 +6,7 @@ import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsByS
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
 import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
+import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 
 let currentId = 0;
 let canvas = null;
@@ -74,10 +75,7 @@ function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
   currentId += 1;
 }
 
-// a change will need to be made here
 function repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
-  const shape = shapeObj.shapeRef;
-  resizeAllPassedObjectsDimensionsBySingleScale(shape, newFileSizeRatio);
   canvas.add(shapeObj.shapeRef);
   resizeLabelDimensionsBySingleScale(label, newFileSizeRatio);
   generateLabel(label);
@@ -88,17 +86,37 @@ function repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
     shapeColor.label, shapeObj.visibility);
 }
 
+function repopulateVisibleLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
+  resizeAllPassedObjectsDimensionsBySingleScale(shapeObj.shapeRef, newFileSizeRatio);
+  repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio);
+}
+
+function repopoulateHiddenLabelShapeGroup(shapeObj, label, id,
+  imageDimensions, newFileSizeRatio) {
+  resizeAllPassedObjectsDimensionsBySingleScale(shapeObj.shapeRef, newFileSizeRatio);
+  const imageScalingDimensions = { scaleX: newFileSizeRatio, scaleY: newFileSizeRatio };
+  const imageLengthDimensions = {
+    height: imageDimensions.originalHeight, width: imageDimensions.originalWidth,
+  };
+  preventOutOfBoundsOnNewObject(shapeObj.shapeRef, imageScalingDimensions, imageLengthDimensions);
+  repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio);
+}
+
 function calculateNewImageHeightRatio(imageDimensions) {
   return canvas.height / imageDimensions.originalHeight;
 }
 
 function repopulateHiddenImageObjects(newImageDimensions, existingShapes, existingLabels) {
-  const imageDimensions = { originalHeight: newImageDimensions.height };
+  const imageDimensions = {
+    originalHeight: newImageDimensions.height,
+    originalWidth: newImageDimensions.width,
+  };
   const newFileSizeRatio = calculateNewImageHeightRatio(imageDimensions);
   const newPolygonOffsetProperties = { width: newFileSizeRatio, height: newFileSizeRatio };
   labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
   Object.keys(existingShapes).forEach((key) => {
-    repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
+    repopoulateHiddenLabelShapeGroup(existingShapes[key], existingLabels[key], key,
+      imageDimensions, newFileSizeRatio);
   });
 }
 
@@ -111,7 +129,8 @@ function repopulateVisibleImageObjects(previousDimensions, existingShapes, exist
   };
   labelProperties.setPolygonOffsetProperties(newPolygonOffsetProperties);
   Object.keys(existingShapes).forEach((key) => {
-    repopulateLabelShapeGroup(existingShapes[key], existingLabels[key], key, newFileSizeRatio);
+    repopulateVisibleLabelShapeGroup(existingShapes[key], existingLabels[key], key,
+      newFileSizeRatio);
   });
   canvas.renderAll();
 }

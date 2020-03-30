@@ -64,10 +64,9 @@ function preventBottomOutOfBoundsPolygonOnNewObject(shape, imageHeight) {
   }
 }
 
-function preventOutOfBoundsOnNewObject(shape, imageScalingDimensions,
-  imageParameterDimensions) {
-  const imageHeight = imageParameterDimensions.height * imageScalingDimensions.scaleY;
-  const imageWidth = imageParameterDimensions.width * imageScalingDimensions.scaleX;
+function preventOutOfBoundsOnNewObject(shape, imageScalingDimensions, imageLengthDimensions) {
+  const imageHeight = imageLengthDimensions.height * imageScalingDimensions.scaleY;
+  const imageWidth = imageLengthDimensions.width * imageScalingDimensions.scaleX;
   shape.setCoords();
   if (shape.shapeName === 'bndBox') {
     preventRightOutOfBoundsBoundingBoxOnNewObject(shape, imageWidth);

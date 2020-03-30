@@ -56,6 +56,11 @@ function roundNumberToDecimalPlaces(number, decimalPlaces) {
   return floorNumber(number, roundingValue);
 }
 
+function ceilNumber(number, roundingValue) {
+  if (roundingValue === null) { return number; }
+  return Math.ceil(number * roundingValue) / roundingValue;
+}
+
 function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces) {
   const roundingValue = getRoundingValue(decimalPlaces);
   const {
@@ -67,8 +72,8 @@ function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, dec
   return {
     left: floorNumber(finalCoordinates.finalLeft, roundingValue),
     top: floorNumber(finalCoordinates.finalTop, roundingValue),
-    width: floorNumber(finalCoordinates.finalWidth, roundingValue),
-    height: floorNumber(finalCoordinates.finalHeight, roundingValue),
+    width: ceilNumber(finalCoordinates.finalWidth, roundingValue),
+    height: ceilNumber(finalCoordinates.finalHeight, roundingValue),
   };
 }
 

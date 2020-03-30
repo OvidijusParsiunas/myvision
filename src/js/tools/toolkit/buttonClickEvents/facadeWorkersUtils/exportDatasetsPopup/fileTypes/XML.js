@@ -3,7 +3,7 @@ import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getCurrentImageId } from '../../stateMachine';
-import { adjustIncorrectBoundingBoxCoordinates } from '../sharedUtils/adjustShapeCoordinates';
+import { adjustIncorrectBoundingBoxCoordinates, roundNumberToDecimalPlaces } from '../sharedUtils/adjustShapeCoordinates';
 
 /*
 If there is an error on generating zips - try to use a file receiver
@@ -25,6 +25,9 @@ function downloadZip(xml) {
 }
 
 */
+
+const decimalPlaces = 0;
+
 function getFileName() {
   const currentDate = new Date();
   return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
@@ -47,7 +50,7 @@ function isShapeOnBottomRightBordersOfImage(xMax, yMax, imageDimensions) {
 }
 
 function isShapeOnTopLeftBordersOfImage(xMin, yMin) {
-  return xMin <= 0 || yMin <= 0;
+  return xMin <= 1 || yMin <= 1;
 }
 
 function isShapeTruncated(xMin, yMin, xMax, yMax, imageDimensions) {
@@ -59,9 +62,9 @@ function parseBoundingBoxData(boundingBox, imageDimensions) {
   const parsedShapeData = {};
   const {
     left, top, width, height,
-  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
-  const xMax = left + width;
-  const yMax = top + height;
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces);
+  const xMax = roundNumberToDecimalPlaces(left + width, decimalPlaces);
+  const yMax = roundNumberToDecimalPlaces(top + height, decimalPlaces);
   const truncated = isShapeTruncated(left, top, xMax, yMax, imageDimensions) ? 1 : 0;
   parsedShapeData.name = boundingBox.shapeLabelText;
   parsedShapeData.pose = 'Unspecified';

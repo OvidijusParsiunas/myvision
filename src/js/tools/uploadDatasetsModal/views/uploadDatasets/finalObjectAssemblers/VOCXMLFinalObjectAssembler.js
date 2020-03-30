@@ -14,9 +14,6 @@ function assembleShape(object, shapes, imageName) {
   shapes.boundingBoxes.push(shapeObj);
 }
 
-// add validation for object { object } property
-// round up voc xml values
-
 function assembleShapes(objects, shapes, imageName) {
   if (Array.isArray(objects)) {
     for (let i = 0; i < objects.length; i += 1) {

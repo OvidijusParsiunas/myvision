@@ -114,6 +114,11 @@ function checkObjectTagChildTags(parsedObj) {
       result = checkbndBoxTag(object.bndbox);
       if (result.error) { return result; }
     }
+  } else {
+    let result = checkObjectProperties(requiredProperties, objectTag);
+    if (result.error) { return result; }
+    result = checkbndBoxTag(objectTag.bndbox);
+    if (result.error) { return result; }
   }
   return { error: false, message: '' };
 }

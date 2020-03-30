@@ -30,7 +30,6 @@ function assembleShapes(regions, shapes, imageName) {
   }
 }
 
-
 function getShapes(datasetObject, validImages) {
   const shapes = { boundingBoxes: [], polygons: [] };
   const annotationObjects = datasetObject[ACTIVE_ANNOTATION_FILE].body.annotationData;
