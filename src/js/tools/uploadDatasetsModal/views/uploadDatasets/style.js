@@ -1,6 +1,11 @@
-import { ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR } from '../../consts';
+import {
+  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR, TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY,
+} from '../../consts';
 
 let titleElement = null;
+let table1Element = null;
+let table2Element = null;
+let table3Element = null;
 let backButtonElement = null;
 let imagesTableElement = null;
 let finishButtonElement = null;
@@ -14,14 +19,22 @@ let imagesTableOuterContainerElement = null;
 let uploadDatasetFilesTriggerElement = null;
 let uploadDatasetsOuterContainerElement = null;
 let annotationsTableOuterContainerElement = null;
+
 let popoverIndex = 0;
 const modalWidth = 505;
 const modalHeight = 340;
+let currentTableStrategy = TWO_TABLE_STRATEGY;
+let finishButtonEnabled = false;
+
 const ANNOTATION_FILE_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-left';
 const ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-left';
 const IMAGE_FILE_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-right';
 const IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-right';
-let finishButtonEnabled = false;
+const TWO_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-two-table-strategy-section';
+const THREE_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-three-table-strategy-section';
+const PROCEED_BUTTON_CLASS = 'popup-proceed-button';
+const ACTIVE_BUTTON_CLASS = 'popup-label-button';
+const DISABLED_BUTTON_CLASS = 'popup-label-button-disabled';
 
 function createTableRowElementMarkup(fileName, tableName) {
   return `
@@ -209,6 +222,24 @@ function resetTitleElementMarginTop() {
   titleElement.style.marginTop = '';
 }
 
+function displayTable1() {
+  table1Element.style.display = '';
+}
+
+function hideTable1() {
+  table1Element.style.display = 'hide';
+}
+
+function changeTwoTableStrategyToThree() {
+  table2Element.classList.replace(TWO_TABLE_STRATEGY_CLASS, THREE_TABLE_STRATEGY_CLASS);
+  table3Element.classList.replace(TWO_TABLE_STRATEGY_CLASS, THREE_TABLE_STRATEGY_CLASS);
+}
+
+function changeThreeTableStrategyToTwo() {
+  table2Element.classList.replace(THREE_TABLE_STRATEGY_CLASS, TWO_TABLE_STRATEGY_CLASS);
+  table3Element.classList.replace(THREE_TABLE_STRATEGY_CLASS, TWO_TABLE_STRATEGY_CLASS);
+}
+
 function setAnnotationsTableTitle(format) {
   annotationsTableTitle.innerHTML = `Annotations (${format})`;
 }
@@ -244,15 +275,15 @@ function hideFinishButtonElement() {
 
 function enableFinishButton() {
   if (!finishButtonEnabled) {
-    finishButtonElement.classList.add('popup-proceed-button');
-    finishButtonElement.classList.replace('popup-label-button-disabled', 'popup-label-button');
+    finishButtonElement.classList.add(PROCEED_BUTTON_CLASS);
+    finishButtonElement.classList.replace(DISABLED_BUTTON_CLASS, ACTIVE_BUTTON_CLASS);
     finishButtonEnabled = true;
   }
 }
 
 function disableFinishButton() {
-  finishButtonElement.classList.remove('popup-proceed-button');
-  finishButtonElement.classList.replace('popup-label-button', 'popup-label-button-disabled');
+  finishButtonElement.classList.remove(PROCEED_BUTTON_CLASS);
+  finishButtonElement.classList.replace(ACTIVE_BUTTON_CLASS, DISABLED_BUTTON_CLASS);
   finishButtonEnabled = false;
 }
 
@@ -303,20 +334,35 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
 };
 
 // will later take an object argument with relevant input attributes
-function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFileFormat) {
+function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFileFormat,
+  tableStrategy) {
   setTitleElementMarginTop('8px');
   setTitleElement(formatName);
   setAnnotationsTableTitle(annotationFileFormat);
   setAcceptedFileFormatTrigger(acceptedFileFormats);
   displayBackButton();
-  displayUploadButtonElement();
   displayFinishButtonElement();
   setButtonGroupElementMarginTopByBrowser();
+  // not sure if need this one
   displayUploadDatasetsOuterContainerElement();
-  changeUploadDatasetsModalElementDimensions(modalWidth, modalHeight);
+  if (tableStrategy === THREE_TABLE_STRATEGY) {
+    displayTable1();
+    displayUploadButtonElement();
+    changeUploadDatasetsModalElementDimensions(1000, modalHeight);
+    changeTwoTableStrategyToThree();
+  } else {
+    displayUploadButtonElement();
+    changeUploadDatasetsModalElementDimensions(modalWidth, modalHeight);
+  }
+  currentTableStrategy = tableStrategy;
 }
 
 function hideUploadDatasetsViewAssets() {
+  if (currentTableStrategy === THREE_TABLE_STRATEGY) {
+    hideTable1();
+    changeThreeTableStrategyToTwo();
+    currentTableStrategy = TWO_TABLE_STRATEGY;
+  }
   hideBackButton();
   hideUploadButtonElement();
   hideFinishButtonElement();
@@ -330,6 +376,9 @@ function hideUploadDatasetsViewAssets() {
 }
 
 function assignUploadDatasetsViewLocalVariables() {
+  table1Element = document.getElementById('upload-datasets-modal-upload-datasets-table-1');
+  table2Element = document.getElementById('upload-datasets-modal-upload-datasets-table-2');
+  table3Element = document.getElementById('upload-datasets-modal-upload-datasets-table-3');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
   titleElement = document.getElementById('upload-datsets-modal-upload-datasets-title');
   uploadDatasetsOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-outer-container');

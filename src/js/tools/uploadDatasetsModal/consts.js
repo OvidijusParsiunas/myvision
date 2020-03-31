@@ -17,3 +17,5 @@ export const JSON_POSTFIX = '.json';
 export const XML_POSTFIX = '.xml';
 export const TXT_POSTFIX = '.txt';
 export const CSV_FORMAT = 'CSV';
+export const TWO_TABLE_STRATEGY = 'two tables';
+export const THREE_TABLE_STRATEGY = 'three tables';

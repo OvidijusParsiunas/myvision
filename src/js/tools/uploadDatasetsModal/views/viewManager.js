@@ -31,6 +31,7 @@ import {
   ACCEPT_JSON_AND_IMG_FILES, ACCEPT_XML_AND_IMG_FILES,
   XML_POSTFIX, JSON_POSTFIX, YOLO_TXT_FORMAT,
   ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX,
+  TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY,
 } from '../consts';
 import {
   setFormatState,
@@ -54,7 +55,8 @@ function prepareChosenFormatFunctionality() {
       setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
         clearCOCOJSONDatasetObject);
-      prepareUploadDatasetsView(COCO_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX);
+      prepareUploadDatasetsView(COCO_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX,
+        TWO_TABLE_STRATEGY);
       break;
     case VGG_JSON_FORMAT:
       setAddFile(addVGGJSONFile);
@@ -64,7 +66,8 @@ function prepareChosenFormatFunctionality() {
       setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
         clearVGGJSONDatasetObject);
-      prepareUploadDatasetsView(VGG_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX);
+      prepareUploadDatasetsView(VGG_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX,
+        TWO_TABLE_STRATEGY);
       break;
     case VOC_XML_FORMAT:
       setAddFile(addVOCXMLFile);
@@ -74,7 +77,8 @@ function prepareChosenFormatFunctionality() {
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
         clearVOCXMLDatasetObject);
-      prepareUploadDatasetsView(VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX);
+      prepareUploadDatasetsView(VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX,
+        TWO_TABLE_STRATEGY);
       break;
     case YOLO_TXT_FORMAT:
       setAddFile(addYOLOTXTFile);
@@ -84,7 +88,8 @@ function prepareChosenFormatFunctionality() {
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
         clearYOLOTXTDatasetObject);
-      prepareUploadDatasetsView(YOLO_TXT_FORMAT, ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX);
+      prepareUploadDatasetsView(YOLO_TXT_FORMAT, ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX,
+        THREE_TABLE_STRATEGY);
       break;
     default:
       break;

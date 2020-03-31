@@ -158,10 +158,22 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 }
 
 function validateClassesFile(parsedObj, validAnnotationFiles) {
-  
+  console.log(parsedObj);
+  const validators = [
+    // checkParentTag,
+    // checkObjectTag,
+    // checkObjectTagChildTags,
+  ];
+  const validationResult = checkXMLObject(parsedObj.body, validators);
+  if (!validationResult.error) {
+    setCurrentAnnotationFilesToInactive(validAnnotationFiles);
+    parsedObj.active = true;
+  }
+  return validationResult;
 }
 
 function validateYOLOTXTFormat(parsedObj, errorObj) {
+  console.log(errorObj);
   if (!errorObj) {
     const datasetObject = getDatasetObject();
     const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];

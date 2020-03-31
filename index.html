@@ -115,7 +115,16 @@
       <div id="machine-learning-modal-info-messages" class="modal-messages"></div>
       <div id="upload-datsets-modal-upload-datasets-outer-container" style="display: none">
         <div id="upload-datsets-modal-upload-datasets-title"></div>
-        <div id="upload-datsets-modal-upload-datasets-left-section" class="upload-datsets-modal-upload-datasets-section">
+        <div id="upload-datasets-modal-upload-datasets-table-1" class="upload-datsets-modal-upload-datasets-three-table-strategy-section">
+          <div id="upload-datasets-modal-upload-datasets-annotations-table-title" style="font-size: 15px; margin-top: 5px; user-select: none">Annotations (.json)</div>
+          <div id="upload-datsets-modal-upload-datasets-annotations-table-outer-container" class="upload-datasets-table" style="max-width: 225px; overflow-x: auto; display: inline-block;" onscroll="uploadDatasetsModalAnnotationsTableScroll()">
+            <table id="upload-datsets-modal-upload-datasets-annotations-table" style="margin-top: 5px">
+              <tbody></tbody>
+            </table>
+         </div>
+        </div>
+        <div class="upload-datasets-modal-vertical-break-line"></div>
+        <div id="upload-datasets-modal-upload-datasets-table-2" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
           <div id="upload-datasets-modal-upload=datasets-annotations-table-title" style="font-size: 15px; margin-top: 5px; user-select: none">Annotations (.json)</div>
           <div id="upload-datsets-modal-upload-datasets-annotations-table-outer-container" class="upload-datasets-table" style="max-width: 225px; overflow-x: auto; display: inline-block;" onscroll="uploadDatasetsModalAnnotationsTableScroll()">
             <table id="upload-datsets-modal-upload-datasets-annotations-table" style="margin-top: 5px">
@@ -123,8 +132,8 @@
             </table>
          </div>
        </div>
-       <div id="upload-datasets-modal-vertical-break-line"></div>
-       <div id="upload-datsets-modal-upload-datasets-right-section" class="upload-datsets-modal-upload-datasets-section">
+       <div class="upload-datasets-modal-vertical-break-line"></div>
+       <div id="upload-datasets-modal-upload-datasets-table-3" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
          <div style="font-size: 15px; margin-top: 5px; user-select: none">Images</div>
          <div id="upload-datsets-modal-upload-datasets-images-table-outer-container" class="upload-datasets-table" style="max-width: 225px; overflow-x: auto; display: inline-block;" onscroll="uploadDatasetsModalImagesTableScroll()">
            <table id="upload-datsets-modal-upload-datasets-images-table" style="margin-top: 5px">
