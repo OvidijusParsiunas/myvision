@@ -158,7 +158,6 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 }
 
 function validateClassesFile(parsedObj, validAnnotationFiles) {
-  console.log(parsedObj);
   const validators = [
     // checkParentTag,
     // checkObjectTag,
@@ -173,7 +172,6 @@ function validateClassesFile(parsedObj, validAnnotationFiles) {
 }
 
 function validateYOLOTXTFormat(parsedObj, errorObj) {
-  console.log(errorObj);
   if (!errorObj) {
     const datasetObject = getDatasetObject();
     const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];

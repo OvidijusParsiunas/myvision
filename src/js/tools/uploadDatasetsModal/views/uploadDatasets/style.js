@@ -333,18 +333,7 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
   imagesTableOuterContainerElement.scrollTo(0, annotationsTableOuterContainerElement.scrollTop);
 };
 
-// will later take an object argument with relevant input attributes
-function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFileFormat,
-  tableStrategy) {
-  setTitleElementMarginTop('8px');
-  setTitleElement(formatName);
-  setAnnotationsTableTitle(annotationFileFormat);
-  setAcceptedFileFormatTrigger(acceptedFileFormats);
-  displayBackButton();
-  displayFinishButtonElement();
-  setButtonGroupElementMarginTopByBrowser();
-  // not sure if need this one
-  displayUploadDatasetsOuterContainerElement();
+function displayTableStrategyRelevantAssets(tableStrategy) {
   if (tableStrategy === THREE_TABLE_STRATEGY) {
     displayTable1();
     displayUploadButtonElement();
@@ -355,6 +344,19 @@ function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFi
     changeUploadDatasetsModalElementDimensions(modalWidth, modalHeight);
   }
   currentTableStrategy = tableStrategy;
+}
+
+function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFileFormat,
+  tableStrategy) {
+  setTitleElementMarginTop('8px');
+  setTitleElement(formatName);
+  setAnnotationsTableTitle(annotationFileFormat);
+  setAcceptedFileFormatTrigger(acceptedFileFormats);
+  displayBackButton();
+  displayFinishButtonElement();
+  setButtonGroupElementMarginTopByBrowser();
+  displayTableStrategyRelevantAssets(tableStrategy);
+  displayUploadDatasetsOuterContainerElement();
 }
 
 function hideUploadDatasetsViewAssets() {

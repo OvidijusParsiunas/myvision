@@ -92,94 +92,39 @@ function parseXML(fileMetaData, event) {
   }
 }
 
-function parseAnnotationTXTFile(lines, fileMetaData) {
-  try {
-    const annotationData = [];
-    for (let i = 0; i < lines.length; i += 1) {
-      const entries = lines[i].split(' ');
-      if (entries.length === 5) {
-        const annotation = {
-          class: entries[0],
-          xmiddle: entries[1],
-          ymiddle: entries[2],
-          width: entries[3],
-          height: entries[4],
-        };
-        annotationData.push(annotation);
-      } else if ((entries.length === 1 && entries[0].trim() !== '') || entries.length > 1) {
-        return {
-          fileFormat: 'annotation',
-          body: { fileMetaData },
-          errorObj: { error: true, message: `Each line should contain 5 attribues: class, x, y, width, height. Line ${i + 1} contains ${entries.length}` },
-        };
+// set warning on x:
+// If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height
+function txtToJSON(result, fileMetaData) {
+  const lines = result.split('\n');
+  let fileEmpty = true;
+  let isAnnotationsFile = true;
+  const linesOfEntries = [];
+  lines.forEach((line) => {
+    const entries = line.split(' ').filter(entry => entry.trim() !== '');
+    if (entries.length > 0) {
+      fileEmpty = false;
+      if (entries.length !== 5) {
+        isAnnotationsFile = false;
       }
+      linesOfEntries.push(entries);
     }
-    return { fileFormat: 'annotation', body: { fileMetaData, annotationData } };
-  } catch (errorMessage) {
-    return {
-      fileFormat: 'annotation',
-      body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid annotations file - ${errorMessage}` },
-    };
+  });
+  const fileEmptyError = {};
+  if (fileEmpty) {
+    fileEmptyError.fileFormat = 'annotation';
+    fileEmptyError.body = { fileMetaData };
+    fileEmptyError.errorObj = { error: true, message: 'Text file is empty' };
   }
-}
-
-// may need to remove tabs and multi-space areas
-
-function parseClassesTXTFile(lines, fileMetaData) {
-  try {
-    const classes = [];
-    for (let i = 0; i < lines.length; i += 1) {
-      const entries = lines[i].split(' ');
-      if (entries.length === 1) {
-        if (entries[0].trim() !== '') {
-          classes.push(entries[i]);
-        }
-      } else if (entries.length > 1) {
-        return {
-          fileFormat: 'classes',
-          body: { fileMetaData },
-          errorObj: { error: true, message: `Each 'classes' file line should contain 1 attribute. Line ${i + 1} contains ${entries.length}` },
-        };
-      }
-    }
-    return { fileFormat: 'classes', body: { fileMetaData, classes } };
-  } catch (errorMessage) {
-    return {
-      fileFormat: 'classes',
-      body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid classes file - ${errorMessage}` },
-    };
-  }
-}
-
-function findFirstValidLineIndexWithText(lines, fileMetaData) {
-  let i = 0;
-  do {
-    if (lines[i].trim() !== '') {
-      return i;
-    }
-    i += 1;
-  }
-  while (i < lines.length);
-  return {
-    fileFormat: 'annotation',
-    body: { fileMetaData },
-    errorObj: { error: true, message: 'Text file is empty' },
-  };
+  const fileFormat = isAnnotationsFile ? 'annotation' : 'classes';
+  const JSONObject = { fileFormat, body: { fileMetaData, linesOfEntries } };
+  return { JSONObject, fileEmptyError };
 }
 
 function parseTXT(fileMetaData, event) {
   try {
-    // not slicing lines array due to the use of specific line numbers in exceptions
-    const lines = event.target.result.split('\n');
-    const firstValidLineResult = findFirstValidLineIndexWithText(lines, fileMetaData);
-    if (typeof firstValidLineResult !== 'number') { return firstValidLineResult; }
-    const lineOneEntries = lines[firstValidLineResult].split(' ');
-    if (lineOneEntries.length === 1) {
-      return parseClassesTXTFile(lines, fileMetaData);
-    }
-    return parseAnnotationTXTFile(lines, fileMetaData);
+    const { JSONObject, fileEmptyError } = txtToJSON(event.target.result, fileMetaData);
+    if (fileEmptyError.errorObj) { return fileEmptyError; }
+    return JSONObject;
   } catch (errorMessage) {
     return {
       fileFormat: 'annotation',
