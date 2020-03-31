@@ -10,6 +10,7 @@ import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdate
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
 import validateVOCXMLFormat from './uploadDatasets/formatValidators/VOCXMLValidator';
+import validateYOLOTXTFormat from './uploadDatasets/formatValidators/YOLOTXTValidator';
 import removeCOCOJSONFileHandler from './uploadDatasets/removeFileHandlers/COCOJSONRemoveFileHandler';
 import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSONRemoveFileHandler';
 import removeVOCXMLFileHandler from './uploadDatasets/removeFileHandlers/VOCXMLRemoveFileHandler';
@@ -78,7 +79,7 @@ function prepareChosenFormatFunctionality() {
       setAddFile(addVOCXMLFile);
       setFileParser(parseAllFiles);
       setTableUpdater(updateVOCXMLTables);
-      setFormatValidator(validateVOCXMLFormat);
+      setFormatValidator(validateYOLOTXTFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
         clearVOCXMLDatasetObject);

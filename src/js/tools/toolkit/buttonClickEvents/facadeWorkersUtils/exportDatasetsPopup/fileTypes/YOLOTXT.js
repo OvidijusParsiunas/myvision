@@ -43,19 +43,19 @@ function downloadZip(xml) {
   });
 }
 
-function buildDownloadableZip(annotationFilesData, namesFileData) {
+function buildDownloadableZip(annotationFilesData, classesFileData) {
   const zip = new JSZip();
   const imagesFolder = zip.folder('images');
   annotationFilesData.forEach((annotationFile) => {
     imagesFolder.file(annotationFile.imageName, annotationFile.data);
   });
-  imagesFolder.file('classes.txt', namesFileData);
+  imagesFolder.file('classes.txt', classesFileData);
   return imagesFolder;
 }
 
-function generateNamesFileData(namesData) {
+function generateClassesFileData(classesData) {
   let classesString = '';
-  Object.keys(namesData).forEach((key) => {
+  Object.keys(classesData).forEach((key) => {
     classesString += key.replace(',', '');
     classesString += '\n';
   });
@@ -83,17 +83,17 @@ function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   return boundingBoxData;
 }
 
-function getAnnotatedString(boundingBox, imageDimensions, namesData) {
+function getAnnotatedString(boundingBox, imageDimensions, classesData) {
   let str = '';
   const boundingBoxData = parseBoundingBoxData(boundingBox, imageDimensions,
-    namesData);
+    classesData);
   Object.keys(boundingBoxData).forEach((boundingBoxKey) => {
     str += `${boundingBoxData[boundingBoxKey]} `;
   });
   return str;
 }
 
-function getImageAndAnnotationData(allImageProperties, namesData) {
+function getImageAndAnnotationData(allImageProperties, classesData) {
   const imageAndAnnotationData = [];
   allImageProperties.forEach((image) => {
     if (image.imageDimensions) {
@@ -101,7 +101,7 @@ function getImageAndAnnotationData(allImageProperties, namesData) {
       Object.keys(image.shapes).forEach((key) => {
         const shape = image.shapes[key].shapeRef;
         if (shape.shapeName === 'bndBox') {
-          imageString += getAnnotatedString(shape, image.imageDimensions, namesData);
+          imageString += getAnnotatedString(shape, image.imageDimensions, classesData);
           imageString = `${imageString.trim()}\n`;
         }
       });
@@ -113,8 +113,8 @@ function getImageAndAnnotationData(allImageProperties, namesData) {
   return imageAndAnnotationData;
 }
 
-function generateAnnotationFilesData(allImageProperties, namesData) {
-  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, namesData);
+function generateAnnotationFilesData(allImageProperties, classesData) {
+  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, classesData);
   const annotationsFiles = [];
   const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
   imageAndAnnotationData.forEach((annotatedImage) => {
@@ -124,17 +124,17 @@ function generateAnnotationFilesData(allImageProperties, namesData) {
   return annotationsFiles;
 }
 
-function getNamesData() {
-  const namesData = {};
+function getClassesData() {
+  const classesData = {};
   const labels = getLabelOptions();
   const maxUsedLabelIndex = getMaxUsedLabelIndex();
   let labelId = 0;
   // the for loop is reversed because the new labels are pushed to the front
   for (let i = maxUsedLabelIndex; i >= 0; i -= 1) {
-    namesData[labels[i].text] = labelId;
+    classesData[labels[i].text] = labelId;
     labelId += 1;
   }
-  return namesData;
+  return classesData;
 }
 
 function saveCurrentImageDetails(allImageProperties) {
@@ -152,10 +152,10 @@ function saveCurrentImageDetails(allImageProperties) {
 function downloadYOLOTXT() {
   const allImageProperties = getAllImageData();
   saveCurrentImageDetails(allImageProperties);
-  const namesData = getNamesData();
-  const annotationFilesData = generateAnnotationFilesData(allImageProperties, namesData);
-  const namesFileData = generateNamesFileData(namesData);
-  const downloadableZip = buildDownloadableZip(annotationFilesData, namesFileData);
+  const classesData = getClassesData();
+  const annotationFilesData = generateAnnotationFilesData(allImageProperties, classesData);
+  const classesFileData = generateClassesFileData(classesData);
+  const downloadableZip = buildDownloadableZip(annotationFilesData, classesFileData);
   downloadZip(downloadableZip);
 }
 

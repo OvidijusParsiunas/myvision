@@ -92,9 +92,8 @@ function parseXML(fileMetaData, event) {
   }
 }
 
-function parseTXT(fileMetaData, event) {
+function parseAnnotationTXTFile(lines, fileMetaData) {
   try {
-    const lines = event.target.result.split('\n');
     const annotationData = [];
     for (let i = 0; i < lines.length; i += 1) {
       const entries = lines[i].split(' ');
@@ -107,9 +106,7 @@ function parseTXT(fileMetaData, event) {
           height: entries[4],
         };
         annotationData.push(annotation);
-      } else if (entries.length === 0 || (entries.length === 1 && entries[0].trim() === '')) {
-        break;
-      } else {
+      } else if ((entries.length === 1 && entries[0].trim() !== '') || entries.length > 1) {
         return {
           fileFormat: 'annotation',
           body: { fileMetaData },
@@ -122,7 +119,72 @@ function parseTXT(fileMetaData, event) {
     return {
       fileFormat: 'annotation',
       body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid XML - ${errorMessage}` },
+      errorObj: { error: true, message: `Invalid annotations file - ${errorMessage}` },
+    };
+  }
+}
+
+// may need to remove tabs and multi-space areas
+
+function parseClassesTXTFile(lines, fileMetaData) {
+  try {
+    const classes = [];
+    for (let i = 0; i < lines.length; i += 1) {
+      const entries = lines[i].split(' ');
+      if (entries.length === 1) {
+        if (entries[0].trim() !== '') {
+          classes.push(entries[i]);
+        }
+      } else if (entries.length > 1) {
+        return {
+          fileFormat: 'classes',
+          body: { fileMetaData },
+          errorObj: { error: true, message: `Each 'classes' file line should contain 1 attribute. Line ${i + 1} contains ${entries.length}` },
+        };
+      }
+    }
+    return { fileFormat: 'classes', body: { fileMetaData, classes } };
+  } catch (errorMessage) {
+    return {
+      fileFormat: 'classes',
+      body: { fileMetaData },
+      errorObj: { error: true, message: `Invalid classes file - ${errorMessage}` },
+    };
+  }
+}
+
+function findFirstValidLineIndexWithText(lines, fileMetaData) {
+  let i = 0;
+  do {
+    if (lines[i].trim() !== '') {
+      return i;
+    }
+    i += 1;
+  }
+  while (i < lines.length);
+  return {
+    fileFormat: 'annotation',
+    body: { fileMetaData },
+    errorObj: { error: true, message: 'Text file is empty' },
+  };
+}
+
+function parseTXT(fileMetaData, event) {
+  try {
+    // not slicing lines array due to the use of specific line numbers in exceptions
+    const lines = event.target.result.split('\n');
+    const firstValidLineResult = findFirstValidLineIndexWithText(lines, fileMetaData);
+    if (typeof firstValidLineResult !== 'number') { return firstValidLineResult; }
+    const lineOneEntries = lines[firstValidLineResult].split(' ');
+    if (lineOneEntries.length === 1) {
+      return parseClassesTXTFile(lines, fileMetaData);
+    }
+    return parseAnnotationTXTFile(lines, fileMetaData);
+  } catch (errorMessage) {
+    return {
+      fileFormat: 'annotation',
+      body: { fileMetaData },
+      errorObj: { error: true, message: `Invalid text file - ${errorMessage}` },
     };
   }
 }
