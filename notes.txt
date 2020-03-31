@@ -154,8 +154,11 @@ labeller modal causes vertical window overflow on the tablet
 test ML still works as expected
 
 when removing images from the image list, their ids will likely mess up ML generated shapes, hence will need to try and use their names
+(or move the images to the empty elements, retaining the elements' indexes)
 
-store images in a hashmap with their names as their keys
+store images in a hashmap with their names as their keys (may not work when allowing multiple images)
+
+have the initial image not reach the borders (test it out 1st to see how it looks)
 
 Things to check on chrome browsers on other pcs:
 

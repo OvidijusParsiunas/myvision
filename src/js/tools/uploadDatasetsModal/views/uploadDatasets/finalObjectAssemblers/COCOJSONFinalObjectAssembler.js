@@ -8,7 +8,7 @@ function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes)
   const { categories } = datasetObject[ACTIVE_ANNOTATION_FILE].body.annotationData;
   for (let i = 0; i < categories.length; i += 1) {
     if (annotationData.category_id === categories[i].id) {
-      shapeObj.coordinates.class = categories[i].name;
+      shapeObj.coordinates.class = categories[i].name.toString();
       break;
     }
   }

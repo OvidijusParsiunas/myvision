@@ -157,6 +157,10 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
   return validationResult;
 }
 
+function validateClassesFile(parsedObj, validAnnotationFiles) {
+  
+}
+
 function validateYOLOTXTFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = getDatasetObject();
@@ -167,6 +171,9 @@ function validateYOLOTXTFormat(parsedObj, errorObj) {
     }
     if (parsedObj.fileFormat === 'image') {
       return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
+    }
+    if (parsedObj.fileFormat === 'classes') {
+      return validateClassesFile(parsedObj, validAnnotationFiles);
     }
   }
   if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === 'image') {

@@ -7,7 +7,7 @@ function assembleShapes(regions, shapes, imageName) {
       type: null, coordinates: {}, imageName,
     };
     const region = regions[i];
-    shapeObj.coordinates.class = region.region_attributes.name;
+    shapeObj.coordinates.class = region.region_attributes.name.toName();
     if (region.shape_attributes.name === 'polygon') {
       const points = [];
       region.shape_attributes.all_points_x.forEach((x, index) => {

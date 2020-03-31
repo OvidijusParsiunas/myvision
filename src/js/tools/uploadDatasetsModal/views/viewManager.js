@@ -17,6 +17,7 @@ import removeVOCXMLFileHandler from './uploadDatasets/removeFileHandlers/VOCXMLR
 import { addFile as addCOCOJSONFile, clearDatasetObject as clearCOCOJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { addFile as addVGGJSONFile, clearDatasetObject as clearVGGJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
 import { addFile as addVOCXMLFile, clearDatasetObject as clearVOCXMLDatasetObject } from './uploadDatasets/datasetObjectManagers/VOCXMLDatasetObjectManager';
+import { addFile as addYOLOTXTFile, clearDatasetObject as clearYOLOTXTDatasetObject } from './uploadDatasets/datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
   setFileParser, setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
 } from './uploadDatasets/uploadDatasetFilesHandler';
@@ -76,13 +77,13 @@ function prepareChosenFormatFunctionality() {
       prepareUploadDatasetsView(VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX);
       break;
     case YOLO_TXT_FORMAT:
-      setAddFile(addVOCXMLFile);
+      setAddFile(addYOLOTXTFile);
       setFileParser(parseAllFiles);
       setTableUpdater(updateVOCXMLTables);
       setFormatValidator(validateYOLOTXTFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
-        clearVOCXMLDatasetObject);
+        clearYOLOTXTDatasetObject);
       prepareUploadDatasetsView(YOLO_TXT_FORMAT, ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX);
       break;
     default:

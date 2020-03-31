@@ -9,7 +9,7 @@ function assembleShape(object, shapes, imageName) {
   bbox[2] = parseInt(object.bndbox.xmax['#text'], 10) - parseInt(object.bndbox.xmin['#text'], 10);
   bbox[3] = parseInt(object.bndbox.ymax['#text'], 10) - parseInt(object.bndbox.ymin['#text'], 10);
   shapeObj.coordinates.bbox = bbox;
-  shapeObj.coordinates.class = object.name['#text'];
+  shapeObj.coordinates.class = object.name['#text'].toString();
   shapeObj.type = 'boundingBox';
   shapes.boundingBoxes.push(shapeObj);
 }

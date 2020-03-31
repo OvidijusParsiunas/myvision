@@ -104,7 +104,7 @@ function checkbndBoxTag(object) {
 }
 
 function checkObjectTagChildTags(parsedObj) {
-  const requiredProperties = { name: 'string', bndbox: 'object' };
+  const requiredProperties = { name: 'number|string', bndbox: 'object' };
   const objectTag = parsedObj.annotation.object;
   if (Array.isArray(objectTag)) {
     for (let i = 0; i < objectTag.length; i += 1) {

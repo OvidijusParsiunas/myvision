@@ -125,7 +125,7 @@ function checkRegionAttributesProperty(parsedObj) {
   for (let i = 0; i < objectKeyNames.length; i += 1) {
     const { regions } = parsedObj[objectKeyNames[i]];
     for (let y = 0; y < regions.length; y += 1) {
-      const requiredProperties = { name: 'string' };
+      const requiredProperties = { name: 'number|string' };
       const result = checkObjectProperties(requiredProperties, regions[y].region_attributes);
       if (result.error) {
         result.message += ' -> in region_attributes';
