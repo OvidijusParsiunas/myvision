@@ -230,7 +230,7 @@ function checkParentProperties(parsedObj) {
   return checkObjectHasProperties(parsedObj, 'parent');
 }
 
-function checkJSONObject(JSONObject, validators) {
+function checkObject(JSONObject, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](JSONObject.annotationData);
     if (result.error) {
@@ -248,7 +248,7 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
     checkShapeAttributesProperty,
     checkRegionAttributesProperty,
   ];
-  const validationResult = checkJSONObject(parsedObj.body, validators);
+  const validationResult = checkObject(parsedObj.body, validators);
   if (!validationResult.error) {
     setCurrentAnnotationFilesToInactive(validAnnotationFiles);
     parsedObj.active = true;

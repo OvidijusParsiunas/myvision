@@ -133,7 +133,7 @@ function checkParentTag(parsedObj) {
   return checkObjectProperties(requiredProperties, parsedObj);
 }
 
-function checkXMLObject(object, validators) {
+function checkObject(object, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](object.annotationData);
     if (result.error) {
@@ -149,7 +149,7 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
     checkObjectTag,
     checkObjectTagChildTags,
   ];
-  const validationResult = checkXMLObject(parsedObj.body, validators);
+  const validationResult = checkObject(parsedObj.body, validators);
   if (!validationResult.error) {
     setCurrentAnnotationFilesToInactive(validAnnotationFiles);
     parsedObj.active = true;

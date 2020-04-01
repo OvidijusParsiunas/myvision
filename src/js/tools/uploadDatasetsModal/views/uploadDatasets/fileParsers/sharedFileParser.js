@@ -93,38 +93,37 @@ function parseXML(fileMetaData, event) {
 }
 
 // set warning on x:
-// If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height
+// If this file belongs in the annotations table,
+// make sure that each row contains exactly 5 attributes: class x y width height
 function txtToJSON(result, fileMetaData) {
   const lines = result.split('\n');
   let fileEmpty = true;
   let isAnnotationsFile = true;
-  const linesOfEntries = [];
+  const linesOfAttributes = [];
   lines.forEach((line) => {
-    const entries = line.split(' ').filter(entry => entry.trim() !== '');
-    if (entries.length > 0) {
+    const attributes = line.split(' ').filter(entry => entry.trim() !== '');
+    if (attributes.length > 0) {
       fileEmpty = false;
-      if (entries.length !== 5) {
+      if (attributes.length !== 5) {
         isAnnotationsFile = false;
       }
-      linesOfEntries.push(entries);
+      linesOfAttributes.push(attributes);
     }
   });
-  const fileEmptyError = {};
   if (fileEmpty) {
-    fileEmptyError.fileFormat = 'annotation';
-    fileEmptyError.body = { fileMetaData };
-    fileEmptyError.errorObj = { error: true, message: 'Text file is empty' };
+    return {
+      fileFormat: 'annotation',
+      body: { fileMetaData },
+      errorObj: { error: true, message: 'Text file is empty' },
+    };
   }
   const fileFormat = isAnnotationsFile ? 'annotation' : 'classes';
-  const JSONObject = { fileFormat, body: { fileMetaData, linesOfEntries } };
-  return { JSONObject, fileEmptyError };
+  return { fileFormat, body: { fileMetaData, annotationData: linesOfAttributes } };
 }
 
 function parseTXT(fileMetaData, event) {
   try {
-    const { JSONObject, fileEmptyError } = txtToJSON(event.target.result, fileMetaData);
-    if (fileEmptyError.errorObj) { return fileEmptyError; }
-    return JSONObject;
+    return txtToJSON(event.target.result, fileMetaData);
   } catch (errorMessage) {
     return {
       fileFormat: 'annotation',

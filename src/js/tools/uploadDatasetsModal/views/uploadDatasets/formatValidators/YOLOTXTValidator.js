@@ -133,7 +133,7 @@ function checkParentTag(parsedObj) {
   return checkObjectProperties(requiredProperties, parsedObj);
 }
 
-function checkXMLObject(object, validators) {
+function checkObject(object, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](object.annotationData);
     if (result.error) {
@@ -143,32 +143,59 @@ function checkXMLObject(object, validators) {
   return { error: false, message: '' };
 }
 
+function checkAllRows(rows) {
+  for (let i = 0; i < rows.length; i += 1) {
+    const attributes = rows[i];
+    const annotationFields = {};
+    annotationFields.class = attributes[0];
+    annotationFields.x = attributes[1];
+    annotationFields.y = attributes[2];
+    annotationFields.width = attributes[3];
+    annotationFields.height = attributes[4];
+    const requiredProperties = {
+      class: 'number', x: 'number', y: 'number', width: 'number', height: 'number',
+    };
+    const validationResult = checkObjectProperties(requiredProperties, annotationFields);
+    if (validationResult.error) { return validationResult; }
+  }
+  return { error: false, message: '' };
+}
+
 function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
   const validators = [
-    checkParentTag,
-    checkObjectTag,
-    checkObjectTagChildTags,
+    checkAllRows,
+    // checkParentTag,
+    // checkObjectTag,
+    // checkObjectTagChildTags,
   ];
-  const validationResult = checkXMLObject(parsedObj.body, validators);
+  const validationResult = checkObject(parsedObj.body, validators);
   if (!validationResult.error) {
-    setCurrentAnnotationFilesToInactive(validAnnotationFiles);
-    parsedObj.active = true;
+    // check against active classes file
+
+
+    // setCurrentAnnotationFilesToInactive(validAnnotationFiles);
+    // parsedObj.active = true;
   }
   return validationResult;
 }
 
 function validateClassesFile(parsedObj, validAnnotationFiles) {
-  const validators = [
+  // const validators = [
     // checkParentTag,
     // checkObjectTag,
     // checkObjectTagChildTags,
-  ];
-  const validationResult = checkXMLObject(parsedObj.body, validators);
-  if (!validationResult.error) {
-    setCurrentAnnotationFilesToInactive(validAnnotationFiles);
-    parsedObj.active = true;
-  }
-  return validationResult;
+  // ];
+  // const validationResult = checkXMLObject(parsedObj.body, validators);
+  // if (!validationResult.error) {
+  //   setCurrentAnnotationFilesToInactive(validAnnotationFiles);
+  //   parsedObj.active = true;
+  // }
+  // if (validAnnotationFiles)
+
+  
+  // set current classes file to inactive
+  parsedObj.active = true;
+  // return validationResult;
 }
 
 function validateYOLOTXTFormat(parsedObj, errorObj) {
