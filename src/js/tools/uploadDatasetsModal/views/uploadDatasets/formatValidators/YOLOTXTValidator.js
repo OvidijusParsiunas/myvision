@@ -1,4 +1,4 @@
-import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE } from '../../../consts';
+import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE } from '../../../consts';
 import { getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
@@ -43,17 +43,13 @@ function validateImageFile(parsedObj, validAnnotationFiles) {
 function assertType(expectedType, subjectVariable) {
   switch (expectedType) {
     case 'number':
-      return !Number.isNaN(parseInt(subjectVariable['#text'], 10));
+      return !Number.isNaN(subjectVariable) && typeof subjectVariable === 'number';
     case 'string':
-      return typeof subjectVariable['#text'] === 'string';
+      return typeof subjectVariable === 'string';
     case 'number|string':
       return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
-    case 'object':
-      return typeof subjectVariable === 'object';
     case 'array':
       return Array.isArray(subjectVariable);
-    case 'object|array':
-      return typeof subjectVariable === 'object' || Array.isArray(subjectVariable);
     case 'array:number':
       return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'number').length === 0;
     case 'array:object':
@@ -71,7 +67,7 @@ function checkObjectProperties(requiredProperties, subjectObject) {
     }
   });
   if (undefinedProperties.length > 0) {
-    return { error: true, message: `The following tag(s) have not been found: ${undefinedProperties.join(', ')}` };
+    return { error: true, message: `The following attributes have not been found: ${undefinedProperties.join(', ')}` };
   }
   const nullProperties = [];
   Object.keys(requiredProperties).forEach((property) => {
@@ -80,7 +76,7 @@ function checkObjectProperties(requiredProperties, subjectObject) {
     }
   });
   if (nullProperties.length > 0) {
-    return { error: true, message: `The following tag(s) are null: ${nullProperties}` };
+    return { error: true, message: `The following attributes are null: ${nullProperties}` };
   }
   const incorrectTypeProperties = [];
   Object.keys(requiredProperties).forEach((property) => {
@@ -89,7 +85,7 @@ function checkObjectProperties(requiredProperties, subjectObject) {
     }
   });
   if (incorrectTypeProperties.length > 0) {
-    return { error: true, message: `The following tag(s) contain an incorrect type: ${incorrectTypeProperties}` };
+    return { error: true, message: `The following attributes contain an incorrect type: ${incorrectTypeProperties}` };
   }
   return { error: false, message: '' };
 }
@@ -101,36 +97,6 @@ function checkbndBoxTag(object) {
   const result = checkObjectProperties(requiredProperties, object);
   if (result.error) { return result; }
   return { error: false, message: '' };
-}
-
-function checkObjectTagChildTags(parsedObj) {
-  const requiredProperties = { name: 'string', bndbox: 'object' };
-  const objectTag = parsedObj.annotation.object;
-  if (Array.isArray(objectTag)) {
-    for (let i = 0; i < objectTag.length; i += 1) {
-      const object = objectTag[i];
-      let result = checkObjectProperties(requiredProperties, object);
-      if (result.error) { return result; }
-      result = checkbndBoxTag(object.bndbox);
-      if (result.error) { return result; }
-    }
-  } else {
-    let result = checkObjectProperties(requiredProperties, objectTag);
-    if (result.error) { return result; }
-    result = checkbndBoxTag(objectTag.bndbox);
-    if (result.error) { return result; }
-  }
-  return { error: false, message: '' };
-}
-
-function checkObjectTag(parsedObj) {
-  const requiredProperties = { object: 'object|array' };
-  return checkObjectProperties(requiredProperties, parsedObj.annotation);
-}
-
-function checkParentTag(parsedObj) {
-  const requiredProperties = { annotation: 'object' };
-  return checkObjectProperties(requiredProperties, parsedObj);
 }
 
 function checkObject(object, validators) {
@@ -147,39 +113,49 @@ function checkAllRows(rows) {
   for (let i = 0; i < rows.length; i += 1) {
     const attributes = rows[i];
     const annotationFields = {};
-    annotationFields.class = attributes[0];
-    annotationFields.x = attributes[1];
-    annotationFields.y = attributes[2];
-    annotationFields.width = attributes[3];
-    annotationFields.height = attributes[4];
+    annotationFields['class (1)'] = attributes[0];
+    annotationFields['x (2)'] = attributes[1];
+    annotationFields['y (3)'] = attributes[2];
+    annotationFields['width (4)'] = attributes[3];
+    annotationFields['height (5)'] = attributes[4];
     const requiredProperties = {
-      class: 'number', x: 'number', y: 'number', width: 'number', height: 'number',
+      'class (1)': 'number', 'x (2)': 'number', 'y (3)': 'number', 'width (4)': 'number', 'height (5)': 'number',
     };
-    const validationResult = checkObjectProperties(requiredProperties, annotationFields);
-    if (validationResult.error) { return validationResult; }
+    const result = checkObjectProperties(requiredProperties, annotationFields);
+    if (result.error) {
+      result.message += ` -> on row ${i + 1}`;
+      return result;
+    }
   }
   return { error: false, message: '' };
 }
 
-function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
+// check if falty classes array is needed, could potentially when class falty,
+// then adding the same one that is valid
+
+// not sure if setCurrentAnnotationFilesToInactive is needed anywhere as I don't think the active
+// property is being used anywhere
+
+// set warning on x:
+// If this file belongs in the annotations table,
+// make sure that each row contains exactly 5 attributes: class x y width height
+
+function validateAgainstActiveClassesFile(parsedObj, activeClassesFile) {
+  console.log('validate')
+}
+
+function validateAnnotationsFile(parsedObj, activeClassesFile) {
   const validators = [
     checkAllRows,
-    // checkParentTag,
-    // checkObjectTag,
-    // checkObjectTagChildTags,
   ];
   const validationResult = checkObject(parsedObj.body, validators);
-  if (!validationResult.error) {
-    // check against active classes file
-
-
-    // setCurrentAnnotationFilesToInactive(validAnnotationFiles);
-    // parsedObj.active = true;
+  if (!validationResult.error && activeClassesFile) {
+    validateAgainstActiveClassesFile(parsedObj, activeClassesFile);
   }
   return validationResult;
 }
 
-function validateClassesFile(parsedObj, validAnnotationFiles) {
+function validateClassesFile(parsedObj) {
   // const validators = [
     // checkParentTag,
     // checkObjectTag,
@@ -201,13 +177,13 @@ function validateClassesFile(parsedObj, validAnnotationFiles) {
 function validateYOLOTXTFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = getDatasetObject();
-    const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
+    const activeClassesFile = datasetObject[ACTIVE_CLASSES_FILE];
     const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
     if (parsedObj.fileFormat === 'annotation') {
-      return validateAnnotationsFile(parsedObj, validAnnotationFiles);
+      return validateAnnotationsFile(parsedObj, activeClassesFile);
     }
     if (parsedObj.fileFormat === 'image') {
-      return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
+      return validateImageFile(parsedObj, validAnnotationFiles);
     }
     if (parsedObj.fileFormat === 'classes') {
       return validateClassesFile(parsedObj, validAnnotationFiles);

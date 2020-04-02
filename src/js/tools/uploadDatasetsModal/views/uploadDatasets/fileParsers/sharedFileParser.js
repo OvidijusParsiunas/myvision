@@ -92,16 +92,16 @@ function parseXML(fileMetaData, event) {
   }
 }
 
-// set warning on x:
-// If this file belongs in the annotations table,
-// make sure that each row contains exactly 5 attributes: class x y width height
 function txtToJSON(result, fileMetaData) {
   const lines = result.split('\n');
   let fileEmpty = true;
   let isAnnotationsFile = true;
   const linesOfAttributes = [];
   lines.forEach((line) => {
-    const attributes = line.split(' ').filter(entry => entry.trim() !== '');
+    const attributes = line
+      .split(' ')
+      .filter(entry => entry.trim() !== '')
+      .map(entry => Number.parseFloat(entry, 10));
     if (attributes.length > 0) {
       fileEmpty = false;
       if (attributes.length !== 5) {

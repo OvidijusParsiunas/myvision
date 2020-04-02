@@ -1,6 +1,10 @@
-import { VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT } from '../../../consts';
+import {
+  VALID_ANNOTATION_FILES_ARRAY, CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE, IMAGE_FILES_OBJECT,
+} from '../../../consts';
 
 const datasetObject = { };
+datasetObject[CLASSES_FILES_ARRAY] = [];
+datasetObject[ACTIVE_CLASSES_FILE] = null;
 datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
 datasetObject[IMAGE_FILES_OBJECT] = {};
 
@@ -11,10 +15,6 @@ function getIndexOfFileInArray(fileName, subjectArray) {
     }
   }
   return undefined;
-}
-
-function addClassesFile(filename, errorObject) {
-    
 }
 
 function addValidAnnotationFile(fileName, annotationFileObj) {
@@ -37,6 +37,34 @@ function removeFile(fileName, objectName) {
     }
   } else {
     delete datasetObject[objectName][fileName];
+  }
+}
+
+function replaceActiveClassesFileIfRemoving(fileName) {
+  if (datasetObject[ACTIVE_CLASSES_FILE]
+    && datasetObject[ACTIVE_CLASSES_FILE].body.fileMetaData.name === fileName) {
+    let newActiveClassesFile = null;
+    for (let i = datasetObject[CLASSES_FILES_ARRAY].length - 1; i > -1; i -= 1) {
+      if (datasetObject[CLASSES_FILES_ARRAY][i].body.fileMetaData.name !== fileName) {
+        newActiveClassesFile = datasetObject[CLASSES_FILES_ARRAY][i];
+      }
+    }
+    datasetObject[ACTIVE_CLASSES_FILE] = newActiveClassesFile;
+    if (datasetObject[ACTIVE_CLASSES_FILE]) {
+      datasetObject[ACTIVE_CLASSES_FILE].newlyActive = true;
+    }
+  }
+}
+
+function addClassesFile(classesFileObj, error) {
+  const { name } = classesFileObj.body.fileMetaData;
+  if (!error) {
+    addValidAnnotationFile(name, classesFileObj);
+    // check if need to remove the falty one, probably do, but double check
+    // that it does not cause two fields to be drawn on the table
+    // when valid is drawn again
+  } else {
+    removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
   }
 }
 
@@ -96,4 +124,5 @@ function getDatasetObject() {
 export {
   addAnnotationFile, getImageFiles, removeFile, getDatasetObject, addFile,
   getAnnotationFiles, addImageFile, clearDatasetObject, updateImageFileErrorStatus,
+  replaceActiveClassesFileIfRemoving,
 };

@@ -1,4 +1,4 @@
-import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE } from '../../../consts';
+import { VALID_ANNOTATION_FILES_ARRAY } from '../../../consts';
 import { getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
@@ -160,13 +160,12 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 function validateVOCXMLFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = getDatasetObject();
-    const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
     const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
     if (parsedObj.fileFormat === 'annotation') {
       return validateAnnotationsFile(parsedObj, validAnnotationFiles);
     }
     if (parsedObj.fileFormat === 'image') {
-      return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
+      return validateImageFile(parsedObj, validAnnotationFiles);
     }
   }
   if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === 'image') {
