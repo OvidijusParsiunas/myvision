@@ -141,7 +141,7 @@ function checkAllRows(rows) {
 // make sure that each row contains exactly 5 attributes: class x y width height
 
 function validateAgainstActiveClassesFile(parsedObj, activeClassesFile) {
-  console.log('validate')
+  console.log('validate');
 }
 
 function validateAnnotationsFile(parsedObj, activeClassesFile) {
