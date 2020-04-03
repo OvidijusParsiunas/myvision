@@ -130,7 +130,7 @@
 }
 
 #upload-datasets-modal-buttons {
-  margin-top: 23px;
+  margin-top: 272px;
 }
 
 .upload-datasets-modal-description-break {
@@ -145,7 +145,7 @@
 }
 
 .upload-datsets-modal-upload-datasets-two-table-strategy-section {
-  width: calc(50% - 0.6px);
+  width: calc(50% - 0.5px);
   text-align: center;
   float: left;
 }
@@ -166,9 +166,15 @@
   margin-right: 0px;
 }
 
+.upload-datsets-modal-upload-datasets {
+  max-width: 281px;
+  overflow-x: auto;
+  display: inline-block;
+}
+
 .upload-datasets-table {
-  max-height: 191px;
-  min-height: 191px;
+  max-height: 231px;
+  min-height: 231px;
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
   scrollbar-width: thin;
@@ -273,10 +279,10 @@
 
 .upload-datasets-modal-vertical-break-line {
   width: 0.5px;
-  height: 195px;
+  height: 234px;
   background-color: #ececec;
   float: left;
-  margin-top: 11px;
+  margin-top: 15px;
 }
 
 .show {display: block;}
@@ -1157,8 +1163,8 @@ body {
     margin-top: 8px;
   }
   .upload-datasets-table {
-    max-height: 196px;
-    min-height: 196px;
+    max-height: 236px;
+    min-height: 236px;
   }
   .upload-datasets-modal-vertical-break-line {
     height: 200px;

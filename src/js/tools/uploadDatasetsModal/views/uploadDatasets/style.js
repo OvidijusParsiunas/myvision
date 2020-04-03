@@ -21,8 +21,8 @@ let uploadDatasetsOuterContainerElement = null;
 let annotationsTableOuterContainerElement = null;
 
 let popoverIndex = 0;
-const modalWidth = 505;
-const modalHeight = 340;
+const modalWidth = 678;
+const modalHeight = 391;
 let currentTableStrategy = TWO_TABLE_STRATEGY;
 let finishButtonEnabled = false;
 
@@ -255,7 +255,7 @@ function isFirefox() {
 
 function setButtonGroupElementMarginTopByBrowser() {
   if (!isFirefox()) {
-    setButtonGroupElementMarginTop('3px');
+    setButtonGroupElementMarginTop('272px');
   } else {
     setButtonGroupElementMarginTop('1px');
   }
@@ -337,7 +337,7 @@ function displayTableStrategyRelevantAssets(tableStrategy) {
   if (tableStrategy === THREE_TABLE_STRATEGY) {
     displayTable1();
     displayUploadButtonElement();
-    changeUploadDatasetsModalElementDimensions(1000, modalHeight);
+    changeUploadDatasetsModalElementDimensions(977, modalHeight);
     changeTwoTableStrategyToThree();
   } else {
     displayUploadButtonElement();
@@ -348,7 +348,7 @@ function displayTableStrategyRelevantAssets(tableStrategy) {
 
 function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFileFormat,
   tableStrategy) {
-  setTitleElementMarginTop('8px');
+  setTitleElementMarginTop('9px');
   setTitleElement(formatName);
   setAnnotationsTableTitle(annotationFileFormat);
   setAcceptedFileFormatTrigger(acceptedFileFormats);
