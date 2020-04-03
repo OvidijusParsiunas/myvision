@@ -22,7 +22,7 @@ let annotationsTableOuterContainerElement = null;
 
 let popoverIndex = 0;
 const modalWidth = 678;
-const modalHeight = 391;
+const modalHeight = 390;
 let currentTableStrategy = TWO_TABLE_STRATEGY;
 let finishButtonEnabled = false;
 
