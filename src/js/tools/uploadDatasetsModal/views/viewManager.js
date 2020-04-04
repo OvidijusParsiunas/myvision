@@ -7,6 +7,7 @@ import parseAllFiles from './uploadDatasets/fileParsers/sharedFileParser';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
 import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdaters';
 import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdaters';
+import updateYOLOTXTTables from './uploadDatasets/tableUpdaters/YOLOTXTTableUpdaters';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
 import validateVOCXMLFormat from './uploadDatasets/formatValidators/VOCXMLValidator';
@@ -83,7 +84,7 @@ function prepareChosenFormatFunctionality() {
     case YOLO_TXT_FORMAT:
       setAddFile(addYOLOTXTFile);
       setFileParser(parseAllFiles);
-      setTableUpdater(updateVOCXMLTables);
+      setTableUpdater(updateYOLOTXTTables);
       setFormatValidator(validateYOLOTXTFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,

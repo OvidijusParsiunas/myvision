@@ -17,6 +17,15 @@ function getIndexOfFileInArray(fileName, subjectArray) {
   return undefined;
 }
 
+function addNewClassesFile(fileName, classesFileObj) {
+  const existingFileIndex = getIndexOfFileInArray(fileName,
+    datasetObject[CLASSES_FILES_ARRAY]);
+  if (existingFileIndex === undefined) {
+    const annotationFiles = datasetObject[CLASSES_FILES_ARRAY];
+    annotationFiles.push(classesFileObj);
+  }
+}
+
 function addValidAnnotationFile(fileName, annotationFileObj) {
   const existingFileIndex = getIndexOfFileInArray(fileName,
     datasetObject[VALID_ANNOTATION_FILES_ARRAY]);
@@ -44,6 +53,8 @@ function replaceActiveClassesFileIfRemoving(fileName) {
   if (datasetObject[ACTIVE_CLASSES_FILE]
     && datasetObject[ACTIVE_CLASSES_FILE].body.fileMetaData.name === fileName) {
     let newActiveClassesFile = null;
+    // the logic here needs to be switched to iterate from the start so the UI
+    // would be able to use the lowest valid classs
     for (let i = datasetObject[CLASSES_FILES_ARRAY].length - 1; i > -1; i -= 1) {
       if (datasetObject[CLASSES_FILES_ARRAY][i].body.fileMetaData.name !== fileName) {
         newActiveClassesFile = datasetObject[CLASSES_FILES_ARRAY][i];
@@ -59,12 +70,10 @@ function replaceActiveClassesFileIfRemoving(fileName) {
 function addClassesFile(classesFileObj, error) {
   const { name } = classesFileObj.body.fileMetaData;
   if (!error) {
-    addValidAnnotationFile(name, classesFileObj);
-    // check if need to remove the falty one, probably do, but double check
-    // that it does not cause two fields to be drawn on the table
-    // when valid is drawn again
+    addNewClassesFile(name, classesFileObj);
   } else {
-    removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
+    replaceActiveClassesFileIfRemoving(name);
+    removeFile(name, CLASSES_FILES_ARRAY);
   }
 }
 
@@ -92,7 +101,7 @@ function updateImageFileErrorStatus(name, errorStatus) {
 
 function addImageFile(imageFileObj, errorObject) {
   if (!isInImagesList(imageFileObj.body.fileMetaData.name)) {
-    // the error property is used to draw shapes on valid images only
+    // the error property is used to draw shapes of valid images only
     imageFileObj.error = errorObject.error;
     imageFileObj.alreadyUploaded = errorObject.alreadyUploaded;
     datasetObject[IMAGE_FILES_OBJECT][imageFileObj.body.fileMetaData.name] = imageFileObj;

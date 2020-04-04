@@ -8,6 +8,7 @@ let table2Element = null;
 let table3Element = null;
 let backButtonElement = null;
 let imagesTableElement = null;
+let classesTableElement = null;
 let finishButtonElement = null;
 let buttonsGroupElement = null;
 let uploadButtonElement = null;
@@ -137,6 +138,23 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
     }
   }
   return false;
+}
+
+function insertRowToClassesTable(fileName, validationResult) {
+  if (!checkFileAlreadyInTable(fileName, validationResult,
+    classesTableElement, ANNOTATION_FILE_POPOVER_POSITION_CLASS,
+    ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS)) {
+    const row = classesTableElement.insertRow(-1);
+    const cell = row.insertCell(0);
+    if (validationResult.error) {
+      cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
+        ANNOTATION_FILE_POPOVER_POSITION_CLASS,
+        ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS,
+        ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1);
+    } else {
+      cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
+    }
+  }
 }
 
 function insertRowToImagesTable(fileName, validationResult) {
@@ -392,6 +410,7 @@ function assignUploadDatasetsViewLocalVariables() {
   imagesTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table-outer-container');
   annotationsTableTitle = document.getElementById('upload-datasets-modal-upload=datasets-annotations-table-title');
   annotationsTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table-outer-container');
+  classesTableElement = document.getElementById('"upload-datsets-modal-upload-datasets-classes-table');
   annotationsTableElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table');
   uploadDatasetsModalElement = document.getElementById('upload-datasets-modal-parent');
 }
@@ -400,4 +419,5 @@ export {
   hideUploadDatasetsViewAssets, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, insertRowToAnnotationsTable,
   changeAnnotationRowToDefault, removeRow, enableFinishButton, disableFinishButton,
+  insertRowToClassesTable,
 };

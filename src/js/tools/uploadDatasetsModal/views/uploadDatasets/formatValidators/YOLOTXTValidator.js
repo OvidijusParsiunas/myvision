@@ -3,12 +3,6 @@ import { getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectMa
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
-function setCurrentAnnotationFilesToInactive(annotationFiles) {
-  annotationFiles.forEach((annotationFile) => {
-    annotationFile.active = false;
-  });
-}
-
 function isImageAlreadyUploaded(newImageName) {
   const images = getAllImageData();
   for (let i = 0; i < images.length; i += 1) {
@@ -90,15 +84,6 @@ function checkObjectProperties(requiredProperties, subjectObject) {
   return { error: false, message: '' };
 }
 
-function checkbndBoxTag(object) {
-  const requiredProperties = {
-    xmin: 'number', ymin: 'number', xmax: 'number', ymax: 'number',
-  };
-  const result = checkObjectProperties(requiredProperties, object);
-  if (result.error) { return result; }
-  return { error: false, message: '' };
-}
-
 function checkObject(object, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](object.annotationData);
@@ -130,11 +115,8 @@ function checkAllRows(rows) {
   return { error: false, message: '' };
 }
 
-// check if falty classes array is needed, could potentially when class falty,
-// then adding the same one that is valid
-
-// not sure if setCurrentAnnotationFilesToInactive is needed anywhere as I don't think the active
-// property is being used anywhere
+// check if setCurrentAnnotationFilesToInactive is actually doing something for other formats
+// as the active property may not be used
 
 // set warning on x:
 // If this file belongs in the annotations table,
@@ -155,25 +137,6 @@ function validateAnnotationsFile(parsedObj, activeClassesFile) {
   return validationResult;
 }
 
-function validateClassesFile(parsedObj) {
-  // const validators = [
-    // checkParentTag,
-    // checkObjectTag,
-    // checkObjectTagChildTags,
-  // ];
-  // const validationResult = checkXMLObject(parsedObj.body, validators);
-  // if (!validationResult.error) {
-  //   setCurrentAnnotationFilesToInactive(validAnnotationFiles);
-  //   parsedObj.active = true;
-  // }
-  // if (validAnnotationFiles)
-
-  
-  // set current classes file to inactive
-  parsedObj.active = true;
-  // return validationResult;
-}
-
 function validateYOLOTXTFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = getDatasetObject();
@@ -185,9 +148,7 @@ function validateYOLOTXTFormat(parsedObj, errorObj) {
     if (parsedObj.fileFormat === 'image') {
       return validateImageFile(parsedObj, validAnnotationFiles);
     }
-    if (parsedObj.fileFormat === 'classes') {
-      return validateClassesFile(parsedObj, validAnnotationFiles);
-    }
+    // do not need further validation for a classes file
   }
   if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === 'image') {
     const imageName = parsedObj.body.fileMetaData.name;
