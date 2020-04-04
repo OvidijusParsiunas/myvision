@@ -110,7 +110,7 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(VOC_XML_FORMAT);
+      setFormatState(YOLO_TXT_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
       prepareChosenFormatFunctionality();
       if (getReuseAlreadyUploadedImagesState()) {

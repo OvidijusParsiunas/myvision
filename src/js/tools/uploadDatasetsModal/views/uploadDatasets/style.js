@@ -429,7 +429,7 @@ function assignUploadDatasetsViewLocalVariables() {
   imagesTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table-outer-container');
   annotationsTableTitle = document.getElementById('upload-datasets-modal-upload=datasets-annotations-table-title');
   annotationsTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table-outer-container');
-  classesTableElement = document.getElementById('"upload-datsets-modal-upload-datasets-classes-table');
+  classesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-classes-table');
   annotationsTableElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table');
   uploadDatasetsModalElement = document.getElementById('upload-datasets-modal-parent');
 }

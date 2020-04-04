@@ -113,7 +113,7 @@ function addFile(file, errorObject) {
     addImageFile(file, errorObject);
   } else if (file.fileFormat === 'annotation') {
     addAnnotationFile(file, errorObject.error);
-  } else if (file.format === 'classes') {
+  } else if (file.fileFormat === 'classes') {
     addClassesFile(file, errorObject.error);
   }
 }

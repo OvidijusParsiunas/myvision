@@ -1,5 +1,5 @@
 import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE } from '../../../consts';
-import { getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import { getDatasetObject } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
@@ -21,7 +21,7 @@ function validateImageFile(parsedObj, validAnnotationFiles) {
   if (validAnnotationFiles.length > 0) {
     for (let i = 0; i < validAnnotationFiles.length; i += 1) {
       const annotationName = validAnnotationFiles[i].body.fileMetaData.name;
-      const parsedAnnotationName = annotationName.substring(0, annotationName.indexOf('.xml'));
+      const parsedAnnotationName = annotationName.substring(0, annotationName.indexOf('.txt'));
       if (parsedImageName === parsedAnnotationName) {
         return {
           error: false, message: '', alreadyUploaded, valid: true,
