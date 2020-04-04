@@ -1,5 +1,6 @@
 import {
-  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR, TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY,
+  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR,
+  TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, CLASSES_TABLE_INDICATOR,
 } from '../../consts';
 
 let titleElement = null;
@@ -56,6 +57,9 @@ function createTableRowElementMarkup(fileName, tableName) {
 function addPopoverArrowMarginLeftStyle(tableName) {
   if (currentTableStrategy === TWO_TABLE_STRATEGY && tableName === ANNOTATIONS_TABLE_INDICATOR) {
     return `style="margin-left: ${(modalWidth / 2 / 2) - 20}px;"`;
+  }
+  if (currentTableStrategy === THREE_TABLE_STRATEGY && tableName === CLASSES_TABLE_INDICATOR) {
+    return `style="margin-left: ${(modalWidth / 3 / 2) - 20}px;"`;
   }
   return '';
 }
@@ -161,9 +165,9 @@ function insertRowToClassesTable(fileName, validationResult) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
         POPOVER_LEFT_POSITION_CLASS,
         POPOVER_ARROW_LEFT_POSITION_CLASS,
-        ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1);
+        CLASSES_TABLE_INDICATOR, popoverIndex += 1);
     } else {
-      cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
+      cell.innerHTML = createTableRowElementMarkup(fileName, CLASSES_TABLE_INDICATOR);
     }
   }
 }

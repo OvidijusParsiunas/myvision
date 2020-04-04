@@ -43,7 +43,6 @@ function reValidateExistingClassesFiles(classesFiles) {
   });
 }
 
-
 function checkClassesFileAlreadyInTable(validationResult, datasetObject) {
   const activeClassesFile = datasetObject[ACTIVE_CLASSES_FILE];
   const classFiles = datasetObject[CLASSES_FILES_ARRAY];
