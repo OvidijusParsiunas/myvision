@@ -148,7 +148,10 @@ function validateYOLOTXTFormat(parsedObj, errorObj) {
     if (parsedObj.fileFormat === 'image') {
       return validateImageFile(parsedObj, validAnnotationFiles);
     }
-    // do not need further validation for a classes file
+    // do not need any validation for a classes file
+    if (parsedObj.fileFormat === 'classes') {
+      return { error: false, message: '' };
+    }
   }
   if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === 'image') {
     const imageName = parsedObj.body.fileMetaData.name;

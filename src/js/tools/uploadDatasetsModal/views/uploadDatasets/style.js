@@ -27,15 +27,19 @@ const modalHeight = 390;
 let currentTableStrategy = TWO_TABLE_STRATEGY;
 let finishButtonEnabled = false;
 
-const ANNOTATION_FILE_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-left';
-const ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-left';
-const IMAGE_FILE_POPOVER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-right';
-const IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-right';
+const POPOVER_LEFT_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-left';
+const POPOVER_ARROW_LEFT_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-left';
+const POPOVER_RIGHT_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-right';
+const POPOVER_ARROW_RIGHT_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-right';
+const POPOVER_CENTER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-center';
+const POPOVER_ARROW_CENTER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-center';
 const TWO_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-two-table-strategy-section';
 const THREE_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-three-table-strategy-section';
 const PROCEED_BUTTON_CLASS = 'popup-proceed-button';
 const ACTIVE_BUTTON_CLASS = 'popup-label-button';
 const DISABLED_BUTTON_CLASS = 'popup-label-button-disabled';
+let currentAnnotationsPopoverPositionClass = null;
+let currentAnnotationsPopoverArrowPositionClass = null;
 
 function createTableRowElementMarkup(fileName, tableName) {
   return `
@@ -49,11 +53,18 @@ function createTableRowElementMarkup(fileName, tableName) {
   `;
 }
 
+function addPopoverArrowMarginLeftStyle(tableName) {
+  if (currentTableStrategy === TWO_TABLE_STRATEGY && tableName === ANNOTATIONS_TABLE_INDICATOR) {
+    return `style="margin-left: ${(modalWidth / 2 / 2) - 20}px;"`;
+  }
+  return '';
+}
+
 function createTableRowElementMarkupWthError(fileName, message, popoverPositionClass,
   popoverArrowClass, tableName, index) {
   return `
     <div id="upload-datasets-modal-file-popover-${index}" class="popover upload-datasets-modal-upload-datasets-table-row-popover error-popover-color-theme ${popoverPositionClass}">${message}</div>
-    <div id="upload-datasets-modal-file-popover-arrow-${index}" style="margin-left: ${(modalWidth / 2 / 2) - 20}px;" class="arrow default-arrow-position upload-datasets-modal-upload-datasets-table-error-row-popover-arrow ${popoverArrowClass}"></div>
+    <div id="upload-datasets-modal-file-popover-arrow-${index}" ${addPopoverArrowMarginLeftStyle(tableName)} class="arrow upload-datasets-modal-upload-datasets-table-error-row-popover-arrow ${popoverArrowClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
         <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
           <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
@@ -142,14 +153,14 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
 
 function insertRowToClassesTable(fileName, validationResult) {
   if (!checkFileAlreadyInTable(fileName, validationResult,
-    classesTableElement, ANNOTATION_FILE_POPOVER_POSITION_CLASS,
-    ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS)) {
+    classesTableElement, POPOVER_LEFT_POSITION_CLASS,
+    POPOVER_ARROW_LEFT_POSITION_CLASS)) {
     const row = classesTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        ANNOTATION_FILE_POPOVER_POSITION_CLASS,
-        ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS,
+        POPOVER_LEFT_POSITION_CLASS,
+        POPOVER_ARROW_LEFT_POSITION_CLASS,
         ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
@@ -159,13 +170,13 @@ function insertRowToClassesTable(fileName, validationResult) {
 
 function insertRowToImagesTable(fileName, validationResult) {
   if (!checkFileAlreadyInTable(fileName, validationResult,
-    imagesTableElement, IMAGE_FILE_POPOVER_POSITION_CLASS,
-    IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS)) {
+    imagesTableElement, POPOVER_RIGHT_POSITION_CLASS,
+    POPOVER_ARROW_RIGHT_POSITION_CLASS)) {
     const row = imagesTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        IMAGE_FILE_POPOVER_POSITION_CLASS, IMAGE_FILE_POPOVER_ARROW_POSITION_CLASS,
+        POPOVER_RIGHT_POSITION_CLASS, POPOVER_ARROW_RIGHT_POSITION_CLASS,
         IMAGES_TABLE_INDICATOR, popoverIndex += 1);
       allImagesStyleSetToDefault = false;
     } else {
@@ -201,14 +212,14 @@ function changeAnnotationRowToDefault(annotationFileName) {
 
 function insertRowToAnnotationsTable(fileName, validationResult) {
   if (!checkFileAlreadyInTable(fileName, validationResult,
-    annotationsTableElement, ANNOTATION_FILE_POPOVER_POSITION_CLASS,
-    ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS)) {
+    annotationsTableElement, currentAnnotationsPopoverPositionClass,
+    currentAnnotationsPopoverArrowPositionClass)) {
     const row = annotationsTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        ANNOTATION_FILE_POPOVER_POSITION_CLASS,
-        ANNOTATION_FILE_POPOVER_ARROW_POSITION_CLASS,
+        currentAnnotationsPopoverPositionClass,
+        currentAnnotationsPopoverArrowPositionClass,
         ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
@@ -357,9 +368,13 @@ function displayTableStrategyRelevantAssets(tableStrategy) {
     displayUploadButtonElement();
     changeUploadDatasetsModalElementDimensions(977, modalHeight);
     changeTwoTableStrategyToThree();
+    currentAnnotationsPopoverPositionClass = POPOVER_CENTER_POSITION_CLASS;
+    currentAnnotationsPopoverArrowPositionClass = POPOVER_ARROW_CENTER_POSITION_CLASS;
   } else {
     displayUploadButtonElement();
     changeUploadDatasetsModalElementDimensions(modalWidth, modalHeight);
+    currentAnnotationsPopoverPositionClass = POPOVER_LEFT_POSITION_CLASS;
+    currentAnnotationsPopoverArrowPositionClass = POPOVER_ARROW_LEFT_POSITION_CLASS;
   }
   currentTableStrategy = tableStrategy;
 }

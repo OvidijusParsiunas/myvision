@@ -254,6 +254,13 @@
   margin-left: 0px;
 }
 
+.upload-datasets-modal-upload-datasets-table-row-popover-center {
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .upload-datasets-modal-upload-datasets-table-row-popover-right {
   right: 5px;
   margin-right: 0px;
@@ -261,6 +268,13 @@
 
 .upload-datasets-modal-upload-datasets-table-row-popover-arrow-left {
   left: 5px;
+}
+
+.upload-datasets-modal-upload-datasets-table-row-popover-arrow-center {
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .upload-datasets-modal-upload-datasets-table-row-popover-arrow-right {
