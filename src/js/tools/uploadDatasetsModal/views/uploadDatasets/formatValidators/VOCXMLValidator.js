@@ -47,7 +47,7 @@ function assertType(expectedType, subjectVariable) {
     case 'string':
       return typeof subjectVariable['#text'] === 'string';
     case 'number|string':
-      return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
+      return typeof subjectVariable['#text'] === 'string' || !Number.isNaN(parseInt(subjectVariable['#text'], 10));
     case 'object':
       return typeof subjectVariable === 'object';
     case 'array':
