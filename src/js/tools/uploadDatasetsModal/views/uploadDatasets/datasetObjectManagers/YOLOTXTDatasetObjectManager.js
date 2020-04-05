@@ -21,8 +21,11 @@ function addNewClassesFile(fileName, classesFileObj) {
   const existingFileIndex = getIndexOfFileInArray(fileName,
     datasetObject[CLASSES_FILES_ARRAY]);
   if (existingFileIndex === undefined) {
-    const annotationFiles = datasetObject[CLASSES_FILES_ARRAY];
-    annotationFiles.push(classesFileObj);
+    const classesFiles = datasetObject[CLASSES_FILES_ARRAY];
+    classesFiles.push(classesFileObj);
+    datasetObject[ACTIVE_CLASSES_FILE] = classesFiles[classesFiles.length - 1];
+  } else {
+    datasetObject[ACTIVE_CLASSES_FILE] = datasetObject[CLASSES_FILES_ARRAY][existingFileIndex];
   }
 }
 

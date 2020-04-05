@@ -31,6 +31,27 @@ function validateExistingImages(datasetObject) {
   }
 }
 
+function validateExistingAnnotations(datasetObject) {
+  if (datasetObject[CLASSES_FILES_ARRAY].length > 0) {
+    let foundValid = false;
+    datasetObject[VALID_ANNOTATION_FILES_ARRAY].forEach((anntoationsFile) => {
+      const validationResult = validateYOLOTXTFormat(anntoationsFile);
+      if (!validationResult.error) { foundValid = true; }
+      const { name } = anntoationsFile.body.fileMetaData;
+      insertRowToAnnotationsTable(name, validationResult);
+      // updateImageFileErrorStatus(name, validationResult.error);
+    });
+    if (foundValid) {
+      enableFinishButton();
+    } else {
+      disableFinishButton();
+    }
+  } else {
+    changeAllImagesTableRowsToDefault();
+    disableFinishButton();
+  }
+}
+
 function reValidateExistingClassesFiles(classesFiles) {
   classesFiles.forEach((classesFile) => {
     const validationResult = validateYOLOTXTFormat(classesFile);
@@ -49,7 +70,8 @@ function checkClassesFileAlreadyInTable(validationResult, datasetObject) {
   if (!validationResult.error) {
     reValidateExistingClassesFiles(classFiles);
     // validate existing annotations
-    validateExistingImages(datasetObject);
+    validateExistingAnnotations(datasetObject);
+    // validateExistingImages(datasetObject);
     return validationResult;
   }
   if (classFiles.length > 0) {

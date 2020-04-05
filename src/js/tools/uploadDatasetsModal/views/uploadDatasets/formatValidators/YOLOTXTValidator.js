@@ -122,8 +122,15 @@ function checkAllRows(rows) {
 // If this file belongs in the annotations table,
 // make sure that each row contains exactly 5 attributes: class x y width height
 
-function validateAgainstActiveClassesFile(parsedObj, activeClassesFile) {
-  console.log('validate');
+function validateAnnotationsAgainstActiveClassesFile(parsedObj, activeClassesFile) {
+  const { annotationData } = parsedObj.body;
+  const numberOfClasses = activeClassesFile.body.annotationData.length;
+  for (let i = 0; i < annotationData.length; i += 1) {
+    if (Math.abs(annotationData[i][0]) > numberOfClasses - 1) {
+      return { error: true, message: `This file contains a class number of ${annotationData[i][0]}, however the classes file only contains ${numberOfClasses} class(es) with the first reference starting from 0` };
+    }
+  }
+  return { error: false, message: '', valid: true };
 }
 
 function validateAnnotationsFile(parsedObj, activeClassesFile) {
@@ -132,7 +139,7 @@ function validateAnnotationsFile(parsedObj, activeClassesFile) {
   ];
   const validationResult = checkObject(parsedObj.body, validators);
   if (!validationResult.error && activeClassesFile) {
-    validateAgainstActiveClassesFile(parsedObj, activeClassesFile);
+    return validateAnnotationsAgainstActiveClassesFile(parsedObj, activeClassesFile);
   }
   return validationResult;
 }

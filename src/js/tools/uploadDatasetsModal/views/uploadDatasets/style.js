@@ -59,7 +59,7 @@ function addPopoverArrowMarginLeftStyle(tableName) {
     return `style="margin-left: ${(modalWidth / 2 / 2) - 20}px;"`;
   }
   if (currentTableStrategy === THREE_TABLE_STRATEGY && tableName === CLASSES_TABLE_INDICATOR) {
-    return `style="margin-left: ${(modalWidth / 3 / 2) - 20}px;"`;
+    return `style="margin-left: ${(modalWidth / 3 / 2) + 34}px;"`;
   }
   return '';
 }
@@ -129,13 +129,26 @@ function removeRow(subjectFileName, tableName) {
   }
 }
 
+function getTableName(tableId) {
+  switch (tableId) {
+    case 'upload-datsets-modal-upload-datasets-annotations-table':
+      return ANNOTATIONS_TABLE_INDICATOR;
+    case 'upload-datsets-modal-upload-datasets-images-table':
+      return IMAGES_TABLE_INDICATOR;
+    case 'upload-datsets-modal-upload-datasets-classes-table':
+      return CLASSES_TABLE_INDICATOR;
+    default:
+      return ANNOTATIONS_TABLE_INDICATOR;
+  }
+}
+
 function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
   popoverPositionClass, popoverArrowPositionClass) {
   const tableBody = tableElement.childNodes[1];
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     const { fileName, currentRowHasError } = getFileName(tableBody, i);
     if (newFileName === fileName) {
-      const tableName = tableElement.id === 'upload-datsets-modal-upload-datasets-annotations-table' ? ANNOTATIONS_TABLE_INDICATOR : IMAGES_TABLE_INDICATOR;
+      const tableName = getTableName(tableElement.id);
       if (validationResult.error) {
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkupWthError(
@@ -163,8 +176,7 @@ function insertRowToClassesTable(fileName, validationResult) {
     const cell = row.insertCell(0);
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        POPOVER_LEFT_POSITION_CLASS,
-        POPOVER_ARROW_LEFT_POSITION_CLASS,
+        POPOVER_LEFT_POSITION_CLASS, POPOVER_ARROW_LEFT_POSITION_CLASS,
         CLASSES_TABLE_INDICATOR, popoverIndex += 1);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, CLASSES_TABLE_INDICATOR);

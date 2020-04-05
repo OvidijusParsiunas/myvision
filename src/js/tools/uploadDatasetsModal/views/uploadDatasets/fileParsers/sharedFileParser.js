@@ -101,7 +101,11 @@ function txtToJSON(result, fileMetaData) {
     const attributes = line
       .split(' ')
       .filter(entry => entry.trim() !== '')
-      .map(entry => Number.parseFloat(entry, 10));
+      .map((entry) => {
+        const number = Number.parseFloat(entry, 10);
+        if (!Number.isNaN(number)) { return number; }
+        return entry;
+      });
     if (attributes.length > 0) {
       fileEmpty = false;
       if (attributes.length !== 5) {
