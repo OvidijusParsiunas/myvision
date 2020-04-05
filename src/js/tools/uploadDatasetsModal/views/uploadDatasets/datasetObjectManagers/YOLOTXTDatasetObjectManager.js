@@ -40,6 +40,12 @@ function addValidAnnotationFile(fileName, annotationFileObj) {
   }
 }
 
+function addFaltyAnnotationFile(fileName, annotationFileObj) {
+  if (getIndexOfFileInArray(fileName, datasetObject[FALTY_ANNOTATION_FILES_ARRAY]) === undefined) {
+    datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(annotationFileObj);
+  }
+}
+
 function removeFile(fileName, objectName) {
   if (Array.isArray(datasetObject[objectName])) {
     const subjectArray = datasetObject[objectName];
@@ -92,6 +98,7 @@ function addAnnotationFile(annotationFileObj, error) {
   if (!error) {
     addValidAnnotationFile(name, annotationFileObj);
   } else {
+    addFaltyAnnotationFile(name, annotationFileObj);
     removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
   }
 }

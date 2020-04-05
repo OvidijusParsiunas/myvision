@@ -42,8 +42,8 @@ function validateAnnotationsFiles(annotationsArray, filesToBeMovedArray, moveWhe
     insertRowToAnnotationsTable(name, validationResult);
     if (!validationResult.error) {
       foundValid = true;
-      if (moveWhenFalty) { filesToBeMovedArray.push(annotationFile); }
-    } else if (!moveWhenFalty) {
+      if (!moveWhenFalty) { filesToBeMovedArray.push(annotationFile); }
+    } else if (moveWhenFalty) {
       filesToBeMovedArray.push(annotationFile);
     }
   });

@@ -1,15 +1,15 @@
 import {
-  removeFile, getDatasetObject, updateImageFileErrorStatus,
+  removeFile, getDatasetObject, updateImageFileErrorStatus, replaceActiveClassesFileIfRemoving,
   moveAnnotationFileToFaltyArray, moveAnnotationFileToValidArray,
 } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
-  insertRowToAnnotationsTable,
+  insertRowToAnnotationsTable, changeClassesRowToDefault,
 } from '../style';
 import validateYOLOTXTFormat from '../formatValidators/YOLOTXTValidator';
 import {
   VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT,
-  CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY,
+  CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE,
 } from '../../../consts';
 
 // functionality here cannot be used for all, will need
@@ -77,12 +77,22 @@ function validateExistingAnnotations(datasetObject) {
   }
 }
 
+function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject) {
+  if (activeAnnotationFile) {
+    changeClassesRowToDefault(activeAnnotationFile.body.fileMetaData.name);
+    activeAnnotationFile.newlyActive = false;
+    validateExistingAnnotations(datasetObject);
+    validateExistingImages(datasetObject);
+  }
+}
+
 // use consts for table indicators
 
 function removeFileHandler(fileName, tableName, errorMessage) {
   const datasetObject = getDatasetObject();
   if (tableName === 'annotations') {
     removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
+    removeFile(fileName, FALTY_ANNOTATION_FILES_ARRAY);
     if (!errorMessage) {
       if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length === 0) {
         disableFinishButton();
@@ -99,12 +109,9 @@ function removeFileHandler(fileName, tableName, errorMessage) {
   } else if (tableName === 'classes') {
     removeFile(fileName, CLASSES_FILES_ARRAY);
     if (!errorMessage) {
-      if (datasetObject[CLASSES_FILES_ARRAY].length === 0) {
-        disableFinishButton();
-        changeAllImagesTableRowsToDefault();
-      } else {
-        validateExistingImages(datasetObject);
-        validateExistingAnnotations(datasetObject);
+      replaceActiveClassesFileIfRemoving(fileName);
+      if (datasetObject[ACTIVE_CLASSES_FILE] !== null) {
+        setNewActiveAnnotationFileRow(datasetObject[ACTIVE_CLASSES_FILE], datasetObject);
       }
     }
   }
