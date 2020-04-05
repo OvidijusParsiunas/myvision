@@ -105,10 +105,12 @@ function updateImageFileErrorStatus(name, errorStatus) {
 }
 
 function moveAnnotationFileToFaltyArray(name) {
+  removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
   datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(name);
 }
 
 function moveAnnotationFileToValidArray(name) {
+  removeFile(name, FALTY_ANNOTATION_FILES_ARRAY);
   datasetObject[VALID_ANNOTATION_FILES_ARRAY].push(name);
 }
 

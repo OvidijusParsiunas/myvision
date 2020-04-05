@@ -1,10 +1,16 @@
-import { removeFile, getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import {
+  removeFile, getDatasetObject, updateImageFileErrorStatus,
+  moveAnnotationFileToFaltyArray, moveAnnotationFileToValidArray,
+} from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   insertRowToAnnotationsTable,
 } from '../style';
 import validateYOLOTXTFormat from '../formatValidators/YOLOTXTValidator';
-import { VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT, CLASSES_FILES_ARRAY } from '../../../consts';
+import {
+  VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT,
+  CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY,
+} from '../../../consts';
 
 // functionality here cannot be used for all, will need
 // to be moved to atomic COCOJSON file
@@ -29,21 +35,40 @@ function validateExistingImages(datasetObject) {
   }
 }
 
+function validateAnnotationsFile(annotationsArray, filesToBeMovedArray, moveWhenFalty) {
+  let foundValid = false;
+  annotationsArray.forEach((anntoationsFile) => {
+    const validationResult = validateYOLOTXTFormat(anntoationsFile);
+    const { name } = anntoationsFile.body.fileMetaData;
+    insertRowToAnnotationsTable(name, validationResult);
+    if (!validationResult.error) {
+      foundValid = true;
+      if (moveWhenFalty) { filesToBeMovedArray.push(anntoationsFile); }
+    } else if (!moveWhenFalty) {
+      filesToBeMovedArray.push(anntoationsFile);
+    }
+  });
+  return foundValid;
+}
+
 function validateExistingAnnotations(datasetObject) {
   if (datasetObject[CLASSES_FILES_ARRAY].length > 0) {
-    let foundValid = false;
-    datasetObject[VALID_ANNOTATION_FILES_ARRAY].forEach((anntoationsFile, index, arrayObject) => {
-      const validationResult = validateYOLOTXTFormat(anntoationsFile);
-      const { name } = anntoationsFile.body.fileMetaData;
-      insertRowToAnnotationsTable(name, validationResult);
-      if (validationResult.error) {
-        // arrayObject.splice(index, 1);
-      } else {
-        foundValid = true;
-      }
+    const filesToBeMovedToFaltyArray = [];
+    const filesToBeMovedToValidArray = [];
+    const foundValidInValidArray = validateAnnotationsFile(
+      datasetObject[VALID_ANNOTATION_FILES_ARRAY], filesToBeMovedToFaltyArray, true,
+    );
+    const foundValidInFaltyArray = validateAnnotationsFile(
+      datasetObject[FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray, false,
+    );
+    filesToBeMovedToFaltyArray.forEach((annotationFile) => {
+      moveAnnotationFileToFaltyArray(annotationFile);
+    });
+    filesToBeMovedToValidArray.forEach((annotationFile) => {
+      moveAnnotationFileToValidArray(annotationFile);
     });
     // think about this
-    if (!foundValid) {
+    if (!foundValidInValidArray && !foundValidInFaltyArray) {
       disableFinishButton();
     }
   } else {

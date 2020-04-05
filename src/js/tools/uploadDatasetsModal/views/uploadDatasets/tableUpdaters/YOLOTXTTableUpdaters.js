@@ -34,33 +34,41 @@ function validateExistingImages(datasetObject) {
   }
 }
 
+function validateAnnotationsFiles(annotationsArray, filesToBeMovedArray, moveWhenFalty) {
+  let foundValid = false;
+  annotationsArray.forEach((annotationFile) => {
+    const validationResult = validateYOLOTXTFormat(annotationFile);
+    const { name } = annotationFile.body.fileMetaData;
+    insertRowToAnnotationsTable(name, validationResult);
+    if (!validationResult.error) {
+      foundValid = true;
+      if (moveWhenFalty) { filesToBeMovedArray.push(annotationFile); }
+    } else if (!moveWhenFalty) {
+      filesToBeMovedArray.push(annotationFile);
+    }
+  });
+  return foundValid;
+}
+
 // will need to be replicated in the remove button
 function validateExistingAnnotations(datasetObject) {
   if (datasetObject[CLASSES_FILES_ARRAY].length > 0) {
-    let foundValid = false;
-    datasetObject[VALID_ANNOTATION_FILES_ARRAY].forEach((anntoationsFile, index, arrayObject) => {
-      const validationResult = validateYOLOTXTFormat(anntoationsFile);
-      const { name } = anntoationsFile.body.fileMetaData;
-      insertRowToAnnotationsTable(name, validationResult);
-      if (!validationResult.error) {
-        foundValid = true;
-      } else {
-        arrayObject.splice(index, 1);
-        moveAnnotationFileToFaltyArray(anntoationsFile);
-      }
+    const filesToBeMovedToFaltyArray = [];
+    const filesToBeMovedToValidArray = [];
+    const foundValidInValidArray = validateAnnotationsFiles(
+      datasetObject[VALID_ANNOTATION_FILES_ARRAY], filesToBeMovedToFaltyArray, true,
+    );
+    const foundValidInFaltyArray = validateAnnotationsFiles(
+      datasetObject[FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray, false,
+    );
+    filesToBeMovedToFaltyArray.forEach((annotationFile) => {
+      moveAnnotationFileToFaltyArray(annotationFile);
     });
-    datasetObject[FALTY_ANNOTATION_FILES_ARRAY].forEach((anntoationsFile, index, arrayObject) => {
-      const validationResult = validateYOLOTXTFormat(anntoationsFile);
-      const { name } = anntoationsFile.body.fileMetaData;
-      insertRowToAnnotationsTable(name, validationResult);
-      if (!validationResult.error) {
-        arrayObject.splice(index, 1);
-        moveAnnotationFileToValidArray(anntoationsFile);
-        foundValid = true;
-      }
+    filesToBeMovedToValidArray.forEach((annotationFile) => {
+      moveAnnotationFileToValidArray(annotationFile);
     });
     // think about this
-    if (foundValid) {
+    if (foundValidInValidArray || foundValidInFaltyArray) {
       enableFinishButton();
     } else {
       disableFinishButton();
