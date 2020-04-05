@@ -116,9 +116,21 @@ function getFileName(tableBody, rowIndex) {
   };
 }
 
+function getTableElement(tableName) {
+  switch (tableName) {
+    case ANNOTATIONS_TABLE_INDICATOR:
+      return annotationsTableElement;
+    case IMAGES_TABLE_INDICATOR:
+      return imagesTableElement;
+    case CLASSES_TABLE_INDICATOR:
+      return classesTableElement;
+    default:
+      return annotationsTableElement;
+  }
+}
+
 function removeRow(subjectFileName, tableName) {
-  const tableElement = tableName === ANNOTATIONS_TABLE_INDICATOR ? annotationsTableElement
-    : imagesTableElement;
+  const tableElement = getTableElement(tableName);
   const tableBody = tableElement.childNodes[1];
   for (let i = 0; i < tableBody.childNodes.length; i += 1) {
     const { fileName } = getFileName(tableBody, i);

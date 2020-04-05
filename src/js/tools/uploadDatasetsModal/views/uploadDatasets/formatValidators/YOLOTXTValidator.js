@@ -115,6 +115,8 @@ function checkAllRows(rows) {
   return { error: false, message: '' };
 }
 
+// update file formats to be consts
+
 // check if setCurrentAnnotationFilesToInactive is actually doing something for other formats
 // as the active property may not be used
 

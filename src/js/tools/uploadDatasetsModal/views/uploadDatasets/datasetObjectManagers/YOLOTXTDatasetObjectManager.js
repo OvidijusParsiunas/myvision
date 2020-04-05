@@ -1,11 +1,13 @@
 import {
   VALID_ANNOTATION_FILES_ARRAY, CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE, IMAGE_FILES_OBJECT,
+  FALTY_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 
 const datasetObject = { };
 datasetObject[CLASSES_FILES_ARRAY] = [];
 datasetObject[ACTIVE_CLASSES_FILE] = null;
 datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
+datasetObject[FALTY_ANNOTATION_FILES_ARRAY] = [];
 datasetObject[IMAGE_FILES_OBJECT] = {};
 
 function getIndexOfFileInArray(fileName, subjectArray) {
@@ -102,6 +104,14 @@ function updateImageFileErrorStatus(name, errorStatus) {
   datasetObject[IMAGE_FILES_OBJECT][name].error = errorStatus;
 }
 
+function moveAnnotationFileToFaltyArray(name) {
+  datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(name);
+}
+
+function moveAnnotationFileToValidArray(name) {
+  datasetObject[VALID_ANNOTATION_FILES_ARRAY].push(name);
+}
+
 function addImageFile(imageFileObj, errorObject) {
   if (!isInImagesList(imageFileObj.body.fileMetaData.name)) {
     // the error property is used to draw shapes of valid images only
@@ -136,5 +146,6 @@ function getDatasetObject() {
 export {
   addAnnotationFile, getImageFiles, removeFile, getDatasetObject, addFile,
   getAnnotationFiles, addImageFile, clearDatasetObject, updateImageFileErrorStatus,
-  replaceActiveClassesFileIfRemoving,
+  replaceActiveClassesFileIfRemoving, moveAnnotationFileToFaltyArray,
+  moveAnnotationFileToValidArray,
 };

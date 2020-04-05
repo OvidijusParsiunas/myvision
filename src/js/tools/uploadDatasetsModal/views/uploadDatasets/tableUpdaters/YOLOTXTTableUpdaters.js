@@ -5,9 +5,12 @@ import {
 import validateYOLOTXTFormat from '../formatValidators/YOLOTXTValidator';
 import {
   ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
-  IMAGE_FILES_OBJECT, CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE,
+  IMAGE_FILES_OBJECT, CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE, FALTY_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
-import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import {
+  getDatasetObject, updateImageFileErrorStatus,
+  moveAnnotationFileToFaltyArray, moveAnnotationFileToValidArray,
+} from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
@@ -31,16 +34,32 @@ function validateExistingImages(datasetObject) {
   }
 }
 
+// will need to be replicated in the remove button
 function validateExistingAnnotations(datasetObject) {
   if (datasetObject[CLASSES_FILES_ARRAY].length > 0) {
     let foundValid = false;
-    datasetObject[VALID_ANNOTATION_FILES_ARRAY].forEach((anntoationsFile) => {
+    datasetObject[VALID_ANNOTATION_FILES_ARRAY].forEach((anntoationsFile, index, arrayObject) => {
       const validationResult = validateYOLOTXTFormat(anntoationsFile);
-      if (!validationResult.error) { foundValid = true; }
       const { name } = anntoationsFile.body.fileMetaData;
       insertRowToAnnotationsTable(name, validationResult);
-      // updateImageFileErrorStatus(name, validationResult.error);
+      if (!validationResult.error) {
+        foundValid = true;
+      } else {
+        arrayObject.splice(index, 1);
+        moveAnnotationFileToFaltyArray(anntoationsFile);
+      }
     });
+    datasetObject[FALTY_ANNOTATION_FILES_ARRAY].forEach((anntoationsFile, index, arrayObject) => {
+      const validationResult = validateYOLOTXTFormat(anntoationsFile);
+      const { name } = anntoationsFile.body.fileMetaData;
+      insertRowToAnnotationsTable(name, validationResult);
+      if (!validationResult.error) {
+        arrayObject.splice(index, 1);
+        moveAnnotationFileToValidArray(anntoationsFile);
+        foundValid = true;
+      }
+    });
+    // think about this
     if (foundValid) {
       enableFinishButton();
     } else {
@@ -69,9 +88,8 @@ function checkClassesFileAlreadyInTable(validationResult, datasetObject) {
   const classFiles = datasetObject[CLASSES_FILES_ARRAY];
   if (!validationResult.error) {
     reValidateExistingClassesFiles(classFiles);
-    // validate existing annotations
     validateExistingAnnotations(datasetObject);
-    // validateExistingImages(datasetObject);
+    validateExistingImages(datasetObject);
     return validationResult;
   }
   if (classFiles.length > 0) {
