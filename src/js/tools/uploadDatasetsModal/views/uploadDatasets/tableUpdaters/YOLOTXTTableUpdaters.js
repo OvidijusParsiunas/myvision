@@ -1,16 +1,17 @@
 import {
   insertRowToAnnotationsTable, insertRowToImagesTable, enableFinishButton, insertRowToClassesTable,
-  changeAllImagesTableRowsToDefault, changeAnnotationRowToDefault, disableFinishButton,
+  changeAllImagesTableRowsToDefault, disableFinishButton, removeRow,
 } from '../style';
 import validateYOLOTXTFormat from '../formatValidators/YOLOTXTValidator';
 import {
-  ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
-  IMAGE_FILES_OBJECT, CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE, FALTY_ANNOTATION_FILES_ARRAY,
+  ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY, ANNOTATIONS_TABLE_INDICATOR,
+  IMAGE_FILES_OBJECT, CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, CLASSES_TABLE_INDICATOR,
 } from '../../../consts';
 import {
-  getDatasetObject, updateImageFileErrorStatus,
+  getDatasetObject, updateImageFileErrorStatus, removeFile,
   moveAnnotationFileToFaltyArray, moveAnnotationFileToValidArray,
 } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import removeFileHandler from '../removeFileHandlers/YOLOTXTRemoveFileHandler';
 
 function validateExistingImages(datasetObject) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
@@ -50,7 +51,6 @@ function validateAnnotationsFiles(annotationsArray, filesToBeMovedArray, moveWhe
   return foundValid;
 }
 
-// will need to be replicated in the remove button
 function validateExistingAnnotations(datasetObject) {
   if (datasetObject[CLASSES_FILES_ARRAY].length > 0) {
     const filesToBeMovedToFaltyArray = [];
@@ -79,7 +79,7 @@ function validateExistingAnnotations(datasetObject) {
   }
 }
 
-function reValidateExistingClassesFiles(classesFiles) {
+function validateExistingClassesFiles(classesFiles) {
   classesFiles.forEach((classesFile) => {
     const validationResult = validateYOLOTXTFormat(classesFile);
     const { name } = classesFile.body.fileMetaData;
@@ -91,29 +91,31 @@ function reValidateExistingClassesFiles(classesFiles) {
   });
 }
 
-function checkClassesFileAlreadyInTable(validationResult, datasetObject) {
-  const activeClassesFile = datasetObject[ACTIVE_CLASSES_FILE];
+function removeFileFromAnnotations(fileName) {
+  if (removeRow(fileName, ANNOTATIONS_TABLE_INDICATOR)) {
+    removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
+    removeFile(fileName, FALTY_ANNOTATION_FILES_ARRAY);
+  }
+}
+
+function validateAllFiles(validationResult, datasetObject, fileName) {
   const classFiles = datasetObject[CLASSES_FILES_ARRAY];
+  // the general expectation is that class files would not have errors (no validation)
   if (!validationResult.error) {
-    reValidateExistingClassesFiles(classFiles);
+    removeFileFromAnnotations(fileName);
+    validateExistingClassesFiles(classFiles);
     validateExistingAnnotations(datasetObject);
     validateExistingImages(datasetObject);
-    return validationResult;
   }
-  if (classFiles.length > 0) {
-    if (activeClassesFile && activeClassesFile.newlyActive) {
-      // change classes row to default
-      changeAnnotationRowToDefault(activeClassesFile.body.fileMetaData.name);
-      activeClassesFile.newlyActive = false;
-      // validate existing annotations
-      validateExistingImages(datasetObject);
-    }
-    return { error: true, message: validationResult.message };
-  }
-  // change all annotation files to default
-  // similar validations should still apply for annotations -> images tables
-  changeAllImagesTableRowsToDefault();
   return validationResult;
+}
+
+function removeFileFromClasses(fileName) {
+  if (removeRow(fileName, CLASSES_TABLE_INDICATOR)) {
+    removeFileHandler(fileName, 'classes');
+    return true;
+  }
+  return false;
 }
 
 function updateYOLOTXTTables(parsedObj, validationResult) {
@@ -123,14 +125,14 @@ function updateYOLOTXTTables(parsedObj, validationResult) {
     insertRowToImagesTable(fileName, validationResult);
     if (validationResult.valid) { enableFinishButton(); }
   } else if (parsedObj.fileFormat === 'annotation') {
-    validateExistingImages(datasetObject);
-    insertRowToAnnotationsTable(fileName, validationResult);
+    if (!removeFileFromClasses(fileName)) {
+      validateExistingImages(datasetObject);
+      insertRowToAnnotationsTable(fileName, validationResult);
+    }
   } else if (parsedObj.fileFormat === 'classes') {
-    const newValidationResult = checkClassesFileAlreadyInTable(
-      validationResult, datasetObject,
-    );
-    // whilst the reValidateExistingAnnotations inserts the new annotation,
-    // this overwrites it if it has been incorrectly set with an error
+    const newValidationResult = validateAllFiles(validationResult, datasetObject, fileName);
+    // whilst the validateExistingClassesFiles inserts the new class into the table,
+    // this overwrites without the error of more than 1 class
     insertRowToClassesTable(fileName, newValidationResult);
   }
 }

@@ -136,9 +136,10 @@ function removeRow(subjectFileName, tableName) {
     const { fileName } = getFileName(tableBody, i);
     if (subjectFileName === fileName) {
       tableBody.childNodes[i].remove();
-      break;
+      return true;
     }
   }
+  return false;
 }
 
 function getTableName(tableId) {

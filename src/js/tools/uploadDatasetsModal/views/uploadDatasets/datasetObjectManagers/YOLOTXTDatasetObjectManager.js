@@ -111,14 +111,16 @@ function updateImageFileErrorStatus(name, errorStatus) {
   datasetObject[IMAGE_FILES_OBJECT][name].error = errorStatus;
 }
 
-function moveAnnotationFileToFaltyArray(name) {
+function moveAnnotationFileToFaltyArray(file) {
+  const { name } = file.body.fileMetaData;
   removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
-  datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(name);
+  datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(file);
 }
 
-function moveAnnotationFileToValidArray(name) {
+function moveAnnotationFileToValidArray(file) {
+  const { name } = file.body.fileMetaData;
   removeFile(name, FALTY_ANNOTATION_FILES_ARRAY);
-  datasetObject[VALID_ANNOTATION_FILES_ARRAY].push(name);
+  datasetObject[VALID_ANNOTATION_FILES_ARRAY].push(file);
 }
 
 function addImageFile(imageFileObj, errorObject) {
