@@ -66,7 +66,6 @@ function validateExistingAnnotations(datasetObject) {
   filesToBeMovedToValidArray.forEach((annotationFile) => {
     moveAnnotationFileToValidArray(annotationFile);
   });
-  // think about this
   if (foundValidInValidArray || foundValidInFaltyArray) {
     enableFinishButton();
   } else {

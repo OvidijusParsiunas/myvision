@@ -67,7 +67,9 @@ function removeFileHandler(fileName, tableName, errorMessage) {
     }
   } else if (tableName === 'images') {
     removeFile(fileName, IMAGE_FILES_OBJECT);
-    if (Object.keys(datasetObject[IMAGE_FILES_OBJECT]).length === 0) {
+    if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
+      .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
+      .length === 0) {
       disableFinishButton();
     }
   }

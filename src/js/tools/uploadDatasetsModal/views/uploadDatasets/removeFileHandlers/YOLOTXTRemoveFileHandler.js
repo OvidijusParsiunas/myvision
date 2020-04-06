@@ -4,7 +4,7 @@ import {
 } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
-  insertRowToAnnotationsTable, changeClassesRowToDefault,
+  insertRowToAnnotationsTable, changeClassesRowToDefault, enableFinishButton,
 } from '../style';
 import validateYOLOTXTFormat from '../formatValidators/YOLOTXTValidator';
 import {
@@ -66,9 +66,10 @@ function validateExistingAnnotations(datasetObject) {
   filesToBeMovedToValidArray.forEach((annotationFile) => {
     moveAnnotationFileToValidArray(annotationFile);
   });
-  // think about this
   if (!foundValidInValidArray && !foundValidInFaltyArray) {
     disableFinishButton();
+  } else {
+    enableFinishButton();
   }
 }
 
@@ -96,7 +97,9 @@ function removeFileHandler(fileName, tableName, errorMessage) {
     }
   } else if (tableName === 'images') {
     removeFile(fileName, IMAGE_FILES_OBJECT);
-    if (Object.keys(datasetObject[IMAGE_FILES_OBJECT]).length === 0) {
+    if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
+      .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
+      .length === 0) {
       disableFinishButton();
     }
   } else if (tableName === 'classes') {
