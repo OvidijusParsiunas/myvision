@@ -52,29 +52,24 @@ function validateAnnotationsFiles(annotationsArray, filesToBeMovedArray, moveWhe
 }
 
 function validateExistingAnnotations(datasetObject) {
-  if (datasetObject[CLASSES_FILES_ARRAY].length > 0) {
-    const filesToBeMovedToFaltyArray = [];
-    const filesToBeMovedToValidArray = [];
-    const foundValidInValidArray = validateAnnotationsFiles(
-      datasetObject[VALID_ANNOTATION_FILES_ARRAY], filesToBeMovedToFaltyArray, true,
-    );
-    const foundValidInFaltyArray = validateAnnotationsFiles(
-      datasetObject[FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray, false,
-    );
-    filesToBeMovedToFaltyArray.forEach((annotationFile) => {
-      moveAnnotationFileToFaltyArray(annotationFile);
-    });
-    filesToBeMovedToValidArray.forEach((annotationFile) => {
-      moveAnnotationFileToValidArray(annotationFile);
-    });
-    // think about this
-    if (foundValidInValidArray || foundValidInFaltyArray) {
-      enableFinishButton();
-    } else {
-      disableFinishButton();
-    }
+  const filesToBeMovedToFaltyArray = [];
+  const filesToBeMovedToValidArray = [];
+  const foundValidInValidArray = validateAnnotationsFiles(
+    datasetObject[VALID_ANNOTATION_FILES_ARRAY], filesToBeMovedToFaltyArray, true,
+  );
+  const foundValidInFaltyArray = validateAnnotationsFiles(
+    datasetObject[FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray, false,
+  );
+  filesToBeMovedToFaltyArray.forEach((annotationFile) => {
+    moveAnnotationFileToFaltyArray(annotationFile);
+  });
+  filesToBeMovedToValidArray.forEach((annotationFile) => {
+    moveAnnotationFileToValidArray(annotationFile);
+  });
+  // think about this
+  if (foundValidInValidArray || foundValidInFaltyArray) {
+    enableFinishButton();
   } else {
-    changeAllImagesTableRowsToDefault();
     disableFinishButton();
   }
 }
