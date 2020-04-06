@@ -1,5 +1,8 @@
 export const ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE = 'Only one annotation file is allowed per dataset (app version 1.0)';
 export const ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE = 'Only one classes file is allowed per dataset (app version 1.0)';
+export const ANNOTATION_FILE_INDICATOR = 'annotation';
+export const CLASSES_FILE_INDICATOR = 'classes';
+export const IMAGE_FILE_INDICATOR = 'image';
 export const CLASSES_TABLE_INDICATOR = 'classes';
 export const ANNOTATIONS_TABLE_INDICATOR = 'annotations';
 export const IMAGES_TABLE_INDICATOR = 'images';

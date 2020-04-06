@@ -3,7 +3,10 @@ import {
   changeAllImagesTableRowsToDefault,
 } from '../style';
 import validateVOCXMLFormat from '../formatValidators/VOCXMLValidator';
-import { IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY } from '../../../consts';
+import {
+  IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY,
+  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
+} from '../../../consts';
 import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {
@@ -31,11 +34,11 @@ function validateExistingImages(datasetObject) {
 function updateVOCXMLTables(parsedObj, validationResult) {
   const datasetObject = getDatasetObject();
   const fileName = parsedObj.body.fileMetaData.name;
-  if (parsedObj.fileFormat === 'image') {
+  if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     insertRowToImagesTable(fileName, validationResult);
     if (validationResult.valid) { enableFinishButton(); }
   }
-  if (parsedObj.fileFormat === 'annotation') {
+  if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
     validateExistingImages(datasetObject);
     insertRowToAnnotationsTable(fileName, validationResult);
   }

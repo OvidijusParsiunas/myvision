@@ -8,10 +8,9 @@ import {
 } from '../style';
 import validateCOCOJSONFormat from '../formatValidators/VGGJSONValidator';
 import {
-  ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE,
-  VALID_ANNOTATION_FILES_ARRAY,
-  FALTY_ANNOTATION_FILES_ARRAY,
-  IMAGE_FILES_OBJECT,
+  FALTY_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT,
+  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR,
+  ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 
 // pontential to move this out into shared validate logic
@@ -46,7 +45,7 @@ function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject) {
 
 function removeVGGJSONFileHandler(fileName, tableName, errorMessage) {
   const datasetObject = getDatasetObject();
-  if (tableName === 'annotations') {
+  if (tableName === ANNOTATIONS_TABLE_INDICATOR) {
     if (errorMessage) {
       let annotationsArrayName;
       if (errorMessage === ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE) {
@@ -65,7 +64,7 @@ function removeVGGJSONFileHandler(fileName, tableName, errorMessage) {
         changeAllImagesTableRowsToDefault();
       }
     }
-  } else if (tableName === 'images') {
+  } else if (tableName === IMAGES_TABLE_INDICATOR) {
     removeFile(fileName, IMAGE_FILES_OBJECT);
     if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
       .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))

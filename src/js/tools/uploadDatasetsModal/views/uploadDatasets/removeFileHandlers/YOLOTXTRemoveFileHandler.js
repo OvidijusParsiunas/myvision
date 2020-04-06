@@ -10,6 +10,7 @@ import validateYOLOTXTFormat from '../formatValidators/YOLOTXTValidator';
 import {
   VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT,
   CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE,
+  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
 } from '../../../consts';
 
 // functionality here cannot be used for all, will need
@@ -80,11 +81,9 @@ function setNewActiveClassesFileRow(activeClassesFile, datasetObject) {
   validateExistingImages(datasetObject);
 }
 
-// use consts for table indicators
-
 function removeFileHandler(fileName, tableName, errorMessage) {
   const datasetObject = getDatasetObject();
-  if (tableName === 'annotations') {
+  if (tableName === ANNOTATIONS_TABLE_INDICATOR) {
     removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
     removeFile(fileName, FALTY_ANNOTATION_FILES_ARRAY);
     if (!errorMessage) {
@@ -95,14 +94,14 @@ function removeFileHandler(fileName, tableName, errorMessage) {
         validateExistingImages(datasetObject);
       }
     }
-  } else if (tableName === 'images') {
+  } else if (tableName === IMAGES_TABLE_INDICATOR) {
     removeFile(fileName, IMAGE_FILES_OBJECT);
     if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
       .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
       .length === 0) {
       disableFinishButton();
     }
-  } else if (tableName === 'classes') {
+  } else if (tableName === CLASSES_TABLE_INDICATOR) {
     removeFile(fileName, CLASSES_FILES_ARRAY);
     if (!errorMessage) {
       replaceActiveClassesFileIfRemoving(fileName);

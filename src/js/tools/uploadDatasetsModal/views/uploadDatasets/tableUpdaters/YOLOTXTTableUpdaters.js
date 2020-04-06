@@ -6,6 +6,7 @@ import validateYOLOTXTFormat from '../formatValidators/YOLOTXTValidator';
 import {
   ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY, ANNOTATIONS_TABLE_INDICATOR,
   IMAGE_FILES_OBJECT, CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, CLASSES_TABLE_INDICATOR,
+  ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
 import {
   getDatasetObject, updateImageFileErrorStatus, removeFile,
@@ -106,7 +107,7 @@ function validateAllFiles(validationResult, datasetObject, fileName) {
 
 function removeFileFromClasses(fileName) {
   if (removeRow(fileName, CLASSES_TABLE_INDICATOR)) {
-    removeFileHandler(fileName, 'classes');
+    removeFileHandler(fileName, CLASSES_FILE_INDICATOR);
     return true;
   }
   return false;
@@ -115,15 +116,15 @@ function removeFileFromClasses(fileName) {
 function updateYOLOTXTTables(parsedObj, validationResult) {
   const datasetObject = getDatasetObject();
   const fileName = parsedObj.body.fileMetaData.name;
-  if (parsedObj.fileFormat === 'image') {
+  if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     insertRowToImagesTable(fileName, validationResult);
     if (validationResult.valid) { enableFinishButton(); }
-  } else if (parsedObj.fileFormat === 'annotation') {
+  } else if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
     if (!removeFileFromClasses(fileName)) {
       validateExistingImages(datasetObject);
       insertRowToAnnotationsTable(fileName, validationResult);
     }
-  } else if (parsedObj.fileFormat === 'classes') {
+  } else if (parsedObj.fileFormat === CLASSES_FILE_INDICATOR) {
     const newValidationResult = validateAllFiles(validationResult, datasetObject, fileName);
     // whilst the validateExistingClassesFiles inserts the new class into the table,
     // this overwrites without the error of more than 1 class

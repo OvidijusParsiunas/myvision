@@ -1,6 +1,6 @@
 import {
-  VALID_ANNOTATION_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY,
-  ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT,
+  VALID_ANNOTATION_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, IMAGE_FILE_INDICATOR,
+  ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT, ANNOTATION_FILE_INDICATOR,
 } from '../../../consts';
 
 // potentiall shared with COCO JSON
@@ -105,9 +105,9 @@ function addImageFile(imageFileObj, errorObject) {
 }
 
 function addFile(file, errorObject) {
-  if (file.fileFormat === 'image') {
+  if (file.fileFormat === IMAGE_FILE_INDICATOR) {
     addImageFile(file, errorObject);
-  } else if (file.fileFormat === 'annotation') {
+  } else if (file.fileFormat === ANNOTATION_FILE_INDICATOR) {
     addAnnotationFile(file, errorObject.error);
   }
 }

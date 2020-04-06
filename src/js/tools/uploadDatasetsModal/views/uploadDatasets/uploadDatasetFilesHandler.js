@@ -1,3 +1,5 @@
+import { IMAGE_FILE_INDICATOR } from '../../consts';
+
 let addFileFunc = null;
 let fileParserFunc = null;
 let tableUpdaterFunc = null;
@@ -32,7 +34,10 @@ function uploadDatasetFilesHandler(uploadData) {
 
 function addAlreadyUploadedImages(images) {
   images.forEach((image) => {
-    const parsedFileObj = { fileFormat: 'image', body: { fileMetaData: { name: image.name } } };
+    const parsedFileObj = {
+      fileFormat: IMAGE_FILE_INDICATOR,
+      body: { fileMetaData: { name: image.name } },
+    };
     const errorObj = { error: false, message: '', alreadyUploaded: true };
     addFileFunc(parsedFileObj, errorObj);
     tableUpdaterFunc(parsedFileObj, errorObj);

@@ -5,7 +5,7 @@ import {
 import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
 import {
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
-  ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT,
+  ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT, ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
 import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 
@@ -63,11 +63,11 @@ function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
 function updateCOCOJSONTables(parsedObj, validationResult) {
   const datasetObject = getDatasetObject();
   const fileName = parsedObj.body.fileMetaData.name;
-  if (parsedObj.fileFormat === 'image') {
+  if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     insertRowToImagesTable(fileName, validationResult);
     if (validationResult.valid) { enableFinishButton(); }
   }
-  if (parsedObj.fileFormat === 'annotation') {
+  if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
     const newValidationResult = checkAnnotationAlreadyInTable(
       validationResult, datasetObject,
     );

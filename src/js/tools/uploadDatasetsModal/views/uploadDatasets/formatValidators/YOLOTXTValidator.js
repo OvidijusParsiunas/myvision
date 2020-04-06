@@ -1,4 +1,7 @@
-import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE } from '../../../consts';
+import {
+  VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE,
+  ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
+} from '../../../consts';
 import { getDatasetObject } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
@@ -115,8 +118,6 @@ function checkAllRows(rows) {
   return { error: false, message: '' };
 }
 
-// update file formats to be consts
-
 // check if setCurrentAnnotationFilesToInactive is actually doing something for other formats
 // as the active property may not be used
 
@@ -151,18 +152,18 @@ function validateYOLOTXTFormat(parsedObj, errorObj) {
     const datasetObject = getDatasetObject();
     const activeClassesFile = datasetObject[ACTIVE_CLASSES_FILE];
     const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === 'annotation') {
+    if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, activeClassesFile);
     }
-    if (parsedObj.fileFormat === 'image') {
+    if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles);
     }
     // do not need any validation for a classes file
-    if (parsedObj.fileFormat === 'classes') {
+    if (parsedObj.fileFormat === CLASSES_FILE_INDICATOR) {
       return { error: false, message: '' };
     }
   }
-  if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === 'image') {
+  if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };

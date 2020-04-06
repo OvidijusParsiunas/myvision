@@ -1,16 +1,21 @@
+import { ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR } from '../../../consts';
+
 function parseImageData(fileMetaData, event) {
   const image = new Image();
   image.src = event.target.result;
-  return { fileFormat: 'image', body: { fileMetaData, imageElement: image } };
+  return { fileFormat: IMAGE_FILE_INDICATOR, body: { fileMetaData, imageElement: image } };
 }
 
 function parseJSON(fileMetaData, event) {
   try {
     const JSONObject = JSON.parse(event.target.result);
-    return { fileFormat: 'annotation', body: { fileMetaData, annotationData: JSONObject } };
+    return {
+      fileFormat: ANNOTATION_FILE_INDICATOR,
+      body: { fileMetaData, annotationData: JSONObject },
+    };
   } catch (errorMessage) {
     return {
-      fileFormat: 'annotation',
+      fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: `Invalid JSON - ${errorMessage}` },
     };
@@ -82,10 +87,13 @@ function parseXML(fileMetaData, event) {
   try {
     const parser = new DOMParser();
     const JSONObject = xmlToJson(parser.parseFromString(event.target.result, 'application/xml'));
-    return { fileFormat: 'annotation', body: { fileMetaData, annotationData: JSONObject } };
+    return {
+      fileFormat: ANNOTATION_FILE_INDICATOR,
+      body: { fileMetaData, annotationData: JSONObject },
+    };
   } catch (errorMessage) {
     return {
-      fileFormat: 'annotation',
+      fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: `Invalid XML - ${errorMessage}` },
     };
@@ -116,12 +124,12 @@ function txtToJSON(result, fileMetaData) {
   });
   if (fileEmpty) {
     return {
-      fileFormat: 'annotation',
+      fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: 'Text file is empty' },
     };
   }
-  const fileFormat = isAnnotationsFile ? 'annotation' : 'classes';
+  const fileFormat = isAnnotationsFile ? ANNOTATION_FILE_INDICATOR : CLASSES_FILE_INDICATOR;
   return { fileFormat, body: { fileMetaData, annotationData: linesOfAttributes } };
 }
 
@@ -130,7 +138,7 @@ function parseTXT(fileMetaData, event) {
     return txtToJSON(event.target.result, fileMetaData);
   } catch (errorMessage) {
     return {
-      fileFormat: 'annotation',
+      fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: `Invalid text file - ${errorMessage}` },
     };

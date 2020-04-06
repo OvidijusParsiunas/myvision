@@ -1,6 +1,7 @@
 import {
-  VALID_ANNOTATION_FILES_ARRAY, CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE, IMAGE_FILES_OBJECT,
-  FALTY_ANNOTATION_FILES_ARRAY,
+  FALTY_ANNOTATION_FILES_ARRAY, ANNOTATION_FILE_INDICATOR,
+  VALID_ANNOTATION_FILES_ARRAY, CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE,
+  IMAGE_FILE_INDICATOR, IMAGE_FILES_OBJECT, CLASSES_FILE_INDICATOR,
 } from '../../../consts';
 
 const datasetObject = { };
@@ -133,11 +134,11 @@ function addImageFile(imageFileObj, errorObject) {
 }
 
 function addFile(file, errorObject) {
-  if (file.fileFormat === 'image') {
+  if (file.fileFormat === IMAGE_FILE_INDICATOR) {
     addImageFile(file, errorObject);
-  } else if (file.fileFormat === 'annotation') {
+  } else if (file.fileFormat === ANNOTATION_FILE_INDICATOR) {
     addAnnotationFile(file, errorObject.error);
-  } else if (file.fileFormat === 'classes') {
+  } else if (file.fileFormat === CLASSES_FILE_INDICATOR) {
     addClassesFile(file, errorObject.error);
   }
 }

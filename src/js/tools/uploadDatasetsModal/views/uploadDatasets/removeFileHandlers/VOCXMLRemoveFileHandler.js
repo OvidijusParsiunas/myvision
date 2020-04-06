@@ -3,7 +3,10 @@ import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
 } from '../style';
 import validateVOCXMLFormat from '../formatValidators/VOCXMLValidator';
-import { VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT } from '../../../consts';
+import {
+  VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT,
+  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR,
+} from '../../../consts';
 
 // functionality here cannot be used for all, will need
 // to be moved to atomic COCOJSON file
@@ -25,7 +28,7 @@ function validateExistingImages(datasetObject) {
 
 function removeFileHandler(fileName, tableName, errorMessage) {
   const datasetObject = getDatasetObject();
-  if (tableName === 'annotations') {
+  if (tableName === ANNOTATIONS_TABLE_INDICATOR) {
     if (errorMessage) {
       const annotationsArrayName = VALID_ANNOTATION_FILES_ARRAY;
       removeFile(fileName, annotationsArrayName);
@@ -38,7 +41,7 @@ function removeFileHandler(fileName, tableName, errorMessage) {
         validateExistingImages(datasetObject);
       }
     }
-  } else if (tableName === 'images') {
+  } else if (tableName === IMAGES_TABLE_INDICATOR) {
     removeFile(fileName, IMAGE_FILES_OBJECT);
     if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
       .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))

@@ -1,4 +1,7 @@
-import { VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE } from '../../../consts';
+import {
+  VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE,
+  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
+} from '../../../consts';
 import { getDatasetObject } from '../datasetObjectManagers/VGGJSONDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
@@ -261,14 +264,14 @@ function validateVGGJSONFormat(parsedObj, errorObj) {
     const datasetObject = getDatasetObject();
     const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
     const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === 'annotation') {
+    if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, validAnnotationFiles);
     }
-    if (parsedObj.fileFormat === 'image') {
+    if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
     }
   }
-  if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === 'image') {
+  if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };
