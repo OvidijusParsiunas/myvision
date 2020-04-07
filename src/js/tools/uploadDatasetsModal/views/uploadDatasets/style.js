@@ -36,6 +36,11 @@ const POPOVER_CENTER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-tab
 const POPOVER_ARROW_CENTER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-center';
 const TWO_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-two-table-strategy-section';
 const THREE_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-three-table-strategy-section';
+const POPOVER_ERROR_THEME_CLASS = 'error-popover-color-theme';
+const POPOVER_ARROW_ERROR_THEME_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-arrow';
+const POPOVER_INFORMATION_THEME_CLASS = 'information-popover-color-theme';
+const POPOVER_ARROW_INFORMATION_THEME_CLASS = 'upload-datasets-modal-upload-datasets-table-information-row-popover-arrow';
+const ERROR_TEXT_THEME_CLASS = 'upload-datasets-modal-upload-datasets-table-row-text-error';
 const PROCEED_BUTTON_CLASS = 'popup-proceed-button';
 const ACTIVE_BUTTON_CLASS = 'popup-label-button';
 const DISABLED_BUTTON_CLASS = 'popup-label-button-disabled';
@@ -64,17 +69,18 @@ function addPopoverArrowMarginLeftStyle(tableName) {
   return '';
 }
 
-function createTableRowElementMarkupWthError(fileName, message, popoverPositionClass,
-  popoverArrowClass, tableName, index) {
+function createTableRowElementMarkupWthPopover(fileName, message, popoverPositionClass,
+  popoverArrowPositionClass, tableName, index, popoverColorThemeClass,
+  popoverArrowTheme, textThemeClass) {
   return `
-    <div id="upload-datasets-modal-file-popover-${index}" class="popover upload-datasets-modal-upload-datasets-table-row-popover error-popover-color-theme ${popoverPositionClass}">${message}</div>
-    <div id="upload-datasets-modal-file-popover-arrow-${index}" ${addPopoverArrowMarginLeftStyle(tableName)} class="arrow upload-datasets-modal-upload-datasets-table-error-row-popover-arrow ${popoverArrowClass}"></div>
+    <div id="upload-datasets-modal-file-popover-${index}" class="popover upload-datasets-modal-upload-datasets-table-row-popover ${popoverColorThemeClass} ${popoverPositionClass}">${message}</div>
+    <div id="upload-datasets-modal-file-popover-arrow-${index}" ${addPopoverArrowMarginLeftStyle(tableName)} class="arrow ${popoverArrowTheme} ${popoverArrowPositionClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
         <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
           <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
           <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
-        <div class="upload-datasets-modal-upload-datasets-table-row-text upload-datasets-modal-upload-datasets-table-row-text-error" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFilePopover(${popoverIndex})">${fileName}</div>
+        <div class="upload-datasets-modal-upload-datasets-table-row-text ${textThemeClass}" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFilePopover(${popoverIndex})">${fileName}</div>
     </div>
   `;
 }
@@ -164,13 +170,21 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
       const tableName = getTableName(tableElement.id);
       if (validationResult.error) {
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
-        rowParentElement.innerHTML = createTableRowElementMarkupWthError(
+        rowParentElement.innerHTML = createTableRowElementMarkupWthPopover(
           newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
-          tableName, popoverIndex += 1,
+          tableName, popoverIndex += 1, POPOVER_ERROR_THEME_CLASS, POPOVER_ARROW_ERROR_THEME_CLASS,
+          ERROR_TEXT_THEME_CLASS,
         );
         if (tableName === IMAGES_TABLE_INDICATOR) {
           allImagesStyleSetToDefault = false;
         }
+      } else if (validationResult.information) {
+        const rowParentElement = tableBody.childNodes[i].childNodes[0];
+        rowParentElement.innerHTML = createTableRowElementMarkupWthPopover(
+          newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
+          tableName, popoverIndex += 1, POPOVER_INFORMATION_THEME_CLASS,
+          POPOVER_ARROW_INFORMATION_THEME_CLASS, '',
+        );
       } else if (currentRowHasError && !validationResult.error) {
         const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkup(newFileName, tableName);
@@ -182,18 +196,28 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
 }
 
 function insertRowToClassesTable(fileName, validationResult) {
+  let popoverThemeClass;
+  let popoverArrowThemeClass;
+  let textThemeClass;
+  if (!validationResult.error) {
+    validationResult.information = true;
+    validationResult.message = 'If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height';
+    popoverThemeClass = POPOVER_INFORMATION_THEME_CLASS;
+    popoverArrowThemeClass = POPOVER_ARROW_INFORMATION_THEME_CLASS;
+    textThemeClass = '';
+  } else {
+    popoverThemeClass = POPOVER_ERROR_THEME_CLASS;
+    popoverArrowThemeClass = POPOVER_ARROW_ERROR_THEME_CLASS;
+    textThemeClass = ERROR_TEXT_THEME_CLASS;
+  }
   if (!checkFileAlreadyInTable(fileName, validationResult,
     classesTableElement, POPOVER_LEFT_POSITION_CLASS,
     POPOVER_ARROW_LEFT_POSITION_CLASS)) {
     const row = classesTableElement.insertRow(-1);
     const cell = row.insertCell(0);
-    if (validationResult.error) {
-      cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        POPOVER_LEFT_POSITION_CLASS, POPOVER_ARROW_LEFT_POSITION_CLASS,
-        CLASSES_TABLE_INDICATOR, popoverIndex += 1);
-    } else {
-      cell.innerHTML = createTableRowElementMarkup(fileName, CLASSES_TABLE_INDICATOR);
-    }
+    cell.innerHTML = createTableRowElementMarkupWthPopover(fileName, validationResult.message,
+      POPOVER_LEFT_POSITION_CLASS, POPOVER_ARROW_LEFT_POSITION_CLASS, CLASSES_TABLE_INDICATOR,
+      popoverIndex += 1, popoverThemeClass, popoverArrowThemeClass, textThemeClass);
   }
 }
 
@@ -204,9 +228,10 @@ function insertRowToImagesTable(fileName, validationResult) {
     const row = imagesTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
-      cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        POPOVER_RIGHT_POSITION_CLASS, POPOVER_ARROW_RIGHT_POSITION_CLASS,
-        IMAGES_TABLE_INDICATOR, popoverIndex += 1);
+      cell.innerHTML = createTableRowElementMarkupWthPopover(fileName, validationResult.message,
+        POPOVER_RIGHT_POSITION_CLASS, POPOVER_ARROW_RIGHT_POSITION_CLASS, IMAGES_TABLE_INDICATOR,
+        popoverIndex += 1, POPOVER_ERROR_THEME_CLASS, POPOVER_ARROW_ERROR_THEME_CLASS,
+        ERROR_TEXT_THEME_CLASS);
       allImagesStyleSetToDefault = false;
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
@@ -259,10 +284,10 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
     const row = annotationsTableElement.insertRow(-1);
     const cell = row.insertCell(0);
     if (validationResult.error) {
-      cell.innerHTML = createTableRowElementMarkupWthError(fileName, validationResult.message,
-        currentAnnotationsPopoverPositionClass,
-        currentAnnotationsPopoverArrowPositionClass,
-        ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1);
+      cell.innerHTML = createTableRowElementMarkupWthPopover(fileName, validationResult.message,
+        currentAnnotationsPopoverPositionClass, currentAnnotationsPopoverArrowPositionClass,
+        ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1, POPOVER_ERROR_THEME_CLASS,
+        POPOVER_ARROW_ERROR_THEME_CLASS, ERROR_TEXT_THEME_CLASS);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, ANNOTATIONS_TABLE_INDICATOR);
     }

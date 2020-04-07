@@ -121,10 +121,6 @@ function checkAllRows(rows) {
 // check if setCurrentAnnotationFilesToInactive is actually doing something for other formats
 // as the active property may not be used
 
-// set warning on x:
-// If this file belongs in the annotations table,
-// make sure that each row contains exactly 5 attributes: class x y width height
-
 function validateAnnotationsAgainstActiveClassesFile(parsedObj, activeClassesFile) {
   const { annotationData } = parsedObj.body;
   const numberOfClasses = activeClassesFile.body.annotationData.length;
