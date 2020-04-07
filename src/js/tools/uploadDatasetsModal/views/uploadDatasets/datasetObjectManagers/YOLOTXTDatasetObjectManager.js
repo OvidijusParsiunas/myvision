@@ -94,12 +94,14 @@ function clearDatasetObject() {
   datasetObject[IMAGE_FILES_OBJECT] = {};
 }
 
-function addAnnotationFile(annotationFileObj, error) {
+function addAnnotationFile(annotationFileObj, erroObj) {
   const { name } = annotationFileObj.body.fileMetaData;
-  if (!error) {
+  if (!erroObj.error) {
     addValidAnnotationFile(name, annotationFileObj);
   } else {
-    addFaltyAnnotationFile(name, annotationFileObj);
+    if (!erroObj.parsingError) {
+      addFaltyAnnotationFile(name, annotationFileObj);
+    }
     removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
   }
 }
@@ -137,7 +139,7 @@ function addFile(file, errorObject) {
   if (file.fileFormat === IMAGE_FILE_INDICATOR) {
     addImageFile(file, errorObject);
   } else if (file.fileFormat === ANNOTATION_FILE_INDICATOR) {
-    addAnnotationFile(file, errorObject.error);
+    addAnnotationFile(file, errorObject);
   } else if (file.fileFormat === CLASSES_FILE_INDICATOR) {
     addClassesFile(file, errorObject.error);
   }

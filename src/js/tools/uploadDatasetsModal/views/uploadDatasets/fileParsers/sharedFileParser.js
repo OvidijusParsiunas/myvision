@@ -126,7 +126,7 @@ function txtToJSON(result, fileMetaData) {
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
-      errorObj: { error: true, message: 'Text file is empty' },
+      errorObj: { error: true, message: 'Text file is empty', parsingError: true },
     };
   }
   const fileFormat = isAnnotationsFile ? ANNOTATION_FILE_INDICATOR : CLASSES_FILE_INDICATOR;
@@ -140,7 +140,7 @@ function parseTXT(fileMetaData, event) {
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid text file - ${errorMessage}` },
+      errorObj: { error: true, message: `Invalid text file - ${errorMessage}`, parsingError: true },
     };
   }
 }
