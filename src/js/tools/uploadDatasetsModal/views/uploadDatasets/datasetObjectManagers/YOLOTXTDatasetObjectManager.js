@@ -91,7 +91,7 @@ function addClassesFile(classesFileObj, error) {
 
 function clearDatasetObject() {
   datasetObject[CLASSES_FILES_ARRAY] = [];
-  datasetObject[ACTIVE_CLASSES_FILE] = [];
+  datasetObject[ACTIVE_CLASSES_FILE] = null;
   datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
   datasetObject[FALTY_ANNOTATION_FILES_ARRAY] = [];
   datasetObject[IMAGE_FILES_OBJECT] = {};
