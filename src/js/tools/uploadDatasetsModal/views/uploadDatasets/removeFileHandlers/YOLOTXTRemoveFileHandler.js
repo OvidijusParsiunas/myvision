@@ -67,7 +67,7 @@ function validateExistingAnnotations(datasetObject) {
   filesToBeMovedToValidArray.forEach((annotationFile) => {
     moveAnnotationFileToValidArray(annotationFile);
   });
-  if (!foundValidInValidArray && !foundValidInFaltyArray) {
+  if ((!foundValidInValidArray && !foundValidInFaltyArray) || !datasetObject[ACTIVE_CLASSES_FILE]) {
     disableFinishButton();
   } else {
     enableFinishButton();
