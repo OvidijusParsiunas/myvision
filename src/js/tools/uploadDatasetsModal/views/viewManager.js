@@ -26,6 +26,7 @@ import {
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
 import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
 import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssemblers/VOCXMLFinalObjectAssembler';
+import assembleFinalObjectFromYOLOTXT from './uploadDatasets/finalObjectAssemblers/YOLOTXTFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
 import {
@@ -87,7 +88,7 @@ function prepareChosenFormatFunctionality() {
       setFileParser(parseAllFiles);
       setTableUpdater(updateYOLOTXTTables);
       setFormatValidator(validateYOLOTXTFormat);
-      setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
+      setFinalObjectAssembler(assembleFinalObjectFromYOLOTXT);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeYOLOTXTFileHandler,
         clearYOLOTXTDatasetObject);
       prepareUploadDatasetsView(YOLO_TXT_FORMAT, ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX,

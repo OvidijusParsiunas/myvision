@@ -36,7 +36,7 @@ function addAlreadyUploadedImages(images) {
   images.forEach((image) => {
     const parsedFileObj = {
       fileFormat: IMAGE_FILE_INDICATOR,
-      body: { fileMetaData: { name: image.name } },
+      body: { fileMetaData: { name: image.name }, imageElement: image.data },
     };
     const errorObj = { error: false, message: '', alreadyUploaded: true };
     addFileFunc(parsedFileObj, errorObj);

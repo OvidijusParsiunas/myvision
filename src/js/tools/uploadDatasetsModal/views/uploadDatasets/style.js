@@ -44,6 +44,7 @@ const ERROR_TEXT_THEME_CLASS = 'upload-datasets-modal-upload-datasets-table-row-
 const PROCEED_BUTTON_CLASS = 'popup-proceed-button';
 const ACTIVE_BUTTON_CLASS = 'popup-label-button';
 const DISABLED_BUTTON_CLASS = 'popup-label-button-disabled';
+const CLASSES_FILE_POPUP_INFORMATION = 'If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height';
 let currentAnnotationsPopoverPositionClass = null;
 let currentAnnotationsPopoverArrowPositionClass = null;
 
@@ -201,7 +202,7 @@ function insertRowToClassesTable(fileName, validationResult) {
   let textThemeClass;
   if (!validationResult.error) {
     validationResult.information = true;
-    validationResult.message = 'If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height';
+    validationResult.message = CLASSES_FILE_POPUP_INFORMATION;
     popoverThemeClass = POPOVER_INFORMATION_THEME_CLASS;
     popoverArrowThemeClass = POPOVER_ARROW_INFORMATION_THEME_CLASS;
     textThemeClass = '';
@@ -304,6 +305,7 @@ function clearTable(tableElement) {
 function clearAllTables() {
   clearTable(annotationsTableElement);
   clearTable(imagesTableElement);
+  clearTable(classesTableElement);
 }
 
 function setTitleElement(title) {
