@@ -35,6 +35,8 @@ import {
   XML_POSTFIX, JSON_POSTFIX, YOLO_TXT_FORMAT,
   ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX,
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY,
+  CSV_FORMAT, ACCEPT_CSV_AND_IMG_FILES,
+  CSV_POSTFIX,
 } from '../consts';
 import {
   setFormatState,
@@ -70,6 +72,17 @@ function prepareChosenFormatFunctionality() {
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
         clearVGGJSONDatasetObject);
       prepareUploadDatasetsView(VGG_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX,
+        TWO_TABLE_STRATEGY);
+      break;
+    case CSV_FORMAT:
+      setAddFile(addCOCOJSONFile);
+      setFileParser(parseAllFiles);
+      setTableUpdater(updateCOCOJSONTables);
+      setFormatValidator(validateCOCOJSONFormat);
+      setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
+      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
+        clearCOCOJSONDatasetObject);
+      prepareUploadDatasetsView(CSV_FORMAT, ACCEPT_CSV_AND_IMG_FILES, CSV_POSTFIX,
         TWO_TABLE_STRATEGY);
       break;
     case VOC_XML_FORMAT:
@@ -112,7 +125,7 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(YOLO_TXT_FORMAT);
+      setFormatState(CSV_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
       prepareChosenFormatFunctionality();
       if (getReuseAlreadyUploadedImagesState()) {

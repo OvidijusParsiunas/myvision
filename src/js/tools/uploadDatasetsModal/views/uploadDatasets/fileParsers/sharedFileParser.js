@@ -22,33 +22,26 @@ function parseJSON(fileMetaData, event) {
   }
 }
 
+// for clarification - this is for Tensorflow CSV
 function parseCSV(fileMetaData, event) {
-  // var reader = new FileReader();
-
-  //           reader.onload = function (e) {
-	// 		   processData(reader.result);
-  //           }
-
-  //           reader.readAsText(xmlFile);
-
-  //           function processData(csv) {
-  //       var allTextLines = csv.split(/\r\n|\n/);
-  //       var lines = [];
-  //       for (var i=0; i<allTextLines.length; i++) {
-  //               var tarr = allTextLines[i].split(',')
-  //               lines.push(tarr);
-  //       }
-  //     console.log(lines);
-  //   }
-
-    
-    // var allTextLines = event.target.result.split(/\r\n|\n/);
-    //     var lines = [];
-    //     for (var i=0; i<allTextLines.length; i++) {
-    //             var tarr = allTextLines[i].split(',')
-    //             lines.push(tarr);
-    //     }
-    //   console.log(lines);
+  try {
+    const lines = event.target.result.split(/\r\n|\n/);
+    const linesOfAttributes = [];
+    lines.forEach((line) => {
+      const attributes = line.split(',').filter(entry => entry.trim() !== '');
+      if (attributes.length > 0) { linesOfAttributes.push(attributes); }
+    });
+    return {
+      fileFormat: ANNOTATION_FILE_INDICATOR,
+      body: { fileMetaData, annotationData: linesOfAttributes },
+    };
+  } catch (errorMessage) {
+    return {
+      fileFormat: ANNOTATION_FILE_INDICATOR,
+      body: { fileMetaData },
+      errorObj: { error: true, message: `Invalid CSV - ${errorMessage}` },
+    };
+  }
 }
 
 function xmlToJson(xml) {
