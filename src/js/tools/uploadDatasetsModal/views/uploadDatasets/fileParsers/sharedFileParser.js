@@ -22,9 +22,9 @@ function parseJSON(fileMetaData, event) {
   }
 }
 
-function isArrayOfStrings(lineOfAttributes) {
-  for (let i = 0; i < lineOfAttributes.length; i += 1) {
-    if (!Number.isNaN(parseInt(lineOfAttributes[i], 10))) {
+function isArrayOfStrings(rowsOfAttributes) {
+  for (let i = 0; i < rowsOfAttributes.length; i += 1) {
+    if (!Number.isNaN(parseInt(rowsOfAttributes[i], 10))) {
       return false;
     }
   }
@@ -34,18 +34,18 @@ function isArrayOfStrings(lineOfAttributes) {
 // for clarification - this is for Tensorflow CSV
 function parseCSV(fileMetaData, event) {
   try {
-    const lines = event.target.result.split(/\r\n|\n/);
-    const linesOfAttributes = [];
-    lines.forEach((line) => {
+    const rows = event.target.result.split(/\r\n|\n/);
+    const rowsOfAttributes = [];
+    rows.forEach((line) => {
       const attributes = line.split(',').filter(entry => entry.trim() !== '');
-      if (attributes.length > 0) { linesOfAttributes.push(attributes); }
+      if (attributes.length > 0) { rowsOfAttributes.push(attributes); }
     });
-    if (linesOfAttributes[0].length === 8 && isArrayOfStrings(linesOfAttributes[0])) {
-      linesOfAttributes.shift();
+    if (rowsOfAttributes[0].length === 8 && isArrayOfStrings(rowsOfAttributes[0])) {
+      rowsOfAttributes.shift();
     }
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
-      body: { fileMetaData, annotationData: linesOfAttributes },
+      body: { fileMetaData, annotationData: rowsOfAttributes },
     };
   } catch (errorMessage) {
     return {

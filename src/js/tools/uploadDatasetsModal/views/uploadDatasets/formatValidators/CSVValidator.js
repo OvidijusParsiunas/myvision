@@ -48,7 +48,7 @@ function checkAnnotationsMapToImages(parsedObj) {
 function assertType(expectedType, subjectVariable) {
   switch (expectedType) {
     case 'number':
-      return typeof subjectVariable === 'number';
+      return !Number.isNaN(Number.parseInt(subjectVariable, 10)) && typeof Number.parseInt(subjectVariable, 10) === 'number';
     case 'string':
       return typeof subjectVariable === 'string';
     case 'number|string':
@@ -250,14 +250,43 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
   return { error: false, message: '', alreadyUploaded };
 }
 
+function checkAllRows(rows) {
+  for (let i = 0; i < rows.length; i += 1) {
+    if (rows[i].length !== 8) {
+      return { error: true, message: `Row ${i + 1} contains ${rows[i].length} attributes, but the expected number is 8` };
+    }
+    const attributes = rows[i];
+    const annotationFields = {};
+    annotationFields['filename(1)'] = attributes[0];
+    annotationFields['width(2)'] = attributes[1];
+    annotationFields['height(3)'] = attributes[2];
+    annotationFields['class(4)'] = attributes[3];
+    annotationFields['xmin(5)'] = attributes[4];
+    annotationFields['ymin(6)'] = attributes[5];
+    annotationFields['xmax(7)'] = attributes[6];
+    annotationFields['ymax(8)'] = attributes[7];
+    const requiredProperties = {
+      'filename(1)': 'string',
+      'width(2)': 'number',
+      'height(3)': 'number',
+      'class(4)': 'number|string',
+      'xmin(5)': 'number',
+      'ymin(6)': 'number',
+      'xmax(7)': 'number',
+      'ymax(8)': 'number',
+    };
+    const result = checkObjectProperties(requiredProperties, annotationFields);
+    if (result.error) {
+      result.message += ` -> on row ${i + 1}`;
+      return result;
+    }
+  }
+  return { error: false, message: '' };
+}
+
 function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
   const validators = [
-    checkParentProperties,
-    checkCategoriesProperty,
-    checkAnnotationsProperty,
-    checkImagesProperty,
-    checkAnnotationsMapToImages,
-    checkAnnotationsMapToCategories,
+    checkAllRows,
   ];
   const validationResult = checkObject(parsedObj.body, validators);
   if (!validationResult.error) {
@@ -269,7 +298,6 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 
 function validateCSVFormat(parsedObj, errorObj) {
   if (!errorObj) {
-    console.log(parsedObj.body.annotationData);
     const datasetObject = getDatasetObject();
     const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
     const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
