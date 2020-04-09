@@ -22,6 +22,15 @@ function parseJSON(fileMetaData, event) {
   }
 }
 
+function isArrayOfStrings(lineOfAttributes) {
+  for (let i = 0; i < lineOfAttributes.length; i += 1) {
+    if (!Number.isNaN(parseInt(lineOfAttributes[i], 10))) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // for clarification - this is for Tensorflow CSV
 function parseCSV(fileMetaData, event) {
   try {
@@ -31,6 +40,9 @@ function parseCSV(fileMetaData, event) {
       const attributes = line.split(',').filter(entry => entry.trim() !== '');
       if (attributes.length > 0) { linesOfAttributes.push(attributes); }
     });
+    if (linesOfAttributes[0].length === 8 && isArrayOfStrings(linesOfAttributes[0])) {
+      linesOfAttributes.shift();
+    }
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData, annotationData: linesOfAttributes },
