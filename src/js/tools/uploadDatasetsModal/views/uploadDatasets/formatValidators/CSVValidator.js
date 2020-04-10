@@ -6,44 +6,6 @@ import { getDatasetObject } from '../datasetObjectManagers/CSVDatasetObjectManag
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
-function checkAnnotationsMapToCategories(parsedObj) {
-  const { annotations, categories } = parsedObj;
-  for (let i = 0; i < annotations.length; i += 1) {
-    const annotation = annotations[i];
-    let categoryIdValid = false;
-    for (let y = 0; y < categories.length; y += 1) {
-      const category = categories[y];
-      if (annotation.category_id === category.id) {
-        categoryIdValid = true;
-        break;
-      }
-    }
-    if (!categoryIdValid) {
-      return { error: true, message: `The following category_id has not been found: ${annotation.category_id} -> in categories` };
-    }
-  }
-  return { error: false, message: '' };
-}
-
-function checkAnnotationsMapToImages(parsedObj) {
-  const { annotations, images } = parsedObj;
-  for (let i = 0; i < annotations.length; i += 1) {
-    const annotation = annotations[i];
-    let imageIdValid = false;
-    for (let y = 0; y < images.length; y += 1) {
-      const image = images[y];
-      if (annotation.image_id === image.id) {
-        imageIdValid = true;
-        break;
-      }
-    }
-    if (!imageIdValid) {
-      return { error: true, message: `The following image_id has not been found: ${annotation.image_id} -> in annotations` };
-    }
-  }
-  return { error: false, message: '' };
-}
-
 // important - does not check for length
 function assertType(expectedType, subjectVariable) {
   switch (expectedType) {
@@ -95,117 +57,6 @@ function checkObjectProperties(requiredProperties, subjectObject) {
   return { error: false, message: '' };
 }
 
-function checkImagesProperty(parsedObj) {
-  const requiredProperties = { id: 'number|string', file_name: 'string' };
-  const { images } = parsedObj;
-  for (let i = 0; i < images.length; i += 1) {
-    const result = checkObjectProperties(requiredProperties, images[i]);
-    if (result.error) {
-      result.message += ' -> in images';
-      return result;
-    }
-  }
-  return { error: false, message: '' };
-}
-
-function checkArrayElements(array, name, {
-  elementsType, length, maxLength, minLength, evenOdd,
-}) {
-  if (length && array.length !== length) {
-    return { error: true, message: `${name} array must contain ${length} elements but instead found ${array.length}` };
-  }
-  if (maxLength && array.length > maxLength) {
-    return { error: true, message: `${name} array must contain ${maxLength} elements at most but instead found ${array.length}` };
-  }
-  if (minLength && array.length < minLength) {
-    return { error: true, message: `${name} array must contain at least ${minLength} elements but instead found ${array.length}` };
-  }
-  if (evenOdd && ((evenOdd === 'even' && array.length % 2 === 1) || (evenOdd === 'odd' && array.length % 2 === 0))) {
-    return { error: true, message: `${name} array must contain an even number of elements but instead found ${array.length}` };
-  }
-  if (elementsType && !assertType(elementsType, array)) {
-    return { error: true, message: `${name} array contains elements of incorrect type` };
-  }
-  return { error: false, message: '' };
-}
-
-function checkSegmentationArray(segmentationArray) {
-  const arrayName = 'Segmentation';
-  const elementsType = 'array:number';
-  if (segmentationArray.length > 1) {
-    const result = checkArrayElements(segmentationArray, arrayName,
-      { elementsType, length: 8 });
-    if (result.error) { return result; }
-  } else if (segmentationArray.length === 1) {
-    const polygonCoordinatesArray = segmentationArray[0];
-    let result = {};
-    result = checkArrayElements(polygonCoordinatesArray, arrayName, {
-      elementsType: 'array',
-    });
-    if (result.error) { return result; }
-    result = checkArrayElements(polygonCoordinatesArray, arrayName,
-      { elementsType, minLength: 6, evenOdd: 'even' });
-    if (result.error) { return result; }
-  }
-  if (segmentationArray.length < 1) {
-    return { error: true, message: `${arrayName} array is empty` };
-  }
-  return { error: false, message: '' };
-}
-
-function checkAnnotationsProperty(parsedObj) {
-  const requiredProperties = {
-    id: 'number|string', image_id: 'number|string', category_id: 'number|string', segmentation: 'array', bbox: 'array:number',
-  };
-  const { annotations } = parsedObj;
-  for (let i = 0; i < annotations.length; i += 1) {
-    const annotation = annotations[i];
-    let result = checkObjectProperties(requiredProperties, annotation);
-    if (result.error) {
-      result.message += ' -> in annotations';
-      return result;
-    }
-    result = checkSegmentationArray(annotation.segmentation);
-    if (result.error) {
-      result.message += ' -> in annotations';
-      return result;
-    }
-    result = checkArrayElements(annotation.bbox, 'bbox', { length: 4 });
-    if (result.error) {
-      result.message += ' -> in annotations';
-      return result;
-    }
-  }
-  return { error: false, message: '' };
-}
-
-function checkCategoriesProperty(parsedObj) {
-  const requiredProperties = { id: 'number|string', name: 'number|string' };
-  const { categories } = parsedObj;
-  for (let i = 0; i < categories.length; i += 1) {
-    const result = checkObjectProperties(requiredProperties, categories[i]);
-    if (result.error) {
-      result.message += ' -> in categories';
-      return result;
-    }
-  }
-  return { error: false, message: '' };
-}
-
-function checkParentProperties(parsedObj) {
-  const requiredProperties = { images: 'array:object', annotations: 'array:object', categories: 'array:object' };
-  let result = {};
-  result = checkObjectProperties(requiredProperties, parsedObj);
-  if (result.error) { return result; }
-  result = checkArrayElements(parsedObj.images, 'images', { minLength: 1 });
-  if (result.error) { return result; }
-  result = checkArrayElements(parsedObj.annotations, 'annotations', { minLength: 1 });
-  if (result.error) { return result; }
-  result = checkArrayElements(parsedObj.categories, 'categories', { minLength: 1 });
-  if (result.error) { return result; }
-  return { error: false, message: '' };
-}
-
 function checkObject(JSONObject, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](JSONObject.annotationData);
@@ -238,8 +89,8 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
     ? isImageAlreadyUploaded(imageName) : false;
   if (validAnnotationFiles.length > 0) {
     const { annotationData } = activeAnnotationFile.body;
-    for (let i = 0; i < annotationData.images.length; i += 1) {
-      if (imageName === annotationData.images[i].file_name) {
+    for (let i = 0; i < annotationData.length; i += 1) {
+      if (imageName === annotationData[i][0]) {
         return {
           error: false, message: '', alreadyUploaded, valid: true,
         };

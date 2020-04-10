@@ -8,6 +8,7 @@ import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUp
 import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdaters';
 import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdaters';
 import updateYOLOTXTTables from './uploadDatasets/tableUpdaters/YOLOTXTTableUpdaters';
+import updateCSVTables from './uploadDatasets/tableUpdaters/CSVTableUpdaters';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
 import validateCSVFormat from './uploadDatasets/formatValidators/CSVValidator';
@@ -15,6 +16,7 @@ import validateVOCXMLFormat from './uploadDatasets/formatValidators/VOCXMLValida
 import validateYOLOTXTFormat from './uploadDatasets/formatValidators/YOLOTXTValidator';
 import removeCOCOJSONFileHandler from './uploadDatasets/removeFileHandlers/COCOJSONRemoveFileHandler';
 import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSONRemoveFileHandler';
+import removeCSVFileHandler from './uploadDatasets/removeFileHandlers/CSVRemoveFileHandler';
 import removeYOLOTXTFileHandler from './uploadDatasets/removeFileHandlers/YOLOTXTRemoveFileHandler';
 import removeVOCXMLFileHandler from './uploadDatasets/removeFileHandlers/VOCXMLRemoveFileHandler';
 import { addFile as addCOCOJSONFile, clearDatasetObject as clearCOCOJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
@@ -27,6 +29,7 @@ import {
 } from './uploadDatasets/uploadDatasetFilesHandler';
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
 import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
+import assembleFinalObjectFromCSV from './uploadDatasets/finalObjectAssemblers/CSVFinalObjectAssembler';
 import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssemblers/VOCXMLFinalObjectAssembler';
 import assembleFinalObjectFromYOLOTXT from './uploadDatasets/finalObjectAssemblers/YOLOTXTFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
@@ -79,10 +82,10 @@ function prepareChosenFormatFunctionality() {
     case CSV_FORMAT:
       setAddFile(addCSVFile);
       setFileParser(parseAllFiles);
-      setTableUpdater(updateCOCOJSONTables);
+      setTableUpdater(updateCSVTables);
       setFormatValidator(validateCSVFormat);
-      setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
-      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
+      setFinalObjectAssembler(assembleFinalObjectFromCSV);
+      registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCSVFileHandler,
         clearCSVDatasetObject);
       prepareUploadDatasetsView(CSV_FORMAT, ACCEPT_CSV_AND_IMG_FILES, CSV_POSTFIX,
         TWO_TABLE_STRATEGY);
