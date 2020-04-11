@@ -3,7 +3,6 @@ import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescri
 import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
-import parseAllFiles from './uploadDatasets/fileParsers/sharedFileParser';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
 import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdaters';
 import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdaters';
@@ -25,7 +24,7 @@ import { addFile as addCSVFile, clearDatasetObject as clearCSVDatasetObject } fr
 import { addFile as addVOCXMLFile, clearDatasetObject as clearVOCXMLDatasetObject } from './uploadDatasets/datasetObjectManagers/VOCXMLDatasetObjectManager';
 import { addFile as addYOLOTXTFile, clearDatasetObject as clearYOLOTXTDatasetObject } from './uploadDatasets/datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
-  setFileParser, setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
+  setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
 } from './uploadDatasets/uploadDatasetFilesHandler';
 import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
 import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
@@ -44,10 +43,8 @@ import {
   CSV_POSTFIX,
 } from '../consts';
 import {
-  setFormatState,
-  getFormatState,
-  setReuseAlreadyUploadedImagesState,
-  getReuseAlreadyUploadedImagesState,
+  setFormatState, setReuseAlreadyUploadedImagesState,
+  getFormatState, getReuseAlreadyUploadedImagesState,
 } from './uploadDatasets/stateManager';
 
 let currentViewNumber = 1;
@@ -59,7 +56,6 @@ function prepareChosenFormatFunctionality() {
   switch (getFormatState()) {
     case COCO_JSON_FORMAT:
       setAddFile(addCOCOJSONFile);
-      setFileParser(parseAllFiles);
       setTableUpdater(updateCOCOJSONTables);
       setFormatValidator(validateCOCOJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
@@ -70,7 +66,6 @@ function prepareChosenFormatFunctionality() {
       break;
     case VGG_JSON_FORMAT:
       setAddFile(addVGGJSONFile);
-      setFileParser(parseAllFiles);
       setTableUpdater(updateVGGJSONTables);
       setFormatValidator(validateVGGJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
@@ -81,7 +76,6 @@ function prepareChosenFormatFunctionality() {
       break;
     case CSV_FORMAT:
       setAddFile(addCSVFile);
-      setFileParser(parseAllFiles);
       setTableUpdater(updateCSVTables);
       setFormatValidator(validateCSVFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCSV);
@@ -92,7 +86,6 @@ function prepareChosenFormatFunctionality() {
       break;
     case VOC_XML_FORMAT:
       setAddFile(addVOCXMLFile);
-      setFileParser(parseAllFiles);
       setTableUpdater(updateVOCXMLTables);
       setFormatValidator(validateVOCXMLFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
@@ -103,7 +96,6 @@ function prepareChosenFormatFunctionality() {
       break;
     case YOLO_TXT_FORMAT:
       setAddFile(addYOLOTXTFile);
-      setFileParser(parseAllFiles);
       setTableUpdater(updateYOLOTXTTables);
       setFormatValidator(validateYOLOTXTFormat);
       setFinalObjectAssembler(assembleFinalObjectFromYOLOTXT);
@@ -116,6 +108,9 @@ function prepareChosenFormatFunctionality() {
       break;
   }
 }
+
+// remove file handlers should either have the format names used on the export function
+// or all other files should not use their name in their export function
 
 function displayNextView() {
   switch (currentViewNumber) {

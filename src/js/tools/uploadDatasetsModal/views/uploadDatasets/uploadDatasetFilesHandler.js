@@ -1,12 +1,12 @@
 import { IMAGE_FILE_INDICATOR } from '../../consts';
+import parseFile from './fileParser';
 
 let addFileFunc = null;
-let fileParserFunc = null;
 let tableUpdaterFunc = null;
 let formatValidatorFunc = null;
 
 function onFileLoad(fileMetaData, event) {
-  const parsedFileObj = fileParserFunc(fileMetaData, event);
+  const parsedFileObj = parseFile(fileMetaData, event);
   let { errorObj } = parsedFileObj;
   errorObj = formatValidatorFunc(parsedFileObj, errorObj);
   addFileFunc(parsedFileObj, errorObj);
@@ -56,11 +56,7 @@ function setAddFile(addFileFuncArg) {
   addFileFunc = addFileFuncArg;
 }
 
-function setFileParser(fileParserFuncArg) {
-  fileParserFunc = fileParserFuncArg;
-}
-
 export {
   uploadDatasetFilesHandler, addAlreadyUploadedImages,
-  setFileParser, setTableUpdater, setFormatValidator, setAddFile,
+  setTableUpdater, setFormatValidator, setAddFile,
 };

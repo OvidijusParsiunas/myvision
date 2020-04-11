@@ -1,7 +1,7 @@
 import { getDatasetObject } from '../datasetObjectManagers/CSVDatasetObjectManager';
 import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
 
-function assembleNewShape(annotationData, imageName, shapes) {
+function addNewShapeToArray(annotationData, imageName, shapes) {
   const shapeObj = { type: null, coordinates: {}, imageName };
   const bbox = [];
   bbox[0] = annotationData[4];
@@ -21,7 +21,7 @@ function getShapes(datasetObject, validImages) {
     for (let i = 0; i < annotationData.length; i += 1) {
       const imageName = validImage.body.fileMetaData.name;
       if (imageName === annotationData[i][0]) {
-        assembleNewShape(annotationData[i], imageName, shapes);
+        addNewShapeToArray(annotationData[i], imageName, shapes);
       }
     }
   });

@@ -1,4 +1,4 @@
-import { ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR } from '../../../consts';
+import { ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR } from '../../consts';
 
 function parseImageData(fileMetaData, event) {
   const image = new Image();
