@@ -125,7 +125,7 @@
 
 #upload-datasets-modal-parent {
   height: 249px;
-  width: 381px;
+  width: 415px;
   left: -151px;
 }
 
@@ -632,10 +632,10 @@
 }
 
 .modal-description {
-  margin-left: 15px;
+  margin-left: 22px;
   margin-top: 10px;
   margin-bottom: 6px;
-  width: 350px;
+  width: 369px;
   user-select: none;
 }
 
@@ -652,9 +652,15 @@
 }
 
 #machine-learning-modal-parent {
-  height: 249px;
-  width: 381px;
+  height: 267px;
+  width: 415px;
   left: -151px;
+}
+
+#machine-learning-modal-description {
+  margin-left: 24px;
+  margin-top: 16px;
+  margin-bottom: -1px;
 }
 
 #machine-learning-modal-error-messages {

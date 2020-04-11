@@ -153,6 +153,8 @@ labeller modal causes vertical window overflow on the tablet
 
 test ML still works as expected
 
+need to change the rest of ML modal views css properties
+
 when removing images from the image list, their ids will likely mess up ML generated shapes, hence will need to try and use their names
 (or move the images to the empty elements, retaining the elements' indexes)
 

@@ -217,6 +217,7 @@ function changeToNoImagesFoundStyle() {
   disableStartButton();
   displayInfoMessage('Please upload an image to get started.');
   setDescriptionElementMarginBottom('3px');
+  // need to change here
   increasePopUpHeight('259px');
   isNoImagesFoundInfoDisplayed = true;
 }
@@ -243,10 +244,9 @@ function hideInitiateMachineLearningViewAssets() {
 function getDefaultDescriptionMarkup() {
   return `
     You can use a pre-trained Machine Learning model to automatically annotate objects with bounding boxes!
-    <!-- You can use a pre-trained Machine Learning model to automate the process of object annotation with bounding boxes! -->
-    <br>
+    <div class="upload-datasets-modal-description-break"></div>
     Click 'Start' to download the 'COCO-SSD' model and use it to generate bounding boxes for your images.
-    <br>
+    <div class="upload-datasets-modal-description-break"></div>
     In addition, because this model operates locally on the browser, your data will never leave the privacy of your computer.`;
 }
 
