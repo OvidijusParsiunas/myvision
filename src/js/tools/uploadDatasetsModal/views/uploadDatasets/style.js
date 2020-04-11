@@ -312,8 +312,8 @@ function setTitleElement(title) {
   titleElement.innerHTML = title;
 }
 
-function setTitleElementMarginTop(pixels) {
-  titleElement.style.marginTop = pixels;
+function setTitleElementMarginTop(length) {
+  titleElement.style.marginTop = length;
 }
 
 function resetTitleElementMarginTop() {
@@ -342,8 +342,8 @@ function setAnnotationsTableTitle(format) {
   annotationsTableTitle.innerHTML = `Annotations (${format})`;
 }
 
-function setButtonGroupElementMarginTop(pixels) {
-  buttonsGroupElement.style.marginTop = pixels;
+function setButtonGroupElementMarginTop(length) {
+  buttonsGroupElement.style.marginTop = length;
 }
 
 // should be a global variable
