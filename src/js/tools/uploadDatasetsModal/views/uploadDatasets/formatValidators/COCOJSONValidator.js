@@ -1,10 +1,8 @@
-import {
-  VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE,
-  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
-} from '../../../consts';
+import * as uploadDatasetsConsts from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
+import { checkObjectProperties, checkArrayElements } from './sharedUtils';
 
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;
@@ -44,87 +42,16 @@ function checkAnnotationsMapToImages(parsedObj) {
   return { error: false, message: '' };
 }
 
-// important - does not check for length
-function assertType(expectedType, subjectVariable) {
-  switch (expectedType) {
-    case 'number':
-      return typeof subjectVariable === 'number';
-    case 'string':
-      return typeof subjectVariable === 'string';
-    case 'number|string':
-      return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
-    case 'array':
-      return Array.isArray(subjectVariable);
-    case 'array:number':
-      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'number').length === 0;
-    case 'array:object':
-      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'object').length === 0;
-    default:
-      return true;
-  }
-}
-
-function checkObjectProperties(requiredProperties, subjectObject) {
-  const undefinedProperties = [];
-  Object.keys(requiredProperties).forEach((property) => {
-    if (subjectObject[property] === undefined) {
-      undefinedProperties.push(property);
-    }
-  });
-  if (undefinedProperties.length > 0) {
-    return { error: true, message: `The following properties have not been found: ${undefinedProperties.join(', ')}` };
-  }
-  const nullProperties = [];
-  Object.keys(requiredProperties).forEach((property) => {
-    if (subjectObject[property] === null) {
-      nullProperties.push(property);
-    }
-  });
-  if (nullProperties.length > 0) {
-    return { error: true, message: `The following properties are null: ${nullProperties}` };
-  }
-  const incorrectTypeProperties = [];
-  Object.keys(requiredProperties).forEach((property) => {
-    if (!assertType(requiredProperties[property], subjectObject[property])) {
-      incorrectTypeProperties.push(property);
-    }
-  });
-  if (incorrectTypeProperties.length > 0) {
-    return { error: true, message: `The following properties contain an incorrect type: ${incorrectTypeProperties}` };
-  }
-  return { error: false, message: '' };
-}
-
 function checkImagesProperty(parsedObj) {
   const requiredProperties = { id: 'number|string', file_name: 'string' };
   const { images } = parsedObj;
   for (let i = 0; i < images.length; i += 1) {
-    const result = checkObjectProperties(requiredProperties, images[i]);
+    const result = checkObjectProperties(requiredProperties, images[i],
+      uploadDatasetsConsts.JSON_POSTFIX, uploadDatasetsConsts.PROPERTIES_STRING);
     if (result.error) {
       result.message += ' -> in images';
       return result;
     }
-  }
-  return { error: false, message: '' };
-}
-
-function checkArrayElements(array, name, {
-  elementsType, length, maxLength, minLength, evenOdd,
-}) {
-  if (length && array.length !== length) {
-    return { error: true, message: `${name} array must contain ${length} elements but instead found ${array.length}` };
-  }
-  if (maxLength && array.length > maxLength) {
-    return { error: true, message: `${name} array must contain ${maxLength} elements at most but instead found ${array.length}` };
-  }
-  if (minLength && array.length < minLength) {
-    return { error: true, message: `${name} array must contain at least ${minLength} elements but instead found ${array.length}` };
-  }
-  if (evenOdd && ((evenOdd === 'even' && array.length % 2 === 1) || (evenOdd === 'odd' && array.length % 2 === 0))) {
-    return { error: true, message: `${name} array must contain an even number of elements but instead found ${array.length}` };
-  }
-  if (elementsType && !assertType(elementsType, array)) {
-    return { error: true, message: `${name} array contains elements of incorrect type` };
   }
   return { error: false, message: '' };
 }
@@ -134,17 +61,16 @@ function checkSegmentationArray(segmentationArray) {
   const elementsType = 'array:number';
   if (segmentationArray.length > 1) {
     const result = checkArrayElements(segmentationArray, arrayName,
-      { elementsType, length: 8 });
+      uploadDatasetsConsts.JSON_POSTFIX, { elementsType, length: 8 });
     if (result.error) { return result; }
   } else if (segmentationArray.length === 1) {
     const polygonCoordinatesArray = segmentationArray[0];
     let result = {};
-    result = checkArrayElements(polygonCoordinatesArray, arrayName, {
-      elementsType: 'array',
-    });
+    result = checkArrayElements(polygonCoordinatesArray, arrayName,
+      uploadDatasetsConsts.JSON_POSTFIX, { elementsType: 'array' });
     if (result.error) { return result; }
     result = checkArrayElements(polygonCoordinatesArray, arrayName,
-      { elementsType, minLength: 6, evenOdd: 'even' });
+      uploadDatasetsConsts.JSON_POSTFIX, { elementsType, minLength: 6, evenOdd: 'even' });
     if (result.error) { return result; }
   }
   if (segmentationArray.length < 1) {
@@ -160,7 +86,8 @@ function checkAnnotationsProperty(parsedObj) {
   const { annotations } = parsedObj;
   for (let i = 0; i < annotations.length; i += 1) {
     const annotation = annotations[i];
-    let result = checkObjectProperties(requiredProperties, annotation);
+    let result = checkObjectProperties(requiredProperties, annotation,
+      uploadDatasetsConsts.JSON_POSTFIX, uploadDatasetsConsts.PROPERTIES_STRING);
     if (result.error) {
       result.message += ' -> in annotations';
       return result;
@@ -170,7 +97,7 @@ function checkAnnotationsProperty(parsedObj) {
       result.message += ' -> in annotations';
       return result;
     }
-    result = checkArrayElements(annotation.bbox, 'bbox', { length: 4 });
+    result = checkArrayElements(annotation.bbox, 'bbox', uploadDatasetsConsts.JSON_POSTFIX, { length: 4 });
     if (result.error) {
       result.message += ' -> in annotations';
       return result;
@@ -183,7 +110,8 @@ function checkCategoriesProperty(parsedObj) {
   const requiredProperties = { id: 'number|string', name: 'number|string' };
   const { categories } = parsedObj;
   for (let i = 0; i < categories.length; i += 1) {
-    const result = checkObjectProperties(requiredProperties, categories[i]);
+    const result = checkObjectProperties(requiredProperties, categories[i],
+      uploadDatasetsConsts.JSON_POSTFIX, uploadDatasetsConsts.PROPERTIES_STRING);
     if (result.error) {
       result.message += ' -> in categories';
       return result;
@@ -195,13 +123,14 @@ function checkCategoriesProperty(parsedObj) {
 function checkParentProperties(parsedObj) {
   const requiredProperties = { images: 'array:object', annotations: 'array:object', categories: 'array:object' };
   let result = {};
-  result = checkObjectProperties(requiredProperties, parsedObj);
+  result = checkObjectProperties(requiredProperties, parsedObj,
+    uploadDatasetsConsts.JSON_POSTFIX, uploadDatasetsConsts.PROPERTIES_STRING);
   if (result.error) { return result; }
-  result = checkArrayElements(parsedObj.images, 'images', { minLength: 1 });
+  result = checkArrayElements(parsedObj.images, 'images', uploadDatasetsConsts.JSON_POSTFIX, { minLength: 1 });
   if (result.error) { return result; }
-  result = checkArrayElements(parsedObj.annotations, 'annotations', { minLength: 1 });
+  result = checkArrayElements(parsedObj.annotations, 'annotations', uploadDatasetsConsts.JSON_POSTFIX, { minLength: 1 });
   if (result.error) { return result; }
-  result = checkArrayElements(parsedObj.categories, 'categories', { minLength: 1 });
+  result = checkArrayElements(parsedObj.categories, 'categories', uploadDatasetsConsts.JSON_POSTFIX, { minLength: 1 });
   if (result.error) { return result; }
   return { error: false, message: '' };
 }
@@ -270,16 +199,17 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 function validateCOCOJSONFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = datasetObjectManager.getDatasetObject();
-    const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
-    const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
+    const activeAnnotationFile = datasetObject[uploadDatasetsConsts.ACTIVE_ANNOTATION_FILE];
+    const validAnnotationFiles = datasetObject[uploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
+    if (parsedObj.fileFormat === uploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, validAnnotationFiles);
     }
-    if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === uploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
     }
   }
-  if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
+  if (getReuseAlreadyUploadedImagesState()
+    && parsedObj.fileFormat === uploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };

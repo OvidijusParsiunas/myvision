@@ -27,3 +27,6 @@ export const TXT_POSTFIX = '.txt';
 export const CSV_POSTFIX = '.csv';
 export const TWO_TABLE_STRATEGY = 'two tables';
 export const THREE_TABLE_STRATEGY = 'three tables';
+export const PROPERTIES_STRING = 'properties';
+export const ATTRIBUTES_STRING = 'attributes';
+export const TAGS_STRING = 'tag(s)';

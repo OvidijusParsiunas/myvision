@@ -1,10 +1,8 @@
-import {
-  VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE,
-  ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
-} from '../../../consts';
+import * as uploadDatasetsConsts from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
+import { checkObjectProperties } from './sharedUtils';
 
 function isImageAlreadyUploaded(newImageName) {
   const images = getAllImageData();
@@ -36,57 +34,6 @@ function validateImageFile(parsedObj, validAnnotationFiles) {
   return { error: false, message: '', alreadyUploaded };
 }
 
-// important - does not check for length
-function assertType(expectedType, subjectVariable) {
-  switch (expectedType) {
-    case 'number':
-      return !Number.isNaN(subjectVariable) && typeof subjectVariable === 'number';
-    case 'string':
-      return typeof subjectVariable === 'string';
-    case 'number|string':
-      return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
-    case 'array':
-      return Array.isArray(subjectVariable);
-    case 'array:number':
-      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'number').length === 0;
-    case 'array:object':
-      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'object').length === 0;
-    default:
-      return true;
-  }
-}
-
-function checkObjectProperties(requiredProperties, subjectObject) {
-  const undefinedProperties = [];
-  Object.keys(requiredProperties).forEach((property) => {
-    if (subjectObject[property] === undefined) {
-      undefinedProperties.push(property);
-    }
-  });
-  if (undefinedProperties.length > 0) {
-    return { error: true, message: `The following attributes have not been found: ${undefinedProperties.join(', ')}` };
-  }
-  const nullProperties = [];
-  Object.keys(requiredProperties).forEach((property) => {
-    if (subjectObject[property] === null) {
-      nullProperties.push(property);
-    }
-  });
-  if (nullProperties.length > 0) {
-    return { error: true, message: `The following attributes are null: ${nullProperties}` };
-  }
-  const incorrectTypeProperties = [];
-  Object.keys(requiredProperties).forEach((property) => {
-    if (!assertType(requiredProperties[property], subjectObject[property])) {
-      incorrectTypeProperties.push(property);
-    }
-  });
-  if (incorrectTypeProperties.length > 0) {
-    return { error: true, message: `The following attributes contain an incorrect type: ${incorrectTypeProperties}` };
-  }
-  return { error: false, message: '' };
-}
-
 function checkObject(object, validators) {
   for (let i = 0; i < validators.length; i += 1) {
     const result = validators[i](object.annotationData);
@@ -109,7 +56,8 @@ function checkAllRows(rows) {
     const requiredProperties = {
       'class (1)': 'number', 'x (2)': 'number', 'y (3)': 'number', 'width (4)': 'number', 'height (5)': 'number',
     };
-    const result = checkObjectProperties(requiredProperties, annotationFields);
+    const result = checkObjectProperties(requiredProperties, annotationFields,
+      uploadDatasetsConsts.TXT_POSTFIX, uploadDatasetsConsts.ATTRIBUTES_STRING);
     if (result.error) {
       result.message += ` -> on row ${i + 1}`;
       return result;
@@ -146,20 +94,21 @@ function validateAnnotationsFile(parsedObj, activeClassesFile) {
 function validateYOLOTXTFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = datasetObjectManager.getDatasetObject();
-    const activeClassesFile = datasetObject[ACTIVE_CLASSES_FILE];
-    const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
+    const activeClassesFile = datasetObject[uploadDatasetsConsts.ACTIVE_CLASSES_FILE];
+    const validAnnotationFiles = datasetObject[uploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
+    if (parsedObj.fileFormat === uploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, activeClassesFile);
     }
-    if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === uploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles);
     }
     // do not need any validation for a classes file
-    if (parsedObj.fileFormat === CLASSES_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === uploadDatasetsConsts.CLASSES_FILE_INDICATOR) {
       return { error: false, message: '' };
     }
   }
-  if (getReuseAlreadyUploadedImagesState() && parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
+  if (getReuseAlreadyUploadedImagesState()
+    && parsedObj.fileFormat === uploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };
