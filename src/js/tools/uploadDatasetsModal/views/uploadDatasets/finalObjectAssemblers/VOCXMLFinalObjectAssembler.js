@@ -1,4 +1,4 @@
-import { getDatasetObject } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import { IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY } from '../../../consts';
 
 function assembleShape(object, shapes, imageName) {
@@ -54,7 +54,7 @@ function getImages(imageFiles) {
 
 function assembleFinalObjectFromVOCXML() {
   const finalObject = { images: [], shapes: [] };
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   finalObject.images = getImages(datasetObject[IMAGE_FILES_OBJECT]);
   finalObject.shapes = getShapes(datasetObject, finalObject.images);
   return finalObject;

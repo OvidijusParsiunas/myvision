@@ -6,7 +6,7 @@ import {
 import validateCOCOJSONFormat from '../formatValidators/COCOJSONValidator';
 import {
   FALTY_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT,
-  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR,
+  ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR, ACTIVE_ANNOTATION_FILE,
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 
@@ -52,7 +52,8 @@ function removeFileHandler(fileName, tableName, errorMessage) {
       }
       datasetObjectManager.removeFile(fileName, annotationsArrayName);
     } else {
-      datasetObjectManager.replaceActiveAnnotationFileIfRemoving(fileName);
+      datasetObjectManager.replaceActiveFileIfRemoving(fileName,
+        VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE);
       datasetObjectManager.removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
       if (datasetObjectManager.getActiveAnnotationFile() !== null) {
         setNewActiveAnnotationFileRow(datasetObjectManager.getActiveAnnotationFile(),

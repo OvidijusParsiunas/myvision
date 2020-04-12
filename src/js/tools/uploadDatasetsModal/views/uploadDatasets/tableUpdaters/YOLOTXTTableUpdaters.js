@@ -8,10 +8,7 @@ import {
   IMAGE_FILES_OBJECT, CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY, CLASSES_TABLE_INDICATOR,
   ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
-import {
-  getDatasetObject, updateImageFileErrorStatus, removeFile,
-  moveAnnotationFileToFaltyArray, moveAnnotationFileToValidArray,
-} from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import removeFileHandler from '../removeFileHandlers/YOLOTXTRemoveFileHandler';
 
 function validateExistingImages(datasetObject) {
@@ -23,7 +20,7 @@ function validateExistingImages(datasetObject) {
       if (!validationResult.error) { foundValid = true; }
       const { name } = imageFile.body.fileMetaData;
       insertRowToImagesTable(name, validationResult);
-      updateImageFileErrorStatus(name, validationResult.error);
+      datasetObjectManager.updateImageFileErrorStatus(name, validationResult.error);
     });
     if (foundValid) {
       enableFinishButton();
@@ -62,10 +59,10 @@ function validateExistingAnnotations(datasetObject) {
     datasetObject[FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray, false,
   );
   filesToBeMovedToFaltyArray.forEach((annotationFile) => {
-    moveAnnotationFileToFaltyArray(annotationFile);
+    datasetObjectManager.moveAnnotationFileToFaltyArray(annotationFile);
   });
   filesToBeMovedToValidArray.forEach((annotationFile) => {
-    moveAnnotationFileToValidArray(annotationFile);
+    datasetObjectManager.moveAnnotationFileToValidArray(annotationFile);
   });
   if (foundValidInValidArray || foundValidInFaltyArray) {
     enableFinishButton();
@@ -88,8 +85,8 @@ function validateExistingClassesFiles(classesFiles) {
 
 function removeFileFromAnnotations(fileName) {
   if (removeRow(fileName, ANNOTATIONS_TABLE_INDICATOR)) {
-    removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
-    removeFile(fileName, FALTY_ANNOTATION_FILES_ARRAY);
+    datasetObjectManager.removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
+    datasetObjectManager.removeFile(fileName, FALTY_ANNOTATION_FILES_ARRAY);
   }
 }
 
@@ -114,7 +111,7 @@ function removeFileFromClasses(fileName) {
 }
 
 function updateYOLOTXTTables(parsedObj, validationResult) {
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   const fileName = parsedObj.body.fileMetaData.name;
   if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     insertRowToImagesTable(fileName, validationResult);

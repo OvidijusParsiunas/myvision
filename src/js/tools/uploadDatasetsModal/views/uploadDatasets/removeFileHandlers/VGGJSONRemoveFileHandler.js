@@ -5,9 +5,9 @@ import {
 } from '../style';
 import validateCOCOJSONFormat from '../formatValidators/VGGJSONValidator';
 import {
-  FALTY_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT,
   ANNOTATIONS_TABLE_INDICATOR, IMAGES_TABLE_INDICATOR,
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
+  FALTY_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE,
 } from '../../../consts';
 
 // pontential to move this out into shared validate logic
@@ -52,7 +52,8 @@ function removeVGGJSONFileHandler(fileName, tableName, errorMessage) {
       }
       datasetObjectManager.removeFile(fileName, annotationsArrayName);
     } else {
-      datasetObjectManager.replaceActiveAnnotationFileIfRemoving(fileName);
+      datasetObjectManager.replaceActiveFileIfRemoving(fileName,
+        VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE);
       datasetObjectManager.removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
       if (datasetObjectManager.getActiveAnnotationFile() !== null) {
         setNewActiveAnnotationFileRow(datasetObjectManager.getActiveAnnotationFile(),

@@ -1,4 +1,4 @@
-import { getDatasetObject } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
   IMAGE_FILES_OBJECT, ACTIVE_CLASSES_FILE, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
@@ -54,7 +54,7 @@ function getImages(imageFiles) {
 
 function assembleFinalObjectFromYOLOTXT() {
   const finalObject = { images: [], shapes: [] };
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   finalObject.images = getImages(datasetObject[IMAGE_FILES_OBJECT]);
   finalObject.shapes = getShapes(datasetObject, finalObject.images);
   return finalObject;

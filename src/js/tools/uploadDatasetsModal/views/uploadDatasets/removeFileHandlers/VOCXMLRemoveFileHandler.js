@@ -1,4 +1,4 @@
-import { removeFile, getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
 } from '../style';
@@ -19,7 +19,7 @@ function validateExistingImages(datasetObject) {
     if (!validationResult.error) { foundValid = true; }
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
-    updateImageFileErrorStatus(name, validationResult.error);
+    datasetObjectManager.updateImageFileErrorStatus(name, validationResult.error);
   });
   if (!foundValid) {
     disableFinishButton();
@@ -27,13 +27,13 @@ function validateExistingImages(datasetObject) {
 }
 
 function removeFileHandler(fileName, tableName, errorMessage) {
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   if (tableName === ANNOTATIONS_TABLE_INDICATOR) {
     if (errorMessage) {
       const annotationsArrayName = VALID_ANNOTATION_FILES_ARRAY;
-      removeFile(fileName, annotationsArrayName);
+      datasetObjectManager.removeFile(fileName, annotationsArrayName);
     } else {
-      removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
+      datasetObjectManager.removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
       if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length === 0) {
         disableFinishButton();
         changeAllImagesTableRowsToDefault();
@@ -42,7 +42,7 @@ function removeFileHandler(fileName, tableName, errorMessage) {
       }
     }
   } else if (tableName === IMAGES_TABLE_INDICATOR) {
-    removeFile(fileName, IMAGE_FILES_OBJECT);
+    datasetObjectManager.removeFile(fileName, IMAGE_FILES_OBJECT);
     if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
       .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
       .length === 0) {

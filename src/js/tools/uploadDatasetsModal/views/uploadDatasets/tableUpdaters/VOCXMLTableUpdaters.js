@@ -7,7 +7,7 @@ import {
   IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY,
   ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
-import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 
 function validateExistingImages(datasetObject) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
@@ -18,7 +18,7 @@ function validateExistingImages(datasetObject) {
       if (!validationResult.error) { foundValid = true; }
       const { name } = imageFile.body.fileMetaData;
       insertRowToImagesTable(name, validationResult);
-      updateImageFileErrorStatus(name, validationResult.error);
+      datasetObjectManager.updateImageFileErrorStatus(name, validationResult.error);
     });
     if (foundValid) {
       enableFinishButton();
@@ -32,7 +32,7 @@ function validateExistingImages(datasetObject) {
 }
 
 function updateVOCXMLTables(parsedObj, validationResult) {
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   const fileName = parsedObj.body.fileMetaData.name;
   if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     insertRowToImagesTable(fileName, validationResult);

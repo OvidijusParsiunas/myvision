@@ -1,7 +1,4 @@
-import {
-  removeFile, getDatasetObject, updateImageFileErrorStatus, replaceActiveClassesFileIfRemoving,
-  moveAnnotationFileToFaltyArray, moveAnnotationFileToValidArray,
-} from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
   removeRow, disableFinishButton, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   insertRowToAnnotationsTable, changeClassesRowToDefault, enableFinishButton,
@@ -25,7 +22,7 @@ function validateExistingImages(datasetObject) {
       if (!validationResult.error) { foundValid = true; }
       const { name } = imageFile.body.fileMetaData;
       insertRowToImagesTable(name, validationResult);
-      updateImageFileErrorStatus(name, validationResult.error);
+      datasetObjectManager.updateImageFileErrorStatus(name, validationResult.error);
     });
     if (!foundValid) {
       disableFinishButton();
@@ -62,10 +59,10 @@ function validateExistingAnnotations(datasetObject) {
     datasetObject[FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray, false,
   );
   filesToBeMovedToFaltyArray.forEach((annotationFile) => {
-    moveAnnotationFileToFaltyArray(annotationFile);
+    datasetObjectManager.moveAnnotationFileToFaltyArray(annotationFile);
   });
   filesToBeMovedToValidArray.forEach((annotationFile) => {
-    moveAnnotationFileToValidArray(annotationFile);
+    datasetObjectManager.moveAnnotationFileToValidArray(annotationFile);
   });
   if ((!foundValidInValidArray && !foundValidInFaltyArray) || !datasetObject[ACTIVE_CLASSES_FILE]) {
     disableFinishButton();
@@ -82,10 +79,10 @@ function setNewActiveClassesFileRow(activeClassesFile, datasetObject) {
 }
 
 function removeFileHandler(fileName, tableName, errorMessage) {
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   if (tableName === ANNOTATIONS_TABLE_INDICATOR) {
-    removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
-    removeFile(fileName, FALTY_ANNOTATION_FILES_ARRAY);
+    datasetObjectManager.removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
+    datasetObjectManager.removeFile(fileName, FALTY_ANNOTATION_FILES_ARRAY);
     if (!errorMessage) {
       if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length === 0) {
         disableFinishButton();
@@ -95,16 +92,17 @@ function removeFileHandler(fileName, tableName, errorMessage) {
       }
     }
   } else if (tableName === IMAGES_TABLE_INDICATOR) {
-    removeFile(fileName, IMAGE_FILES_OBJECT);
+    datasetObjectManager.removeFile(fileName, IMAGE_FILES_OBJECT);
     if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
       .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
       .length === 0) {
       disableFinishButton();
     }
   } else if (tableName === CLASSES_TABLE_INDICATOR) {
-    removeFile(fileName, CLASSES_FILES_ARRAY);
+    datasetObjectManager.removeFile(fileName, CLASSES_FILES_ARRAY);
     if (!errorMessage) {
-      replaceActiveClassesFileIfRemoving(fileName);
+      datasetObjectManager.replaceActiveFileIfRemoving(fileName,
+        CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE);
       if (datasetObject[ACTIVE_CLASSES_FILE] !== null) {
         setNewActiveClassesFileRow(datasetObject[ACTIVE_CLASSES_FILE], datasetObject);
       } else {

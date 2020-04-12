@@ -2,7 +2,7 @@ import {
   VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE,
   ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
-import { getDatasetObject } from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
@@ -145,7 +145,7 @@ function validateAnnotationsFile(parsedObj, activeClassesFile) {
 
 function validateYOLOTXTFormat(parsedObj, errorObj) {
   if (!errorObj) {
-    const datasetObject = getDatasetObject();
+    const datasetObject = datasetObjectManager.getDatasetObject();
     const activeClassesFile = datasetObject[ACTIVE_CLASSES_FILE];
     const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
     if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
