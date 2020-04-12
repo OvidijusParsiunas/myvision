@@ -1,4 +1,4 @@
-import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
 
 function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes) {
@@ -57,7 +57,7 @@ function getImages(imageFiles) {
 
 function assembleFinalObjectFromCOCOJSON() {
   const finalObject = { images: [], shapes: [] };
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   finalObject.images = getImages(datasetObject[IMAGE_FILES_OBJECT]);
   finalObject.shapes = getShapes(datasetObject, finalObject.images);
   return finalObject;

@@ -2,7 +2,7 @@ import {
   VALID_ANNOTATION_FILES_ARRAY, ACTIVE_ANNOTATION_FILE,
   ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
-import { getDatasetObject } from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
 
@@ -269,7 +269,7 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 
 function validateCOCOJSONFormat(parsedObj, errorObj) {
   if (!errorObj) {
-    const datasetObject = getDatasetObject();
+    const datasetObject = datasetObjectManager.getDatasetObject();
     const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
     const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
     if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {

@@ -1,4 +1,4 @@
-import { getDatasetObject } from '../datasetObjectManagers/VGGJSONDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/VGGJSONDatasetObjectManager';
 import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
 
 function assembleShapes(regions, shapes, imageName) {
@@ -7,7 +7,7 @@ function assembleShapes(regions, shapes, imageName) {
       type: null, coordinates: {}, imageName,
     };
     const region = regions[i];
-    shapeObj.coordinates.class = region.region_attributes.name.toName();
+    shapeObj.coordinates.class = region.region_attributes.name.toString();
     if (region.shape_attributes.name === 'polygon') {
       const points = [];
       region.shape_attributes.all_points_x.forEach((x, index) => {
@@ -57,7 +57,7 @@ function getImages(imageFiles) {
 
 function assembleFinalObjectFromVGGJSON() {
   const finalObject = { images: [], shapes: [] };
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   finalObject.images = getImages(datasetObject[IMAGE_FILES_OBJECT]);
   finalObject.shapes = getShapes(datasetObject, finalObject.images);
   return finalObject;

@@ -1,4 +1,4 @@
-import { getDatasetObject } from '../datasetObjectManagers/CSVDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
 import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
 
 function addNewShapeToArray(annotationData, imageName, shapes) {
@@ -40,7 +40,7 @@ function getImages(imageFiles) {
 
 function assembleFinalObjectFromCSV() {
   const finalObject = { images: [], shapes: [] };
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   finalObject.images = getImages(datasetObject[IMAGE_FILES_OBJECT]);
   finalObject.shapes = getShapes(datasetObject, finalObject.images);
   return finalObject;

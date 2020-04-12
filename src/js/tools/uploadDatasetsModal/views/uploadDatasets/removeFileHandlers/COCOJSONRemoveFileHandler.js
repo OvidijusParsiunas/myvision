@@ -1,7 +1,4 @@
-import {
-  removeFile, replaceActiveAnnotationFileIfRemoving, getDatasetObject,
-  getActiveAnnotationFile, updateImageFileErrorStatus,
-} from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import {
   removeRow, changeAnnotationRowToDefault, disableFinishButton,
   insertRowToImagesTable, changeAllImagesTableRowsToDefault, enableFinishButton,
@@ -23,7 +20,7 @@ function validateExistingImages(datasetObject) {
     if (!validationResult.error) { foundValid = true; }
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
-    updateImageFileErrorStatus(name, validationResult.error);
+    datasetObjectManager.updateImageFileErrorStatus(name, validationResult.error);
   });
   if (foundValid) {
     enableFinishButton();
@@ -44,7 +41,7 @@ function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject) {
 // to be moved to atomic COCOJSON file
 
 function removeFileHandler(fileName, tableName, errorMessage) {
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   if (tableName === ANNOTATIONS_TABLE_INDICATOR) {
     if (errorMessage) {
       let annotationsArrayName;
@@ -53,19 +50,20 @@ function removeFileHandler(fileName, tableName, errorMessage) {
       } else {
         annotationsArrayName = FALTY_ANNOTATION_FILES_ARRAY;
       }
-      removeFile(fileName, annotationsArrayName);
+      datasetObjectManager.removeFile(fileName, annotationsArrayName);
     } else {
-      replaceActiveAnnotationFileIfRemoving(fileName);
-      removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
-      if (getActiveAnnotationFile() !== null) {
-        setNewActiveAnnotationFileRow(getActiveAnnotationFile(), datasetObject);
+      datasetObjectManager.replaceActiveAnnotationFileIfRemoving(fileName);
+      datasetObjectManager.removeFile(fileName, VALID_ANNOTATION_FILES_ARRAY);
+      if (datasetObjectManager.getActiveAnnotationFile() !== null) {
+        setNewActiveAnnotationFileRow(datasetObjectManager.getActiveAnnotationFile(),
+          datasetObject);
       } else {
         disableFinishButton();
         changeAllImagesTableRowsToDefault();
       }
     }
   } else if (tableName === IMAGES_TABLE_INDICATOR) {
-    removeFile(fileName, IMAGE_FILES_OBJECT);
+    datasetObjectManager.removeFile(fileName, IMAGE_FILES_OBJECT);
     if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
       .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
       .length === 0) {

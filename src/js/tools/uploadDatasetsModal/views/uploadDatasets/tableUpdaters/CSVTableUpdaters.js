@@ -7,7 +7,7 @@ import {
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, VALID_ANNOTATION_FILES_ARRAY,
   ACTIVE_ANNOTATION_FILE, IMAGE_FILES_OBJECT, ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
-import { getDatasetObject, updateImageFileErrorStatus } from '../datasetObjectManagers/CSVDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
 
 // pontential to move this out into shared validate logic
 // can't at the moment because validate is just one default function
@@ -19,7 +19,7 @@ function validateExistingImages(datasetObject) {
     if (!validationResult.error) { foundValid = true; }
     const { name } = imageFile.body.fileMetaData;
     insertRowToImagesTable(name, validationResult);
-    updateImageFileErrorStatus(name, validationResult.error);
+    datasetObjectManager.updateImageFileErrorStatus(name, validationResult.error);
   });
   if (foundValid) {
     enableFinishButton();
@@ -61,7 +61,7 @@ function checkAnnotationAlreadyInTable(validationResult, datasetObject) {
 }
 
 function updateCSVTables(parsedObj, validationResult) {
-  const datasetObject = getDatasetObject();
+  const datasetObject = datasetObjectManager.getDatasetObject();
   const fileName = parsedObj.body.fileMetaData.name;
   if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     insertRowToImagesTable(fileName, validationResult);

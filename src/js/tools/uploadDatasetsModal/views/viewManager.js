@@ -18,9 +18,9 @@ import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSO
 import removeCSVFileHandler from './uploadDatasets/removeFileHandlers/CSVRemoveFileHandler';
 import removeYOLOTXTFileHandler from './uploadDatasets/removeFileHandlers/YOLOTXTRemoveFileHandler';
 import removeVOCXMLFileHandler from './uploadDatasets/removeFileHandlers/VOCXMLRemoveFileHandler';
-import { addFile as addCOCOJSONFile, clearDatasetObject as clearCOCOJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { addFile as addVGGJSONFile, clearDatasetObject as clearVGGJSONDatasetObject } from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
-import { addFile as addCSVFile, clearDatasetObject as clearCSVDatasetObject } from './uploadDatasets/datasetObjectManagers/CSVDatasetObjectManager';
+import COCOJSONObjectDatasetManager from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
+import VGGJSONObjectDatasetManager from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
+import CSVObjectDatasetManager from './uploadDatasets/datasetObjectManagers/CSVDatasetObjectManager';
 import { addFile as addVOCXMLFile, clearDatasetObject as clearVOCXMLDatasetObject } from './uploadDatasets/datasetObjectManagers/VOCXMLDatasetObjectManager';
 import { addFile as addYOLOTXTFile, clearDatasetObject as clearYOLOTXTDatasetObject } from './uploadDatasets/datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import {
@@ -55,32 +55,32 @@ let closeModalFunc = null;
 function prepareChosenFormatFunctionality() {
   switch (getFormatState()) {
     case COCO_JSON_FORMAT:
-      setAddFile(addCOCOJSONFile);
+      setAddFile(COCOJSONObjectDatasetManager.addFile);
       setTableUpdater(updateCOCOJSONTables);
       setFormatValidator(validateCOCOJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
-        clearCOCOJSONDatasetObject);
+        COCOJSONObjectDatasetManager.clearDatasetObject);
       prepareUploadDatasetsView(COCO_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX,
         TWO_TABLE_STRATEGY);
       break;
     case VGG_JSON_FORMAT:
-      setAddFile(addVGGJSONFile);
+      setAddFile(VGGJSONObjectDatasetManager.addFile);
       setTableUpdater(updateVGGJSONTables);
       setFormatValidator(validateVGGJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
-        clearVGGJSONDatasetObject);
+        VGGJSONObjectDatasetManager.clearDatasetObject);
       prepareUploadDatasetsView(VGG_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX,
         TWO_TABLE_STRATEGY);
       break;
     case CSV_FORMAT:
-      setAddFile(addCSVFile);
+      setAddFile(CSVObjectDatasetManager.addFile);
       setTableUpdater(updateCSVTables);
       setFormatValidator(validateCSVFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCSV);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCSVFileHandler,
-        clearCSVDatasetObject);
+        CSVObjectDatasetManager.clearDatasetObject);
       prepareUploadDatasetsView(CSV_FORMAT, ACCEPT_CSV_AND_IMG_FILES, CSV_POSTFIX,
         TWO_TABLE_STRATEGY);
       break;
@@ -125,7 +125,7 @@ function displayNextView() {
       break;
     case 3:
       // will be done in previous view in future
-      setFormatState(CSV_FORMAT);
+      setFormatState(VGG_JSON_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
       prepareChosenFormatFunctionality();
       if (getReuseAlreadyUploadedImagesState()) {
