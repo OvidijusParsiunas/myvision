@@ -1,6 +1,6 @@
-import DatasetObjectManagetFactory from './datasetObjectManagerFactory';
+import DatasetObjectManagerBuilder from './datasetObjectManagerBuilder';
 
-const datasetObjectManager = DatasetObjectManagetFactory
-  .createMultipleAnnotationFileInclClassesObjectManager();
+const datasetObjectManager = DatasetObjectManagerBuilder
+  .buildObjectManagerForMultipleAnnotationFilesInclClassesStrategy();
 
 export default datasetObjectManager;

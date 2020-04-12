@@ -190,7 +190,7 @@ function addFileWhenMultipleAnnotationFilesAllowed(file, errorObject) {
   }
 }
 
-function addFileWhenUsingMultipleAnnotationsInclClasses(file, errorObject) {
+function addFileWhenMultipleAnnotationsInclClasses(file, errorObject) {
   if (file.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
     addImageFile(file, errorObject);
   } else if (file.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
@@ -220,7 +220,7 @@ function getDatasetObject() {
   return datasetObject;
 }
 
-const oneAnnotationFileObjectManager = {
+const oneAnnotationFileStrategyObjectManager = {
   removeFile,
   addImageFile,
   getImageFiles,
@@ -235,7 +235,7 @@ const oneAnnotationFileObjectManager = {
   addAnnotationFile: addAnnotationFileWhenOneAllowed,
 };
 
-const multipleAnnotationFileObjectManager = {
+const multipleAnnotationFilesStrategyObjectManager = {
   removeFile,
   addImageFile,
   getImageFiles,
@@ -250,7 +250,7 @@ const multipleAnnotationFileObjectManager = {
   addAnnotationFile: addAnnotationFileWhenMultipleAllowed,
 };
 
-const multipleAnnotationFileInclClassesObjectManager = {
+const multipleAnnotationFilesInclClassesStrategyObjectManager = {
   removeFile,
   addImageFile,
   getImageFiles,
@@ -263,27 +263,28 @@ const multipleAnnotationFileInclClassesObjectManager = {
   replaceActiveFileIfRemoving,
   moveAnnotationFileToFaltyArray,
   moveAnnotationFileToValidArray,
-  addFile: addFileWhenUsingMultipleAnnotationsInclClasses,
+  addFile: addFileWhenMultipleAnnotationsInclClasses,
   addAnnotationFile: addAnnotationFileWhenMultipleAllowedInclClasses,
 };
 
 
-function createOneAnnotationFileObjectManager() {
-  return { ...oneAnnotationFileObjectManager };
+function buildObjectManagerForOneAnnotationFileStrategy() {
+  console.log('called');
+  return { ...oneAnnotationFileStrategyObjectManager };
 }
 
-function createMultipleAnnotationFileObjectManager() {
-  return { ...multipleAnnotationFileObjectManager };
+function buildObjectManagerForMultipleAnnotationFilesStrategy() {
+  return { ...multipleAnnotationFilesStrategyObjectManager };
 }
 
-function createMultipleAnnotationFileInclClassesObjectManager() {
-  return { ...multipleAnnotationFileInclClassesObjectManager };
+function buildObjectManagerForMultipleAnnotationFilesInclClassesStrategy() {
+  return { ...multipleAnnotationFilesInclClassesStrategyObjectManager };
 }
 
-const DatasetObjectManagerFactory = {
-  createOneAnnotationFileObjectManager,
-  createMultipleAnnotationFileObjectManager,
-  createMultipleAnnotationFileInclClassesObjectManager,
+const DatasetObjectManagerBuilder = {
+  buildObjectManagerForOneAnnotationFileStrategy,
+  buildObjectManagerForMultipleAnnotationFilesStrategy,
+  buildObjectManagerForMultipleAnnotationFilesInclClassesStrategy,
 };
 
-export { DatasetObjectManagerFactory as default };
+export { DatasetObjectManagerBuilder as default };

@@ -29,7 +29,8 @@ function setNewActiveAnnotationFileRow(activeAnnotationFile, datasetObject,
   }
 }
 
-function removeAnnotationFileForMultipleAnnotationFiles(fileName, errorMessage, datasetObject) {
+function removeAnnotationFileWhenMultipleAnnotationFilesAllowed(fileName,
+  errorMessage, datasetObject) {
   if (errorMessage) {
     const annotationsArrayName = UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY;
     this.datasetObjectManager.removeFile(fileName, annotationsArrayName);
@@ -46,7 +47,7 @@ function removeAnnotationFileForMultipleAnnotationFiles(fileName, errorMessage, 
   }
 }
 
-function removeAnnotationFileForOneAnnotationFile(fileName, errorMessage, datasetObject) {
+function removeAnnotationFileWhenOneAnnotationFileAllowed(fileName, errorMessage, datasetObject) {
   if (errorMessage) {
     let annotationsArrayName;
     if (errorMessage === UploadDatasetsConsts.ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE) {
@@ -71,7 +72,7 @@ function removeAnnotationFileForOneAnnotationFile(fileName, errorMessage, datase
   }
 }
 
-function oneAnnotationFileRemoveFileHandler(fileName, tableName, errorMessage) {
+function removeFileHandlerWthClasses(fileName, tableName, errorMessage) {
   const datasetObject = this.datasetObjectManager.getDatasetObject();
   if (tableName === UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR) {
     this.removeAnnotationFileFunc(fileName, errorMessage, datasetObject);
@@ -86,23 +87,24 @@ function oneAnnotationFileRemoveFileHandler(fileName, tableName, errorMessage) {
   UploadDatasetsStyle.removeRow(fileName, tableName);
 }
 
-function createOneAnnotationFileRemoveFileHandler(datasetObjectManager, validateFormat) {
-  const removeAnnotationFileFunc = removeAnnotationFileForOneAnnotationFile;
-  return oneAnnotationFileRemoveFileHandler.bind(
-    { datasetObjectManager, validateFormat, removeAnnotationFileFunc },
-  );
-}
-
-function createMultipleAnnotationFileRemoveFileHandler(datasetObjectManager, validateFormat) {
-  const removeAnnotationFileFunc = removeAnnotationFileForMultipleAnnotationFiles;
-  return oneAnnotationFileRemoveFileHandler.bind({
+function buildRemoveFileHandlerForMultipleAnnotationFilesStrategy(datasetObjectManager,
+  validateFormat) {
+  const removeAnnotationFileFunc = removeAnnotationFileWhenMultipleAnnotationFilesAllowed;
+  return removeFileHandlerWthClasses.bind({
     datasetObjectManager, validateFormat, removeAnnotationFileFunc,
   });
 }
 
+function buildRemoveFileHandlerForOneAnnotationFileStrategy(datasetObjectManager, validateFormat) {
+  const removeAnnotationFileFunc = removeAnnotationFileWhenOneAnnotationFileAllowed;
+  return removeFileHandlerWthClasses.bind(
+    { datasetObjectManager, validateFormat, removeAnnotationFileFunc },
+  );
+}
+
 const RemoveFileHandlerGenericBuilder = {
-  createOneAnnotationFileRemoveFileHandler,
-  createMultipleAnnotationFileRemoveFileHandler,
+  buildRemoveFileHandlerForOneAnnotationFileStrategy,
+  buildRemoveFileHandlerForMultipleAnnotationFilesStrategy,
 };
 
 export { RemoveFileHandlerGenericBuilder as default };

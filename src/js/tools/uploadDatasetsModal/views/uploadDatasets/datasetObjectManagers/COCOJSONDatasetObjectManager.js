@@ -1,5 +1,6 @@
-import DatasetObjectManagetFactory from './datasetObjectManagerFactory';
+import DatasetObjectManagerBuilder from './datasetObjectManagerBuilder';
 
-const datasetObjectManager = DatasetObjectManagetFactory.createOneAnnotationFileObjectManager();
+const datasetObjectManager = DatasetObjectManagerBuilder
+  .buildObjectManagerForOneAnnotationFileStrategy();
 
 export default datasetObjectManager;

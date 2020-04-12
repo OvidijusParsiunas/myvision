@@ -1,9 +1,8 @@
-import RemoveFileHandlerFactory from './RemoveFileHandlerGenericBuilder';
+import RemoveFileHandlerBuilder from './removeFileHandlerGenericBuilder';
 import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import validateFormat from '../formatValidators/VOCXMLValidator';
 
-const removeFileHandler = RemoveFileHandlerFactory.createMultipleAnnotationFileRemoveFileHandler(
-  datasetObjectManager, validateFormat,
-);
+const removeFileHandler = RemoveFileHandlerBuilder
+  .buildRemoveFileHandlerForMultipleAnnotationFilesStrategy(datasetObjectManager, validateFormat);
 
 export default removeFileHandler;

@@ -125,12 +125,12 @@ function removeFileHandlerWthClasses(fileName, tableName, errorMessage) {
   UploadDatasetsStyle.removeRow(fileName, tableName);
 }
 
-function createRemoveFileHandlerInclClasses(datasetObjectManager, validateFormat) {
+function buildRemoveFileHandlerInclClasses(datasetObjectManager, validateFormat) {
   return removeFileHandlerWthClasses.bind({ datasetObjectManager, validateFormat });
 }
 
 const RemoveFileHandlerInclClassesBuilder = {
-  createRemoveFileHandlerInclClasses,
+  buildRemoveFileHandlerInclClasses,
 };
 
 export { RemoveFileHandlerInclClassesBuilder as default };

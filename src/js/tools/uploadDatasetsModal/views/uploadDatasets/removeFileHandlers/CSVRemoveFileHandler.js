@@ -1,9 +1,8 @@
-import RemoveFileHandlerFactory from './RemoveFileHandlerGenericBuilder';
+import RemoveFileHandlerBuilder from './removeFileHandlerGenericBuilder';
 import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
 import validateFormat from '../formatValidators/CSVValidator';
 
-const removeFileHandler = RemoveFileHandlerFactory.createOneAnnotationFileRemoveFileHandler(
-  datasetObjectManager, validateFormat,
-);
+const removeFileHandler = RemoveFileHandlerBuilder
+  .buildRemoveFileHandlerForOneAnnotationFileStrategy(datasetObjectManager, validateFormat);
 
 export default removeFileHandler;
