@@ -1,4 +1,4 @@
-import * as uploadDatasetsConsts from '../../../consts';
+import * as UploadDatasetsConsts from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../stateManager';
@@ -57,7 +57,7 @@ function checkAllRows(rows) {
       'class (1)': 'number', 'x (2)': 'number', 'y (3)': 'number', 'width (4)': 'number', 'height (5)': 'number',
     };
     const result = checkObjectProperties(requiredProperties, annotationFields,
-      uploadDatasetsConsts.TXT_POSTFIX, uploadDatasetsConsts.ATTRIBUTES_STRING);
+      UploadDatasetsConsts.TXT_POSTFIX, UploadDatasetsConsts.ATTRIBUTES_STRING);
     if (result.error) {
       result.message += ` -> on row ${i + 1}`;
       return result;
@@ -94,21 +94,21 @@ function validateAnnotationsFile(parsedObj, activeClassesFile) {
 function validateYOLOTXTFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = datasetObjectManager.getDatasetObject();
-    const activeClassesFile = datasetObject[uploadDatasetsConsts.ACTIVE_CLASSES_FILE];
-    const validAnnotationFiles = datasetObject[uploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === uploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
+    const activeClassesFile = datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE];
+    const validAnnotationFiles = datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
+    if (parsedObj.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, activeClassesFile);
     }
-    if (parsedObj.fileFormat === uploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles);
     }
     // do not need any validation for a classes file
-    if (parsedObj.fileFormat === uploadDatasetsConsts.CLASSES_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === UploadDatasetsConsts.CLASSES_FILE_INDICATOR) {
       return { error: false, message: '' };
     }
   }
   if (getReuseAlreadyUploadedImagesState()
-    && parsedObj.fileFormat === uploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    && parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };

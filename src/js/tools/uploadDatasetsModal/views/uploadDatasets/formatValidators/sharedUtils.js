@@ -1,11 +1,31 @@
-import * as uploadDatasetsConsts from '../../../consts';
+import * as UploadDatasetsConsts from '../../../consts';
+
+function checkNumberOrStringTypeByFormat(subjectVariable, format) {
+  switch (format) {
+    case UploadDatasetsConsts.XML_POSTFIX:
+      return typeof subjectVariable['#text'] === 'string' || !Number.isNaN(parseInt(subjectVariable['#text'], 10));
+    default:
+      return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
+  }
+}
+
+function checkStringTypeByFormat(subjectVariable, format) {
+  switch (format) {
+    case UploadDatasetsConsts.XML_POSTFIX:
+      return typeof subjectVariable['#text'] === 'string';
+    default:
+      return typeof subjectVariable === 'string';
+  }
+}
 
 function checkNumberTypeByFormat(subjectVariable, format) {
   switch (format) {
-    case uploadDatasetsConsts.CSV_POSTFIX:
+    case UploadDatasetsConsts.CSV_POSTFIX:
       return !Number.isNaN(Number.parseInt(subjectVariable, 10)) && typeof Number.parseInt(subjectVariable, 10) === 'number';
-    case uploadDatasetsConsts.TXT_POSTFIX:
+    case UploadDatasetsConsts.TXT_POSTFIX:
       return !Number.isNaN(subjectVariable) && typeof subjectVariable === 'number';
+    case UploadDatasetsConsts.XML_POSTFIX:
+      return !Number.isNaN(parseInt(subjectVariable['#text'], 10));
     default:
       return typeof subjectVariable === 'number';
   }
@@ -17,9 +37,9 @@ function assertObjectType(expectedType, subjectVariable, format) {
     case 'number':
       return checkNumberTypeByFormat(subjectVariable, format);
     case 'string':
-      return typeof subjectVariable === 'string';
+      return checkStringTypeByFormat(subjectVariable, format);
     case 'number|string':
-      return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
+      return checkNumberOrStringTypeByFormat(subjectVariable, format);
     case 'object':
       return typeof subjectVariable === 'object';
     case 'array':
