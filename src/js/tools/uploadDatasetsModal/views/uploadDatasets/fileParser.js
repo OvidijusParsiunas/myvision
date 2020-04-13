@@ -1,21 +1,24 @@
-import { ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, IMAGE_FILE_INDICATOR } from '../../consts';
+import * as UploadDatasetsConsts from '../../consts';
 
 function parseImageData(fileMetaData, event) {
   const image = new Image();
   image.src = event.target.result;
-  return { fileFormat: IMAGE_FILE_INDICATOR, body: { fileMetaData, imageElement: image } };
+  return {
+    fileFormat: UploadDatasetsConsts.IMAGE_FILE_INDICATOR,
+    body: { fileMetaData, imageElement: image },
+  };
 }
 
 function parseJSON(fileMetaData, event) {
   try {
     const JSONObject = JSON.parse(event.target.result);
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData, annotationData: JSONObject },
     };
   } catch (errorMessage) {
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: `Invalid JSON - ${errorMessage}` },
     };
@@ -44,12 +47,12 @@ function parseCSV(fileMetaData, event) {
       rowsOfAttributes.shift();
     }
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData, annotationData: rowsOfAttributes },
     };
   } catch (errorMessage) {
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: `Invalid CSV - ${errorMessage}` },
     };
@@ -93,12 +96,12 @@ function parseXML(fileMetaData, event) {
     const parser = new DOMParser();
     const JSONObject = xmlToJson(parser.parseFromString(event.target.result, 'application/xml'));
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData, annotationData: JSONObject },
     };
   } catch (errorMessage) {
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: `Invalid XML - ${errorMessage}` },
     };
@@ -129,12 +132,13 @@ function txtToJSON(result, fileMetaData) {
   });
   if (fileEmpty) {
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: 'Text file is empty', parsingError: true },
     };
   }
-  const fileFormat = isAnnotationsFile ? ANNOTATION_FILE_INDICATOR : CLASSES_FILE_INDICATOR;
+  const fileFormat = isAnnotationsFile
+    ? UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR : UploadDatasetsConsts.CLASSES_FILE_INDICATOR;
   return { fileFormat, body: { fileMetaData, annotationData: linesOfAttributes } };
 }
 
@@ -143,7 +147,7 @@ function parseTXT(fileMetaData, event) {
     return txtToJSON(event.target.result, fileMetaData);
   } catch (errorMessage) {
     return {
-      fileFormat: ANNOTATION_FILE_INDICATOR,
+      fileFormat: UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
       errorObj: { error: true, message: `Invalid text file - ${errorMessage}`, parsingError: true },
     };
