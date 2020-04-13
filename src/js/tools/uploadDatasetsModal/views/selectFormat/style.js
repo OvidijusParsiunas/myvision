@@ -2,6 +2,15 @@ let descriptionElement = null;
 let startButtonElement = null;
 let cancelButtonElement = null;
 let buttonsGroupElement = null;
+let selectFormatOuterContainerElement = null;
+
+function displaySelectFormatOuterContainerElementView() {
+  selectFormatOuterContainerElement.style.display = '';
+}
+
+function hideSelectFormatOuterContainerElement() {
+  selectFormatOuterContainerElement.style.display = 'none';
+}
 
 function displayCancelButtonElement() {
   cancelButtonElement.style.display = '';
@@ -15,56 +24,40 @@ function displayStartButtonElement() {
   startButtonElement.style.display = '';
 }
 
-function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = '18px';
-}
-
 function hideStartButtonElement() {
   startButtonElement.style.display = 'none';
-}
-
-function displayDescription() {
-  descriptionElement.style.display = '';
 }
 
 function hideDescriptionElement() {
   descriptionElement.style.display = 'none';
 }
 
-function moveDescriptionToLowerPosition() {
-  descriptionElement.style.marginTop = '20px';
+function setButtonGroupElementMarginTop(length) {
+  buttonsGroupElement.style.marginTop = length;
 }
 
-function getDefaultDescriptionMarkup() {
-  return `
-    Upload existing images/datasets and continue working on them in MyLabel.
-    <br>
-    <div class="upload-datasets-modal-description-break"></div>
-    It is important to note that everything you upload here will never leave the privacy of your computer.`;
-}
-
-function prepareDescriptionView() {
-  descriptionElement.innerHTML = getDefaultDescriptionMarkup();
-  displayDescription();
-  moveDescriptionToLowerPosition();
+function prepareSelectFormatView() {
   displayStartButtonElement();
-  moveButtonsGroupElementToLowerPosition();
+  setButtonGroupElementMarginTop('5px');
   displayCancelButtonElement();
+  displaySelectFormatOuterContainerElementView();
 }
 
-function hideDescriptionViewAssets() {
+function hideSelectFormatViewAssets() {
   hideStartButtonElement();
   hideDescriptionElement();
   hideCancelButtonElement();
+  hideSelectFormatOuterContainerElement();
 }
 
-function assignDescriptionViewLocalVariables() {
+function assignSelectFormatViewLocalVariables() {
   descriptionElement = document.getElementById('upload-datasets-modal-description');
   startButtonElement = document.getElementById('upload-datasets-modal-start-button');
   cancelButtonElement = document.getElementById('upload-datasets-modal-cancel-button');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
+  selectFormatOuterContainerElement = document.getElementById('upload-datsets-modal-select-format-outer-container');
 }
 
 export {
-  assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescriptionViewAssets,
+  assignSelectFormatViewLocalVariables, prepareSelectFormatView, hideSelectFormatViewAssets,
 };

@@ -1,5 +1,7 @@
 import registerDescriptionViewButtonEventHandlers from './description/buttonEvents';
 import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescriptionViewAssets } from './description/style';
+import registerSelectFormatViewButtonEventHandlers from './selectFormat/buttonEvents';
+import { assignSelectFormatViewLocalVariables, prepareSelectFormatView, hideSelectFormatViewAssets } from './selectFormat/style';
 import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
@@ -121,18 +123,18 @@ function prepareChosenFormatFunctionality() {
   }
 }
 
-// remove file handlers should either have the format names used on the export function
-// or all other files should not use their name in their export function
+// rename table updaters to table updater
 
 function displayNextView() {
   switch (currentViewNumber) {
     case 1:
       prepareDescriptionView();
       hideViewOnCancelFunc = hideDescriptionViewAssets;
-      // jumping to upload datasets
-      currentViewNumber += 2;
+      currentViewNumber += 1;
       break;
     case 2:
+      prepareSelectFormatView();
+      hideViewOnCancelFunc = hideSelectFormatViewAssets;
       currentViewNumber += 1;
       break;
     case 3:
@@ -174,6 +176,8 @@ function initialiseUploadDatasetsModal() {
   assignViewManagerLocalVariables();
   registerDescriptionViewButtonEventHandlers(displayNextView);
   assignDescriptionViewLocalVariables();
+  registerSelectFormatViewButtonEventHandlers(displayNextView);
+  assignSelectFormatViewLocalVariables();
   assignUploadDatasetsViewLocalVariables();
   displayNextView();
   window.cancelUploadDatasetsModal = closeModal;
