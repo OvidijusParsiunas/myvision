@@ -12,7 +12,7 @@ function assembleShape(object, shapes, imageName, classes, imageElement) {
   bbox[2] = object[3] * width;
   bbox[3] = object[4] * height;
   shapeObj.coordinates.bbox = bbox;
-  shapeObj.coordinates.class = classes[object[0]][0];
+  shapeObj.coordinates.class = classes[object[0]][0].toString();
   shapeObj.type = 'boundingBox';
   shapes.boundingBoxes.push(shapeObj);
 }

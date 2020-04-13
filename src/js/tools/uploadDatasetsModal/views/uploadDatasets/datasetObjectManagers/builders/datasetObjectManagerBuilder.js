@@ -1,4 +1,4 @@
-import * as UploadDatasetsConsts from '../../../consts';
+import * as UploadDatasetsConsts from '../../../../consts';
 
 const datasetObject = { };
 datasetObject[UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE] = null;
@@ -269,7 +269,6 @@ const multipleAnnotationFilesInclClassesStrategyObjectManager = {
 
 
 function buildObjectManagerForOneAnnotationFileStrategy() {
-  console.log('called');
   return { ...oneAnnotationFileStrategyObjectManager };
 }
 

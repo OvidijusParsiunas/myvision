@@ -9,7 +9,7 @@ function addNewShapeToArray(annotationData, imageName, shapes) {
   bbox[2] = annotationData[6] - annotationData[4];
   bbox[3] = annotationData[7] - annotationData[5];
   shapeObj.coordinates.bbox = bbox;
-  shapeObj.coordinates.class = annotationData[3];
+  shapeObj.coordinates.class = annotationData[3].toString();
   shapeObj.type = 'boundingBox';
   shapes.boundingBoxes.push(shapeObj);
 }

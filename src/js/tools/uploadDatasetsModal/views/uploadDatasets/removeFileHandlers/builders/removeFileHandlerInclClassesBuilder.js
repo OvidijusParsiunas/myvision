@@ -1,5 +1,5 @@
-import * as UploadDatasetsStyle from '../style';
-import * as UploadDatasetsConsts from '../../../consts';
+import * as UploadDatasetsStyle from '../../style';
+import * as UploadDatasetsConsts from '../../../../consts';
 
 // functionality here cannot be used for all, will need
 // to be moved to atomic COCOJSON file

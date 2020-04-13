@@ -1,4 +1,4 @@
-import RemoveFileHandlerBuilder from './removeFileHandlerInclClassesBuilder';
+import RemoveFileHandlerBuilder from './builders/removeFileHandlerInclClassesBuilder';
 import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
 import validateFormat from '../formatValidators/YOLOTXTValidator';
 

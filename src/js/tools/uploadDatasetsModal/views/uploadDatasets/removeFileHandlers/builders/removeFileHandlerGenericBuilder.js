@@ -1,5 +1,5 @@
-import * as UploadDatasetsConsts from '../../../consts';
-import * as UploadDatasetsStyle from '../style';
+import * as UploadDatasetsConsts from '../../../../consts';
+import * as UploadDatasetsStyle from '../../style';
 
 // pontential to move this out into shared validate logic
 // can't at the moment because validate is just one default function
@@ -72,7 +72,7 @@ function removeAnnotationFileWhenOneAnnotationFileAllowed(fileName, errorMessage
   }
 }
 
-function removeFileHandlerWthClasses(fileName, tableName, errorMessage) {
+function removeFileHandler(fileName, tableName, errorMessage) {
   const datasetObject = this.datasetObjectManager.getDatasetObject();
   if (tableName === UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR) {
     this.removeAnnotationFileFunc(fileName, errorMessage, datasetObject);
@@ -90,16 +90,12 @@ function removeFileHandlerWthClasses(fileName, tableName, errorMessage) {
 function buildRemoveFileHandlerForMultipleAnnotationFilesStrategy(datasetObjectManager,
   validateFormat) {
   const removeAnnotationFileFunc = removeAnnotationFileWhenMultipleAnnotationFilesAllowed;
-  return removeFileHandlerWthClasses.bind({
-    datasetObjectManager, validateFormat, removeAnnotationFileFunc,
-  });
+  return removeFileHandler.bind({ datasetObjectManager, validateFormat, removeAnnotationFileFunc });
 }
 
 function buildRemoveFileHandlerForOneAnnotationFileStrategy(datasetObjectManager, validateFormat) {
   const removeAnnotationFileFunc = removeAnnotationFileWhenOneAnnotationFileAllowed;
-  return removeFileHandlerWthClasses.bind(
-    { datasetObjectManager, validateFormat, removeAnnotationFileFunc },
-  );
+  return removeFileHandler.bind({ datasetObjectManager, validateFormat, removeAnnotationFileFunc });
 }
 
 const RemoveFileHandlerGenericBuilder = {

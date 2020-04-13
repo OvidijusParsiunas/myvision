@@ -1,4 +1,4 @@
-import DatasetObjectManagerBuilder from './datasetObjectManagerBuilder';
+import DatasetObjectManagerBuilder from './builders/datasetObjectManagerBuilder';
 
 const datasetObjectManager = DatasetObjectManagerBuilder
   .buildObjectManagerForOneAnnotationFileStrategy();

@@ -1,4 +1,4 @@
-import RemoveFileHandlerBuilder from './removeFileHandlerGenericBuilder';
+import RemoveFileHandlerBuilder from './builders/removeFileHandlerGenericBuilder';
 import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import validateFormat from '../formatValidators/VOCXMLValidator';
 
