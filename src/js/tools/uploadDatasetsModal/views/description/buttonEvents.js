@@ -6,7 +6,7 @@ function moveToNextView(nextViewCallback) {
 }
 
 function registerButtonEventHandlers(nextViewCallback) {
-  window.startUploadDatasets = moveToNextView.bind(
+  window.moveToSelectFormatView = moveToNextView.bind(
     this, nextViewCallback,
   );
 }

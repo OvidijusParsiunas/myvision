@@ -39,7 +39,7 @@ import * as UploadDatasetsConsts from '../consts';
 import {
   setFormatState, setReuseAlreadyUploadedImagesState,
   getFormatState, getReuseAlreadyUploadedImagesState,
-} from './uploadDatasets/stateManager';
+} from '../stateMachine';
 
 let currentViewNumber = 1;
 let modalElement = null;

@@ -1,7 +1,7 @@
 import { hideUploadDatasetsViewAssets } from './style';
 import { uploadDatasetFilesHandler } from './uploadDatasetFilesHandler';
 import { drawShapesAndImages } from './drawShapesAndImages';
-import { setAllStatesToDefault } from './stateManager';
+import { setAllStatesToDefault } from '../../stateMachine';
 
 function triggerUploadDatasetFiles() {
   document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger').click();

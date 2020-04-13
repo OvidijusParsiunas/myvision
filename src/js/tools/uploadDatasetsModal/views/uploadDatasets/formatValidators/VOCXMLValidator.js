@@ -1,7 +1,7 @@
 import * as UploadDatasetsConsts from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
-import { getReuseAlreadyUploadedImagesState } from '../stateManager';
+import { getReuseAlreadyUploadedImagesState } from '../../../stateMachine';
 import { checkObjectProperties } from './sharedUtils';
 
 function setCurrentAnnotationFilesToInactive(annotationFiles) {

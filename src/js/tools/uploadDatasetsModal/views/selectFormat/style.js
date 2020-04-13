@@ -1,8 +1,37 @@
 let descriptionElement = null;
-let startButtonElement = null;
 let cancelButtonElement = null;
 let buttonsGroupElement = null;
+let nextButtonElement = null;
 let selectFormatOuterContainerElement = null;
+
+let isCheckboxSelected = false;
+let currentlySelectedCheckboxElement = null;
+
+function enableExportButton() {
+  console.log('enable');
+}
+
+function disableExportButton() {
+  console.log('disable');
+}
+
+function uncheckCurrentlySelectedCheckbox() {
+  currentlySelectedCheckboxElement.checked = false;
+}
+
+function selectFormat(target) {
+  if (!isCheckboxSelected) {
+    currentlySelectedCheckboxElement = target;
+    enableExportButton();
+    isCheckboxSelected = true;
+  } else if (target === currentlySelectedCheckboxElement) {
+    isCheckboxSelected = false;
+    disableExportButton();
+  } else {
+    uncheckCurrentlySelectedCheckbox();
+    currentlySelectedCheckboxElement = target;
+  }
+}
 
 function displaySelectFormatOuterContainerElementView() {
   selectFormatOuterContainerElement.style.display = '';
@@ -20,12 +49,12 @@ function hideCancelButtonElement() {
   cancelButtonElement.style.display = 'none';
 }
 
-function displayStartButtonElement() {
-  startButtonElement.style.display = '';
+function displayNextButtonElement() {
+  nextButtonElement.style.display = '';
 }
 
-function hideStartButtonElement() {
-  startButtonElement.style.display = 'none';
+function hideNextButtonElement() {
+  nextButtonElement.style.display = 'none';
 }
 
 function hideDescriptionElement() {
@@ -37,14 +66,14 @@ function setButtonGroupElementMarginTop(length) {
 }
 
 function prepareSelectFormatView() {
-  displayStartButtonElement();
+  displayNextButtonElement();
   setButtonGroupElementMarginTop('5px');
   displayCancelButtonElement();
   displaySelectFormatOuterContainerElementView();
 }
 
 function hideSelectFormatViewAssets() {
-  hideStartButtonElement();
+  hideNextButtonElement();
   hideDescriptionElement();
   hideCancelButtonElement();
   hideSelectFormatOuterContainerElement();
@@ -52,12 +81,13 @@ function hideSelectFormatViewAssets() {
 
 function assignSelectFormatViewLocalVariables() {
   descriptionElement = document.getElementById('upload-datasets-modal-description');
-  startButtonElement = document.getElementById('upload-datasets-modal-start-button');
   cancelButtonElement = document.getElementById('upload-datasets-modal-cancel-button');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
+  nextButtonElement = document.getElementById('upload-datsets-modal-select-format-next-button');
   selectFormatOuterContainerElement = document.getElementById('upload-datsets-modal-select-format-outer-container');
 }
 
 export {
-  assignSelectFormatViewLocalVariables, prepareSelectFormatView, hideSelectFormatViewAssets,
+  assignSelectFormatViewLocalVariables, selectFormat,
+  hideSelectFormatViewAssets, prepareSelectFormatView,
 };

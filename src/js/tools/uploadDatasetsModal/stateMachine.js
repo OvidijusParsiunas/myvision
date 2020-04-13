@@ -1,8 +1,11 @@
-let format = '';
+import { COCO_JSON_FORMAT } from './consts';
+
+const defaultState = COCO_JSON_FORMAT;
+let currentlySelectedFormat = defaultState;
 let reuseAlreadyUploadedImages = false;
 
 function setFormatState(formatState) {
-  format = formatState;
+  currentlySelectedFormat = currentlySelectedFormat === formatState ? defaultState : formatState;
 }
 
 function setReuseAlreadyUploadedImagesState(reuseAlreadyUploadedImagesState) {
@@ -10,7 +13,7 @@ function setReuseAlreadyUploadedImagesState(reuseAlreadyUploadedImagesState) {
 }
 
 function getFormatState() {
-  return format;
+  return currentlySelectedFormat;
 }
 
 function getReuseAlreadyUploadedImagesState() {
@@ -18,7 +21,7 @@ function getReuseAlreadyUploadedImagesState() {
 }
 
 function setAllStatesToDefault() {
-  format = '';
+  currentlySelectedFormat = defaultState;
   reuseAlreadyUploadedImages = false;
 }
 
