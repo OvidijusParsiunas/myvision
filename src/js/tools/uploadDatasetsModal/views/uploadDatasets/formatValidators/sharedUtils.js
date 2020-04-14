@@ -1,8 +1,8 @@
-import * as UploadDatasetsConsts from '../../../consts';
+import { CSV_POSTFIX, XML_POSTFIX, TXT_POSTFIX } from '../../../consts';
 
 function checkNumberOrStringTypeByFormat(subjectVariable, format) {
   switch (format) {
-    case UploadDatasetsConsts.XML_POSTFIX:
+    case XML_POSTFIX:
       return typeof subjectVariable['#text'] === 'string' || !Number.isNaN(parseInt(subjectVariable['#text'], 10));
     default:
       return typeof subjectVariable === 'string' || typeof subjectVariable === 'number';
@@ -11,7 +11,7 @@ function checkNumberOrStringTypeByFormat(subjectVariable, format) {
 
 function checkStringTypeByFormat(subjectVariable, format) {
   switch (format) {
-    case UploadDatasetsConsts.XML_POSTFIX:
+    case XML_POSTFIX:
       return typeof subjectVariable['#text'] === 'string';
     default:
       return typeof subjectVariable === 'string';
@@ -20,11 +20,11 @@ function checkStringTypeByFormat(subjectVariable, format) {
 
 function checkNumberTypeByFormat(subjectVariable, format) {
   switch (format) {
-    case UploadDatasetsConsts.CSV_POSTFIX:
+    case CSV_POSTFIX:
       return !Number.isNaN(Number.parseInt(subjectVariable, 10)) && typeof Number.parseInt(subjectVariable, 10) === 'number';
-    case UploadDatasetsConsts.TXT_POSTFIX:
+    case TXT_POSTFIX:
       return !Number.isNaN(subjectVariable) && typeof subjectVariable === 'number';
-    case UploadDatasetsConsts.XML_POSTFIX:
+    case XML_POSTFIX:
       return !Number.isNaN(parseInt(subjectVariable['#text'], 10));
     default:
       return typeof subjectVariable === 'number';

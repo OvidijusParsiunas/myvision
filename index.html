@@ -91,54 +91,38 @@
     <div id="upload-datasets-modal-parent" class="modal-parent" style="display: none">
       <div class="modal-title small-title">Upload Data</div>
       <div class="modal-title-border-line"></div>
-      <div id="upload-datasets-modal-description" class="modal-description">
-        Upload existing images/datasets from your computer and continue working on them in MyLabel.
-        <br>
-        <div class="upload-datasets-modal-description-break"></div>
-        It is important to note that everything you upload here will never leave the privacy of your computer.
-      </div>
-      <div id="machine-learning-modal-check-mark-parent" style="display: none">
-          <div id="machine-learning-modal-check-mark" class="draw"></div>
-      </div>
-      <div id="machine-learning-modal-progress-messages" style="display: none" class="modal-messages"></div>
-      <div id="machine-learning-modal-loading-wheel" style="display: none" class="loading-wheel" ></div>
-      <div id="machine-learning-modal-loading-text" style="display: none">Loading...</div>
+      <div id="upload-datasets-modal-description" class="modal-description"></div>
       <div id="upload-datasets-modal-error-messages" style="display: none" class="modal-messages"></div>
-      <div id="machine-learning-modal-info-messages" class="modal-messages"></div>
-      
       <div id="upload-datsets-modal-select-format-outer-container" style="display: none">
-        <div id="upload-datsets-modal-select-format-title" style="margin-bottom: 0px; margin-top: 6px" class="upload-datsets-modal-title">Choose Format</div>
+        <div id="upload-datsets-modal-select-format-title" class="upload-datsets-modal-title">Choose Format</div>
         <div id="upload-datsets-modal-select-format-inner-container">
-          <div style="width: 172px; left: 0; right: 0; margin-left: auto; margin-right: auto;">
-            <table style="width: 167px; padding: 2px; padding-left: 5px; padding-top: 7px" id="upload-datsets-modal-select-format-table" class="export-labels-popup-item"></table>
-          </div>
+          <table id="upload-datsets-modal-select-format-table" class="export-labels-popup-item"></table>
         </div>
       </div>
-
       <div id="upload-datsets-modal-upload-datasets-outer-container" style="display: none">
-        <div id="upload-datsets-modal-upload-datasets-title" style="margin-bottom: 5px" class="upload-datsets-modal-title"></div>
+        <div id="upload-datsets-modal-upload-datasets-title" class="upload-datsets-modal-title"></div>
         <div id="upload-datasets-modal-upload-datasets-table-1" style="display: none" class="upload-datsets-modal-upload-datasets-three-table-strategy-section">
-          <div id="upload-datasets-modal-upload-datasets-classes-table-title" style="font-size: 15px; margin-top: 5px; user-select: none; margin-bottom: 2px;">Classes (.txt)</div>
+          <div class="upload-datasets-modal-upload-datasets-table-title">Classes (.txt)</div>
           <div id="upload-datsets-modal-upload-datasets-classes-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets" onscroll="uploadDatasetsModalAnnotationsTableScroll()">
-            <table id="upload-datsets-modal-upload-datasets-classes-table" style="margin-top: 5px">
+            <table id="upload-datsets-modal-upload-datasets-classes-table" class="upload-datasets-modal-upload-datasets-table">
               <tbody></tbody>
             </table>
          </div>
         </div>
         <div class="upload-datasets-modal-vertical-break-line"></div>
         <div id="upload-datasets-modal-upload-datasets-table-2" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
-          <div id="upload-datasets-modal-upload=datasets-annotations-table-title" style="font-size: 15px; margin-top: 5px; user-select: none; margin-bottom: 2px;">Annotations (.json)</div>
+          <div id="upload-datasets-modal-upload=datasets-annotations-table-title" class="upload-datasets-modal-upload-datasets-table-title">Annotations (.json)</div>
           <div id="upload-datsets-modal-upload-datasets-annotations-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets" onscroll="uploadDatasetsModalAnnotationsTableScroll()">
-            <table id="upload-datsets-modal-upload-datasets-annotations-table" style="margin-top: 5px">
+            <table id="upload-datsets-modal-upload-datasets-annotations-table" class="upload-datasets-modal-upload-datasets-table">
               <tbody></tbody>
             </table>
          </div>
        </div>
        <div class="upload-datasets-modal-vertical-break-line"></div>
        <div id="upload-datasets-modal-upload-datasets-table-3" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
-         <div style="font-size: 15px; margin-top: 5px; user-select: none; margin-bottom: 2px;">Images</div>
+         <div class="upload-datasets-modal-upload-datasets-table-title">Images</div>
          <div id="upload-datsets-modal-upload-datasets-images-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets" onscroll="uploadDatasetsModalImagesTableScroll()">
-           <table id="upload-datsets-modal-upload-datasets-images-table" style="margin-top: 5px">
+           <table id="upload-datsets-modal-upload-datasets-images-table" class="upload-datasets-modal-upload-datasets-table">
              <tbody></tbody>
            </table>
         </div>
@@ -149,28 +133,12 @@
         <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()">Back</div>
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
-        <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
         <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
         <div id="upload-datsets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)">Yes</div>
         <div id="upload-datasets-modal-no-button" style="display: none" class="popup-label-button popup-cancel-button" onclick="reuseAlreadyExistingImages(false)">No</div>
         <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>
       </div>
-      <div id="machine-learning-modal-generated-labels-outer-container" style="display: none">
-          <div id="machine-learning-modal-generated-labels-inner-container">
-            <div id="machine-learning-modal-generated-labels">
-              <table id="machine-learning-modal-generated-labels-table">
-                <tbody></tbody>
-              </table>
-            </div>
-            <div id="machine-learning-modal-generated-labels-buttons" class="buttons modal-buttons">
-              <div id="machine-learning-modal-generated-labels-submit-button" class="popup-label-button popup-proceed-button" onclick="submitMLGeneratedLabels()">Submit</div>
-            </div>
-          </div>
-        </div>
-        <div id="machine-learning-modal-no-objects-buttons" style="display: none" class="buttons modal-buttons">
-            <div id="machine-learning-modal-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningModal()">Close</div>
-        </div>
     </div>
       <div id="export-labels-popup-parent" class="export-labels-popup-item" style="display: none; width: 173px; height: 203px">
         <div class="export-labels-popup-item small-title" style="padding-left: 10px; padding-top: 6px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>

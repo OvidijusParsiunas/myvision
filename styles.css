@@ -144,6 +144,30 @@
   user-select: none;
 }
 
+#upload-datsets-modal-select-format-title {
+  margin-bottom: 0px;
+  margin-top: 6px;
+}
+
+#upload-datsets-modal-select-format-inner-container {
+  left: 0;
+  right: 0;
+  width: 172px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#upload-datsets-modal-select-format-table {
+  width: 167px;
+  padding: 2px;
+  padding-top: 6px;
+  padding-left: 5px;
+}
+
+#upload-datsets-modal-upload-datasets-title {
+  margin-bottom: 5px;
+}
+
 .upload-datsets-modal-upload-datasets-two-table-strategy-section {
   width: calc(50% - 0.5px);
   text-align: center;
@@ -176,6 +200,17 @@
   max-width: 281px;
   overflow-x: auto;
   display: inline-block;
+}
+
+.upload-datasets-modal-upload-datasets-table-title {
+  font-size: 15px;
+  margin-top: 5px;
+  margin-bottom: 2px;
+  user-select: none;
+}
+
+.upload-datasets-modal-upload-datasets-table {
+  margin-top: 5px;
 }
 
 .upload-datasets-table {

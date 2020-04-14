@@ -9,6 +9,7 @@ let selectFormatOuterContainerElement = null;
 
 let isCheckboxSelected = false;
 let isNextButtonActive = false;
+let formatsTablePopulated = false;
 let currentlySelectedCheckboxElement = null;
 
 const PROCEED_BUTTON_CLASS = 'popup-proceed-button';
@@ -90,7 +91,7 @@ function createTableRow(format, index) {
       <div style="padding-left: 2px" class="checkbox-text format-option-text">
         ${format}
       </div>
-      <input style="margin-right: 1px" class="checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
+      <input style="margin-right: 0px" class="checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
     </td>
   `;
 }
@@ -100,12 +101,14 @@ function populateFormatsTable(formats) {
     const row = tableElement.insertRow(-1);
     row.innerHTML = createTableRow(format, index);
   });
+  formatsTablePopulated = true;
 }
 
 function prepareSelectFormatView() {
   displayNextButtonElement();
   setButtonGroupElementMarginTop('5px');
   displayCancelButtonElement();
+  if (!formatsTablePopulated) { populateFormatsTable(getAvailableFormats()); }
   displaySelectFormatOuterContainerElementView();
 }
 
@@ -124,7 +127,6 @@ function assignSelectFormatViewLocalVariables() {
   cancelButtonElement = document.getElementById('upload-datasets-modal-cancel-button');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
   selectFormatOuterContainerElement = document.getElementById('upload-datsets-modal-select-format-outer-container');
-  populateFormatsTable(getAvailableFormats());
 }
 
 export {

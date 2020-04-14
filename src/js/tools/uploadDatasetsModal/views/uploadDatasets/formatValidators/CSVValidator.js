@@ -1,4 +1,7 @@
-import * as UploadDatasetsConsts from '../../../consts';
+import {
+  CSV_POSTFIX, PROPERTIES_STRING, ACTIVE_ANNOTATION_FILE,
+  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
+} from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../../../stateMachine';
@@ -74,7 +77,7 @@ function checkAllRows(rows) {
       'ymax(8)': 'number',
     };
     const result = checkObjectProperties(requiredProperties, annotationFields,
-      UploadDatasetsConsts.CSV_POSTFIX, UploadDatasetsConsts.PROPERTIES_STRING);
+      CSV_POSTFIX, PROPERTIES_STRING);
     if (result.error) {
       result.message += ` -> on row ${i + 1}`;
       return result;
@@ -98,17 +101,17 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 function validateCSVFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = datasetObjectManager.getDatasetObject();
-    const activeAnnotationFile = datasetObject[UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE];
-    const validAnnotationFiles = datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
+    const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
+    const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
+    if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, validAnnotationFiles);
     }
-    if (parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
     }
   }
   if (getReuseAlreadyUploadedImagesState()
-    && parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    && parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };

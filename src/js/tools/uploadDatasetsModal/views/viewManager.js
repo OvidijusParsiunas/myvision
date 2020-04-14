@@ -7,11 +7,11 @@ import { assignUseExistingImagesQstnViewLocalVariables, prepareUseExistingImages
 import registerUseExistingImagesQstnViewButtonEventHandlers from './useExistingImagesQstn/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
-import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
-import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdaters';
-import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdaters';
-import updateYOLOTXTTables from './uploadDatasets/tableUpdaters/YOLOTXTTableUpdaters';
-import updateCSVTables from './uploadDatasets/tableUpdaters/CSVTableUpdaters';
+import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdater';
+import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdater';
+import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdater';
+import updateYOLOTXTTables from './uploadDatasets/tableUpdaters/YOLOTXTTableUpdater';
+import updateCSVTables from './uploadDatasets/tableUpdaters/CSVTableUpdater';
 import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
 import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
 import validateCSVFormat from './uploadDatasets/formatValidators/CSVValidator';
@@ -37,7 +37,13 @@ import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssembler
 import assembleFinalObjectFromYOLOTXT from './uploadDatasets/finalObjectAssemblers/YOLOTXTFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
-import * as UploadDatasetsConsts from '../consts';
+import {
+  JSON_POSTFIX, CSV_POSTFIX, XML_POSTFIX, TXT_POSTFIX,
+  ACCEPT_JSON_AND_IMG_FILES, ACCEPT_CSV_AND_IMG_FILES,
+  ACCEPT_XML_AND_IMG_FILES, ACCEPT_TXT_AND_IMG_FILES,
+  TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, YOLO_TXT_FORMAT,
+  COCO_JSON_FORMAT, VGG_JSON_FORMAT, CSV_FORMAT, VOC_XML_FORMAT,
+} from '../consts';
 import {
   getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState,
 } from '../stateMachine';
@@ -50,7 +56,7 @@ let goBackToSelectFormatViewFunc = null;
 
 function prepareChosenFormatFunctionality() {
   switch (getFormatState()) {
-    case UploadDatasetsConsts.COCO_JSON_FORMAT:
+    case COCO_JSON_FORMAT:
       setAddFile(COCOJSONObjectDatasetManager.addFile);
       setTableUpdater(updateCOCOJSONTables);
       setFormatValidator(validateCOCOJSONFormat);
@@ -58,13 +64,10 @@ function prepareChosenFormatFunctionality() {
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
         COCOJSONObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
-        UploadDatasetsConsts.COCO_JSON_FORMAT,
-        UploadDatasetsConsts.ACCEPT_JSON_AND_IMG_FILES,
-        UploadDatasetsConsts.JSON_POSTFIX,
-        UploadDatasetsConsts.TWO_TABLE_STRATEGY,
+        COCO_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX, TWO_TABLE_STRATEGY,
       );
       break;
-    case UploadDatasetsConsts.VGG_JSON_FORMAT:
+    case VGG_JSON_FORMAT:
       setAddFile(VGGJSONObjectDatasetManager.addFile);
       setTableUpdater(updateVGGJSONTables);
       setFormatValidator(validateVGGJSONFormat);
@@ -72,13 +75,10 @@ function prepareChosenFormatFunctionality() {
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
         VGGJSONObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
-        UploadDatasetsConsts.VGG_JSON_FORMAT,
-        UploadDatasetsConsts.ACCEPT_JSON_AND_IMG_FILES,
-        UploadDatasetsConsts.JSON_POSTFIX,
-        UploadDatasetsConsts.TWO_TABLE_STRATEGY,
+        VGG_JSON_FORMAT, ACCEPT_JSON_AND_IMG_FILES, JSON_POSTFIX, TWO_TABLE_STRATEGY,
       );
       break;
-    case UploadDatasetsConsts.CSV_FORMAT:
+    case CSV_FORMAT:
       setAddFile(CSVObjectDatasetManager.addFile);
       setTableUpdater(updateCSVTables);
       setFormatValidator(validateCSVFormat);
@@ -86,13 +86,10 @@ function prepareChosenFormatFunctionality() {
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCSVFileHandler,
         CSVObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
-        UploadDatasetsConsts.CSV_FORMAT,
-        UploadDatasetsConsts.ACCEPT_CSV_AND_IMG_FILES,
-        UploadDatasetsConsts.CSV_POSTFIX,
-        UploadDatasetsConsts.TWO_TABLE_STRATEGY,
+        CSV_FORMAT, ACCEPT_CSV_AND_IMG_FILES, CSV_POSTFIX, TWO_TABLE_STRATEGY,
       );
       break;
-    case UploadDatasetsConsts.VOC_XML_FORMAT:
+    case VOC_XML_FORMAT:
       setAddFile(VOCXMLObjectDatasetManager.addFile);
       setTableUpdater(updateVOCXMLTables);
       setFormatValidator(validateVOCXMLFormat);
@@ -100,13 +97,10 @@ function prepareChosenFormatFunctionality() {
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
         VOCXMLObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
-        UploadDatasetsConsts.VOC_XML_FORMAT,
-        UploadDatasetsConsts.ACCEPT_XML_AND_IMG_FILES,
-        UploadDatasetsConsts.XML_POSTFIX,
-        UploadDatasetsConsts.TWO_TABLE_STRATEGY,
+        VOC_XML_FORMAT, ACCEPT_XML_AND_IMG_FILES, XML_POSTFIX, TWO_TABLE_STRATEGY,
       );
       break;
-    case UploadDatasetsConsts.YOLO_TXT_FORMAT:
+    case YOLO_TXT_FORMAT:
       setAddFile(YOLOTXTObjectDatasetManager.addFile);
       setTableUpdater(updateYOLOTXTTables);
       setFormatValidator(validateYOLOTXTFormat);
@@ -114,19 +108,13 @@ function prepareChosenFormatFunctionality() {
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeYOLOTXTFileHandler,
         YOLOTXTObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
-        UploadDatasetsConsts.YOLO_TXT_FORMAT,
-        UploadDatasetsConsts.ACCEPT_TXT_AND_IMG_FILES,
-        UploadDatasetsConsts.TXT_POSTFIX,
-        UploadDatasetsConsts.THREE_TABLE_STRATEGY,
+        YOLO_TXT_FORMAT, ACCEPT_TXT_AND_IMG_FILES, TXT_POSTFIX, THREE_TABLE_STRATEGY,
       );
       break;
     default:
       break;
   }
 }
-
-// don't need to reset the height, expand it to fit reuse existing images
-// rename table updaters to table updater
 
 function displayNextView() {
   switch (currentViewNumber) {

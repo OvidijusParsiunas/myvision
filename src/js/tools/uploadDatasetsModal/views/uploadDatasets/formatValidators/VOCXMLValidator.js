@@ -1,4 +1,7 @@
-import * as UploadDatasetsConsts from '../../../consts';
+import {
+  IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
+  XML_POSTFIX, TAGS_STRING, ANNOTATION_FILE_INDICATOR,
+} from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../../../stateMachine';
@@ -45,7 +48,7 @@ function checkbndBoxTag(object) {
     xmin: 'number', ymin: 'number', xmax: 'number', ymax: 'number',
   };
   const result = checkObjectProperties(requiredProperties, object,
-    UploadDatasetsConsts.XML_POSTFIX, UploadDatasetsConsts.TAGS_STRING);
+    XML_POSTFIX, TAGS_STRING);
   if (result.error) { return result; }
   return { error: false, message: '' };
 }
@@ -57,14 +60,14 @@ function checkObjectTagChildTags(parsedObj) {
     for (let i = 0; i < objectTag.length; i += 1) {
       const object = objectTag[i];
       let result = checkObjectProperties(requiredProperties, object,
-        UploadDatasetsConsts.XML_POSTFIX, UploadDatasetsConsts.TAGS_STRING);
+        XML_POSTFIX, TAGS_STRING);
       if (result.error) { return result; }
       result = checkbndBoxTag(object.bndbox);
       if (result.error) { return result; }
     }
   } else {
     let result = checkObjectProperties(requiredProperties, objectTag,
-      UploadDatasetsConsts.XML_POSTFIX, UploadDatasetsConsts.TAGS_STRING);
+      XML_POSTFIX, TAGS_STRING);
     if (result.error) { return result; }
     result = checkbndBoxTag(objectTag.bndbox);
     if (result.error) { return result; }
@@ -75,13 +78,13 @@ function checkObjectTagChildTags(parsedObj) {
 function checkObjectTag(parsedObj) {
   const requiredProperties = { object: 'object|array' };
   return checkObjectProperties(requiredProperties, parsedObj.annotation,
-    UploadDatasetsConsts.XML_POSTFIX, UploadDatasetsConsts.TAGS_STRING);
+    XML_POSTFIX, TAGS_STRING);
 }
 
 function checkParentTag(parsedObj) {
   const requiredProperties = { annotation: 'object' };
   return checkObjectProperties(requiredProperties, parsedObj,
-    UploadDatasetsConsts.XML_POSTFIX, UploadDatasetsConsts.TAGS_STRING);
+    XML_POSTFIX, TAGS_STRING);
 }
 
 function checkObject(object, validators) {
@@ -111,16 +114,16 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 function validateVOCXMLFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = datasetObjectManager.getDatasetObject();
-    const validAnnotationFiles = datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
+    const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
+    if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, validAnnotationFiles);
     }
-    if (parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles);
     }
   }
   if (getReuseAlreadyUploadedImagesState()
-    && parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    && parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };

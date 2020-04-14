@@ -1,19 +1,23 @@
-import * as UploadDatasetsConsts from '../../../../consts';
+import {
+  ACTIVE_CLASSES_FILE, CLASSES_FILES_ARRAY, IMAGE_FILES_OBJECT,
+  ACTIVE_ANNOTATION_FILE, VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILE_INDICATOR,
+  ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR, FALTY_ANNOTATION_FILES_ARRAY,
+} from '../../../../consts';
 
 const datasetObject = { };
-datasetObject[UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE] = null;
-datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY] = [];
-datasetObject[UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY] = [];
-datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE] = null;
-datasetObject[UploadDatasetsConsts.CLASSES_FILES_ARRAY] = [];
-datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT] = {};
+datasetObject[ACTIVE_ANNOTATION_FILE] = null;
+datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
+datasetObject[FALTY_ANNOTATION_FILES_ARRAY] = [];
+datasetObject[ACTIVE_CLASSES_FILE] = null;
+datasetObject[CLASSES_FILES_ARRAY] = [];
+datasetObject[IMAGE_FILES_OBJECT] = {};
 
 function clearDatasetObject() {
-  datasetObject[UploadDatasetsConsts.CLASSES_FILES_ARRAY] = [];
-  datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE] = null;
-  datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY] = [];
-  datasetObject[UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY] = [];
-  datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT] = {};
+  datasetObject[CLASSES_FILES_ARRAY] = [];
+  datasetObject[ACTIVE_CLASSES_FILE] = null;
+  datasetObject[VALID_ANNOTATION_FILES_ARRAY] = [];
+  datasetObject[FALTY_ANNOTATION_FILES_ARRAY] = [];
+  datasetObject[IMAGE_FILES_OBJECT] = {};
 }
 
 function getIndexOfFileInArray(fileName, subjectArray) {
@@ -57,14 +61,14 @@ function replaceActiveFileIfRemoving(fileName, arrayName, activeFileName) {
 
 function addNewClassesFile(fileName, classesFileObj) {
   const existingFileIndex = getIndexOfFileInArray(fileName,
-    datasetObject[UploadDatasetsConsts.CLASSES_FILES_ARRAY]);
+    datasetObject[CLASSES_FILES_ARRAY]);
   if (existingFileIndex === undefined) {
-    const classesFiles = datasetObject[UploadDatasetsConsts.CLASSES_FILES_ARRAY];
+    const classesFiles = datasetObject[CLASSES_FILES_ARRAY];
     classesFiles.push(classesFileObj);
-    datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE] = classesFiles[classesFiles.length - 1];
+    datasetObject[ACTIVE_CLASSES_FILE] = classesFiles[classesFiles.length - 1];
   } else {
-    datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE] = datasetObject[
-      UploadDatasetsConsts.CLASSES_FILES_ARRAY][existingFileIndex];
+    datasetObject[ACTIVE_CLASSES_FILE] = datasetObject[
+      CLASSES_FILES_ARRAY][existingFileIndex];
   }
 }
 
@@ -73,38 +77,38 @@ function addClassesFile(classesFileObj, error) {
   if (!error) {
     addNewClassesFile(name, classesFileObj);
   } else {
-    replaceActiveFileIfRemoving(name, UploadDatasetsConsts.CLASSES_FILES_ARRAY,
-      UploadDatasetsConsts.ACTIVE_CLASSES_FILE);
-    removeFile(name, UploadDatasetsConsts.CLASSES_FILES_ARRAY);
+    replaceActiveFileIfRemoving(name, CLASSES_FILES_ARRAY,
+      ACTIVE_CLASSES_FILE);
+    removeFile(name, CLASSES_FILES_ARRAY);
   }
 }
 
 function addFaltyAnnotationFile(fileName, annotationFileObj) {
   if (getIndexOfFileInArray(fileName, datasetObject[
-    UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY]) === undefined) {
-    datasetObject[UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY].push(annotationFileObj);
+    FALTY_ANNOTATION_FILES_ARRAY]) === undefined) {
+    datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(annotationFileObj);
   }
 }
 
 function addValidAnnotationFileWhenOneAllowed(fileName, annotationFileObj) {
   const existingFileIndex = getIndexOfFileInArray(fileName,
-    datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY]);
+    datasetObject[VALID_ANNOTATION_FILES_ARRAY]);
   if (existingFileIndex === undefined) {
-    const annotationFiles = datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
+    const annotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
     annotationFiles.push(annotationFileObj);
-    datasetObject[UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE] = annotationFiles[
+    datasetObject[ACTIVE_ANNOTATION_FILE] = annotationFiles[
       annotationFiles.length - 1];
   } else {
-    datasetObject[UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE] = datasetObject[
-      UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY][existingFileIndex];
+    datasetObject[ACTIVE_ANNOTATION_FILE] = datasetObject[
+      VALID_ANNOTATION_FILES_ARRAY][existingFileIndex];
   }
 }
 
 function addValidAnnotationFileWhenMultipleAllowed(fileName, annotationFileObj) {
   const existingFileIndex = getIndexOfFileInArray(fileName,
-    datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY]);
+    datasetObject[VALID_ANNOTATION_FILES_ARRAY]);
   if (existingFileIndex === undefined) {
-    const annotationFiles = datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
+    const annotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
     annotationFiles.push(annotationFileObj);
   }
 }
@@ -113,11 +117,11 @@ function addAnnotationFileWhenOneAllowed(annotationFileObj, error) {
   const { name } = annotationFileObj.body.fileMetaData;
   if (!error) {
     addValidAnnotationFileWhenOneAllowed(name, annotationFileObj);
-    removeFile(name, UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY);
+    removeFile(name, FALTY_ANNOTATION_FILES_ARRAY);
   } else {
-    replaceActiveFileIfRemoving(name, UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY,
-      UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE);
-    removeFile(name, UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY);
+    replaceActiveFileIfRemoving(name, VALID_ANNOTATION_FILES_ARRAY,
+      ACTIVE_ANNOTATION_FILE);
+    removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
     addFaltyAnnotationFile(name, annotationFileObj);
   }
 }
@@ -127,7 +131,7 @@ function addAnnotationFileWhenMultipleAllowed(annotationFileObj, error) {
   if (!error) {
     addValidAnnotationFileWhenMultipleAllowed(name, annotationFileObj);
   } else {
-    removeFile(name, UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY);
+    removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
   }
 }
 
@@ -139,29 +143,29 @@ function addAnnotationFileWhenMultipleAllowedInclClasses(annotationFileObj, erro
     if (!erroObj.parsingError) {
       addFaltyAnnotationFile(name, annotationFileObj);
     }
-    removeFile(name, UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY);
+    removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
   }
 }
 
 
 function moveAnnotationFileToFaltyArray(file) {
   const { name } = file.body.fileMetaData;
-  removeFile(name, UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY);
-  datasetObject[UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY].push(file);
+  removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
+  datasetObject[FALTY_ANNOTATION_FILES_ARRAY].push(file);
 }
 
 function moveAnnotationFileToValidArray(file) {
   const { name } = file.body.fileMetaData;
-  removeFile(name, UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY);
-  datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY].push(file);
+  removeFile(name, FALTY_ANNOTATION_FILES_ARRAY);
+  datasetObject[VALID_ANNOTATION_FILES_ARRAY].push(file);
 }
 
 function isInImagesList(name) {
-  return datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT][name];
+  return datasetObject[IMAGE_FILES_OBJECT][name];
 }
 
 function updateImageFileErrorStatus(name, errorStatus) {
-  datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT][name].error = errorStatus;
+  datasetObject[IMAGE_FILES_OBJECT][name].error = errorStatus;
 }
 
 function addImageFile(imageFileObj, errorObject) {
@@ -169,51 +173,51 @@ function addImageFile(imageFileObj, errorObject) {
     // the error property is used to draw shapes on valid images only
     imageFileObj.error = errorObject.error;
     imageFileObj.alreadyUploaded = errorObject.alreadyUploaded;
-    datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT][
+    datasetObject[IMAGE_FILES_OBJECT][
       imageFileObj.body.fileMetaData.name] = imageFileObj;
   }
 }
 
 function addFileWhenOneAnnotationFileAllowed(file, errorObject) {
-  if (file.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+  if (file.fileFormat === IMAGE_FILE_INDICATOR) {
     addImageFile(file, errorObject);
-  } else if (file.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
+  } else if (file.fileFormat === ANNOTATION_FILE_INDICATOR) {
     addAnnotationFileWhenOneAllowed(file, errorObject.error);
   }
 }
 
 function addFileWhenMultipleAnnotationFilesAllowed(file, errorObject) {
-  if (file.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+  if (file.fileFormat === IMAGE_FILE_INDICATOR) {
     addImageFile(file, errorObject);
-  } else if (file.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
+  } else if (file.fileFormat === ANNOTATION_FILE_INDICATOR) {
     addAnnotationFileWhenMultipleAllowed(file, errorObject.error);
   }
 }
 
 function addFileWhenMultipleAnnotationsInclClasses(file, errorObject) {
-  if (file.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+  if (file.fileFormat === IMAGE_FILE_INDICATOR) {
     addImageFile(file, errorObject);
-  } else if (file.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
+  } else if (file.fileFormat === ANNOTATION_FILE_INDICATOR) {
     addAnnotationFileWhenMultipleAllowedInclClasses(file, errorObject);
-  } else if (file.fileFormat === UploadDatasetsConsts.CLASSES_FILE_INDICATOR) {
+  } else if (file.fileFormat === CLASSES_FILE_INDICATOR) {
     addClassesFile(file, errorObject.error);
   }
 }
 
 function getActiveAnnotationFile() {
-  return datasetObject[UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE];
+  return datasetObject[ACTIVE_ANNOTATION_FILE];
 }
 
 function getAnnotationFiles() {
-  return datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
+  return datasetObject[VALID_ANNOTATION_FILES_ARRAY];
 }
 
 function getFaltyAnnotationFiles() {
-  return datasetObject[UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY];
+  return datasetObject[FALTY_ANNOTATION_FILES_ARRAY];
 }
 
 function getImageFiles() {
-  return datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT];
+  return datasetObject[IMAGE_FILES_OBJECT];
 }
 
 function getDatasetObject() {

@@ -1,13 +1,15 @@
-import * as UploadDatasetsConsts from './consts';
+import {
+  COCO_JSON_FORMAT, VGG_JSON_FORMAT, CSV_FORMAT, VOC_XML_FORMAT, YOLO_TXT_FORMAT,
+} from './consts';
 
 const availableFormats = [
-  UploadDatasetsConsts.COCO_JSON_FORMAT,
-  UploadDatasetsConsts.VGG_JSON_FORMAT,
-  UploadDatasetsConsts.CSV_FORMAT,
-  UploadDatasetsConsts.VOC_XML_FORMAT,
-  UploadDatasetsConsts.YOLO_TXT_FORMAT,
+  COCO_JSON_FORMAT,
+  VGG_JSON_FORMAT,
+  CSV_FORMAT,
+  VOC_XML_FORMAT,
+  YOLO_TXT_FORMAT,
 ];
-const defaultState = UploadDatasetsConsts.COCO_JSON_FORMAT;
+const defaultState = COCO_JSON_FORMAT;
 let currentlySelectedFormat = defaultState;
 let reuseAlreadyUploadedImages = false;
 

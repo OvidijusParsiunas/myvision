@@ -1,26 +1,33 @@
-import * as UploadDatasetsStyle from '../../style';
-import * as UploadDatasetsConsts from '../../../../consts';
+import {
+  CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY,
+  IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY, IMAGES_TABLE_INDICATOR,
+  ACTIVE_CLASSES_FILE, ANNOTATIONS_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
+} from '../../../../consts';
+import {
+  changeAllImagesTableRowsToDefault, removeRow, insertRowToAnnotationsTable,
+  insertRowToImagesTable, enableFinishButton, disableFinishButton, changeClassesRowToDefault,
+} from '../../style';
 
 // functionality here cannot be used for all, will need
 // to be moved to atomic COCOJSON file
 
 function validateExistingImages(datasetObject, updateImageFileErrorStatusFunc, validateFormatFunc) {
-  if (datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY].length > 0) {
+  if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
     let foundValid = false;
-    Object.keys(datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT]).forEach((key) => {
-      const imageFile = datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT][key];
+    Object.keys(datasetObject[IMAGE_FILES_OBJECT]).forEach((key) => {
+      const imageFile = datasetObject[IMAGE_FILES_OBJECT][key];
       const validationResult = validateFormatFunc(imageFile);
       if (!validationResult.error) { foundValid = true; }
       const { name } = imageFile.body.fileMetaData;
-      UploadDatasetsStyle.insertRowToImagesTable(name, validationResult);
+      insertRowToImagesTable(name, validationResult);
       updateImageFileErrorStatusFunc(name, validationResult.error);
     });
     if (!foundValid) {
-      UploadDatasetsStyle.disableFinishButton();
+      disableFinishButton();
     }
   } else {
-    UploadDatasetsStyle.changeAllImagesTableRowsToDefault();
-    UploadDatasetsStyle.disableFinishButton();
+    changeAllImagesTableRowsToDefault();
+    disableFinishButton();
   }
 }
 
@@ -30,7 +37,7 @@ function validateAnnotationsFile(annotationsArray, filesToBeMovedArray, moveWhen
   annotationsArray.forEach((annotationsFile) => {
     const validationResult = validateFormatFunc(annotationsFile);
     const { name } = annotationsFile.body.fileMetaData;
-    UploadDatasetsStyle.insertRowToAnnotationsTable(name, validationResult);
+    insertRowToAnnotationsTable(name, validationResult);
     if (!validationResult.error) {
       foundValid = true;
       if (!moveWhenFalty) { filesToBeMovedArray.push(annotationsFile); }
@@ -46,11 +53,11 @@ function validateExistingAnnotations(datasetObject, moveAnnotationFileToValidArr
   const filesToBeMovedToFaltyArray = [];
   const filesToBeMovedToValidArray = [];
   const foundValidInValidArray = validateAnnotationsFile(
-    datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY], filesToBeMovedToFaltyArray,
+    datasetObject[VALID_ANNOTATION_FILES_ARRAY], filesToBeMovedToFaltyArray,
     true, validateFormatFunc,
   );
   const foundValidInFaltyArray = validateAnnotationsFile(
-    datasetObject[UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray,
+    datasetObject[FALTY_ANNOTATION_FILES_ARRAY], filesToBeMovedToValidArray,
     false, validateFormatFunc,
   );
   filesToBeMovedToFaltyArray.forEach((annotationFile) => {
@@ -60,17 +67,17 @@ function validateExistingAnnotations(datasetObject, moveAnnotationFileToValidArr
     moveAnnotationFileToValidArrayFunc(annotationFile);
   });
   if ((!foundValidInValidArray && !foundValidInFaltyArray)
-    || !datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE]) {
-    UploadDatasetsStyle.disableFinishButton();
+    || !datasetObject[ACTIVE_CLASSES_FILE]) {
+    disableFinishButton();
   } else {
-    UploadDatasetsStyle.enableFinishButton();
+    enableFinishButton();
   }
 }
 
 function setNewActiveClassesFileRow(activeClassesFile, datasetObject,
   updateImageFileErrorStatusFunc, validateFormatFunc, moveAnnotationFileToValidArrayFunc,
   moveAnnotationFileToFaltyArrayFunc) {
-  UploadDatasetsStyle.changeClassesRowToDefault(activeClassesFile.body.fileMetaData.name);
+  changeClassesRowToDefault(activeClassesFile.body.fileMetaData.name);
   activeClassesFile.newlyActive = false;
   validateExistingAnnotations(datasetObject, moveAnnotationFileToValidArrayFunc,
     moveAnnotationFileToFaltyArrayFunc, validateFormatFunc);
@@ -79,35 +86,35 @@ function setNewActiveClassesFileRow(activeClassesFile, datasetObject,
 
 function removeFileHandlerWthClasses(fileName, tableName, errorMessage) {
   const datasetObject = this.datasetObjectManager.getDatasetObject();
-  if (tableName === UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR) {
+  if (tableName === ANNOTATIONS_TABLE_INDICATOR) {
     this.datasetObjectManager.removeFile(fileName,
-      UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY);
+      VALID_ANNOTATION_FILES_ARRAY);
     this.datasetObjectManager.removeFile(fileName,
-      UploadDatasetsConsts.FALTY_ANNOTATION_FILES_ARRAY);
+      FALTY_ANNOTATION_FILES_ARRAY);
     if (!errorMessage) {
-      if (datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY].length === 0) {
-        UploadDatasetsStyle.disableFinishButton();
-        UploadDatasetsStyle.changeAllImagesTableRowsToDefault();
+      if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length === 0) {
+        disableFinishButton();
+        changeAllImagesTableRowsToDefault();
       } else {
         validateExistingImages(datasetObject,
           this.datasetObjectManager.updateImageFileErrorStatus,
           this.validateFormat);
       }
     }
-  } else if (tableName === UploadDatasetsConsts.IMAGES_TABLE_INDICATOR) {
-    this.datasetObjectManager.removeFile(fileName, UploadDatasetsConsts.IMAGE_FILES_OBJECT);
-    if (Object.keys(datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT])
-      .filter((key => !datasetObject[UploadDatasetsConsts.IMAGE_FILES_OBJECT][key].error))
+  } else if (tableName === IMAGES_TABLE_INDICATOR) {
+    this.datasetObjectManager.removeFile(fileName, IMAGE_FILES_OBJECT);
+    if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
+      .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
       .length === 0) {
-      UploadDatasetsStyle.disableFinishButton();
+      disableFinishButton();
     }
-  } else if (tableName === UploadDatasetsConsts.CLASSES_TABLE_INDICATOR) {
-    this.datasetObjectManager.removeFile(fileName, UploadDatasetsConsts.CLASSES_FILES_ARRAY);
+  } else if (tableName === CLASSES_TABLE_INDICATOR) {
+    this.datasetObjectManager.removeFile(fileName, CLASSES_FILES_ARRAY);
     if (!errorMessage) {
       this.datasetObjectManager.replaceActiveFileIfRemoving(fileName,
-        UploadDatasetsConsts.CLASSES_FILES_ARRAY, UploadDatasetsConsts.ACTIVE_CLASSES_FILE);
-      if (datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE] !== null) {
-        setNewActiveClassesFileRow(datasetObject[UploadDatasetsConsts.ACTIVE_CLASSES_FILE],
+        CLASSES_FILES_ARRAY, ACTIVE_CLASSES_FILE);
+      if (datasetObject[ACTIVE_CLASSES_FILE] !== null) {
+        setNewActiveClassesFileRow(datasetObject[ACTIVE_CLASSES_FILE],
           datasetObject, this.datasetObjectManager.updateImageFileErrorStatus, this.validateFormat,
           this.datasetObjectManager.moveAnnotationFileToValidArray,
           this.datasetObjectManager.moveAnnotationFileToFaltyArray);
@@ -122,7 +129,7 @@ function removeFileHandlerWthClasses(fileName, tableName, errorMessage) {
       }
     }
   }
-  UploadDatasetsStyle.removeRow(fileName, tableName);
+  removeRow(fileName, tableName);
 }
 
 function buildRemoveFileHandlerInclClasses(datasetObjectManager, validateFormat) {

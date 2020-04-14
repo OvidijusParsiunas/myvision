@@ -1,4 +1,7 @@
-import * as UploadDatasetsConsts from '../../../consts';
+import {
+  JSON_POSTFIX, PROPERTIES_STRING, ACTIVE_ANNOTATION_FILE,
+  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
+} from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/VGGJSONDatasetObjectManager';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../../../stateMachine';
@@ -54,7 +57,7 @@ function checkRegionAttributesProperty(parsedObj) {
     for (let y = 0; y < regions.length; y += 1) {
       const requiredProperties = { name: 'number|string' };
       const result = checkObjectProperties(requiredProperties, regions[y].region_attributes,
-        UploadDatasetsConsts.JSON_POSTFIX, UploadDatasetsConsts.PROPERTIES_STRING);
+        JSON_POSTFIX, PROPERTIES_STRING);
       if (result.error) {
         result.message += ' -> in region_attributes';
         return result;
@@ -70,16 +73,16 @@ function checkShapeAttributesPolygonProperty(region) {
     all_points_x: elementsType, all_points_y: elementsType,
   };
   let result = checkObjectProperties(requiredProperties, region.shape_attributes,
-    UploadDatasetsConsts.JSON_POSTFIX, UploadDatasetsConsts.PROPERTIES_STRING);
+    JSON_POSTFIX, PROPERTIES_STRING);
   if (result.error) { return result; }
   if (region.shape_attributes.all_points_x.length
       !== region.shape_attributes.all_points_y.length) {
     return { error: true, message: 'all_points_x and all_points_y arrays must have equal size' };
   }
-  result = checkArrayElements(region.shape_attributes.all_points_x, 'all_points_x', UploadDatasetsConsts.JSON_POSTFIX,
+  result = checkArrayElements(region.shape_attributes.all_points_x, 'all_points_x', JSON_POSTFIX,
     { elementsType, minLength: 3 });
   if (result.error) { return result; }
-  result = checkArrayElements(region.shape_attributes.all_points_y, 'all_points_y', UploadDatasetsConsts.JSON_POSTFIX,
+  result = checkArrayElements(region.shape_attributes.all_points_y, 'all_points_y', JSON_POSTFIX,
     { elementsType, minLength: 3 });
   if (result.error) { return result; }
   return { error: false, message: '' };
@@ -90,7 +93,7 @@ function checkShapeAttributesRectProperty(region) {
     x: 'number', y: 'number', width: 'number', height: 'number',
   };
   const result = checkObjectProperties(requiredProperties, region.shape_attributes,
-    UploadDatasetsConsts.JSON_POSTFIX, UploadDatasetsConsts.PROPERTIES_STRING);
+    JSON_POSTFIX, PROPERTIES_STRING);
   if (result.error) { return result; }
   return { error: false, message: '' };
 }
@@ -103,7 +106,7 @@ function checkShapeAttributesProperty(parsedObj) {
       const region = regions[y];
       const requiredProperties = { name: 'string' };
       let result = checkObjectProperties(requiredProperties, region.shape_attributes,
-        UploadDatasetsConsts.JSON_POSTFIX, UploadDatasetsConsts.PROPERTIES_STRING);
+        JSON_POSTFIX, PROPERTIES_STRING);
       if (result.error) {
         result.message += ' -> in shape_attributes';
         return result;
@@ -135,7 +138,7 @@ function checkRegionsProperty(parsedObj) {
     const { regions } = parsedObj[objectKeyNames[i]];
     for (let y = 0; y < regions.length; y += 1) {
       const result = checkObjectProperties(requiredProperties, regions[y],
-        UploadDatasetsConsts.JSON_POSTFIX, UploadDatasetsConsts.PROPERTIES_STRING);
+        JSON_POSTFIX, PROPERTIES_STRING);
       if (result.error) {
         result.message += ' -> in regions';
         return result;
@@ -150,7 +153,7 @@ function checkAnnotationObjectsProperties(parsedObj) {
   const objectKeyNames = Object.keys(parsedObj);
   for (let i = 0; i < objectKeyNames.length; i += 1) {
     const result = checkObjectProperties(requiredProperties, parsedObj[objectKeyNames[i]],
-      UploadDatasetsConsts.JSON_POSTFIX, UploadDatasetsConsts.PROPERTIES_STRING);
+      JSON_POSTFIX, PROPERTIES_STRING);
     if (result.error) {
       result.message += ' -> in annotation object';
       return result;
@@ -192,17 +195,17 @@ function validateAnnotationsFile(parsedObj, validAnnotationFiles) {
 function validateVGGJSONFormat(parsedObj, errorObj) {
   if (!errorObj) {
     const datasetObject = datasetObjectManager.getDatasetObject();
-    const activeAnnotationFile = datasetObject[UploadDatasetsConsts.ACTIVE_ANNOTATION_FILE];
-    const validAnnotationFiles = datasetObject[UploadDatasetsConsts.VALID_ANNOTATION_FILES_ARRAY];
-    if (parsedObj.fileFormat === UploadDatasetsConsts.ANNOTATION_FILE_INDICATOR) {
+    const activeAnnotationFile = datasetObject[ACTIVE_ANNOTATION_FILE];
+    const validAnnotationFiles = datasetObject[VALID_ANNOTATION_FILES_ARRAY];
+    if (parsedObj.fileFormat === ANNOTATION_FILE_INDICATOR) {
       return validateAnnotationsFile(parsedObj, validAnnotationFiles);
     }
-    if (parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
       return validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile);
     }
   }
   if (getReuseAlreadyUploadedImagesState()
-    && parsedObj.fileFormat === UploadDatasetsConsts.IMAGE_FILE_INDICATOR) {
+    && parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     const imageName = parsedObj.body.fileMetaData.name;
     if (isImageAlreadyUploaded(imageName)) {
       return { error: false, message: '', alreadyUploaded: true };

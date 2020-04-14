@@ -1,4 +1,7 @@
-import * as UploadDatasetsConsts from '../../consts';
+import {
+  ANNOTATIONS_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
+  TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, IMAGES_TABLE_INDICATOR,
+} from '../../consts';
 
 let titleElement = null;
 let table1Element = null;
@@ -22,7 +25,7 @@ let annotationsTableOuterContainerElement = null;
 let popoverIndex = 0;
 const modalWidth = 678;
 const modalHeight = 390;
-let currentTableStrategy = UploadDatasetsConsts.TWO_TABLE_STRATEGY;
+let currentTableStrategy = TWO_TABLE_STRATEGY;
 let finishButtonEnabled = false;
 
 const POPOVER_LEFT_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-left';
@@ -58,12 +61,12 @@ function createTableRowElementMarkup(fileName, tableName) {
 }
 
 function addPopoverArrowMarginLeftStyle(tableName) {
-  if (currentTableStrategy === UploadDatasetsConsts.TWO_TABLE_STRATEGY
-      && tableName === UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR) {
+  if (currentTableStrategy === TWO_TABLE_STRATEGY
+      && tableName === ANNOTATIONS_TABLE_INDICATOR) {
     return `style="margin-left: ${(modalWidth / 2 / 2) - 20}px;"`;
   }
-  if (currentTableStrategy === UploadDatasetsConsts.THREE_TABLE_STRATEGY
-    && tableName === UploadDatasetsConsts.CLASSES_TABLE_INDICATOR) {
+  if (currentTableStrategy === THREE_TABLE_STRATEGY
+    && tableName === CLASSES_TABLE_INDICATOR) {
     return `style="margin-left: ${(modalWidth / 3 / 2) + 34}px;"`;
   }
   return '';
@@ -86,7 +89,7 @@ function createTableRowElementMarkupWthPopover(fileName, message, popoverPositio
 }
 
 window.displayUploadDatasetsAnnotationFilePopover = (id, tableName) => {
-  const tableOuterContainerElement = tableName === UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR
+  const tableOuterContainerElement = tableName === ANNOTATIONS_TABLE_INDICATOR
     ? annotationsTableOuterContainerElement : imagesTableOuterContainerElement;
   document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.display = 'block';
   document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 30}px`;
@@ -124,11 +127,11 @@ function getFileName(tableBody, rowIndex) {
 
 function getTableElement(tableName) {
   switch (tableName) {
-    case UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR:
+    case ANNOTATIONS_TABLE_INDICATOR:
       return annotationsTableElement;
-    case UploadDatasetsConsts.IMAGES_TABLE_INDICATOR:
+    case IMAGES_TABLE_INDICATOR:
       return imagesTableElement;
-    case UploadDatasetsConsts.CLASSES_TABLE_INDICATOR:
+    case CLASSES_TABLE_INDICATOR:
       return classesTableElement;
     default:
       return annotationsTableElement;
@@ -151,13 +154,13 @@ function removeRow(subjectFileName, tableName) {
 function getTableName(tableId) {
   switch (tableId) {
     case 'upload-datsets-modal-upload-datasets-annotations-table':
-      return UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR;
+      return ANNOTATIONS_TABLE_INDICATOR;
     case 'upload-datsets-modal-upload-datasets-images-table':
-      return UploadDatasetsConsts.IMAGES_TABLE_INDICATOR;
+      return IMAGES_TABLE_INDICATOR;
     case 'upload-datsets-modal-upload-datasets-classes-table':
-      return UploadDatasetsConsts.CLASSES_TABLE_INDICATOR;
+      return CLASSES_TABLE_INDICATOR;
     default:
-      return UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR;
+      return ANNOTATIONS_TABLE_INDICATOR;
   }
 }
 
@@ -175,7 +178,7 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
           tableName, popoverIndex += 1, POPOVER_ERROR_THEME_CLASS, POPOVER_ARROW_ERROR_THEME_CLASS,
           ERROR_TEXT_THEME_CLASS,
         );
-        if (tableName === UploadDatasetsConsts.IMAGES_TABLE_INDICATOR) {
+        if (tableName === IMAGES_TABLE_INDICATOR) {
           allImagesStyleSetToDefault = false;
         }
       } else if (validationResult.information) {
@@ -217,7 +220,7 @@ function insertRowToClassesTable(fileName, validationResult) {
     const cell = row.insertCell(0);
     cell.innerHTML = createTableRowElementMarkupWthPopover(fileName, validationResult.message,
       POPOVER_LEFT_POSITION_CLASS, POPOVER_ARROW_LEFT_POSITION_CLASS,
-      UploadDatasetsConsts.CLASSES_TABLE_INDICATOR, popoverIndex += 1,
+      CLASSES_TABLE_INDICATOR, popoverIndex += 1,
       popoverThemeClass, popoverArrowThemeClass, textThemeClass);
   }
 }
@@ -231,13 +234,12 @@ function insertRowToImagesTable(fileName, validationResult) {
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthPopover(fileName, validationResult.message,
         POPOVER_RIGHT_POSITION_CLASS, POPOVER_ARROW_RIGHT_POSITION_CLASS,
-        UploadDatasetsConsts.IMAGES_TABLE_INDICATOR, popoverIndex += 1,
+        IMAGES_TABLE_INDICATOR, popoverIndex += 1,
         POPOVER_ERROR_THEME_CLASS, POPOVER_ARROW_ERROR_THEME_CLASS,
         ERROR_TEXT_THEME_CLASS);
       allImagesStyleSetToDefault = false;
     } else {
-      cell.innerHTML = createTableRowElementMarkup(fileName,
-        UploadDatasetsConsts.IMAGES_TABLE_INDICATOR);
+      cell.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
     }
   }
 }
@@ -248,8 +250,7 @@ function changeAllImagesTableRowsToDefault() {
     for (let i = 0; i < tableBody.childNodes.length; i += 1) {
       const rowParentElement = tableBody.childNodes[i].childNodes[0];
       const { fileName } = getFileName(tableBody, i);
-      rowParentElement.innerHTML = createTableRowElementMarkup(fileName,
-        UploadDatasetsConsts.IMAGES_TABLE_INDICATOR);
+      rowParentElement.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
     }
   }
   allImagesStyleSetToDefault = true;
@@ -262,7 +263,7 @@ function changeClassesRowToDefault(classesFileName) {
     const { fileName } = getFileName(tableBody, i);
     if (classesFileName === fileName) {
       rowParentElement.innerHTML = createTableRowElementMarkup(
-        classesFileName, UploadDatasetsConsts.CLASSES_TABLE_INDICATOR,
+        classesFileName, CLASSES_TABLE_INDICATOR,
       );
     }
   }
@@ -275,7 +276,7 @@ function changeAnnotationRowToDefault(annotationFileName) {
     const { fileName } = getFileName(tableBody, i);
     if (annotationFileName === fileName) {
       rowParentElement.innerHTML = createTableRowElementMarkup(
-        annotationFileName, UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR,
+        annotationFileName, ANNOTATIONS_TABLE_INDICATOR,
       );
     }
   }
@@ -290,11 +291,11 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
     if (validationResult.error) {
       cell.innerHTML = createTableRowElementMarkupWthPopover(fileName, validationResult.message,
         currentAnnotationsPopoverPositionClass, currentAnnotationsPopoverArrowPositionClass,
-        UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1,
+        ANNOTATIONS_TABLE_INDICATOR, popoverIndex += 1,
         POPOVER_ERROR_THEME_CLASS, POPOVER_ARROW_ERROR_THEME_CLASS, ERROR_TEXT_THEME_CLASS);
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName,
-        UploadDatasetsConsts.ANNOTATIONS_TABLE_INDICATOR);
+        ANNOTATIONS_TABLE_INDICATOR);
     }
   }
 }
@@ -436,7 +437,7 @@ window.uploadDatasetsModalAnnotationsTableScroll = () => {
 };
 
 function displayTableStrategyRelevantAssets(tableStrategy) {
-  if (tableStrategy === UploadDatasetsConsts.THREE_TABLE_STRATEGY) {
+  if (tableStrategy === THREE_TABLE_STRATEGY) {
     displayTable1();
     displayUploadButtonElement();
     changeUploadDatasetsModalElementDimensions(977, modalHeight);
@@ -466,10 +467,10 @@ function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFi
 }
 
 function hideUploadDatasetsViewAssets() {
-  if (currentTableStrategy === UploadDatasetsConsts.THREE_TABLE_STRATEGY) {
+  if (currentTableStrategy === THREE_TABLE_STRATEGY) {
     hideTable1();
     changeThreeTableStrategyToTwo();
-    currentTableStrategy = UploadDatasetsConsts.TWO_TABLE_STRATEGY;
+    currentTableStrategy = TWO_TABLE_STRATEGY;
   }
   hideBackButton();
   hideUploadButtonElement();
