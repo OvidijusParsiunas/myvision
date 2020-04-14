@@ -139,6 +139,8 @@ function displayNextView() {
       break;
     case 3:
       setReuseAlreadyUploadedImagesState(true);
+      break;
+    case 4:
       prepareChosenFormatFunctionality();
       if (getReuseAlreadyUploadedImagesState()) {
         addAlreadyUploadedImages(getAllImageData());

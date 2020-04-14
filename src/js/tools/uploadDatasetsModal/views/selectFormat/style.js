@@ -5,7 +5,6 @@ let cancelButtonElement = null;
 let buttonsGroupElement = null;
 let nextButtonElement = null;
 let tableElement = null;
-let uploadDatasetsModalElement = null;
 let selectFormatOuterContainerElement = null;
 
 let isCheckboxSelected = false;
@@ -32,14 +31,6 @@ function disableExportButton() {
 
 function uncheckCurrentlySelectedCheckbox() {
   currentlySelectedCheckboxElement.checked = false;
-}
-
-function setUploadDatasetsModalHeight(length) {
-  uploadDatasetsModalElement.style.height = length;
-}
-
-function resetUploadDatasetsModalHeight() {
-  uploadDatasetsModalElement.style.height = '';
 }
 
 function selectFormat(target) {
@@ -93,13 +84,13 @@ function resetButtonGroupElementMarginTop() {
 }
 
 function createTableRow(format, index) {
-  const paddingTop = index === 2 ? '5px"' : '3px';
+  const paddingTop = index === 2 ? 5 : 3;
   return `
-    <td style="padding-top:${paddingTop}" class="data-format-table-row-data">
-      <div class="checkbox-text format-option-text bounding-box-format-option-text">
+    <td style="padding-top: ${paddingTop}px" class="data-format-table-row-data">
+      <div style="padding-left: 2px" class="checkbox-text format-option-text">
         ${format}
       </div>
-      <input style="margin-right: 1px" class="bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
+      <input style="margin-right: 1px" class="checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
     </td>
   `;
 }
@@ -113,7 +104,6 @@ function populateFormatsTable(formats) {
 
 function prepareSelectFormatView() {
   displayNextButtonElement();
-  setUploadDatasetsModalHeight('270px');
   setButtonGroupElementMarginTop('5px');
   displayCancelButtonElement();
   displaySelectFormatOuterContainerElementView();
@@ -121,7 +111,6 @@ function prepareSelectFormatView() {
 
 function hideSelectFormatViewAssets() {
   hideNextButtonElement();
-  resetUploadDatasetsModalHeight();
   hideDescriptionElement();
   resetButtonGroupElementMarginTop();
   hideCancelButtonElement();
@@ -134,7 +123,6 @@ function assignSelectFormatViewLocalVariables() {
   descriptionElement = document.getElementById('upload-datasets-modal-description');
   cancelButtonElement = document.getElementById('upload-datasets-modal-cancel-button');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
-  uploadDatasetsModalElement = document.getElementById('upload-datasets-modal-parent');
   selectFormatOuterContainerElement = document.getElementById('upload-datsets-modal-select-format-outer-container');
   populateFormatsTable(getAvailableFormats());
 }
