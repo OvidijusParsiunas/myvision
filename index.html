@@ -146,12 +146,14 @@
      </div>
       <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
         <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="moveToSelectFormatView()">Start</div>
-        <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button">Back</div>
+        <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()">Back</div>
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
         <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
         <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
+        <div id="upload-datsets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)">Yes</div>
+        <div id="upload-datasets-modal-no-button" style="display: none" class="popup-label-button popup-cancel-button" onclick="reuseAlreadyExistingImages(false)">No</div>
         <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>
       </div>
       <div id="machine-learning-modal-generated-labels-outer-container" style="display: none">
@@ -171,7 +173,7 @@
         </div>
     </div>
       <div id="export-labels-popup-parent" class="export-labels-popup-item" style="display: none; width: 173px; height: 203px">
-        <div class="export-labels-popup-item small-title" style="padding-left: 10px; padding-top: 7px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
+        <div class="export-labels-popup-item small-title" style="padding-left: 10px; padding-top: 6px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
         <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px;">
           <table style="width: 162px; padding-left: 5px;" id="settings-table" class="export-labels-popup-item">
             <tr><td style="padding-top: 7px;" class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>

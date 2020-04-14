@@ -3,6 +3,8 @@ import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescri
 import registerSelectFormatViewButtonEventHandlers from './selectFormat/buttonEvents';
 import { assignSelectFormatViewLocalVariables, prepareSelectFormatView, hideSelectFormatViewAssets } from './selectFormat/style';
 import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
+import { assignUseExistingImagesQstnViewLocalVariables, prepareUseExistingImagesQstnView } from './useExistingImagesQstn/style';
+import registerUseExistingImagesQstnViewButtonEventHandlers from './useExistingImagesQstn/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdaters';
@@ -44,6 +46,7 @@ let currentViewNumber = 1;
 let modalElement = null;
 let hideViewOnCancelFunc = null;
 let closeModalFunc = null;
+let goBackToSelectFormatViewFunc = null;
 
 function prepareChosenFormatFunctionality() {
   switch (getFormatState()) {
@@ -53,7 +56,7 @@ function prepareChosenFormatFunctionality() {
       setFormatValidator(validateCOCOJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCOCOJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCOCOJSONFileHandler,
-        COCOJSONObjectDatasetManager.clearDatasetObject);
+        COCOJSONObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
         UploadDatasetsConsts.COCO_JSON_FORMAT,
         UploadDatasetsConsts.ACCEPT_JSON_AND_IMG_FILES,
@@ -67,7 +70,7 @@ function prepareChosenFormatFunctionality() {
       setFormatValidator(validateVGGJSONFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVGGJSON);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVGGJSONFileHandler,
-        VGGJSONObjectDatasetManager.clearDatasetObject);
+        VGGJSONObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
         UploadDatasetsConsts.VGG_JSON_FORMAT,
         UploadDatasetsConsts.ACCEPT_JSON_AND_IMG_FILES,
@@ -81,7 +84,7 @@ function prepareChosenFormatFunctionality() {
       setFormatValidator(validateCSVFormat);
       setFinalObjectAssembler(assembleFinalObjectFromCSV);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeCSVFileHandler,
-        CSVObjectDatasetManager.clearDatasetObject);
+        CSVObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
         UploadDatasetsConsts.CSV_FORMAT,
         UploadDatasetsConsts.ACCEPT_CSV_AND_IMG_FILES,
@@ -95,7 +98,7 @@ function prepareChosenFormatFunctionality() {
       setFormatValidator(validateVOCXMLFormat);
       setFinalObjectAssembler(assembleFinalObjectFromVOCXML);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeVOCXMLFileHandler,
-        VOCXMLObjectDatasetManager.clearDatasetObject);
+        VOCXMLObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
         UploadDatasetsConsts.VOC_XML_FORMAT,
         UploadDatasetsConsts.ACCEPT_XML_AND_IMG_FILES,
@@ -109,7 +112,7 @@ function prepareChosenFormatFunctionality() {
       setFormatValidator(validateYOLOTXTFormat);
       setFinalObjectAssembler(assembleFinalObjectFromYOLOTXT);
       registerUploadDatasetsViewButtonEventHandlers(closeModalFunc, removeYOLOTXTFileHandler,
-        YOLOTXTObjectDatasetManager.clearDatasetObject);
+        YOLOTXTObjectDatasetManager.clearDatasetObject, goBackToSelectFormatViewFunc);
       prepareUploadDatasetsView(
         UploadDatasetsConsts.YOLO_TXT_FORMAT,
         UploadDatasetsConsts.ACCEPT_TXT_AND_IMG_FILES,
@@ -138,7 +141,13 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 3:
-      setReuseAlreadyUploadedImagesState(true);
+      currentViewNumber += 1;
+      if (getAllImageData().length > 0) {
+        prepareUseExistingImagesQstnView();
+      } else {
+        setReuseAlreadyUploadedImagesState(false);
+        displayNextView();
+      }
       break;
     case 4:
       prepareChosenFormatFunctionality();
@@ -168,6 +177,11 @@ function closeModal() {
   displayNextView();
 }
 
+function goBackToSelectFormatView() {
+  currentViewNumber = 2;
+  displayNextView();
+}
+
 function assignViewManagerLocalVariables() {
   modalElement = document.getElementById('upload-datasets-modal-parent');
 }
@@ -178,10 +192,13 @@ function initialiseUploadDatasetsModal() {
   assignDescriptionViewLocalVariables();
   registerSelectFormatViewButtonEventHandlers(displayNextView);
   assignSelectFormatViewLocalVariables();
+  registerUseExistingImagesQstnViewButtonEventHandlers(displayNextView);
+  assignUseExistingImagesQstnViewLocalVariables();
   assignUploadDatasetsViewLocalVariables();
   displayNextView();
   window.cancelUploadDatasetsModal = closeModal;
   closeModalFunc = closeModal;
+  goBackToSelectFormatViewFunc = goBackToSelectFormatView;
 }
 
 export { displayModal, initialiseUploadDatasetsModal };

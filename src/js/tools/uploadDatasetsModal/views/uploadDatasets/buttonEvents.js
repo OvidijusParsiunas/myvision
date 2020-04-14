@@ -1,7 +1,6 @@
 import { hideUploadDatasetsViewAssets } from './style';
 import { uploadDatasetFilesHandler } from './uploadDatasetFilesHandler';
 import { drawShapesAndImages } from './drawShapesAndImages';
-import { setAllStatesToDefault } from '../../stateMachine';
 
 function triggerUploadDatasetFiles() {
   document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger').click();
@@ -15,16 +14,23 @@ function moveToNextView(nextViewCallback, clearDatasetObjectFunc) {
   drawShapesAndImages();
   hideUploadDatasetsViewAssets();
   clearDatasetObjectFunc();
-  setAllStatesToDefault();
   nextViewCallback();
 }
 
+function goBackToSelectFormatView(selectFormatViewCallback, clearDatasetObjectFunc) {
+  hideUploadDatasetsViewAssets();
+  clearDatasetObjectFunc();
+  selectFormatViewCallback();
+}
+
 function registerButtonEventHandlers(nextViewCallback, removeFileHandlerFunc,
-  clearDatasetObjectFunc) {
+  clearDatasetObjectFunc, selectFormatViewCallback) {
   window.triggerUploadDatasetFiles = triggerUploadDatasetFiles;
   window.uploadDatasetFilesHandler = uploadDatasetFilesHandler;
   window.drawShapesAndImages = moveToNextView.bind(this, nextViewCallback, clearDatasetObjectFunc);
   window.removeFileFromUploadDatasetFiles = removeFile.bind(this, removeFileHandlerFunc);
+  window.goBackToSelectFormatView = goBackToSelectFormatView.bind(this,
+    selectFormatViewCallback, clearDatasetObjectFunc);
 }
 
 export { registerButtonEventHandlers as default };

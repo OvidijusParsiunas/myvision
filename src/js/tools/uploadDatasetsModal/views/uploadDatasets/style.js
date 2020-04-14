@@ -329,7 +329,7 @@ function displayTable1() {
 }
 
 function hideTable1() {
-  table1Element.style.display = 'hide';
+  table1Element.style.display = 'none';
 }
 
 function changeTwoTableStrategyToThree() {
