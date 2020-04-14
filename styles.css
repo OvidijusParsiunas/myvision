@@ -156,7 +156,13 @@
   float: left;
 }
 
+/* cannot reuse these as a class because their elements undergo class replacement */
 #upload-datasets-modal-upload-datasets-upload-button {
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+#upload-datsets-modal-next-button {
   margin-right: 2px;
   margin-left: 2px;
 }
@@ -513,7 +519,7 @@
   width: 50px;
 }
 
-.export-labels-table-row-data {
+.data-format-table-row-data {
   padding-top: 2px;
   padding-bottom: 2px;
   line-height: 18px;

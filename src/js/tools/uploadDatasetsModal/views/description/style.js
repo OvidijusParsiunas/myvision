@@ -15,12 +15,12 @@ function displayStartButtonElement() {
   startButtonElement.style.display = '';
 }
 
-function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = '18px';
-}
-
 function hideStartButtonElement() {
   startButtonElement.style.display = 'none';
+}
+
+function moveButtonsGroupElementToLowerPosition() {
+  buttonsGroupElement.style.marginTop = '18px';
 }
 
 function displayDescription() {

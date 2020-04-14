@@ -37,8 +37,7 @@ import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
 import { getAllImageData } from '../../imageList/imageList';
 import * as UploadDatasetsConsts from '../consts';
 import {
-  setFormatState, setReuseAlreadyUploadedImagesState,
-  getFormatState, getReuseAlreadyUploadedImagesState,
+  getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState,
 } from '../stateMachine';
 
 let currentViewNumber = 1;
@@ -123,6 +122,7 @@ function prepareChosenFormatFunctionality() {
   }
 }
 
+// don't need to reset the height, expand it to fit reuse existing images
 // rename table updaters to table updater
 
 function displayNextView() {
@@ -138,8 +138,6 @@ function displayNextView() {
       currentViewNumber += 1;
       break;
     case 3:
-      // will be done in previous view in future
-      setFormatState(UploadDatasetsConsts.YOLO_TXT_FORMAT);
       setReuseAlreadyUploadedImagesState(true);
       prepareChosenFormatFunctionality();
       if (getReuseAlreadyUploadedImagesState()) {

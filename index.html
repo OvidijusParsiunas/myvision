@@ -110,35 +110,7 @@
         <div id="upload-datsets-modal-select-format-title" style="margin-bottom: 0px; margin-top: 0px" class="upload-datsets-modal-title">Choose Format</div>
         <div id="upload-datsets-modal-select-format-inner-container">
           <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px; left: 0; right: 0; margin-left: auto; margin-right: auto;">
-            <table style="width: 162px; padding-left: 5px;" id="settings-table" class="export-labels-popup-item">
-              <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
-                <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('COCO JSON', this)">
-              </td></tr>
-              <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">VGG JSON</div>
-                <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('VGG JSON', this)">
-              </td></tr>
-              <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text">
-                  CSV
-                </div>
-                <div class="export-labels-popup-item">
-                  <input class="export-labels-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('CSV', this)">
-                </div>
-                </td></tr>
-              <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text">
-                  VOC XML
-                </div>
-                <div class="export-labels-popup-item">
-                  <input class="export-labels-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('VOC XML', this)">
-                </div>
-                </td></tr>
-              <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text">
-                  YOLO TXT
-                </div>
-                <div class="export-labels-popup-item">
-                    <input class="export-labels-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('YOLO TXT', this)">
-                </div>
-                </td></tr>
-            </table>
+            <table style="width: 162px; padding: 2px; padding-left: 5px; padding-top: 7px" id="upload-datsets-modal-select-format-table" class="export-labels-popup-item"></table>
           </div>
         </div>
       </div>
@@ -178,7 +150,7 @@
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
         <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
-        <div id="upload-datsets-modal-select-format-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="moveToUploadDatasetsView()">Next</div>
+        <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
         <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>
       </div>
@@ -202,13 +174,13 @@
         <div class="export-labels-popup-item small-title" style="padding-left: 10px; padding-top: 7px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
         <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px;">
           <table style="width: 162px; padding-left: 5px;" id="settings-table" class="export-labels-popup-item">
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
+            <tr><td style="padding-top: 7px;" class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON', this)">
             </td></tr>
-            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">VGG JSON</div>
+            <tr><td class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">VGG JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VGG JSON', this)">
             </td></tr>
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
+            <tr><td style="padding-top: 7px;" class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
                 <div id="format-option-checkbox-popover-4" class="export-labels-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-4" class="export-labels-popup-item arrow text-arrow-position default-arrow-color"></div>
                 CSV
@@ -219,7 +191,7 @@
                 <input class="export-labels-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('CSV', this)">
               </div>
               </td></tr>
-            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(5)" onmouseleave="removeExportPopUpInformationPopover(5)">
+            <tr><td class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(5)" onmouseleave="removeExportPopUpInformationPopover(5)">
                 <div id="format-option-checkbox-popover-5" class="export-labels-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-5" class="export-labels-popup-item arrow text-arrow-position default-arrow-color"></div>
                 VOC XML
@@ -230,7 +202,7 @@
                 <input class="export-labels-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VOC XML', this)">
               </div>
               </td></tr>
-            <tr><td class="export-labels-popup-item export-labels-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(6)" onmouseleave="removeExportPopUpInformationPopover(6)">
+            <tr><td class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(6)" onmouseleave="removeExportPopUpInformationPopover(6)">
                 <div id="format-option-checkbox-popover-6" class="export-labels-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-6" class="export-labels-popup-item arrow text-arrow-position default-arrow-color"></div>
                 YOLO TXT

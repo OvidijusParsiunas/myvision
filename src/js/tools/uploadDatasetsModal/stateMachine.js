@@ -1,6 +1,13 @@
-import { COCO_JSON_FORMAT } from './consts';
+import * as UploadDatasetsConsts from './consts';
 
-const defaultState = COCO_JSON_FORMAT;
+const availableFormats = [
+  UploadDatasetsConsts.COCO_JSON_FORMAT,
+  UploadDatasetsConsts.VGG_JSON_FORMAT,
+  UploadDatasetsConsts.CSV_FORMAT,
+  UploadDatasetsConsts.VOC_XML_FORMAT,
+  UploadDatasetsConsts.YOLO_TXT_FORMAT,
+];
+const defaultState = UploadDatasetsConsts.COCO_JSON_FORMAT;
 let currentlySelectedFormat = defaultState;
 let reuseAlreadyUploadedImages = false;
 
@@ -20,6 +27,10 @@ function getReuseAlreadyUploadedImagesState() {
   return reuseAlreadyUploadedImages;
 }
 
+function getAvailableFormats() {
+  return availableFormats;
+}
+
 function setAllStatesToDefault() {
   currentlySelectedFormat = defaultState;
   reuseAlreadyUploadedImages = false;
@@ -28,6 +39,7 @@ function setAllStatesToDefault() {
 export {
   setFormatState,
   getFormatState,
+  getAvailableFormats,
   setAllStatesToDefault,
   setReuseAlreadyUploadedImagesState,
   getReuseAlreadyUploadedImagesState,
