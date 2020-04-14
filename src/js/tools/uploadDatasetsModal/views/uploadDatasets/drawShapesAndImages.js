@@ -2,6 +2,7 @@ import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/fac
 import { addImageFromMultiUploadToList } from '../../../imageList/imageList';
 import { removeNoImagesFoundOnMLModalStyle } from '../../../machineLearningModal/views/initiateMachineLearning/style';
 import { onImageLoad } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { getReuseAlreadyUploadedImagesState } from '../../stateMachine';
 
 let finalObjectAssemblerFunc = null;
 
@@ -21,7 +22,8 @@ function drawShapesAndImages() {
   const { images, shapes } = finalObjectAssemblerFunc();
   drawImages(images);
   setTimeout(() => {
-    drawShapesViaCoordinates(shapes);
+    const isUsingMachineLearning = false;
+    drawShapesViaCoordinates(shapes, isUsingMachineLearning, getReuseAlreadyUploadedImagesState());
   }, 0);
 }
 

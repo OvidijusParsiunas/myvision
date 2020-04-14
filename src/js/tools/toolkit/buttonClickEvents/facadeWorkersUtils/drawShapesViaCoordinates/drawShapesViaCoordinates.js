@@ -183,28 +183,31 @@ function generateShapeForFileUpload(shapeData, imageData, isCurrentlySelectedIma
   }
 }
 
-function generateNewShapesForFileUpload(shapes, allImageData, currentlySelectedImageId) {
+function generateNewShapesForFileUpload(shapes, allImageData, currentlySelectedImageId,
+  reuseAlreadyUploadedImages) {
   for (let i = 0; i < shapes.length; i += 1) {
-    for (let y = 0; y < allImageData.length; y += 1) {
+    for (let y = allImageData.length - 1; y >= 0; y -= 1) {
       if (shapes[i].imageName === allImageData[y].name) {
         const isCurrentlySelectedImage = currentlySelectedImageId === y;
         generateShapeForFileUpload(shapes[i], allImageData[y], isCurrentlySelectedImage);
         displayTickSVGOverImageThumbnail(getLastImageIdByName(allImageData[y].name));
+        if (!reuseAlreadyUploadedImages) { break; }
       }
     }
   }
 }
 
-function drawShapesForFileUpload(shapesData, allImageData, currentlySelectedImageId) {
+function drawShapesForFileUpload(shapesData, allImageData, currentlySelectedImageId,
+  reuseAlreadyUploadedImages) {
   if (shapesData.boundingBoxes.length > 0) {
     prepareCanvasForNewBoundingBoxesFromExternalSources(canvas);
     generateNewShapesForFileUpload(shapesData.boundingBoxes, allImageData,
-      currentlySelectedImageId);
+      currentlySelectedImageId, reuseAlreadyUploadedImages);
   }
   if (shapesData.polygons.length > 0) {
     prepareCanvasForNewPolygonsFromExternalSources(canvas);
     generateNewShapesForFileUpload(shapesData.polygons, allImageData,
-      currentlySelectedImageId);
+      currentlySelectedImageId, reuseAlreadyUploadedImages);
   }
 }
 
@@ -228,12 +231,13 @@ function assignCanvasEvents() {
   }
 }
 
-function drawShapesViaCoordinates(shapesData, isUsingMachineLearning) {
+function drawShapesViaCoordinates(shapesData, isUsingMachineLearning, reuseAlreadyUploadedImages) {
   const { allImageData, currentlySelectedImageId } = getImageData();
   assignCanvasEvents();
   captureCurrentImageData(allImageData, currentlySelectedImageId);
   if (!isUsingMachineLearning) {
-    drawShapesForFileUpload(shapesData, allImageData, currentlySelectedImageId);
+    drawShapesForFileUpload(shapesData, allImageData, currentlySelectedImageId,
+      reuseAlreadyUploadedImages);
   } else {
     drawShapesForML(shapesData, allImageData, currentlySelectedImageId, isUsingMachineLearning);
   }
