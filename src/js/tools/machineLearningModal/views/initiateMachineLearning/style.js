@@ -182,11 +182,11 @@ function hideUploadImagesButton() {
   toolkitUploadImagesButton.style.border = '';
 }
 
-function increasePopUpHeight(height) {
+function setModalHeight(height) {
   modalParentElement.style.height = height;
 }
 
-function setDefaultPopUpHeight() {
+function setDefaultModalHeight() {
   modalParentElement.style.height = '';
 }
 
@@ -196,6 +196,11 @@ function setDescriptionElementMarginBottom(height) {
 
 function setDefaultDescriptionElementMarginBottom() {
   descriptionElement.style.marginBottom = '';
+}
+
+// should be a global variable
+function isFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 }
 
 function changeToLoadingStyle() {
@@ -217,8 +222,8 @@ function changeToNoImagesFoundStyle() {
   disableStartButton();
   displayInfoMessage('Please upload an image to get started.');
   setDescriptionElementMarginBottom('3px');
-  // need to change here
-  increasePopUpHeight('259px');
+  const newModalHeight = isFirefox() ? '277px' : '273px';
+  setModalHeight(newModalHeight);
   isNoImagesFoundInfoDisplayed = true;
 }
 
@@ -227,7 +232,7 @@ function removeNoImagesFoundOnMLModalStyle() {
     hideUploadImagesButton();
     removeInfoMessage();
     enableStartButton();
-    setDefaultPopUpHeight();
+    setDefaultModalHeight();
     setDefaultDescriptionElementMarginBottom();
     isNoImagesFoundInfoDisplayed = false;
   }
