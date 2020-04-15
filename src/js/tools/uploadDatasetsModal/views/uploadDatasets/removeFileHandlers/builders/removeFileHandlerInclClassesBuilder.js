@@ -8,9 +8,6 @@ import {
   insertRowToImagesTable, enableFinishButton, disableFinishButton, changeClassesRowToDefault,
 } from '../../style';
 
-// functionality here cannot be used for all, will need
-// to be moved to atomic COCOJSON file
-
 function validateExistingImages(datasetObject, updateImageFileErrorStatusFunc, validateFormatFunc) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
     let foundValid = false;

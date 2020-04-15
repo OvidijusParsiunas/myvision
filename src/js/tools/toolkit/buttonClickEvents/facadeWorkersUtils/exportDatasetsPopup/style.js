@@ -11,7 +11,7 @@ let genericFormatOptionsTextElements = null;
 let genericFormatOptionsCheckboxElements = null;
 let boundingBoxFormatOptionsTextElements = null;
 let boundingBoxFormatOptionsCheckboxElements = null;
-const POPOVER_DISPLAY_LAG_MILLISECONDS = 200;
+const POPOVER_DISPLAY_LAG_MILLISECONDS = 0;
 
 function removeExportPopUpInformationPopover(id) {
   currentlyHoveredPopoverId = null;

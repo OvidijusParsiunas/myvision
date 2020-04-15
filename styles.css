@@ -186,6 +186,11 @@
   margin-left: 2px;
 }
 
+#upload-datasets-modal-back-button {
+  padding-left: 9px;
+  padding-right: 7px;
+}
+
 #upload-datsets-modal-next-button {
   margin-right: 2px;
   margin-left: 2px;
@@ -259,7 +264,6 @@
   padding-right: 6px;
   padding-top: 4px;
   padding-bottom: 3px;
-  margin-top: -30px;
   width: max-content;
   min-width: 224px;
 }
@@ -552,6 +556,7 @@
   margin-right: 3px;
   margin-top: 5px;
   width: 50px;
+  padding-top: 5px;
 }
 
 .data-format-table-row-data {
@@ -577,7 +582,7 @@
 }
 
 .format-option-checkbox-popover {
-  margin-top: -29px;
+  margin-top: -28px;
   margin-left: 21px;
 }
 
@@ -1194,14 +1199,14 @@ body {
     margin-bottom: 2px;
   }
   .format-option-popover {
-    padding-top: 1.5px;
+    padding-top: 2px;
   }
   .format-option-checkbox-popover {
-    margin-top: -26px;
+    margin-top: -27px;
   }
 
   .format-option-text-popover {
-    margin-top: -27px;
+    margin-top: -28px;
   }
   #canvas-wrapper-parent {
     width: calc(100% - 268.5px);
@@ -1216,12 +1221,28 @@ body {
     padding-top: 4.5px;
     margin-top: 8px;
   }
+  #upload-datasets-modal-parent {
+    height: 247px;
+  }
+  #upload-datasets-modal-back-button {
+    margin-right: 7px;
+  }
+  #upload-datasets-modal-finish-button {
+    margin-left: -1px;
+  }
+  #upload-datsets-modal-select-format-title {
+    margin-top: 7px;
+  }
   .upload-datasets-table {
     max-height: 236px;
     min-height: 236px;
   }
   .upload-datasets-modal-vertical-break-line {
     height: 200px;
+  }
+  .upload-datasets-modal-upload-datasets-table-row-popover {
+    padding-top: 3px;
+    padding-bottom: 4px;
   }
 }
 

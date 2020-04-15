@@ -47,7 +47,7 @@ function replaceActiveFileIfRemoving(fileName, arrayName, activeFileName) {
   if (datasetObject[activeFileName]
     && datasetObject[activeFileName].body.fileMetaData.name === fileName) {
     let newActiveAnnotationFile = null;
-    for (let i = datasetObject[arrayName].length - 1; i > -1; i -= 1) {
+    for (let i = 0; i < datasetObject[arrayName].length; i += 1) {
       if (datasetObject[arrayName][i].body.fileMetaData.name !== fileName) {
         newActiveAnnotationFile = datasetObject[arrayName][i];
       }
