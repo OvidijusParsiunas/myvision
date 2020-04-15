@@ -1,7 +1,7 @@
 import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { addImageFromMultiUploadToList } from '../../../imageList/imageList';
 import { removeNoImagesFoundOnMLModalStyle } from '../../../machineLearningModal/views/initiateMachineLearning/style';
-import { onImageLoad } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { onImageLoad } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 import { getReuseAlreadyUploadedImagesState } from '../../stateMachine';
 
 let finalObjectAssemblerFunc = null;

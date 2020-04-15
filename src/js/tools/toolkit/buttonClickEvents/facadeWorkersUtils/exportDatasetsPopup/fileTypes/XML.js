@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
+import { getImageProperties } from '../../uploadImage/drawImageOnCanvas';
 import { getAllImageData } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 import { getCurrentImageId } from '../../stateMachine';
@@ -8,7 +8,7 @@ import { adjustIncorrectBoundingBoxCoordinates, roundNumberToDecimalPlaces } fro
 /*
 If there is an error on generating zips - try to use a file receiver
 import FileSaver from 'file-saver';
-import { getImageProperties } from '../../uploadFile/drawImageOnCanvas';
+import { getImageProperties } from '../../uploadImage/drawImageOnCanvas';
 import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
 import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 

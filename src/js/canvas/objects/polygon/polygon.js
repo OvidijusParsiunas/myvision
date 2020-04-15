@@ -230,6 +230,8 @@ function instantiatePolygon(event) {
     } else if (polygonMode) {
       addPoint(pointer);
     }
+    // fix for double click to draw first point bug
+    coordinatesOfLastMouseHover = pointer;
   }
 }
 

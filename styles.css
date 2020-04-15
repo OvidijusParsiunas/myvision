@@ -152,7 +152,7 @@
 #upload-datsets-modal-select-format-inner-container {
   left: 0;
   right: 0;
-  width: 172px;
+  width: 170px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1134,6 +1134,11 @@ body {
   cursor: pointer;
 }
 
+/* removing dotted border when in focus on firefox */
+.tools-button::-moz-focus-inner { 
+  border: 0; 
+}
+
 .tools-button:hover {
   background-color: rgb(238, 238, 238);
 }
@@ -1172,6 +1177,7 @@ body {
 
 .checkbox {
   float: right;
+  outline: none;
   margin-left: 10px;
   margin-right: 7px;
 }

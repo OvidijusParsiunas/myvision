@@ -1,5 +1,5 @@
 import { setBoundingBoxScalingState, getCurrentZoomState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
-import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 import labelProperies from '../label/properties';
 
 let originalBoundingBoxBottomCoordinate = 0;

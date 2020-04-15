@@ -1,6 +1,6 @@
 import { assignCanvasForDrawingShapesViaCoordinates } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { assignCanvasMouseEvents } from '../tools/toolkit/buttonClickEvents/facade';
-import { assignCanvasForDrawImageOnCanvas } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { assignCanvasForDrawImageOnCanvas } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/resetCanvasEvents';
 import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, reasignCanvas } from './utils/fabricUtils';
 import { assignCanvasForLabelManipulation } from './objects/label/label';

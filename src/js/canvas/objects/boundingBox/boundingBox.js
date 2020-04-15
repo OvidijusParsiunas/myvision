@@ -7,7 +7,7 @@ import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
-import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 
 let canvas = null;

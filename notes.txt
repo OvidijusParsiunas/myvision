@@ -79,13 +79,7 @@ delete images button
 check when editing label name on the bigger laptop and clicking paste (with vertical overflow present); does
 it scroll to appropriate width (does not on the smaller laptop, had to check for vertical overflow in ML popup functionality)
 
-rename uploadFile to uploadImage
-
-rename shapeLabellerModal to labellingPopUp
-
 move facadeWorkersUtils contents to a folder outside named utils
-
-update labelimg
 
 Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
 
@@ -100,11 +94,7 @@ arrow keys should go down the dropdown options for a label
 
 try trashcan icon for remove image label
 
-try a new border style for the uploaded images section
-
 inform the user that they are about to export without checking all of the ml generated shapes & images
-
-double click when drawing polygon throws error
 
 when the bounding box is too far right, can't scale left
 
@@ -122,34 +112,14 @@ grey out the zoom button when it is above 3.9
 
 upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
 
-should not be able to upload image with the same name twice
-
-was not able to check ML generated label list overflow border chrome fix on smaller screens
-
-check ml generated modal's initial view buttons group height is nice and acceptable
-
-change upload datasets view to upload dataset files view
-
-fix the cursor remaining as select after clicking a button in upload datasets
-
-fix left and right padding of the export format popovers
-
-increase the size of machine learning modal
-
-export button in chrome has padding top that is too high
-
-in firefox, the upload datasets modal (upload stage) buttons are too low
-
-in firefox, the upload datasets modal (upload stage) errors padding top is too high
-
-fix the back button to be more grey on hover
-
-have an option on choosing format to use already uploaded images
-
 in the upload datasets modal tables, when there is vertical overflow, some of the text can be hidden behind the scroll and the horizontal
 overflow doesn't kick in automatically
 
 labeller modal causes vertical window overflow on the tablet
+
+increase the size of machine learning modal
+
+was not able to check ML generated label list overflow border chrome fix on smaller screens
 
 test ML still works as expected
 

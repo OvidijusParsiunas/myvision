@@ -1,4 +1,4 @@
-import { getCanvasProperties, getImageProperties, resizeCanvasAndImage } from '../facadeWorkersUtils/uploadFile/drawImageOnCanvas';
+import { getCanvasProperties, getImageProperties, resizeCanvasAndImage } from '../facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
