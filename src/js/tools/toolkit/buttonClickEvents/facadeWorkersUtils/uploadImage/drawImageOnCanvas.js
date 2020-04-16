@@ -108,7 +108,6 @@ function draw() {
 }
 
 // investigate quality
-// check the divs are wrapped around for all pcs
 
 function drawImageFromList(selectedImage) {
   currentImage = selectedImage;

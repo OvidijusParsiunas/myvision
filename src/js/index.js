@@ -10,6 +10,7 @@ import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetter
 import { initialiseGlobalStyleSetup } from './tools/globalStyle/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageListFunctionality } from './tools/imageList/imageList';
+import { initialiseRemoveImagesFunctionality } from './tools/imageList/removeImages/removeImages';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
@@ -24,6 +25,7 @@ assignPassiveEventListeners();
 initialiseGlobalStyleSetup();
 initialiseLabelListFunctionality();
 initialiseImageListFunctionality();
+initialiseRemoveImagesFunctionality();
 initialiseImageSwitchPanelFunctionality();
 registerGlobalKeyEventHandlers();
 initialiseShapeManipulationDeltas();

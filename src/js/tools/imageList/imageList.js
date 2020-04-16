@@ -19,6 +19,15 @@ let newImageId = 0;
 let firstImage = true;
 let imageListOverflowParent = null;
 
+function getCurrentImageId() {
+  return currentlySelectedImageId;
+}
+
+function updateCurrentImageIds(currentId, newId) {
+  currentlySelectedImageId = currentId;
+  newImageId = newId;
+}
+
 function findImageListElement() {
   imageListOverflowParent = document.getElementById('image-list-overflow-parent');
 }
@@ -256,7 +265,7 @@ function changeToExistingImage(id) {
   // zoomOutObjectOnImageSelect
   // make sure the scales are correct
   setDefaultState(false);
-  captureCurrentImageData();
+  if (currentlySelectedImageId >= 0) { captureCurrentImageData(); }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   drawImageFromList(images[id].data);
@@ -264,8 +273,10 @@ function changeToExistingImage(id) {
     images[id].imageDimensions, images[id].data);
   switchCanvasWrapperInnerElementsDisplay();
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
-  zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
-    images[currentlySelectedImageId].labels, timesZoomedOut);
+  if (currentlySelectedImageId >= 0) {
+    zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
+      images[currentlySelectedImageId].labels, timesZoomedOut);
+  }
   setCurrentImageId(id);
   switchCanvasWrapperInnerElement();
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
@@ -300,9 +311,10 @@ function canSwitchImage(direction) {
 }
 
 export {
-  switchImage, canSwitchImage, addImageFromMultiUploadToList,
+  getCurrentImageId,
   initialiseImageListFunctionality, setDefaultImageThumbnailHighlightToML,
   displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
   setThumbnailColourOverlayBackToDefault, getImageIdByName, getLastImageIdByName,
+  switchImage, canSwitchImage, addImageFromMultiUploadToList, updateCurrentImageIds,
 };

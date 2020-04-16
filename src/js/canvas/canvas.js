@@ -10,6 +10,7 @@ import assignCanvasForResizeWhenWindowResize from '../tools/toolkit/buttonClickE
 import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
 import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
+import { assignCanvasForRemovingImages } from '../tools/imageList/removeImages/removeImages';
 
 let currentCanvasInstance = null;
 
@@ -23,6 +24,7 @@ function repopulateCanvasReference(canvas) {
   assignCanvasForDrawingShapesViaCoordinates(canvas);
   assignCanvasForResizeWhenWindowResize(canvas);
   assignCanvasForLabelAndShapeBuilder(canvas);
+  assignCanvasForRemovingImages(canvas);
   initialiseZoomVariables(canvas);
 }
 

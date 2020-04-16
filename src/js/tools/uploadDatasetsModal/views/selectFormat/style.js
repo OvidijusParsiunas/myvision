@@ -88,10 +88,10 @@ function createTableRow(format, index) {
   const paddingTop = index === 2 ? 5 : 3;
   return `
     <td style="padding-top: ${paddingTop}px" class="data-format-table-row-data">
-      <div style="padding-left: 2px" class="checkbox-text format-option-text">
+      <div style="padding-left: 5px" class="checkbox-text format-option-text">
         ${format}
       </div>
-      <input style="margin-right: 0px" class="checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
+      <input style="margin-right: 10px" class="checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
     </td>
   `;
 }
