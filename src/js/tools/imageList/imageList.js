@@ -1,6 +1,6 @@
 import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from '../toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
-import { removeAndRetrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
-import { removeAndRetrieveAllLabelRefs } from '../../canvas/objects/label/label';
+import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
+import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
@@ -166,8 +166,10 @@ function addNewImage(imageName, imageData) {
 }
 
 function captureCurrentImageData() {
-  images[currentlySelectedImageId].shapes = removeAndRetrieveAllShapeRefs();
-  images[currentlySelectedImageId].labels = removeAndRetrieveAllLabelRefs();
+  images[currentlySelectedImageId].labels = retrieveAllLabelRefs();
+  images[currentlySelectedImageId].shapes = retrieveAllShapeRefs();
+  removeAllLabelRefs();
+  removeAllShapeRefs();
   const currentlySelectedImageProperties = getImageProperties();
   const imageDimensions = {};
   imageDimensions.scaleX = currentlySelectedImageProperties.scaleX;

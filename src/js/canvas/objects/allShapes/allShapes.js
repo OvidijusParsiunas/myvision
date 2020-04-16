@@ -37,7 +37,11 @@ function getAllExistingShapes() {
   return shapes;
 }
 
-function removeAndRetrieveAllShapeRefs() {
+function removeAllShapeRefs() {
+  shapes = {};
+}
+
+function retrieveAllShapeRefs() {
   const shapeRefs = {};
   Object.keys(shapes).forEach((key) => {
     shapeRefs[key] = shapes[key];
@@ -95,7 +99,7 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 }
 
 export {
-  getShapeVisibilityById, removeAndRetrieveAllShapeRefs, addExistingShape,
+  getShapeVisibilityById, retrieveAllShapeRefs, addExistingShape, removeAllShapeRefs,
   changeShapeVisibilityById, assignCanvasForShapeFillManipulation, getNumberOfShapes,
   addShape, removeShape, highlightShapeFill, defaultShapeFill, addShapeForInvisibleImage,
   getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText, getAllExistingShapes,

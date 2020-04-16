@@ -277,7 +277,6 @@ function pasteHandlerOnDiv(event) {
 
 function addNewLabelToListFromPopUp(labelText, id, labelColor) {
   const labelElement = initialiseParentElement();
-  labelElement.id = id;
   labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default');
   const newRow = labelListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
@@ -290,7 +289,6 @@ function addNewLabelToListFromPopUp(labelText, id, labelColor) {
 
 function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
   const labelElement = initialiseParentElement();
-  labelElement.id = id;
   let visibility = null;
   if (shapeVisible === true) {
     visibility = 'default';
