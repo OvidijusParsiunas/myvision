@@ -25,6 +25,7 @@ function removeImage() {
       updateCurrentImageIds(-1, allImageData.length);
       window.switchImage(allImageData.length - 1);
     } else {
+      updateCurrentImageIds(0, 0);
       canvas.clear();
     }
   }
