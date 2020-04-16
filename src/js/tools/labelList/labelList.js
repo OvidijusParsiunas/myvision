@@ -63,6 +63,7 @@ let chromiumFakeDrodownBottomBorderElement = null;
 let chromiumFakeDropdownBorderElementTopDelta = 0;
 let newFakeDropdownBottomBorderDeltaGenerated = false;
 let originalActiveDropdownHeight = 0;
+const LABEL_CONTAINER_ELEMENT_ID_PREFIX = 'label-container-';
 
 // refactor label popup label options element manipulation code
 
@@ -277,6 +278,7 @@ function pasteHandlerOnDiv(event) {
 
 function addNewLabelToListFromPopUp(labelText, id, labelColor) {
   const labelElement = initialiseParentElement();
+  labelElement.id = `${LABEL_CONTAINER_ELEMENT_ID_PREFIX}${id}`;
   labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default');
   const newRow = labelListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
@@ -289,6 +291,7 @@ function addNewLabelToListFromPopUp(labelText, id, labelColor) {
 
 function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
   const labelElement = initialiseParentElement();
+  labelElement.id = `${LABEL_CONTAINER_ELEMENT_ID_PREFIX}${id}`;
   let visibility = null;
   if (shapeVisible === true) {
     visibility = 'default';
@@ -307,9 +310,10 @@ function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
 function removeLabelFromListOnShapeDelete(id) {
   if (id != null) {
     let index = 0;
+    const parentElementId = `${LABEL_CONTAINER_ELEMENT_ID_PREFIX}${id}`;
     const tableList = labelListElement.childNodes[0].childNodes;
     while (index !== tableList.length) {
-      if (parseInt(tableList[index].childNodes[0].childNodes[0].id, 10) === id) {
+      if (tableList[index].childNodes[0].childNodes[0].id === parentElementId) {
         tableList[index].remove();
         break;
       }
