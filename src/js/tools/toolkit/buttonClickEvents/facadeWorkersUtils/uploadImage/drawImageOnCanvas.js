@@ -165,6 +165,10 @@ function resizeCanvasAndImage() {
   return calculateNewFileSizeRatio();
 }
 
+function setCurrentImage(image) {
+  currentImage = image;
+}
+
 function resizeCanvas() {
   setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
@@ -186,7 +190,7 @@ function resizeCanvas() {
 }
 
 export {
-  onImageLoad, getImageProperties, resizeCanvasAndImage, resizeCanvas,
+  onImageLoad, getImageProperties, resizeCanvasAndImage,
+  calculateCurrentImageHeightRatio, setCurrentImage, resizeCanvas,
   assignCanvasForDrawImageOnCanvas, getCanvasProperties, drawImageFromList,
-  calculateCurrentImageHeightRatio,
 };

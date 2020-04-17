@@ -3,6 +3,7 @@ import { setCurrentImageNameElementToDefault } from '../../imageSwitchPanel/styl
 import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
 import { removeAllShapeRefs } from '../../../canvas/objects/allShapes/allShapes';
+import { setCurrentImage } from '../../toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 
 let canvas = null;
 
@@ -19,6 +20,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
     removeAllLabelListItems();
     setCurrentImageNameElementToDefault();
     canvas.clear();
+    setCurrentImage(null);
   }
 }
 

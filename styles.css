@@ -970,6 +970,14 @@
   bottom: 0.5px;
 }
 
+#remove-images-button {
+  cursor: pointer;
+  width: 15px;
+  padding-top: 2px;
+  padding-right: 6px;
+  float: right;
+}
+
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
