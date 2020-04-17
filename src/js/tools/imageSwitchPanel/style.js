@@ -31,6 +31,7 @@ function setCurrentImageNameElementToActive() {
 }
 
 function setCurrentImageNameElementToDefault() {
+  currentImageNameElement.innerHTML = DEFAULT_IMAGE_NAME;
   currentImageNameElement.style.color = '';
 }
 
@@ -62,11 +63,6 @@ function changeCurrentImageName(imageName, images, currentlySelectedImageId, fir
   }
 }
 
-function setCurrentImageNameToDefault() {
-  currentImageNameElement.innerHTML = DEFAULT_IMAGE_NAME;
-  setCurrentImageNameElementToDefault();
-}
-
 function findImageSwitchElements() {
   currentImageNameElement = document.getElementById('current-image-name');
   [previousButtonElement, nextButtonElement] = document.getElementsByClassName('image-switch-button');
@@ -77,5 +73,7 @@ function initialiseImageSwitchPanelFunctionality() {
 }
 
 export {
-  initialiseImageSwitchPanelFunctionality, setCurrentImageNameToDefault, changeCurrentImageName,
+  changeCurrentImageName,
+  setCurrentImageNameElementToDefault,
+  initialiseImageSwitchPanelFunctionality,
 };

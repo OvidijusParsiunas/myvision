@@ -1,10 +1,3 @@
-The nice to haves:
-
-highlight all of them differently to indicate that
-they can all be potentially edited (when none are selected)
-Make sure this is properly needed by doing tests
-when finished adding points, return to editable
-
 change cursor modes name convention
 
 should alert the user when unsaved changes before leaving
@@ -76,6 +69,8 @@ add points mode should not delete the currently being drawn polygon and should i
 
 delete images button
 
+highlight shapes to indicate that the user needs to click on them to start adding/removing points
+
 check when editing label name on the bigger laptop and clicking paste (with vertical overflow present); does
 it scroll to appropriate width (does not on the smaller laptop, had to check for vertical overflow in ML popup functionality)
 
@@ -141,3 +136,8 @@ machine learning generated labels horizontal and vertical overflow fake borders
 Things to check on firefox browsers on larger screens:
 
 does the export labels popup look valid
+
+
+The nice to haves:
+
+select multiple images or shapes to delete (via ctrl)
