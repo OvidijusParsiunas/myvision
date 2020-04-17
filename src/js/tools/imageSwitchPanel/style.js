@@ -4,6 +4,7 @@ let currentImageNameElement = null;
 
 const ACTIVE_COLOR = 'black';
 const ACTIVE_CURSOR = 'pointer';
+const DEFAULT_IMAGE_NAME = 'Image name';
 
 function setPreviousButtonElementToActive() {
   previousButtonElement.style.color = ACTIVE_COLOR;
@@ -29,12 +30,19 @@ function setCurrentImageNameElementToActive() {
   currentImageNameElement.style.color = ACTIVE_COLOR;
 }
 
+function setCurrentImageNameElementToDefault() {
+  currentImageNameElement.style.color = '';
+}
+
 function changeCurrentImageName(imageName, images, currentlySelectedImageId, firstFromMany) {
   currentImageNameElement.innerHTML = imageName;
   if (images.length === 1) {
     setCurrentImageNameElementToActive();
     if (firstFromMany) {
       setNextButtonElementToActive();
+    } else {
+      setNextButtonElementToDefault();
+      setPreviousButtonElementToDefault();
     }
   } else if (images.length > 1) {
     if (images.length - 1 === currentlySelectedImageId) {
@@ -54,6 +62,11 @@ function changeCurrentImageName(imageName, images, currentlySelectedImageId, fir
   }
 }
 
+function setCurrentImageNameToDefault() {
+  currentImageNameElement.innerHTML = DEFAULT_IMAGE_NAME;
+  setCurrentImageNameElementToDefault();
+}
+
 function findImageSwitchElements() {
   currentImageNameElement = document.getElementById('current-image-name');
   [previousButtonElement, nextButtonElement] = document.getElementsByClassName('image-switch-button');
@@ -63,4 +76,6 @@ function initialiseImageSwitchPanelFunctionality() {
   findImageSwitchElements();
 }
 
-export { initialiseImageSwitchPanelFunctionality, changeCurrentImageName };
+export {
+  initialiseImageSwitchPanelFunctionality, setCurrentImageNameToDefault, changeCurrentImageName,
+};
