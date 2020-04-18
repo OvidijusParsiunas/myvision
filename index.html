@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="styles.css?v=1.0">
 </head>
 <!-- this will need to be set to margin-top: 0, and the rest of the elements vertical alignments will need to be changed -->
-<body onresize="windowResize()" style="background-color: rgb(243, 243, 243);">
+<!-- set overflow: hidden; on body in order to prevent overflow bug when the labeller modal is too low, do at the very end in order to prevent
+     other overflows from not being identified -->
+<body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
   <div id="title-panel">
     <img src="check-box.svg" draggable="false" style="padding-left: 15px;
     padding-right: 5px;
@@ -30,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)">
+    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmouseup="updateMouseProperties(event)">
       <div id="canvas-wrapper">
         <div id="canvas-absolute-container-2" class="canvas-absolute-container">
           <canvas id="d"></canvas>
@@ -143,7 +145,7 @@
       <div id="export-labels-popup-parent" class="export-labels-popup-item" style="display: none; width: 173px; height: 203px">
         <div class="export-labels-popup-item small-title" style="padding-left: 10px; padding-top: 6px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
         <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px;">
-          <table style="width: 162px; padding-left: 5px;" id="settings-table" class="export-labels-popup-item">
+          <table id="export-labels-table" class="export-labels-popup-item">
             <tr><td style="padding-top: 7px;" class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON', this)">
             </td></tr>

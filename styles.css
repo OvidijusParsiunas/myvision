@@ -550,6 +550,18 @@
   line-height: 1.2;
 }
 
+#export-labels-table {
+  width: 164px;
+  padding: 2px;
+  padding-left: 5px;
+}
+
+.checkbox-text {
+  float: left;
+  padding-left: 8px;
+  user-select: none;
+}
+
 /* repeating code for the submit buttons */
 
 #export-labels-popup-export-button {
@@ -1260,12 +1272,6 @@ body {
   }
 }
 
-.checkbox-text {
-  float: left;
-  padding-left: 5px;
-  user-select: none;
-}
-
 .settings-table-row-data {
   padding-top: 2px;
   padding-bottom: 3px;
@@ -1435,6 +1441,12 @@ body {
   height: 56px;
 }
 
+.image-list-thumbnail-default {
+  border: 3px solid #0dc7ff;
+  width: calc(100% - 6px);
+  height: 54px;
+}
+
 .image-list-thumbnail-machine-learning {
   border: 3px solid #58ca4b;
   background: #01a20124;
@@ -1454,7 +1466,7 @@ body {
   width: 16%;
   height: 45%;
   bottom: 0px;
-  right: 0px;
+  right: 2px;
   display: none;
 }
 

@@ -2,44 +2,19 @@ change cursor modes name convention
 
 should alert the user when unsaved changes before leaving
 
-polyfill for scrollIntoViewIfNeeded for all browsers (only chrome right now)
-
-Decided not to use image segmentation because it works on pixel bases, where each and every boundary is drawn by an array of pixels
-However, can be achieved by generating an algorithm that will draw polygons based on the boundaries found on the pixels variable's value
-on line 318, file called as segment-annotator.js.
-
-https://github.com/kyamagu/js-segment-annotator
-
-The following repo does use fabricjs, but to only draw a line;
-https://github.com/AKSHAYUBHAT/ImageSegmentation
-
-Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
-would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation
-
 when editing label and clicking scroll, should not close the editing process, however not able to fix it
 as click event on the horizontal scroll identifies the target as the label list parent (required)
 
 Really like a light green / blue and white color theme
 
-
 Toolkit button functionality for getting smaller with the screen should be done when we know all of the buttons
 
 Escape button should close the settings popup and cancel the shape labeller modal
-
-Things to check for optimal UX:
-Should the switch images section be located at the top or bot of the screen:
-    index.html
-Should the canvas fill up the entire screen when displaying images:
-    drawImagesOnCanvas.js
-Should there be a hover dim effect on image thumbnails
-    styles.css
 
 set shape labeller modal popup height relative to text or label option height
 
 make sure to use the custom scrollIntoViewIfNeeded in the labelList instead of element.scrollIntoViewIfNeeded
 which is currently present in many files as it is not supported by FireFox
-
-can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
 
 /* button states file
  default button active
@@ -78,22 +53,11 @@ move facadeWorkersUtils contents to a folder outside named utils
 
 Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
 
-Confirm UX button border size:
-.image-list-thumbnail-default {
-  border: 3px solid #0dc7ff;
-  width: calc(100% - 6px);
-  height: 54px;
-}
-
 arrow keys should go down the dropdown options for a label
 
 try trashcan icon for remove image label
 
-inform the user that they are about to export without checking all of the ml generated shapes & images
-
 when the bounding box is too far right, can't scale left
-
-hold ctrl to select multiple shapes
 
 polygon size reduction when zoomed in is a little bit off
 
@@ -110,8 +74,6 @@ upon drawing a bounding box (could be via ML) and the resizing the screen to sma
 in the upload datasets modal tables, when there is vertical overflow, some of the text can be hidden behind the scroll and the horizontal
 overflow doesn't kick in automatically
 
-labeller modal causes vertical window overflow on the tablet
-
 increase the size of machine learning modal
 
 was not able to check ML generated label list overflow border chrome fix on smaller screens
@@ -123,9 +85,8 @@ need to change the rest of ML modal views css properties
 when removing images from the image list, their ids will likely mess up ML generated shapes, hence will need to try and use their names
 (or move the images to the empty elements, retaining the elements' indexes)
 
-store images in a hashmap with their names as their keys (may not work when allowing multiple images)
-
 have the initial image not reach the borders (test it out 1st to see how it looks)
+
 
 Things to check on chrome browsers on other pcs:
 
@@ -133,11 +94,21 @@ shape labeller modal  horizontal and vertical overflow fake borders
 label list dropdown horizontal and vertical overflow fake borders
 machine learning generated labels horizontal and vertical overflow fake borders
 
-Things to check on firefox browsers on larger screens:
 
-does the export labels popup look valid
+Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
+would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation
 
+Decided not to use image segmentation because it works on pixel bases, where each and every boundary is drawn by an array of pixels
+However, can be achieved by generating an algorithm that will draw polygons based on the boundaries found on the pixels variable's value
+on line 318, file called as segment-annotator.js.
+
+https://github.com/kyamagu/js-segment-annotator
+
+The following repo does use fabricjs, but to only draw a line;
+https://github.com/AKSHAYUBHAT/ImageSegmentation
 
 The nice to haves:
 
 select multiple images or shapes to delete (via ctrl)
+
+can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
