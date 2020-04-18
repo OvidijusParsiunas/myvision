@@ -1,4 +1,5 @@
 import { getScrollbarWidth } from '../../../globalStyle/style';
+import scrollIntoViewIfNeeded from '../../../utils/tableUtils';
 
 let editingActive = false;
 let activeTextRow = null;
@@ -42,10 +43,6 @@ function displayGreyedDefaultEditLabelButton(element) {
 
 function isVerticalScrollPresent() {
   return generatedLabelsParentElement.scrollHeight > generatedLabelsParentElement.clientHeight;
-}
-
-function isHorizontalScrollPresent() {
-  return generatedLabelsParentElement.scrollWidth > generatedLabelsParentElement.clientWidth;
 }
 
 function getDefaultFont() {
@@ -220,26 +217,6 @@ function canChangeRowToStopEdit(element) {
     return true;
   }
   return false;
-}
-
-function isElementHeightFullyVisibleInParent(childElement, parentElement) {
-  const childBoundingRect = childElement.getBoundingClientRect();
-  const parentBoundingRect = parentElement.getBoundingClientRect();
-  if (childBoundingRect.top < parentBoundingRect.top) {
-    return false;
-  }
-  if ((isHorizontalScrollPresent()
-    && childBoundingRect.bottom > parentBoundingRect.bottom - overflowScrollWidth)
-    || (childBoundingRect.bottom > parentBoundingRect.bottom)) {
-    return false;
-  }
-  return true;
-}
-
-function scrollIntoViewIfNeeded(childElement, parentElement) {
-  if (!isElementHeightFullyVisibleInParent(childElement, parentElement)) {
-    activeTextElement.scrollIntoView();
-  }
 }
 
 function setTextElementContentToEditable() {

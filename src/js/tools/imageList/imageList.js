@@ -11,6 +11,7 @@ import { initialiseImageListML } from './imageListML';
 import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
 import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { updateImageNameElement } from '../imageSwitchPanel/style';
+import scrollIntoViewIfNeeded from '../utils/tableUtils';
 
 let currentlyActiveElement = null;
 const images = [];
@@ -229,22 +230,6 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
     images[newImageId].thumbnailElementRef.scrollIntoView();
   }
   newImageId += 1;
-}
-
-function isElementHeightFullyVisibleInParent(childElement, parentElement) {
-  const childBoundingRect = childElement.getBoundingClientRect();
-  const parentBoundingRect = parentElement.getBoundingClientRect();
-  if (childBoundingRect.top < parentBoundingRect.top
-    || childBoundingRect.bottom > parentBoundingRect.bottom) {
-    return false;
-  }
-  return true;
-}
-
-function scrollIntoViewIfNeeded(childElement, parentElement) {
-  if (!isElementHeightFullyVisibleInParent(childElement, parentElement)) {
-    childElement.scrollIntoView();
-  }
 }
 
 // to replicate the bug, carry out the following:

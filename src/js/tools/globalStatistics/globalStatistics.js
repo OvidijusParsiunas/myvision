@@ -9,6 +9,7 @@ function incrementShapeType(shapeObj) {
 }
 
 function decrementShapeType(shapeObj) {
+  // need to see if decrements
   if (shapeObj.shapeName === 'polygon') {
     numberOfShapeTypes.polygons -= 1;
   } else if (shapeObj.shapeName === 'bndBox') {

@@ -1,9 +1,13 @@
+import scrollIntoViewIfNeeded from '../utils/tableUtils';
+
 let labelListElement = null;
 let currentlyHighlightedElement = null;
 let highlightedElementOriginalColor = null;
+let labelListOverflowParentElement = null;
 
-function setLabelListElementForHighlights(labelListElementRef) {
+function setLabelListElementForHighlights(labelListElementRef, labelsListOverflowParentElementRef) {
   labelListElement = labelListElementRef;
+  labelListOverflowParentElement = labelsListOverflowParentElementRef;
 }
 
 function removeHighlightOfListLabel() {
@@ -20,8 +24,7 @@ function highlightLabelInTheList(id) {
   highlightedElementOriginalColor = currentlyHighlightedElement.style.backgroundColor;
   const highlightColor = `${highlightedElementOriginalColor.substring(0, highlightedElementOriginalColor.length - 5)} 0.6)`;
   currentlyHighlightedElement.style.backgroundColor = highlightColor;
-  // check why it doesn't work in firefox
-  // currentlyHighlightedElement.scrollIntoViewIfNeeded();
+  scrollIntoViewIfNeeded(currentlyHighlightedElement, labelListOverflowParentElement);
 }
 
 function changeLabelColor(color) {

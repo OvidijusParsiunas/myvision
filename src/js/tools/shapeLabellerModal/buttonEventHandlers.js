@@ -5,6 +5,7 @@ import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';
 import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
+import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
   hideShapeLabellerModal, changeStyleWhenInputEmpty,
   changeStyleWhenInputInvalid, changeStyleToAllowSubmit,
@@ -120,7 +121,7 @@ function inputKeyDown(event) {
           [currentlySelectedLabelOption] = optionsElementList[i].childNodes;
           currentlySelectedLabelOption.style.backgroundColor = getLabelOptions()[i].color.label;
           currentlySelectedLabelOption.id = 'used';
-          currentlySelectedLabelOption.scrollIntoViewIfNeeded();
+          scrollIntoViewIfNeeded(currentlySelectedLabelOption, optionsElement);
           break;
         }
       }

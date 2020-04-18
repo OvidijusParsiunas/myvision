@@ -33,6 +33,7 @@ import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEven
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyle/style';
+import scrollIntoViewIfNeeded from '../utils/tableUtils';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -101,7 +102,7 @@ function initialiseLabelListFunctionality() {
   findLabelListElement();
   findPopupElement();
   setDropdownElementWidthVariables();
-  setLabelListElementForHighlights(labelListElement);
+  setLabelListElementForHighlights(labelListElement, labelsListOverflowParentElement);
 }
 
 function createNewDropdown() {
@@ -464,26 +465,6 @@ function prepareLabelDivForEditing(id) {
   activeDropdownElements[0].scrollLeft = 0;
 }
 
-function isElementHeightFullyVisibleInParent(childElement, parentElement) {
-  const childBoundingRect = childElement.getBoundingClientRect();
-  const parentBoundingRect = parentElement.getBoundingClientRect();
-  if (childBoundingRect.top < parentBoundingRect.top) {
-    return false;
-  }
-  if ((isHorizontalScrollPresent()
-    && childBoundingRect.bottom > parentBoundingRect.bottom - getScrollbarWidth())
-    || (childBoundingRect.bottom > parentBoundingRect.bottom)) {
-    return false;
-  }
-  return true;
-}
-
-function scrollIntoViewIfNeeded(childElement, parentElement) {
-  if (!isElementHeightFullyVisibleInParent(childElement, parentElement)) {
-    activeLabelTextElement.scrollIntoView();
-  }
-}
-
 function initLabelEditing(id) {
   prepareLabelDivForEditing(id);
   deleteAndAddLastRowToRefreshDropdownDiv(activeDropdownElements[0]);
@@ -629,7 +610,7 @@ function highlightDropdownLabelOption(labelOptionsIndex, divIndex) {
   [lastSelectedLabelOption] = labelParenElement.childNodes[0].childNodes;
   const labelColor = availableListOptions[labelOptionsIndex].color.label;
   lastSelectedLabelOption.style.backgroundColor = labelColor;
-  lastSelectedLabelOption.scrollIntoViewIfNeeded();
+  scrollIntoViewIfNeeded(lastSelectedLabelOption, activeDropdownElements[0]);
   currentlyActiveLabelOptionIndex = labelOptionsIndex;
 }
 
