@@ -1,3 +1,5 @@
+import IS_FIREFOX from '../../../utils/browserType';
+
 let isNoImagesFoundInfoDisplayed = false;
 
 let checkmarkElement = null;
@@ -198,11 +200,6 @@ function setDefaultDescriptionElementMarginBottom() {
   descriptionElement.style.marginBottom = '';
 }
 
-// should be a global variable
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 function changeToLoadingStyle() {
   displayLoadingText();
   removeDescription();
@@ -222,7 +219,7 @@ function changeToNoImagesFoundStyle() {
   disableStartButton();
   displayInfoMessage('Please upload an image to get started.');
   setDescriptionElementMarginBottom('3px');
-  const newModalHeight = isFirefox() ? '277px' : '273px';
+  const newModalHeight = IS_FIREFOX ? '277px' : '273px';
   setModalHeight(newModalHeight);
   isNoImagesFoundInfoDisplayed = true;
 }

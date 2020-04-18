@@ -1,4 +1,5 @@
 import downloadFonts from './fonts';
+import IS_FIREFOX from '../utils/browserType';
 
 let canvasWrapperParentElement = null;
 let zoomOverflowWrapperParentElement = null;
@@ -48,12 +49,8 @@ function getChromiumScrollBarWidth() {
   return 6;
 }
 
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 function getScrollbarWidth() {
-  if (isFirefox()) {
+  if (IS_FIREFOX) {
     return getFirefoxScrollBarWidth();
   }
   return getChromiumScrollBarWidth();

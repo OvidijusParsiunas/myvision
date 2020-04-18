@@ -14,6 +14,7 @@ import {
   changeElementPropertiesFirefox, setDOMElementsFirefox,
   initialiseVariablesFirefox, setCanvasElementFirefox,
 } from '../facadeWorkersUtils/zoom/firefox';
+import IS_FIREFOX from '../../../utils/browserType';
 
 let currentZoom = null;
 let canvas = null;
@@ -358,17 +359,13 @@ function loadCanvasElements(browserSpecificSetterCallback) {
     zoomOverflowWrapperElement, canvasElement);
 }
 
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 function initialiseZoomVariables(canvasObj) {
   canvas = canvasObj;
   // if firefox
   // if chromium
   // use callback here and choose the set canvas properties method
   currentZoom = getCurrentZoomState();
-  if (isFirefox()) {
+  if (IS_FIREFOX) {
     initialiseVariablesFirefox(canvas);
     loadCanvasElements(setDOMElementsFirefox);
     setNewCanvasElementForZoomFunc = setCanvasElementFirefox;

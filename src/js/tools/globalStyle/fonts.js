@@ -1,4 +1,5 @@
 import { getExportDatasetsPopUpOpenState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import IS_FIREFOX from '../utils/browserType';
 
 function refreshExportLabelsPopover() {
   if (!getExportDatasetsPopUpOpenState()) {
@@ -22,11 +23,6 @@ function loadFailed() {
   console.log('Failed to load custom fonts');
 }
 
-// should be a global variable
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 // fix for a bug where the loading of the script would stop all elements from being
 // dynamic and the browser would not render them when screen dimensions are changed
 function firefoxBugFix(document, url, relationship) {
@@ -46,7 +42,7 @@ function downloadFonts() {
   link.rel = relationship;
   link.href = url;
   document.head.appendChild(link);
-  if (isFirefox()) firefoxBugFix(document, url, relationship);
+  if (IS_FIREFOX) firefoxBugFix(document, url, relationship);
 }
 
 export { downloadFonts as default };

@@ -2,6 +2,6 @@ function isCurrentBrowserFireFox() {
   return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 }
 
-const isFireFox = isCurrentBrowserFireFox();
+const IS_FIREFOX = isCurrentBrowserFireFox();
 
-export { isFireFox as default };
+export { IS_FIREFOX as default };

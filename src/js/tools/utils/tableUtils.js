@@ -1,4 +1,5 @@
 import { getScrollbarWidth } from '../globalStyle/style';
+import IS_FIREFOX from './browserType';
 
 function isHorizontalScrollPresent(parentElement) {
   return parentElement.scrollWidth > parentElement.clientWidth;
@@ -24,12 +25,8 @@ function scrollIntoViewIfNeededPolyfill(childElement, parentElement) {
   }
 }
 
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 function scrollIntoViewIfNeeded(childElement, parentElement) {
-  if (isFirefox()) {
+  if (IS_FIREFOX) {
     scrollIntoViewIfNeededPolyfill(childElement, parentElement);
   } else {
     childElement.scrollIntoViewIfNeeded();

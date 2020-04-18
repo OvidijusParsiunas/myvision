@@ -2,6 +2,7 @@ import {
   ANNOTATIONS_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, IMAGES_TABLE_INDICATOR,
 } from '../../consts';
+import IS_FIREFOX from '../../../utils/browserType';
 
 let titleElement = null;
 let table1Element = null;
@@ -356,13 +357,8 @@ function setButtonGroupElementMarginTop(length) {
   buttonsGroupElement.style.marginTop = length;
 }
 
-// should be a global variable
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 function setButtonGroupElementMarginTopByBrowser() {
-  if (!isFirefox()) {
+  if (!IS_FIREFOX) {
     setButtonGroupElementMarginTop('272px');
   } else {
     setButtonGroupElementMarginTop('1px');

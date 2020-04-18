@@ -1,5 +1,6 @@
 import fabric from 'fabric';
 import { getLeftSideBarWidth, getRightSideBarWidth } from '../../../../globalStyle/style';
+import IS_FIREFOX from '../../../../utils/browserType';
 
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
@@ -73,15 +74,10 @@ function setCanvasWrapperMaximumDimensions() {
   canvasWrapper.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
 }
 
-// should be a global variable
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 function setCanvasProperties() {
   canvasProperties.maximumCanvasHeight = window.innerHeight - 64;
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
-  if (isFirefox()) {
+  if (IS_FIREFOX) {
     canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 0.5;
   } else {
     canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth;

@@ -1,3 +1,5 @@
+import IS_FIREFOX from '../../tools/utils/browserType';
+
 let canvasElement1Displaying = true;
 let oldCanvas = null;
 let canvas = null;
@@ -5,15 +7,8 @@ let canvasElement1 = null;
 let canvasElement2 = null;
 let timeoutMilliseconds = 0;
 
-function isFirefox() {
-  if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-    return true;
-  }
-  return false;
-}
-
 function assignTimeoutMillisecondsDependingOnBrowser() {
-  timeoutMilliseconds = isFirefox() ? 12 : 0;
+  timeoutMilliseconds = IS_FIREFOX ? 12 : 0;
 }
 
 function assignCanvasForUtils(canvasObj) {

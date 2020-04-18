@@ -2,13 +2,10 @@ import { setRightBoundingBoxDrawingDelta } from '../boundingBox/boundingBox';
 import { setRightBoundingBoxMovingDelta } from '../sharedUtils/moveBlockers';
 import { setRightBoundingBoxNewObjectDelta } from '../sharedUtils/newObjectBlockers';
 import { setRightBoundingBoxScalingDelta } from '../boundingBox/scaling';
-
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
+import IS_FIREFOX from '../../../tools/utils/browserType';
 
 function initialiseShapeManipulationDeltas() {
-  if (!isFirefox() && window.screen.width < 1500) {
+  if (!IS_FIREFOX && window.screen.width < 1500) {
     setRightBoundingBoxDrawingDelta(2);
     setRightBoundingBoxMovingDelta(2);
     setRightBoundingBoxNewObjectDelta(2);

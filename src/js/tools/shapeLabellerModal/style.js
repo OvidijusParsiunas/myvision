@@ -2,6 +2,7 @@ import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
 import { setShapeLabellerModalDisplayedState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { getScrollbarWidth } from '../globalStyle/style';
+import IS_FIREFOX from '../utils/browserType';
 
 let parentElement = null;
 let optionsElement = null;
@@ -53,17 +54,12 @@ function addFakeBottomBorder() {
   optionsElement.style.paddingBottom = '0px';
 }
 
-// should be a global variable
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 // the following is a bug fix for chromium based browsers where the scroll bars
 // do not cover the edge of the table body, meaning that upon hovering on them;
 // the mouse over events would be triggered on the body below it.
 // In this case, it would be the table element highlighting and cursor change
 function addFakeBordersForChromium() {
-  if (!isFirefox()) {
+  if (!IS_FIREFOX) {
     if (isVerticalScrollPresent()) {
       addFakeRightBorder();
     }
@@ -158,7 +154,7 @@ function validateFullModalVisibile(isWindowResized) {
 }
 
 function setListHeightVariables() {
-  if (isFirefox()) {
+  if (IS_FIREFOX) {
     defaultListHeightPx = 105.5;
     addNewLabelDeltaHeight = 21.5;
   } else {

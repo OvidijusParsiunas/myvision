@@ -28,6 +28,7 @@ import {
   highlightActiveIcon, highlightDefaultIcon, switchToHighlightedActiveIcon,
   switchToHighlightedDefaultIcon, switchToHighlightedDefaultVisibilityIcon,
 } from './iconHighlightUtils';
+import IS_FIREFOX from '../utils/browserType';
 import { resetShapeLabellerModalOptions } from '../shapeLabellerModal/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
@@ -66,21 +67,8 @@ let newFakeDropdownBottomBorderDeltaGenerated = false;
 let originalActiveDropdownHeight = 0;
 const LABEL_CONTAINER_ELEMENT_ID_PREFIX = 'label-container-';
 
-// refactor label popup label options element manipulation code
-
-// consider narrowing down the dropdown to make it more appropriate
-// should be able to select labels in add/remove point modes
-
-// get default font style in browser and compute dimensions accordingly
-// make sure to consider label name validations
-// escape should close the popup - more on hotkeys
-
-function isFirefox() {
-  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
-
 function setDropdownElementWidthVariables() {
-  if (isFirefox()) {
+  if (IS_FIREFOX) {
     dropdownElementsWidthDefault = 171;
     dropdownElementsWidthFull = 206;
   } else {
@@ -422,7 +410,7 @@ function addFakeBottomBorder(activeDropdownElementPosition) {
 // the mouse over events would be triggered on the body below it.
 // In this case, it would be the table element highlighting and cursor change
 function setFakeDropdownBorderFixForChromium(id) {
-  if (!isFirefox()) {
+  if (!IS_FIREFOX) {
     const fakeBorderElements = document.getElementById(`chromium-fake-dropdown-border-fix${id}`);
     const activeDropdownElementPosition = activeDropdownElements[0].getBoundingClientRect();
     if (isDropdownVerticalScrollPresent()) {

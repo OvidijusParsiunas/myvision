@@ -13,9 +13,6 @@ Escape button should close the settings popup and cancel the shape labeller moda
 
 set shape labeller modal popup height relative to text or label option height
 
-make sure to use the custom scrollIntoViewIfNeeded in the labelList instead of element.scrollIntoViewIfNeeded
-which is currently present in many files as it is not supported by FireFox
-
 /* button states file
  default button active
  draw polygon button active
@@ -87,6 +84,7 @@ when removing images from the image list, their ids will likely mess up ML gener
 
 have the initial image not reach the borders (test it out 1st to see how it looks)
 
+should be able to select labels in add/remove point modes
 
 Things to check on chrome browsers on other pcs:
 

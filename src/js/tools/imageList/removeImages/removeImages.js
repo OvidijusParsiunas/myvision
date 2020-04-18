@@ -2,7 +2,8 @@ import { getAllImageData, updateCurrentImageIds, getCurrentImageId } from '../im
 import { setImageNameElementToDefault } from '../../imageSwitchPanel/style';
 import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
-import { removeAllShapeRefs } from '../../../canvas/objects/allShapes/allShapes';
+import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
+import { decrementShapeType } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../../toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 
 let canvas = null;
@@ -24,6 +25,14 @@ function switchImage(index, allImageData, previousImageDataLength) {
   }
 }
 
+function removeAllShapes() {
+  const allShapes = getAllExistingShapes();
+  Object.keys(allShapes).forEach((key) => {
+    decrementShapeType(allShapes[key].shapeRef);
+  });
+  removeAllShapeRefs();
+}
+
 function resetRemainingImageElements() {
   const imageNodes = document.getElementById('image-list-overflow-parent').childNodes;
   for (let i = 1; i < imageNodes.length; i += 1) {
@@ -42,7 +51,7 @@ function removeImage() {
     const previousImageDataLength = allImageData.length;
     allImageData.splice(index, 1);
     removeAllLabelRefs();
-    removeAllShapeRefs();
+    removeAllShapes();
     switchImage(index, allImageData, previousImageDataLength);
   }
 }
