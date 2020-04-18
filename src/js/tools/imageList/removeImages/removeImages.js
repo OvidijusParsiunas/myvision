@@ -1,5 +1,5 @@
 import { getAllImageData, updateCurrentImageIds, getCurrentImageId } from '../imageList';
-import { setCurrentImageNameElementToDefault } from '../../imageSwitchPanel/style';
+import { setImageNameElementToDefault } from '../../imageSwitchPanel/style';
 import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
 import { removeAllShapeRefs } from '../../../canvas/objects/allShapes/allShapes';
@@ -18,7 +18,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
   } else {
     updateCurrentImageIds(0, 0);
     removeAllLabelListItems();
-    setCurrentImageNameElementToDefault();
+    setImageNameElementToDefault();
     canvas.clear();
     setCurrentImage(null);
   }

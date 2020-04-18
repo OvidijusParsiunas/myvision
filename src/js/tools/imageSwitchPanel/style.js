@@ -1,6 +1,8 @@
 let nextButtonElement = null;
 let previousButtonElement = null;
-let currentImageNameElement = null;
+let imageNameElement = null;
+let imageNameElementMinWidth = 0;
+const IMAGE_ELEMENT_SIDE_PADDING = 40;
 
 const ACTIVE_COLOR = 'black';
 const ACTIVE_CURSOR = 'pointer';
@@ -26,19 +28,29 @@ function setNextButtonElementToDefault() {
   nextButtonElement.style.cursor = '';
 }
 
-function setCurrentImageNameElementToActive() {
-  currentImageNameElement.style.color = ACTIVE_COLOR;
+function setImageNameElementToActive() {
+  imageNameElement.style.color = ACTIVE_COLOR;
 }
 
-function setCurrentImageNameElementToDefault() {
-  currentImageNameElement.innerHTML = DEFAULT_IMAGE_NAME;
-  currentImageNameElement.style.color = '';
+function setImageNameElementToDefault() {
+  imageNameElement.innerHTML = DEFAULT_IMAGE_NAME;
+  imageNameElement.style.color = '';
 }
 
-function changeCurrentImageName(imageName, images, currentlySelectedImageId, firstFromMany) {
-  currentImageNameElement.innerHTML = imageName;
+function setNameElementMinWidth() {
+  const imageNameElementWidth = imageNameElement.clientWidth
+    - IMAGE_ELEMENT_SIDE_PADDING;
+  if (imageNameElementWidth > imageNameElementMinWidth) {
+    imageNameElement.style.minWidth = `${imageNameElementWidth}px`;
+    imageNameElementMinWidth = imageNameElementWidth;
+  }
+}
+
+function updateImageNameElement(imageName, images, currentlySelectedImageId, firstFromMany) {
+  imageNameElement.innerHTML = imageName;
+  setNameElementMinWidth();
   if (images.length === 1) {
-    setCurrentImageNameElementToActive();
+    setImageNameElementToActive();
     if (firstFromMany) {
       setNextButtonElementToActive();
     } else {
@@ -64,7 +76,7 @@ function changeCurrentImageName(imageName, images, currentlySelectedImageId, fir
 }
 
 function findImageSwitchElements() {
-  currentImageNameElement = document.getElementById('current-image-name');
+  imageNameElement = document.getElementById('image-name');
   [previousButtonElement, nextButtonElement] = document.getElementsByClassName('image-switch-button');
 }
 
@@ -73,7 +85,7 @@ function initialiseImageSwitchPanelFunctionality() {
 }
 
 export {
-  changeCurrentImageName,
-  setCurrentImageNameElementToDefault,
+  updateImageNameElement,
+  setImageNameElementToDefault,
   initialiseImageSwitchPanelFunctionality,
 };

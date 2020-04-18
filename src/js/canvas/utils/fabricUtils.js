@@ -9,8 +9,8 @@ function setBoundingBoxEditToolsToBeTransparent() {
 }
 
 function createNewCanvas() {
-  canvas1 = new fabric.Canvas('c', { selection: false });
-  canvas2 = new fabric.Canvas('d', { selection: false });
+  canvas1 = new fabric.Canvas('c', { selection: false, width: 1, height: 1 });
+  canvas2 = new fabric.Canvas('d', { selection: false, width: 1, height: 1 });
   activeCanvasRef = 'canvas1';
   return canvas1;
 }
