@@ -171,8 +171,8 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
     const { fileName, currentRowHasError } = getFileName(tableBody, i);
     if (newFileName === fileName) {
       const tableName = getTableName(tableElement.id);
+      const rowParentElement = tableBody.childNodes[i].childNodes[0];
       if (validationResult.error) {
-        const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkupWthPopover(
           newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
           tableName, popoverIndex += 1, POPOVER_ERROR_THEME_CLASS, POPOVER_ARROW_ERROR_THEME_CLASS,
@@ -182,16 +182,15 @@ function checkFileAlreadyInTable(newFileName, validationResult, tableElement,
           allImagesStyleSetToDefault = false;
         }
       } else if (validationResult.information) {
-        const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkupWthPopover(
           newFileName, validationResult.message, popoverPositionClass, popoverArrowPositionClass,
           tableName, popoverIndex += 1, POPOVER_INFORMATION_THEME_CLASS,
           POPOVER_ARROW_INFORMATION_THEME_CLASS, '',
         );
       } else if (currentRowHasError && !validationResult.error) {
-        const rowParentElement = tableBody.childNodes[i].childNodes[0];
         rowParentElement.innerHTML = createTableRowElementMarkup(newFileName, tableName);
       }
+      rowParentElement.scrollIntoView();
       return true;
     }
   }
@@ -222,6 +221,7 @@ function insertRowToClassesTable(fileName, validationResult) {
       POPOVER_LEFT_POSITION_CLASS, POPOVER_ARROW_LEFT_POSITION_CLASS,
       CLASSES_TABLE_INDICATOR, popoverIndex += 1,
       popoverThemeClass, popoverArrowThemeClass, textThemeClass);
+    cell.scrollIntoView();
   }
 }
 
@@ -241,6 +241,7 @@ function insertRowToImagesTable(fileName, validationResult) {
     } else {
       cell.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
     }
+    cell.scrollIntoView();
   }
 }
 
@@ -251,6 +252,7 @@ function changeAllImagesTableRowsToDefault() {
       const rowParentElement = tableBody.childNodes[i].childNodes[0];
       const { fileName } = getFileName(tableBody, i);
       rowParentElement.innerHTML = createTableRowElementMarkup(fileName, IMAGES_TABLE_INDICATOR);
+      rowParentElement.scrollIntoView();
     }
   }
   allImagesStyleSetToDefault = true;
@@ -265,6 +267,7 @@ function changeClassesRowToDefault(classesFileName) {
       rowParentElement.innerHTML = createTableRowElementMarkup(
         classesFileName, CLASSES_TABLE_INDICATOR,
       );
+      rowParentElement.scrollIntoView();
     }
   }
 }
@@ -278,6 +281,7 @@ function changeAnnotationRowToDefault(annotationFileName) {
       rowParentElement.innerHTML = createTableRowElementMarkup(
         annotationFileName, ANNOTATIONS_TABLE_INDICATOR,
       );
+      rowParentElement.scrollIntoView();
     }
   }
 }
@@ -297,6 +301,7 @@ function insertRowToAnnotationsTable(fileName, validationResult) {
       cell.innerHTML = createTableRowElementMarkup(fileName,
         ANNOTATIONS_TABLE_INDICATOR);
     }
+    cell.scrollIntoView();
   }
 }
 
@@ -427,14 +432,6 @@ function resetUploadDatasetsModalElementDimensions() {
   uploadDatasetsModalElement.style.width = '';
   uploadDatasetsModalElement.style.height = '';
 }
-
-window.uploadDatasetsModalImagesTableScroll = () => {
-  annotationsTableOuterContainerElement.scrollTo(0, imagesTableOuterContainerElement.scrollTop);
-};
-
-window.uploadDatasetsModalAnnotationsTableScroll = () => {
-  imagesTableOuterContainerElement.scrollTo(0, annotationsTableOuterContainerElement.scrollTop);
-};
 
 function displayTableStrategyRelevantAssets(tableStrategy) {
   if (tableStrategy === THREE_TABLE_STRATEGY) {
