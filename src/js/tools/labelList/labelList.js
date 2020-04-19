@@ -1,9 +1,9 @@
 import { changeLabelText, changeLabelVisibilityById } from '../../canvas/objects/label/label';
 import {
-  highlightShapeFill, defaultShapeFill, changeShapeColorById, changeShapeLabelText,
   getShapeById, changeShapeVisibilityById, getShapeVisibilityById,
+  highlightShapeFill, defaultShapeFill, changeShapeColorById, changeShapeLabelText,
 } from '../../canvas/objects/allShapes/allShapes';
-import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
+import { removePolygonPoints, isAddingPointsToPolygon } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
   getRemovingPolygonPointsState, setExportDatasetsPopUpOpenState,
   getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
@@ -478,7 +478,7 @@ function initLabelEditing(id) {
 
 function setToShapeEditModeWhenDrawing() {
   if (!getAddingPolygonPointsState()) {
-    if (getRemovingPointsState()) {
+    if (getRemovingPolygonPointsState()) {
       if (getPolygonDrawingInProgressState()) {
         window.editShapes();
       }
@@ -495,6 +495,7 @@ function selectShape() {
     pointMouseDownEvents(eventShape);
     pointMouseUpEvents(eventShape);
   } else if (getAddingPolygonPointsState()) {
+    if (isAddingPointsToPolygon()) window.addPoints();
     addPointsMouseDownEvents(eventShape);
     addPointsMouseUpEvents(eventShape);
   } else {
@@ -839,6 +840,7 @@ window.visibilityBtnClick = (id, element) => {
     if (getRemovingPolygonPointsState()) {
       setPolygonNotEditableOnClick();
     } else if (getAddingPolygonPointsState()) {
+      if (isAddingPointsToPolygon()) window.addPoints();
       addPointsPolygonNotEditable();
     }
     switchToHighlightedActiveIcon(element);
