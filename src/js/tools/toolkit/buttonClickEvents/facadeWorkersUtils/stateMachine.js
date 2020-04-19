@@ -23,6 +23,7 @@ let currentImageId = false;
 let shapeLabellerModalDisplayed = false;
 let boundingBoxScalingState = false;
 let shapeMovingState = false;
+let polygonDrawingInProgressState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -118,6 +119,10 @@ function getBoundingBoxScalingState() {
 
 function getShapeMovingState() {
   return shapeMovingState;
+}
+
+function getPolygonDrawingInProgressState() {
+  return polygonDrawingInProgressState;
 }
 
 function setDefaultState(state) {
@@ -217,6 +222,10 @@ function setShapeMovingState(state) {
   shapeMovingState = state;
 }
 
+function setPolygonDrawingInProgressState(state) {
+  polygonDrawingInProgressState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -258,6 +267,8 @@ export {
   setExportDatasetsPopUpOpenState,
   getLastPolygonActionWasMoveState,
   setLastPolygonActionWasMoveState,
+  getPolygonDrawingInProgressState,
+  setPolygonDrawingInProgressState,
   getShapeLabellerModalDisplayedState,
   setShapeLabellerModalDisplayedState,
   getNewShapeSelectedViaLabelListState,

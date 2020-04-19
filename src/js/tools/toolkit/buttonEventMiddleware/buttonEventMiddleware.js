@@ -2,9 +2,8 @@ import { isLabelling } from '../../shapeLabellerModal/labellingProcess';
 import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
-import { isPolygonDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
 import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
-import { getContinuousDrawingState, getRemovingPolygonPointsState } from '../buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getContinuousDrawingState, getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { canSwitchImage } from '../../imageList/imageList';
 import { removeActiveButtonPopup } from '../buttonHoverEvents/buttonHoverEvents';
 
@@ -14,9 +13,9 @@ function interruptAllCanvasEventsBeforeFunc(func) {
   if (func) func();
 }
 
-function func1IfRemovingPointsElseInterruptAllWthFunc2(func1, func2) {
+function func1IfDrawRemovePointsElseInterruptAllWthFunc2(func1, func2) {
   removeActiveButtonPopup();
-  if (getRemovingPolygonPointsState()) {
+  if (getRemovingPolygonPointsState() && getPolygonDrawingInProgressState()) {
     if (func1) func1();
   } else if (func2) {
     interruptAllCanvasEvents();
@@ -32,7 +31,7 @@ function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
 
 function interruptNewShapeDrawingWthFunc1OrExecFunc2(func1, func2) {
   removeActiveButtonPopup();
-  if ((isPolygonDrawingInProgress() || isLabelling()) && !getContinuousDrawingState()) {
+  if ((getPolygonDrawingInProgressState() || isLabelling()) && !getContinuousDrawingState()) {
     interruptAllCanvasEvents();
     func1();
   } else if (func2) {
@@ -56,7 +55,7 @@ function doNothingIfLabellingInProgress(func) {
 
 function doNothingIfLabellingOrAddingNewPoints(func) {
   removeActiveButtonPopup();
-  if (!isLabelling() && !isPolygonDrawingInProgress()) {
+  if (!isLabelling() && !getPolygonDrawingInProgressState()) {
     interruptCanvasToStartAddPoints();
     if (func) func();
   }
@@ -100,6 +99,6 @@ export {
   interruptAllCanvasEventsBeforeFuncWInputs,
   interruptAllCanvasEventsBeforeMultipleFunc,
   interruptNewShapeDrawingWthFunc1OrExecFunc2,
-  func1IfRemovingPointsElseInterruptAllWthFunc2,
   interruptAllCanvasEventsIfLabellingInProgress,
+  func1IfDrawRemovePointsElseInterruptAllWthFunc2,
 };

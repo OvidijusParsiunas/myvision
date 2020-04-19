@@ -2,9 +2,10 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState,
+  getPolygonDrawingInProgressState, setDefaultState, getAlteringPolygonPointsState,
   setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
-  setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState, setDefaultState,
-  getRemovingPolygonPointsState, setRemovingPolygonPointsState, getAlteringPolygonPointsState,
 } from '../facadeWorkersUtils/stateMachine';
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon,
@@ -13,7 +14,7 @@ import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseI
 import { getSelectedPolygonIdForAddPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
-import { resetNewPolygonData, isPolygonDrawingInProgress } from '../../../../canvas/objects/polygon/polygon';
+import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
 
 function dismissAddPointsEvents(canvas) {
   if (isAddingPointsToPolygon()) {
@@ -30,7 +31,7 @@ function dismissAddPointsEvents(canvas) {
 }
 
 function dismissRemovePointsEvents(canvas) {
-  if (isPolygonDrawingInProgress()) { resetNewPolygonData(); }
+  if (getPolygonDrawingInProgressState()) { resetNewPolygonData(); }
   purgeCanvasMouseEvents(canvas);
   cleanPolygonPointsArray();
   setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
@@ -45,7 +46,7 @@ function dismissOtherEvents(canvas) {
   } else {
     setCancelledReadyToDrawState(false);
   }
-  if (isPolygonDrawingInProgress()) { resetNewPolygonData(); }
+  if (getPolygonDrawingInProgressState()) { resetNewPolygonData(); }
   purgeCanvasMouseEvents(canvas);
   assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
   setDefaultCursorMode(canvas);

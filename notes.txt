@@ -11,8 +11,6 @@ Toolkit button functionality for getting smaller with the screen should be done 
 
 Escape button should close the settings popup and cancel the shape labeller modal
 
-set shape labeller modal popup height relative to text or label option height
-
 /* button states file
  default button active
  draw polygon button active
@@ -23,7 +21,6 @@ set shape labeller modal popup height relative to text or label option height
 
 cancel the creation of a new polygon when clicked escape or delete
 or move shapes button
-
 
 when there is vertical overflow in the label list, the label options width should be narrower
 

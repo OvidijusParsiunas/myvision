@@ -5,10 +5,11 @@ import {
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
-  getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState, getBoundingBoxScalingState,
-  getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState, getShapeMovingState,
+  getRemovingPolygonPointsState, setExportDatasetsPopUpOpenState,
+  getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
   getAddingPolygonPointsState, setSettingsPopUpOpenState, setEditingLabelId,
-  getRemovingPolygonPointsState, getDefaultState, setExportDatasetsPopUpOpenState,
+  getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState,
+  getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
 } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
@@ -475,6 +476,18 @@ function initLabelEditing(id) {
   isEditingLabel = true;
 }
 
+function setToShapeEditModeWhenDrawing() {
+  if (!getAddingPolygonPointsState()) {
+    if (getRemovingPointsState()) {
+      if (getPolygonDrawingInProgressState()) {
+        window.editShapes();
+      }
+    } else {
+      window.editShapes();
+    }
+  }
+}
+
 function selectShape() {
   const eventShape = {};
   eventShape.target = activeShape;
@@ -692,9 +705,7 @@ window.labelTextKeyDown = (event) => {
 };
 
 window.labelBtnClick = (id) => {
-  if (!getDefaultState()) {
-    // window.cancel();
-  }
+  setToShapeEditModeWhenDrawing();
   activeShape = getShapeById(id);
   highlightLabel(activeShape.shapeName, id);
   if (!isVisibilitySelected) {

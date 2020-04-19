@@ -9,13 +9,13 @@ import {
 import {
   interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
   doNothingIfLabellingInProgress, interruptNewShapeDrawingWthFunc1OrExecFunc2,
-  doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeMultipleFunc,
-  replaceExistingCanvas, removeButtonPopIfActive, func1IfRemovingPointsElseInterruptAllWthFunc2,
+  doNothingIfLabellingOrAddingNewPoints, replaceExistingCanvas, removeButtonPopIfActive,
+  interruptAllCanvasEventsBeforeMultipleFunc, func1IfDrawRemovePointsElseInterruptAllWthFunc2,
 } from '../buttonEventMiddleware/buttonEventMiddleware';
 
 function assignToolkitButtonClickEvents() {
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
-  window.createNewPolygon = func1IfRemovingPointsElseInterruptAllWthFunc2.bind(this,
+  window.createNewPolygon = func1IfDrawRemovePointsElseInterruptAllWthFunc2.bind(this,
     removePolygonPointBtnClick, createNewPolygonBtnClick);
   window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);

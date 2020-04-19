@@ -4,8 +4,9 @@ import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/c
 import { showShapeLabellerModal } from '../../../tools/shapeLabellerModal/style';
 import { prepareLabelShape } from '../../../tools/shapeLabellerModal/labellingProcess';
 import {
-  getMovableObjectsState, getAddingPolygonPointsState, getDoubleScrollCanvasState,
-  setAddingPolygonPointsState, setReadyToDrawShapeState, getCurrentZoomState,
+  getMovableObjectsState, getAddingPolygonPointsState,
+  setPolygonDrawingInProgressState, setAddingPolygonPointsState,
+  setReadyToDrawShapeState, getCurrentZoomState, getDoubleScrollCanvasState,
 } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
@@ -44,6 +45,7 @@ let movedOverflowScroll = false;
 function removeActiveShape() {
   canvas.remove(activeShape);
   activeShape = null;
+  setPolygonDrawingInProgressState(false);
 }
 
 function repositionCrosshair(event) {
@@ -61,6 +63,7 @@ function repositionCrosshair(event) {
   activeShape = polygon;
   canvas.add(polygon);
   polygon.sendToBack();
+  setPolygonDrawingInProgressState(true);
 }
 
 function drawPolygon(event) {
@@ -119,6 +122,7 @@ function generatePolygon(pointer) {
   drawingFinished = true;
   prepareLabelShape(polygon, canvas);
   showShapeLabellerModal(pointer.x, pointer.y);
+  setPolygonDrawingInProgressState(false);
 }
 
 /* initial point should begin with one color and switch when there are 3
@@ -167,6 +171,7 @@ function addPoint(pointer) {
   pointArray.push(point);
   activeShape.sendToBack();
   canvas.selection = false;
+  setPolygonDrawingInProgressState(true);
 }
 
 function getTempPolygon() {
@@ -176,11 +181,6 @@ function getTempPolygon() {
     return activeShape;
   }
   return null;
-}
-
-// should be a global state
-function isPolygonDrawingInProgress() {
-  return activeShape !== null;
 }
 
 function isPolygonDrawingFinished() {
@@ -199,6 +199,7 @@ function clearPolygonData() {
     activeShape = null;
     pointId = 0;
     drawingFinished = false;
+    setPolygonDrawingInProgressState(false);
   }
 }
 
@@ -470,7 +471,6 @@ export {
   changeInitialPointColour,
   isPolygonDrawingFinished,
   prepareCanvasForNewPolygon,
-  isPolygonDrawingInProgress,
   resumeDrawingAfterRemovePoints,
   placeholderToAddMouseDownEvents,
   createNewPolygonFromCoordinates,

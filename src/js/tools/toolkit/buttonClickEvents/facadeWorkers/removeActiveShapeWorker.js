@@ -2,9 +2,7 @@ import {
   removePolygon, clearAllAddPointsData, isAddingPointsToPolygon,
   removePolygonPoints, getPolygonIdIfEditing,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import {
-  resetNewPolygonData, isPolygonDrawingInProgress, isPolygonDrawingFinished, resetDrawPolygonMode,
-} from '../../../../canvas/objects/polygon/polygon';
+import { resetNewPolygonData, isPolygonDrawingFinished, resetDrawPolygonMode } from '../../../../canvas/objects/polygon/polygon';
 import { clearBoundingBoxData, isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../../../canvas/objects/boundingBox/boundingBox';
 import { removeEditedPolygonId, removeActiveLabelObject } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
@@ -12,7 +10,7 @@ import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInte
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import {
   getAddingPolygonPointsState, getContinuousDrawingState, getCurrentImageId,
-  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState, getPolygonDrawingInProgressState,
 } from '../facadeWorkersUtils/stateMachine';
 import { isLabelling, removeTargetShape } from '../../../shapeLabellerModal/labellingProcess';
 import { hideShapeLabellerModal } from '../../../shapeLabellerModal/style';
@@ -49,7 +47,7 @@ function removeIfContinuousDrawing(canvas) {
       }
       return true;
     }
-    if (isPolygonDrawingInProgress()) {
+    if (getPolygonDrawingInProgressState()) {
       if (getRemovingPolygonPointsState()) {
         setRemovingPolygonPointsState(false);
       }

@@ -1,12 +1,12 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
-  getContinuousDrawingState, getAddingPolygonPointsState, setReadyToDrawShapeState,
-  getLastDrawingModeState, setAddingPolygonPointsState,
+  getCancelledReadyToDrawState, setRemovingPolygonPointsState,
   getRemovingPolygonPointsState, setRemovingPointsAfterCancelDrawState,
   getReadyToDrawShapeState, setCancelledReadyToDrawState, setDefaultState,
-  getCancelledReadyToDrawState, setRemovingPolygonPointsState,
+  getContinuousDrawingState, getAddingPolygonPointsState, setReadyToDrawShapeState,
+  getLastDrawingModeState, setAddingPolygonPointsState, getPolygonDrawingInProgressState,
 } from '../facadeWorkersUtils/stateMachine';
-import { isPolygonDrawingInProgress, removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
+import { removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
 import setRemovePointsOnDrawNewPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode';
 import assignRemovePointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/removePointsEventHandlers';
@@ -22,7 +22,7 @@ import {
 import { removeHighlightOfListLabel } from '../../../labelList/labelListHighlightUtils';
 
 function setRemovePointsCursorMode(canvas) {
-  const isDrawingPolygon = isPolygonDrawingInProgress();
+  const isDrawingPolygon = getPolygonDrawingInProgressState();
   if (isDrawingPolygon) {
     setRemovePointsOnDrawNewPolygonMode(canvas);
   } else if (!isDrawingPolygon) {
@@ -31,7 +31,7 @@ function setRemovePointsCursorMode(canvas) {
 }
 
 function assignRemovePointsEvents(canvas) {
-  const isDrawingPolygon = isPolygonDrawingInProgress();
+  const isDrawingPolygon = getPolygonDrawingInProgressState();
   if (isDrawingPolygon) {
     removeInvisiblePoint();
     assignRemovePointsOnDrawPolygonEvents(canvas);
@@ -42,7 +42,7 @@ function assignRemovePointsEvents(canvas) {
 
 function discardRemovePointsEvents(canvas) {
   // is this still drawing after manually removing all polygon points
-  const isDrawingPolygon = isPolygonDrawingInProgress();
+  const isDrawingPolygon = getPolygonDrawingInProgressState();
   if (isDrawingPolygon) {
     assignDrawPolygonEvents(canvas, true);
     setDefaultState(false);
