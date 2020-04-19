@@ -4,7 +4,7 @@ import {
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { isPolygonDrawingInProgress } from '../../../canvas/objects/polygon/polygon';
 import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
-import { getContinuousDrawingState } from '../buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getContinuousDrawingState, getRemovingPolygonPointsState } from '../buttonClickEvents/facadeWorkersUtils/stateMachine';
 import { canSwitchImage } from '../../imageList/imageList';
 import { removeActiveButtonPopup } from '../buttonHoverEvents/buttonHoverEvents';
 
@@ -12,6 +12,16 @@ function interruptAllCanvasEventsBeforeFunc(func) {
   removeActiveButtonPopup();
   interruptAllCanvasEvents();
   if (func) func();
+}
+
+function func1IfRemovingPointsElseInterruptAllWthFunc2(func1, func2) {
+  removeActiveButtonPopup();
+  if (getRemovingPolygonPointsState()) {
+    if (func1) func1();
+  } else if (func2) {
+    interruptAllCanvasEvents();
+    func2();
+  }
 }
 
 function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
@@ -46,7 +56,7 @@ function doNothingIfLabellingInProgress(func) {
 
 function doNothingIfLabellingOrAddingNewPoints(func) {
   removeActiveButtonPopup();
-  if (!isLabelling()) {
+  if (!isLabelling() && !isPolygonDrawingInProgress()) {
     interruptCanvasToStartAddPoints();
     if (func) func();
   }
@@ -90,5 +100,6 @@ export {
   interruptAllCanvasEventsBeforeFuncWInputs,
   interruptAllCanvasEventsBeforeMultipleFunc,
   interruptNewShapeDrawingWthFunc1OrExecFunc2,
+  func1IfRemovingPointsElseInterruptAllWthFunc2,
   interruptAllCanvasEventsIfLabellingInProgress,
 };

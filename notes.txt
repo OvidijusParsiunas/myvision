@@ -24,22 +24,10 @@ set shape labeller modal popup height relative to text or label option height
 cancel the creation of a new polygon when clicked escape or delete
 or move shapes button
 
-when creating new polygon, clicking add points should not do anything
-when creating new polygon, choosing to delete points, then clicking to create new polygon again
-should resume polygon drawing
 
 when there is vertical overflow in the label list, the label options width should be narrower
 
 the label should not track off the screen
-
-when want to delete shape and not selected shape, upon clicking delete, a cursor should appear to delete (colour should change whether
-a shape has been selected or not)
-
-delete button does not set to a default mode when in continuous mode
-
-add points mode should not delete the currently being drawn polygon and should instead remain in that same mode
-
-delete images button
 
 highlight shapes to indicate that the user needs to click on them to start adding/removing points
 
@@ -59,8 +47,6 @@ when the bounding box is too far right, can't scale left
 polygon size reduction when zoomed in is a little bit off
 
 delete keyboard button should remove shape
-
-when drawing a new polygon and clicking the add button shouldn't do anything
 
 the shape labeller modal is too thick, check if can be thin at the start and resize to bigger later on
 
@@ -85,6 +71,10 @@ when removing images from the image list, their ids will likely mess up ML gener
 have the initial image not reach the borders (test it out 1st to see how it looks)
 
 should be able to select labels in add/remove point modes
+
+grey out add points when drawing a new polygon
+
+grey out delete shape when shape not selected
 
 Things to check on chrome browsers on other pcs:
 
