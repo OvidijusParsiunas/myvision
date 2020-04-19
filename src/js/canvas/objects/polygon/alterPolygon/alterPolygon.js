@@ -138,10 +138,16 @@ function movePolygonPoint(event, labelObject) {
   movePolygonPointImpl(event, polygon, labelObject);
 }
 
-function removePolygon() {
+function removePolygon(lableObjectFromLabelList) {
   if (editingPolygon) {
     removePolygonImpl(canvas, polygon);
+    return polygon.id;
   }
+  if (lableObjectFromLabelList && lableObjectFromLabelList.shapeName === 'polygon') {
+    removePolygonImpl(canvas, polygon);
+    return polygon.id;
+  }
+  return null;
 }
 
 function removePolygonPoint(pointId, existingPolygon) {

@@ -85,7 +85,7 @@ function getSelectedPolygonIdForRemovingPoints() {
 }
 
 export {
-  pointMouseDownEvents, pointMouseOverEvents,
+  setRemovablePointsEventsCanvas, pointMouseOverEvents,
+  pointMouseDownEvents, getSelectedPolygonIdForRemovingPoints,
   pointMouseUpEvents, pointMouseOutEvents, setPolygonNotEditableOnClick,
-  setRemovablePointsEventsCanvas, getSelectedPolygonIdForRemovingPoints,
 };

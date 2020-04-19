@@ -1,6 +1,5 @@
 import {
-  removePolygon, clearAllAddPointsData, isAddingPointsToPolygon,
-  removePolygonPoints, getPolygonIdIfEditing,
+  removePolygon, clearAllAddPointsData, isAddingPointsToPolygon, removePolygonPoints,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import { resetNewPolygonData, isPolygonDrawingFinished, resetDrawPolygonMode } from '../../../../canvas/objects/polygon/polygon';
 import { clearBoundingBoxData, isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../../../canvas/objects/boundingBox/boundingBox';
@@ -16,12 +15,13 @@ import { isLabelling, removeTargetShape } from '../../../shapeLabellerModal/labe
 import { hideShapeLabellerModal } from '../../../shapeLabellerModal/style';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { removeLabel } from '../../../../canvas/objects/label/label';
-import { removeLabelFromListOnShapeDelete } from '../../../labelList/labelList';
+import { removeLabelFromListOnShapeDelete, getCurrentlySelectedLabelShape } from '../../../labelList/labelList';
 import { removeShape, getNumberOfShapes } from '../../../../canvas/objects/allShapes/allShapes';
 import { removeTickSVGOverImageThumbnail } from '../../../imageList/imageList';
 
 function removeBoundingBox(canvas, mLGeneratedObject) {
-  const activeObject = mLGeneratedObject || canvas.getActiveObject();
+  const activeObject = mLGeneratedObject || canvas.getActiveObject()
+    || getCurrentlySelectedLabelShape();
   if (activeObject && activeObject.shapeName === 'bndBox') {
     removeShape(activeObject.id);
     removeLabel(activeObject.id, canvas);
@@ -70,8 +70,8 @@ function removeActiveShapeEvent(canvas) {
     } else if (getAddingPolygonPointsState()) {
       clearAllAddPointsData();
     }
-    removeLabelFromListOnShapeDelete(getPolygonIdIfEditing());
-    removePolygon();
+    const polygonId = removePolygon(getCurrentlySelectedLabelShape());
+    removeLabelFromListOnShapeDelete(polygonId);
     removePolygonPoints();
     removeEditedPolygonId();
   }

@@ -31,7 +31,6 @@ import {
 } from './iconHighlightUtils';
 import IS_FIREFOX from '../utils/browserType';
 import { resetShapeLabellerModalOptions } from '../shapeLabellerModal/style';
-import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyling/style';
@@ -309,6 +308,7 @@ function removeLabelFromListOnShapeDelete(id) {
       }
       index += 1;
     }
+    activeShape = null;
   }
 }
 
@@ -486,6 +486,10 @@ function setToShapeEditModeWhenDrawing() {
       window.editShapes();
     }
   }
+}
+
+function getCurrentlySelectedLabelShape() {
+  return activeShape;
 }
 
 function selectShape() {
@@ -716,7 +720,11 @@ window.labelBtnClick = (id) => {
       programaticallyDeselectBoundingBox();
     } else {
       removePolygonPoints();
-      if (!getRemovingPointsState() && !getAddingPolygonPointsState()) {
+      if (getRemovingPolygonPointsState()) {
+        setPolygonNotEditableOnClick();
+      } else if (getAddingPolygonPointsState()) {
+        addPointsPolygonNotEditable();
+      } else {
         removeEditedPolygonId();
         setShapeToInvisible();
       }
@@ -910,7 +918,7 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
-  initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
-  addExistingLabelToList, removeAllLabelListItems, repopulateDropdown,
   removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
+  addExistingLabelToList, removeAllLabelListItems, getCurrentlySelectedLabelShape,
+  initialiseLabelListFunctionality, addNewLabelToListFromPopUp, repopulateDropdown,
 };
