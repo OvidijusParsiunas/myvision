@@ -7,7 +7,7 @@ import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/bu
 import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
-import { initialiseGlobalStyleSetup } from './tools/globalStyle/style';
+import { initialiseGlobalStyleSetup } from './tools/globalStyling/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageListFunctionality } from './tools/imageList/imageList';
 import { initialiseRemoveImagesFunctionality } from './tools/imageList/removeImages/removeImages';

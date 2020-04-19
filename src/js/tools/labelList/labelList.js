@@ -33,7 +33,7 @@ import { resetShapeLabellerModalOptions } from '../shapeLabellerModal/style';
 import { getRemovingPointsState } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
-import { getScrollbarWidth } from '../globalStyle/style';
+import { getScrollbarWidth } from '../globalStyling/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 
 let isEditingLabel = false;

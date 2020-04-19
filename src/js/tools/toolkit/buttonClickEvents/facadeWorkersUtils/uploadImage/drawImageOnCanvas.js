@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import { getLeftSideBarWidth, getRightSideBarWidth } from '../../../../globalStyle/style';
+import { getLeftSideBarWidth, getRightSideBarWidth } from '../../../../globalStyling/style';
 import IS_FIREFOX from '../../../../utils/browserType';
 
 const initialFileStatus = {};

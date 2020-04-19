@@ -1,4 +1,4 @@
-import { getScrollbarWidth } from '../../../globalStyle/style';
+import { getScrollbarWidth } from '../../../globalStyling/style';
 import scrollIntoViewIfNeeded from '../../../utils/tableUtils';
 
 let editingActive = false;
