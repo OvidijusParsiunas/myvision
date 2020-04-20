@@ -165,6 +165,10 @@ function setCurrentImage(image) {
   currentImage = image;
 }
 
+function getCurrentImage() {
+  return currentImage;
+}
+
 function resizeCanvas() {
   setCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
@@ -186,7 +190,7 @@ function resizeCanvas() {
 }
 
 export {
-  onImageLoad, getImageProperties, resizeCanvasAndImage,
   calculateCurrentImageHeightRatio, setCurrentImage, resizeCanvas,
+  onImageLoad, getImageProperties, resizeCanvasAndImage, getCurrentImage,
   assignCanvasForDrawImageOnCanvas, getCanvasProperties, drawImageFromList,
 };

@@ -2,9 +2,6 @@ change cursor modes name convention
 
 should alert the user when unsaved changes before leaving
 
-when editing label and clicking scroll, should not close the editing process, however not able to fix it
-as click event on the horizontal scroll identifies the target as the label list parent (required)
-
 Really like a light green / blue and white color theme
 
 Toolkit button functionality for getting smaller with the screen should be done when we know all of the buttons
@@ -22,10 +19,6 @@ Escape button should close the settings popup and cancel the shape labeller moda
 cancel the creation of a new polygon when clicked escape or delete
 or move shapes button
 
-when there is vertical overflow in the label list, the label options width should be narrower
-
-the label should not track off the screen
-
 highlight shapes to indicate that the user needs to click on them to start adding/removing points
 
 check when editing label name on the bigger laptop and clicking paste (with vertical overflow present); does
@@ -39,20 +32,11 @@ arrow keys should go down the dropdown options for a label
 
 try trashcan icon for remove image label
 
-when the bounding box is too far right, can't scale left
-
-polygon size reduction when zoomed in is a little bit off
-
 delete keyboard button should remove shape
 
 the shape labeller modal is too thick, check if can be thin at the start and resize to bigger later on
 
 grey out the zoom button when it is above 3.9
-
-upon drawing a bounding box (could be via ML) and the resizing the screen to smaller does not persist its blocking edges
-
-in the upload datasets modal tables, when there is vertical overflow, some of the text can be hidden behind the scroll and the horizontal
-overflow doesn't kick in automatically
 
 increase the size of machine learning modal
 
@@ -72,6 +56,8 @@ should be able to select labels in add/remove point modes
 grey out add points when drawing a new polygon
 
 grey out delete shape when shape not selected
+
+windowHasScrollbar will need to be exported to a shared area
 
 Things to check on chrome browsers on other pcs:
 
@@ -97,3 +83,7 @@ The nice to haves:
 select multiple images or shapes to delete (via ctrl)
 
 can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
+
+the label should not track off the screen
+
+polygon size reduction when zoomed in is a little bit off

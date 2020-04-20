@@ -218,6 +218,8 @@ function resetShapeLabellerModalOptions() {
   });
 }
 
+// needs to be on mouse move as otherwise would not be able to track
+// mouse position when clicked outside of the canvas element
 window.updateMouseProperties = (event) => {
   mouseProperties = event;
 };

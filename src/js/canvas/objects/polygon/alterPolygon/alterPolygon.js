@@ -144,8 +144,8 @@ function removePolygon(lableObjectFromLabelList) {
     return polygon.id;
   }
   if (lableObjectFromLabelList && lableObjectFromLabelList.shapeName === 'polygon') {
-    removePolygonImpl(canvas, polygon);
-    return polygon.id;
+    removePolygonImpl(canvas, lableObjectFromLabelList);
+    return lableObjectFromLabelList.id;
   }
   return null;
 }
