@@ -1,28 +1,6 @@
 import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp, displayExportLabelsPopUp } from '../facadeWorkersUtils/exportDatasetsPopup/style';
 import { getExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateMachine';
-
-// the logic here will need to be exported into a shared styles file for popups
-function windowHasScrollbar() {
-  if (typeof window.innerWidth === 'number') {
-    return window.innerWidth > document.documentElement.clientWidth;
-  }
-  const rootElem = document.documentElement || document.body;
-  let overflowStyle = null;
-  if (typeof rootElem.currentStyle !== 'undefined') {
-    overflowStyle = rootElem.currentStyle.overflow;
-  }
-  overflowStyle = overflowStyle || window.getComputedStyle(rootElem, '').overflow;
-  let overflowYStyle = null;
-  if (typeof rootElem.currentStyle !== 'undefined') {
-    overflowYStyle = rootElem.currentStyle.overflowY;
-  }
-  overflowYStyle = overflowYStyle || window.getComputedStyle(rootElem, '').overflowY;
-  const contentOverflows = rootElem.scrollHeight > rootElem.clientHeight;
-  const overflowShown = /^(visible|auto)$/.test(overflowStyle) || /^(visible|auto)$/.test(overflowYStyle);
-  const alwaysShowScroll = overflowStyle === 'scroll' || overflowYStyle === 'scroll';
-
-  return (contentOverflows && overflowShown) || (alwaysShowScroll);
-}
+import { windowHasScrollbar } from '../../../globalStyling/style';
 
 function validateFullPopUpVisible(popupLabelParentElement) {
   if (windowHasScrollbar()) {

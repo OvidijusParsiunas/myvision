@@ -57,8 +57,6 @@ grey out add points when drawing a new polygon
 
 grey out delete shape when shape not selected
 
-windowHasScrollbar will need to be exported to a shared area
-
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders
