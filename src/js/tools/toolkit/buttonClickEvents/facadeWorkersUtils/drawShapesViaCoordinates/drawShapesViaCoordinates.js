@@ -5,7 +5,7 @@ import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes
 import initiateResetCanvasEventsToDefaultEvent from '../../facadeWorkers/resetCanvasEventsToDefaultWorker';
 import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { resetShapeLabellerModalOptions } from '../../../../shapeLabellerModal/style';
-import { getCurrentImageId } from '../stateMachine';
+import { getCurrentImageId } from '../../../../stateMachine';
 import { removeBoundingBox } from '../../facadeWorkers/removeActiveShapeWorker';
 import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/allShapes';
 import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';

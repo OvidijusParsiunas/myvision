@@ -4,7 +4,7 @@ import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvent
 import {
   getContinuousDrawingState, setContinuousDrawingState, getHasDrawnShapeState,
   getReadyToDrawShapeState, setDefaultState,
-} from '../facadeWorkersUtils/stateMachine';
+} from '../../../stateMachine';
 
 function changeContinuousDrawingState(canvas) {
   if (getContinuousDrawingState()) {

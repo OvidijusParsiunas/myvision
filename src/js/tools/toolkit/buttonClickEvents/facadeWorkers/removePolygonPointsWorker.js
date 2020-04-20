@@ -5,7 +5,7 @@ import {
   getReadyToDrawShapeState, setCancelledReadyToDrawState, setDefaultState,
   getContinuousDrawingState, getAddingPolygonPointsState, setReadyToDrawShapeState,
   getLastDrawingModeState, setAddingPolygonPointsState, getPolygonDrawingInProgressState,
-} from '../facadeWorkersUtils/stateMachine';
+} from '../../../stateMachine';
 import { removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
 import setRemovePointsOnDrawNewPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode';

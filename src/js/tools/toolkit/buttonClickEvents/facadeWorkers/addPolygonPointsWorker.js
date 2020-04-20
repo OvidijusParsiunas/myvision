@@ -3,7 +3,7 @@ import {
   setAddingPolygonPointsState, getAddingPolygonPointsState, setDefaultState,
   getContinuousDrawingState, getLastDrawingModeState, getCancelledReadyToDrawState,
   getRemovingPointsAfterCancelDrawState,
-} from '../facadeWorkersUtils/stateMachine';
+} from '../../../stateMachine';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';

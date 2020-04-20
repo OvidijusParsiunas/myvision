@@ -1,5 +1,5 @@
 import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp, displayExportLabelsPopUp } from '../facadeWorkersUtils/exportDatasetsPopup/style';
-import { getExportDatasetsPopUpOpenState } from '../facadeWorkersUtils/stateMachine';
+import { getExportDatasetsPopUpOpenState } from '../../../stateMachine';
 import { windowHasScrollbar } from '../../../globalStyling/style';
 
 function validateFullPopUpVisible(popupLabelParentElement) {

@@ -1,4 +1,4 @@
-import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from '../facadeWorkersUtils/stateMachine';
+import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from '../../../stateMachine';
 import { windowHasScrollbar } from '../../../globalStyling/style';
 
 

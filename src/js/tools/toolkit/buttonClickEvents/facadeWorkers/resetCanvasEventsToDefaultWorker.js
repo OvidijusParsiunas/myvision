@@ -4,7 +4,7 @@ import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvent
 import {
   setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
   getDefaultState, getAddingPolygonPointsState, getLastDrawingModeState, getContinuousDrawingState,
-} from '../facadeWorkersUtils/stateMachine';
+} from '../../../stateMachine';
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 

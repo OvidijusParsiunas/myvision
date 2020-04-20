@@ -1,4 +1,4 @@
-import { getMovableObjectsState, setMovableObjectsState, getDefaultState } from '../facadeWorkersUtils/stateMachine';
+import { getMovableObjectsState, setMovableObjectsState, getDefaultState } from '../../../stateMachine';
 
 function changeMovableObjectsState(canvas) {
   if (getDefaultState()) {

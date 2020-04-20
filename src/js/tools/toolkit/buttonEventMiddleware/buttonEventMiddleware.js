@@ -3,7 +3,7 @@ import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
-import { getContinuousDrawingState, getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getContinuousDrawingState, getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../stateMachine';
 import { canSwitchImage } from '../../imageList/imageList';
 import { removeActiveButtonPopup } from '../buttonHoverEvents/buttonHoverEvents';
 

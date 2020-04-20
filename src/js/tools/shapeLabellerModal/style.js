@@ -1,6 +1,6 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
-import { setShapeLabellerModalDisplayedState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { setShapeLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
 

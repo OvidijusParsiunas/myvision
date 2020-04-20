@@ -1,6 +1,6 @@
 import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/alterPolygon/alterPolygon';
 import { setObjectPropertiesToDefaultWhenReadyToDraw } from '../../objects/objectsProperties/changeProperties';
-import { getMovableObjectsState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getMovableObjectsState } from '../../../tools/stateMachine';
 
 function setDefaultCanvasCursors(canvas) {
   canvas.defaultCursor = 'default';

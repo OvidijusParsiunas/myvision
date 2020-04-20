@@ -10,7 +10,7 @@ import {
   getAddingPolygonPointsState, setSettingsPopUpOpenState, setEditingLabelId,
   getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState,
   getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
-} from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+} from '../stateMachine';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,

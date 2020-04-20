@@ -1,4 +1,4 @@
-import { getMovableObjectsState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getMovableObjectsState } from '../../../tools/stateMachine';
 
 function setAllObjectsToUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {

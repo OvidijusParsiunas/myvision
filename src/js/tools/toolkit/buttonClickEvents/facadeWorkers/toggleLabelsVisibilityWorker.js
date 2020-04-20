@@ -1,4 +1,4 @@
-import { getLabelsVisibilityState, setLabelsVisibilityState } from '../facadeWorkersUtils/stateMachine';
+import { getLabelsVisibilityState, setLabelsVisibilityState } from '../../../stateMachine';
 import { setAllLabelsVisibilityProperty } from '../../../../canvas/objects/label/label';
 
 function toggleLabelsVisibility(canvas) {

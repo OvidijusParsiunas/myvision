@@ -3,7 +3,7 @@ import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mo
 import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
-} from '../facadeWorkersUtils/stateMachine';
+} from '../../../stateMachine';
 
 function initiateCreateNewBndBoxEvents(canvas) {
   // cancel drawing polygon

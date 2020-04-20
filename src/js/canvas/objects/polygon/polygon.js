@@ -7,7 +7,7 @@ import {
   getMovableObjectsState, getAddingPolygonPointsState,
   setPolygonDrawingInProgressState, setAddingPolygonPointsState,
   setReadyToDrawShapeState, getCurrentZoomState, getDoubleScrollCanvasState,
-} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+} from '../../../tools/stateMachine';
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 

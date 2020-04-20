@@ -1,4 +1,4 @@
-import { setBoundingBoxScalingState, getCurrentZoomState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { setBoundingBoxScalingState, getCurrentZoomState } from '../../../tools/stateMachine';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 import labelProperies from '../label/properties';
 

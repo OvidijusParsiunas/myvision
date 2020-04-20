@@ -6,7 +6,7 @@ import {
   addPointsMouseOver, resetAddPointProperties, addPointsMouseOut,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/stateMachine';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon

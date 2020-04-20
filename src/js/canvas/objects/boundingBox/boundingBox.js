@@ -6,7 +6,7 @@ import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode'
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
-} from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+} from '../../../tools/stateMachine';
 import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 

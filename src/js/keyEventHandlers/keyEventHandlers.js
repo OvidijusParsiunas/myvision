@@ -1,5 +1,5 @@
 import { labelShape } from '../tools/shapeLabellerModal/buttonEventHandlers';
-import { getShapeLabellerModalDisplayedState } from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getShapeLabellerModalDisplayedState } from '../tools/stateMachine';
 
 function keyDownEventHandler(event) {
   if (getShapeLabellerModalDisplayedState() && event.key === 'Enter') {

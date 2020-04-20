@@ -4,7 +4,7 @@ import labelProperties from '../label/properties';
 import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
 import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
-import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/stateMachine';
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 

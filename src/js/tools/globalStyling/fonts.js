@@ -1,4 +1,4 @@
-import { getExportDatasetsPopUpOpenState } from '../toolkit/buttonClickEvents/facadeWorkersUtils/stateMachine';
+import { getExportDatasetsPopUpOpenState } from '../stateMachine';
 import IS_FIREFOX from '../utils/browserType';
 
 function refreshExportLabelsPopover() {

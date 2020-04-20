@@ -6,7 +6,7 @@ import {
   setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState,
   getPolygonDrawingInProgressState, setDefaultState, getAlteringPolygonPointsState,
   setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
-} from '../facadeWorkersUtils/stateMachine';
+} from '../../../stateMachine';
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
