@@ -1,5 +1,5 @@
 import { getCurrentZoomState } from '../../../tools/stateMachine';
-import { getImageProperties } from '../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
+import { getImageProperties } from '../../../tools/imageList/uploadImage/drawImageOnCanvas';
 
 let rightBoundingBoxDelta = 0;
 

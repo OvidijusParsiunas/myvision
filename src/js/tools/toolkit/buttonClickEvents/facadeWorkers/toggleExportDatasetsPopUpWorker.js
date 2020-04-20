@@ -1,4 +1,4 @@
-import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp, displayExportLabelsPopUp } from '../facadeWorkersUtils/exportDatasetsPopup/style';
+import { disableFormatOptionsTextIfNoBoundingBoxes, hideExportLabelsPopUp, displayExportLabelsPopUp } from '../../../exportDatasetsPopup/style';
 import { getExportDatasetsPopUpOpenState } from '../../../stateMachine';
 import { windowHasScrollbar } from '../../../globalStyling/style';
 

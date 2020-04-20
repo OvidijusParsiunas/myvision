@@ -11,7 +11,7 @@ import {
   doNothingIfLabellingInProgress, interruptNewShapeDrawingWthFunc1OrExecFunc2,
   doNothingIfLabellingOrAddingNewPoints, replaceExistingCanvas, removeButtonPopIfActive,
   interruptAllCanvasEventsBeforeMultipleFunc, func1IfDrawRemovePointsElseInterruptAllWthFunc2,
-} from '../buttonEventMiddleware/buttonEventMiddleware';
+} from './eventMiddleware/buttonEventMiddleware';
 
 function assignToolkitButtonClickEvents() {
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);

@@ -1,9 +1,9 @@
 import JSZip from 'jszip';
-import { getImageProperties } from '../../uploadImage/drawImageOnCanvas';
-import { getAllImageData } from '../../../../../imageList/imageList';
-import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
-import { getLabelOptions, getMaxUsedLabelIndex } from '../../../../../labelList/labelOptions';
-import { getCurrentImageId } from '../../../../../stateMachine';
+import { getImageProperties } from '../../imageList/uploadImage/drawImageOnCanvas';
+import { getAllImageData } from '../../imageList/imageList';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
+import { getLabelOptions, getMaxUsedLabelIndex } from '../../labelList/labelOptions';
+import { getCurrentImageId } from '../../stateMachine';
 import { adjustIncorrectBoundingBoxCoordinates } from '../sharedUtils/adjustShapeCoordinates';
 
 /*

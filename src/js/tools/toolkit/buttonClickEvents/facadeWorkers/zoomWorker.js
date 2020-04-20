@@ -1,4 +1,4 @@
-import { getCanvasProperties, getImageProperties, resizeCanvasAndImage } from '../facadeWorkersUtils/uploadImage/drawImageOnCanvas';
+import { getCanvasProperties, getImageProperties, resizeCanvasAndImage } from '../../../imageList/uploadImage/drawImageOnCanvas';
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
@@ -9,11 +9,11 @@ import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
 import {
   changeElementPropertiesChromium, setDOMElementsChromium,
   initialiseVariablesChromium, setCanvasElementChromium,
-} from '../facadeWorkersUtils/zoom/chromium';
+} from '../../../zoom/chromium';
 import {
   changeElementPropertiesFirefox, setDOMElementsFirefox,
   initialiseVariablesFirefox, setCanvasElementFirefox,
-} from '../facadeWorkersUtils/zoom/firefox';
+} from '../../../zoom/firefox';
 import IS_FIREFOX from '../../../utils/browserType';
 
 let currentZoom = null;

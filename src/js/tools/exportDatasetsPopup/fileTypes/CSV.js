@@ -1,7 +1,7 @@
-import { getImageProperties } from '../../uploadImage/drawImageOnCanvas';
-import { getAllImageData } from '../../../../../imageList/imageList';
-import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
-import { getCurrentImageId } from '../../../../../stateMachine';
+import { getImageProperties } from '../../imageList/uploadImage/drawImageOnCanvas';
+import { getAllImageData } from '../../imageList/imageList';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
+import { getCurrentImageId } from '../../stateMachine';
 import { adjustIncorrectBoundingBoxCoordinates } from '../sharedUtils/adjustShapeCoordinates';
 
 const columnHeaders = {

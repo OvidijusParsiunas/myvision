@@ -1,9 +1,9 @@
-import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from './uploadImage/drawImageOnCanvas';
-import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
-import labelProperies from '../../../../canvas/objects/label/properties';
-import { zoomCanvas } from '../facadeWorkers/zoomWorker';
-import { getCurrentZoomState } from '../../../stateMachine';
-import { validateFullModalVisibile } from '../../../shapeLabellerModal/style';
+import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageList/uploadImage/drawImageOnCanvas';
+import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/objectsProperties/changeProperties';
+import labelProperies from '../../canvas/objects/label/properties';
+import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
+import { getCurrentZoomState } from '../stateMachine';
+import { validateFullModalVisibile } from '../shapeLabellerModal/style';
 
 let canvas = null;
 

@@ -1,24 +1,24 @@
-import { getImageProperties } from '../uploadImage/drawImageOnCanvas';
-import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../../../../canvas/objects/boundingBox/boundingBox';
-import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoordinates } from '../../../../../canvas/objects/polygon/polygon';
-import { generateLabelShapeGroup } from '../../../../../canvas/objects/allShapes/labelAndShapeBuilder';
-import initiateResetCanvasEventsToDefaultEvent from '../../facadeWorkers/resetCanvasEventsToDefaultWorker';
-import { setDefaultCursorMode } from '../../../../../canvas/mouseInteractions/cursorModes/defaultMode';
-import { resetShapeLabellerModalOptions } from '../../../../shapeLabellerModal/style';
-import { getCurrentImageId } from '../../../../stateMachine';
-import { removeBoundingBox } from '../../facadeWorkers/removeActiveShapeWorker';
-import { getAllExistingShapes } from '../../../../../canvas/objects/allShapes/allShapes';
-import { getNumberOfShapeTypes } from '../../../../globalStatistics/globalStatistics';
-import { getCanvasReferences } from '../../../../../canvas/utils/fabricUtils';
-import assignDefaultEvents from '../../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
-import { repopulateDropdown } from '../../../../labelList/labelList';
+import { getImageProperties } from '../../../tools/imageList/uploadImage/drawImageOnCanvas';
+import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../objects/boundingBox/boundingBox';
+import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoordinates } from '../../objects/polygon/polygon';
+import { generateLabelShapeGroup } from '../../objects/allShapes/labelAndShapeBuilder';
+import initiateResetCanvasEventsToDefaultEvent from '../../../tools/toolkit/buttonClickEvents/facadeWorkers/resetCanvasEventsToDefaultWorker';
+import { setDefaultCursorMode } from '../../mouseInteractions/cursorModes/defaultMode';
+import { resetShapeLabellerModalOptions } from '../../../tools/shapeLabellerModal/style';
+import { getCurrentImageId } from '../../../tools/stateMachine';
+import { removeBoundingBox } from '../../../tools/toolkit/buttonClickEvents/facadeWorkers/removeActiveShapeWorker';
+import { getAllExistingShapes } from '../../objects/allShapes/allShapes';
+import { getNumberOfShapeTypes } from '../../../tools/globalStatistics/globalStatistics';
+import { getCanvasReferences } from '../fabricUtils';
+import assignDefaultEvents from '../../mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
+import { repopulateDropdown } from '../../../tools/labelList/labelList';
 import {
   getAllImageData,
   getLastImageIdByName,
   displayTickSVGOverImageThumbnail,
   setDefaultImageThumbnailHighlightToML,
   setDefaultImageThumbnailHighlightToMLSelected,
-} from '../../../../imageList/imageList';
+} from '../../../tools/imageList/imageList';
 
 let canvas = null;
 const tempShapes = [];

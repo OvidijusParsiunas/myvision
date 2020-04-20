@@ -1,4 +1,4 @@
-import boundingBoxProps from '../../../../../../canvas/objects/boundingBox/properties';
+import boundingBoxProps from '../../../canvas/objects/boundingBox/properties';
 
 const widthDelta = 3.5;
 const heightDelta = 2;

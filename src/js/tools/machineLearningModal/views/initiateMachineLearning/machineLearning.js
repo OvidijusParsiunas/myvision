@@ -1,5 +1,5 @@
 import { getAllImageData } from '../../../imageList/imageList';
-import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId } from '../../../stateMachine';
 import {
   displayErrorMessage, changeToMLCompleteStyle, removeCancelButton, changeToNoImagesFoundStyle,

@@ -7,7 +7,7 @@ import {
   getGeneratedMachineLearningData, setActiveLabelProperties,
   stopEditingMLGeneratedLabelName, submitNewLabelNames,
 } from './changeLabels';
-import { drawShapesViaCoordinates } from '../../../toolkit/buttonClickEvents/facadeWorkersUtils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { drawShapesViaCoordinates } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 
 function MLLabelTextKeyDown(event) {
   if (event.key === 'Enter') {

@@ -16,7 +16,7 @@ import {
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
 import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
-import { getImageProperties } from '../../../../tools/toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
+import { getImageProperties } from '../../../../tools/imageList/uploadImage/drawImageOnCanvas';
 import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
 import { preventOutOfBoundsPointsOnMove, preventOutOfBoundsShapesOnMove, validateAndFixOutOfBoundsPolygonShapePointsAfterMove } from '../../../objects/sharedUtils/moveBlockers';
 

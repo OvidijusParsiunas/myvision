@@ -4,7 +4,7 @@ import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
 import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 import { decrementShapeType } from '../../globalStatistics/globalStatistics';
-import { setCurrentImage } from '../../toolkit/buttonClickEvents/facadeWorkersUtils/uploadImage/drawImageOnCanvas';
+import { setCurrentImage } from '../uploadImage/drawImageOnCanvas';
 
 let canvas = null;
 
