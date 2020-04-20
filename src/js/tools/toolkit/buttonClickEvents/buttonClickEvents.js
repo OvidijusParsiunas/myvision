@@ -1,9 +1,9 @@
 import {
   createNewBndBoxBtnClick, createNewPolygonBtnClick, settingsBtnClick,
   addPointsBtnClick, removeActiveShapeBtnClick, removePolygonPointBtnClick,
-  exportDatasetsBtnClick, uploadImageInputClick, resetCanvasEventsToDefault,
+  exportDatasetsBtnClick, uploadImagesInputClick, resetCanvasEventsToDefault,
   movableObjectsBtnClick, continuousDrawingBtnClick, editShapesBtnClick,
-  toggleLabelsVisibilityBtnClick, switchImageBtnClick, uploadImageBtnClick,
+  toggleLabelsVisibilityBtnClick, switchImageBtnClick, uploadImagesBtnClick,
   zoomBtnClick, machineLearningBtnClick, uploadDatasetsBtnClick,
 } from './facade';
 import {
@@ -25,8 +25,9 @@ function assignToolkitButtonClickEvents() {
   window.uploadDatasets = removeButtonPopIfActive.bind(this, uploadDatasetsBtnClick);
   window.displayMachineLearningModal = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
     resetCanvasEventsToDefault, removeButtonPopIfActive, machineLearningBtnClick);
-  window.uploadImage = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
-    { uploadImageInputClick, resetCanvasEventsToDefault });
+  window.uploadImages = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
+    { uploadImagesInputClick, resetCanvasEventsToDefault });
+  window.triggerImageUpload = removeButtonPopIfActive.bind(this, uploadImagesBtnClick);
   window.removeShape = interruptNewShapeDrawingWthFunc1OrExecFunc2.bind(this,
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
   window.movableObjects = movableObjectsBtnClick;
@@ -35,7 +36,6 @@ function assignToolkitButtonClickEvents() {
   window.zoom = zoomBtnClick;
   window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick,
     resetCanvasEventsToDefault);
-  window.triggerImageUpload = removeButtonPopIfActive.bind(this, uploadImageBtnClick);
   window.displaySettingsPopup = removeButtonPopIfActive.bind(this, settingsBtnClick);
 }
 

@@ -1,5 +1,5 @@
 import { setBoundingBoxScalingState, getCurrentZoomState } from '../../../tools/stateMachine';
-import { getImageProperties } from '../../../tools/imageList/uploadImage/drawImageOnCanvas';
+import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import labelProperies from '../label/properties';
 
 let originalBoundingBoxBottomCoordinate = 0;

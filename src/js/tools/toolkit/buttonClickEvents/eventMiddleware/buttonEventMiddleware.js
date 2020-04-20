@@ -43,7 +43,7 @@ function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) 
   removeActiveButtonPopup();
   interruptAllCanvasEvents();
   funcObj.resetCanvasEventsToDefault();
-  funcObj.uploadImageInputClick(input);
+  funcObj.uploadImagesInputClick(input);
 }
 
 function doNothingIfLabellingInProgress(func) {

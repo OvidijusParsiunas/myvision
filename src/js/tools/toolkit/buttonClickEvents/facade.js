@@ -6,14 +6,13 @@ import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvas
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
 import toggleExportDatasetsPopUp from './facadeWorkers/toggleExportDatasetsPopUpWorker';
 import displayMachineLearningModal from './facadeWorkers/displayMLModalWorker';
-import uploadImageFile from './facadeWorkers/uploadImageWorker';
+import { uploadImageFiles, triggeUploadImagesButton } from './facadeWorkers/uploadImagesWorker';
 import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
 import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
 import toggleLabelsVisibility from './facadeWorkers/toggleLabelsVisibilityWorker';
 import { zoomCanvas } from './facadeWorkers/zoomWorker';
 import switchImages from './facadeWorkers/switchImageWorker';
 import toggleSettingsPopUp from './facadeWorkers/toggleSettingsPopUpWorker';
-import triggerImageUpload from './facadeWorkers/uploadImageButtonWorker';
 import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
 import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker';
 
@@ -59,10 +58,6 @@ function machineLearningBtnClick() {
   displayMachineLearningModal(canvas);
 }
 
-function uploadImageInputClick(uploadData) {
-  uploadImageFile(canvas, uploadData);
-}
-
 function movableObjectsBtnClick() {
   changeMovableObjectsState(canvas);
 }
@@ -87,8 +82,12 @@ function settingsBtnClick() {
   toggleSettingsPopUp();
 }
 
-function uploadImageBtnClick() {
-  triggerImageUpload();
+function uploadImagesInputClick(uploadData) {
+  uploadImageFiles(canvas, uploadData);
+}
+
+function uploadImagesBtnClick() {
+  triggeUploadImagesButton();
 }
 
 function editShapesBtnClick() {
@@ -108,11 +107,11 @@ export {
   exportDatasetsBtnClick,
   uploadDatasetsBtnClick,
   machineLearningBtnClick,
-  uploadImageInputClick,
+  uploadImagesInputClick,
   addPointsBtnClick,
   zoomBtnClick,
   switchImageBtnClick,
   settingsBtnClick,
-  uploadImageBtnClick,
+  uploadImagesBtnClick,
   editShapesBtnClick,
 };

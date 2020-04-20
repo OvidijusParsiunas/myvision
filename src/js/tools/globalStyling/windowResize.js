@@ -1,4 +1,4 @@
-import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageList/uploadImage/drawImageOnCanvas';
+import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageList/uploadImages/drawImageOnCanvas';
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';

@@ -7,7 +7,7 @@ import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
   setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
 } from '../../../tools/stateMachine';
-import { getImageProperties } from '../../../tools/imageList/uploadImage/drawImageOnCanvas';
+import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 
 let canvas = null;

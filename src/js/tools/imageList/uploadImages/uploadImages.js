@@ -21,7 +21,7 @@ function onMultiFileLoad(imageMetadata, firstImage, e) {
 }
 
 // onerror?
-function uploadImage(uploadData) {
+function uploadImages(uploadData) {
   if (uploadData.files && uploadData.files.length > 0) {
     if (uploadData.files.length === 1) {
       const reader = new FileReader();
@@ -38,4 +38,4 @@ function uploadImage(uploadData) {
   }
 }
 
-export { uploadImage as default };
+export { uploadImages as default };

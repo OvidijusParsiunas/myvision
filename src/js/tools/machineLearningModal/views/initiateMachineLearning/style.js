@@ -264,7 +264,7 @@ function prepareInstantiateMachineLearningView() {
 }
 
 function assignInitiateMachineLearningViewLocalVariables() {
-  toolkitUploadImagesButton = document.getElementById('uploadImagesButton');
+  toolkitUploadImagesButton = document.getElementById('upload-images-button');
   modalParentElement = document.getElementById('machine-learning-modal-parent');
   checkmarkElement = document.getElementById('machine-learning-modal-check-mark');
   loadingWheelElement = document.getElementById('machine-learning-modal-loading-wheel');

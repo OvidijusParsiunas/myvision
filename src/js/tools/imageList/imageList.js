@@ -1,4 +1,4 @@
-import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from './uploadImage/drawImageOnCanvas';
+import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from './uploadImages/drawImageOnCanvas';
 import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';

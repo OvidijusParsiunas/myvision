@@ -1,4 +1,4 @@
-import { getImageProperties } from '../../../tools/imageList/uploadImage/drawImageOnCanvas';
+import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../objects/boundingBox/boundingBox';
 import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoordinates } from '../../objects/polygon/polygon';
 import { generateLabelShapeGroup } from '../../objects/allShapes/labelAndShapeBuilder';
