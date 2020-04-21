@@ -34,7 +34,7 @@ function setPopUpPosition(settingsButton, settingsPopupElement) {
 
 function toggleSettingsPopUp() {
   const settingsPopupElement = document.getElementById('settings-popup');
-  const settingsButton = document.getElementById('settingsButton');
+  const settingsButton = document.getElementById('settings-button');
   if (!getSettingsPopUpOpenState()) {
     setPopUpPosition(settingsButton, settingsPopupElement);
     displayPopUp(settingsPopupElement);

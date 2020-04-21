@@ -1060,6 +1060,8 @@
 
 /* update these when changing the left side bar width */
 
+/* background-color: rgb(232, 232, 232) */
+/* maybe darken on image upload */
 #canvas-wrapper-parent {
   width: calc(100% - 268px);
   height: calc(100% - 64.5px);

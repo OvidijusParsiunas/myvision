@@ -42,7 +42,7 @@ function displayPopup(middlewareChecks, id) {
 }
 
 function checkIfSettingsButtonNotUp(event) {
-  if (event.target.id === 'settingsButton') {
+  if (event.target.id === 'settings-button') {
     if (!getSettingsPopUpOpenState()) {
       return true;
     }
@@ -52,7 +52,7 @@ function checkIfSettingsButtonNotUp(event) {
 }
 
 function checkIfExportDatasetsButtonNotUp(event) {
-  if (event.target.id === 'exportDatasetsButton') {
+  if (event.target.id === 'export-datasets-button') {
     if (!getExportDatasetsPopUpOpenState()) {
       return true;
     }

@@ -75,12 +75,12 @@ function setCanvasWrapperMaximumDimensions() {
 }
 
 function setCanvasProperties() {
-  canvasProperties.maximumCanvasHeight = window.innerHeight - 64;
+  canvasProperties.maximumCanvasHeight = window.innerHeight - 64 - 50;
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
   if (IS_FIREFOX) {
-    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 0.5;
+    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 0.5 - 50;
   } else {
-    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth;
+    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 50;
   }
 }
 

@@ -26,7 +26,7 @@ function setPopUpPosition(exportLabelsPopupParentElement, exportDatasetsButton) 
 
 function toggleExportDatasetsPopUp() {
   const exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
-  const exportDatasetsButton = document.getElementById('exportDatasetsButton');
+  const exportDatasetsButton = document.getElementById('export-datasets-button');
   if (!getExportDatasetsPopUpOpenState()) {
     disableFormatOptionsTextIfNoBoundingBoxes();
     setPopUpPosition(exportLabelsPopupParentElement, exportDatasetsButton);

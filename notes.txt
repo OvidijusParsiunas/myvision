@@ -1,7 +1,5 @@
 change cursor modes name convention
 
-should alert the user when unsaved changes before leaving
-
 Really like a light green / blue and white color theme
 
 Toolkit button functionality for getting smaller with the screen should be done when we know all of the buttons
@@ -24,8 +22,6 @@ highlight shapes to indicate that the user needs to click on them to start addin
 check when editing label name on the bigger laptop and clicking paste (with vertical overflow present); does
 it scroll to appropriate width (does not on the smaller laptop, had to check for vertical overflow in ML popup functionality)
 
-move facadeWorkersUtils contents to a folder outside named utils
-
 Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
 
 arrow keys should go down the dropdown options for a label
@@ -33,8 +29,6 @@ arrow keys should go down the dropdown options for a label
 try trashcan icon for remove image label
 
 delete keyboard button should remove shape
-
-the shape labeller modal is too thick, check if can be thin at the start and resize to bigger later on
 
 grey out the zoom button when it is above 3.9
 
@@ -56,6 +50,10 @@ should be able to select labels in add/remove point modes
 grey out add points when drawing a new polygon
 
 grey out delete shape when shape not selected
+
+popover for github links
+
+the label option does not stay after clicking it in the modal .
 
 Things to check on chrome browsers on other pcs:
 
@@ -85,3 +83,19 @@ can update the image list thumbnails by taking screenshot from farbicjs canvas w
 the label should not track off the screen
 
 polygon size reduction when zoomed in is a little bit off
+
+I believe the bounding box drawing bottom edge is not working in horizontally narrow images going by the trend
+
+control the darkness of the background
+
+control the thickness of shape corner sizes
+
+change label colors
+
+rebind keys
+
+export custom settings
+
+animations for image upload, new label create
+
+should alert the user when unsaved changes before leaving (potentially too intrusive for new people)
