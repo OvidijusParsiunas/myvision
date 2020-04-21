@@ -7,6 +7,7 @@ const newFileStatus = { uploaded: false, name: null };
 const canvasProperties = {};
 let canvas = null;
 let currentImage = null;
+let canvasOuterMargin = true;
 
 function drawResizedImage(newImageDimensions) {
   canvas.setWidth(newImageDimensions.width);
@@ -74,18 +75,26 @@ function setCanvasWrapperMaximumDimensions() {
   canvasWrapper.style.maxHeight = `${canvasProperties.maximumCanvasHeight}px`;
 }
 
-function setCanvasProperties() {
-  canvasProperties.maximumCanvasHeight = window.innerHeight - 64 - 50;
+function setNewCanvasProperties() {
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
+  const innerHeight = window.innerHeight - 64;
+  const innerWidth = window.innerWidth - sideToolsTotalWidth;
+  canvasProperties.maximumCanvasHeight = canvasOuterMargin
+    ? innerHeight - (window.innerHeight * 0.0509684)
+    : innerHeight;
   if (IS_FIREFOX) {
-    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 0.5 - 50;
+    canvasProperties.maximumCanvasWidth = canvasOuterMargin
+      ? innerWidth - 0.5 - (window.innerWidth * 0.02698327)
+      : innerWidth - 0.5;
   } else {
-    canvasProperties.maximumCanvasWidth = window.innerWidth - sideToolsTotalWidth - 50;
+    canvasProperties.maximumCanvasWidth = canvasOuterMargin
+      ? innerWidth - (window.innerWidth * 0.02698327)
+      : innerWidth;
   }
 }
 
 function draw() {
-  setCanvasProperties();
+  setNewCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
@@ -101,6 +110,16 @@ function draw() {
   setCanvasWrapperMaximumDimensions();
   initialFileStatus.width = newFileStatus.width;
   initialFileStatus.height = newFileStatus.height;
+}
+
+function removeCanvasOuterMargin() {
+  canvasOuterMargin = false;
+  setNewCanvasProperties();
+}
+
+function enableCanvasOuterMargin() {
+  canvasOuterMargin = true;
+  setNewCanvasProperties();
 }
 
 // investigate quality
@@ -143,7 +162,7 @@ function calculateNewFileSizeRatio() {
 }
 
 function resizeCanvasAndImage() {
-  setCanvasProperties();
+  setNewCanvasProperties();
   if (currentImage) {
     if (canvasProperties.maximumCanvasHeight < currentImage.height) {
       let newImageDimensions = resizeWhenImageExceedsMaxHeight();
@@ -170,7 +189,7 @@ function getCurrentImage() {
 }
 
 function resizeCanvas() {
-  setCanvasProperties();
+  setNewCanvasProperties();
   if (canvasProperties.maximumCanvasHeight < currentImage.height) {
     let newImageDimensions = resizeWhenImageExceedsMaxHeight();
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
@@ -190,7 +209,8 @@ function resizeCanvas() {
 }
 
 export {
-  calculateCurrentImageHeightRatio, setCurrentImage, resizeCanvas,
-  onImageLoad, getImageProperties, resizeCanvasAndImage, getCurrentImage,
+  removeCanvasOuterMargin, resizeCanvas, getCurrentImage,
+  onImageLoad, getImageProperties, enableCanvasOuterMargin,
+  calculateCurrentImageHeightRatio, setCurrentImage, resizeCanvasAndImage,
   assignCanvasForDrawImageOnCanvas, getCanvasProperties, drawImageFromList,
 };

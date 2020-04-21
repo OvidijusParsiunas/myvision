@@ -1,4 +1,7 @@
-import { getCanvasProperties, getImageProperties, resizeCanvasAndImage } from '../../../imageList/uploadImages/drawImageOnCanvas';
+import {
+  resizeCanvasAndImage, removeCanvasOuterMargin,
+  getCanvasProperties, getImageProperties, enableCanvasOuterMargin,
+} from '../../../imageList/uploadImages/drawImageOnCanvas';
 import { changeMovePolygonPathOffset } from '../../../../canvas/objects/polygon/alterPolygon/resetCoordinatesAfterMove';
 import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
@@ -210,6 +213,7 @@ function increaseMovePolygonPathOffset() {
 }
 
 function resetCanvasToDefault() {
+  enableCanvasOuterMargin();
   currentZoom = 1;
   canvas.setZoom(currentZoom);
   while (timesZoomedIn !== 0) {
@@ -232,6 +236,7 @@ function zoomOut() {
     zoomOutObjects();
     increaseMovePolygonPathOffset();
     if (currentZoom < 1.0001) {
+      enableCanvasOuterMargin();
       const newFileSizeRatio = resizeCanvasAndImage();
       labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
       resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
@@ -246,6 +251,7 @@ function zoomOut() {
 }
 
 function zoomIn() {
+  if (currentZoom < 1.0001) removeCanvasOuterMargin();
   timesZoomedIn += 1;
   currentZoom += 0.2;
   canvas.setZoom(currentZoom);
