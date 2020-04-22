@@ -4,7 +4,7 @@ import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClickEvents';
 import { initialiseSettingsPopup } from './tools/settingsPopup/buttonClickEvents';
-import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/buttonClickEvents';
+import assignToolkitButtonEventHandlers from './tools/toolkit/buttonClickEvents/buttonClickEvents';
 import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
@@ -21,7 +21,7 @@ initialiseShapeLabellerModal();
 initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();
 initialiseExportLabelsPopUp();
-assignToolkitButtonClickEvents();
+assignToolkitButtonEventHandlers();
 assignToolkitButtonHoverEvents();
 assignPassiveEventListeners();
 initialiseGlobalStyleSetup();

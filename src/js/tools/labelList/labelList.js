@@ -1,15 +1,15 @@
-import { changeLabelText, changeLabelVisibilityById } from '../../canvas/objects/label/label';
+import { changeLabelText, changeLabelVisibilityById, changeVisibilityButtonActiveFlagById } from '../../canvas/objects/label/label';
 import {
   getShapeById, changeShapeVisibilityById, getShapeVisibilityById,
   highlightShapeFill, defaultShapeFill, changeShapeColorById, changeShapeLabelText,
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints, isAddingPointsToPolygon } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
-  getRemovingPolygonPointsState, setExportDatasetsPopUpOpenState,
   getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
   getAddingPolygonPointsState, setSettingsPopUpOpenState, setEditingLabelId,
   getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState,
   getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
+  getRemovingPolygonPointsState, setExportDatasetsPopUpOpenState, getLabelsVisibilityState,
 } from '../stateMachine';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
@@ -840,8 +840,9 @@ window.mouseLeaveVisibilityBtn = (id, element) => {
 };
 
 window.visibilityBtnClick = (id, element) => {
-  changeShapeVisibilityById(id);
-  isVisibilityRestored = changeLabelVisibilityById(id);
+  isVisibilityRestored = changeShapeVisibilityById(id);
+  if (getLabelsVisibilityState()) changeLabelVisibilityById(id);
+  changeVisibilityButtonActiveFlagById(id);
   isVisibilitySelected = true;
   if (element.id === 'default') {
     element.id = 'highlighted';

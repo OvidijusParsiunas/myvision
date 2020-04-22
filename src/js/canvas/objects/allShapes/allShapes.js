@@ -58,6 +58,7 @@ function getShapeColorById(id) {
 function changeShapeVisibilityById(id) {
   shapes[id].shapeRef.visible = !shapes[id].shapeRef.visible;
   shapes[id].visibility = !shapes[id].visibility;
+  return shapes[id].visibility;
 }
 
 function getShapeVisibilityById(id) {

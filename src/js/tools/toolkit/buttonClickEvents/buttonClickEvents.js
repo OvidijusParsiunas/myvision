@@ -12,7 +12,7 @@ import {
   interruptAllCanvasEventsBeforeMultipleFunc, func1IfDrawRemovePointsElseInterruptAllWthFunc2,
 } from './eventMiddleware/buttonEventMiddleware';
 
-function assignToolkitButtonClickEvents() {
+function assignToolkitButtonEventHandlers() {
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = func1IfDrawRemovePointsElseInterruptAllWthFunc2.bind(this,
     removePolygonPointBtnClick, createNewPolygonBtnClick);
@@ -35,4 +35,4 @@ function assignToolkitButtonClickEvents() {
   window.displaySettingsPopup = removeButtonPopIfActive.bind(this, settingsBtnClick);
 }
 
-export { assignToolkitButtonClickEvents as default };
+export { assignToolkitButtonEventHandlers as default };

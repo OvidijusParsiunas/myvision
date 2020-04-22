@@ -29,15 +29,20 @@ function changeLabelText(id, text) {
   canvas.renderAll();
 }
 
+function changeVisibilityButtonActiveFlagById(id) {
+  labelObjects[id].visibilityButtonActive = !labelObjects[id].visibilityButtonActive;
+}
+
 function changeLabelVisibilityById(id) {
   labelObjects[id].visible = !labelObjects[id].visible;
   canvas.renderAll();
-  return labelObjects[id].visible;
 }
 
 function setAllLabelsVisibilityProperty(state) {
   Object.keys(labelObjects).forEach((label) => {
-    labelObjects[label].visible = state;
+    if (!labelObjects[label].visibilityButtonActive) {
+      labelObjects[label].visible = state;
+    }
   });
   canvas.renderAll();
 }
@@ -67,7 +72,8 @@ function removeAllLabels() {
 }
 
 export {
-  retrieveAllLabelRefs, removeAllLabelRefs, removeLabel,
+  retrieveAllLabelRefs, removeAllLabelRefs,
+  changeVisibilityButtonActiveFlagById, removeLabel,
   setPolygonLabelOffsetProps, getLabelById, addLabelRef,
   assignCanvasForLabelManipulation, changeLabelVisibilityById,
   setAllLabelsVisibilityProperty, changeLabelText, removeAllLabels,

@@ -28,6 +28,7 @@ function findInitialLabelLocation(shape) {
 
 function generateLabel(label) {
   label.visible = getLabelsVisibilityState();
+  label.setVisibilityButtonActiveFlagById = false;
   canvas.add(label);
   canvas.bringToFront(label);
 }
