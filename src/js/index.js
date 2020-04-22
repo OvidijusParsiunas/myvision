@@ -3,6 +3,7 @@ import initialiseShapeLabellerModal from './tools/shapeLabellerModal/buttons';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClickEvents';
+import { initialiseSettingsPopup } from './tools/settingsPopup/buttonClickEvents';
 import assignToolkitButtonClickEvents from './tools/toolkit/buttonClickEvents/buttonClickEvents';
 import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
@@ -15,6 +16,7 @@ import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPane
 import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
 constructCanvas();
+initialiseSettingsPopup();
 initialiseShapeLabellerModal();
 initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();

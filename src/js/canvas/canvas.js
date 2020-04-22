@@ -11,6 +11,7 @@ import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAn
 import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
 import { assignCanvasForRemovingImages } from '../tools/imageList/removeImages/removeImages';
+import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/buttonClickEvents';
 
 let currentCanvasInstance = null;
 
@@ -25,6 +26,7 @@ function repopulateCanvasReference(canvas) {
   assignCanvasForResizeWhenWindowResize(canvas);
   assignCanvasForLabelAndShapeBuilder(canvas);
   assignCanvasForRemovingImages(canvas);
+  assignCanvasForSettingsPopup(canvas);
   initialiseZoomVariables(canvas);
 }
 

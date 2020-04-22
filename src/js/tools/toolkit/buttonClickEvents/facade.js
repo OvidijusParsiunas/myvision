@@ -7,9 +7,6 @@ import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPoin
 import toggleExportDatasetsPopUp from './facadeWorkers/toggleExportDatasetsPopUpWorker';
 import displayMachineLearningModal from './facadeWorkers/displayMLModalWorker';
 import { uploadImageFiles, triggeUploadImagesButton } from './facadeWorkers/uploadImagesWorker';
-import changeMovableObjectsState from './facadeWorkers/movableObjectsWorker';
-import changeContinuousDrawingState from './facadeWorkers/continuousDrawingWorker';
-import toggleLabelsVisibility from './facadeWorkers/toggleLabelsVisibilityWorker';
 import { zoomCanvas } from './facadeWorkers/zoomWorker';
 import switchImages from './facadeWorkers/switchImageWorker';
 import toggleSettingsPopUp from './facadeWorkers/toggleSettingsPopUpWorker';
@@ -58,18 +55,6 @@ function machineLearningBtnClick() {
   displayMachineLearningModal(canvas);
 }
 
-function movableObjectsBtnClick() {
-  changeMovableObjectsState(canvas);
-}
-
-function continuousDrawingBtnClick() {
-  changeContinuousDrawingState(canvas);
-}
-
-function toggleLabelsVisibilityBtnClick() {
-  toggleLabelsVisibility(canvas);
-}
-
 function zoomBtnClick(activity) {
   zoomCanvas(canvas, activity);
 }
@@ -99,11 +84,8 @@ export {
   createNewBndBoxBtnClick,
   createNewPolygonBtnClick,
   resetCanvasEventsToDefault,
-  continuousDrawingBtnClick,
   removeActiveShapeBtnClick,
   removePolygonPointBtnClick,
-  movableObjectsBtnClick,
-  toggleLabelsVisibilityBtnClick,
   exportDatasetsBtnClick,
   uploadDatasetsBtnClick,
   machineLearningBtnClick,

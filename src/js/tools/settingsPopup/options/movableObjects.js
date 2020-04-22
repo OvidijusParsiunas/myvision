@@ -1,9 +1,9 @@
-import { getMovableObjectsState, setMovableObjectsState, getDefaultState } from '../../../stateMachine';
+import { getMovableObjectsState, setMovableObjectsState, getDefaultState } from '../../stateMachine';
 
-function changeMovableObjectsState(canvas) {
+function changeMovableObjectsState() {
   if (getDefaultState()) {
     if (getMovableObjectsState()) {
-      canvas.forEachObject((iteratedObj) => {
+      this.canvas.forEachObject((iteratedObj) => {
         if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {
           iteratedObj.lockMovementX = true;
           iteratedObj.lockMovementY = true;
@@ -12,7 +12,7 @@ function changeMovableObjectsState(canvas) {
       });
       setMovableObjectsState(false);
     } else {
-      canvas.forEachObject((iteratedObj) => {
+      this.canvas.forEachObject((iteratedObj) => {
         if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {
           iteratedObj.lockMovementX = false;
           iteratedObj.lockMovementY = false;

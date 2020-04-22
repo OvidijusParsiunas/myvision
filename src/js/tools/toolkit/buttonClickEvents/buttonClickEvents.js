@@ -2,8 +2,7 @@ import {
   createNewBndBoxBtnClick, createNewPolygonBtnClick, settingsBtnClick,
   addPointsBtnClick, removeActiveShapeBtnClick, removePolygonPointBtnClick,
   exportDatasetsBtnClick, uploadImagesInputClick, resetCanvasEventsToDefault,
-  movableObjectsBtnClick, continuousDrawingBtnClick, editShapesBtnClick,
-  toggleLabelsVisibilityBtnClick, switchImageBtnClick, uploadImagesBtnClick,
+  switchImageBtnClick, uploadImagesBtnClick, editShapesBtnClick,
   zoomBtnClick, machineLearningBtnClick, uploadDatasetsBtnClick,
 } from './facade';
 import {
@@ -30,9 +29,6 @@ function assignToolkitButtonClickEvents() {
   window.triggerImageUpload = removeButtonPopIfActive.bind(this, uploadImagesBtnClick);
   window.removeShape = interruptNewShapeDrawingWthFunc1OrExecFunc2.bind(this,
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
-  window.movableObjects = movableObjectsBtnClick;
-  window.continuousDrawing = continuousDrawingBtnClick;
-  window.toggleLabelsVisibility = toggleLabelsVisibilityBtnClick;
   window.zoom = zoomBtnClick;
   window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick,
     resetCanvasEventsToDefault);
