@@ -5,6 +5,7 @@ import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
 import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 import { decrementShapeType } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
+import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 
 let canvas = null;
 
@@ -17,6 +18,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
     updateCurrentImageIds(-1, allImageData.length);
     window.switchImage(allImageData.length - 1);
   } else {
+    resetZoom(false);
     updateCurrentImageIds(0, 0);
     removeAllLabelListItems();
     setImageNameElementToDefault();

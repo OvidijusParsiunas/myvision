@@ -315,6 +315,10 @@ function setStubElementProperties(width, height, marginLeft, marginTop) {
   stubElement.style.marginTop = marginTop;
 }
 
+function setDefaultZoomOverflowBackground() {
+  zoomOverflowElement.style.backgroundColor = '';
+}
+
 function setAllElementPropertiesToDefault(switchImage) {
   setZoomOverFlowElementProperties('', '', '');
   setStubElementProperties('', '', '', '');
@@ -322,6 +326,7 @@ function setAllElementPropertiesToDefault(switchImage) {
   if (!switchImage) {
     setCanvasElementProperties('', '');
   }
+  setDefaultZoomOverflowBackground();
 }
 
 function resetZoom(switchImage) {
@@ -335,6 +340,7 @@ function resetZoom(switchImage) {
   setAllElementPropertiesToDefault(switchImage);
   setDoubleScrollCanvasState(false);
   setCurrentZoomState(currentZoom);
+  enableCanvasOuterMargin();
   return timesNeededToZoomOut;
 }
 
