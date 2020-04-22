@@ -5,6 +5,11 @@ import {
   getContinuousDrawingState, setContinuousDrawingState, getHasDrawnShapeState,
   getReadyToDrawShapeState, setDefaultState,
 } from '../../../stateMachine';
+import { setLabellerPopupDimProperties } from '../../../shapeLabellerModal/style';
+import {
+  QUICK_LIGHTUP_MILLISECONDS, SLOW_LIGHTUP_MILLISECONDS,
+  QUICK_DIM_SECONDS, SLOW_DIM_SECONDS, THICK_DIM, THIN_DIM,
+} from '../../../dimWindow/consts';
 
 function changeContinuousDrawingState(canvas) {
   if (getContinuousDrawingState()) {
@@ -14,8 +19,10 @@ function changeContinuousDrawingState(canvas) {
       assignDefaultEvents(canvas);
       setDefaultState(true);
     }
+    setLabellerPopupDimProperties(SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM);
     setContinuousDrawingState(false);
   } else {
+    setLabellerPopupDimProperties(QUICK_LIGHTUP_MILLISECONDS, QUICK_DIM_SECONDS, THIN_DIM);
     setContinuousDrawingState(true);
   }
 }

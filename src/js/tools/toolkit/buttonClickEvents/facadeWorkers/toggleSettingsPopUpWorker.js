@@ -1,7 +1,6 @@
 import { getSettingsPopUpOpenState, setSettingsPopUpOpenState } from '../../../stateMachine';
 import { windowHasScrollbar } from '../../../globalStyling/style';
 
-
 function validateFullPopUpVisible(popupLabelParentElement) {
   if (windowHasScrollbar()) {
     popupLabelParentElement.style.top = '';

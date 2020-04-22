@@ -6,6 +6,7 @@ import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMa
 import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/buttonEvents';
 import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
+import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
@@ -55,12 +56,12 @@ function displayModal() {
   setTimeout(() => {
     modalElement.style.display = '';
   }, 60);
-  dimWindow(0.5);
+  dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
 
 function closeModal() {
   modalElement.style.display = 'none';
-  lightUpWindow();
+  lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
   currentViewNumber = 1;
   displayNextView();
 }

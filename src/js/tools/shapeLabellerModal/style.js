@@ -1,5 +1,6 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
+import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../dimWindow/consts';
 import { setShapeLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
@@ -14,6 +15,9 @@ let addNewLabelDeltaHeight = 0;
 let currentListHeightPx = 105;
 let heightIncreasedForNewLabel = false;
 let heightIncreasedForHorizontalScrollbar = false;
+let lightupTimePeriod = SLOW_LIGHTUP_MILLISECONDS;
+let dimTimePeriod = SLOW_DIM_SECONDS;
+let dimIntensity = THICK_DIM;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -115,7 +119,7 @@ function highlightInitialLabelOptionOnInit() {
 }
 
 function hideShapeLabellerModal() {
-  lightUpWindow();
+  lightUpWindow(lightupTimePeriod);
   parentElement.style.display = 'none';
   inputElement.value = inputElement.value.trim();
   setShapeLabellerModalDisplayedState(false);
@@ -202,7 +206,7 @@ window.updateMouseProperties = (event) => {
 };
 
 function showShapeLabellerModal() {
-  dimWindow(0.5);
+  dimWindow(dimTimePeriod, dimIntensity);
   parentElement.style.top = `${mouseProperties.clientY}px`;
   parentElement.style.left = `${mouseProperties.clientX}px`;
   getLabelOptions();
@@ -219,8 +223,15 @@ function showShapeLabellerModal() {
   }, 0);
 }
 
+function setLabellerPopupDimProperties(lightupTimePeriodArg, dimTimePeriodArg, dimIntensityArg) {
+  lightupTimePeriod = lightupTimePeriodArg;
+  dimTimePeriod = dimTimePeriodArg;
+  dimIntensity = dimIntensityArg;
+}
+
 export {
+  resetShapeLabellerModalOptions, getShapeLabellerModalInputText,
+  changeStyleWhenInputInvalid, initialiseShapeLabellerModalOptionsList,
   showShapeLabellerModal, hideShapeLabellerModal, changeStyleWhenInputEmpty,
-  resetShapeLabellerModalOptions, getShapeLabellerModalInputText, changeStyleToAllowSubmit,
-  changeStyleWhenInputInvalid, initialiseShapeLabellerModalOptionsList, validateFullModalVisibile,
+  setLabellerPopupDimProperties, validateFullModalVisibile, changeStyleToAllowSubmit,
 };

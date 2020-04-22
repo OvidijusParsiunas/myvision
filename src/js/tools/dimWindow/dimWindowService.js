@@ -1,19 +1,19 @@
 let baseDiv = null;
 
-function lightUpWindow() {
+function lightUpWindow(transitionDurationMillisonds) {
   baseDiv = document.getElementById('window-dim');
   baseDiv.style.backgroundColor = 'rgba(0,0,0,0)';
   window.setTimeout(() => {
     baseDiv.style.position = '';
-  }, 500);
+  }, transitionDurationMillisonds);
 }
 
-function dimWindow(transitionDuration) {
+function dimWindow(transitionDurationSeconds, backgroundColor) {
   baseDiv = document.getElementById('window-dim');
-  baseDiv.style.transitionDuration = `${transitionDuration}s`;
-  baseDiv.style.MozTransitionDuration = `${transitionDuration}s`;
+  baseDiv.style.transitionDuration = `${transitionDurationSeconds}s`;
+  baseDiv.style.MozTransitionDuration = `${transitionDurationSeconds}s`;
   baseDiv.style.position = 'absolute';
-  baseDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
+  baseDiv.style.backgroundColor = backgroundColor;
 }
 
 export { dimWindow, lightUpWindow };

@@ -7,6 +7,7 @@ import { assignUseExistingImagesQstnViewLocalVariables, prepareUseExistingImages
 import registerUseExistingImagesQstnViewButtonEventHandlers from './useExistingImagesQstn/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
+import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts';
 import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdater';
 import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdater';
 import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdater';
@@ -154,12 +155,12 @@ function displayModal() {
   setTimeout(() => {
     modalElement.style.display = '';
   }, 60);
-  dimWindow(0.5);
+  dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
 
 function closeModal() {
   modalElement.style.display = 'none';
-  lightUpWindow();
+  lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
   hideViewOnCancelFunc();
   currentViewNumber = 1;
   displayNextView();
