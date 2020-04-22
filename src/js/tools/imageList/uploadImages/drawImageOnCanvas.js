@@ -80,18 +80,35 @@ function setNewCanvasProperties() {
   const innerHeight = window.innerHeight - 64;
   const innerWidth = window.innerWidth - sideToolsTotalWidth;
   canvasProperties.maximumCanvasHeight = canvasOuterMargin
-    ? innerHeight - (window.innerHeight * 0.0509684)
+    ? innerHeight - (window.innerHeight * 0.04077472)
     : innerHeight;
   if (IS_FIREFOX) {
     canvasProperties.maximumCanvasWidth = canvasOuterMargin
-      ? innerWidth - 0.5 - (window.innerWidth * 0.02698327)
+      ? innerWidth - 0.5 - (window.innerWidth * 0.021586616)
       : innerWidth - 0.5;
   } else {
     canvasProperties.maximumCanvasWidth = canvasOuterMargin
-      ? innerWidth - (window.innerWidth * 0.02698327)
+      ? innerWidth - (window.innerWidth * 0.021586616)
       : innerWidth;
   }
 }
+
+// For 45px margin instead
+// const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
+// const innerHeight = window.innerHeight - 64;
+// const innerWidth = window.innerWidth - sideToolsTotalWidth;
+// canvasProperties.maximumCanvasHeight = canvasOuterMargin
+//   ? innerHeight - (window.innerHeight * 0.04587156)
+//   : innerHeight;
+// if (IS_FIREFOX) {
+//   canvasProperties.maximumCanvasWidth = canvasOuterMargin
+//     ? innerWidth - 0.5 - (window.innerWidth * 0.024284943)
+//     : innerWidth - 0.5;
+// } else {
+//   canvasProperties.maximumCanvasWidth = canvasOuterMargin
+//     ? innerWidth - (window.innerWidth * 0.024284943)
+//     : innerWidth;
+// }
 
 function draw() {
   setNewCanvasProperties();
