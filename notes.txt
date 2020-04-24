@@ -60,6 +60,7 @@ Things to check on chrome browsers on other pcs:
 shape labeller modal  horizontal and vertical overflow fake borders
 label list dropdown horizontal and vertical overflow fake borders
 machine learning generated labels horizontal and vertical overflow fake borders
+make sure the dim effect is not choppy for slower pcs
 
 
 Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
@@ -89,6 +90,8 @@ I believe the bounding box drawing bottom edge is not working in horizontally na
 control the darkness of the background
 
 control the thickness of shape corner sizes
+
+control the size of labels
 
 change label colors
 

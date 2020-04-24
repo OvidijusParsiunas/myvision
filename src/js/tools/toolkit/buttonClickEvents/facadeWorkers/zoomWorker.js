@@ -11,13 +11,11 @@ import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } 
 import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
 import {
   changeElementPropertiesChromium, setDOMElementsChromium,
-  initialiseVariablesChromium, setCanvasElementChromium,
+  initialiseVariablesChromium,
 } from '../../../zoom/chromium';
-import {
-  changeElementPropertiesFirefox, setDOMElementsFirefox,
-  initialiseVariablesFirefox, setCanvasElementFirefox,
-} from '../../../zoom/firefox';
+import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../../../zoom/firefox';
 import IS_FIREFOX from '../../../utils/browserType';
+import { getCurrentCanvasContainerElement } from '../../../../canvas/utils/canvasUtils';
 
 let currentZoom = null;
 let canvas = null;
@@ -25,16 +23,13 @@ let canvasProperties = null;
 let imageProperties = null;
 
 let stubElement;
-let canvasElement;
 let zoomOverflowElement;
 let zoomOverflowWrapperElement;
-let setNewCanvasElementForZoomFunc = null;
 let changeElementPropertiesOnZoomFunc = null;
 
 let timesZoomedIn = 0;
 let scrollWheelUsed = false;
 let movedPolygonPathOffsetReduced = false;
-let usingFirstCanvasWrapperInnerElement = true;
 
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
@@ -290,8 +285,9 @@ function zoomCanvas(canvasObj, action, windowResize) {
 }
 
 function setCanvasElementProperties(left, top) {
-  canvasElement.style.left = left || '50%';
-  canvasElement.style.top = top || '50%';
+  const canvasContainerElement = getCurrentCanvasContainerElement();
+  canvasContainerElement.style.left = left || '50%';
+  canvasContainerElement.style.top = top || '50%';
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
@@ -351,24 +347,11 @@ function zoomOutObjectOnImageSelect(previousShapes, previousLabels, timesToZoomO
   }
 }
 
-function switchCanvasWrapperInnerElement() {
-  if (usingFirstCanvasWrapperInnerElement) {
-    canvasElement = document.getElementById('canvas-absolute-container-2');
-    usingFirstCanvasWrapperInnerElement = false;
-  } else {
-    canvasElement = document.getElementById('canvas-absolute-container-1');
-    usingFirstCanvasWrapperInnerElement = true;
-  }
-  setNewCanvasElementForZoomFunc(canvasElement);
-}
-
 function loadCanvasElements(browserSpecificSetterCallback) {
   stubElement = document.getElementById('stub');
   zoomOverflowElement = document.getElementById('zoom-overflow');
-  canvasElement = document.getElementById('canvas-absolute-container-1');
   zoomOverflowWrapperElement = document.getElementById('zoom-overflow-wrapper');
-  browserSpecificSetterCallback(stubElement, zoomOverflowElement,
-    zoomOverflowWrapperElement, canvasElement);
+  browserSpecificSetterCallback(stubElement, zoomOverflowElement, zoomOverflowWrapperElement);
 }
 
 function initialiseZoomVariables(canvasObj) {
@@ -380,12 +363,10 @@ function initialiseZoomVariables(canvasObj) {
   if (IS_FIREFOX) {
     initialiseVariablesFirefox(canvas);
     loadCanvasElements(setDOMElementsFirefox);
-    setNewCanvasElementForZoomFunc = setCanvasElementFirefox;
     changeElementPropertiesOnZoomFunc = changeElementPropertiesFirefox;
   } else {
     initialiseVariablesChromium(canvas);
     loadCanvasElements(setDOMElementsChromium);
-    setNewCanvasElementForZoomFunc = setCanvasElementChromium;
     changeElementPropertiesOnZoomFunc = changeElementPropertiesChromium;
   }
 }
@@ -408,6 +389,6 @@ window.zoomOverflowScroll = (element) => {
 };
 
 export {
-  zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement,
-  zoomCanvas, initialiseZoomVariables, resetZoom, initiateZoomOverflowScroll,
+  zoomOutObjectOnImageSelect, zoomCanvas, resetZoom,
+  initialiseZoomVariables, initiateZoomOverflowScroll,
 };

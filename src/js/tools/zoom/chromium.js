@@ -1,9 +1,9 @@
 import { setDoubleScrollCanvasState } from '../stateMachine';
+import { getCurrentCanvasContainerElement } from '../../canvas/utils/canvasUtils';
 
 let zoomOverflowWrapperElement;
 let zoomOverflowElement;
 let stubElement;
-let canvasElement;
 
 let newCanvasWidth;
 let newCanvasHeight;
@@ -24,8 +24,9 @@ function reduceCanvasDimensionsBy(width, height) {
 }
 
 function setCanvasElementProperties(left, top) {
-  canvasElement.style.left = left || '50%';
-  canvasElement.style.top = top || '50%';
+  const canvasContainerElement = getCurrentCanvasContainerElement();
+  canvasContainerElement.style.left = left || '50%';
+  canvasContainerElement.style.top = top || '50%';
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
@@ -238,15 +239,10 @@ function changeElementPropertiesChromium(heightOverflowed, widthOverflowed, orig
 }
 
 function setDOMElementsChromium(stubElementArg, zoomOverflowElementArg,
-  zoomOverflowWrapperElementArg, initialCanvasElement) {
+  zoomOverflowWrapperElementArg) {
   stubElement = stubElementArg;
   zoomOverflowElement = zoomOverflowElementArg;
   zoomOverflowWrapperElement = zoomOverflowWrapperElementArg;
-  canvasElement = initialCanvasElement;
-}
-
-function setCanvasElementChromium(newCanvasElement) {
-  canvasElement = newCanvasElement;
 }
 
 function initialiseVariablesChromium(canvasArg) {
@@ -254,6 +250,5 @@ function initialiseVariablesChromium(canvasArg) {
 }
 
 export {
-  initialiseVariablesChromium, setCanvasElementChromium,
-  changeElementPropertiesChromium, setDOMElementsChromium,
+  initialiseVariablesChromium, changeElementPropertiesChromium, setDOMElementsChromium,
 };

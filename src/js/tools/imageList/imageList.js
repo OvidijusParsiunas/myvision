@@ -2,10 +2,10 @@ import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio
 import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
-import { resetZoom, zoomOutObjectOnImageSelect, switchCanvasWrapperInnerElement } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
+import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState, setCurrentImageId } from '../stateMachine';
-import { switchCanvasWrapperInnerElementsDisplay } from '../../canvas/utils/canvasUtils';
+import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
 import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
@@ -258,14 +258,13 @@ function changeToExistingImage(id) {
   drawImageFromList(images[id].data);
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels,
     images[id].imageDimensions, images[id].data);
-  switchCanvasWrapperInnerElementsDisplay();
+  switchCanvasContainerElements();
   setShapeMovablePropertiesOnImageSelect(images[id].shapes);
   if (currentlySelectedImageId >= 0) {
     zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
       images[currentlySelectedImageId].labels, timesZoomedOut);
   }
   setCurrentImageId(id);
-  switchCanvasWrapperInnerElement();
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
   scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
   fixForObjectScalingBugOnCanvasSwitch();

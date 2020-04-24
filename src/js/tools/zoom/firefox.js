@@ -1,9 +1,9 @@
 import { setDoubleScrollCanvasState } from '../stateMachine';
+import { getCurrentCanvasContainerElement } from '../../canvas/utils/canvasUtils';
 
 let zoomOverflowWrapperElement;
 let zoomOverflowElement;
 let stubElement;
-let canvasElement;
 
 let newCanvasWidth;
 let newCanvasHeight;
@@ -20,8 +20,9 @@ function reduceCanvasDimensionsBy(width, height) {
 }
 
 function setCanvasElementProperties(left, top) {
-  canvasElement.style.left = left || '50%';
-  canvasElement.style.top = top || '50%';
+  const canvasContainerElement = getCurrentCanvasContainerElement();
+  canvasContainerElement.style.left = left || '50%';
+  canvasContainerElement.style.top = top || '50%';
 }
 
 function setZoomOverFlowElementProperties(width, maxWidth, maxHeight) {
@@ -243,22 +244,14 @@ function changeElementPropertiesFirefox(heightOverflowed, widthOverflowed, origi
 }
 
 function setDOMElementsFirefox(stubElementArg, zoomOverflowElementArg,
-  zoomOverflowWrapperElementArg, canvasElementArg) {
+  zoomOverflowWrapperElementArg) {
   stubElement = stubElementArg;
   zoomOverflowElement = zoomOverflowElementArg;
   zoomOverflowWrapperElement = zoomOverflowWrapperElementArg;
-  canvasElement = canvasElementArg;
-}
-
-function setCanvasElementFirefox(newCanvasElement) {
-  canvasElement = newCanvasElement;
 }
 
 function initialiseVariablesFirefox(canvasArg) {
   canvas = canvasArg;
 }
 
-export {
-  initialiseVariablesFirefox, setCanvasElementFirefox,
-  changeElementPropertiesFirefox, setDOMElementsFirefox,
-};
+export { initialiseVariablesFirefox, changeElementPropertiesFirefox, setDOMElementsFirefox };

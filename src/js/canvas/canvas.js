@@ -8,6 +8,7 @@ import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allSha
 import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
 import assignCanvasForResizeWhenWindowResize from '../tools/globalStyling/windowResize';
 import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
+import { assignCanvasToDimWindowService } from '../tools/dimWindow/dimWindowService';
 import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
 import { assignCanvasForRemovingImages } from '../tools/imageList/removeImages/removeImages';
@@ -21,6 +22,7 @@ function repopulateCanvasReference(canvas) {
   assignResetCanvasEventsFuncToMouseEvents(canvas);
   assignCanvasForShapeFillManipulation(canvas);
   assignCanvasForLabelManipulation(canvas);
+  assignCanvasToDimWindowService(canvas);
   assignCanvasForResettingToDefaultAfterAddPoints(canvas);
   assignCanvasForDrawingShapesViaCoordinates(canvas);
   assignCanvasForResizeWhenWindowResize(canvas);
