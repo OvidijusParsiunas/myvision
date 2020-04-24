@@ -7,7 +7,7 @@ import { getLabelOptions } from '../labelList/labelOptions';
 import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
-  hideShapeLabellerModal, changeStyleWhenInputEmpty,
+  hideLabellerModal, changeStyleWhenInputEmpty,
   changeStyleWhenInputInvalid, changeStyleToAllowSubmit,
 } from './style';
 
@@ -31,9 +31,9 @@ function changeSubmitButtonStyling() {
   }
 }
 
-function prepareShapeLabellerModalElements() {
-  textInputElement = document.getElementById('shape-labeller-modal-input');
-  optionsElement = document.getElementById('shape-labeller-modal-options');
+function prepareLabellerModalElements() {
+  textInputElement = document.getElementById('labeller-modal-input');
+  optionsElement = document.getElementById('labeller-modal-options');
 }
 
 function resetDrawingMode() {
@@ -59,7 +59,7 @@ function labelShape() {
 
 function cancelLabellingProcess() {
   if (isLabelling()) {
-    hideShapeLabellerModal();
+    hideLabellerModal();
     removeTargetShape();
     resetDrawingMode();
   }
@@ -147,5 +147,5 @@ function pasteLabelText() {
 
 export {
   labelShape, inputKeyDown, cancelLabellingProcess,
-  selectLabelOption, prepareShapeLabellerModalElements, pasteLabelText,
+  selectLabelOption, prepareLabellerModalElements, pasteLabelText,
 };

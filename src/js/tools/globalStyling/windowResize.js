@@ -3,7 +3,7 @@ import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/ob
 import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { getCurrentZoomState } from '../stateMachine';
-import { validateFullModalVisibile } from '../shapeLabellerModal/style';
+import { validateFullModalVisibile } from '../labellerModal/style';
 
 let canvas = null;
 

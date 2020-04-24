@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import boundingBoxProperties from './properties';
-import { prepareLabelShape } from '../../../tools/shapeLabellerModal/labellingProcess';
-import { showShapeLabellerModal } from '../../../tools/shapeLabellerModal/style';
+import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess';
+import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
@@ -170,7 +170,7 @@ function finishDrawingBoundingBoxFunc(event) {
     setReadyToDrawShapeState(false);
     prepareLabelShape(boundingBox, canvas);
     const pointer = canvas.getPointer(event.e);
-    showShapeLabellerModal(pointer.x, pointer.y);
+    showLabellerModal(pointer.x, pointer.y);
   }
 }
 

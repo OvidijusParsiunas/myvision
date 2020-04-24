@@ -4,7 +4,7 @@ import {
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { resetNewPolygonData } from '../../../objects/polygon/polygon';
 import { clearBoundingBoxData, deselectBoundingBox } from '../../../objects/boundingBox/boundingBox';
-import { cancelLabellingProcess } from '../../../../tools/shapeLabellerModal/buttonEventHandlers';
+import { cancelLabellingProcess } from '../../../../tools/labellerModal/buttonEventHandlers';
 import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
 import {
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getAlteringPolygonPointsState,

@@ -30,7 +30,7 @@ import {
   switchToHighlightedDefaultIcon, switchToHighlightedDefaultVisibilityIcon,
 } from './iconHighlightUtils';
 import IS_FIREFOX from '../utils/browserType';
-import { resetShapeLabellerModalOptions } from '../shapeLabellerModal/style';
+import { resetLabellerModalOptions } from '../labellerModal/style';
 import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyling/style';
@@ -83,7 +83,7 @@ function findLabelListElement() {
 }
 
 function findPopupElement() {
-  popuplabelOptionsElement = document.getElementById('shape-labeller-modal-options');
+  popuplabelOptionsElement = document.getElementById('labeller-modal-options');
 }
 
 function initialiseLabelListFunctionality() {
@@ -580,7 +580,7 @@ function moveSelectedLabelToFrontOfLabelOptions(id, text) {
     changeShapeColorById(activeLabelId, newLabelColor);
     changeLabelColor(newLabelColor.label);
     repopulateDropdown();
-    resetShapeLabellerModalOptions();
+    resetLabellerModalOptions();
   }
 }
 
@@ -599,7 +599,7 @@ function addNewLabelToLabelOptions(text) {
       changeShapeColorById(activeLabelId, newLabelColor);
       changeLabelColor(newLabelColor.label);
       repopulateDropdown();
-      resetShapeLabellerModalOptions();
+      resetLabellerModalOptions();
     }
   }
 }

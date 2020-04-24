@@ -42,16 +42,16 @@
         </div>
       </div>
     </div>
-    <div id="shape-labeller-modal-parent" hidden>
+    <div id="labeller-modal-parent" hidden>
       <div class="small-title">Label name:</div>
-      <input type="text" id="shape-labeller-modal-input" onpaste="shapeLabellerPaste()" name="labelName" spellcheck="false" onkeydown="shapeLabellerModalKeyDown(event, this)" value="new label">
-      <table id="shape-labeller-modal-options">
+      <input type="text" id="labeller-modal-input" onpaste="labellerModalInputPaste()" name="labelName" spellcheck="false" onkeydown="labellerModalKeyDown(event, this)" value="new label">
+      <table id="labeller-modal-options">
       </table>
       <div id="chromium-fake-popup-table-right-border-fix" class="chromium-right-border-fix" style="display: none"></div>
       <div id="chromium-fake-popup-table-bottom-border-fix" class="chromium-bottom-border-fix" style="display: none"></div>
       <div class="buttons popup-label-buttons">
-        <div id="shape-labeller-modal-submit-button" class="popup-label-button popup-proceed-button" onclick="labelShape()">Submit</div>
-        <div id="shape-labeller-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelLabellingProcess()">Cancel</div>
+        <div id="labeller-modal-submit-button" class="popup-label-button popup-proceed-button" onclick="labelShape()">Submit</div>
+        <div id="labeller-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
     <div id="machine-learning-modal-parent" class="modal-parent" style="display: none">

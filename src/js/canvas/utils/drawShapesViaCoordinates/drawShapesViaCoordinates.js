@@ -4,7 +4,7 @@ import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoo
 import { generateLabelShapeGroup } from '../../objects/allShapes/labelAndShapeBuilder';
 import initiateResetCanvasEventsToDefaultEvent from '../../../tools/toolkit/buttonClickEvents/facadeWorkers/resetCanvasEventsToDefaultWorker';
 import { setDefaultCursorMode } from '../../mouseInteractions/cursorModes/defaultMode';
-import { resetShapeLabellerModalOptions } from '../../../tools/shapeLabellerModal/style';
+import { resetLabellerModalOptions } from '../../../tools/labellerModal/style';
 import { getCurrentImageId } from '../../../tools/stateMachine';
 import { removeBoundingBox } from '../../../tools/toolkit/buttonClickEvents/facadeWorkers/removeActiveShapeWorker';
 import { getAllExistingShapes } from '../../objects/allShapes/allShapes';
@@ -242,7 +242,7 @@ function drawShapesViaCoordinates(shapesData, isUsingMachineLearning, reuseAlrea
     drawShapesForML(shapesData, allImageData, currentlySelectedImageId, isUsingMachineLearning);
   }
   repopulateDropdown();
-  resetShapeLabellerModalOptions();
+  resetLabellerModalOptions();
   setDefaultCursorMode(canvas);
   initiateResetCanvasEventsToDefaultEvent(canvas);
 }

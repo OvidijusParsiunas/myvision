@@ -1,8 +1,8 @@
 import fabric from 'fabric';
 import polygonProperties from './properties';
 import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode';
-import { showShapeLabellerModal } from '../../../tools/shapeLabellerModal/style';
-import { prepareLabelShape } from '../../../tools/shapeLabellerModal/labellingProcess';
+import { showLabellerModal } from '../../../tools/labellerModal/style';
+import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess';
 import {
   getMovableObjectsState, getAddingPolygonPointsState,
   setPolygonDrawingInProgressState, setAddingPolygonPointsState,
@@ -121,7 +121,7 @@ function generatePolygon(pointer) {
   polygonMode = false;
   drawingFinished = true;
   prepareLabelShape(polygon, canvas);
-  showShapeLabellerModal(pointer.x, pointer.y);
+  showLabellerModal(pointer.x, pointer.y);
   setPolygonDrawingInProgressState(false);
 }
 

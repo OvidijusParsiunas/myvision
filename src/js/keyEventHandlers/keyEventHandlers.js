@@ -1,8 +1,8 @@
-import { labelShape } from '../tools/shapeLabellerModal/buttonEventHandlers';
-import { getShapeLabellerModalDisplayedState } from '../tools/stateMachine';
+import { labelShape } from '../tools/labellerModal/buttonEventHandlers';
+import { getLabellerModalDisplayedState } from '../tools/stateMachine';
 
 function keyDownEventHandler(event) {
-  if (getShapeLabellerModalDisplayedState() && event.key === 'Enter') {
+  if (getLabellerModalDisplayedState() && event.key === 'Enter') {
     labelShape();
   }
 }

@@ -1,7 +1,7 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
 import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../dimWindow/consts';
-import { setShapeLabellerModalDisplayedState } from '../stateMachine';
+import { setLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
 
@@ -110,19 +110,19 @@ function resetLabelOptionsListScroll() {
   optionsElement.scrollLeft = 0;
 }
 
-function getShapeLabellerModalInputText() {
+function getLabellerModalInputText() {
   return inputElement.value;
 }
 
 function highlightInitialLabelOptionOnInit() {
-  window.shapeLabellerModalKeyDown({ key: 'stub' });
+  window.labellerModalKeyDown({ key: 'stub' });
 }
 
-function hideShapeLabellerModal() {
+function hideLabellerModal() {
   lightUpWindow(lightupTimePeriod);
   parentElement.style.display = 'none';
   inputElement.value = inputElement.value.trim();
-  setShapeLabellerModalDisplayedState(false);
+  setLabellerModalDisplayedState(false);
 }
 
 function validateFullModalVisibile(isWindowResized) {
@@ -146,21 +146,21 @@ function setListHeightVariables() {
 }
 
 function setLocalVariables() {
-  inputElement = document.getElementById('shape-labeller-modal-input');
-  parentElement = document.getElementById('shape-labeller-modal-parent');
-  optionsElement = document.getElementById('shape-labeller-modal-options');
-  submitButtonElement = document.getElementById('shape-labeller-modal-submit-button');
+  inputElement = document.getElementById('labeller-modal-input');
+  parentElement = document.getElementById('labeller-modal-parent');
+  optionsElement = document.getElementById('labeller-modal-options');
+  submitButtonElement = document.getElementById('labeller-modal-submit-button');
   setListHeightVariables();
 }
 
-function initialiseShapeLabellerModalOptionsList() {
+function initialiseLabellerModalOptionsList() {
   setLocalVariables();
   getLabelOptions().forEach((option) => {
     addLabelToList(option.text, option.color.label);
   });
 }
 
-function addLabelToshapeLabellerModalOptions(labelText, color) {
+function addLabelTolabellerModalOptions(labelText, color) {
   const labelElement = initialiseParentElement();
   labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this)">${labelText}</div>`;
   const newRow = optionsElement.insertRow(-1);
@@ -192,10 +192,10 @@ function changeStyleToAllowSubmit() {
   });
 }
 
-function resetShapeLabellerModalOptions() {
+function resetLabellerModalOptions() {
   purgeOptionsFromLabelElement();
   getLabelOptions().forEach((label) => {
-    addLabelToshapeLabellerModalOptions(label.text, label.color.label);
+    addLabelTolabellerModalOptions(label.text, label.color.label);
   });
 }
 
@@ -205,7 +205,7 @@ window.updateMouseProperties = (event) => {
   mouseProperties = event;
 };
 
-function showShapeLabellerModal() {
+function showLabellerModal() {
   dimWindow(dimTimePeriod, dimIntensity);
   parentElement.style.top = `${mouseProperties.clientY}px`;
   parentElement.style.left = `${mouseProperties.clientX}px`;
@@ -216,7 +216,7 @@ function showShapeLabellerModal() {
   addFakeBordersForChromium();
   resetLabelOptionsListScroll();
   validateFullModalVisibile();
-  setShapeLabellerModalDisplayedState(true);
+  setLabellerModalDisplayedState(true);
   window.setTimeout(() => {
     inputElement.select();
     highlightInitialLabelOptionOnInit();
@@ -230,8 +230,8 @@ function setLabellerPopupDimProperties(lightupTimePeriodArg, dimTimePeriodArg, d
 }
 
 export {
-  resetShapeLabellerModalOptions, getShapeLabellerModalInputText,
-  changeStyleWhenInputInvalid, initialiseShapeLabellerModalOptionsList,
-  showShapeLabellerModal, hideShapeLabellerModal, changeStyleWhenInputEmpty,
+  resetLabellerModalOptions, getLabellerModalInputText,
+  changeStyleWhenInputInvalid, initialiseLabellerModalOptionsList,
+  showLabellerModal, hideLabellerModal, changeStyleWhenInputEmpty,
   setLabellerPopupDimProperties, validateFullModalVisibile, changeStyleToAllowSubmit,
 };

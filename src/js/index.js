@@ -1,5 +1,5 @@
 import { constructCanvas } from './canvas/canvas';
-import initialiseShapeLabellerModal from './tools/shapeLabellerModal/buttons';
+import initialiseLabellerModal from './tools/labellerModal/buttons';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClickEvents';
@@ -16,8 +16,8 @@ import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPane
 import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
 constructCanvas();
+initialiseLabellerModal();
 initialiseSettingsPopup();
-initialiseShapeLabellerModal();
 initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();
 initialiseExportLabelsPopUp();

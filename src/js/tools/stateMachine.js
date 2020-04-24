@@ -20,7 +20,7 @@ let settingsPopUpOpenState = false;
 let exportDatasetsPopUpOpenState = false;
 let changingMLGeneratedLabelNamesState = false;
 let currentImageId = false;
-let shapeLabellerModalDisplayed = false;
+let labellerModalDisplayed = false;
 let boundingBoxScalingState = false;
 let shapeMovingState = false;
 let polygonDrawingInProgressState = false;
@@ -109,8 +109,8 @@ function getChangingMLGeneratedLabelNamesState() {
   return changingMLGeneratedLabelNamesState;
 }
 
-function getShapeLabellerModalDisplayedState() {
-  return shapeLabellerModalDisplayed;
+function getLabellerModalDisplayedState() {
+  return labellerModalDisplayed;
 }
 
 function getBoundingBoxScalingState() {
@@ -210,8 +210,8 @@ function setChangingMLGeneratedLabelNamesState(state) {
   changingMLGeneratedLabelNamesState = state;
 }
 
-function setShapeLabellerModalDisplayedState(state) {
-  shapeLabellerModalDisplayed = state;
+function setLabellerModalDisplayedState(state) {
+  labellerModalDisplayed = state;
 }
 
 function setBoundingBoxScalingState(state) {
@@ -269,8 +269,8 @@ export {
   setLastPolygonActionWasMoveState,
   getPolygonDrawingInProgressState,
   setPolygonDrawingInProgressState,
-  getShapeLabellerModalDisplayedState,
-  setShapeLabellerModalDisplayedState,
+  getLabellerModalDisplayedState,
+  setLabellerModalDisplayedState,
   getNewShapeSelectedViaLabelListState,
   setNewShapeSelectedViaLabelListState,
   getRemovingPointsAfterCancelDrawState,

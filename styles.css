@@ -4,7 +4,7 @@
   font-family: K2D, sans-serif;
 */
 
-#shape-labeller-modal-input {
+#labeller-modal-input {
   width: 161px;
   border: thin ridge rgb(177, 177, 177);
   margin: 6px 9px 9px 9px;
@@ -33,7 +33,7 @@
   font-size: 15px;
 }
 
-#shape-labeller-modal-options tbody {
+#labeller-modal-options tbody {
   cursor: pointer;
 }
 
@@ -44,20 +44,20 @@
   user-select: none;
 }
 
-#shape-labeller-modal-options .labelDropdownOption {
+#labeller-modal-options .labelDropdownOption {
   white-space: pre;
   padding-left: 3px;
   user-select: none;
   text-decoration: none;
 }
 
-#shape-labeller-modal-submit-button {
+#labeller-modal-submit-button {
   width: 61px;
   margin-right: 4px;
   padding-bottom: 4px;
 }
 
-#shape-labeller-modal-cancel-button {
+#labeller-modal-cancel-button {
   width: 61px;
   padding-bottom: 4px;
 }
@@ -372,7 +372,7 @@
   width: 10px;
 }
 
-#shape-labeller-modal-parent {
+#labeller-modal-parent {
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 3px;
   position: absolute;
@@ -383,7 +383,7 @@
   z-index: 3;
 }
 
-#shape-labeller-modal-options {
+#labeller-modal-options {
   padding-top: 2px;
   padding-bottom: 2px;
   display: block;
@@ -399,16 +399,16 @@
   scrollbar-width: thin;
 }
 
-#shape-labeller-modal-options::-webkit-scrollbar-track {
+#labeller-modal-options::-webkit-scrollbar-track {
   background: #f9f9f9;
 }
 
-#shape-labeller-modal-options::-webkit-scrollbar-thumb {
+#labeller-modal-options::-webkit-scrollbar-thumb {
   background: #c7c7c7;
   border-radius: 10px;
 }
 
-#shape-labeller-modal-options::-webkit-scrollbar {
+#labeller-modal-options::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
@@ -1126,7 +1126,7 @@ td {
   width: inherit;
 }
 
-#shape-labeller-modal-options td {
+#labeller-modal-options td {
   padding-top: 1px;
   padding-bottom: 1px;
   width: inherit;
@@ -1523,7 +1523,7 @@ body {
 #canvas-wrapper {
 }
 
-#shape-labeller-modal-input {
+#labeller-modal-input {
   width: 150px;
   border: thin ridge grey;
   margin: 5px 5px 5px 5px;
@@ -1577,7 +1577,7 @@ body {
   padding-top: 3px;
 }
 
-#shape-labeller-modal-options .labelDropdownOption {
+#labeller-modal-options .labelDropdownOption {
   padding-left: 2px;
   user-select: none;
   text-decoration: none;
@@ -1627,7 +1627,7 @@ body {
   width: 10px;
 }
 
-#shape-labeller-modal-parent {
+#labeller-modal-parent {
   position: absolute;
   background-color: white;
   border-width: 1px;
@@ -1636,7 +1636,7 @@ body {
   z-index: 3;
 }
 
-#shape-labeller-modal-options {
+#labeller-modal-options {
   padding-top: 2px;
   padding-bottom: 2px;
   margin-top: 3px;
@@ -1649,7 +1649,7 @@ body {
   margin-left: 5px;
 }
 
-#shape-labeller-modal-options div:hover {
+#labeller-modal-options div:hover {
   cursor: default;
 }
 
@@ -1787,7 +1787,7 @@ td {
   width: inherit;
 }
 
-#shape-labeller-modal-options td {
+#labeller-modal-options td {
   padding-top: 1px;
   padding-bottom: 1px;
   width: inherit;
