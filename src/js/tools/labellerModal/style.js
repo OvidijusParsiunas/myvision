@@ -25,7 +25,7 @@ function initialiseParentElement() {
 
 function addLabelToList(labelText, color) {
   const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this)">${labelText}</div>`;
+  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this, '${color}')">${labelText}</div>`;
   const newRow = optionsElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
@@ -160,16 +160,6 @@ function initialiseLabellerModalOptionsList() {
   });
 }
 
-function addLabelTolabellerModalOptions(labelText, color) {
-  const labelElement = initialiseParentElement();
-  labelElement.innerHTML = `<div class="labelDropdownOption" ondblclick="labelShape()" onmousedown="selectLabelOption(innerHTML, this)">${labelText}</div>`;
-  const newRow = optionsElement.insertRow(-1);
-  const cell = newRow.insertCell(0);
-  cell.onmouseenter = window.mouseEnterLabelDropdownOption.bind(this, cell, color);
-  cell.onmouseleave = window.mouseLeaveLabelDropdownOption.bind(this, cell, false);
-  cell.appendChild(labelElement);
-}
-
 function purgeOptionsFromLabelElement() {
   optionsElement.innerHTML = '';
 }
@@ -195,7 +185,7 @@ function changeStyleToAllowSubmit() {
 function resetLabellerModalOptions() {
   purgeOptionsFromLabelElement();
   getLabelOptions().forEach((label) => {
-    addLabelTolabellerModalOptions(label.text, label.color.label);
+    addLabelToList(label.text, label.color.label);
   });
 }
 

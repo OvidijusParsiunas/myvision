@@ -80,15 +80,15 @@ function setNewCanvasProperties() {
   const innerHeight = window.innerHeight - 64;
   const innerWidth = window.innerWidth - sideToolsTotalWidth;
   canvasProperties.maximumCanvasHeight = canvasOuterMargin
-    ? innerHeight - (window.innerHeight * 0.04077472)
+    ? innerHeight - (window.innerHeight * 0.0382263)
     : innerHeight;
   if (IS_FIREFOX) {
     canvasProperties.maximumCanvasWidth = canvasOuterMargin
-      ? innerWidth - 0.5 - (window.innerWidth * 0.021586616)
+      ? innerWidth - 0.5 - (window.innerWidth * 0.020237453)
       : innerWidth - 0.5;
   } else {
     canvasProperties.maximumCanvasWidth = canvasOuterMargin
-      ? innerWidth - (window.innerWidth * 0.021586616)
+      ? innerWidth - (window.innerWidth * 0.020237453)
       : innerWidth;
   }
 }

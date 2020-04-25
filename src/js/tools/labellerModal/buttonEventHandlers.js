@@ -65,13 +65,15 @@ function cancelLabellingProcess() {
   }
 }
 
-function selectLabelOption(text, element) {
+function selectLabelOption(text, element, color) {
   if (currentlySelectedLabelOption) {
     currentlySelectedLabelOption.id = '';
     currentlySelectedLabelOption.style.backgroundColor = '';
   }
-  element.id = 'used';
-  currentlySelectedLabelOption = element;
+  const { parentElement } = element.parentElement;
+  parentElement.id = 'used';
+  parentElement.style.backgroundColor = color;
+  currentlySelectedLabelOption = parentElement;
   textInputElement.value = text;
   changeSubmitButtonStyling();
 }
@@ -101,6 +103,10 @@ function getOptionsElementList() {
   return optionsElement.childNodes[0].childNodes;
 }
 
+// at the moment if the mouse hovers over an option, then the user types in that option
+// and changes something again -> the highlight will disappear as the currentlySelectedLabelOption
+// is blanked. The only way this can be prevented is adding a special indicator for when
+// that element is being highlighted
 function inputKeyDown(event) {
   if (event.key !== 'Enter') {
     window.setTimeout(() => {
