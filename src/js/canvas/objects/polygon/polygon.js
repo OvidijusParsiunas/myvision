@@ -451,9 +451,9 @@ function moveDrawCrosshair() {
   }
 }
 
-function createNewPolygonFromCoordinates(points, imageScalingDimensions, imageParameterDimensions) {
+function createNewPolygonFromCoordinates(points, imageScalingDimensions, imageLengthDimensions) {
   const polygon = new fabric.Polygon(points, polygonProperties.newPolygon());
-  preventOutOfBoundsOnNewObject(polygon, imageScalingDimensions, imageParameterDimensions);
+  preventOutOfBoundsOnNewObject(polygon, imageScalingDimensions, imageLengthDimensions);
   lockMovementIfAssertedByState(polygon);
   return polygon;
 }

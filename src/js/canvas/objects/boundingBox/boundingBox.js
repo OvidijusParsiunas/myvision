@@ -288,7 +288,7 @@ function shapeScrollEvents(event) {
 }
 
 function createNewBoundingBoxFromCoordinates(left, top, width, height,
-  imageScalingDimensions, imageParameterDimensions) {
+  imageScalingDimensions, imageLengthDimensions) {
   boundingBoxProps.left = left;
   boundingBoxProps.top = top;
   boundingBoxProps.width = width;
@@ -298,7 +298,7 @@ function createNewBoundingBoxFromCoordinates(left, top, width, height,
   const newBoundingBox = new fabric.Rect(
     boundingBoxProperties.getStandaloneBoundingBoxProperties(boundingBoxProps),
   );
-  preventOutOfBoundsOnNewObject(newBoundingBox, imageScalingDimensions, imageParameterDimensions);
+  preventOutOfBoundsOnNewObject(newBoundingBox, imageScalingDimensions, imageLengthDimensions);
   lockMovementIfAssertedByState(newBoundingBox);
   return newBoundingBox;
 }

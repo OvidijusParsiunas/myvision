@@ -36,19 +36,19 @@ function newLabelShapeGroup(shape, shapeCoordinates, isCurrentlySelectedImage,
 }
 
 function generateNewBoundingBox(shapeCoordinates, imageScalingDimensions,
-  imageParameterDimensions) {
+  imageLengthDimensions) {
   const boundingBoxShape = createNewBoundingBoxFromCoordinates(
     shapeCoordinates.bbox[0],
     shapeCoordinates.bbox[1],
     shapeCoordinates.bbox[2],
     shapeCoordinates.bbox[3],
     imageScalingDimensions,
-    imageParameterDimensions,
+    imageLengthDimensions,
   );
   return boundingBoxShape;
 }
 
-function generateNewPolygon(shapeCoordinates, imageScalingDimensions, imageParameterDimensions) {
+function generateNewPolygon(shapeCoordinates, imageScalingDimensions, imageLengthDimensions) {
   const points = [];
   for (let i = 0; i < shapeCoordinates.points.length; i += 2) {
     points.push({
@@ -56,13 +56,14 @@ function generateNewPolygon(shapeCoordinates, imageScalingDimensions, imageParam
       y: shapeCoordinates.points[i + 1] * imageScalingDimensions.scaleY,
     });
   }
-  return createNewPolygonFromCoordinates(points, imageScalingDimensions, imageParameterDimensions);
+  return createNewPolygonFromCoordinates(points, imageScalingDimensions, imageLengthDimensions);
 }
 
 function generateImageShapesForML(image, isCurrentlySelectedImage, predictedShapeCoordinates,
-  imageScalingDimensions, isUsingMachineLearning) {
+  imageScalingDimensions, imageLengthDimensions, isUsingMachineLearning) {
   predictedShapeCoordinates.forEach((shapeCoordinates) => {
-    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageScalingDimensions);
+    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageScalingDimensions,
+      imageLengthDimensions);
     newLabelShapeGroup(boundingBox, shapeCoordinates, isCurrentlySelectedImage,
       isUsingMachineLearning, image);
   });
@@ -74,6 +75,13 @@ function getImageScalingDimensions(image) {
     return image.imageDimensions;
   }
   return { scaleX: 1, scaleY: 1 };
+}
+
+function getImageLengthDimensions(image) {
+  if (image && image.data) {
+    return { height: image.data.height, width: image.data.width };
+  }
+  return { height: 1, width: 1 };
 }
 
 function removeMLShapesOnImage(imageData, currentImage) {
@@ -100,10 +108,11 @@ function generateNewShapesForML(predictedShapeCoordinatesForImages, allImageData
     const image = allImageData[key];
     const imageScalingDimensions = getImageScalingDimensions(image);
     const isCurrentlySelectedImage = currentlySelectedImageId === parseInt(key, 10);
+    const imageLengthDimensions = getImageLengthDimensions(allImageData[key]);
     const predictedShapeCoordinates = predictedShapeCoordinatesForImages[key];
     if (predictedShapeCoordinates.length > 0) {
       generateImageShapesForML(image, isCurrentlySelectedImage, predictedShapeCoordinates,
-        imageScalingDimensions, isUsingMachineLearning);
+        imageScalingDimensions, imageLengthDimensions, isUsingMachineLearning);
     }
   });
 }
@@ -142,10 +151,11 @@ function updateImageThumbnails(predictedShapeCoordinatesForImages) {
   });
 }
 
-function generateTempShapes(predictedShapeCoordinates,
-  imageScalingDimensions) {
+function generateTempShapes(predictedShapeCoordinates, imageScalingDimensions,
+  imageLengthDimensions) {
   predictedShapeCoordinates.forEach((shapeCoordinates) => {
-    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageScalingDimensions);
+    const boundingBox = generateNewBoundingBox(shapeCoordinates, imageScalingDimensions,
+      imageLengthDimensions);
     tempShapes.push(boundingBox);
     canvas.add(boundingBox);
   });
@@ -164,20 +174,21 @@ function drawTempShapesToShowCaseMLResults(predictedShapeCoordinatesForImages) {
   prepareCanvasForNewBoundingBoxesFromExternalSources(canvas);
   const currentlySelectedImageShapes = predictedShapeCoordinatesForImages[currentlySelectedImageId];
   const imageScalingDimensions = getImageScalingDimensions(allImageData[currentlySelectedImageId]);
-  generateTempShapes(currentlySelectedImageShapes, imageScalingDimensions);
+  const imageLengthDimensions = getImageLengthDimensions(allImageData[currentlySelectedImageId]);
+  generateTempShapes(currentlySelectedImageShapes, imageScalingDimensions, imageLengthDimensions);
 }
 
 function generateShapeForFileUpload(shapeData, imageData, isCurrentlySelectedImage) {
   const imageScalingDimensions = getImageScalingDimensions(imageData);
-  const imageParameterDimensions = { height: imageData.data.height, width: imageData.data.width };
+  const imageLengthDimensions = getImageLengthDimensions(imageData);
   if (shapeData.type === 'boundingBox') {
     const shape = generateNewBoundingBox(shapeData.coordinates, imageScalingDimensions,
-      imageParameterDimensions);
+      imageLengthDimensions);
     newLabelShapeGroup(shape, shapeData.coordinates, isCurrentlySelectedImage,
       false, imageData);
   } else if (shapeData.type === 'polygon') {
     const shape = generateNewPolygon(shapeData.coordinates, imageScalingDimensions,
-      imageParameterDimensions);
+      imageLengthDimensions);
     newLabelShapeGroup(shape, shapeData.coordinates, isCurrentlySelectedImage,
       false, imageData);
   }
