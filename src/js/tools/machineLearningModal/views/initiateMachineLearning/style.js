@@ -82,6 +82,16 @@ function displayDescription() {
   descriptionElement.style.display = '';
 }
 
+function displayAllButtons() {
+  buttonsGroupElement.style.marginTop = '-4px';
+  buttonsGroupElement.style.display = '';
+}
+
+function removeAllButtons() {
+  buttonsGroupElement.style.marginTop = '';
+  buttonsGroupElement.style.display = 'none';
+}
+
 function removeDescription() {
   descriptionElement.style.display = 'none';
 }
@@ -133,6 +143,7 @@ function removeNextButton() {
 }
 
 function displayCancelButton() {
+  cancelButtonElement.style.marginRight = '';
   cancelButtonElement.style.display = '';
 }
 
@@ -239,7 +250,7 @@ function hideInitiateMachineLearningViewAssets() {
   removeNextButton();
   removeProgressMessage();
   removeCheckMark();
-  buttonsGroupElement.style.display = 'none';
+  removeAllButtons();
   descriptionElement.style.marginBottom = '';
 }
 
@@ -256,10 +267,9 @@ function prepareInstantiateMachineLearningView() {
   setDefaultDescriptionElementMarginBottom();
   descriptionElement.innerHTML = getDefaultDescriptionMarkup();
   displayDescription();
-  buttonsGroupElement.style.display = '';
-  cancelButtonElement.style.marginRight = '';
   displayStartButton();
   displayCancelButton();
+  displayAllButtons();
   removeLoadingContent();
 }
 

@@ -9,11 +9,13 @@ function displayDescription() {
   descriptionElement.style.display = '';
 }
 
-function setDescriptionElementMarginBottom(height) {
-  descriptionElement.style.marginBottom = height;
+function setDescriptionElementMargins(top, bottom) {
+  descriptionElement.style.marginTop = top;
+  descriptionElement.style.marginBottom = bottom;
 }
 
-function setDefaultDescriptionElementMarginBottom() {
+function setDefaultDescriptionElementMargins() {
+  descriptionElement.style.marginTop = '';
   descriptionElement.style.marginBottom = '';
 }
 
@@ -22,14 +24,14 @@ function displayButtonGroupElement() {
 }
 
 function displayNoObjectsFoundView() {
-  setDescriptionElementMarginBottom('15px');
+  setDescriptionElementMargins('19px', '15px');
   changeModalDescription();
   displayDescription();
   displayButtonGroupElement();
 }
 
 function hideNoObjectsFoundViewAssets() {
-  setDefaultDescriptionElementMarginBottom();
+  setDefaultDescriptionElementMargins();
   buttonGroupElement.style.display = 'none';
 }
 

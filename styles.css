@@ -710,7 +710,7 @@
 }
 
 #machine-learning-modal-parent {
-  height: 267px;
+  height: 269px;
   width: 415px;
   left: -151px;
 }
@@ -720,6 +720,10 @@
   margin-top: 16px;
 }
 
+#machine-learning-modal-initiate-start-button {
+  margin-left: 3px;
+}
+
 #machine-learning-modal-error-messages {
   margin-top: 70px;
   color: red;
@@ -727,7 +731,7 @@
 
 #machine-learning-modal-check-mark-parent {
   position: relative;
-  margin-left: 137px;
+  margin-left: 153px;
   margin-top: 20px;
 }
 
@@ -804,6 +808,7 @@
 }
 
 #machine-learning-modal-generated-labels-outer-container {
+  padding-top: 12px;
   position: relative;
   height: 152px;
 }
