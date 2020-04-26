@@ -47,8 +47,8 @@ function getRightSideBarWidth() {
 function findWindowElements() {
   canvasWrapperParentElement = document.getElementById('canvas-wrapper-parent');
   zoomOverflowWrapperParentElement = document.getElementById('zoom-overflow-wrapper-parent');
-  leftSideBar = document.getElementById('right-side-bar');
-  rightSideBar = document.getElementById('left-side-bar');
+  leftSideBar = document.getElementById('left-side-bar');
+  rightSideBar = document.getElementById('right-side-bar');
 }
 
 function initialiseGlobalStyleSetup() {

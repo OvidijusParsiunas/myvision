@@ -1151,7 +1151,7 @@ body {
   margin-top: 0;
 }
 
-.tools-button {
+.toolkit-button {
   background-color: white;
   border-style: none;
   padding: 0;
@@ -1160,20 +1160,20 @@ body {
 }
 
 /* removing dotted border when in focus on firefox */
-.tools-button::-moz-focus-inner { 
+.toolkit-button::-moz-focus-inner { 
   border: 0; 
 }
 
-.tools-button:hover {
+.toolkit-button:hover {
   background-color: rgb(238, 238, 238);
 }
 
-.tools-button:active {
+.toolkit-button:active {
   /* highlight in the color of what the icon is going to be */
   background-color: lightgreen;
 }
 
-.tools-button-icon {
+.toolkit-button-icon {
   padding-top: 6px;
   width: 30px;
   padding-left: 8px;
@@ -1183,19 +1183,19 @@ body {
 }
 
 /* @media only screen and (max-height: 826px) {
-  .tools-button-text {
+  .toolkit-button-text {
     font-size: calc(13.3333 * (100vh / 826));
   }
-  .tools-button-icon {
+  .toolkit-button-icon {
     width: calc(40 * (100vh / (906)));
   }
 }
 
 @media only screen and (max-height: 522px) {
-  .tools-button-text {
+  .toolkit-button-text {
     display: none;
   }
-  .tools-button-icon {
+  .toolkit-button-icon {
     width: calc(40 * (100vh / (806)));
   }
 } */
@@ -1395,7 +1395,7 @@ body {
   border-color: rgb(202, 209, 209);
 }
 
-.tools-button-hover-popup {
+.toolkit-button-hover-popup {
   margin-left: 62px;
   position: absolute;
   margin-top: -35px;
@@ -1812,7 +1812,7 @@ body {
   margin-top: 0;
 }
 
-.tools-button {
+.toolkit-button {
   background-color: white;
   border-style: none;
   padding: 0;
@@ -1820,15 +1820,15 @@ body {
   cursor: pointer;
 }
 
-.tools-button:hover {
+.toolkit-button:hover {
   background-color: rgb(238, 238, 238);
 }
 
-.tools-button:active {
+.toolkit-button:active {
   background-color: lightgreen;
 }
 
-.tools-button-icon {
+.toolkit-button-icon {
   padding-top: 6px;
   width: 30px;
   padding-left: 8px;
@@ -1880,7 +1880,7 @@ body {
   border-color: rgb(202, 209, 209);
 }
 
-.tools-button-hover-popup {
+.toolkit-button-hover-popup {
   margin-left: 62px;
   position: absolute;
   margin-top: -35px;

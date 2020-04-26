@@ -699,8 +699,8 @@ window.onmousedown = (event) => {
         addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
         resetLabelElement();
       }
-    } else if (event.target.nodeName === 'CANVAS' || event.target.className === 'tools-button-icon'
-        || event.target.className === 'tools-button-text' || event.target.id === activeLabelElementId) {
+    } else if (event.target.nodeName === 'CANVAS' || event.target.className === 'toolkit-button-icon'
+        || event.target.className === 'toolkit-button-text' || event.target.id === activeLabelElementId) {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
       stopEditing();
     } else {

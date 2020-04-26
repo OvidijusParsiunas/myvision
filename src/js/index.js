@@ -1,11 +1,10 @@
 import { constructCanvas } from './canvas/canvas';
+import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClickEvents';
 import { initialiseSettingsPopup } from './tools/settingsPopup/buttonClickEvents';
-import assignToolkitButtonEventHandlers from './tools/toolkit/buttonClickEvents/buttonClickEvents';
-import { assignToolkitButtonHoverEvents } from './tools/toolkit/buttonHoverEvents/buttonHoverEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import { initialiseGlobalStyleSetup } from './tools/globalStyling/style';
@@ -16,13 +15,12 @@ import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPane
 import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
 constructCanvas();
+initialiseToolkit();
 initialiseLabellerModal();
 initialiseSettingsPopup();
 initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();
 initialiseExportLabelsPopUp();
-assignToolkitButtonEventHandlers();
-assignToolkitButtonHoverEvents();
 assignPassiveEventListeners();
 initialiseGlobalStyleSetup();
 initialiseLabelListFunctionality();

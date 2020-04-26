@@ -65,100 +65,100 @@
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="continuousDrawing()"></td></tr>
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Label visibility</div><input class="settings-popup-item checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" checked></td></tr>
       </table>
-      <!-- <button id="tools-button" onclick="movableObjects()">Movable Objects</button> --> 
-      <!-- <button id="tools-button" onclick="continuousDrawing()">Continuous Drawing</button>
-      <button id="tools-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button> -->
+      <!-- <button id="toolkit-button" onclick="movableObjects()">Movable Objects</button> --> 
+      <!-- <button id="toolkit-button" onclick="continuousDrawing()">Continuous Drawing</button>
+      <button id="toolkit-button" onclick="toggleLabelsVisibility()">Toggle label visibility</button> -->
     </div>
     <!-- resize icons on screen size -->
     <!-- think the icons and font could be smaller on startup -->
     <div id="left-side-bar">
       <div style="margin-top: 8px;"> </div>
       <!-- on hover, increase the size of polygon points -->
-      <!-- <button class="tools-button" style="text-align: center" onclick="cancel()">
-          <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-          <div class="tools-button-text">Cancel</div>
+      <!-- <button class="toolkit-button" style="text-align: center" onclick="cancel()">
+          <img src="bounding-box.svg" class="toolkit-button-icon" alt="visibility">
+          <div class="toolkit-button-text">Cancel</div>
         </button>
-      <button class="tools-button" style="text-align: center" onclick="createNewBndBox()"> -->
+      <button class="toolkit-button" style="text-align: center" onclick="createNewBndBox()"> -->
         <!-- will need to have padding in the svg on default then remove top on hover by the border width-->
-        <!-- <img src="drawing.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Bounding box</div>
+        <!-- <img src="drawing.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Bounding box</div>
       </button> -->
       <!-- will create a new icons as a swoosh, but show the option to minimise it-->
-      <!-- <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
-        <img src="drawing2.svg" class="tools-button-icon" alt="visibility"></img>
-        <div class="tools-button-text">Polygon</div>
+      <!-- <button class="toolkit-button" style="text-align: center" onclick="createNewPolygon()">
+        <img src="drawing2.svg" class="toolkit-button-icon" alt="visibility"></img>
+        <div class="toolkit-button-text">Polygon</div>
       </button>
-      <button class="tools-button" style="text-align: center" onclick="addPoints()" >
-        <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Add points</div>
+      <button class="toolkit-button" style="text-align: center" onclick="addPoints()" >
+        <img src="invisible-button.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Add points</div>
       </button>
-      <button class="tools-button" style="text-align: center" onclick="removePoint()">
-        <img src="done-tick-highlighted.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Remove points</div>
+      <button class="toolkit-button" style="text-align: center" onclick="removePoint()">
+        <img src="done-tick-highlighted.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Remove points</div>
       </button>
-      <button class="tools-button" style="text-align: center" onclick="removeShape()" >
-        <img src="edit-highlighted.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Remove Shape</div>
+      <button class="toolkit-button" style="text-align: center" onclick="removeShape()" >
+        <img src="edit-highlighted.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Remove Shape</div>
       </button>
-      <button class="tools-button" style="text-align: center" onclick="downloadXML()">
-        <img src="check-box.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Dowload</div>
+      <button class="toolkit-button" style="text-align: center" onclick="downloadXML()">
+        <img src="check-box.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Dowload</div>
       </button>
-      <button class="tools-button" style="text-align: center" onclick="zoom('in')">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Zoom In</div>
+      <button class="toolkit-button" style="text-align: center" onclick="zoom('in')">
+        <img src="bounding-box.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Zoom In</div>
       </button>
-      <button class="tools-button" style="text-align: center" onclick="zoom('out')">
-        <img src="done.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Zoom Out</div>
+      <button class="toolkit-button" style="text-align: center" onclick="zoom('out')">
+        <img src="done.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Zoom Out</div>
       </button>
       <input id='fileid' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
-      <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
-        <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Upload Image</div>
+      <button class="toolkit-button" style="text-align: center" onclick="triggerImageUpload()">
+        <img src="invisible-button.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Upload Image</div>
       </button>
-      <button id="settingsButton" class="settings-popup-item tools-button" style="text-align: center" onclick="displaySettingsPopup()">
-        <img src="icon.svg" class="settings-popup-item tools-button-icon" alt="visibility">
-        <div class="settings-popup-item tools-button-text">Settings</div>
+      <button id="settingsButton" class="settings-popup-item toolkit-button" style="text-align: center" onclick="displaySettingsPopup()">
+        <img src="icon.svg" class="settings-popup-item toolkit-button-icon" alt="visibility">
+        <div class="settings-popup-item toolkit-button-text">Settings</div>
       </button> -->
-      <!-- <button id="settingsButton" class="tools-button" style="text-align: center" onclick="minimiseTextAndIcons()">
-        <img src="icon.svg" class="tools-button-icon" alt="visibility">
-        <div class="tools-button-text">Minimise buttons</div>
+      <!-- <button id="settingsButton" class="toolkit-button" style="text-align: center" onclick="minimiseTextAndIcons()">
+        <img src="icon.svg" class="toolkit-button-icon" alt="visibility">
+        <div class="toolkit-button-text">Minimise buttons</div>
       </button> -->
-      <button class="tools-button" style="text-align: center" onclick="cancel()">
-        <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+      <button class="toolkit-button" style="text-align: center" onclick="cancel()">
+        <img src="bounding-box.svg" class="toolkit-button-icon" alt="visibility">
       </button>
-    <button class="tools-button" style="text-align: center" onclick="createNewBndBox()">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="createNewBndBox()">
+      <img src="bounding-box.svg" class="toolkit-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="createNewPolygon()">
-      <img src="drop-down-arrow.svg" class="tools-button-icon" alt="visibility"></img>
+    <button class="toolkit-button" style="text-align: center" onclick="createNewPolygon()">
+      <img src="drop-down-arrow.svg" class="toolkit-button-icon" alt="visibility"></img>
     </button>
-    <button class="tools-button" style="text-align: center" onclick="addPoints()" >
-      <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="addPoints()" >
+      <img src="invisible-button.svg" class="toolkit-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="removePoint()">
-      <img src="done-tick-highlighted.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="removePoint()">
+      <img src="done-tick-highlighted.svg" class="toolkit-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="removeShape()" >
-      <img src="edit-highlighted.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="removeShape()" >
+      <img src="edit-highlighted.svg" class="toolkit-button-icon" alt="visibility">
     </button>
     <div id="separator" style="width: 37px; height: 1px; border-bottom: solid; border-width: 1px; border-color: #80808026; margin-left: 10px; margin-top: 2px; margin-bottom: 7px"></div>
-    <button class="tools-button" style="text-align: center" onclick="downloadXML()">
-      <img src="check-box.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="downloadXML()">
+      <img src="check-box.svg" class="toolkit-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="zoom('in')">
-      <img src="bounding-box.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="zoom('in')">
+      <img src="bounding-box.svg" class="toolkit-button-icon" alt="visibility">
     </button>
-    <button class="tools-button" style="text-align: center" onclick="zoom('out')">
-      <img src="done.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="zoom('out')">
+      <img src="done.svg" class="toolkit-button-icon" alt="visibility">
     </button>
     <input id='fileid' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
-    <button class="tools-button" style="text-align: center" onclick="triggerImageUpload()">
-      <img src="invisible-button.svg" class="tools-button-icon" alt="visibility">
+    <button class="toolkit-button" style="text-align: center" onclick="triggerImageUpload()">
+      <img src="invisible-button.svg" class="toolkit-button-icon" alt="visibility">
     </button>
-    <button id="settingsButton" class="settings-popup-item tools-button" style="text-align: center" onclick="displaySettingsPopup()">
-      <img src="icon.svg" class="settings-popup-item tools-button-icon" alt="visibility">
+    <button id="settingsButton" class="settings-popup-item toolkit-button" style="text-align: center" onclick="displaySettingsPopup()">
+      <img src="icon.svg" class="settings-popup-item toolkit-button-icon" alt="visibility">
     </button>
     </div>
     <div id="right-side-bar">
@@ -185,12 +185,12 @@
     width: 100%;">
       <div id="image-switch-contents" style="padding-top: 5px">
         <!-- grey out everything on startup -->
-        <button id="tools-button" onclick="switchImage('previous')"> < </button>
+        <button id="toolkit-button" onclick="switchImage('previous')"> < </button>
         <!-- grey out buttons when 1 image -->
         <div id="image-name" style="display: inline-block; padding-left: 20px; padding-right: 20px">
           Image name
         </div>
-        <button id="tools-button" onclick="switchImage('next')"> > </button>
+        <button id="toolkit-button" onclick="switchImage('next')"> > </button>
       </div>
     </div>
   </div>
