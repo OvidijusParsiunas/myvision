@@ -5,6 +5,7 @@ import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';
 import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
+import preprocessPastedText from '../utils/textProcessingUtils';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
   hideLabellerModal, changeStyleWhenInputEmpty,
@@ -112,8 +113,6 @@ function inputKeyDown(event) {
     window.setTimeout(() => {
       if (event.code === 'Space') {
         const initialCaretLocation = textInputElement.selectionStart;
-        // code for converting spaces to hythons
-        // textInputElement.value = textInputElement.value.replace(/\s/g, '-');
         setCaretPosition(initialCaretLocation);
       }
       if (currentlySelectedLabelOption) {
@@ -134,13 +133,6 @@ function inputKeyDown(event) {
       changeSubmitButtonStyling();
     }, 0);
   }
-}
-
-function preprocessPastedText(text) {
-  const noReturnChars = text.replace(/\n|\r/g, '');
-  // code for converting spaces to hythons
-  // const spacesToHythons = noReturnChars.replace(/\s/g, '-');
-  return noReturnChars;
 }
 
 function pasteLabelText() {

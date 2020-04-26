@@ -35,6 +35,10 @@ import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyling/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
+import {
+  setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent,
+} from '../utils/elementCaretUtils';
+import preprocessPastedText from '../utils/textProcessingUtils';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -158,27 +162,15 @@ function initialiseParentElement() {
   return document.createElement('div');
 }
 
-// test this in different browsers
-function getDefaultFont() {
-  const defaultSyle = window.getComputedStyle(activeLabelTextElement, null);
-  const size = defaultSyle.getPropertyValue('font-size');
-  const fontFamily = defaultSyle.getPropertyValue('font-family');
-  return `${size} ${fontFamily}`;
-}
-
-function isVerticalScrollPresent() {
-  return labelsListOverflowParentElement.scrollHeight
-   > labelsListOverflowParentElement.clientHeight;
-}
-
 function scrollHorizontallyToAppropriateWidth(text) {
   let myCanvas = document.createElement('canvas');
   const context = myCanvas.getContext('2d');
-  context.font = getDefaultFont();
+  context.font = getDefaultFont(activeLabelTextElement);
   const metrics = context.measureText(text);
-  if (isVerticalScrollPresent() && metrics.width > 170 - getScrollbarWidth()) {
+  if (isVerticalScrollPresent(labelsListOverflowParentElement)
+      && metrics.width > 170 - getScrollbarWidth()) {
     labelsListOverflowParentElement.scrollLeft = metrics.width - 165 + getScrollbarWidth() / 2;
-  } else if (!isVerticalScrollPresent() && metrics.width > 170) {
+  } else if (!isVerticalScrollPresent(labelsListOverflowParentElement) && metrics.width > 170) {
     labelsListOverflowParentElement.scrollLeft = metrics.width - 165;
   } else {
     labelsListOverflowParentElement.scrollLeft = 0;
@@ -186,69 +178,8 @@ function scrollHorizontallyToAppropriateWidth(text) {
   myCanvas = null;
 }
 
-function getCaretPositionOnDiv(editableDiv, paste) {
-  const currentCaretPosition = { position: 0, highlightRangeOnPaste: 0 };
-  let range = null;
-  if (window.getSelection) {
-    const selection = window.getSelection();
-    if (selection.rangeCount) {
-      range = selection.getRangeAt(0);
-      if (range.commonAncestorContainer.parentNode === editableDiv) {
-        currentCaretPosition.position = range.endOffset;
-      }
-      if (paste) {
-        currentCaretPosition.highlightRangeOnPaste = Math.abs(selection.focusOffset
-          - selection.anchorOffset);
-      }
-    }
-  } else if (document.selection && document.selection.createRange) {
-    range = document.selection.createRange();
-    if (range.parentElement() === editableDiv) {
-      const tempElement = document.createElement('span');
-      editableDiv.insertBefore(tempElement, editableDiv.firstChild);
-      const tempRange = range.duplicate();
-      tempRange.moveToElementText(tempRange);
-      tempRange.setEndPoint('EndToEnd', range);
-      currentCaretPosition.position = tempRange.text.length;
-    }
-  }
-  return currentCaretPosition;
-}
-
-function setCaretPositionOnDiv(index, contentEditableElement, space) {
-  let range;
-  if (document.createRange) {
-    // Firefox, Chrome, Opera, Safari, IE 9+
-    range = document.createRange();
-    // false means collapse to end rather than the start
-    range.setStart(contentEditableElement.childNodes[0], index);
-    range.collapse(false);
-    const selection = window.getSelection();
-    // remove any selections already made
-    selection.removeAllRanges();
-    selection.addRange(range);
-  } else if (document.selection) { // IE 8 and lower
-    range = document.body.createTextRange();
-    range.moveToElementText(contentEditableElement);
-    // false means collapse to end rather than the start
-    range.collapse(false);
-    // make it the visible selection
-    range.select();
-  }
-  if (!space) {
-    scrollHorizontallyToAppropriateWidth(contentEditableElement.innerHTML.substring(0, index));
-  }
-}
-
 function isHorizontalScrollPresent() {
   return labelsListOverflowParentElement.scrollWidth > labelsListOverflowParentElement.clientWidth;
-}
-
-function preprocessPastedText(text) {
-  const noReturnChars = text.replace(/(\r\n|\n|\r)/gm, '');
-  // code for converting spaces to hythons
-  // const spacesToHythons = noReturnChars.replace(/\s/g, '-');
-  return noReturnChars;
 }
 
 function pasteHandlerOnDiv(event) {
@@ -262,7 +193,8 @@ function pasteHandlerOnDiv(event) {
   const preprocessedPastedData = preprocessPastedText(pastedData);
   activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.slice(0, caretPositionStart)
    + preprocessedPastedData + activeLabelTextElement.innerHTML.slice(caretPositionEnd);
-  setCaretPositionOnDiv(caretPositionStart + preprocessedPastedData.length, activeLabelTextElement);
+  setCaretPositionOnDiv(caretPositionStart + preprocessedPastedData.length,
+    activeLabelTextElement, false, scrollHorizontallyToAppropriateWidth);
 }
 
 function addNewLabelToListFromPopUp(labelText, id, labelColor) {
@@ -446,7 +378,8 @@ function prepareLabelDivForEditing(id) {
   activeEditLabelButton = document.getElementById(`editButton${id}`);
   activeEditLabelButton.style.paddingRight = '3px';
   activeLabelId = id;
-  setCaretPositionOnDiv(activeLabelTextElement.innerHTML.length, activeLabelTextElement);
+  setCaretPositionOnDiv(activeLabelTextElement.innerHTML.length,
+    activeLabelTextElement, false, scrollHorizontallyToAppropriateWidth);
   activeDropdownElements = document.getElementsByClassName(`labelDropdown${id}`);
   changeActiveDropdownElementStyling();
   activeDropdownElements[0].classList.toggle('show');
@@ -678,9 +611,8 @@ window.labelTextKeyDown = (event) => {
   window.setTimeout(() => {
     if (event.code === 'Space') {
       const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement).position;
-      // code for converting spaces to hythons
-      // activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.replace(/\s/g, '-');
-      setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement, true);
+      setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement,
+        true, scrollHorizontallyToAppropriateWidth);
     }
     if (lastSelectedLabelOption) {
       lastSelectedLabelOption.style.backgroundColor = '';
