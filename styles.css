@@ -1153,12 +1153,17 @@ body {
 
 .toolkit-button {
   background-color: white;
+  border-radius: 3px;
   border-style: none;
   padding: 0;
   outline: none;
 }
 
 .toolkit-button-default {
+  cursor: pointer;
+}
+
+.toolkit-button-active {
   cursor: pointer;
 }
 

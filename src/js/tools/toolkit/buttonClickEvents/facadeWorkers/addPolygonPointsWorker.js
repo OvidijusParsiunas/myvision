@@ -12,6 +12,7 @@ import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvent
 import { resetAddPoints, isAddingPointsToPolygon, removePolygonPoints } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
+import { setButtonToActive, setButtonToDefault } from '../../styling/styling';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
 
@@ -38,6 +39,7 @@ function initiateAddPolygonPointsEvents(canvas) {
     purgeCanvasMouseEvents(canvas);
     assignAddPointsOnExistingPolygonEvents(canvas);
     setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
+    setButtonToActive(document.getElementById('add-points-button'));
     setDefaultState(false);
     setAddingPolygonPointsState(true);
   } else if (isAddingPointsToPolygon()) {
@@ -47,6 +49,7 @@ function initiateAddPolygonPointsEvents(canvas) {
     setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
   } else {
     resetAddPoints();
+    setButtonToDefault(document.getElementById('add-points-button'));
     setAddingPolygonPointsState(false);
     purgeCanvasMouseEvents(canvas);
     discardAddPointsEvents(canvas);
