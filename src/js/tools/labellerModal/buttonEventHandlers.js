@@ -5,7 +5,7 @@ import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';
 import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
-import preprocessPastedText from '../utils/textProcessingUtils';
+import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
   hideLabellerModal, changeStyleWhenInputEmpty,
@@ -17,12 +17,8 @@ let optionsElement = null;
 let oneOrMoreLabelsAdded = false;
 let currentlySelectedLabelOption = null;
 
-function preProcessText(text) {
-  return text.trim();
-}
-
 function changeSubmitButtonStyling() {
-  const prepocessedText = preProcessText(textInputElement.value);
+  const prepocessedText = preprocessLabelText(textInputElement.value);
   if (prepocessedText === '') {
     changeStyleWhenInputEmpty();
   } else if (prepocessedText === 'new label') {
@@ -48,7 +44,7 @@ function resetDrawingMode() {
 }
 
 function labelShape() {
-  const preprocessedText = preProcessText(textInputElement.value);
+  const preprocessedText = preprocessLabelText(textInputElement.value);
   if (preprocessedText !== '') {
     createLabelShape();
     setHasDrawnShapeState(true);

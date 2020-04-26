@@ -38,7 +38,7 @@ import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
   setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent,
 } from '../utils/elementCaretUtils';
-import preprocessPastedText from '../utils/textProcessingUtils';
+import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
 
 let isEditingLabel = false;
 let isVisibilitySelected = false;
@@ -517,16 +517,13 @@ function moveSelectedLabelToFrontOfLabelOptions(id, text) {
   }
 }
 
-function preprocessText(text) {
-  return text.trim();
-}
-
 function addNewLabelToLabelOptions(text) {
-  const preprocessedText = preprocessText(text);
+  const preprocessedText = preprocessLabelText(text);
   if (isLabelChanged) {
     if (preprocessedText === '') {
       activeLabelTextElement.innerHTML = originalLabelText;
     } else {
+      activeLabelTextElement.innerHTML = preprocessedText;
       addToLabelOptions(preprocessedText);
       const newLabelColor = getLabelColor(preprocessedText);
       changeShapeColorById(activeLabelId, newLabelColor);

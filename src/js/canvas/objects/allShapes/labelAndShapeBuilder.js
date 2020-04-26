@@ -7,6 +7,7 @@ import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/label
 import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/stateMachine';
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
+import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils';
 
 let currentId = 0;
 let canvas = null;
@@ -47,12 +48,8 @@ function replaceCurrentShapeColourPropertiesWithMLPallette(shape) {
   shape.set('stroke', 'rgb(88, 202, 75)');
 }
 
-function preProcessText(text) {
-  return text.trim();
-}
-
 function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
-  const preprocessedText = preProcessText(text);
+  const preprocessedText = preprocessLabelText(text);
   shape.set('id', currentId);
   shape.set('shapeLabelText', preprocessedText);
   const initialLocation = findInitialLabelLocation(shape);

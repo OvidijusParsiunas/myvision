@@ -5,4 +5,8 @@ function preprocessPastedText(text) {
   return noReturnChars;
 }
 
-export { preprocessPastedText as default };
+function preprocessLabelText(text) {
+  return text.trim();
+}
+
+export { preprocessPastedText, preprocessLabelText };

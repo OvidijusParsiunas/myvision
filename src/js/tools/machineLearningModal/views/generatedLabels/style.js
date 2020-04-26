@@ -3,7 +3,7 @@ import scrollIntoViewIfNeeded from '../../../utils/tableUtils';
 import {
   setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent,
 } from '../../../utils/elementCaretUtils';
-import preprocessPastedText from '../../../utils/textProcessingUtils';
+import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
 
 let editingActive = false;
 let activeTextRow = null;
@@ -183,12 +183,8 @@ function changeRowToEdit(element) {
   }
 }
 
-function preProcessText(text) {
-  return text.trim();
-}
-
 function displayRedEditButtonIfActiveTextEmpty() {
-  const preprocessedText = preProcessText(activeTextElement.innerHTML);
+  const preprocessedText = preprocessLabelText(activeTextElement.innerHTML);
   if (preprocessedText === '') {
     activeTextRow.childNodes[5].style.display = 'none';
     activeTextRow.childNodes[7].style.display = '';
@@ -301,9 +297,10 @@ function assignGeneratedLabelsViewLocalVariables() {
 }
 
 export {
-  hideGeneratedLabelsViewAssets, changeRowToEdit, MLLabelTextPaste,
+  scrollHorizontallyToAppropriateWidth, displayViewElements,
+  displayGreyedDefaultEditLabelButton, changeEditedLabelText,
   assignGeneratedLabelsViewLocalVariables, canChangeRowToStopEdit,
+  hideGeneratedLabelsViewAssets, changeRowToEdit, MLLabelTextPaste,
   stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty,
   updateGeneratedLabelsElementWidth, displayHighlightedDefaultEditLabelButton,
-  displayGreyedDefaultEditLabelButton, changeEditedLabelText, displayViewElements,
 };

@@ -1,7 +1,7 @@
 import {
-  updateGeneratedLabelsElementWidth, MLLabelTextPaste,
   displayHighlightedDefaultEditLabelButton, displayRedEditButtonIfActiveTextEmpty,
   displayGreyedDefaultEditLabelButton, changeRowToEdit, hideGeneratedLabelsViewAssets,
+  updateGeneratedLabelsElementWidth, MLLabelTextPaste, scrollHorizontallyToAppropriateWidth,
 } from './style';
 import {
   getGeneratedMachineLearningData, setActiveLabelProperties,
@@ -12,6 +12,7 @@ import { drawShapesViaCoordinates } from '../../../../canvas/utils/drawShapesVia
 function MLLabelTextKeyDown(event) {
   if (event.key === 'Enter') {
     stopEditingMLGeneratedLabelName();
+    scrollHorizontallyToAppropriateWidth('');
   } else {
     window.setTimeout(() => {
       updateGeneratedLabelsElementWidth();
