@@ -46,14 +46,20 @@ function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) 
   funcObj.uploadImagesInputClick(input);
 }
 
-function doNothingIfLabellingInProgress(func) {
+function isElement(element) {
+  return element instanceof Element || element instanceof HTMLDocument;
+}
+
+function doNothingIfLabellingInProgress(func, element) {
+  if (isElement(element) && element.classList.contains('toolkit-button-disabled')) return;
   removeActiveButtonPopup();
   if (!isLabelling()) {
     if (func) func();
   }
 }
 
-function doNothingIfLabellingOrAddingNewPoints(func) {
+function doNothingIfLabellingOrAddingNewPoints(func, element) {
+  if (isElement(element) && element.classList.contains('toolkit-button-disabled')) return;
   removeActiveButtonPopup();
   if (!isLabelling() && !getPolygonDrawingInProgressState()) {
     interruptCanvasToStartAddPoints();

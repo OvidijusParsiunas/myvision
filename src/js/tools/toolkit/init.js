@@ -1,6 +1,6 @@
 import { assignToolkitButtonHoverEvents } from './buttonHoverEvents/buttonHoverEvents';
+import { initiateToolkitButtonStyling } from './styling/styling';
 import assignToolkitButtonEventHandlers from './buttonClickEvents/buttonClickEvents';
-import initiateToolkitButtonStyling from './styling/styling';
 
 function initialiseToolkit() {
   assignToolkitButtonEventHandlers();

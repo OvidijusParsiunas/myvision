@@ -3,9 +3,10 @@ import { setImageNameElementToDefault } from '../../imageSwitchPanel/style';
 import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
 import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { decrementShapeType } from '../../globalStatistics/globalStatistics';
+import { decrementShapeType, getNumberOfShapeTypes } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
 import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
+import { setButtonToDisabled } from '../../toolkit/styling/styling';
 
 let canvas = null;
 
@@ -44,6 +45,11 @@ function resetRemainingImageElements() {
   }
 }
 
+function disableShapeEditingIcons() {
+  setButtonToDisabled(document.getElementById('add-points-button'));
+  setButtonToDisabled(document.getElementById('remove-points-button'));
+}
+
 function removeImage() {
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
@@ -54,6 +60,7 @@ function removeImage() {
     allImageData.splice(index, 1);
     removeAllLabelRefs();
     removeAllShapes();
+    if (getNumberOfShapeTypes().polygons === 0) disableShapeEditingIcons();
     switchImage(index, allImageData, previousImageDataLength);
   }
 }

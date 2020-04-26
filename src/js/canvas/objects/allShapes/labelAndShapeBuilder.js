@@ -8,9 +8,17 @@ import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingS
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils';
+import { setButtonToDefault } from '../../../tools/toolkit/styling/styling';
 
 let currentId = 0;
 let canvas = null;
+
+function enableShapeEditingIcons(shape) {
+  if (shape.shapeName === 'polygon') {
+    setButtonToDefault(document.getElementById('add-points-button'));
+    setButtonToDefault(document.getElementById('remove-points-button'));
+  }
+}
 
 function findInitialLabelLocation(shape) {
   const locationObj = {};
@@ -58,6 +66,7 @@ function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
   addToLabelOptions(textShape.text);
   const shapeColor = getLabelColor(textShape.text);
   addLabelRef(textShape, currentId);
+  enableShapeEditingIcons(shape);
   // sending image reference when not current image
   if (image) {
     const shapeRefObject = addShapeForInvisibleImage(shape, shapeColor);

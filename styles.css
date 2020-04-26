@@ -1156,21 +1156,28 @@ body {
   border-style: none;
   padding: 0;
   outline: none;
+}
+
+.toolkit-button-default {
   cursor: pointer;
 }
 
 /* removing dotted border when in focus on firefox */
-.toolkit-button::-moz-focus-inner { 
+.toolkit-button-default::-moz-focus-inner { 
   border: 0; 
 }
 
-.toolkit-button:hover {
+.toolkit-button-default:hover {
   background-color: rgb(238, 238, 238);
 }
 
-.toolkit-button:active {
+.toolkit-button-default:active {
   /* highlight in the color of what the icon is going to be */
   background-color: lightgreen;
+}
+
+.toolkit-button-disabled {
+  cursor: default;
 }
 
 .toolkit-button-icon {
