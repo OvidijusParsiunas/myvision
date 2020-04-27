@@ -1,5 +1,6 @@
 import { getNumberOfShapeTypes } from '../../globalStatistics/globalStatistics';
 import { setButtonToActive, setButtonToDefault, setButtonToDisabled } from './styling';
+import { getPolygonDrawingInProgressState } from '../../stateMachine';
 
 const state = { ACTIVE: 'active', DEFAULT: 'default', DISABLED: 'disabled' };
 let removePointsState = state.DEFAULT;
@@ -51,7 +52,7 @@ function setAddPointsButtonToDefault() {
 }
 
 function setRemovePointsButtonToDefault() {
-  if (getNumberOfShapeTypes().polygons > 0) {
+  if (getNumberOfShapeTypes().polygons > 0 || getPolygonDrawingInProgressState()) {
     setRemovePointsDefault();
   } else {
     setRemovePointsDisabled();
@@ -59,8 +60,8 @@ function setRemovePointsButtonToDefault() {
 }
 
 function setPolygonEditingButtonsToDefault() {
-  setRemovePointsDefault();
-  if (getNumberOfShapeTypes().polygons > 0) setAddPointsDefault();
+  setAddPointsButtonToDefault();
+  setRemovePointsButtonToDefault();
 }
 
 function setAddPointsButtonToActive() {

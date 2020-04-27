@@ -10,7 +10,7 @@ import {
 } from '../../../tools/stateMachine';
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { setAddPointsButtonToDefault } from '../../../tools/toolkit/styling/stateMachine';
+import { setAddPointsButtonToDefault, setRemovePointsButtonToDefault } from '../../../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 let pointArray = [];
@@ -139,6 +139,7 @@ if (pointArray.length === 2) {
 */
 
 function addPoint(pointer) {
+  setPolygonDrawingInProgressState(true);
   const point = new fabric.Circle(polygonProperties.newPoint(pointId, pointer));
   pointId += 1;
   let points = [pointer.x, pointer.y, pointer.x, pointer.y];
@@ -167,12 +168,12 @@ function addPoint(pointer) {
     invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(pointer));
     canvas.add(invisiblePoint);
     point.set(polygonProperties.firstPoint());
+    setRemovePointsButtonToDefault();
   }
   preventOutOfBoundsPointsOnMove(point, canvas);
   pointArray.push(point);
   activeShape.sendToBack();
   canvas.selection = false;
-  setPolygonDrawingInProgressState(true);
 }
 
 function getTempPolygon() {

@@ -37,6 +37,7 @@ function interruptCanvasEventsWithoutRemovingExistingPoints() {
     setPolygonEditingButtonsToDefault();
     setAlteringPolygonPointsState(false);
   }
+  setPolygonEditingButtonsToDefault();
 }
 
 function interruptAllCanvasEvents() {

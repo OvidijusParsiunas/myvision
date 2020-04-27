@@ -63,7 +63,6 @@ function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
   addToLabelOptions(textShape.text);
   const shapeColor = getLabelColor(textShape.text);
   addLabelRef(textShape, currentId);
-  enableShapeEditingIcons(shape);
   // sending image reference when not current image
   if (image) {
     const shapeRefObject = addShapeForInvisibleImage(shape, shapeColor);
@@ -73,6 +72,7 @@ function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
     addShape(shape, shapeColor, currentId);
     addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
   }
+  enableShapeEditingIcons(shape);
   if (isUsingMachineLearning) {
     replaceCurrentShapeColourPropertiesWithMLPallette(shape);
   }
