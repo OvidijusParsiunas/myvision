@@ -1,6 +1,7 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
+import { setPolygonEditingButtonsToDefault } from '../../styling/stateMachine';
 import {
   setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
   getDefaultState, getAddingPolygonPointsState, getLastDrawingModeState, getContinuousDrawingState,
@@ -19,6 +20,7 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
     }
     assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
     if (getAlteringPolygonPointsState()) {
+      setPolygonEditingButtonsToDefault();
       setAlteringPolygonPointsState(false);
     }
     setDefaultState(true);

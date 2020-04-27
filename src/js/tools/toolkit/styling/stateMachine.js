@@ -1,3 +1,4 @@
+import { getNumberOfShapeTypes } from '../../globalStatistics/globalStatistics';
 import { setButtonToActive, setButtonToDefault, setButtonToDisabled } from './styling';
 
 const state = { ACTIVE: 'active', DEFAULT: 'default', DISABLED: 'disabled' };
@@ -6,40 +7,70 @@ let addPointsState = state.DEFAULT;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
 
-function setPolygonEditingButtonsToDefault() {
-  setButtonToDefault(removePolygonPointsButtonElement);
-  removePointsState = state.DEFAULT;
-  setButtonToDefault(addPolygonPointsButtonElement);
-  addPointsState = state.DEFAULT;
-}
-
-function setPolygonEditingButtonsToDisabled() {
-  setButtonToDisabled(removePolygonPointsButtonElement);
-  removePointsState = state.DISABLED;
+function setAddPointsDisabled() {
   setButtonToDisabled(addPolygonPointsButtonElement);
   addPointsState = state.DISABLED;
 }
 
-function setAddPointsButtonToActive() {
-  setButtonToActive(addPolygonPointsButtonElement);
-  addPointsState = state.ACTIVE;
-  if (removePointsState === state.ACTIVE) setButtonToDefault(removePolygonPointsButtonElement);
+function setRemovePointsDisabled() {
+  setButtonToDisabled(removePolygonPointsButtonElement);
+  removePointsState = state.DISABLED;
 }
 
-function setAddPointsButtonToDefault() {
+function setAddPointsDefault() {
   setButtonToDefault(addPolygonPointsButtonElement);
   addPointsState = state.DEFAULT;
 }
 
-function setRemovePointsButtonToActive() {
+function setRemovePointsDefault() {
+  setButtonToDefault(removePolygonPointsButtonElement);
+  removePointsState = state.DEFAULT;
+}
+
+function setAddPointsActive() {
+  setButtonToActive(addPolygonPointsButtonElement);
+  addPointsState = state.ACTIVE;
+}
+
+function setRemovePointsActive() {
   setButtonToActive(removePolygonPointsButtonElement);
   removePointsState = state.ACTIVE;
-  if (addPointsState === state.ACTIVE) setButtonToDefault(addPolygonPointsButtonElement);
+}
+
+function setPolygonEditingButtonsToDisabled() {
+  setRemovePointsDisabled();
+  setAddPointsDisabled();
+}
+
+function setAddPointsButtonToDefault() {
+  if (getNumberOfShapeTypes().polygons > 0) {
+    setAddPointsDefault();
+  } else {
+    setAddPointsDisabled();
+  }
 }
 
 function setRemovePointsButtonToDefault() {
-  setButtonToDefault(removePolygonPointsButtonElement);
-  removePointsState = state.DEFAULT;
+  if (getNumberOfShapeTypes().polygons > 0) {
+    setRemovePointsDefault();
+  } else {
+    setRemovePointsDisabled();
+  }
+}
+
+function setPolygonEditingButtonsToDefault() {
+  setRemovePointsDefault();
+  if (getNumberOfShapeTypes().polygons > 0) setAddPointsDefault();
+}
+
+function setAddPointsButtonToActive() {
+  setAddPointsActive();
+  if (removePointsState === state.ACTIVE) setRemovePointsDefault();
+}
+
+function setRemovePointsButtonToActive() {
+  setRemovePointsActive();
+  if (addPointsState === state.ACTIVE) setAddPointsDefault();
 }
 
 function identifyToolkitButtons() {

@@ -1,5 +1,6 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
+import { setPolygonEditingButtonsToDefault } from '../../styling/stateMachine';
 import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
@@ -9,6 +10,7 @@ function initiateCreateNewPolygonEvents(canvas) {
   purgeCanvasMouseEvents(canvas);
   assignDrawPolygonEvents(canvas);
   setDefaultState(false);
+  setPolygonEditingButtonsToDefault();
   setAlteringPolygonPointsState(false);
   setLastDrawingModeState('polygon');
   setHasDrawnShapeState(false);

@@ -9,6 +9,7 @@ import {
 } from '../../../tools/stateMachine';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
+import { setAddPointsButtonToDefault } from '../../../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -202,6 +203,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
   setReadyToDrawShapeState(true);
   canvas.discardActiveObject();
   if (getAddingPolygonPointsState()) {
+    setAddPointsButtonToDefault();
     setAddingPolygonPointsState(false);
     finishDrawingBoundingBoxClick = skipMouseUpEvent;
   } else {

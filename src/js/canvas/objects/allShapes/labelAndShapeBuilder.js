@@ -8,16 +8,13 @@ import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingS
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils';
-import { setButtonToDefault } from '../../../tools/toolkit/styling/styling';
+import { setPolygonEditingButtonsToDefault } from '../../../tools/toolkit/styling/stateMachine';
 
 let currentId = 0;
 let canvas = null;
 
 function enableShapeEditingIcons(shape) {
-  if (shape.shapeName === 'polygon') {
-    setButtonToDefault(document.getElementById('add-points-button'));
-    setButtonToDefault(document.getElementById('remove-points-button'));
-  }
+  if (shape.shapeName === 'polygon') setPolygonEditingButtonsToDefault();
 }
 
 function findInitialLabelLocation(shape) {

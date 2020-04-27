@@ -10,6 +10,7 @@ import {
 } from '../../../tools/stateMachine';
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
+import { setAddPointsButtonToDefault } from '../../../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 let pointArray = [];
@@ -265,6 +266,7 @@ function prepareCanvasForNewPolygon(canvasObj) {
   setDrawCursorMode(canvas);
   setReadyToDrawShapeState(true);
   if (getAddingPolygonPointsState()) {
+    setAddPointsButtonToDefault();
     setAddingPolygonPointsState(false);
     mouseUpClick = skipMouseUpEvent;
   } else {
