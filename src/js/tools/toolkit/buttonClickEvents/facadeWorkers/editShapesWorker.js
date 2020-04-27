@@ -8,9 +8,8 @@ import {
   setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
 } from '../../../stateMachine';
 import {
-  cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon,
+  cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon, getPolygonIdIfEditing,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import { getSelectedPolygonIdForAddPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
@@ -37,8 +36,7 @@ function dismissRemovePointsEvents(canvas) {
   purgeCanvasMouseEvents(canvas);
   cleanPolygonPointsArray();
   setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
-  const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
-  assignDefaultEvents(canvas, currentlySelectedPolygonId);
+  assignDefaultEvents(canvas, getPolygonIdIfEditing());
   setRemovePointsButtonToDefault();
   setRemovingPolygonPointsState(false);
 }

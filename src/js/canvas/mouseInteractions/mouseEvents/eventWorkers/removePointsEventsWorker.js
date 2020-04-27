@@ -80,12 +80,7 @@ function pointMouseOutEvents(event) {
   }
 }
 
-function getSelectedPolygonIdForRemovingPoints() {
-  return selectedPolygonId;
-}
-
 export {
-  setRemovablePointsEventsCanvas, pointMouseOverEvents,
-  pointMouseDownEvents, getSelectedPolygonIdForRemovingPoints,
   pointMouseUpEvents, pointMouseOutEvents, setPolygonNotEditableOnClick,
+  setRemovablePointsEventsCanvas, pointMouseOverEvents, pointMouseDownEvents,
 };

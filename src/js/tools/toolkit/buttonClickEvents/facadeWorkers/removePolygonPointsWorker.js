@@ -16,9 +16,8 @@ import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mo
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
-import { getSelectedPolygonIdForRemovingPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import {
-  resetAddPoints, cleanPolygonPointsArray, removePolygonPoints,
+  resetAddPoints, cleanPolygonPointsArray, removePolygonPoints, getPolygonIdIfEditing,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import { removeHighlightOfListLabel } from '../../../labelList/labelListHighlightUtils';
 
@@ -58,8 +57,7 @@ function discardRemovePointsEvents(canvas) {
   } else {
     cleanPolygonPointsArray();
     setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
-    const currentlySelectedPolygonId = getSelectedPolygonIdForRemovingPoints();
-    assignDefaultEvents(canvas, currentlySelectedPolygonId);
+    assignDefaultEvents(canvas, getPolygonIdIfEditing());
     setDefaultState(true);
   }
 }
