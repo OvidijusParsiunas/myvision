@@ -19,7 +19,7 @@ import { removeLabelFromListOnShapeDelete, getCurrentlySelectedLabelShape } from
 import { removeShape, getNumberOfShapes } from '../../../../canvas/objects/allShapes/allShapes';
 import { removeTickSVGOverImageThumbnail } from '../../../imageList/imageList';
 import { getNumberOfShapeTypes } from '../../../globalStatistics/globalStatistics';
-import { setPolygonEditingButtonsToDisabled, setRemovePointsButtonToDefault, setPolygonEditingButtonsToDefault } from '../../styling/stateMachine';
+import { setPolygonEditingButtonsToDisabled, setRemovePointsButtonToDefault } from '../../styling/stateMachine';
 
 function removeBoundingBox(canvas, mLGeneratedObject) {
   const activeObject = mLGeneratedObject || canvas.getActiveObject()
@@ -79,8 +79,7 @@ function removeActiveShapeEvent(canvas) {
     removeEditedPolygonId();
     if (getNumberOfShapeTypes().polygons === 0) {
       setPolygonEditingButtonsToDisabled();
-    } else {
-      setPolygonEditingButtonsToDefault();
+      window.editShapes();
     }
   }
   if (getNumberOfShapes() === 0) {
