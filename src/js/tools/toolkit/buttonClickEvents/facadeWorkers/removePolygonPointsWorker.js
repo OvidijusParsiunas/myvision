@@ -6,6 +6,7 @@ import {
   getContinuousDrawingState, getAddingPolygonPointsState, setReadyToDrawShapeState,
   getLastDrawingModeState, setAddingPolygonPointsState, getPolygonDrawingInProgressState,
 } from '../../../stateMachine';
+import { setRemovePointsButtonToActive, setRemovePointsButtonToDefault } from '../../styling/stateMachine';
 import { removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
 import setRemovePointsOnDrawNewPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnDrawNewPolygonMode';
@@ -20,7 +21,6 @@ import {
   resetAddPoints, cleanPolygonPointsArray, removePolygonPoints,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import { removeHighlightOfListLabel } from '../../../labelList/labelListHighlightUtils';
-import { setButtonToActive, setButtonToDefault } from '../../styling/styling';
 
 function setRemovePointsCursorMode(canvas) {
   const isDrawingPolygon = getPolygonDrawingInProgressState();
@@ -72,8 +72,6 @@ function initiateRemovePolygonPointsEvents(canvas) {
     if (getAddingPolygonPointsState()) {
       setAddingPolygonPointsState(false);
       resetAddPoints();
-      // state machine would take care of this
-      setButtonToDefault(document.getElementById('add-points-button'));
     }
     purgeCanvasMouseEvents(canvas);
     assignRemovePointsEvents(canvas);
@@ -82,14 +80,14 @@ function initiateRemovePolygonPointsEvents(canvas) {
       setCancelledReadyToDrawState(true);
       setRemovingPointsAfterCancelDrawState(true);
     }
-    setButtonToActive(document.getElementById('remove-points-button'));
+    setRemovePointsButtonToActive();
     setDefaultState(false);
     setReadyToDrawShapeState(false);
     setRemovingPolygonPointsState(true);
   } else {
     purgeCanvasMouseEvents(canvas);
     discardRemovePointsEvents(canvas);
-    setButtonToDefault(document.getElementById('remove-points-button'));
+    setRemovePointsButtonToDefault();
     setRemovingPolygonPointsState(false);
   }
 }

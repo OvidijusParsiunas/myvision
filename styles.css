@@ -1172,6 +1172,11 @@ body {
   border: 0; 
 }
 
+/* removing dotted border when in focus on firefox */
+.toolkit-button-active::-moz-focus-inner { 
+  border: 0; 
+}
+
 .toolkit-button-default:hover {
   background-color: rgb(238, 238, 238);
 }

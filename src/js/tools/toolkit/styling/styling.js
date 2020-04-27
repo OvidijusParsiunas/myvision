@@ -1,13 +1,8 @@
-let removePolygonPointsButton = null;
-let addPolygonPointsButton = null;
 const INDEX_OF_BUTTON_STATE_CLASS = 1;
 
 function isElement(element) {
   return element instanceof Element || element instanceof HTMLDocument;
 }
-
-// might need a state machine for this
-// good example is a set polygon editing buttons to active
 
 function setButtonToActive(button) {
   if (isElement(button) && button.classList[INDEX_OF_BUTTON_STATE_CLASS] === 'toolkit-button-active') return;
@@ -40,21 +35,4 @@ function setButtonToDisabled(button) {
   button.style.backgroundColor = '';
 }
 
-function identifyToolkitButtons() {
-  removePolygonPointsButton = document.getElementById('remove-points-button');
-  addPolygonPointsButton = document.getElementById('add-points-button');
-}
-
-function setInitialToolkitButtonStyling() {
-  setButtonToDisabled(removePolygonPointsButton);
-  setButtonToDisabled(addPolygonPointsButton);
-}
-
-function initiateToolkitButtonStyling() {
-  identifyToolkitButtons();
-  setInitialToolkitButtonStyling();
-}
-
-export {
-  initiateToolkitButtonStyling, setButtonToDefault, setButtonToDisabled, setButtonToActive,
-};
+export { setButtonToDefault, setButtonToDisabled, setButtonToActive };
