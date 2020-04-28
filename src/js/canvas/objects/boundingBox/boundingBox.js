@@ -10,6 +10,7 @@ import {
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { setAddPointsButtonToDefault } from '../../../tools/toolkit/styling/stateMachine';
+import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -216,20 +217,6 @@ function prepareCanvasForNewBoundingBoxesFromExternalSources(canvasObj) {
   setDrawCursorMode(canvas);
 }
 
-function getScrollWidth() {
-  // create a div with the scroll
-  const div = document.createElement('div');
-  div.style.overflowY = 'scroll';
-  div.style.width = '50px';
-  div.style.height = '50px';
-
-  // must put it in the document, otherwise sizes will be 0
-  document.body.append(div);
-  const scrollWidth = div.offsetWidth - div.clientWidth;
-  div.remove();
-  return scrollWidth * 2;
-}
-
 function topOverflowScroll(event, zoomOverflowElement) {
   const currentScrollTopOffset = zoomOverflowElement.scrollTop / getCurrentZoomState();
   const newPositionTop = canvas.getPointer(event.e).y - currentScrollTopOffset;
@@ -276,7 +263,11 @@ function shapeScrollEvents(event) {
       const zoomOverflowElement = document.getElementById('zoom-overflow');
       const currentBotLocation = zoomOverflowElement.scrollTop + zoomOverflowElement.offsetHeight;
       const futureBotLocation = currentBotLocation + event.e.deltaY;
-      const scrollWidth = getDoubleScrollCanvasState() ? getScrollWidth() : getScrollWidth() / 2;
+      // if the scrolling brings issues where the bottom of the bounding box is not at
+      // the right position, then go with the original implementation:
+      // 9ff478d8ac4e06eeae9d472ef49b3387682e12b6
+      const scrollWidth = getDoubleScrollCanvasState() ? getScrollbarWidth() * 4
+        : getScrollbarWidth() * 2;
       if (zoomOverflowElement.scrollTop + event.e.deltaY < 0) {
         topOverflowScroll(event, zoomOverflowElement);
       } else if (futureBotLocation > stubHeight + scrollWidth) {
