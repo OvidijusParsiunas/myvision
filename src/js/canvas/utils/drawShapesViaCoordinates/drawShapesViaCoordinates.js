@@ -13,12 +13,12 @@ import { getCanvasReferences } from '../fabricUtils';
 import assignDefaultEvents from '../../mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { repopulateDropdown } from '../../../tools/labelList/labelList';
 import {
-  getAllImageData,
   getLastImageIdByName,
   displayTickSVGOverImageThumbnail,
   setDefaultImageThumbnailHighlightToML,
   setDefaultImageThumbnailHighlightToMLSelected,
 } from '../../../tools/imageList/imageList';
+import getAllImageData from '../../../tools/imageList/imageData';
 
 let canvas = null;
 const tempShapes = [];

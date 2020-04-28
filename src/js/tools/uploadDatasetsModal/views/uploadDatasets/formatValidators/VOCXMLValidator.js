@@ -3,7 +3,7 @@ import {
   XML_POSTFIX, TAGS_STRING, ANNOTATION_FILE_INDICATOR,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
+import getAllImageData from '../../../../imageList/imageData';
 import { getReuseAlreadyUploadedImagesState } from '../../../stateMachine';
 import { checkObjectProperties } from './sharedUtils';
 

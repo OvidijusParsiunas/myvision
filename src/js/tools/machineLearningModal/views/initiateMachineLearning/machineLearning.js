@@ -1,4 +1,4 @@
-import { getAllImageData } from '../../../imageList/imageList';
+import getAllImageData from '../../../imageList/imageData';
 import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { getCurrentImageId } from '../../../stateMachine';
 import {

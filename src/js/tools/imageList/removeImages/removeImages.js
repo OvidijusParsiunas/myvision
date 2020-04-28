@@ -1,4 +1,5 @@
-import { getAllImageData, updateCurrentImageIds, getCurrentImageId } from '../imageList';
+import { updateCurrentImageIds, getCurrentImageId } from '../imageList';
+import getAllImageData from '../imageData';
 import { setImageNameElementToDefault } from '../../imageSwitchPanel/style';
 import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';

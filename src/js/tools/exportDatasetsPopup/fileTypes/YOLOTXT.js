@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
-import { getAllImageData } from '../../imageList/imageList';
+import getAllImageData from '../../imageList/imageData';
 import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions, getMaxUsedLabelIndex } from '../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateMachine';

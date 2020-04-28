@@ -12,9 +12,10 @@ import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
 import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { updateImageNameElement } from '../imageSwitchPanel/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
+import getAllImageData from './imageData';
 
 let currentlyActiveElement = null;
-const images = [];
+let images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
 let firstImage = true;
@@ -34,12 +35,9 @@ function findImageListElement() {
 }
 
 function initialiseImageListFunctionality() {
+  images = getAllImageData();
   findImageListElement();
   initialiseImageListML(images);
-}
-
-function getAllImageData() {
-  return images;
 }
 
 function getImageIdByName(imageName) {
@@ -299,7 +297,7 @@ function canSwitchImage(direction) {
 export {
   getCurrentImageId,
   initialiseImageListFunctionality, setDefaultImageThumbnailHighlightToML,
-  displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
+  displayTickSVGOverImageThumbnail, addSingleImageToList,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
   setThumbnailColourOverlayBackToDefault, getImageIdByName, getLastImageIdByName,
   switchImage, canSwitchImage, addImageFromMultiUploadToList, updateCurrentImageIds,

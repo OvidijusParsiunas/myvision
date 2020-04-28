@@ -3,7 +3,7 @@ import {
   ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
+import getAllImageData from '../../../../imageList/imageData';
 import { getReuseAlreadyUploadedImagesState } from '../../../stateMachine';
 import { checkObjectProperties, checkArrayElements } from './sharedUtils';
 
