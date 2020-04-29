@@ -44,6 +44,8 @@ popover for github links
 
 I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed\
 
+highlight the trash can icon when an image has been uploaded
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders

@@ -1,13 +1,13 @@
-import { updateCurrentImageIds, getCurrentImageId } from '../imageList';
-import getAllImageData from '../imageData';
+import { updateCurrentImageIds, getAllImageData } from '../imageList';
 import { setImageNameElementToDefault } from '../../imageSwitchPanel/style';
 import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
 import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { decrementShapeType, getNumberOfShapeTypes } from '../../globalStatistics/globalStatistics';
+import { decrementShapeType } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
 import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { setPolygonEditingButtonsToDisabled } from '../../toolkit/styling/stateMachine';
+import { getCurrentImageId } from '../../stateMachine';
 
 let canvas = null;
 
@@ -56,7 +56,7 @@ function removeImage() {
     allImageData.splice(index, 1);
     removeAllLabelRefs();
     removeAllShapes();
-    if (getNumberOfShapeTypes().polygons === 0) setPolygonEditingButtonsToDisabled();
+    setPolygonEditingButtonsToDisabled();
     switchImage(index, allImageData, previousImageDataLength);
   }
 }

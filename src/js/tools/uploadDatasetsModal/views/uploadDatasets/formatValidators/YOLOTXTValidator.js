@@ -3,7 +3,7 @@ import {
   TXT_POSTFIX, ATTRIBUTES_STRING, ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
-import getAllImageData from '../../../../imageList/imageData';
+import { getAllImageData } from '../../../../imageList/imageList';
 import { getReuseAlreadyUploadedImagesState } from '../../../stateMachine';
 import { checkObjectProperties } from './sharedUtils';
 

@@ -18,7 +18,6 @@ import { removeLabel } from '../../../../canvas/objects/label/label';
 import { removeLabelFromListOnShapeDelete, getCurrentlySelectedLabelShape } from '../../../labelList/labelList';
 import { removeShape, getNumberOfShapes } from '../../../../canvas/objects/allShapes/allShapes';
 import { removeTickSVGOverImageThumbnail } from '../../../imageList/imageList';
-import { getNumberOfShapeTypes } from '../../../globalStatistics/globalStatistics';
 import { setPolygonEditingButtonsToDisabled, setRemovePointsButtonToDefault } from '../../styling/stateMachine';
 
 function removeBoundingBox(canvas, mLGeneratedObject) {
@@ -77,10 +76,7 @@ function removeActiveShapeEvent(canvas) {
     removeLabelFromListOnShapeDelete(polygonId);
     removePolygonPoints();
     removeEditedPolygonId();
-    if (getNumberOfShapeTypes().polygons === 0) {
-      setPolygonEditingButtonsToDisabled();
-      window.editShapes();
-    }
+    if (setPolygonEditingButtonsToDisabled()) window.editShapes();
   }
   if (getNumberOfShapes() === 0) {
     removeTickSVGOverImageThumbnail(getCurrentImageId());

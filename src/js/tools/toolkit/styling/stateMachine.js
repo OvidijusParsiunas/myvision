@@ -1,13 +1,21 @@
-import { getNumberOfShapeTypes } from '../../globalStatistics/globalStatistics';
 import { setButtonToActive, setButtonToDefault, setButtonToDisabled } from './styling';
-import { getPolygonDrawingInProgressState, getCurrentImageId } from '../../stateMachine';
-import getAllImageData from '../../imageList/imageData';
+import { getPolygonDrawingInProgressState } from '../../stateMachine';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 
 const state = { ACTIVE: 'active', DEFAULT: 'default', DISABLED: 'disabled' };
 let removePointsState = state.DEFAULT;
 let addPointsState = state.DEFAULT;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
+
+function polygonsPresentInCurrentImage() {
+  const currentShapes = getAllExistingShapes();
+  const shapeIds = Object.keys(currentShapes);
+  for (let i = 0; i < shapeIds.length; i += 1) {
+    if (currentShapes[shapeIds[i]].shapeRef.shapeName === 'polygon') return true;
+  }
+  return false;
+}
 
 function setAddPointsDisabled() {
   setButtonToDisabled(addPolygonPointsButtonElement);
@@ -40,13 +48,16 @@ function setRemovePointsActive() {
 }
 
 function setPolygonEditingButtonsToDisabled() {
-  setRemovePointsDisabled();
-  setAddPointsDisabled();
+  if (!polygonsPresentInCurrentImage()) {
+    setRemovePointsDisabled();
+    setAddPointsDisabled();
+    return true;
+  }
+  return false;
 }
 
 function setAddPointsButtonToDefault() {
-  // console.log(getAllImageData()[getCurrentImageId()]);
-  if (getNumberOfShapeTypes().polygons > 0) {
+  if (polygonsPresentInCurrentImage()) {
     setAddPointsDefault();
   } else {
     setAddPointsDisabled();
@@ -54,7 +65,7 @@ function setAddPointsButtonToDefault() {
 }
 
 function setRemovePointsButtonToDefault() {
-  if (getNumberOfShapeTypes().polygons > 0 || getPolygonDrawingInProgressState()) {
+  if (polygonsPresentInCurrentImage() || getPolygonDrawingInProgressState()) {
     setRemovePointsDefault();
   } else {
     setRemovePointsDisabled();

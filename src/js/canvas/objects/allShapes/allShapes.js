@@ -41,6 +41,7 @@ function removeAllShapeRefs() {
   shapes = {};
 }
 
+// refactor the side effect of removing shape refs
 function retrieveAllShapeRefs() {
   const shapeRefs = {};
   Object.keys(shapes).forEach((key) => {
@@ -93,7 +94,6 @@ function removeShape(id) {
   canvas.remove(shapes[id].shapeRef);
   delete shapes[id];
 }
-
 
 function assignCanvasForShapeFillManipulation(canvasObj) {
   canvas = canvasObj;

@@ -1,5 +1,5 @@
 import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
-import getAllImageData from '../../imageList/imageData';
+import { getAllImageData } from '../../imageList/imageList';
 import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 import { getLabelOptions } from '../../labelList/labelOptions';
 import { getCurrentImageId } from '../../stateMachine';

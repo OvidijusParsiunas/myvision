@@ -37,7 +37,7 @@ import assembleFinalObjectFromCSV from './uploadDatasets/finalObjectAssemblers/C
 import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssemblers/VOCXMLFinalObjectAssembler';
 import assembleFinalObjectFromYOLOTXT from './uploadDatasets/finalObjectAssemblers/YOLOTXTFinalObjectAssembler';
 import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
-import getAllImageData from '../../imageList/imageData';
+import { getAllImageData } from '../../imageList/imageList';
 import {
   JSON_POSTFIX, CSV_POSTFIX, XML_POSTFIX, TXT_POSTFIX,
   ACCEPT_JSON_AND_IMG_FILES, ACCEPT_CSV_AND_IMG_FILES,

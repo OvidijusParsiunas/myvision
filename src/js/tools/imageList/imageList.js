@@ -5,6 +5,7 @@ import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect 
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState, setCurrentImageId } from '../stateMachine';
+import { setPolygonEditingButtonsToDefault } from '../toolkit/styling/stateMachine';
 import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
@@ -12,18 +13,13 @@ import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
 import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { updateImageNameElement } from '../imageSwitchPanel/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
-import getAllImageData from './imageData';
 
 let currentlyActiveElement = null;
-let images = [];
+const images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
 let firstImage = true;
 let imageListOverflowParent = null;
-
-function getCurrentImageId() {
-  return currentlySelectedImageId;
-}
 
 function updateCurrentImageIds(currentId, newId) {
   currentlySelectedImageId = currentId;
@@ -35,9 +31,12 @@ function findImageListElement() {
 }
 
 function initialiseImageListFunctionality() {
-  images = getAllImageData();
   findImageListElement();
   initialiseImageListML(images);
+}
+
+function getAllImageData() {
+  return images;
 }
 
 function getImageIdByName(imageName) {
@@ -215,12 +214,14 @@ function addSingleImageToList(imageMetadata, imageData) {
   changeCurrentImageNameElementText(imageMetadata.name);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   setDefaultImageProperties(images[newImageId], imageMetadata);
+  setPolygonEditingButtonsToDefault();
   newImageId += 1;
 }
 
 function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) {
   addNewImage(imageMetadata.name, imageData);
   setDefaultImageProperties(images[newImageId], imageMetadata);
+  setPolygonEditingButtonsToDefault();
   if (firstFromMany) {
     highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     saveAndRemoveCurrentImageDetails();
@@ -268,6 +269,7 @@ function changeToExistingImage(id) {
   fixForObjectScalingBugOnCanvasSwitch();
   currentlySelectedImageId = id;
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);
+  setPolygonEditingButtonsToDefault();
 }
 
 function switchImage(direction) {
@@ -295,9 +297,8 @@ function canSwitchImage(direction) {
 }
 
 export {
-  getCurrentImageId,
   initialiseImageListFunctionality, setDefaultImageThumbnailHighlightToML,
-  displayTickSVGOverImageThumbnail, addSingleImageToList,
+  displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
   setThumbnailColourOverlayBackToDefault, getImageIdByName, getLastImageIdByName,
   switchImage, canSwitchImage, addImageFromMultiUploadToList, updateCurrentImageIds,
