@@ -5,6 +5,7 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { removeEditedPolygonId } from './editPolygonEventsWorker';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
+import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/stateMachine';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -12,12 +13,22 @@ let canvas = null;
 let removedPolygonPoints = false;
 let selectedNothing = false;
 
+function selectShape(shapeId) {
+  highlightLabelInTheList(shapeId);
+  setRemoveShapeButtonToDefault();
+}
+
+function deselectShape() {
+  removeHighlightOfListLabel();
+  setRemoveShapeButtonToDisabled();
+}
+
 function setRemovablePointsEventsCanvas(canvasObj) {
   changeExistingPolygonPointsToRemovable(canvasObj);
   canvas = canvasObj;
   selectedPolygonId = getPolygonIdIfEditing();
   if (selectedPolygonId !== null && selectedPolygonId !== undefined) {
-    highlightLabelInTheList(selectedPolygonId);
+    selectShape(selectedPolygonId);
   }
 }
 
@@ -30,13 +41,13 @@ function prepareToEditPolygonPoints(event) {
   removeEditedPolygonId();
   setEditablePolygon(canvas, event.target, true);
   selectedPolygonId = event.target.id;
-  highlightLabelInTheList(selectedPolygonId);
+  selectShape(selectedPolygonId);
 }
 
 function setPolygonNotEditableOnClick() {
   removePolygonPoints();
   selectedPolygonId = null;
-  removeHighlightOfListLabel();
+  deselectShape();
 }
 
 function pointMouseDownEvents(event) {

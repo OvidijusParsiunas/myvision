@@ -18,7 +18,11 @@ import { removeLabel } from '../../../../canvas/objects/label/label';
 import { removeLabelFromListOnShapeDelete, getCurrentlySelectedLabelShape } from '../../../labelList/labelList';
 import { removeShape, getNumberOfShapes } from '../../../../canvas/objects/allShapes/allShapes';
 import { removeTickSVGOverImageThumbnail } from '../../../imageList/imageList';
-import { setPolygonEditingButtonsToDisabled, setRemovePointsButtonToDefault } from '../../styling/stateMachine';
+import {
+  setRemovePointsButtonToDefault,
+  setRemoveShapeButtonToDisabled,
+  setPolygonEditingButtonsToDisabled,
+} from '../../styling/stateMachine';
 
 function removeBoundingBox(canvas, mLGeneratedObject) {
   const activeObject = mLGeneratedObject || canvas.getActiveObject()
@@ -81,6 +85,7 @@ function removeActiveShapeEvent(canvas) {
   if (getNumberOfShapes() === 0) {
     removeTickSVGOverImageThumbnail(getCurrentImageId());
   }
+  setRemoveShapeButtonToDisabled();
 }
 
 export { removeActiveShapeEvent, removeBoundingBox };

@@ -10,8 +10,6 @@ Escape button should close the settings popup and cancel the shape labeller moda
  default button active
  draw polygon button active
  draw bounding box button active
- remove polygon points button active
- add polygon points button active
 */
 
 cancel the creation of a new polygon when clicked escape or delete
@@ -36,8 +34,6 @@ was not able to check ML generated label list overflow border chrome fix on smal
 
 should be able to select labels in add/remove point modes
 
-grey out add points when drawing a new polygon
-
 grey out delete shape when shape not selected
 
 popover for github links
@@ -45,6 +41,16 @@ popover for github links
 I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed\
 
 highlight the trash can icon when an image has been uploaded
+
+bug where upon selecting a polygon, then remove points mode, then clicking nothing, deselcting remove points mode and clicking on a polygon
+does not highlight its points
+
+when drawing a polygon then clicking the 'default edit shapes' button and clicking on a polygon does not allow it to add points (the add points
+button is coincidently disabled)
+
+when drawing a polygon and clicking default events, the remove shape icon is not disabled
+
+fix cursor move for chrome browser in Ubuntu
 
 Things to check on chrome browsers on other pcs:
 

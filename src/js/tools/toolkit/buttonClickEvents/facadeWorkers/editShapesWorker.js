@@ -10,7 +10,6 @@ import {
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon, getPolygonIdIfEditing,
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { getSelectedPolygonIdForAddPoints } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
@@ -27,8 +26,7 @@ function dismissAddPointsEvents(canvas) {
   setAddingPolygonPointsState(false);
   purgeCanvasMouseEvents(canvas);
   setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
-  const currentlySelectedPolygonId = getSelectedPolygonIdForAddPoints();
-  assignDefaultEvents(canvas, currentlySelectedPolygonId);
+  assignDefaultEvents(canvas, getPolygonIdIfEditing());
 }
 
 function dismissRemovePointsEvents(canvas) {

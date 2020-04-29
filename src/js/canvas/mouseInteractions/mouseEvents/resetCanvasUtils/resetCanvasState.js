@@ -12,7 +12,7 @@ import {
   getReadyToDrawShapeState,
 } from '../../../../tools/stateMachine';
 import { removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
-import { setPolygonEditingButtonsToDefault } from '../../../../tools/toolkit/styling/stateMachine';
+import { setPolygonEditingButtonsToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/stateMachine';
 
 function interruptCanvasEventsWithoutRemovingExistingPoints() {
   removeHighlightOfListLabel();
@@ -37,6 +37,7 @@ function interruptCanvasEventsWithoutRemovingExistingPoints() {
     setPolygonEditingButtonsToDefault();
     setAlteringPolygonPointsState(false);
   }
+  setRemoveShapeButtonToDisabled();
   setPolygonEditingButtonsToDefault();
 }
 

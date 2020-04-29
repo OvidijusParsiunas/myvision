@@ -7,6 +7,7 @@ let removePointsState = state.DEFAULT;
 let addPointsState = state.DEFAULT;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
+let removeShapeButtonElement = null;
 
 function polygonsPresentInCurrentImage() {
   const currentShapes = getAllExistingShapes();
@@ -47,6 +48,14 @@ function setRemovePointsActive() {
   removePointsState = state.ACTIVE;
 }
 
+function setRemoveShapeButtonToDisabled() {
+  setButtonToDisabled(removeShapeButtonElement);
+}
+
+function setRemoveShapeButtonToDefault() {
+  setButtonToDefault(removeShapeButtonElement);
+}
+
 function setPolygonEditingButtonsToDisabled() {
   if (!polygonsPresentInCurrentImage()) {
     setRemovePointsDisabled();
@@ -57,7 +66,7 @@ function setPolygonEditingButtonsToDisabled() {
 }
 
 function setAddPointsButtonToDefault() {
-  if (polygonsPresentInCurrentImage()) {
+  if (polygonsPresentInCurrentImage() && !getPolygonDrawingInProgressState()) {
     setAddPointsDefault();
   } else {
     setAddPointsDisabled();
@@ -87,14 +96,16 @@ function setRemovePointsButtonToActive() {
   if (addPointsState === state.ACTIVE) setAddPointsDefault();
 }
 
+function setInitialToolkitButtonStyling() {
+  setAddPointsDisabled();
+  setRemovePointsDisabled();
+  setRemoveShapeButtonToDisabled();
+}
+
 function identifyToolkitButtons() {
   removePolygonPointsButtonElement = document.getElementById('remove-points-button');
   addPolygonPointsButtonElement = document.getElementById('add-points-button');
-}
-
-function setInitialToolkitButtonStyling() {
-  setButtonToDisabled(removePolygonPointsButtonElement);
-  setButtonToDisabled(addPolygonPointsButtonElement);
+  removeShapeButtonElement = document.getElementById('remove-shape-button');
 }
 
 function initiateToolkitButtonsStyling() {
@@ -107,6 +118,8 @@ export {
   setAddPointsButtonToDefault,
   setRemovePointsButtonToActive,
   initiateToolkitButtonsStyling,
+  setRemoveShapeButtonToDefault,
+  setRemoveShapeButtonToDisabled,
   setRemovePointsButtonToDefault,
   setPolygonEditingButtonsToDefault,
   setPolygonEditingButtonsToDisabled,

@@ -46,8 +46,8 @@ function setRemovingPointsStateToFalse() {
 }
 
 export {
-  pointMouseDownEvents, pointMouseOverEvents,
-  pointMouseUpEvents, pointMouseOutEvents,
-  setRemovablePointsEventsCanvas, getRemovingPointsState,
   setRemovingPointsStateToFalse,
+  pointMouseUpEvents, pointMouseOutEvents,
+  pointMouseDownEvents, pointMouseOverEvents,
+  setRemovablePointsEventsCanvas, getRemovingPointsState,
 };

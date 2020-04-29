@@ -19,6 +19,7 @@ import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/ima
 import { getImageProperties } from '../../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
 import { preventOutOfBoundsPointsOnMove, preventOutOfBoundsShapesOnMove, validateAndFixOutOfBoundsPolygonShapePointsAfterMove } from '../../../objects/sharedUtils/moveBlockers';
+import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 let labelObject = null;
@@ -31,6 +32,7 @@ let newPolygonSelected = false;
 let setEditablePolygonOnClick = null;
 let finishedAddingNewPoints = false;
 let lastShapeSelectedIsBoundingBox = false;
+let removeBoundingBoxFillWhenScaling = false;
 let mouseIsDown = false;
 let zoomOverflowElement = null;
 
@@ -41,6 +43,16 @@ function programaticallySelectBoundingBox(boundingBoxObj) {
 function programaticallyDeselectBoundingBox() {
   canvas.discardActiveObject();
   canvas.renderAll();
+}
+
+function selectShape(shape) {
+  highlightLabelInTheList(shape);
+  setRemoveShapeButtonToDefault();
+}
+
+function deselectShape() {
+  removeHighlightOfListLabel();
+  setRemoveShapeButtonToDisabled();
 }
 
 function setEditablePolygonOnClickFunc(event) {
@@ -94,15 +106,13 @@ function setMLGeneratedPalletteToOriginal(shape) {
   shape.MLPallette = false;
 }
 
-let removeBoundingBoxFillWhenScaling = false;
-
 // reduce nested if statements in code
 function polygonMouseDownEvents(event) {
   mouseIsDown = true;
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
     if (event.target.shapeName === 'bndBox') {
-      removeHighlightOfListLabel();
+      deselectShape();
       if (event.target.MLPallette) {
         setMLGeneratedPalletteToOriginal(event.target);
         highlightShapeFill(event.target.id);
@@ -110,7 +120,7 @@ function polygonMouseDownEvents(event) {
       if (event.transform && event.transform.corner) {
         setInitialBoundingBoxCoordinates(event);
       }
-      highlightLabelInTheList(event.target.id);
+      selectShape(event.target.id);
       if (getPolygonEditingStatus()) {
         setPolygonNotEditableOnClick();
         newPolygonSelected = false;
@@ -122,7 +132,7 @@ function polygonMouseDownEvents(event) {
     } else {
       if (event.target.shapeName === 'polygon' && event.target.id !== selectedShapeId) {
         if (lastShapeSelectedIsBoundingBox) {
-          removeHighlightOfListLabel();
+          deselectShape();
           lastShapeSelectedIsBoundingBox = false;
         }
         labelObject = getLabelById(event.target.id);
@@ -186,7 +196,7 @@ function polygonMouseUpEvents(event) {
     canvas.bringToFront(labelObject);
     clearControlSelectedObject();
   } else if (polygonMoved) {
-    highlightLabelInTheList(event.target.id);
+    selectShape(event.target.id);
     validateAndFixOutOfBoundsPolygonShapePointsAfterMove(event.target);
     setEditablePolygonWhenPolygonMoved(event);
     highlightShapeFill(event.target.id);
@@ -196,7 +206,7 @@ function polygonMouseUpEvents(event) {
     if (finishedAddingNewPoints) {
       finishedAddingNewPoints = false;
     } else {
-      highlightLabelInTheList(event.target.id);
+      selectShape(event.target.id);
     }
     canvas.bringToFront(event.target);
     setEditablePolygonOnClick(event);
@@ -204,13 +214,13 @@ function polygonMouseUpEvents(event) {
   } else if (polygonPointMoved) {
     resetPolygonSelectableAreaAfterPointMoved();
   } else if (event.target && event.target.shapeName === 'polygon') {
-    highlightLabelInTheList(event.target.id);
+    selectShape(event.target.id);
     sendPolygonPointsToFront(canvas);
   } else if (!event.target && getPolygonEditingStatus()) {
-    removeHighlightOfListLabel();
+    deselectShape();
     setPolygonNotEditableOnClick();
   } else if (selectedShapeId != null || shapeSetToInvisible) {
-    removeHighlightOfListLabel();
+    deselectShape();
     shapeSetToInvisible = false;
   }
   if (getShapeMovingState()) {
@@ -305,7 +315,7 @@ function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
   if (polygonObjId !== undefined && polygonObjId !== null) {
     selectedShapeId = polygonObjId;
     labelObject = getLabelById(selectedShapeId);
-    highlightLabelInTheList(selectedShapeId);
+    selectShape(selectedShapeId);
   }
   if (afterAddPoints) {
     selectedShapeId = null;

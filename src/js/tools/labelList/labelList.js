@@ -11,6 +11,7 @@ import {
   getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
   getRemovingPolygonPointsState, setExportDatasetsPopUpOpenState, getLabelsVisibilityState,
 } from '../stateMachine';
+import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../toolkit/styling/stateMachine';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,
@@ -448,6 +449,7 @@ function selectShape() {
 
 function deselectShape() {
   removeHighlightOfListLabel();
+  setRemoveShapeButtonToDisabled();
   if (getRemovingPolygonPointsState()) {
     pointMouseDownEvents({});
     pointMouseUpEvents({});
@@ -585,9 +587,11 @@ function highlightLabel(currentlySelectedShapeName, idArg) {
   if (getRemovingPolygonPointsState() || getAddingPolygonPointsState()) {
     if (currentlySelectedShapeName !== 'bndBox') {
       highlightLabelInTheList(id);
+      setRemoveShapeButtonToDefault();
     }
   } else {
     highlightLabelInTheList(id);
+    setRemoveShapeButtonToDefault();
   }
 }
 

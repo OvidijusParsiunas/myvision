@@ -10,7 +10,9 @@ import {
 } from '../../../tools/stateMachine';
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { setAddPointsButtonToDefault, setRemovePointsButtonToDefault } from '../../../tools/toolkit/styling/stateMachine';
+import {
+  setAddPointsButtonToDefault, setRemovePointsButtonToDefault, setRemoveShapeButtonToDefault,
+} from '../../../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 let pointArray = [];
@@ -168,7 +170,9 @@ function addPoint(pointer) {
     invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(pointer));
     canvas.add(invisiblePoint);
     point.set(polygonProperties.firstPoint());
+    setAddPointsButtonToDefault();
     setRemovePointsButtonToDefault();
+    setRemoveShapeButtonToDefault();
   }
   preventOutOfBoundsPointsOnMove(point, canvas);
   pointArray.push(point);

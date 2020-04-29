@@ -8,6 +8,7 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/stateMachine';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
+import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/stateMachine';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
 
@@ -20,6 +21,16 @@ let addFirstPointMode = false;
 let coordinatesOfLastMouseHover = null;
 let mouseIsDownOnTempPoint = false;
 let activeShape = null;
+
+function selectShape(shapeId) {
+  highlightLabelInTheList(shapeId);
+  setRemoveShapeButtonToDefault();
+}
+
+function deselectShape() {
+  removeHighlightOfListLabel();
+  setRemoveShapeButtonToDisabled();
+}
 
 function isRightMouseButtonClicked(pointer) {
   if (coordinatesOfLastMouseHover.x !== pointer.x) {
@@ -40,7 +51,7 @@ function setAddPointsEventsCanvas(canvasObj) {
   addFirstPointMode = false;
   resetAddPointProperties(canvasObj);
   if (selectedPolygonId !== null && selectedPolygonId !== undefined) {
-    highlightLabelInTheList(selectedPolygonId);
+    selectShape(selectedPolygonId);
   }
 }
 
@@ -49,8 +60,7 @@ function prepareToAddPolygonPoints(shape) {
   removeEditedPolygonId();
   setEditablePolygon(canvas, shape, false, false, true);
   selectedPolygonId = shape.id;
-  highlightLabelInTheList(selectedPolygonId);
-  // should not be managed here
+  selectShape(selectedPolygonId);
 }
 
 function moveAddPoints(event) {
@@ -70,7 +80,7 @@ function mouseMove(event) {
 function setPolygonNotEditableOnClick() {
   removePolygonPoints();
   selectedPolygonId = null;
-  removeHighlightOfListLabel();
+  deselectShape();
 }
 
 function pointMouseDownEvents(event) {
