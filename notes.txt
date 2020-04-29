@@ -48,8 +48,6 @@ does not highlight its points
 when drawing a polygon then clicking the 'default edit shapes' button and clicking on a polygon does not allow it to add points (the add points
 button is coincidently disabled)
 
-when drawing a polygon and clicking default events, the remove shape icon is not disabled
-
 fix cursor move for chrome browser in Ubuntu
 
 Things to check on chrome browsers on other pcs:

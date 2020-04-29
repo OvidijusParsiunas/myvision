@@ -13,12 +13,12 @@ import {
 } from './eventMiddleware/buttonEventMiddleware';
 
 function assignToolkitButtonEventHandlers() {
+  window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.createNewPolygon = func1IfDrawRemovePointsElseInterruptAllWthFunc2.bind(this,
     removePolygonPointBtnClick, createNewPolygonBtnClick);
   window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
-  window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
   window.exportDatasets = removeButtonPopIfActive.bind(this, exportDatasetsBtnClick);
   window.uploadDatasets = removeButtonPopIfActive.bind(this, uploadDatasetsBtnClick);

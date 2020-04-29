@@ -13,7 +13,10 @@ import {
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
-import { setAddPointsButtonToDefault, setRemovePointsButtonToDefault, setPolygonEditingButtonsToDefault } from '../../styling/stateMachine';
+import {
+  setRemovePointsButtonToDefault, setRemoveShapeButtonToDisabled,
+  setPolygonEditingButtonsToDefault, setAddPointsButtonToDefault,
+} from '../../styling/stateMachine';
 
 function dismissAddPointsEvents(canvas) {
   if (isAddingPointsToPolygon()) {
@@ -45,7 +48,10 @@ function dismissOtherEvents(canvas) {
   } else {
     setCancelledReadyToDrawState(false);
   }
-  if (getPolygonDrawingInProgressState()) { resetNewPolygonData(); }
+  if (getPolygonDrawingInProgressState()) {
+    resetNewPolygonData();
+    setRemoveShapeButtonToDisabled();
+  }
   purgeCanvasMouseEvents(canvas);
   assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
   setDefaultCursorMode(canvas);
