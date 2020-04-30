@@ -14,8 +14,7 @@ import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
 import {
-  setRemovePointsButtonToDefault, setRemoveShapeButtonToDisabled,
-  setPolygonEditingButtonsToDefault, setAddPointsButtonToDefault,
+  setPolygonEditingButtonsToDefault, setRemoveShapeButtonToDisabled,
 } from '../../styling/stateMachine';
 
 function dismissAddPointsEvents(canvas) {
@@ -25,7 +24,6 @@ function dismissAddPointsEvents(canvas) {
     setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
   }
   resetAddPoints();
-  setAddPointsButtonToDefault();
   setAddingPolygonPointsState(false);
   purgeCanvasMouseEvents(canvas);
   setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
@@ -38,7 +36,6 @@ function dismissRemovePointsEvents(canvas) {
   cleanPolygonPointsArray();
   setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
   assignDefaultEvents(canvas, getPolygonIdIfEditing());
-  setRemovePointsButtonToDefault();
   setRemovingPolygonPointsState(false);
 }
 
@@ -68,11 +65,11 @@ function initiateEditShapesEvent(canvas) {
       dismissOtherEvents(canvas);
     }
     if (getAlteringPolygonPointsState()) {
-      setPolygonEditingButtonsToDefault();
       setAlteringPolygonPointsState(false);
     }
     setDefaultState(true);
   }
+  setPolygonEditingButtonsToDefault();
 }
 
 export { initiateEditShapesEvent as default };

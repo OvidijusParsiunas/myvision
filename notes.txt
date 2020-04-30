@@ -45,9 +45,6 @@ highlight the trash can icon when an image has been uploaded
 bug where upon selecting a polygon, then remove points mode, then clicking nothing, deselcting remove points mode and clicking on a polygon
 does not highlight its points
 
-when drawing a polygon then clicking the 'default edit shapes' button and clicking on a polygon does not allow it to add points (the add points
-button is coincidently disabled)
-
 fix cursor move for chrome browser in Ubuntu
 
 Things to check on chrome browsers on other pcs:
