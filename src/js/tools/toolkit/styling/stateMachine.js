@@ -8,6 +8,8 @@ let addPointsState = state.DEFAULT;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
 let removeShapeButtonElement = null;
+let zoomInButtonElement = null;
+let zoomOutButtonElement = null;
 
 function polygonsPresentInCurrentImage() {
   const currentShapes = getAllExistingShapes();
@@ -48,12 +50,28 @@ function setRemovePointsActive() {
   removePointsState = state.ACTIVE;
 }
 
+function setRemoveShapeButtonToDefault() {
+  setButtonToDefault(removeShapeButtonElement);
+}
+
 function setRemoveShapeButtonToDisabled() {
   setButtonToDisabled(removeShapeButtonElement);
 }
 
-function setRemoveShapeButtonToDefault() {
-  setButtonToDefault(removeShapeButtonElement);
+function setZoomInButtonToDefault() {
+  setButtonToDefault(zoomInButtonElement);
+}
+
+function setZoomInButtonToDisabled() {
+  setButtonToDisabled(zoomInButtonElement);
+}
+
+function setZoomOutButtonToDefault() {
+  setButtonToDefault(zoomOutButtonElement);
+}
+
+function setZoomOutButtonToDisabled() {
+  setButtonToDisabled(zoomOutButtonElement);
 }
 
 function setPolygonEditingButtonsToDisabled() {
@@ -99,6 +117,8 @@ function setRemovePointsButtonToActive() {
 function setInitialToolkitButtonStyling() {
   setAddPointsDisabled();
   setRemovePointsDisabled();
+  setZoomInButtonToDisabled();
+  setZoomOutButtonToDisabled();
   setRemoveShapeButtonToDisabled();
 }
 
@@ -106,6 +126,8 @@ function identifyToolkitButtons() {
   removePolygonPointsButtonElement = document.getElementById('remove-points-button');
   addPolygonPointsButtonElement = document.getElementById('add-points-button');
   removeShapeButtonElement = document.getElementById('remove-shape-button');
+  zoomInButtonElement = document.getElementById('zoom-in-button');
+  zoomOutButtonElement = document.getElementById('zoom-out-button');
 }
 
 function initiateToolkitButtonsStyling() {
@@ -114,6 +136,10 @@ function initiateToolkitButtonsStyling() {
 }
 
 export {
+  setZoomInButtonToDefault,
+  setZoomInButtonToDisabled,
+  setZoomOutButtonToDefault,
+  setZoomOutButtonToDisabled,
   setAddPointsButtonToActive,
   setAddPointsButtonToDefault,
   setRemovePointsButtonToActive,

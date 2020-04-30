@@ -16,6 +16,10 @@ import {
 import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../../../zoom/firefox';
 import IS_FIREFOX from '../../../utils/browserType';
 import { getCurrentCanvasContainerElement } from '../../../../canvas/utils/canvasUtils';
+import {
+  setZoomInButtonToDefault, setZoomInButtonToDisabled,
+  setZoomOutButtonToDefault, setZoomOutButtonToDisabled,
+} from '../../styling/stateMachine';
 
 let currentZoom = null;
 let canvas = null;
@@ -219,6 +223,8 @@ function resetCanvasToDefault() {
   const newFileSizeRatio = resizeCanvasAndImage();
   labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
   resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
+  setZoomInButtonToDefault();
+  setZoomOutButtonToDisabled();
   movedPolygonPathOffsetReduced = false;
 }
 
@@ -236,9 +242,11 @@ function zoomOut() {
       labelProperties.updatePolygonOffsetProperties(newFileSizeRatio);
       resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
       canvas.setZoom(currentZoom);
+      setZoomOutButtonToDisabled();
     } else if (setNewCanvasDimensions() && imageProperties.scaleX < 1) {
       resetCanvasToDefault();
     } else {
+      setZoomInButtonToDefault();
       canvas.setZoom(currentZoom);
     }
   }
@@ -253,6 +261,10 @@ function zoomIn() {
   zoomInObjects();
   reduceMovePolygonPathOffset();
   changeCanvas();
+  setZoomOutButtonToDefault();
+  if (currentZoom >= 3.69999) {
+    setZoomInButtonToDisabled();
+  }
 }
 
 function calculateReduceShapeSizeFactor() {
@@ -275,9 +287,6 @@ function zoomCanvas(canvasObj, action, windowResize) {
     calculateReduceShapeSizeFactor();
     if (action === 'in' && currentZoom < 3.7) {
       zoomIn();
-      if (currentZoom >= 3.9) {
-        console.log('should grey out the zoom in button');
-      }
     } else if (action === 'out' && currentZoom > 1.0001) {
       zoomOut();
     }
@@ -337,6 +346,7 @@ function resetZoom(switchImage) {
   setDoubleScrollCanvasState(false);
   setCurrentZoomState(currentZoom);
   enableCanvasOuterMargin();
+  setZoomOutButtonToDisabled();
   return timesNeededToZoomOut;
 }
 

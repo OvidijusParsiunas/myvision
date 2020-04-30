@@ -28,22 +28,13 @@ try trashcan icon for remove image label
 
 delete keyboard button should remove shape
 
-grey out the zoom button when it is above 3.9
-
 was not able to check ML generated label list overflow border chrome fix on smaller screens
-
-should be able to select labels in add/remove point modes
-
-grey out delete shape when shape not selected
 
 popover for github links
 
 I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed\
 
 highlight the trash can icon when an image has been uploaded
-
-bug where upon selecting a polygon, then remove points mode, then clicking nothing, deselcting remove points mode and clicking on a polygon
-does not highlight its points
 
 fix cursor move for chrome browser in Ubuntu
 

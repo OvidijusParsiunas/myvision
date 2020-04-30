@@ -6,7 +6,7 @@ import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/object
 import { decrementShapeType } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
 import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { setPolygonEditingButtonsToDisabled } from '../../toolkit/styling/stateMachine';
+import { setPolygonEditingButtonsToDisabled, setZoomInButtonToDisabled } from '../../toolkit/styling/stateMachine';
 import { getCurrentImageId } from '../../stateMachine';
 
 let canvas = null;
@@ -24,6 +24,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
     updateCurrentImageIds(0, 0);
     removeAllLabelListItems();
     setImageNameElementToDefault();
+    setZoomInButtonToDisabled();
     canvas.clear();
     setCurrentImage(null);
   }

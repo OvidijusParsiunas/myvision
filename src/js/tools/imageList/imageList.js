@@ -5,7 +5,7 @@ import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect 
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState, setCurrentImageId } from '../stateMachine';
-import { setPolygonEditingButtonsToDefault } from '../toolkit/styling/stateMachine';
+import { setPolygonEditingButtonsToDefault, setZoomInButtonToDefault } from '../toolkit/styling/stateMachine';
 import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
@@ -215,18 +215,20 @@ function addSingleImageToList(imageMetadata, imageData) {
   images[newImageId].thumbnailElementRef.scrollIntoView();
   setDefaultImageProperties(images[newImageId], imageMetadata);
   setPolygonEditingButtonsToDefault();
+  setZoomInButtonToDefault();
   newImageId += 1;
 }
 
 function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) {
   addNewImage(imageMetadata.name, imageData);
   setDefaultImageProperties(images[newImageId], imageMetadata);
-  setPolygonEditingButtonsToDefault();
   if (firstFromMany) {
     highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     saveAndRemoveCurrentImageDetails();
     changeCurrentImageNameElementText(imageMetadata.name, firstFromMany);
     images[newImageId].thumbnailElementRef.scrollIntoView();
+    setPolygonEditingButtonsToDefault();
+    setZoomInButtonToDefault();
   }
   newImageId += 1;
 }
@@ -270,6 +272,7 @@ function changeToExistingImage(id) {
   currentlySelectedImageId = id;
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);
   setPolygonEditingButtonsToDefault();
+  setZoomInButtonToDefault();
 }
 
 function switchImage(direction) {
