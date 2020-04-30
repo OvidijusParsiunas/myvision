@@ -4,8 +4,15 @@ import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/l
 import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
-import { setDefaultState, setCurrentImageId } from '../stateMachine';
-import { setPolygonEditingButtonsToDefault, setZoomInButtonToDefault, setEditShapesButtonToDefault } from '../toolkit/styling/stateMachine';
+import {
+  setDefaultState, setCurrentImageId, getContinuousDrawingState, getLastDrawingModeState,
+} from '../stateMachine';
+import {
+  setZoomInButtonToDefault, setCreatePolygonButtonToActive,
+  setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault,
+  setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
+} from '../toolkit/styling/stateMachine';
+
 import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
@@ -203,6 +210,22 @@ function setDefaultImageProperties(image, imageMetadata) {
   image.analysedByML = false;
 }
 
+function setToolkitStylingOnNewImage() {
+  if (getContinuousDrawingState()) {
+    const lastDrawnShapeState = getLastDrawingModeState();
+    if (lastDrawnShapeState === 'polygon') {
+      setCreatePolygonButtonToActive();
+    } else if (lastDrawnShapeState === 'boundingBox') {
+      setCreateBoundingBoxButtonToActive();
+    }
+  } else {
+    setCreatePolygonButtonToDefault();
+    setCreateBoundingBoxButtonToDefault();
+  }
+  setPolygonEditingButtonsToDefault();
+  setZoomInButtonToDefault();
+}
+
 function changeCurrentImageNameElementText(imageName, firstFromMany) {
   updateImageNameElement(imageName, images, currentlySelectedImageId, firstFromMany);
 }
@@ -214,8 +237,7 @@ function addSingleImageToList(imageMetadata, imageData) {
   changeCurrentImageNameElementText(imageMetadata.name);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   setDefaultImageProperties(images[newImageId], imageMetadata);
-  setPolygonEditingButtonsToDefault();
-  setZoomInButtonToDefault();
+  setToolkitStylingOnNewImage();
   newImageId += 1;
 }
 
@@ -227,8 +249,7 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
     saveAndRemoveCurrentImageDetails();
     changeCurrentImageNameElementText(imageMetadata.name, firstFromMany);
     images[newImageId].thumbnailElementRef.scrollIntoView();
-    setPolygonEditingButtonsToDefault();
-    setZoomInButtonToDefault();
+    setToolkitStylingOnNewImage();
   }
   newImageId += 1;
 }
@@ -253,7 +274,6 @@ function changeToExistingImage(id) {
   // zoomOutObjectOnImageSelect
   // make sure the scales are correct
   setDefaultState(false);
-  setEditShapesButtonToDefault();
   if (currentlySelectedImageId >= 0) { captureCurrentImageData(); }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
@@ -272,8 +292,7 @@ function changeToExistingImage(id) {
   fixForObjectScalingBugOnCanvasSwitch();
   currentlySelectedImageId = id;
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);
-  setPolygonEditingButtonsToDefault();
-  setZoomInButtonToDefault();
+  setToolkitStylingOnNewImage();
 }
 
 function switchImage(direction) {

@@ -6,12 +6,6 @@ Toolkit button functionality for getting smaller with the screen should be done 
 
 Escape button should close the settings popup and cancel the shape labeller modal
 
-/* button states file
- default button active
- draw polygon button active
- draw bounding box button active
-*/
-
 cancel the creation of a new polygon when clicked escape or delete
 or move shapes button
 
@@ -37,6 +31,8 @@ I beliveve the reason why the bottom of new bounding boxes is not showing up cor
 highlight the trash can icon when an image has been uploaded
 
 fix cursor move for chrome browser in Ubuntu
+
+will have to highlight initial buttons to get users started
 
 Things to check on chrome browsers on other pcs:
 

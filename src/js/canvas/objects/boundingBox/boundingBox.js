@@ -9,7 +9,7 @@ import {
 } from '../../../tools/stateMachine';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { setAddPointsButtonToDefault } from '../../../tools/toolkit/styling/stateMachine';
+import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/stateMachine';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 
 let canvas = null;
@@ -44,6 +44,7 @@ function deselectBoundingBox() {
 }
 
 function resetDrawBoundingBoxMode() {
+  setCreateBoundingBoxButtonToActive();
   setReadyToDrawShapeState(true);
   setDrawCursorMode(canvas);
   createNewBoundingBoxBtnClicked = true;

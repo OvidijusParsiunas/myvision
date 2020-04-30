@@ -11,7 +11,8 @@ import {
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import {
-  setAddPointsButtonToDefault, setRemovePointsButtonToDefault, setRemoveShapeButtonToDefault,
+  setAddPointsButtonToDefault, setRemovePointsButtonToDefault,
+  setRemoveShapeButtonToDefault, setCreatePolygonButtonToActive,
 } from '../../../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
@@ -286,6 +287,7 @@ function prepareCanvasForNewPolygonsFromExternalSources(canvasObj) {
 
 function resetDrawPolygonMode() {
   polygonMode = true;
+  setCreatePolygonButtonToActive();
   setReadyToDrawShapeState(true);
   drawingFinished = false;
   clearPolygonData();

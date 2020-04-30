@@ -5,12 +5,17 @@ import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShape
 const state = { ACTIVE: 'active', DEFAULT: 'default', DISABLED: 'disabled' };
 let removePointsState = state.DEFAULT;
 let addPointsState = state.DEFAULT;
+let createBoundingBoxState = state.DEFAULT;
+let createPolygonState = state.DEFAULT;
+let editShapesState = state.DEFAULT;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
 let removeShapeButtonElement = null;
 let editShapesButtonElement = null;
 let zoomInButtonElement = null;
 let zoomOutButtonElement = null;
+let createBoundingBoxButton = null;
+let createPolygonButton = null;
 
 function polygonsPresentInCurrentImage() {
   const currentShapes = getAllExistingShapes();
@@ -22,16 +27,54 @@ function polygonsPresentInCurrentImage() {
 }
 
 function setEditShapesButtonToDefault() {
-  console.log('setting to default');
   setButtonToDefault(editShapesButtonElement);
+  editShapesState = state.DEFAULT;
 }
 
 function setEditShapesButtonToDisabled() {
   setButtonToDisabled(editShapesButtonElement);
+  editShapesState = state.DISABLED;
+}
+
+function setCreateBoundingBoxButtonToDefault() {
+  setButtonToDefault(createBoundingBoxButton);
+  createBoundingBoxState = state.DEFAULT;
+}
+
+function setCreatePolygonButtonToDefault() {
+  setButtonToDefault(createPolygonButton);
+  createPolygonState = state.DEFAULT;
 }
 
 function setEditShapesButtonToActive() {
   setButtonToActive(editShapesButtonElement);
+  editShapesState = state.ACTIVE;
+  if (createBoundingBoxState === state.ACTIVE) setCreateBoundingBoxButtonToDefault();
+  if (createPolygonState === state.ACTIVE) setCreatePolygonButtonToDefault();
+}
+
+function setCreateBoundingBoxButtonToDisabled() {
+  setButtonToDisabled(createBoundingBoxButton);
+  createBoundingBoxState = state.DISABLED;
+}
+
+function setCreateBoundingBoxButtonToActive() {
+  setButtonToActive(createBoundingBoxButton);
+  createBoundingBoxState = state.ACTIVE;
+  if (editShapesState === state.ACTIVE) setEditShapesButtonToDefault();
+  if (createPolygonState === state.ACTIVE) setCreatePolygonButtonToDefault();
+}
+
+function setCreatePolygonButtonToDisabled() {
+  setButtonToDisabled(createPolygonButton);
+  createPolygonState = state.DISABLED;
+}
+
+function setCreatePolygonButtonToActive() {
+  setButtonToActive(createPolygonButton);
+  createPolygonState = state.ACTIVE;
+  if (createBoundingBoxState === state.ACTIVE) setCreateBoundingBoxButtonToDefault();
+  if (editShapesState === state.ACTIVE) setEditShapesButtonToDefault();
 }
 
 function setAddPointsDisabled() {
@@ -134,7 +177,10 @@ function setInitialToolkitButtonStyling() {
   setZoomInButtonToDisabled();
   setZoomOutButtonToDisabled();
   setEditShapesButtonToDisabled();
+  setCreatePolygonButtonToActive();
   setRemoveShapeButtonToDisabled();
+  setCreatePolygonButtonToDisabled();
+  setCreateBoundingBoxButtonToDisabled();
 }
 
 function identifyToolkitButtons() {
@@ -144,6 +190,8 @@ function identifyToolkitButtons() {
   removeShapeButtonElement = document.getElementById('remove-shape-button');
   zoomInButtonElement = document.getElementById('zoom-in-button');
   zoomOutButtonElement = document.getElementById('zoom-out-button');
+  createBoundingBoxButton = document.getElementById('create-bounding-box-button');
+  createPolygonButton = document.getElementById('create-polygon-button');
 }
 
 function initiateToolkitButtonsStyling() {
@@ -166,8 +214,14 @@ export {
   setRemoveShapeButtonToDefault,
   setRemoveShapeButtonToDisabled,
   setRemovePointsButtonToDefault,
+  setCreatePolygonButtonToActive,
+  setCreatePolygonButtonToDefault,
+  setCreatePolygonButtonToDisabled,
   setPolygonEditingButtonsToDefault,
   setPolygonEditingButtonsToDisabled,
+  setCreateBoundingBoxButtonToActive,
+  setCreateBoundingBoxButtonToDefault,
+  setCreateBoundingBoxButtonToDisabled,
 };
 
 
