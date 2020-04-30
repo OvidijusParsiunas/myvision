@@ -28,8 +28,6 @@ popover for github links
 
 I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed\
 
-highlight the trash can icon when an image has been uploaded
-
 fix cursor move for chrome browser in Ubuntu
 
 will have to highlight initial buttons to get users started

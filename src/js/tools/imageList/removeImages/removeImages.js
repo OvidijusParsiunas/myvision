@@ -7,8 +7,9 @@ import { decrementShapeType } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
 import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import {
-  setCreateBoundingBoxButtonToDisabled, setCreatePolygonButtonToDisabled,
-  setPolygonEditingButtonsToDisabled, setZoomInButtonToDisabled, setEditShapesButtonToDisabled,
+  setPolygonEditingButtonsToDisabled, setZoomInButtonToDisabled,
+  setCreatePolygonButtonToDisabled, setEditShapesButtonToDisabled,
+  setCreateBoundingBoxButtonToDisabled, setRemoveImagesButtonsDisabled,
 } from '../../toolkit/styling/stateMachine';
 import { getCurrentImageId } from '../../stateMachine';
 
@@ -29,6 +30,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
     removeAllLabelListItems();
     setCreateBoundingBoxButtonToDisabled();
     setCreatePolygonButtonToDisabled();
+    setRemoveImagesButtonsDisabled();
     setEditShapesButtonToDisabled();
     setZoomInButtonToDisabled();
     canvas.clear();

@@ -987,12 +987,15 @@
   bottom: 0.5px;
 }
 
-#remove-images-button {
-  cursor: pointer;
-  width: 15px;
+#remove-images-button-container {
   padding-top: 2px;
   padding-right: 6px;
   float: right;
+}
+
+#remove-images-button-icon {
+  cursor: pointer;
+  width: 15px;
 }
 
 #image-list-overflow-parent {

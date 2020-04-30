@@ -8,7 +8,7 @@ import {
   setDefaultState, setCurrentImageId, getContinuousDrawingState, getLastDrawingModeState,
 } from '../stateMachine';
 import {
-  setZoomInButtonToDefault, setCreatePolygonButtonToActive,
+  setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
   setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault,
   setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
 } from '../toolkit/styling/stateMachine';
@@ -223,6 +223,7 @@ function setToolkitStylingOnNewImage() {
     setCreateBoundingBoxButtonToDefault();
   }
   setPolygonEditingButtonsToDefault();
+  setRemoveImagesButtonDefault();
   setZoomInButtonToDefault();
 }
 
