@@ -4,10 +4,12 @@ import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
 } from '../../../stateMachine';
+import { setEditShapesButtonToDefault } from '../../styling/stateMachine';
 
 function initiateCreateNewPolygonEvents(canvas) {
   purgeCanvasMouseEvents(canvas);
   assignDrawPolygonEvents(canvas);
+  setEditShapesButtonToDefault();
   setDefaultState(false);
   setAlteringPolygonPointsState(false);
   setLastDrawingModeState('polygon');

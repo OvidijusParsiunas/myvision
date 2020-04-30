@@ -1,7 +1,7 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
-import { setPolygonEditingButtonsToDefault } from '../../styling/stateMachine';
+import { setPolygonEditingButtonsToDefault, setEditShapesButtonToActive, setEditShapesButtonToDefault } from '../../styling/stateMachine';
 import {
   setDefaultState, getAlteringPolygonPointsState, setAlteringPolygonPointsState,
   getDefaultState, getAddingPolygonPointsState, getLastDrawingModeState, getContinuousDrawingState,
@@ -23,6 +23,7 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
       setPolygonEditingButtonsToDefault();
       setAlteringPolygonPointsState(false);
     }
+    setEditShapesButtonToActive();
     setDefaultState(true);
   }
   if (getContinuousDrawingState()) {
@@ -32,7 +33,8 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
     } else if (getLastDrawingModeState() === 'boundingBox') {
       assignDrawBoundingBoxEvents(canvas);
     }
-    setDefaultState(true);
+    setEditShapesButtonToDefault();
+    setDefaultState(false);
   }
 }
 

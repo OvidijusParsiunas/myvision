@@ -5,13 +5,14 @@ import { resetAddPoints } from '../../../objects/polygon/alterPolygon/alterPolyg
 import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../cursorModes/defaultMode';
 import assignDefaultEvents from '../eventHandlers/defaultEventHandlers';
 import purgeCanvasMouseEvents from './purgeAllMouseHandlers';
-import { setAddPointsButtonToDefault } from '../../../../tools/toolkit/styling/stateMachine';
+import { setAddPointsButtonToDefault, setEditShapesButtonToActive } from '../../../../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 
 function discardAddPointsEvents(id) {
   setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
   assignDefaultEvents(canvas, id);
+  setEditShapesButtonToActive();
   setDefaultState(true);
 }
 

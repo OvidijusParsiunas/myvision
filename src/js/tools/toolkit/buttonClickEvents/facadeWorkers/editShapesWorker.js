@@ -14,7 +14,7 @@ import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
 import {
-  setPolygonEditingButtonsToDefault, setRemoveShapeButtonToDisabled,
+  setPolygonEditingButtonsToDefault, setRemoveShapeButtonToDisabled, setEditShapesButtonToActive,
 } from '../../styling/stateMachine';
 
 function dismissAddPointsEvents(canvas) {
@@ -67,6 +67,7 @@ function initiateEditShapesEvent(canvas) {
     if (getAlteringPolygonPointsState()) {
       setAlteringPolygonPointsState(false);
     }
+    setEditShapesButtonToActive();
     setDefaultState(true);
   }
   setPolygonEditingButtonsToDefault();

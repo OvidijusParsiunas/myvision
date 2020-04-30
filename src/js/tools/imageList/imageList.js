@@ -5,7 +5,7 @@ import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect 
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
 import { setDefaultState, setCurrentImageId } from '../stateMachine';
-import { setPolygonEditingButtonsToDefault, setZoomInButtonToDefault } from '../toolkit/styling/stateMachine';
+import { setPolygonEditingButtonsToDefault, setZoomInButtonToDefault, setEditShapesButtonToDefault } from '../toolkit/styling/stateMachine';
 import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
@@ -253,6 +253,7 @@ function changeToExistingImage(id) {
   // zoomOutObjectOnImageSelect
   // make sure the scales are correct
   setDefaultState(false);
+  setEditShapesButtonToDefault();
   if (currentlySelectedImageId >= 0) { captureCurrentImageData(); }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);

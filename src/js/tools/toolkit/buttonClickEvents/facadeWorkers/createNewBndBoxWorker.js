@@ -1,6 +1,6 @@
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
-import { setPolygonEditingButtonsToDefault } from '../../styling/stateMachine';
+import { setPolygonEditingButtonsToDefault, setEditShapesButtonToDefault } from '../../styling/stateMachine';
 import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
@@ -12,6 +12,7 @@ function initiateCreateNewBndBoxEvents(canvas) {
   if (canvas.backgroundImage) {
     purgeCanvasMouseEvents(canvas);
     assignDrawBoundingBoxEvents(canvas);
+    setEditShapesButtonToDefault();
     setDefaultState(false);
     setPolygonEditingButtonsToDefault();
     setAlteringPolygonPointsState(false);

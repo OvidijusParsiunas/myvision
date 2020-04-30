@@ -8,6 +8,7 @@ let addPointsState = state.DEFAULT;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
 let removeShapeButtonElement = null;
+let editShapesButtonElement = null;
 let zoomInButtonElement = null;
 let zoomOutButtonElement = null;
 
@@ -18,6 +19,19 @@ function polygonsPresentInCurrentImage() {
     if (currentShapes[shapeIds[i]].shapeRef.shapeName === 'polygon') return true;
   }
   return false;
+}
+
+function setEditShapesButtonToDefault() {
+  console.log('setting to default');
+  setButtonToDefault(editShapesButtonElement);
+}
+
+function setEditShapesButtonToDisabled() {
+  setButtonToDisabled(editShapesButtonElement);
+}
+
+function setEditShapesButtonToActive() {
+  setButtonToActive(editShapesButtonElement);
 }
 
 function setAddPointsDisabled() {
@@ -119,10 +133,12 @@ function setInitialToolkitButtonStyling() {
   setRemovePointsDisabled();
   setZoomInButtonToDisabled();
   setZoomOutButtonToDisabled();
+  setEditShapesButtonToDisabled();
   setRemoveShapeButtonToDisabled();
 }
 
 function identifyToolkitButtons() {
+  editShapesButtonElement = document.getElementById('edit-shapes-button');
   removePolygonPointsButtonElement = document.getElementById('remove-points-button');
   addPolygonPointsButtonElement = document.getElementById('add-points-button');
   removeShapeButtonElement = document.getElementById('remove-shape-button');
@@ -142,7 +158,10 @@ export {
   setZoomOutButtonToDisabled,
   setAddPointsButtonToActive,
   setAddPointsButtonToDefault,
+  setEditShapesButtonToActive,
+  setEditShapesButtonToDefault,
   setRemovePointsButtonToActive,
+  setEditShapesButtonToDisabled,
   initiateToolkitButtonsStyling,
   setRemoveShapeButtonToDefault,
   setRemoveShapeButtonToDisabled,

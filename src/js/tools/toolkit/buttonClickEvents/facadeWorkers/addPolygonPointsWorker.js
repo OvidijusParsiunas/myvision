@@ -12,7 +12,10 @@ import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvent
 import { resetAddPoints, isAddingPointsToPolygon, removePolygonPoints } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
-import { setAddPointsButtonToActive, setAddPointsButtonToDefault } from '../../styling/stateMachine';
+import {
+  setAddPointsButtonToActive, setAddPointsButtonToDefault,
+  setEditShapesButtonToActive, setEditShapesButtonToDefault,
+} from '../../styling/stateMachine';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
 
@@ -29,6 +32,7 @@ function discardAddPointsEvents(canvas) {
     setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
     const currentlySelectedPolygonId = getSelectedPolygonIdForAddPoints();
     assignDefaultEvents(canvas, currentlySelectedPolygonId);
+    setEditShapesButtonToActive();
     setDefaultState(true);
   }
 }
@@ -40,6 +44,7 @@ function initiateAddPolygonPointsEvents(canvas) {
     assignAddPointsOnExistingPolygonEvents(canvas);
     setInitialStageOfAddPointsOnExistingPolygonMode(canvas);
     setAddPointsButtonToActive();
+    setEditShapesButtonToDefault();
     setDefaultState(false);
     setAddingPolygonPointsState(true);
   } else if (isAddingPointsToPolygon()) {
