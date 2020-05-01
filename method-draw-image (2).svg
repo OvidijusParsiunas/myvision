@@ -1,0 +1,22 @@
+<svg width="402" height="402" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="404" width="404" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <line stroke="#000" transform="rotate(0.4744679033756256 42.50828170776177,199.4375762939458) " stroke-linecap="null" stroke-linejoin="null" id="svg_2" y2="84.437191" x2="40.925471" y1="314.437945" x1="44.09109" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <ellipse stroke="#000" ry="39.499999" rx="38.499998" id="svg_6" cy="44.937501" cx="43.499998" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <ellipse stroke="#000" ry="39.499999" rx="38.499998" id="svg_14" cy="355.937501" cx="43.499998" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <ellipse stroke="#000" ry="39.499999" rx="38.499998" id="svg_15" cy="356.937501" cx="358.499998" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <ellipse stroke="#000" ry="39.499999" rx="38.499998" id="svg_16" cy="42.937501" cx="359.499998" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <line stroke="#000" transform="rotate(0.4744679033756256 423.50830078124744,197.4375762939442) " stroke-linecap="null" stroke-linejoin="null" id="svg_18" y2="82.437191" x2="421.925471" y1="312.437945" x1="425.09109" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_19" y2="354.4375" x2="317.000015" y1="354.4375" x1="82" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_21" y2="43.4375" x2="321.000007" y1="43.4375" x1="82" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+  <line stroke="#000" transform="rotate(0.4744679033756256 359.50827026367165,200.4375762939484) " stroke-linecap="null" stroke-linejoin="null" id="svg_22" y2="85.437191" x2="357.925471" y1="315.437945" x1="361.09109" fill-opacity="null" stroke-opacity="null" stroke-width="8" fill="none"/>
+ </g>
+</svg>
