@@ -32,6 +32,8 @@ fix cursor move for chrome browser in Ubuntu
 
 will have to highlight initial buttons to get users started
 
+clicking create polygon and immediately clicking add points or remove points works
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders
