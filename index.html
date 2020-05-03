@@ -307,13 +307,9 @@
         <img id="zoom-out-icon" src="magnifying-glass.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="toolkit-button-hover-popup" id="zoom-out-button-popup">Zoom Out</div>
-      <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
-      <button id="upload-images-button" class="toolkit-button toolkit-button-default" style="text-align: center; position: relative" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
-        <img id="upload-images-icon" src="invisible-button.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
-      </button>
-      <div class="toolkit-button-hover-popup" id="upload-images-button-popup">Upload Images</div>
       <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default" style="text-align: center;" onclick="displaySettingsPopup()" onmouseenter="mouseEnterToolkitButton(event, 'settings')" onmouseleave="mouseLeaveToolkitButton(event)">
-        <img id="settings-icon" src="cogwheels.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
+        <img id="settings-icon" src="miscellaneous.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
+        <!-- <img id="settings-icon" src="cogwheels.svg.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility"> -->
       </button>
       <div class="toolkit-button-hover-popup" id="settings-button-popup">Settings</div>
     </div>
@@ -333,6 +329,11 @@
                 <img id="remove-images-button-icon" src="x-icon-default.svg" draggable="false" alt="visibility" onclick="removeImage()">
               </button>
             </div>
+            <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
+            <button id="upload-images-button" class="toolkit-button toolkit-button-default" style="text-align: center; position: relative; float: right" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
+              <img id="upload-images-icon" style="width: 17px; padding: 0; padding-right: 7px;" src="invisible-button.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+            </button>
+            <div class="toolkit-button-hover-popup" id="upload-images-button-popup">Upload Images</div>
           </div>
           <div id="image-list-overflow-parent">
           </div>
