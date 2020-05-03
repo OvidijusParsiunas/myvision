@@ -38,6 +38,8 @@ rename exports datasets to download datasets
 
 change the machine learning icon to an AI icon
 
+current ml svg looks vertically tight - may need to create a margin for it
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders
