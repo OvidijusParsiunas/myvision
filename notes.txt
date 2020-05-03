@@ -34,6 +34,10 @@ will have to highlight initial buttons to get users started
 
 clicking create polygon and immediately clicking add points or remove points works
 
+rename exports datasets to download datasets
+
+change the machine learning icon to an AI icon
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders
