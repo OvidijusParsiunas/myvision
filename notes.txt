@@ -26,13 +26,11 @@ was not able to check ML generated label list overflow border chrome fix on smal
 
 popover for github links
 
-I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed\
+I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed
 
 fix cursor move for chrome browser in Ubuntu
 
 will have to highlight initial buttons to get users started
-
-clicking create polygon and immediately clicking add points or remove points works
 
 rename exports datasets to download datasets
 

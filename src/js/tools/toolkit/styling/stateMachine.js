@@ -174,11 +174,16 @@ function setCreateBoundingBoxButtonToActive() {
 
 function setAddPointsButtonToActive() {
   setAddPointsActive();
+  if (createBoundingBoxState === state.ACTIVE) setCreateBoundingBoxButtonToDefault();
+  if (createPolygonState === state.ACTIVE) setCreatePolygonButtonToDefault();
   if (removePointsState === state.ACTIVE) setRemovePointsDefault();
 }
 
 function setRemovePointsButtonToActive() {
   setRemovePointsActive();
+  if (createBoundingBoxState === state.ACTIVE) setCreateBoundingBoxButtonToDefault();
+  if (createPolygonState === state.ACTIVE
+    && !getPolygonDrawingInProgressState()) setCreatePolygonButtonToDefault();
   if (addPointsState === state.ACTIVE) setAddPointsDefault();
 }
 
