@@ -9,7 +9,7 @@ import {
 } from '../stateMachine';
 import {
   setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
-  setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault,
+  setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault, setEditShapesButtonToActive,
   setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
 } from '../toolkit/styling/stateMachine';
 
@@ -31,6 +31,7 @@ let imageListOverflowParent = null;
 function updateCurrentImageIds(currentId, newId) {
   currentlySelectedImageId = currentId;
   newImageId = newId;
+  if (newImageId) firstImage = true;
 }
 
 function findImageListElement() {
@@ -190,6 +191,8 @@ function captureCurrentImageData() {
 function saveAndRemoveCurrentImageDetails() {
   if (!firstImage) {
     captureCurrentImageData();
+  } else {
+    setEditShapesButtonToActive();
   }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(false);

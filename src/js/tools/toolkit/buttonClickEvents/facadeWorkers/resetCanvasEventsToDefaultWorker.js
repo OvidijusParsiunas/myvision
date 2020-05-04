@@ -11,6 +11,7 @@ import {
 } from '../../../stateMachine';
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
+import { getCurrentImage } from '../../../imageList/uploadImages/drawImageOnCanvas';
 
 function initiateResetCanvasEventsToDefaultEvent(canvas) {
   canvas.discardActiveObject();
@@ -36,7 +37,7 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
       assignDrawBoundingBoxEvents(canvas);
     }
     setDefaultState(false);
-  } else {
+  } else if (getCurrentImage()) {
     setEditShapesButtonToActive();
     setCreatePolygonButtonToDefault();
     setCreateBoundingBoxButtonToDefault();
