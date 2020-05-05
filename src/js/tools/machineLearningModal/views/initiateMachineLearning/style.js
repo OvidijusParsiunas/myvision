@@ -191,7 +191,7 @@ function displayUploadImagesButton() {
   toolkitUploadImagesButton.style.marginTop = '0px';
   toolkitUploadImagesButton.style.height = '23px';
   toolkitUploadImagesButton.style.marginRight = '-2px';
-  toolkitUploadImagesButton.childNodes[1].style.paddingTop = '2.6px';
+  toolkitUploadImagesButton.childNodes[1].style.paddingTop = '3px';
 }
 
 function hideUploadImagesButton() {
