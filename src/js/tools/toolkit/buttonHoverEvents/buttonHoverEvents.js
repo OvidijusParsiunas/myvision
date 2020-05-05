@@ -77,7 +77,6 @@ window.mouseEnterLeftSideBar = () => {
 window.mouseEnterToolkitButton = (event, id) => {
   if (event.target.tagName === 'BUTTON') {
     pendingButtonPopups.unshift(buttonPopups[id]);
-    console.log('called');
     if (persistButtonPopupDisplay) {
       displayPopup([checkIfSettingsButtonNotUpMiddleware.bind(this, event),
         checkIfExportDatasetsButtonNotUpMiddleware.bind(this, event)], id);

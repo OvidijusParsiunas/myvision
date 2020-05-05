@@ -188,11 +188,19 @@ function highlightCancelButton() {
 function displayUploadImagesButton() {
   toolkitUploadImagesButton.style.zIndex = 3;
   toolkitUploadImagesButton.style.border = '2px solid rgb(73, 178, 218)';
+  toolkitUploadImagesButton.style.marginTop = '0px';
+  toolkitUploadImagesButton.style.height = '23px';
+  toolkitUploadImagesButton.style.marginRight = '-2px';
+  toolkitUploadImagesButton.childNodes[1].style.paddingTop = '2.6px';
 }
 
 function hideUploadImagesButton() {
   toolkitUploadImagesButton.style.zIndex = 1;
   toolkitUploadImagesButton.style.border = '';
+  toolkitUploadImagesButton.style.marginTop = '';
+  toolkitUploadImagesButton.style.height = '';
+  toolkitUploadImagesButton.style.marginRight = '';
+  toolkitUploadImagesButton.childNodes[1].style.paddingTop = '';
 }
 
 function setModalHeight(height) {
