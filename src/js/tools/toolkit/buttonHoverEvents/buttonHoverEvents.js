@@ -21,8 +21,9 @@ function assignToolkitButtonHoverEvents() {
   buttonPopups.machineLearning = document.getElementById('machine-learning-button-modal');
   buttonPopups.zoomIn = document.getElementById('zoom-in-button-popup');
   buttonPopups.zoomOut = document.getElementById('zoom-out-button-popup');
-  buttonPopups.uploadImages = document.getElementById('upload-images-button-popup');
   buttonPopups.settings = document.getElementById('settings-button-popup');
+  buttonPopups.uploadImages = document.getElementById('upload-images-button-popup');
+  buttonPopups.removeImages = document.getElementById('remove-images-button-popup');
 }
 
 function removeActiveButtonPopup() {
@@ -76,6 +77,7 @@ window.mouseEnterLeftSideBar = () => {
 window.mouseEnterToolkitButton = (event, id) => {
   if (event.target.tagName === 'BUTTON') {
     pendingButtonPopups.unshift(buttonPopups[id]);
+    console.log('called');
     if (persistButtonPopupDisplay) {
       displayPopup([checkIfSettingsButtonNotUpMiddleware.bind(this, event),
         checkIfExportDatasetsButtonNotUpMiddleware.bind(this, event)], id);

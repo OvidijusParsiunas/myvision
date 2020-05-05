@@ -977,9 +977,13 @@
   height: 6px;
 }
 
+#image-list-component {
+  padding-top: 0px;
+}
+
 #image-list-title-parent {
   position: relative;
-  height: 20px;
+  height: 23px;
 }
 
 #image-list-title-text {
@@ -987,15 +991,44 @@
   bottom: 0.5px;
 }
 
+#upload-images-button {
+  text-align: center;
+  position: relative;
+  float: right;
+  margin-right: 0px;
+  margin-top: 1px;
+}
+
+#upload-images-icon {
+  width: 14px;
+  padding-top: 3.6px;
+  padding-bottom: 0px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+#upload-images-button-popup {
+  margin-top: -30px;
+  margin-left: 84px;
+}
+
 #remove-images-button-container {
-  padding-top: 2px;
-  padding-right: 6px;
+  margin-top: 1px;
+  padding-right: 4px;
+  padding-top: 0px;
   float: right;
 }
 
 #remove-images-button-icon {
-  cursor: pointer;
   width: 15px;
+  padding-top: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+#remove-images-button-popup {
+  margin-top: -30px;
+  margin-left: 90px;
 }
 
 #image-list-overflow-parent {
@@ -1294,6 +1327,12 @@ body {
   .upload-datasets-modal-upload-datasets-table-row-popover {
     padding-top: 3px;
     padding-bottom: 4px;
+  }
+  #upload-images-button-popup {
+    margin-top: -31px;
+  }
+  #remove-images-button-popup {
+    margin-top: -31px;
   }
 }
 

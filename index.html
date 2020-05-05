@@ -325,14 +325,14 @@
           <div id="image-list-title-parent" class="right-side-bar-component-title">
             <div id="image-list-title-text">Uploads:</div>
             <div id="remove-images-button-container">
-              <button id="remove-images-button" class="toolkit-button toolkit-button-default">
+              <button id="remove-images-button" class="toolkit-button toolkit-button-default" onmouseenter="mouseEnterToolkitButton(event, 'removeImages')" onmouseleave="mouseLeaveToolkitButton(event)">
                 <img id="remove-images-button-icon" src="rubbish-can.svg" draggable="false" alt="visibility" onclick="removeImage()">
               </button>
             </div>
+            <div class="toolkit-button-hover-popup" id="remove-images-button-popup">Remove Image</div>
             <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
-            <button id="upload-images-button" class="toolkit-button toolkit-button-default" style="text-align: center; position: relative; float: right" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
-              <img id="upload-images-icon" style="width: 14px; padding: 0; padding-right: 7px; padding-top: 1.5px;" src="method-draw-image - 2020-05-05T022144.694.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
-              <!-- <img id="upload-images-icon" style="width: 14px; padding: 0; padding-right: 7px; padding-top: 1.5px;" src="method-draw-image - 2020-05-05T020515.499.svg" draggable="false" class="toolkit-button-icon" alt="visibility"> -->
+            <button id="upload-images-button" class="toolkit-button toolkit-button-default" onclick="triggerImageUpload()" onmouseenter="mouseEnterToolkitButton(event, 'uploadImages')" onmouseleave="mouseLeaveToolkitButton(event)">
+              <img id="upload-images-icon" src="method-draw-image - 2020-05-05T022144.694.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
             </button>
             <div class="toolkit-button-hover-popup" id="upload-images-button-popup">Upload Images</div>
           </div>
