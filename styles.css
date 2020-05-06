@@ -1454,7 +1454,7 @@ body {
   border-color: rgb(202, 209, 209);
 }
 
-.toolkit-button-hover-popover {
+.core-button-hover-popover {
   margin-left: 62px;
   position: absolute;
   margin-top: -35px;
@@ -1939,7 +1939,7 @@ body {
   border-color: rgb(202, 209, 209);
 }
 
-.toolkit-button-hover-popover {
+.core-button-hover-popover {
   margin-left: 62px;
   position: absolute;
   margin-top: -35px;

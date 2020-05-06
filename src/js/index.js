@@ -13,11 +13,13 @@ import { initialiseImageListFunctionality } from './tools/imageList/imageList';
 import { initialiseRemoveImagesFunctionality } from './tools/imageList/removeImages/removeImages';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
+import { initialiseCoreButtonPopovers } from './tools/globalStyling/coreButtonPopovers';
 
 constructCanvas();
 initialiseToolkit();
 initialiseLabellerModal();
 initialiseSettingsPopup();
+initialiseCoreButtonPopovers();
 initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();
 initialiseExportLabelsPopUp();

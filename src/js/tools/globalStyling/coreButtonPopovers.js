@@ -1,4 +1,4 @@
-import { getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../../stateMachine';
+import { getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../stateMachine';
 
 const buttonPopovers = {};
 const HOVER_TIMEOUT = 500;
@@ -9,7 +9,7 @@ let activePopover = null;
 let persistButtonPopoverDisplay = false;
 let doNotDisplayButtonAfterTimeoutState = false;
 
-function assignToolkitButtonHoverEvents() {
+function initialiseCoreButtonPopovers() {
   buttonPopovers.default = document.getElementById('default-button-popover');
   buttonPopovers.boundingBox = document.getElementById('bounding-box-button-popover');
   buttonPopovers.polygon = document.getElementById('polygon-button-popover');
@@ -74,7 +74,7 @@ window.mouseEnterLeftSideBar = () => {
   doNotDisplayButtonAfterTimeoutState = false;
 };
 
-window.mouseEnterToolkitButton = (event, id) => {
+window.mouseEnterCoreButton = (event, id) => {
   if (event.target.tagName === 'BUTTON') {
     pendingbuttonPopovers.unshift(buttonPopovers[id]);
     if (persistButtonPopoverDisplay) {
@@ -93,7 +93,7 @@ window.mouseEnterToolkitButton = (event, id) => {
   }
 };
 
-window.mouseLeaveToolkitButton = (event) => {
+window.mouseLeaveCoreButton = (event) => {
   if (event.target.tagName === 'BUTTON') {
     if (activePopover !== null) {
       activePopover.style.display = 'none';
@@ -108,4 +108,4 @@ window.mouseLeaveToolkitButton = (event) => {
   doNotDisplayButtonAfterTimeoutState = false;
 };
 
-export { assignToolkitButtonHoverEvents, removeActiveButtonPopover };
+export { initialiseCoreButtonPopovers, removeActiveButtonPopover };

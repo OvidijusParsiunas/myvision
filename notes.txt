@@ -36,6 +36,8 @@ rename exports datasets to download datasets
 
 think about height of the image list popovers and margin top of the toolkit
 
+add and remove points buttons popovers are not in the correct position
+
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders
