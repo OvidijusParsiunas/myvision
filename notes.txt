@@ -38,8 +38,6 @@ add and remove points buttons popovers are not in the correct position
 
 help button top right
 
-remove shape button is still active after drawing a shape
-
 Things to check on chrome browsers on other pcs:
 
 shape labeller modal  horizontal and vertical overflow fake borders

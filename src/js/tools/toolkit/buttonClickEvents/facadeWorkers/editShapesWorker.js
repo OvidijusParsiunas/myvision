@@ -31,7 +31,10 @@ function dismissAddPointsEvents(canvas) {
 }
 
 function dismissRemovePointsEvents(canvas) {
-  if (getPolygonDrawingInProgressState()) { resetNewPolygonData(); }
+  if (getPolygonDrawingInProgressState()) {
+    resetNewPolygonData();
+    setRemoveShapeButtonToDisabled();
+  }
   purgeCanvasMouseEvents(canvas);
   cleanPolygonPointsArray();
   setDefaultCursorModeAfterAlteringPolygonPoints(canvas);
