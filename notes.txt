@@ -34,7 +34,7 @@ will have to highlight initial buttons to get users started
 
 rename exports datasets to download datasets
 
-rename toolkit-button-hover-popup class to toolkit-button-hover-popover
+think about height of the image list popovers and margin top of the toolkit
 
 Things to check on chrome browsers on other pcs:
 

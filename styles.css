@@ -1007,7 +1007,7 @@
   padding-right: 3px;
 }
 
-#upload-images-button-popup {
+#upload-images-button-popover {
   margin-top: -29px;
   margin-left: 84px;
 }
@@ -1026,7 +1026,7 @@
   padding-right: 3px;
 }
 
-#remove-images-button-popup {
+#remove-images-button-popover {
   margin-top: -29px;
   margin-left: 90px;
 }
@@ -1218,8 +1218,8 @@ body {
 }
 
 .toolkit-button-default:active {
-  /* highlight in the color of what the icon is going to be */
-  background-color: lightgreen;
+  background-color: #dadada;
+  /* background-color: #d4d4d4; */
 }
 
 .toolkit-button-disabled {
@@ -1328,10 +1328,10 @@ body {
     padding-top: 3px;
     padding-bottom: 4px;
   }
-  #upload-images-button-popup {
+  #upload-images-button-popover {
     margin-top: -31px;
   }
-  #remove-images-button-popup {
+  #remove-images-button-popover {
     margin-top: -31px;
   }
 }
@@ -1454,7 +1454,7 @@ body {
   border-color: rgb(202, 209, 209);
 }
 
-.toolkit-button-hover-popup {
+.toolkit-button-hover-popover {
   margin-left: 62px;
   position: absolute;
   margin-top: -35px;
@@ -1939,7 +1939,7 @@ body {
   border-color: rgb(202, 209, 209);
 }
 
-.toolkit-button-hover-popup {
+.toolkit-button-hover-popover {
   margin-left: 62px;
   position: absolute;
   margin-top: -35px;
