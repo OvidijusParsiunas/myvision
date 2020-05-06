@@ -1,4 +1,4 @@
-import { getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../stateMachine';
+import { getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../../stateMachine';
 
 const buttonPopovers = {};
 const HOVER_TIMEOUT = 500;

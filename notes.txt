@@ -34,9 +34,13 @@ will have to highlight initial buttons to get users started
 
 rename exports datasets to download datasets
 
-think about height of the image list popovers and margin top of the toolkit
-
 add and remove points buttons popovers are not in the correct position
+
+move upload images functionality from toolkit to the imageList folder
+
+help button top right
+
+remove shape button is still active after drawing a shape
 
 Things to check on chrome browsers on other pcs:
 
@@ -44,6 +48,12 @@ shape labeller modal  horizontal and vertical overflow fake borders
 label list dropdown horizontal and vertical overflow fake borders
 machine learning generated labels horizontal and vertical overflow fake borders
 make sure the dim effect is not choppy for slower pcs
+
+UX:
+
+Check to see if the upload images and remove image button are not too high up, causing the user to click remove image when
+their actual intention is to remove a shape. To fix this, can potentially move the buttons lower by increasing their padding top
+or highlight the image to be removed (in red) on remove image button hover (border or potentially overlay)
 
 Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
 would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation

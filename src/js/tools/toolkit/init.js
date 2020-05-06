@@ -1,9 +1,9 @@
-import assignToolkitButtonEventHandlers from './buttonClickEvents/buttonClickEvents';
 import { initiateToolkitButtonsStyling } from './styling/stateMachine';
+import assignToolkitButtonEventHandlers from './buttonClickEvents/buttonClickEvents';
 
 function initialiseToolkit() {
-  assignToolkitButtonEventHandlers();
   initiateToolkitButtonsStyling();
+  assignToolkitButtonEventHandlers();
 }
 
 export { initialiseToolkit as default };

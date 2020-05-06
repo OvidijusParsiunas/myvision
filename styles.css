@@ -1220,6 +1220,7 @@ body {
 .toolkit-button-default:active {
   background-color: #dadada;
   /* background-color: #d4d4d4; */
+    /* background-color: #d8d8d8; */
 }
 
 .toolkit-button-disabled {

@@ -5,7 +5,7 @@ import {
 import { reassignReferenceToNewCanvas } from '../../../../canvas/canvas';
 import { getContinuousDrawingState, getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../../stateMachine';
 import { canSwitchImage } from '../../../imageList/imageList';
-import { removeActiveButtonPopover } from '../../../globalStyling/coreButtonPopovers';
+import { removeActiveButtonPopover } from '../../../globalStyling/coreButtons/popovers';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   removeActiveButtonPopover();
