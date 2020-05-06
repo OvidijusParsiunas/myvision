@@ -36,8 +36,6 @@ rename exports datasets to download datasets
 
 add and remove points buttons popovers are not in the correct position
 
-move upload images functionality from toolkit to the imageList folder
-
 help button top right
 
 remove shape button is still active after drawing a shape

@@ -12,7 +12,6 @@ import {
   setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault, setEditShapesButtonToActive,
   setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
 } from '../toolkit/styling/stateMachine';
-
 import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
@@ -38,7 +37,7 @@ function findImageListElement() {
   imageListOverflowParent = document.getElementById('image-list-overflow-parent');
 }
 
-function initialiseImageListFunctionality() {
+function initialiseImageList() {
   findImageListElement();
   initialiseImageListML(images);
 }
@@ -324,9 +323,9 @@ function canSwitchImage(direction) {
 }
 
 export {
-  initialiseImageListFunctionality, setDefaultImageThumbnailHighlightToML,
-  displayTickSVGOverImageThumbnail, addSingleImageToList, getAllImageData,
+  setDefaultImageThumbnailHighlightToML, switchImage, canSwitchImage,
+  displayTickSVGOverImageThumbnail, getAllImageData, initialiseImageList,
+  addImageFromMultiUploadToList, updateCurrentImageIds, getLastImageIdByName,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
-  setThumbnailColourOverlayBackToDefault, getImageIdByName, getLastImageIdByName,
-  switchImage, canSwitchImage, addImageFromMultiUploadToList, updateCurrentImageIds,
+  addSingleImageToList, setThumbnailColourOverlayBackToDefault, getImageIdByName,
 };

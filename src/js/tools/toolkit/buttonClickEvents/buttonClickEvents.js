@@ -1,15 +1,13 @@
 import {
   createNewBndBoxBtnClick, createNewPolygonBtnClick, settingsBtnClick,
   addPointsBtnClick, removeActiveShapeBtnClick, removePolygonPointBtnClick,
-  exportDatasetsBtnClick, uploadImagesInputClick, resetCanvasEventsToDefault,
-  switchImageBtnClick, uploadImagesBtnClick, editShapesBtnClick,
+  exportDatasetsBtnClick, resetCanvasEventsToDefault, editShapesBtnClick,
   zoomBtnClick, machineLearningBtnClick, uploadDatasetsBtnClick,
 } from './facade';
 import {
-  interruptAllCanvasEventsBeforeFunc, interruptAllCanvasEventsBeforeFuncWInputs,
-  doNothingIfLabellingInProgress, interruptNewShapeDrawingWthFunc1OrExecFunc2,
-  doNothingIfLabellingOrAddingNewPoints, replaceExistingCanvas, removeButtonPopIfActive,
+  doNothingIfLabellingOrAddingNewPoints, interruptNewShapeDrawingWthFunc1OrExecFunc2,
   interruptAllCanvasEventsBeforeMultipleFunc, func1IfDrawRemovePointsElseInterruptAllWthFunc2,
+  doNothingIfLabellingInProgress, removeButtonPopoverIfActive, interruptAllCanvasEventsBeforeFunc,
 } from './eventMiddleware/buttonEventMiddleware';
 
 function assignToolkitButtonEventHandlers() {
@@ -20,20 +18,15 @@ function assignToolkitButtonEventHandlers() {
   window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
-  window.exportDatasets = removeButtonPopIfActive.bind(this, exportDatasetsBtnClick);
+  window.exportDatasets = removeButtonPopoverIfActive.bind(this, exportDatasetsBtnClick);
   window.uploadDatasets = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
-    resetCanvasEventsToDefault, removeButtonPopIfActive, uploadDatasetsBtnClick);
+    resetCanvasEventsToDefault, removeButtonPopoverIfActive, uploadDatasetsBtnClick);
   window.displayMachineLearningModal = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
-    resetCanvasEventsToDefault, removeButtonPopIfActive, machineLearningBtnClick);
-  window.uploadImages = interruptAllCanvasEventsBeforeFuncWInputs.bind(this, this,
-    { uploadImagesInputClick, resetCanvasEventsToDefault });
-  window.triggerImageUpload = removeButtonPopIfActive.bind(this, uploadImagesBtnClick);
+    resetCanvasEventsToDefault, removeButtonPopoverIfActive, machineLearningBtnClick);
   window.removeShape = interruptNewShapeDrawingWthFunc1OrExecFunc2.bind(this,
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
   window.zoom = zoomBtnClick;
-  window.switchImage = replaceExistingCanvas.bind(this, switchImageBtnClick,
-    resetCanvasEventsToDefault);
-  window.displaySettingsPopup = removeButtonPopIfActive.bind(this, settingsBtnClick);
+  window.displaySettingsPopup = removeButtonPopoverIfActive.bind(this, settingsBtnClick);
 }
 
 export { assignToolkitButtonEventHandlers as default };

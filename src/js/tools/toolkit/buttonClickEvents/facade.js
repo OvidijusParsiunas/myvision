@@ -6,9 +6,7 @@ import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvas
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
 import toggleExportDatasetsPopUp from './facadeWorkers/toggleExportDatasetsPopUpWorker';
 import displayMachineLearningModal from './facadeWorkers/displayMLModalWorker';
-import { uploadImageFiles, triggeUploadImagesButton } from './facadeWorkers/uploadImagesWorker';
 import { zoomCanvas } from './facadeWorkers/zoomWorker';
-import switchImages from './facadeWorkers/switchImageWorker';
 import toggleSettingsPopUp from './facadeWorkers/toggleSettingsPopUpWorker';
 import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
 import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker';
@@ -59,20 +57,8 @@ function zoomBtnClick(activity) {
   zoomCanvas(canvas, activity);
 }
 
-function switchImageBtnClick(direction) {
-  switchImages(direction);
-}
-
 function settingsBtnClick() {
   toggleSettingsPopUp();
-}
-
-function uploadImagesInputClick(uploadData) {
-  uploadImageFiles(canvas, uploadData);
-}
-
-function uploadImagesBtnClick() {
-  triggeUploadImagesButton();
 }
 
 function editShapesBtnClick() {
@@ -89,11 +75,8 @@ export {
   exportDatasetsBtnClick,
   uploadDatasetsBtnClick,
   machineLearningBtnClick,
-  uploadImagesInputClick,
   addPointsBtnClick,
   zoomBtnClick,
-  switchImageBtnClick,
   settingsBtnClick,
-  uploadImagesBtnClick,
   editShapesBtnClick,
 };

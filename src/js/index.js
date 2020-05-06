@@ -7,11 +7,10 @@ import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClick
 import { initialiseSettingsPopup } from './tools/settingsPopup/buttonClickEvents';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
+import initialiseImageListFunctionality from './tools/imageList/init';
 import { initialiseCoreButtonPopovers } from './tools/globalStyling/coreButtons/popovers';
 import { initialiseGlobalStyleSetup } from './tools/globalStyling/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
-import { initialiseImageListFunctionality } from './tools/imageList/imageList';
-import { initialiseRemoveImagesFunctionality } from './tools/imageList/removeImages/removeImages';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
@@ -25,9 +24,8 @@ initialiseMachineLearningModal();
 initialiseExportLabelsPopUp();
 assignPassiveEventListeners();
 initialiseGlobalStyleSetup();
-initialiseLabelListFunctionality();
 initialiseImageListFunctionality();
-initialiseRemoveImagesFunctionality();
+initialiseLabelListFunctionality();
 initialiseImageSwitchPanelFunctionality();
 registerGlobalKeyEventHandlers();
 initialiseShapeManipulationDeltas();

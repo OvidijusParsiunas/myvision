@@ -74,11 +74,7 @@ function assignCanvasForRemovingImages(canvasArg) {
   canvas = canvasArg;
 }
 
-function initialiseRemoveImagesFunctionality() {
-  window.removeImage = removeImage;
-}
-
-export { initialiseRemoveImagesFunctionality, assignCanvasForRemovingImages };
+export { assignCanvasForRemovingImages, removeImage };
 
 // initial code to get started on the multi-image removal functionality
 
