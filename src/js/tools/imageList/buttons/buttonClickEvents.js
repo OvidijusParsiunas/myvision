@@ -14,7 +14,7 @@ function uploadImageFiles(uploadData) {
   uploadImages(uploadData);
 }
 
-function initialiseImageListButtonEvents() {
+function initialiseImageListButtonClickEvents() {
   window.switchImage = replaceExistingCanvas.bind(this, switchImage,
     resetCanvasEventsToDefault);
   window.triggerImageUpload = removeButtonPopoverIfActive.bind(this, triggeUploadImagesButton);
@@ -23,4 +23,4 @@ function initialiseImageListButtonEvents() {
   window.removeImage = removeImage;
 }
 
-export { initialiseImageListButtonEvents as default };
+export { initialiseImageListButtonClickEvents as default };

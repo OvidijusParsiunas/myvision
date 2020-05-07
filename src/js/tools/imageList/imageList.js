@@ -162,6 +162,18 @@ function highlightImageThumbnail(element) {
   currentlyActiveElement = element;
 }
 
+function changeImageThumbnailBorderColorToRed() {
+  if (currentlyActiveElement) {
+    currentlyActiveElement.style.borderColor = '#ff4d4d';
+  }
+}
+
+function resetImageThumbnailBorderColor() {
+  if (currentlyActiveElement) {
+    currentlyActiveElement.style.borderColor = '';
+  }
+}
+
 function addNewImage(imageName, imageData) {
   const thumbnailElementRef = addNewItemToImageList(imageData);
   const imageObject = {
@@ -324,6 +336,7 @@ function canSwitchImage(direction) {
 
 export {
   setDefaultImageThumbnailHighlightToML, switchImage, canSwitchImage,
+  changeImageThumbnailBorderColorToRed, resetImageThumbnailBorderColor,
   displayTickSVGOverImageThumbnail, getAllImageData, initialiseImageList,
   addImageFromMultiUploadToList, updateCurrentImageIds, getLastImageIdByName,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,

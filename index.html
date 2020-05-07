@@ -324,7 +324,7 @@
           <div id="image-list-title-parent" class="right-side-bar-component-title">
             <div id="image-list-title-text">Uploads:</div>
             <div id="remove-images-button-container">
-              <button id="remove-images-button" class="toolkit-button toolkit-button-default" onmouseenter="mouseEnterCoreButton(event, 'removeImages')" onmouseleave="mouseLeaveCoreButton(event)">
+              <button id="remove-images-button" class="toolkit-button toolkit-button-default" onmouseenter="mouseEnterCoreButton(event, 'removeImages'); changeImageThumbnailBorderColorToRed()" onmouseleave="mouseLeaveCoreButton(event); resetImageThumbnailBorderColor()">
                 <img id="remove-images-button-icon" src="rubbish-can.svg" draggable="false" alt="visibility" onclick="removeImage()">
               </button>
             </div>

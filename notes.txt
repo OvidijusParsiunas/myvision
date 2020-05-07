@@ -1,7 +1,5 @@
 change cursor modes name convention
 
-Really like a light green / blue and white color theme
-
 Toolkit button functionality for getting smaller with the screen should be done when we know all of the buttons
 
 Escape button should close the settings popup and cancel the shape labeller modal
@@ -17,8 +15,6 @@ it scroll to appropriate width (does not on the smaller laptop, had to check for
 Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
 
 arrow keys should go down the dropdown options for a label
-
-try trashcan icon for remove image label
 
 delete keyboard button should remove shape
 
@@ -48,6 +44,8 @@ UX:
 Check to see if the upload images and remove image button are not too high up, causing the user to click remove image when
 their actual intention is to remove a shape. To fix this, can potentially move the buttons lower by increasing their padding top
 or highlight the image to be removed (in red) on remove image button hover (border or potentially overlay)
+Check to see if the new border functionality is not causing users to think that on hovering the delete shape button, the shape would
+be highlighted
 
 Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
 would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation

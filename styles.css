@@ -1029,10 +1029,6 @@
   margin-left: 90px;
 }
 
-.image-list-button-hover-popover-v-position {
-  margin-top: -29px;
-}
-
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
@@ -1418,6 +1414,10 @@ body {
 
 .small-core-button-hover-popover-v-position {
   margin-top: -31px;
+}
+
+.image-list-button-hover-popover-v-position {
+  margin-top: -29px;
 }
 
 .image-list-thumbnail {
