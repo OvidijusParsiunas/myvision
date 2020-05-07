@@ -34,8 +34,6 @@ will have to highlight initial buttons to get users started
 
 rename exports datasets to download datasets
 
-add and remove points buttons popovers are not in the correct position
-
 help button top right
 
 Things to check on chrome browsers on other pcs:
