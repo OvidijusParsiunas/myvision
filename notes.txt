@@ -28,9 +28,9 @@ fix cursor move for chrome browser in Ubuntu
 
 will have to highlight initial buttons to get users started
 
-rename exports datasets to download datasets
-
 help button top right
+
+---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
 
@@ -39,6 +39,8 @@ label list dropdown horizontal and vertical overflow fake borders
 machine learning generated labels horizontal and vertical overflow fake borders
 make sure the dim effect is not choppy for slower pcs
 
+-------------------------------------------------
+
 UX:
 
 Check to see if the upload images and remove image button are not too high up, causing the user to click remove image when
@@ -46,6 +48,17 @@ their actual intention is to remove a shape. To fix this, can potentially move t
 or highlight the image to be removed (in red) on remove image button hover (border or potentially overlay)
 Check to see if the new border functionality is not causing users to think that on hovering the delete shape button, the shape would
 be highlighted
+
+check if export datasets is enough of an indicator that it is a download functionality
+(reason not using download is because the word is long for the popup)
+
+Or maybe having the 'Download Datasets' popover and Export button is clear enough
+
+Change the HTML naming conventions with the final decisions!!!!
+
+--------------------------------------------------
+
+The export datasets button is not disabled on load time to enable the user explore the formats available
 
 Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
 would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation
