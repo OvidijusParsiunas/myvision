@@ -102,23 +102,17 @@ function removeTickSVGOverImageThumbnail(id) {
   images[id].thumbnailElementRef.childNodes[2].style.display = 'none';
 }
 
-function removeTickSVGIfShapesPresent(id) {
-  if (Object.keys(images[id].shapes).length > 0) {
-    removeTickSVGOverImageThumbnail(id);
-  }
-}
-
 function setDefaultImageThumbnailHighlightToMLSelected(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning-selected');
   const imageId = element.childNodes[0].id;
-  removeTickSVGIfShapesPresent(imageId);
+  displayTickSVGOverImageThumbnail(imageId);
 }
 
 function setDefaultImageThumbnailHighlightToML(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning');
   element.childNodes[1].style.display = 'block';
   const imageId = element.childNodes[0].id;
-  removeTickSVGIfShapesPresent(imageId);
+  displayTickSVGOverImageThumbnail(imageId);
 }
 
 function setMLThumbnailOverlayToMLSelected(element) {
