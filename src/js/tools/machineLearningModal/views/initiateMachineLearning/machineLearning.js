@@ -24,48 +24,57 @@ function predict(image) {
   return tfModel.detect(image.data);
 }
 
-// check bounding box overflow overflow
-// check the memory leak, need parition
-
 function isObjectEmpty(object) {
   return Object.keys(object).length === 0 && object.constructor === Object;
 }
 
-function executeAndRecordPredictionResults(promisesArray, predictionIdToImageId,
-  nextViewCallback, setMachineLearningData, coverage) {
-  Promise.all(promisesArray)
-    .then((predictions) => {
-      // opportunity for remembering the last changed label names by moving
-      // this object outside of the function
-      const predictedImageCoordinates = {};
-      for (let i = 0; i < predictions.length; i += 1) {
-        predictedImageCoordinates[predictionIdToImageId[i]] = predictions[i];
-      }
-      setMachineLearningData(predictedImageCoordinates);
-      removeLoadingContent();
-      removeCancelButton();
-      if (isObjectEmpty(predictedImageCoordinates)) {
-        nextViewCallback();
-      } else {
-        displayNextButton();
-        if (coverage === 'all'
-        || (coverage === 'new' && Object.prototype.hasOwnProperty.call(predictedImageCoordinates, getCurrentImageId()))) {
-          drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
-        }
-        updateImageThumbnails(predictedImageCoordinates);
-        changeToMLCompleteStyle();
-      }
-      isInProgress = false;
+function displayPredictionResults(results, predictionIdToImageId,
+  nextViewCallback, setMachineLearningDataFunc, coverage) {
+  // opportunity for remembering the last changed label names by moving
+  // this object outside of the function
+  const predictedImageCoordinates = {};
+  for (let i = 0; i < results.length; i += 1) {
+    predictedImageCoordinates[predictionIdToImageId[i]] = results[i];
+  }
+  setMachineLearningDataFunc(predictedImageCoordinates);
+  removeLoadingContent();
+  removeCancelButton();
+  if (isObjectEmpty(predictedImageCoordinates)) {
+    nextViewCallback();
+  } else {
+    displayNextButton();
+    if (coverage === 'all'
+    || (coverage === 'new' && Object.prototype.hasOwnProperty.call(predictedImageCoordinates, getCurrentImageId()))) {
+      drawTempShapesToShowCaseMLResults(predictedImageCoordinates);
+    }
+    updateImageThumbnails(predictedImageCoordinates);
+    changeToMLCompleteStyle();
+  }
+  isInProgress = false;
+}
+
+function executeModel(images, results, predictionIdToImageId,
+  nextViewCallback, setMachineLearningDataFunc, coverage) {
+  if (isCancelled) return;
+  if (images.length > 0) {
+    predict(images.splice(0, 1)[0]).then((result) => {
+      results.push(result);
+      executeModel(images, results, predictionIdToImageId,
+        nextViewCallback, setMachineLearningDataFunc, coverage);
     }).catch((error) => {
       console.log(error);
       errorHandler();
     });
+  } else {
+    displayPredictionResults(results, predictionIdToImageId,
+      nextViewCallback, setMachineLearningDataFunc, coverage);
+  }
 }
 
 // decided not to store generated shapes because if you have 100 images with
 // 100s of shapes, it would lead to significant memory usage
 function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage) {
-  const predictPromises = [];
+  const images = [];
   const allImageData = getAllImageData();
   const predictionIdToImageId = [];
   // optimisation for not generating shapes on untouched images taken out
@@ -80,11 +89,11 @@ function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, c
     const image = allImageData[i];
     if (coverage === 'all' || (coverage === 'new' && !image.analysedByML)) {
       image.analysedByML = true;
-      predictPromises.push(predict(image));
+      images.push(image);
       predictionIdToImageId.push(i);
     }
   }
-  executeAndRecordPredictionResults(predictPromises, predictionIdToImageId,
+  executeModel(images, [], predictionIdToImageId,
     nextViewCallback, setMachineLearningData, coverage);
 }
 

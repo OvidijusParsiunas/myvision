@@ -3,8 +3,6 @@ Escape button should close the settings popup and cancel the shape labeller moda
 cancel the creation of a new polygon when clicked escape or delete
 or move shapes button
 
-Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
-
 arrow keys should go down the dropdown options for a label
 
 delete keyboard button should remove shape
