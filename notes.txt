@@ -1,12 +1,7 @@
-change cursor modes name convention
-
 Escape button should close the settings popup and cancel the shape labeller modal
 
 cancel the creation of a new polygon when clicked escape or delete
 or move shapes button
-
-check when editing label name on the bigger laptop and clicking paste (with vertical overflow present); does
-it scroll to appropriate width (does not on the smaller laptop, had to check for vertical overflow in ML popup functionality)
 
 Think about partitioning some of the ML prediction work as there is a memory leak with a lot of images
 
@@ -14,13 +9,11 @@ arrow keys should go down the dropdown options for a label
 
 delete keyboard button should remove shape
 
-was not able to check ML generated label list overflow border chrome fix on smaller screens
+was not able to check ML generated label list overflow border chrome fix on smaller screens - check vertical
 
 popover for github links
 
 I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed
-
-fix cursor move for chrome browser in Ubuntu
 
 will have to highlight initial buttons to get users started
 

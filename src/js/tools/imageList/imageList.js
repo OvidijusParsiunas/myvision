@@ -26,6 +26,7 @@ let currentlySelectedImageId = 0;
 let newImageId = 0;
 let firstImage = true;
 let imageListOverflowParent = null;
+let hasCurrentImageThumbnailRedBorder = false;
 
 function updateCurrentImageIds(currentId, newId) {
   currentlySelectedImageId = currentId;
@@ -152,17 +153,22 @@ function setCurrentlyActiveElementToInvisible() {
 function highlightImageThumbnail(element) {
   setCurrentlyActiveElementToInvisible();
   setMLThumbnailOverlayToMLSelected(element);
+  if (hasCurrentImageThumbnailRedBorder) {
+    element.style.borderColor = '#ff4d4d';
+  }
   element.style.display = 'block';
   currentlyActiveElement = element;
 }
 
 function changeImageThumbnailBorderColorToRed() {
   if (currentlyActiveElement) {
+    hasCurrentImageThumbnailRedBorder = true;
     currentlyActiveElement.style.borderColor = '#ff4d4d';
   }
 }
 
 function resetImageThumbnailBorderColor() {
+  hasCurrentImageThumbnailRedBorder = false;
   if (currentlyActiveElement) {
     currentlyActiveElement.style.borderColor = '';
   }

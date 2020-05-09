@@ -1008,7 +1008,7 @@
 }
 
 #upload-images-button-popover {
-  margin-left: 84px;
+  margin-left: 72px;
 }
 
 #remove-images-button-container {
@@ -1457,15 +1457,17 @@ body {
 .image-list-thumbnail-machine-learning {
   border: 3px solid #58ca4b;
   background: #01a20124;
-  width: calc(100% - 6px);
-  height: 54px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .image-list-thumbnail-machine-learning-selected {
-  border: 2px solid #0dc7ff;
+  border: 3px solid #0dc7ff;
   background: #01a20124;
-  width: calc(100% - 4px);
-  height: 56px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .image-list-thumbnail-SVG-tick-icon {
