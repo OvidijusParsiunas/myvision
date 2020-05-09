@@ -1,8 +1,5 @@
 Escape button should close the settings popup and cancel the shape labeller modal
 
-cancel the creation of a new polygon when clicked escape or delete
-or move shapes button
-
 arrow keys should go down the dropdown options for a label
 
 delete keyboard button should remove shape

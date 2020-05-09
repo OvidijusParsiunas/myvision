@@ -7,7 +7,9 @@ import {
   getLastDrawingModeState, setAddingPolygonPointsState, getPolygonDrawingInProgressState,
 } from '../../../stateMachine';
 import {
-  setRemovePointsButtonToActive, setRemovePointsButtonToDefault, setEditShapesButtonToActive, setEditShapesButtonToDefault,
+  setEditShapesButtonToActive, setEditShapesButtonToDefault,
+  setRemovePointsButtonToActive, setRemovePointsButtonToDefault,
+  setCreateBoundingBoxButtonToActive, setCreatePolygonButtonToActive,
 } from '../../styling/stateMachine';
 import { removeInvisiblePoint } from '../../../../canvas/objects/polygon/polygon';
 import setRemovePointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/removePointsOnExistingPolygonMode';
@@ -55,8 +57,10 @@ function discardRemovePointsEvents(canvas) {
     removePolygonPoints();
     if (getLastDrawingModeState() === 'polygon') {
       assignDrawPolygonEvents(canvas);
+      setCreatePolygonButtonToActive();
     } else if (getLastDrawingModeState() === 'boundingBox') {
       assignDrawBoundingBoxEvents(canvas);
+      setCreateBoundingBoxButtonToActive();
     }
   } else {
     cleanPolygonPointsArray();

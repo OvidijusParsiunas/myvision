@@ -15,6 +15,7 @@ import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mo
 import {
   setAddPointsButtonToActive, setAddPointsButtonToDefault,
   setEditShapesButtonToActive, setEditShapesButtonToDefault,
+  setCreateBoundingBoxButtonToActive, setCreatePolygonButtonToActive,
 } from '../../styling/stateMachine';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
@@ -25,8 +26,10 @@ function discardAddPointsEvents(canvas) {
     removePolygonPoints();
     if (getLastDrawingModeState() === 'polygon') {
       assignDrawPolygonEvents(canvas);
+      setCreatePolygonButtonToActive();
     } else if (getLastDrawingModeState() === 'boundingBox') {
       assignDrawBoundingBoxEvents(canvas);
+      setCreateBoundingBoxButtonToActive();
     }
   } else {
     setDefaultCursorModeAfterAlteringPolygonPoints(canvas);

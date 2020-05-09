@@ -1,21 +1,44 @@
 import { labelShape, cancelLabellingProcess } from '../tools/labellerModal/buttonEventHandlers';
-import { getLabellerModalDisplayedState, getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState } from '../tools/stateMachine';
+import {
+  getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
+  getExportDatasetsPopUpOpenState,
+  getLabellerModalDisplayedState, getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
+} from '../tools/stateMachine';
+
+function enterKey() {
+  if (getLabellerModalDisplayedState()) {
+    labelShape();
+  }
+}
+
+function escapeKey() {
+  if (getExportDatasetsPopUpOpenState()) {
+    window.exportDatasets();
+  } else if (getSettingsPopUpOpenState()) {
+    window.displaySettingsPopup();
+  } else if (getLabellerModalDisplayedState()) {
+    cancelLabellingProcess();
+  } else if (getPolygonDrawingInProgressState()) {
+    window.createNewPolygon();
+  } else if (getBoundingBoxDrawingInProgressState()) {
+    window.createNewBndBox();
+  } else if (getAddingPolygonPointsState()) {
+    window.addPoints(document.getElementById('add-points-button'));
+  } else if (getRemovingPolygonPointsState()) {
+    window.removePoint(document.getElementById('remove-points-button'));
+  }
+}
 
 function keyDownEventHandler(event) {
-  if (getLabellerModalDisplayedState()) {
-    if (event.key === 'Enter') {
-      labelShape();
-    } else if (event.key === 'Escape') {
-      cancelLabellingProcess();
-    }
-  } else if (getPolygonDrawingInProgressState()) {
-    if (event.key === 'Escape') {
-      window.createNewPolygon();
-    }
-  } else if (getBoundingBoxDrawingInProgressState()) {
-    if (event.key === 'Escape') {
-      window.createNewBndBox();
-    }
+  switch (event.key) {
+    case 'Escape':
+      escapeKey();
+      break;
+    case 'Enter':
+      enterKey();
+      break;
+    default:
+      break;
   }
   console.log(event.key);
 }
