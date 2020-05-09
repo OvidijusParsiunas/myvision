@@ -5,7 +5,8 @@ import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import {
   getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
-  setAddingPolygonPointsState, setReadyToDrawShapeState, getDoubleScrollCanvasState,
+  setBoundingBoxDrawingInProgressState, getBoundingBoxDrawingInProgressState,
+  getDoubleScrollCanvasState, setReadyToDrawShapeState, setAddingPolygonPointsState,
 } from '../../../tools/stateMachine';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
@@ -29,11 +30,8 @@ function instantiateNewBoundingBox() {
     boundingBoxProps.origY = pointer.y < 0 ? 0 : pointer.y;
     boundingBox = new fabric.Rect(boundingBoxProperties.tempBoundingBoxProps(boundingBoxProps));
     canvas.add(boundingBox);
+    setBoundingBoxDrawingInProgressState(true);
   }
-}
-
-function clearBoundingBoxData() {
-  drawingFinished = true;
 }
 
 function deselectBoundingBox() {
@@ -49,6 +47,17 @@ function resetDrawBoundingBoxMode() {
   setDrawCursorMode(canvas);
   createNewBoundingBoxBtnClicked = true;
   drawingFinished = false;
+  setBoundingBoxDrawingInProgressState(false);
+}
+
+function clearBoundingBoxData() {
+  if (getBoundingBoxDrawingInProgressState()) {
+    canvas.remove(boundingBox);
+    boundingBox = null;
+    resetDrawBoundingBoxMode();
+    leftMouseBtnDown = false;
+  }
+  setBoundingBoxDrawingInProgressState(false);
 }
 
 // check whether the results are truncated
@@ -163,7 +172,7 @@ function isBoundingBoxDrawingFinished() {
 }
 
 function finishDrawingBoundingBoxFunc(event) {
-  if (leftMouseBtnDown) {
+  if (leftMouseBtnDown && getBoundingBoxDrawingInProgressState()) {
     createNewBoundingBoxBtnClicked = false;
     leftMouseBtnDown = false;
     boundingBox.setCoords();
@@ -174,6 +183,8 @@ function finishDrawingBoundingBoxFunc(event) {
     prepareLabelShape(boundingBox, canvas);
     const pointer = canvas.getPointer(event.e);
     showLabellerModal(pointer.x, pointer.y);
+    setBoundingBoxDrawingInProgressState(false);
+    boundingBox = null;
   }
 }
 

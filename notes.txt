@@ -17,6 +17,8 @@ will have to highlight initial buttons to get users started
 
 help button top right
 
+draw polygon (q, w);
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

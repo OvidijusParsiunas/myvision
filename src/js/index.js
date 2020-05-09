@@ -1,6 +1,7 @@
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
+import registerKeyInterceptor from './keyInterceptor/keyInterceptor';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClickEvents';
@@ -12,10 +13,10 @@ import { initialiseCoreButtonPopovers } from './tools/globalStyling/coreButtons/
 import { initialiseGlobalStyleSetup } from './tools/globalStyling/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
-import registerGlobalKeyEventHandlers from './keyEventHandlers/keyEventHandlers';
 
 constructCanvas();
 initialiseToolkit();
+registerKeyInterceptor();
 initialiseLabellerModal();
 initialiseSettingsPopup();
 initialiseCoreButtonPopovers();
@@ -27,5 +28,4 @@ initialiseGlobalStyleSetup();
 initialiseImageListFunctionality();
 initialiseLabelListFunctionality();
 initialiseImageSwitchPanelFunctionality();
-registerGlobalKeyEventHandlers();
 initialiseShapeManipulationDeltas();

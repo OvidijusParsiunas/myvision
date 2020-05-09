@@ -24,6 +24,7 @@ let labellerModalDisplayed = false;
 let boundingBoxScalingState = false;
 let shapeMovingState = false;
 let polygonDrawingInProgressState = false;
+let boundingBoxDrawingInProgressState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -123,6 +124,10 @@ function getShapeMovingState() {
 
 function getPolygonDrawingInProgressState() {
   return polygonDrawingInProgressState;
+}
+
+function getBoundingBoxDrawingInProgressState() {
+  return boundingBoxDrawingInProgressState;
 }
 
 function setDefaultState(state) {
@@ -226,6 +231,10 @@ function setPolygonDrawingInProgressState(state) {
   polygonDrawingInProgressState = state;
 }
 
+function setBoundingBoxDrawingInProgressState(state) {
+  boundingBoxDrawingInProgressState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -273,6 +282,8 @@ export {
   setPolygonDrawingInProgressState,
   getNewShapeSelectedViaLabelListState,
   setNewShapeSelectedViaLabelListState,
+  getBoundingBoxDrawingInProgressState,
+  setBoundingBoxDrawingInProgressState,
   getRemovingPointsAfterCancelDrawState,
   setRemovingPointsAfterCancelDrawState,
   getChangingMLGeneratedLabelNamesState,
