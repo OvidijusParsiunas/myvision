@@ -6,7 +6,7 @@ function displayTickSVGOverImageThumbnail(element) {
   element.style.display = 'block';
 }
 
-function setThumbnailColourOverlayBackToDefault(element) {
+function setSelectedMLThumbnailColourOverlayBackToDefault(element) {
   if (element.classList.contains('image-list-thumbnail-machine-learning-selected')) {
     element.classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
   }
@@ -18,8 +18,9 @@ function updateNumberOfUncheckedMLImages() {
   if (currentImage.numberOfMLGeneratedShapes > 0) {
     currentImage.numberOfMLGeneratedShapes -= 1;
     if (currentImage.numberOfMLGeneratedShapes === 0) {
-      setThumbnailColourOverlayBackToDefault(currentImage.thumbnailElementRef.childNodes[1]);
-      displayTickSVGOverImageThumbnail(currentImage.thumbnailElementRef.childNodes[2]);
+      const thumbnailElements = currentImage.thumbnailElementRef.childNodes;
+      setSelectedMLThumbnailColourOverlayBackToDefault(thumbnailElements[1]);
+      displayTickSVGOverImageThumbnail(thumbnailElements[2]);
     }
   }
 }

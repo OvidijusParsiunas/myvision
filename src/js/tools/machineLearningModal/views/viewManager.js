@@ -3,12 +3,13 @@ import { assignGeneratedLabelsViewLocalVariables, hideGeneratedLabelsViewAssets 
 import { displayGeneratedLabelsView } from './generatedLabels/changeLabels';
 import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView, hideNoObjectsFoundViewAssets } from './noObjectsFound/style';
 import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
+import { getProgressStatus, cancelMachineLearning } from './initiateMachineLearning/machineLearning';
 import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/buttonEvents';
 import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts';
 import { getContinuousDrawingState, getLastDrawingModeState, setMachineLearningModalDisplayedState } from '../../stateMachine';
-import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/stateMachine';
+import { removeTempShapes, removeImageThumbnails } from '../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
@@ -37,16 +38,33 @@ function displayNextView() {
   switch (currentViewNumber) {
     case 1:
       prepareInstantiateMachineLearningView();
-      closeModalFunc = hideInitiateMachineLearningViewAssets;
+      closeModalFunc = () => {
+        hideInitiateMachineLearningViewAssets();
+        if (getProgressStatus()) {
+          cancelMachineLearning();
+          return false;
+        }
+        removeTempShapes();
+        removeImageThumbnails();
+        return true;
+      };
       currentViewNumber += 1;
       break;
     case 2:
       if (isMachineLearningObjectEmpty()) {
         displayNoObjectsFoundView();
-        closeModalFunc = hideNoObjectsFoundViewAssets;
+        closeModalFunc = () => {
+          hideNoObjectsFoundViewAssets();
+          return true;
+        };
       } else {
         displayGeneratedLabelsView(machineLearningData);
-        closeModalFunc = hideGeneratedLabelsViewAssets;
+        closeModalFunc = () => {
+          removeTempShapes();
+          removeImageThumbnails();
+          hideGeneratedLabelsViewAssets();
+          return true;
+        };
       }
       currentViewNumber += 1;
       break;
@@ -66,12 +84,14 @@ function displayModal() {
   dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
 
+// need to use window buttons because when the escape button is clicked after
+// the temp shapes have been drawn, the existing shapes are still selecatble
 function resetContinuousShapeButtons() {
   if (getContinuousDrawingState()) {
     if (getLastDrawingModeState() === 'polygon') {
-      setCreatePolygonButtonToActive();
+      window.createNewPolygon();
     } else if (getLastDrawingModeState() === 'boundingBox') {
-      setCreateBoundingBoxButtonToActive();
+      window.createNewBndBox();
     }
   }
 }
@@ -94,8 +114,8 @@ function closeModal(isCancel) {
 }
 
 function closeMLModalViaKeyboard() {
-  closeModalFunc();
-  closeModal(false);
+  const shouldCloseModal = closeModalFunc();
+  if (shouldCloseModal) closeModal(true);
 }
 
 function assignViewManagerLocalVariables() {

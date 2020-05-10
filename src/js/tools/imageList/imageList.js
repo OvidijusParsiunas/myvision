@@ -114,13 +114,22 @@ function setDefaultImageThumbnailHighlightToML(element) {
   displayTickSVGOverImageThumbnail(imageId);
 }
 
+function removeMLThumbnailHighlight(element) {
+  element.childNodes[1].classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-default');
+  element.childNodes[1].style.display = 'none';
+}
+
+function removeSelectedMLThumbnailHighlight(element) {
+  element.childNodes[1].classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
+}
+
 function setMLThumbnailOverlayToMLSelected(element) {
   if (element.classList.contains('image-list-thumbnail-machine-learning')) {
     element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-machine-learning-selected');
   }
 }
 
-function setThumbnailColourOverlayBackToDefault(element) {
+function setSelectedMLThumbnailColourOverlayBackToDefault(element) {
   if (element.classList.contains('image-list-thumbnail-machine-learning-selected')) {
     element.classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
     displayTickSVGOverImageThumbnail();
@@ -144,7 +153,7 @@ function setMLGeneratedShapesToOriginalColorPallette() {
 function setCurrentlyActiveElementToInvisible() {
   if (currentlyActiveElement) {
     currentlyActiveElement.style.display = 'none';
-    setThumbnailColourOverlayBackToDefault(currentlyActiveElement);
+    setSelectedMLThumbnailColourOverlayBackToDefault(currentlyActiveElement);
   }
 }
 
@@ -340,5 +349,6 @@ export {
   displayTickSVGOverImageThumbnail, getAllImageData, initialiseImageList,
   addImageFromMultiUploadToList, updateCurrentImageIds, getLastImageIdByName,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
-  addSingleImageToList, setThumbnailColourOverlayBackToDefault, getImageIdByName,
+  removeMLThumbnailHighlight, removeSelectedMLThumbnailHighlight,
+  addSingleImageToList, setSelectedMLThumbnailColourOverlayBackToDefault, getImageIdByName,
 };

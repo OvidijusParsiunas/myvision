@@ -15,7 +15,10 @@ import { repopulateDropdown } from '../../../tools/labelList/labelList';
 import {
   getAllImageData,
   getLastImageIdByName,
+  removeMLThumbnailHighlight,
+  removeTickSVGOverImageThumbnail,
   displayTickSVGOverImageThumbnail,
+  removeSelectedMLThumbnailHighlight,
   setDefaultImageThumbnailHighlightToML,
   setDefaultImageThumbnailHighlightToMLSelected,
 } from '../../../tools/imageList/imageList';
@@ -151,6 +154,18 @@ function updateImageThumbnails(predictedShapeCoordinatesForImages) {
   });
 }
 
+function removeImageThumbnails() {
+  const { allImageData, currentlySelectedImageId } = getImageData();
+  allImageData.forEach((image, index) => {
+    if (currentlySelectedImageId === index) {
+      removeSelectedMLThumbnailHighlight(image.thumbnailElementRef);
+    } else {
+      removeMLThumbnailHighlight(image.thumbnailElementRef);
+    }
+    if (Object.keys(image.shapes).length === 0) removeTickSVGOverImageThumbnail(index);
+  });
+}
+
 function generateTempShapes(predictedShapeCoordinates, imageScalingDimensions,
   imageLengthDimensions) {
   predictedShapeCoordinates.forEach((shapeCoordinates) => {
@@ -263,6 +278,6 @@ function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {
 }
 
 export {
-  drawTempShapesToShowCaseMLResults, updateImageThumbnails,
-  assignCanvasForDrawingShapesViaCoordinates, drawShapesViaCoordinates,
+  drawTempShapesToShowCaseMLResults, updateImageThumbnails, removeTempShapes,
+  assignCanvasForDrawingShapesViaCoordinates, drawShapesViaCoordinates, removeImageThumbnails,
 };
