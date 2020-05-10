@@ -2,8 +2,6 @@ Escape button should close the settings popup and cancel the shape labeller moda
 
 arrow keys should go down the dropdown options for a label
 
-delete keyboard button should remove shape
-
 was not able to check ML generated label list overflow border chrome fix on smaller screens - check vertical
 
 popover for github links

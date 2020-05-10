@@ -135,7 +135,7 @@
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
         <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
-        <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal()">Cancel</div>
+        <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal(true)">Cancel</div>
         <div id="upload-datsets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)">Yes</div>
         <div id="upload-datasets-modal-no-button" style="display: none" class="popup-label-button popup-cancel-button" onclick="reuseAlreadyExistingImages(false)">No</div>
         <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>

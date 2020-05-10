@@ -25,7 +25,7 @@ function submitMLGeneratedLabelNames(closeModalCallback) {
   submitNewLabelNames();
   const generatedMachineLearningData = getGeneratedMachineLearningData();
   drawShapesViaCoordinates(generatedMachineLearningData, true);
-  closeModalCallback();
+  closeModalCallback(false);
   hideGeneratedLabelsViewAssets();
 }
 

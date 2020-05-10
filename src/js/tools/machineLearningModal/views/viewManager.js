@@ -7,6 +7,8 @@ import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/bu
 import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts';
+import { getContinuousDrawingState, getLastDrawingModeState } from '../../stateMachine';
+import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/stateMachine';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
@@ -59,7 +61,26 @@ function displayModal() {
   dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
 
-function closeModal() {
+function resetContinuousShapeButtons() {
+  if (getContinuousDrawingState()) {
+    if (getLastDrawingModeState() === 'polygon') {
+      setCreatePolygonButtonToActive();
+    } else if (getLastDrawingModeState() === 'boundingBox') {
+      setCreateBoundingBoxButtonToActive();
+    }
+  }
+}
+
+function setButtons(isCancel) {
+  if (isCancel) {
+    resetContinuousShapeButtons();
+  } else {
+    window.editShapes();
+  }
+}
+
+function closeModal(isCancel) {
+  setButtons(isCancel);
   modalElement.style.display = 'none';
   lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
   currentViewNumber = 1;

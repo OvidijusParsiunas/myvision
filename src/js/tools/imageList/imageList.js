@@ -24,14 +24,12 @@ let currentlyActiveElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
 let newImageId = 0;
-let firstImage = true;
 let imageListOverflowParent = null;
 let hasCurrentImageThumbnailRedBorder = false;
 
 function updateCurrentImageIds(currentId, newId) {
   currentlySelectedImageId = currentId;
   newImageId = newId;
-  if (newImageId) firstImage = true;
 }
 
 function findImageListElement() {
@@ -200,7 +198,7 @@ function captureCurrentImageData() {
 }
 
 function saveAndRemoveCurrentImageDetails() {
-  if (!firstImage) {
+  if (images.length > 1) {
     captureCurrentImageData();
   } else {
     setEditShapesButtonToActive();
@@ -212,7 +210,6 @@ function saveAndRemoveCurrentImageDetails() {
   setMLGeneratedShapesToOriginalColorPallette();
   currentlySelectedImageId = newImageId;
   setCurrentImageId(newImageId);
-  firstImage = false;
 }
 
 function setDefaultImageProperties(image, imageMetadata) {
@@ -231,6 +228,9 @@ function setToolkitStylingOnNewImage() {
       setCreatePolygonButtonToActive();
     } else if (lastDrawnShapeState === 'boundingBox') {
       setCreateBoundingBoxButtonToActive();
+    } else {
+      setCreatePolygonButtonToDefault();
+      setCreateBoundingBoxButtonToDefault();
     }
   } else {
     setCreatePolygonButtonToDefault();

@@ -14,7 +14,7 @@ function moveToNextView(nextViewCallback, clearDatasetObjectFunc) {
   drawShapesAndImages();
   hideUploadDatasetsViewAssets();
   clearDatasetObjectFunc();
-  nextViewCallback();
+  nextViewCallback(false);
 }
 
 function goBackToSelectFormatView(selectFormatViewCallback, clearDatasetObjectFunc) {

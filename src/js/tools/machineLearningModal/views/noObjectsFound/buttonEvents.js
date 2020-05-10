@@ -1,7 +1,7 @@
 import { hideNoObjectsFoundViewAssets } from './style';
 
 function closeModal(closeModalCallback) {
-  closeModalCallback();
+  closeModalCallback(true);
   hideNoObjectsFoundViewAssets();
 }
 

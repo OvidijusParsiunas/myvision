@@ -45,6 +45,8 @@ import {
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, YOLO_TXT_FORMAT,
   COCO_JSON_FORMAT, VGG_JSON_FORMAT, CSV_FORMAT, VOC_XML_FORMAT,
 } from '../consts';
+import { getContinuousDrawingState, getLastDrawingModeState } from '../../stateMachine';
+import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/stateMachine';
 import {
   getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState,
 } from '../stateMachine';
@@ -158,7 +160,28 @@ function displayModal() {
   dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
 
-function closeModal() {
+function resetContinuousShapeButtons() {
+  if (getContinuousDrawingState()) {
+    if (getLastDrawingModeState() === 'polygon') {
+      setCreatePolygonButtonToActive();
+    } else if (getLastDrawingModeState() === 'boundingBox') {
+      setCreateBoundingBoxButtonToActive();
+    }
+  }
+}
+
+function setButtons(isCancel) {
+  if (isCancel) {
+    resetContinuousShapeButtons();
+  } else {
+    setTimeout(() => {
+      window.editShapes();
+    }, 0);
+  }
+}
+
+function closeModal(isCancel) {
+  setButtons(isCancel);
   modalElement.style.display = 'none';
   lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
   hideViewOnCancelFunc();

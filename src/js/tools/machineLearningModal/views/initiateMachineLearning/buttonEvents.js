@@ -13,7 +13,7 @@ function cancelMLModal(closeModal) {
     cancelMachineLearning();
     prepareInstantiateMachineLearningView();
   } else {
-    closeModal();
+    closeModal(true);
     removeErrorMessage();
     removeRetryButton();
     prepareInstantiateMachineLearningView();

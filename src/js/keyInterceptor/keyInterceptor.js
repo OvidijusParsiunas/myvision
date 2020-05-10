@@ -1,9 +1,13 @@
-import { labelShape, cancelLabellingProcess } from '../tools/labellerModal/buttonEventHandlers';
+import { labelShape } from '../tools/labellerModal/buttonEventHandlers';
 import {
+  getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState,
+  getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
-  getExportDatasetsPopUpOpenState,
-  getLabellerModalDisplayedState, getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
 } from '../tools/stateMachine';
+
+function deleteKey() {
+  window.removeShape();
+}
 
 function enterKey() {
   if (getLabellerModalDisplayedState()) {
@@ -17,7 +21,7 @@ function escapeKey() {
   } else if (getSettingsPopUpOpenState()) {
     window.displaySettingsPopup();
   } else if (getLabellerModalDisplayedState()) {
-    cancelLabellingProcess();
+    window.cancelLabellingProcess();
   } else if (getPolygonDrawingInProgressState()) {
     window.createNewPolygon();
   } else if (getBoundingBoxDrawingInProgressState()) {
@@ -36,6 +40,9 @@ function keyDownEventHandler(event) {
       break;
     case 'Enter':
       enterKey();
+      break;
+    case 'Delete':
+      deleteKey();
       break;
     default:
       break;
