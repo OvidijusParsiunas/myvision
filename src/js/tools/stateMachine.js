@@ -21,6 +21,8 @@ let exportDatasetsPopUpOpenState = false;
 let changingMLGeneratedLabelNamesState = false;
 let currentImageId = false;
 let labellerModalDisplayed = false;
+let uploadDatasetsModalDisplayedState = false;
+let machineLearningModalDisplayedState = false;
 let boundingBoxScalingState = false;
 let shapeMovingState = false;
 let polygonDrawingInProgressState = false;
@@ -130,6 +132,14 @@ function getBoundingBoxDrawingInProgressState() {
   return boundingBoxDrawingInProgressState;
 }
 
+function getUploadDatasetsModalDisplayedState() {
+  return uploadDatasetsModalDisplayedState;
+}
+
+function getMachineLearningModalDisplayedState() {
+  return machineLearningModalDisplayedState;
+}
+
 function setDefaultState(state) {
   defaultState = state;
 }
@@ -235,6 +245,14 @@ function setBoundingBoxDrawingInProgressState(state) {
   boundingBoxDrawingInProgressState = state;
 }
 
+function setUploadDatasetsModalDisplayedState(state) {
+  uploadDatasetsModalDisplayedState = state;
+}
+
+function setMachineLearningModalDisplayedState(state) {
+  machineLearningModalDisplayedState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -280,10 +298,14 @@ export {
   setLastPolygonActionWasMoveState,
   getPolygonDrawingInProgressState,
   setPolygonDrawingInProgressState,
+  getUploadDatasetsModalDisplayedState,
+  setUploadDatasetsModalDisplayedState,
   getNewShapeSelectedViaLabelListState,
   setNewShapeSelectedViaLabelListState,
   getBoundingBoxDrawingInProgressState,
   setBoundingBoxDrawingInProgressState,
+  getMachineLearningModalDisplayedState,
+  setMachineLearningModalDisplayedState,
   getRemovingPointsAfterCancelDrawState,
   setRemovingPointsAfterCancelDrawState,
   getChangingMLGeneratedLabelNamesState,

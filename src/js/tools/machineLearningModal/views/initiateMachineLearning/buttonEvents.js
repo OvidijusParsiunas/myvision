@@ -3,7 +3,7 @@ import {
   cancelMachineLearning, isFractionOfImagesAnalysedByML,
 } from './machineLearning';
 import {
-  prepareInstantiateMachineLearningView, hideInitiateMachineLearningViewAssets, removeErrorMessage,
+  prepareInstantiateMachineLearningView, hideInitiateMachineLearningViewAssets,
   removeStartButton, removeCancelButton, displayMLCoverageSelectionButtons, removeRetryButton,
   removeMLCoverageSelectionButtons,
 } from './style';
@@ -11,13 +11,11 @@ import {
 function cancelMLModal(closeModal) {
   if (getProgressStatus()) {
     cancelMachineLearning();
-    prepareInstantiateMachineLearningView();
   } else {
     closeModal(true);
-    removeErrorMessage();
-    removeRetryButton();
-    prepareInstantiateMachineLearningView();
   }
+  hideInitiateMachineLearningViewAssets();
+  prepareInstantiateMachineLearningView();
 }
 
 function moveToNextView(nextViewCallback) {
@@ -44,9 +42,7 @@ function machineLearningCoverageMiddleware(nextViewCallback, setMachineLearningD
 function registerButtonEventHandlers(nextViewCallback, setMachineLearningData, closeModal) {
   window.startMachineLearning = startMachineLearningMiddleware.bind(this,
     nextViewCallback, setMachineLearningData, false);
-  window.changeInitiateMLToNextView = moveToNextView.bind(
-    this, nextViewCallback,
-  );
+  window.changeInitiateMLToNextView = moveToNextView.bind(this, nextViewCallback);
   window.cancelMLModal = cancelMLModal.bind(this, closeModal);
   window.retryMachineLearning = startMachineLearningMiddleware.bind(this,
     nextViewCallback, setMachineLearningData, true);

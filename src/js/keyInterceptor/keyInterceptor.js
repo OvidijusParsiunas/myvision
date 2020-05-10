@@ -1,6 +1,9 @@
 import { labelShape } from '../tools/labellerModal/buttonEventHandlers';
+import { closeModal as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
+import { closeMLModalViaKeyboard } from '../tools/machineLearningModal/views/viewManager';
 import {
   getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState,
+  getUploadDatasetsModalDisplayedState, getMachineLearningModalDisplayedState,
   getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
 } from '../tools/stateMachine';
@@ -22,6 +25,10 @@ function escapeKey() {
     window.displaySettingsPopup();
   } else if (getLabellerModalDisplayedState()) {
     window.cancelLabellingProcess();
+  } else if (getUploadDatasetsModalDisplayedState()) {
+    closeUploadDatasetsModal();
+  } else if (getMachineLearningModalDisplayedState()) {
+    closeMLModalViaKeyboard();
   } else if (getPolygonDrawingInProgressState()) {
     window.createNewPolygon();
   } else if (getBoundingBoxDrawingInProgressState()) {

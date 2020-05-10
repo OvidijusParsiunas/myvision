@@ -1,18 +1,19 @@
-import { assignInitiateMachineLearningViewLocalVariables, prepareInstantiateMachineLearningView } from './initiateMachineLearning/style';
-import { assignGeneratedLabelsViewLocalVariables } from './generatedLabels/style';
+import { assignInitiateMachineLearningViewLocalVariables, prepareInstantiateMachineLearningView, hideInitiateMachineLearningViewAssets } from './initiateMachineLearning/style';
+import { assignGeneratedLabelsViewLocalVariables, hideGeneratedLabelsViewAssets } from './generatedLabels/style';
 import { displayGeneratedLabelsView } from './generatedLabels/changeLabels';
-import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView } from './noObjectsFound/style';
+import { assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView, hideNoObjectsFoundViewAssets } from './noObjectsFound/style';
 import registerInitiateMachineLearningViewButtonEventHandlers from './initiateMachineLearning/buttonEvents';
 import registerGeneratedLabelsViewButtonEventHandlers from './generatedLabels/buttonEvents';
 import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/buttonEvents';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts';
-import { getContinuousDrawingState, getLastDrawingModeState } from '../../stateMachine';
+import { getContinuousDrawingState, getLastDrawingModeState, setMachineLearningModalDisplayedState } from '../../stateMachine';
 import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/stateMachine';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
 let modalElement = null;
+let closeModalFunc = null;
 
 function setMachineLearningData(machineLearningDataArg) {
   machineLearningData = machineLearningDataArg;
@@ -36,13 +37,16 @@ function displayNextView() {
   switch (currentViewNumber) {
     case 1:
       prepareInstantiateMachineLearningView();
+      closeModalFunc = hideInitiateMachineLearningViewAssets;
       currentViewNumber += 1;
       break;
     case 2:
       if (isMachineLearningObjectEmpty()) {
         displayNoObjectsFoundView();
+        closeModalFunc = hideNoObjectsFoundViewAssets;
       } else {
         displayGeneratedLabelsView(machineLearningData);
+        closeModalFunc = hideGeneratedLabelsViewAssets;
       }
       currentViewNumber += 1;
       break;
@@ -57,6 +61,7 @@ function displayNextView() {
 function displayModal() {
   setTimeout(() => {
     modalElement.style.display = '';
+    setMachineLearningModalDisplayedState(true);
   }, 60);
   dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
@@ -85,6 +90,12 @@ function closeModal(isCancel) {
   lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
   currentViewNumber = 1;
   displayNextView();
+  setMachineLearningModalDisplayedState(false);
+}
+
+function closeMLModalViaKeyboard() {
+  closeModalFunc();
+  closeModal(false);
 }
 
 function assignViewManagerLocalVariables() {
@@ -103,4 +114,4 @@ function initialiseMachineLearningModal() {
   displayNextView();
 }
 
-export { displayModal, initialiseMachineLearningModal };
+export { displayModal, initialiseMachineLearningModal, closeMLModalViaKeyboard };

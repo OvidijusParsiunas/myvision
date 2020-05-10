@@ -255,6 +255,8 @@ function removeNoImagesFoundOnMLModalStyle() {
 }
 
 function hideInitiateMachineLearningViewAssets() {
+  removeErrorMessage();
+  removeRetryButton();
   removeNextButton();
   removeProgressMessage();
   removeCheckMark();

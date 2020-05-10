@@ -3,7 +3,7 @@ import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescri
 import registerSelectFormatViewButtonEventHandlers from './selectFormat/buttonEvents';
 import { assignSelectFormatViewLocalVariables, prepareSelectFormatView, hideSelectFormatViewAssets } from './selectFormat/style';
 import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
-import { assignUseExistingImagesQstnViewLocalVariables, prepareUseExistingImagesQstnView } from './useExistingImagesQstn/style';
+import { assignUseExistingImagesQstnViewLocalVariables, prepareUseExistingImagesQstnView, hideUseExistingImagesViewAssets } from './useExistingImagesQstn/style';
 import registerUseExistingImagesQstnViewButtonEventHandlers from './useExistingImagesQstn/buttonEvents';
 import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
@@ -45,11 +45,9 @@ import {
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, YOLO_TXT_FORMAT,
   COCO_JSON_FORMAT, VGG_JSON_FORMAT, CSV_FORMAT, VOC_XML_FORMAT,
 } from '../consts';
-import { getContinuousDrawingState, getLastDrawingModeState } from '../../stateMachine';
+import { getContinuousDrawingState, getLastDrawingModeState, setUploadDatasetsModalDisplayedState } from '../../stateMachine';
 import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/stateMachine';
-import {
-  getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState,
-} from '../stateMachine';
+import { getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState } from '../stateMachine';
 
 let currentViewNumber = 1;
 let modalElement = null;
@@ -135,6 +133,7 @@ function displayNextView() {
       currentViewNumber += 1;
       if (getAllImageData().length > 0) {
         prepareUseExistingImagesQstnView();
+        hideViewOnCancelFunc = hideUseExistingImagesViewAssets;
       } else {
         setReuseAlreadyUploadedImagesState(false);
         displayNextView();
@@ -156,6 +155,7 @@ function displayNextView() {
 function displayModal() {
   setTimeout(() => {
     modalElement.style.display = '';
+    setUploadDatasetsModalDisplayedState(true);
   }, 60);
   dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
@@ -187,6 +187,7 @@ function closeModal(isCancel) {
   hideViewOnCancelFunc();
   currentViewNumber = 1;
   displayNextView();
+  setUploadDatasetsModalDisplayedState(false);
 }
 
 function goBackToSelectFormatView() {
@@ -213,4 +214,4 @@ function initialiseUploadDatasetsModal() {
   goBackToSelectFormatViewFunc = goBackToSelectFormatView;
 }
 
-export { displayModal, initialiseUploadDatasetsModal };
+export { displayModal, initialiseUploadDatasetsModal, closeModal };
