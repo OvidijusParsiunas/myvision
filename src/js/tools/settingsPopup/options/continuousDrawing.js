@@ -12,7 +12,7 @@ import {
 } from '../../dimWindow/consts';
 import { setEditShapesButtonToActive } from '../../toolkit/styling/stateMachine';
 
-function changeContinuousDrawingState() {
+function changeContinuousDrawingSetting() {
   if (getContinuousDrawingState()) {
     if (getHasDrawnShapeState() && getReadyToDrawShapeState()) {
       purgeCanvasMouseEvents(this.canvas);
@@ -29,4 +29,4 @@ function changeContinuousDrawingState() {
   }
 }
 
-export { changeContinuousDrawingState as default };
+export { changeContinuousDrawingSetting as default };

@@ -1,6 +1,6 @@
-import changeMovaleObjectsState from './options/movableObjects';
-import changeContinuousDrawingState from './options/continuousDrawing';
-import changeLabelsVisibilityState from './options/labelsVisibility';
+import { changeMovaleObjectsSetting } from './options/movableObjects';
+import changeContinuousDrawingSetting from './options/continuousDrawing';
+import changeLabelsVisibilitySetting from './options/labelsVisibility';
 
 let canvas = null;
 
@@ -9,9 +9,9 @@ function assignCanvasForSettingsPopup(canvasObj) {
 }
 
 function initialiseSettingsPopup() {
-  window.toggleMovableObjects = changeMovaleObjectsState.bind({ canvas });
-  window.toggleContinuousDrawing = changeContinuousDrawingState.bind({ canvas });
-  window.toggleLabelsVisibility = changeLabelsVisibilityState.bind({ canvas });
+  window.toggleMovableObjects = changeMovaleObjectsSetting.bind({ canvas });
+  window.toggleContinuousDrawing = changeContinuousDrawingSetting.bind({ canvas });
+  window.toggleLabelsVisibility = changeLabelsVisibilitySetting.bind({ canvas });
 }
 
 export { initialiseSettingsPopup, assignCanvasForSettingsPopup };

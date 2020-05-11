@@ -1,7 +1,7 @@
 import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from './uploadImages/drawImageOnCanvas';
 import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label';
-import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
+import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
 import {
@@ -16,10 +16,12 @@ import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
 import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
+import purgeCanvasMouseEvents from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { updateImageNameElement } from '../imageSwitchPanel/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode';
+import { changeExistingImagesMovability } from '../settingsPopup/options/movableObjects';
 
 let currentlyActiveElement = null;
 const images = [];
@@ -298,6 +300,7 @@ function fixForObjectScalingBugOnCanvasSwitch() {
 // functions in order to set the objects correctly. There is still some scepticism for whether
 // this is working correctly, hence please be cautions.
 function resetCanvasForUnseenShapes() {
+  purgeCanvasMouseEvents(canvas);
   setDefaultCursorMode(canvas);
   assignDefaultEvents(canvas, null, false);
 }
@@ -317,7 +320,7 @@ function changeToExistingImage(id) {
   repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels,
     images[id].imageDimensions, images[id].data);
   switchCanvasContainerElements();
-  setShapeMovablePropertiesOnImageSelect(images[id].shapes);
+  changeExistingImagesMovability(images[id].shapes);
   if (currentlySelectedImageId >= 0) {
     zoomOutObjectOnImageSelect(images[currentlySelectedImageId].shapes,
       images[currentlySelectedImageId].labels, timesZoomedOut);

@@ -1,7 +1,7 @@
 import { getLabelsVisibilityState, setLabelsVisibilityState } from '../../stateMachine';
 import { setAllLabelsVisibilityProperty } from '../../../canvas/objects/label/label';
 
-function changeLabelsVisibilityState() {
+function changeLabelsVisibilitySetting() {
   if (getLabelsVisibilityState()) {
     setAllLabelsVisibilityProperty(false, this.canvas);
     setLabelsVisibilityState(false);
@@ -11,4 +11,4 @@ function changeLabelsVisibilityState() {
   }
 }
 
-export { changeLabelsVisibilityState as default };
+export { changeLabelsVisibilitySetting as default };

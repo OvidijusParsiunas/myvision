@@ -1,31 +1,36 @@
-import { getMovableObjectsState, setMovableObjectsState, getDefaultState } from '../../stateMachine';
+import { getMovableObjectsState, setMovableObjectsState } from '../../stateMachine';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 
-function changeMovableObjectsState() {
-  if (getDefaultState()) {
-    if (getMovableObjectsState()) {
-      this.canvas.forEachObject((iteratedObj) => {
-        if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {
-          iteratedObj.lockMovementX = true;
-          iteratedObj.lockMovementY = true;
-          iteratedObj.hoverCursor = 'default';
-        }
-      });
-      setMovableObjectsState(false);
-    } else {
-      this.canvas.forEachObject((iteratedObj) => {
-        if (iteratedObj.shapeName === 'polygon' || iteratedObj.shapeName === 'bndBox') {
-          iteratedObj.lockMovementX = false;
-          iteratedObj.lockMovementY = false;
-          iteratedObj.hoverCursor = 'move';
-        }
-      });
-      setMovableObjectsState(true);
-    }
-  } else if (getMovableObjectsState()) {
+function changeExistingImagesMovability(shapes) {
+  if (getMovableObjectsState()) {
+    Object.keys(shapes).forEach((key) => {
+      const object = shapes[key].shapeRef;
+      if (object.shapeName === 'polygon' || object.shapeName === 'bndBox') {
+        object.lockMovementX = false;
+        object.lockMovementY = false;
+        object.hoverCursor = 'move';
+      }
+    });
+  } else {
+    Object.keys(shapes).forEach((key) => {
+      const object = shapes[key].shapeRef;
+      if (object.shapeName === 'polygon' || object.shapeName === 'bndBox') {
+        object.lockMovementX = true;
+        object.lockMovementY = true;
+        object.hoverCursor = 'default';
+      }
+    });
+  }
+}
+
+function changeMovaleObjectsSetting() {
+  if (getMovableObjectsState()) {
     setMovableObjectsState(false);
   } else {
     setMovableObjectsState(true);
   }
+  const currentCanvasShapes = getAllExistingShapes();
+  changeExistingImagesMovability(currentCanvasShapes);
 }
 
-export { changeMovableObjectsState as default };
+export { changeMovaleObjectsSetting, changeExistingImagesMovability };

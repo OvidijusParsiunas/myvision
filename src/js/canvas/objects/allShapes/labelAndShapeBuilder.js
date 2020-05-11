@@ -4,7 +4,7 @@ import labelProperties from '../label/properties';
 import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
 import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
-import { getLabelsVisibilityState, getMovableObjectsState, getContinuousDrawingState } from '../../../tools/stateMachine';
+import { getLabelsVisibilityState } from '../../../tools/stateMachine';
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils';
@@ -151,31 +151,11 @@ function repopulateLabelAndShapeObjects(existingShapes, existingLabels,
   }
 }
 
-function setShapeMovablePropertiesOnImageSelect(existingShapes) {
-  if (!getContinuousDrawingState()) {
-    if (getMovableObjectsState()) {
-      Object.keys(existingShapes).forEach((key) => {
-        const shape = existingShapes[key].shapeRef;
-        shape.lockMovementX = false;
-        shape.lockMovementY = false;
-        shape.hoverCursor = 'move';
-      });
-    } else {
-      Object.keys(existingShapes).forEach((key) => {
-        const shape = existingShapes[key].shapeRef;
-        shape.lockMovementX = true;
-        shape.lockMovementY = true;
-        shape.hoverCursor = 'default';
-      });
-    }
-  }
-}
-
 function assignCanvasForLabelAndShapeBuilder(canvasObj) {
   canvas = canvasObj;
 }
 
 export {
-  assignCanvasForLabelAndShapeBuilder, setShapeMovablePropertiesOnImageSelect,
-  generateLabelShapeGroup, findInitialLabelLocation, repopulateLabelAndShapeObjects,
+  assignCanvasForLabelAndShapeBuilder, generateLabelShapeGroup,
+  findInitialLabelLocation, repopulateLabelAndShapeObjects,
 };

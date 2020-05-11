@@ -13,6 +13,26 @@ import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mo
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { getCurrentImage } from '../../../imageList/uploadImages/drawImageOnCanvas';
 
+function setNewState(canvas) {
+  if (getContinuousDrawingState()) {
+    purgeCanvasMouseEvents(canvas);
+    if (getLastDrawingModeState() === 'polygon') {
+      assignDrawPolygonEvents(canvas);
+    } else if (getLastDrawingModeState() === 'boundingBox') {
+      assignDrawBoundingBoxEvents(canvas);
+    }
+    setDefaultState(false);
+  } else {
+    assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
+    setDefaultState(true);
+    if (getCurrentImage()) {
+      setEditShapesButtonToActive();
+      setCreatePolygonButtonToDefault();
+      setCreateBoundingBoxButtonToDefault();
+    }
+  }
+}
+
 function initiateResetCanvasEventsToDefaultEvent(canvas) {
   canvas.discardActiveObject();
   if (!getDefaultState()) {
@@ -22,27 +42,11 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
     } else {
       setDefaultCursorMode(canvas);
     }
-    assignDefaultEvents(canvas, null, getAddingPolygonPointsState());
     if (getAlteringPolygonPointsState()) {
       setPolygonEditingButtonsToDefault();
       setAlteringPolygonPointsState(false);
     }
-    if (getContinuousDrawingState()) {
-      purgeCanvasMouseEvents(canvas);
-      if (getLastDrawingModeState() === 'polygon') {
-        assignDrawPolygonEvents(canvas);
-      } else if (getLastDrawingModeState() === 'boundingBox') {
-        assignDrawBoundingBoxEvents(canvas);
-      }
-      setDefaultState(false);
-    } else {
-      setDefaultState(true);
-      if (getCurrentImage()) {
-        setEditShapesButtonToActive();
-        setCreatePolygonButtonToDefault();
-        setCreateBoundingBoxButtonToDefault();
-      }
-    }
+    setNewState(canvas);
   }
 }
 
