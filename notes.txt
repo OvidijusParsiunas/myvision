@@ -19,7 +19,7 @@ upon uploading new shapes and disabling the movable property, they are still mov
 when an object is set to invisible, then label visibility is set to false, when moving away from image and coming back
 the label is visible whereas the object is not
 
-when labeller modal open, the escape button clicked, then run ML and the tick is not displayed
+double check that continuous drawing events are displayed correctly when switching between images etc.
 
 ---------------------------------------------
 

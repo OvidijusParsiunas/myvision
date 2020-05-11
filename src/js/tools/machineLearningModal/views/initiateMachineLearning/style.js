@@ -34,9 +34,13 @@ function displayCheckMarkWthAnimation() {
   checkmarkElement.classList.toggle('checkmark');
 }
 
+// bug fix where the yet not displayed checkmark would get toggled via esc
+// and cause it to not display when needed
 function removeCheckMark() {
-  checkmarkParentElement.style.display = 'none';
-  checkmarkElement.classList.toggle('checkmark');
+  if (checkmarkParentElement.style.display === '') {
+    checkmarkParentElement.style.display = 'none';
+    checkmarkElement.classList.toggle('checkmark');
+  }
 }
 
 function displayErrorMessage(errorMessage) {

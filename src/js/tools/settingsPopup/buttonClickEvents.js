@@ -9,7 +9,7 @@ function assignCanvasForSettingsPopup(canvasObj) {
 }
 
 function initialiseSettingsPopup() {
-  window.toggleMovableObjects = changeMovaleObjectsSetting.bind({ canvas });
+  window.toggleMovableObjects = changeMovaleObjectsSetting;
   window.toggleContinuousDrawing = changeContinuousDrawingSetting.bind({ canvas });
   window.toggleLabelsVisibility = changeLabelsVisibilitySetting.bind({ canvas });
 }
