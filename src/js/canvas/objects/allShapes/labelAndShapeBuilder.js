@@ -35,8 +35,9 @@ function findInitialLabelLocation(shape) {
   return locationObj;
 }
 
-function generateLabel(label) {
-  label.visible = getLabelsVisibilityState();
+function generateLabel(label, objectVisibility) {
+  label.visible = (objectVisibility === undefined || objectVisibility)
+    && getLabelsVisibilityState();
   label.setVisibilityButtonActiveFlagById = false;
   canvas.add(label);
   canvas.bringToFront(label);
@@ -85,7 +86,7 @@ function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
 function repopulateLabelShapeGroup(shapeObj, label, id, newFileSizeRatio) {
   canvas.add(shapeObj.shapeRef);
   resizeLabelDimensionsBySingleScale(label, newFileSizeRatio);
-  generateLabel(label);
+  generateLabel(label, shapeObj.visibility);
   addExistingShape(shapeObj, id);
   addLabelRef(label, id);
   const shapeColor = getLabelColor(shapeObj.shapeRef.shapeLabelText);
