@@ -26,8 +26,9 @@ function escapeKey() {
   } else if (getLabellerModalDisplayedState()) {
     window.cancelLabellingProcess();
   } else if (getUploadDatasetsModalDisplayedState()) {
-    closeUploadDatasetsModal();
+    closeUploadDatasetsModal(true);
   } else if (getMachineLearningModalDisplayedState()) {
+    // rename this
     closeMLModalViaKeyboard();
   } else if (getPolygonDrawingInProgressState()) {
     window.createNewPolygon();

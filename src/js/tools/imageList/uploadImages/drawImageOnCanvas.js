@@ -153,7 +153,7 @@ function onImageLoad(arg) {
   canvas.setZoom(1);
 }
 
-function assignCanvasForDrawImageOnCanvas(canvasObj) {
+function assignCanvasForDrawingImage(canvasObj) {
   canvas = canvasObj;
 }
 
@@ -229,5 +229,5 @@ export {
   removeCanvasOuterMargin, resizeCanvas, getCurrentImage,
   onImageLoad, getImageProperties, enableCanvasOuterMargin,
   calculateCurrentImageHeightRatio, setCurrentImage, resizeCanvasAndImage,
-  assignCanvasForDrawImageOnCanvas, getCanvasProperties, drawImageFromList,
+  assignCanvasForDrawingImage, getCanvasProperties, drawImageFromList,
 };

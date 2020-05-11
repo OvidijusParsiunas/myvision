@@ -1,6 +1,5 @@
 import { assignCanvasForDrawingShapesViaCoordinates } from './utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 import { assignCanvasMouseEvents } from '../tools/toolkit/buttonClickEvents/facade';
-import { assignCanvasForDrawImageOnCanvas } from '../tools/imageList/uploadImages/drawImageOnCanvas';
 import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/resetCanvasEvents';
 import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, reasignCanvas } from './utils/fabricUtils';
 import { assignCanvasForLabelManipulation } from './objects/label/label';
@@ -18,11 +17,10 @@ let currentCanvasInstance = null;
 
 function repopulateCanvasReference(canvas) {
   assignCanvasMouseEvents(canvas);
-  assignCanvasForDrawImageOnCanvas(canvas);
-  assignResetCanvasEventsFuncToMouseEvents(canvas);
-  assignCanvasForShapeFillManipulation(canvas);
-  assignCanvasForLabelManipulation(canvas);
   assignCanvasToDimWindowService(canvas);
+  assignCanvasForLabelManipulation(canvas);
+  assignCanvasForShapeFillManipulation(canvas);
+  assignResetCanvasEventsFuncToMouseEvents(canvas);
   assignCanvasForResettingToDefaultAfterAddPoints(canvas);
   assignCanvasForDrawingShapesViaCoordinates(canvas);
   assignCanvasForResizeWhenWindowResize(canvas);

@@ -5,7 +5,7 @@ import { repopulateLabelAndShapeObjects, setShapeMovablePropertiesOnImageSelect 
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
 import {
-  setDefaultState, setCurrentImageId, getContinuousDrawingState, getLastDrawingModeState,
+  getDefaultState, setCurrentImageId, getContinuousDrawingState, getLastDrawingModeState,
 } from '../stateMachine';
 import {
   setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
@@ -19,10 +19,12 @@ import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
 import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { updateImageNameElement } from '../imageSwitchPanel/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
+import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode';
 
 let currentlyActiveElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
+let canvas = null;
 let newImageId = 0;
 let imageListOverflowParent = null;
 let hasCurrentImageThumbnailRedBorder = false;
@@ -231,12 +233,14 @@ function setDefaultImageProperties(image, imageMetadata) {
 }
 
 function setToolkitStylingOnNewImage() {
-  if (getContinuousDrawingState()) {
+  if (!getDefaultState() && getContinuousDrawingState()) {
     const lastDrawnShapeState = getLastDrawingModeState();
     if (lastDrawnShapeState === 'polygon') {
       setCreatePolygonButtonToActive();
+      setCreateBoundingBoxButtonToDefault();
     } else if (lastDrawnShapeState === 'boundingBox') {
       setCreateBoundingBoxButtonToActive();
+      setCreatePolygonButtonToDefault();
     } else {
       setCreatePolygonButtonToDefault();
       setCreateBoundingBoxButtonToDefault();
@@ -289,6 +293,15 @@ function fixForObjectScalingBugOnCanvasSwitch() {
   }
 }
 
+// the following function is implemented to set properties for unseen shapes that have been
+// uploaded where I had to originall setDefault(false) in order to trigger some of the contained
+// functions in order to set the objects correctly. There is still some scepticism for whether
+// this is working correctly, hence please be cautions.
+function resetCanvasForUnseenShapes() {
+  setDefaultCursorMode(canvas);
+  assignDefaultEvents(canvas, null, false);
+}
+
 // the reason why we do not use scaleX/scaleY is because these are returned in
 // a promise as the image is drawn hence we do not have it at this time
 // (for the new image)
@@ -297,7 +310,6 @@ function changeToExistingImage(id) {
   // get shapes
   // zoomOutObjectOnImageSelect
   // make sure the scales are correct
-  setDefaultState(false);
   if (currentlySelectedImageId >= 0) { captureCurrentImageData(); }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
@@ -316,6 +328,7 @@ function changeToExistingImage(id) {
   fixForObjectScalingBugOnCanvasSwitch();
   currentlySelectedImageId = id;
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);
+  resetCanvasForUnseenShapes();
   setToolkitStylingOnNewImage();
 }
 
@@ -343,12 +356,17 @@ function canSwitchImage(direction) {
   return direction !== currentlySelectedImageId;
 }
 
+function assignCanvasToImageList(canvasObj) {
+  canvas = canvasObj;
+}
+
 export {
+  assignCanvasToImageList,
   setDefaultImageThumbnailHighlightToML, switchImage, canSwitchImage,
   changeImageThumbnailBorderColorToRed, resetImageThumbnailBorderColor,
   displayTickSVGOverImageThumbnail, getAllImageData, initialiseImageList,
+  addSingleImageToList, setSelectedMLThumbnailColourOverlayBackToDefault,
   addImageFromMultiUploadToList, updateCurrentImageIds, getLastImageIdByName,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
-  removeMLThumbnailHighlight, removeSelectedMLThumbnailHighlight,
-  addSingleImageToList, setSelectedMLThumbnailColourOverlayBackToDefault, getImageIdByName,
+  removeMLThumbnailHighlight, removeSelectedMLThumbnailHighlight, getImageIdByName,
 };

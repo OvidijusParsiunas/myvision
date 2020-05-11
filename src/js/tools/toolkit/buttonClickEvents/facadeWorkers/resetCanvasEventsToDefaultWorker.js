@@ -27,20 +27,22 @@ function initiateResetCanvasEventsToDefaultEvent(canvas) {
       setPolygonEditingButtonsToDefault();
       setAlteringPolygonPointsState(false);
     }
-    setDefaultState(true);
-  }
-  if (getContinuousDrawingState()) {
-    purgeCanvasMouseEvents(canvas);
-    if (getLastDrawingModeState() === 'polygon') {
-      assignDrawPolygonEvents(canvas);
-    } else if (getLastDrawingModeState() === 'boundingBox') {
-      assignDrawBoundingBoxEvents(canvas);
+    if (getContinuousDrawingState()) {
+      purgeCanvasMouseEvents(canvas);
+      if (getLastDrawingModeState() === 'polygon') {
+        assignDrawPolygonEvents(canvas);
+      } else if (getLastDrawingModeState() === 'boundingBox') {
+        assignDrawBoundingBoxEvents(canvas);
+      }
+      setDefaultState(false);
+    } else {
+      setDefaultState(true);
+      if (getCurrentImage()) {
+        setEditShapesButtonToActive();
+        setCreatePolygonButtonToDefault();
+        setCreateBoundingBoxButtonToDefault();
+      }
     }
-    setDefaultState(false);
-  } else if (getCurrentImage()) {
-    setEditShapesButtonToActive();
-    setCreatePolygonButtonToDefault();
-    setCreateBoundingBoxButtonToDefault();
   }
 }
 

@@ -33,7 +33,6 @@ function isMachineLearningObjectEmpty() {
   return isEmpty;
 }
 
-// the following architecture was originally prepared for more views
 function displayNextView() {
   switch (currentViewNumber) {
     case 1:
@@ -84,7 +83,7 @@ function displayModal() {
   dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
 }
 
-// need to use window buttons because when the escape button is clicked after
+// need to use window functions because when the escape button is clicked after
 // the temp shapes have been drawn, the existing shapes are still selecatble
 function resetContinuousShapeButtons() {
   if (getContinuousDrawingState()) {
