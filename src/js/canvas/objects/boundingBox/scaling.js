@@ -60,6 +60,10 @@ function setInitialBoundingBoxCoordinates(event) {
       originalBoundingBoxBottomCoordinate = event.target.top + event.target.height;
       originalBoundingBoxLeftCoordinate = event.target.left;
       controlSelected.topRight = true;
+      // fix for when uploading dataset to a second canvas that has not been viewed and dragging
+      // top right of a bbox that is on the right side of an image, thus going out of canvas
+      // note that this does cause an initial scaling twitch but it is acceptable for now
+      event.target.left = originalBoundingBoxLeftCoordinate + event.target.width;
       break;
     case 'mr':
       controlSelected.middleRight = true;

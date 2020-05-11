@@ -9,7 +9,7 @@ import registerNoObjectsFoundViewButtonEventHandlers from './noObjectsFound/butt
 import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
 import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts';
 import { getContinuousDrawingState, getLastDrawingModeState, setMachineLearningModalDisplayedState } from '../../stateMachine';
-import { removeTempShapes, removeImageThumbnails } from '../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { removeTempShapes, removeImageThumbnails, resetCursor } from '../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 
 let currentViewNumber = 1;
 let machineLearningData = {};
@@ -43,6 +43,7 @@ function displayNextView() {
           cancelMachineLearning();
           return false;
         }
+        resetCursor();
         removeTempShapes();
         removeImageThumbnails();
         return true;
@@ -59,6 +60,7 @@ function displayNextView() {
       } else {
         displayGeneratedLabelsView(machineLearningData);
         closeModalFunc = () => {
+          resetCursor();
           removeTempShapes();
           removeImageThumbnails();
           hideGeneratedLabelsViewAssets();

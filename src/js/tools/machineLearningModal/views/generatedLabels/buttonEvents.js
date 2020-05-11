@@ -40,8 +40,7 @@ function registerButtonEventHandlers(closeModalCallback) {
   window.displayMachineLearningModalEditLabelButton = displayHighlightedDefaultEditLabelButton;
   window.hideMachineLearningModalEditLabelButton = displayGreyedDefaultEditLabelButton;
   window.editMachineLearningLabel = editMachineLearningLabelButtonClick;
-  window.submitMLGeneratedLabels = submitMLGeneratedLabelNames.bind(this,
-    closeModalCallback);
+  window.submitMLGeneratedLabels = submitMLGeneratedLabelNames.bind(this, closeModalCallback);
 }
 
 export { registerButtonEventHandlers as default };

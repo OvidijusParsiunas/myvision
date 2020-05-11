@@ -12,6 +12,7 @@ import { getNumberOfShapeTypes } from '../../../tools/globalStatistics/globalSta
 import { getCanvasReferences } from '../fabricUtils';
 import assignDefaultEvents from '../../mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import { repopulateDropdown } from '../../../tools/labelList/labelList';
+import purgeCanvasMouseEvents from '../../mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
   getAllImageData,
   getLastImageIdByName,
@@ -248,13 +249,20 @@ function drawShapesForML(shapesData, allImageData, currentlySelectedImageId,
   removeTempShapes();
 }
 
-// fix for a bug where the newly generated shapes would not adhere to
-// the boundaries when scaling
+
 function assignCanvasEvents() {
   if (getNumberOfShapeTypes().boundingBoxes === 0) {
     const { canvas1 } = getCanvasReferences();
+    // fix for bug where upon generating ML shapes, clicking finish would have two event listeners
+    purgeCanvasMouseEvents(canvas1);
+    // fix for a bug where the newly generated shapes would not adhere to
+    // the boundaries when scaling
     assignDefaultEvents(canvas1, null, false);
   }
+}
+
+function resetCursor() {
+  setDefaultCursorMode(canvas);
 }
 
 function drawShapesViaCoordinates(shapesData, isUsingMachineLearning, reuseAlreadyUploadedImages) {
@@ -269,7 +277,7 @@ function drawShapesViaCoordinates(shapesData, isUsingMachineLearning, reuseAlrea
   }
   repopulateDropdown();
   resetLabellerModalOptions();
-  setDefaultCursorMode(canvas);
+  resetCursor();
   initiateResetCanvasEventsToDefaultEvent(canvas);
 }
 
@@ -278,6 +286,6 @@ function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {
 }
 
 export {
-  drawTempShapesToShowCaseMLResults, updateImageThumbnails, removeTempShapes,
+  drawTempShapesToShowCaseMLResults, updateImageThumbnails, removeTempShapes, resetCursor,
   assignCanvasForDrawingShapesViaCoordinates, drawShapesViaCoordinates, removeImageThumbnails,
 };
