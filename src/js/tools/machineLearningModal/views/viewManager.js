@@ -34,15 +34,17 @@ function isMachineLearningObjectEmpty() {
 }
 
 function displayNextView() {
+  console.log(currentViewNumber, ' number');
   switch (currentViewNumber) {
     case 1:
       prepareInstantiateMachineLearningView();
       closeModalFunc = () => {
-        hideInitiateMachineLearningViewAssets();
+        console.log('1')
         if (getProgressStatus()) {
           cancelMachineLearning();
           return false;
         }
+        hideInitiateMachineLearningViewAssets();
         resetCursor();
         removeTempShapes();
         removeImageThumbnails();
@@ -54,12 +56,14 @@ function displayNextView() {
       if (isMachineLearningObjectEmpty()) {
         displayNoObjectsFoundView();
         closeModalFunc = () => {
+          console.log('2')
           hideNoObjectsFoundViewAssets();
           return true;
         };
       } else {
         displayGeneratedLabelsView(machineLearningData);
         closeModalFunc = () => {
+          console.log('3')
           resetCursor();
           removeTempShapes();
           removeImageThumbnails();
@@ -116,7 +120,12 @@ function closeModal(isCancel) {
 
 function closeMLModalViaKeyboard() {
   const shouldCloseModal = closeModalFunc();
-  if (shouldCloseModal) closeModal(true);
+  if (shouldCloseModal) {
+    closeModal(true);
+  } else {
+    currentViewNumber = 1;
+    displayNextView();
+  }
 }
 
 function assignViewManagerLocalVariables() {

@@ -16,7 +16,9 @@ draw polygon (q, w);
 
 upon uploading new shapes and disabling the movable property, they are still movable
 
-esc button doesn't cancel the machine learning process properly.
+removing images with ml generated shapes throws an error
+
+try removing shapes with uploaded shapes
 
 double check that continuous drawing events are displayed correctly when switching between images etc.
 

@@ -10,6 +10,7 @@ let tfModel = null;
 let isInProgress = false;
 let isCancelled = false;
 let modelLoadingInitiated = false;
+let imagesToBeAnalysedByML = [];
 const tensorflowJSScript = { element: document.createElement('script'), status: { download: 'waiting' } };
 const cocoSSDScript = { element: document.createElement('script'), status: { download: 'waiting' } };
 
@@ -74,9 +75,9 @@ function executeModel(images, results, predictionIdToImageId,
 // decided not to store generated shapes because if you have 100 images with
 // 100s of shapes, it would lead to significant memory usage
 function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage) {
-  const images = [];
   const allImageData = getAllImageData();
   const predictionIdToImageId = [];
+  imagesToBeAnalysedByML = [];
   // optimisation for not generating shapes on untouched images taken out
   // as when displaying the generated label names, only the new name label
   // names were shown, but when looked at image, all of them were there
@@ -89,10 +90,11 @@ function makePredictionsForAllImages(nextViewCallback, setMachineLearningData, c
     const image = allImageData[i];
     if (coverage === 'all' || (coverage === 'new' && !image.analysedByML)) {
       image.analysedByML = true;
-      images.push(image);
+      imagesToBeAnalysedByML.push(image);
       predictionIdToImageId.push(i);
     }
   }
+  const images = [...imagesToBeAnalysedByML];
   executeModel(images, [], predictionIdToImageId,
     nextViewCallback, setMachineLearningData, coverage);
 }
@@ -157,8 +159,8 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, coverage
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
     changeToLoadingStyle();
+    isInProgress = true;
     if (!tfModel) {
-      isInProgress = true;
       downloadTensorflowJS()
         .then(resultScriptStatus => downloadCOCOSSD(resultScriptStatus))
         .then(resultScriptStatus => loadModel(resultScriptStatus))
@@ -192,6 +194,7 @@ function isFractionOfImagesAnalysedByML() {
 function cancelMachineLearning() {
   isCancelled = true;
   isInProgress = false;
+  imagesToBeAnalysedByML.forEach((image) => { image.analysedByML = false; });
 }
 
 function getProgressStatus() {

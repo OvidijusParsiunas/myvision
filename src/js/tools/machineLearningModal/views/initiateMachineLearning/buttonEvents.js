@@ -13,8 +13,8 @@ function cancelMLModal(closeModal) {
     cancelMachineLearning();
   } else {
     closeModal(true);
+    hideInitiateMachineLearningViewAssets();
   }
-  hideInitiateMachineLearningViewAssets();
   prepareInstantiateMachineLearningView();
 }
 

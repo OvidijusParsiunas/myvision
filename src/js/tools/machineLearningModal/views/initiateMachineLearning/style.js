@@ -225,6 +225,7 @@ function setDefaultDescriptionElementMarginBottom() {
 
 function changeToLoadingStyle() {
   displayLoadingText();
+  displayCancelButton();
   removeDescription();
   disableImmediateCancelButtonHoverEffect();
   displayLoaderWheel();
