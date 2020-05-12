@@ -34,12 +34,10 @@ function isMachineLearningObjectEmpty() {
 }
 
 function displayNextView() {
-  console.log(currentViewNumber, ' number');
   switch (currentViewNumber) {
     case 1:
       prepareInstantiateMachineLearningView();
       closeModalFunc = () => {
-        console.log('1')
         if (getProgressStatus()) {
           cancelMachineLearning();
           return false;
@@ -56,14 +54,12 @@ function displayNextView() {
       if (isMachineLearningObjectEmpty()) {
         displayNoObjectsFoundView();
         closeModalFunc = () => {
-          console.log('2')
           hideNoObjectsFoundViewAssets();
           return true;
         };
       } else {
         displayGeneratedLabelsView(machineLearningData);
         closeModalFunc = () => {
-          console.log('3')
           resetCursor();
           removeTempShapes();
           removeImageThumbnails();

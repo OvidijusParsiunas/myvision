@@ -98,7 +98,7 @@ function addNewItemToImageList(imageData) {
 
 function displayTickSVGOverImageThumbnail(id) {
   const imageId = id !== undefined ? id : currentlySelectedImageId;
-  images[imageId].thumbnailElementRef.childNodes[2].style.display = 'block';
+  if (images[imageId]) images[imageId].thumbnailElementRef.childNodes[2].style.display = 'block';
 }
 
 function removeTickSVGOverImageThumbnail(id) {
