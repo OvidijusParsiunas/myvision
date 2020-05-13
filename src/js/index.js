@@ -1,7 +1,7 @@
+import registerHotKeys from './hotKeys/hotKeys';
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
-import registerKeyInterceptor from './keyInterceptor/keyInterceptor';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClickEvents';
@@ -15,8 +15,8 @@ import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 
 constructCanvas();
+registerHotKeys();
 initialiseToolkit();
-registerKeyInterceptor();
 initialiseLabellerModal();
 initialiseSettingsPopup();
 initialiseCoreButtonPopovers();

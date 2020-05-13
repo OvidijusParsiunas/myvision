@@ -54,7 +54,6 @@ let activeLabelElementId = null;
 let activeEditLabelButton = null;
 let labelListElement = null;
 let currentTableElementScrollPosition = 0;
-let isLabelChanged = false;
 let popuplabelOptionsElement = null;
 let lastSelectedLabelOption = null;
 let originalLabelText = null;
@@ -505,7 +504,6 @@ function resetLabelElement() {
   activeEditLabelButton.style.paddingRight = '5px';
   labelsListOverflowParentElement.scrollLeft = 0;
   setEditingLabelId(null);
-  isLabelChanged = false;
 }
 
 function moveSelectedLabelToFrontOfLabelOptions(id, text) {
@@ -521,7 +519,7 @@ function moveSelectedLabelToFrontOfLabelOptions(id, text) {
 
 function addNewLabelToLabelOptions(text) {
   const preprocessedText = preprocessLabelText(text);
-  if (isLabelChanged) {
+  if (activeLabelTextElement.innerHTML !== originalLabelText) {
     if (preprocessedText === '') {
       activeLabelTextElement.innerHTML = originalLabelText;
     } else {
@@ -635,7 +633,6 @@ window.labelTextKeyDown = (event) => {
     }
     changeActiveDropdownElementStyling();
     updateAssociatedLabelObjectsText(activeLabelTextElement.innerHTML);
-    isLabelChanged = true;
     if (event.key === 'Enter') {
       activeLabelId = null;
     }

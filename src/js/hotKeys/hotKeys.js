@@ -1,4 +1,4 @@
-import { labelShape, arrowKeyEvents } from '../tools/labellerModal/buttonEventHandlers';
+import { labelShape, arrowKeyEvents as labellerModalArrowKeyEvents } from '../tools/labellerModal/buttonEventHandlers';
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
 import {
@@ -10,13 +10,13 @@ import {
 
 function arrowUpKeyHandler() {
   if (getLabellerModalDisplayedState()) {
-    arrowKeyEvents('ArrowUp');
+    labellerModalArrowKeyEvents('ArrowUp');
   }
 }
 
 function arrowDownKeyHandler() {
   if (getLabellerModalDisplayedState()) {
-    arrowKeyEvents('ArrowDown');
+    labellerModalArrowKeyEvents('ArrowDown');
   }
 }
 
@@ -75,8 +75,8 @@ function keyDownEventHandler(event) {
   console.log(event.key);
 }
 
-function registerKeyInterceptor() {
+function registerHotKeys() {
   document.addEventListener('keydown', keyDownEventHandler);
 }
 
-export { registerKeyInterceptor as default };
+export { registerHotKeys as default };
