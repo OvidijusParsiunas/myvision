@@ -14,12 +14,6 @@ help button top right
 
 draw polygon (q, w);
 
-upon uploading new shapes and disabling the movable property, they are still movable
-
-try removing shapes with uploaded shapes
-
-double check that continuous drawing events are displayed correctly when switching between images etc.
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

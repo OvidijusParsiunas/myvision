@@ -1,6 +1,6 @@
-import { labelShape } from '../tools/labellerModal/buttonEventHandlers';
-import { closeModal as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
-import { closeMLModalViaKeyboard } from '../tools/machineLearningModal/views/viewManager';
+import { labelShape, arrowKeyEvents } from '../tools/labellerModal/buttonEventHandlers';
+import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
+import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
 import {
   getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState,
   getUploadDatasetsModalDisplayedState, getMachineLearningModalDisplayedState,
@@ -8,17 +8,29 @@ import {
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
 } from '../tools/stateMachine';
 
-function deleteKey() {
+function arrowUpKeyHandler() {
+  if (getLabellerModalDisplayedState()) {
+    arrowKeyEvents('ArrowUp');
+  }
+}
+
+function arrowDownKeyHandler() {
+  if (getLabellerModalDisplayedState()) {
+    arrowKeyEvents('ArrowDown');
+  }
+}
+
+function deleteKeyHandler() {
   window.removeShape();
 }
 
-function enterKey() {
+function enterKeyHandler() {
   if (getLabellerModalDisplayedState()) {
     labelShape();
   }
 }
 
-function escapeKey() {
+function escapeKeyHandler() {
   if (getExportDatasetsPopUpOpenState()) {
     window.exportDatasets();
   } else if (getSettingsPopUpOpenState()) {
@@ -26,10 +38,9 @@ function escapeKey() {
   } else if (getLabellerModalDisplayedState()) {
     window.cancelLabellingProcess();
   } else if (getUploadDatasetsModalDisplayedState()) {
-    closeUploadDatasetsModal(true);
+    closeUploadDatasetsModal();
   } else if (getMachineLearningModalDisplayedState()) {
-    // rename this
-    closeMLModalViaKeyboard();
+    closeMachineLearningModal();
   } else if (getPolygonDrawingInProgressState()) {
     window.createNewPolygon();
   } else if (getBoundingBoxDrawingInProgressState()) {
@@ -44,13 +55,19 @@ function escapeKey() {
 function keyDownEventHandler(event) {
   switch (event.key) {
     case 'Escape':
-      escapeKey();
+      escapeKeyHandler();
       break;
     case 'Enter':
-      enterKey();
+      enterKeyHandler();
       break;
     case 'Delete':
-      deleteKey();
+      deleteKeyHandler();
+      break;
+    case 'ArrowUp':
+      arrowUpKeyHandler();
+      break;
+    case 'ArrowDown':
+      arrowDownKeyHandler();
       break;
     default:
       break;

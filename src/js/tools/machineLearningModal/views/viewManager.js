@@ -114,7 +114,7 @@ function closeModal(isCancel) {
   setMachineLearningModalDisplayedState(false);
 }
 
-function closeMLModalViaKeyboard() {
+function closeModalViaKeyboard() {
   const shouldCloseModal = closeModalFunc();
   if (shouldCloseModal) {
     closeModal(true);
@@ -140,4 +140,4 @@ function initialiseMachineLearningModal() {
   displayNextView();
 }
 
-export { displayModal, initialiseMachineLearningModal, closeMLModalViaKeyboard };
+export { displayModal, initialiseMachineLearningModal, closeModalViaKeyboard };

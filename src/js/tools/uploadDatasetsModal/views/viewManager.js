@@ -190,6 +190,10 @@ function closeModal(isCancel) {
   setUploadDatasetsModalDisplayedState(false);
 }
 
+function closeModalViaKeyboard() {
+  closeModal(true);
+}
+
 function goBackToSelectFormatView() {
   currentViewNumber = 2;
   displayNextView();
@@ -214,4 +218,6 @@ function initialiseUploadDatasetsModal() {
   goBackToSelectFormatViewFunc = goBackToSelectFormatView;
 }
 
-export { displayModal, initialiseUploadDatasetsModal, closeModal };
+export {
+  displayModal, initialiseUploadDatasetsModal, closeModal, closeModalViaKeyboard,
+};

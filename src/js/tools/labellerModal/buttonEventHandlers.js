@@ -114,6 +114,7 @@ function inputKeyDown(event) {
       if (currentlySelectedLabelOption) {
         currentlySelectedLabelOption.style.backgroundColor = '';
         currentlySelectedLabelOption.id = '';
+        currentlySelectedLabelOption = null;
       }
       const optionsElementList = getOptionsElementList();
       for (let i = 0; i < optionsElementList.length; i += 1) {
@@ -131,6 +132,27 @@ function inputKeyDown(event) {
   }
 }
 
+function arrowKeyEvents(key) {
+  if (currentlySelectedLabelOption) {
+    if (key === 'ArrowDown') {
+      const { nextSibling } = currentlySelectedLabelOption.parentElement;
+      if (nextSibling) {
+        nextSibling.childNodes[0].childNodes[0].childNodes[0].dispatchEvent(new Event('mousedown'));
+      }
+    } else if (key === 'ArrowUp') {
+      const { previousSibling } = currentlySelectedLabelOption.parentElement;
+      if (previousSibling) {
+        previousSibling.childNodes[0].childNodes[0].childNodes[0].dispatchEvent(new Event('mousedown'));
+      }
+    }
+  } else {
+    const optionsElementList = optionsElement.childNodes[0].childNodes[0]
+      || optionsElement.childNodes[1].childNodes[0];
+    optionsElementList.childNodes[0].childNodes[0].childNodes[0].dispatchEvent(new Event('mousedown'));
+  }
+  changeSubmitButtonStyling();
+}
+
 function pasteLabelText() {
   window.setTimeout(() => {
     const initialCaretLocation = textInputElement.selectionStart;
@@ -140,6 +162,6 @@ function pasteLabelText() {
 }
 
 export {
-  labelShape, inputKeyDown, cancelLabellingProcess,
   selectLabelOption, prepareLabellerModalElements, pasteLabelText,
+  labelShape, inputKeyDown, cancelLabellingProcess, arrowKeyEvents,
 };
