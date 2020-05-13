@@ -703,6 +703,7 @@ window.onmousedown = (event) => {
     } else if (event.target.nodeName === 'CANVAS' || event.target.className === 'toolkit-button-icon'
         || event.target.className === 'toolkit-button-text' || event.target.id === activeLabelElementId) {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
+
       stopEditing();
     } else {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
@@ -726,6 +727,44 @@ window.onmousedown = (event) => {
     stopEditingMLGeneratedLabelNameBtnClick(event.target);
   }
 };
+
+function isEditingLabelInLabelList() {
+  return isEditingLabel;
+}
+
+// the labelTextKeyDown event handles the update of a new text word
+function arrowKeyEvents(key) {
+  if (key === 'ArrowDown') {
+    if (currentlyActiveLabelOptionIndex !== null) {
+      const secondLastElement = currentlyActiveLabelOptionIndex === availableListOptions.length - 2;
+      const lastElementIndex = secondLastElement ? currentlyActiveLabelOptionIndex * 2 + 1
+        : currentlyActiveLabelOptionIndex * 2;
+      const { nextSibling } = activeDropdownElements[0].childNodes[0]
+        .childNodes[lastElementIndex].nextSibling;
+      if (nextSibling) {
+        const optionElement = nextSibling.childNodes[0].childNodes[0];
+        const text = secondLastElement ? optionElement.childNodes[0].innerHTML
+          : optionElement.innerHTML;
+        activeLabelTextElement.innerHTML = text;
+      }
+    } else {
+      activeLabelTextElement.innerHTML = activeDropdownElements[0].childNodes[0]
+        .childNodes[0].childNodes[0].childNodes[0].innerHTML;
+    }
+  } else if (key === 'ArrowUp') {
+    if (currentlyActiveLabelOptionIndex !== null) {
+      const { previousSibling } = activeDropdownElements[0].childNodes[0]
+        .childNodes[currentlyActiveLabelOptionIndex * 2];
+      if (previousSibling) {
+        activeLabelTextElement.innerHTML = previousSibling.previousSibling.childNodes[0]
+          .childNodes[0].innerHTML;
+      }
+    } else {
+      activeLabelTextElement.innerHTML = activeDropdownElements[0].childNodes[0]
+        .childNodes[0].childNodes[0].childNodes[0].innerHTML;
+    }
+  }
+}
 
 window.labelListScroll = () => {
   if (currentTableElementScrollPosition !== labelsListOverflowParentElement.scrollTop) {
@@ -849,7 +888,8 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
+  initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
+  addExistingLabelToList, removeAllLabelListItems, repopulateDropdown,
   removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
-  addExistingLabelToList, removeAllLabelListItems, getCurrentlySelectedLabelShape,
-  initialiseLabelListFunctionality, addNewLabelToListFromPopUp, repopulateDropdown,
+  isEditingLabelInLabelList, arrowKeyEvents, getCurrentlySelectedLabelShape,
 };

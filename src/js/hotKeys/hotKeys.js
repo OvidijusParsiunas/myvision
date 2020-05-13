@@ -1,4 +1,5 @@
 import { labelShape, arrowKeyEvents as labellerModalArrowKeyEvents } from '../tools/labellerModal/buttonEventHandlers';
+import { isEditingLabelInLabelList, arrowKeyEvents as labelListArrowKeyEvents } from '../tools/labelList/labelList';
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
 import {
@@ -11,12 +12,16 @@ import {
 function arrowUpKeyHandler() {
   if (getLabellerModalDisplayedState()) {
     labellerModalArrowKeyEvents('ArrowUp');
+  } else if (isEditingLabelInLabelList()) {
+    labelListArrowKeyEvents('ArrowUp');
   }
 }
 
 function arrowDownKeyHandler() {
   if (getLabellerModalDisplayedState()) {
     labellerModalArrowKeyEvents('ArrowDown');
+  } else if (isEditingLabelInLabelList()) {
+    labelListArrowKeyEvents('ArrowDown');
   }
 }
 
