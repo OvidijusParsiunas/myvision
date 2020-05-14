@@ -14,8 +14,6 @@ help button top right
 
 draw polygon (q, w);
 
-label list dropdown overflow min-height not set correctly
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

@@ -78,7 +78,7 @@
   border: thin solid grey;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 2;
-  max-height: 147px;
+  max-height: 139px;
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
   scrollbar-width: thin;
