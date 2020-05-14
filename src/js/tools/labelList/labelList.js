@@ -652,6 +652,7 @@ function arrowKeyEvents(key) {
 }
 
 window.labelTextKeyDown = (event) => {
+  if (event.key === 'Delete') return;
   if (event.key === 'Enter') {
     cancelEditingLabelInLabelList();
   } else {

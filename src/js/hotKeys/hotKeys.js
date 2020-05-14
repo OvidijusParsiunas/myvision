@@ -26,6 +26,7 @@ function arrowDownKeyHandler() {
 }
 
 function deleteKeyHandler() {
+  if (isEditingLabelInLabelList) labelListEscapeKeyEvents();
   window.removeShape();
 }
 
