@@ -593,50 +593,96 @@ function highlightLabel(currentlySelectedShapeName, idArg) {
   }
 }
 
+function cancelEditingLabelInLabelList() {
+  deselectedEditing = true;
+  const currentlySelectedShapeName = activeShape.shapeName;
+  activeShape = false;
+  if (mouseHoveredOnLabelEditButton) {
+    switchToHighlightedDefaultIcon(activeEditLabelButton);
+  } else {
+    switchToDefaultIcon(activeEditLabelButton);
+  }
+  addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
+  resetLabelElement();
+  highlightLabel(currentlySelectedShapeName);
+}
+
+function isEditingLabelInLabelList() {
+  return isEditingLabel;
+}
+
+function escapeKeyEvent() {
+  activeLabelTextElement.innerHTML = originalLabelText;
+  cancelEditingLabelInLabelList();
+}
+
+// the labelTextKeyDown event handles the update of a new text word
+function arrowKeyEvents(key) {
+  if (key === 'ArrowDown') {
+    if (currentlyActiveLabelOptionIndex !== null) {
+      const isBeforeLastElement = currentlyActiveLabelOptionIndex
+        === availableListOptions.length - 2;
+      const lastElementIndex = isBeforeLastElement ? currentlyActiveLabelOptionIndex * 2 + 1
+        : currentlyActiveLabelOptionIndex * 2;
+      const { nextSibling } = activeDropdownElements[0].childNodes[0]
+        .childNodes[lastElementIndex].nextSibling;
+      if (nextSibling) {
+        const optionElement = nextSibling.childNodes[0].childNodes[0];
+        const text = isBeforeLastElement ? optionElement.childNodes[0].innerHTML
+          : optionElement.innerHTML;
+        activeLabelTextElement.innerHTML = text;
+      }
+    } else {
+      activeLabelTextElement.innerHTML = activeDropdownElements[0].childNodes[0]
+        .childNodes[0].childNodes[0].childNodes[0].innerHTML;
+    }
+  } else if (key === 'ArrowUp') {
+    if (currentlyActiveLabelOptionIndex !== null) {
+      const { previousSibling } = activeDropdownElements[0].childNodes[0]
+        .childNodes[currentlyActiveLabelOptionIndex * 2];
+      if (previousSibling) {
+        activeLabelTextElement.innerHTML = previousSibling.previousSibling.childNodes[0]
+          .childNodes[0].innerHTML;
+      }
+    } else {
+      activeLabelTextElement.innerHTML = activeDropdownElements[0].childNodes[0]
+        .childNodes[0].childNodes[0].childNodes[0].innerHTML;
+    }
+  }
+}
+
 window.labelTextKeyDown = (event) => {
   if (event.key === 'Enter') {
-    deselectedEditing = true;
-    const currentlySelectedShapeName = activeShape.shapeName;
-    activeShape = false;
-    if (mouseHoveredOnLabelEditButton) {
-      switchToHighlightedDefaultIcon(activeEditLabelButton);
-    } else {
-      switchToDefaultIcon(activeEditLabelButton);
-    }
-    addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
-    resetLabelElement();
-    highlightLabel(currentlySelectedShapeName);
+    cancelEditingLabelInLabelList();
+  } else {
+    window.setTimeout(() => {
+      if (event.code === 'Space') {
+        const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement).position;
+        setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement,
+          true, scrollHorizontallyToAppropriateWidth);
+      }
+      if (lastSelectedLabelOption) {
+        lastSelectedLabelOption.style.backgroundColor = '';
+      }
+      let found = false;
+      for (let i = 0; i < availableListOptions.length - 1; i += 1) {
+        if (availableListOptions[i].text === activeLabelTextElement.innerHTML) {
+          highlightDropdownLabelOption(i, i * 2);
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        const lastLabelOptionIndex = availableListOptions.length - 1;
+        currentlyActiveLabelOptionIndex = null;
+        if (availableListOptions[lastLabelOptionIndex].text === activeLabelTextElement.innerHTML) {
+          highlightDropdownLabelOption(lastLabelOptionIndex, lastLabelOptionIndex * 2 + 1);
+        }
+      }
+      changeActiveDropdownElementStyling();
+      updateAssociatedLabelObjectsText(activeLabelTextElement.innerHTML);
+    }, 0);
   }
-  window.setTimeout(() => {
-    if (event.code === 'Space') {
-      const currentCaretPosition = getCaretPositionOnDiv(activeLabelTextElement).position;
-      setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement,
-        true, scrollHorizontallyToAppropriateWidth);
-    }
-    if (lastSelectedLabelOption) {
-      lastSelectedLabelOption.style.backgroundColor = '';
-    }
-    let found = false;
-    for (let i = 0; i < availableListOptions.length - 1; i += 1) {
-      if (availableListOptions[i].text === activeLabelTextElement.innerHTML) {
-        highlightDropdownLabelOption(i, i * 2);
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      const lastLabelOptionIndex = availableListOptions.length - 1;
-      currentlyActiveLabelOptionIndex = null;
-      if (availableListOptions[lastLabelOptionIndex].text === activeLabelTextElement.innerHTML) {
-        highlightDropdownLabelOption(lastLabelOptionIndex, lastLabelOptionIndex * 2 + 1);
-      }
-    }
-    changeActiveDropdownElementStyling();
-    updateAssociatedLabelObjectsText(activeLabelTextElement.innerHTML);
-    if (event.key === 'Enter') {
-      activeLabelId = null;
-    }
-  }, 0);
 };
 
 window.labelBtnClick = (id) => {
@@ -703,7 +749,6 @@ window.onmousedown = (event) => {
     } else if (event.target.nodeName === 'CANVAS' || event.target.className === 'toolkit-button-icon'
         || event.target.className === 'toolkit-button-text' || event.target.id === activeLabelElementId) {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
-
       stopEditing();
     } else {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
@@ -727,44 +772,6 @@ window.onmousedown = (event) => {
     stopEditingMLGeneratedLabelNameBtnClick(event.target);
   }
 };
-
-function isEditingLabelInLabelList() {
-  return isEditingLabel;
-}
-
-// the labelTextKeyDown event handles the update of a new text word
-function arrowKeyEvents(key) {
-  if (key === 'ArrowDown') {
-    if (currentlyActiveLabelOptionIndex !== null) {
-      const secondLastElement = currentlyActiveLabelOptionIndex === availableListOptions.length - 2;
-      const lastElementIndex = secondLastElement ? currentlyActiveLabelOptionIndex * 2 + 1
-        : currentlyActiveLabelOptionIndex * 2;
-      const { nextSibling } = activeDropdownElements[0].childNodes[0]
-        .childNodes[lastElementIndex].nextSibling;
-      if (nextSibling) {
-        const optionElement = nextSibling.childNodes[0].childNodes[0];
-        const text = secondLastElement ? optionElement.childNodes[0].innerHTML
-          : optionElement.innerHTML;
-        activeLabelTextElement.innerHTML = text;
-      }
-    } else {
-      activeLabelTextElement.innerHTML = activeDropdownElements[0].childNodes[0]
-        .childNodes[0].childNodes[0].childNodes[0].innerHTML;
-    }
-  } else if (key === 'ArrowUp') {
-    if (currentlyActiveLabelOptionIndex !== null) {
-      const { previousSibling } = activeDropdownElements[0].childNodes[0]
-        .childNodes[currentlyActiveLabelOptionIndex * 2];
-      if (previousSibling) {
-        activeLabelTextElement.innerHTML = previousSibling.previousSibling.childNodes[0]
-          .childNodes[0].innerHTML;
-      }
-    } else {
-      activeLabelTextElement.innerHTML = activeDropdownElements[0].childNodes[0]
-        .childNodes[0].childNodes[0].childNodes[0].innerHTML;
-    }
-  }
-}
 
 window.labelListScroll = () => {
   if (currentTableElementScrollPosition !== labelsListOverflowParentElement.scrollTop) {
@@ -829,7 +836,11 @@ window.visibilityBtnClick = (id, element) => {
 };
 
 window.mouseEnterLabelEditBtn = (element) => {
-  mouseHoveredOnLabelEditButton = true;
+  if (isEditingLabel) {
+    mouseHoveredOnLabelEditButton = element.id === `editButton${activeLabelId}`;
+  } else {
+    mouseHoveredOnLabelEditButton = true;
+  }
   if (!isEditingLabel) {
     highlightDefaultIcon(element);
   } else if (activeEditLabelButton.id !== element.id) {
@@ -888,8 +899,8 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
-  initialiseLabelListFunctionality, addNewLabelToListFromPopUp,
-  addExistingLabelToList, removeAllLabelListItems, repopulateDropdown,
+  addNewLabelToListFromPopUp, repopulateDropdown, removeAllLabelListItems,
   removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
+  initialiseLabelListFunctionality, addExistingLabelToList, escapeKeyEvent,
   isEditingLabelInLabelList, arrowKeyEvents, getCurrentlySelectedLabelShape,
 };

@@ -1,5 +1,5 @@
 import { labelShape, arrowKeyEvents as labellerModalArrowKeyEvents } from '../tools/labellerModal/buttonEventHandlers';
-import { isEditingLabelInLabelList, arrowKeyEvents as labelListArrowKeyEvents } from '../tools/labelList/labelList';
+import { isEditingLabelInLabelList, escapeKeyEvent as labelListEscapeKeyEvents, arrowKeyEvents as labelListArrowKeyEvents } from '../tools/labelList/labelList';
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
 import {
@@ -54,6 +54,8 @@ function escapeKeyHandler() {
     window.addPoints(document.getElementById('add-points-button'));
   } else if (getRemovingPolygonPointsState()) {
     window.removePoint(document.getElementById('remove-points-button'));
+  } else if (isEditingLabelInLabelList()) {
+    labelListEscapeKeyEvents();
   }
 }
 
