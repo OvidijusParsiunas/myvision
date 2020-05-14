@@ -329,7 +329,7 @@ function addFakeBottomBorder(activeDropdownElementPosition) {
     }
   }
   const dropdownElementWidthInt = parseInt(activeDropdownElements[0].style.width, 10);
-  chromiumFakeDrodownBottomBorderElement.style.width = `${dropdownElementWidthInt + 1.5}px`;
+  chromiumFakeDrodownBottomBorderElement.style.width = `${dropdownElementWidthInt}px`;
   const activeDropDownBottomBorderOffsetFromTop = activeDropdownElementPosition.height
    + activeDropdownElementPosition.top + chromiumFakeDropdownBorderElementTopDelta - 0.6;
   chromiumFakeDrodownBottomBorderElement.style.top = `${activeDropDownBottomBorderOffsetFromTop}px`;

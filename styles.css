@@ -442,7 +442,7 @@
 .chromium-fake-dropdown-border-fix {
   background-color: grey;
   z-index: 2;
-  right: 1.5px;
+  right: 3px;
 }
 
 .chromium-fake-dropdown-border-fix-width {
