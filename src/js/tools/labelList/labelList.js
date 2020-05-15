@@ -439,7 +439,7 @@ function selectShape() {
     polygonMouseDownEvents(eventShape);
     polygonMouseUpEvents(eventShape);
   }
-  if (activeShape.shapeName === 'bndBox') {
+  if (activeShape && activeShape.shapeName === 'bndBox') {
     if (!getRemovingPolygonPointsState() && !getAddingPolygonPointsState()) {
       programaticallySelectBoundingBox(activeShape);
     }
@@ -459,7 +459,7 @@ function deselectShape() {
     polygonMouseDownEvents({});
     polygonMouseUpEvents({});
   }
-  if (activeShape.shapeName === 'bndBox') {
+  if (activeShape && activeShape.shapeName === 'bndBox') {
     programaticallyDeselectBoundingBox();
   }
 }
@@ -707,7 +707,7 @@ window.labelBtnClick = (id) => {
   if (!isVisibilitySelected) {
     if (getShapeVisibilityById(id)) {
       selectShape();
-    } else if (activeShape.shapeName === 'bndBox') {
+    } else if (activeShape && activeShape.shapeName === 'bndBox') {
       programaticallyDeselectBoundingBox();
     } else {
       removePolygonPoints();
@@ -731,7 +731,7 @@ window.labelBtnClick = (id) => {
     } else {
       removePolygonPoints();
       setShapeToInvisible();
-      if (activeShape.shapeName === 'bndBox') {
+      if (activeShape && activeShape.shapeName === 'bndBox') {
         programaticallyDeselectBoundingBox();
       }
     }
@@ -743,7 +743,7 @@ window.labelBtnClick = (id) => {
 window.onmousedown = (event) => {
   if (isEditingLabel) {
     if (event.target.matches('.labelDropdownOption')) {
-      const currentlySelectedShapeName = activeShape !== null ? activeShape.shapeName : null;
+      const currentlySelectedShapeName = activeShape ? activeShape.shapeName : null;
       const newText = event.target.innerHTML;
       activeLabelTextElement.innerHTML = newText;
       updateAssociatedLabelObjectsText(newText);
