@@ -13,9 +13,8 @@ function setLabelListElementForHighlights(labelListElementRef, labelsListOverflo
 function removeHighlightOfListLabel() {
   if (currentlyHighlightedElement !== null) {
     currentlyHighlightedElement.style.backgroundColor = highlightedElementOriginalColor;
-  } else {
-    currentlyHighlightedElement = null;
   }
+  currentlyHighlightedElement = null;
 }
 
 function highlightLabelInTheList(id) {
@@ -32,7 +31,11 @@ function changeLabelColor(color) {
   currentlyHighlightedElement.style.backgroundColor = color;
 }
 
+function getCurrentlyHighlightedElement() {
+  return currentlyHighlightedElement;
+}
+
 export {
-  setLabelListElementForHighlights, changeLabelColor,
-  highlightLabelInTheList, removeHighlightOfListLabel,
+  setLabelListElementForHighlights, removeHighlightOfListLabel,
+  highlightLabelInTheList, changeLabelColor, getCurrentlyHighlightedElement,
 };

@@ -1,5 +1,10 @@
 import { labelShape, arrowKeyEvents as labellerModalArrowKeyEvents } from '../tools/labellerModal/buttonEventHandlers';
-import { isEditingLabelInLabelList, escapeKeyEvent as labelListEscapeKeyEvents, arrowKeyEvents as labelListArrowKeyEvents } from '../tools/labelList/labelList';
+import {
+  isEditingLabelInLabelList, cancelEditingViaKeyboard as cancelEditingLabelList,
+  arrowKeyEventsForLabelOtionsList as labelOptionsListArrowKeyEvents,
+  arrowKeyEventsForLabelList as labelListArrowKeyEvents,
+} from '../tools/labelList/labelList';
+import { getCurrentlyHighlightedElement } from '../tools/labelList/labelListHighlightUtils';
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
 import {
@@ -10,23 +15,43 @@ import {
 } from '../tools/stateMachine';
 
 function arrowUpKeyHandler() {
+  const arrowUp = 'ArrowUp';
   if (getLabellerModalDisplayedState()) {
-    labellerModalArrowKeyEvents('ArrowUp');
+    labellerModalArrowKeyEvents(arrowUp);
   } else if (isEditingLabelInLabelList()) {
-    labelListArrowKeyEvents('ArrowUp');
+    labelOptionsListArrowKeyEvents(arrowUp);
+  } else if (getCurrentlyHighlightedElement()) {
+    labelListArrowKeyEvents(arrowUp);
   }
 }
 
 function arrowDownKeyHandler() {
+  const arrowDown = 'ArrowDown';
   if (getLabellerModalDisplayedState()) {
-    labellerModalArrowKeyEvents('ArrowDown');
+    labellerModalArrowKeyEvents(arrowDown);
   } else if (isEditingLabelInLabelList()) {
-    labelListArrowKeyEvents('ArrowDown');
+    labelOptionsListArrowKeyEvents(arrowDown);
+  } else if (getCurrentlyHighlightedElement()) {
+    labelListArrowKeyEvents(arrowDown);
+  }
+}
+
+function arrowLeftKeyHandler() {
+  const arrowLeft = 'ArrowLeft';
+  if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
+    labelListArrowKeyEvents(arrowLeft);
+  }
+}
+
+function arrowRightKeyHandler() {
+  const arrowRight = 'ArrowRight';
+  if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
+    labelListArrowKeyEvents(arrowRight);
   }
 }
 
 function deleteKeyHandler() {
-  if (isEditingLabelInLabelList) labelListEscapeKeyEvents();
+  if (isEditingLabelInLabelList()) cancelEditingLabelList();
   window.removeShape();
 }
 
@@ -56,7 +81,7 @@ function escapeKeyHandler() {
   } else if (getRemovingPolygonPointsState()) {
     window.removePoint(document.getElementById('remove-points-button'));
   } else if (isEditingLabelInLabelList()) {
-    labelListEscapeKeyEvents();
+    cancelEditingLabelList();
   }
 }
 
@@ -76,6 +101,12 @@ function keyDownEventHandler(event) {
       break;
     case 'ArrowDown':
       arrowDownKeyHandler();
+      break;
+    case 'ArrowLeft':
+      arrowLeftKeyHandler();
+      break;
+    case 'ArrowRight':
+      arrowRightKeyHandler();
       break;
     default:
       break;

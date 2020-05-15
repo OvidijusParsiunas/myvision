@@ -19,8 +19,8 @@ import {
 import { pointMouseDownEvents, pointMouseUpEvents, setPolygonNotEditableOnClick } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import { pointMouseDownEvents as addPointsMouseDownEvents, pointMouseUpEvents as addPointsMouseUpEvents, setPolygonNotEditableOnClick as addPointsPolygonNotEditable } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import {
-  setLabelListElementForHighlights, changeLabelColor,
-  removeHighlightOfListLabel, highlightLabelInTheList,
+  setLabelListElementForHighlights, getCurrentlyHighlightedElement,
+  removeHighlightOfListLabel, highlightLabelInTheList, changeLabelColor,
 } from './labelListHighlightUtils';
 import {
   addToLabelOptions, sendLabelOptionToFront, getLabelOptions, getLabelColor,
@@ -535,7 +535,7 @@ function addNewLabelToLabelOptions(text) {
 }
 
 function stopEditing() {
-  activeShape = false;
+  activeShape = null;
   switchToDefaultIcon(activeEditLabelButton);
   resetLabelElement();
 }
@@ -596,7 +596,7 @@ function highlightLabel(currentlySelectedShapeName, idArg) {
 function cancelEditingLabelInLabelList() {
   deselectedEditing = true;
   const currentlySelectedShapeName = activeShape.shapeName;
-  activeShape = false;
+  activeShape = null;
   if (mouseHoveredOnLabelEditButton) {
     switchToHighlightedDefaultIcon(activeEditLabelButton);
   } else {
@@ -611,13 +611,27 @@ function isEditingLabelInLabelList() {
   return isEditingLabel;
 }
 
-function escapeKeyEvent() {
+function cancelEditingViaKeyboard() {
   activeLabelTextElement.innerHTML = originalLabelText;
   cancelEditingLabelInLabelList();
 }
 
+function arrowKeyEventsForLabelList(key) {
+  const currentlyHighlightedElement = getCurrentlyHighlightedElement()
+    .parentElement.parentElement.parentElement;
+  if (key === 'ArrowDown' || key === 'ArrowRight') {
+    if (currentlyHighlightedElement.nextSibling) {
+      currentlyHighlightedElement.nextSibling.childNodes[0].childNodes[0].childNodes[1].dispatchEvent(new Event('click'));
+    }
+  } else if (key === 'ArrowUp' || key === 'ArrowLeft') {
+    if (currentlyHighlightedElement.previousSibling) {
+      currentlyHighlightedElement.previousSibling.childNodes[0].childNodes[0].childNodes[1].dispatchEvent(new Event('click'));
+    }
+  }
+}
+
 // the labelTextKeyDown event handles the update of a new text word
-function arrowKeyEvents(key) {
+function arrowKeyEventsForLabelOtionsList(key) {
   if (key === 'ArrowDown') {
     if (currentlyActiveLabelOptionIndex !== null) {
       const isBeforeLastElement = currentlyActiveLabelOptionIndex
@@ -900,8 +914,8 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
-  addNewLabelToListFromPopUp, repopulateDropdown, removeAllLabelListItems,
-  removeLabelFromListOnShapeDelete, moveSelectedLabelToFrontOfLabelOptions,
-  initialiseLabelListFunctionality, addExistingLabelToList, escapeKeyEvent,
-  isEditingLabelInLabelList, arrowKeyEvents, getCurrentlySelectedLabelShape,
+  moveSelectedLabelToFrontOfLabelOptions, removeAllLabelListItems, repopulateDropdown,
+  initialiseLabelListFunctionality, addExistingLabelToList, arrowKeyEventsForLabelList,
+  isEditingLabelInLabelList, getCurrentlySelectedLabelShape, addNewLabelToListFromPopUp,
+  arrowKeyEventsForLabelOtionsList, removeLabelFromListOnShapeDelete, cancelEditingViaKeyboard,
 };
