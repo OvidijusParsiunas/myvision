@@ -18,6 +18,7 @@ let createNewBoundingBoxBtnClicked = false;
 let leftMouseBtnDown = false;
 const boundingBoxProps = {};
 let boundingBox = null;
+let lastMouseEvent = null;
 let drawingFinished = false;
 let finishDrawingBoundingBoxClick = null;
 let rightBoundingBoxDelta = 0;
@@ -25,7 +26,7 @@ let rightBoundingBoxDelta = 0;
 function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked) {
     leftMouseBtnDown = true;
-    const pointer = canvas.getPointer(canvas.e);
+    const pointer = canvas.getPointer(lastMouseEvent.e);
     boundingBoxProps.origX = pointer.x < 0 ? 0 : pointer.x;
     boundingBoxProps.origY = pointer.y < 0 ? 0 : pointer.y;
     boundingBox = new fabric.Rect(boundingBoxProperties.tempBoundingBoxProps(boundingBoxProps));
@@ -69,6 +70,7 @@ let mouseMovedLeft = false;
 let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
+  lastMouseEvent = event;
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {
@@ -171,7 +173,7 @@ function isBoundingBoxDrawingFinished() {
   return drawingFinished;
 }
 
-function finishDrawingBoundingBoxFunc(event) {
+function finishDrawingBoundingBoxFunc() {
   if (leftMouseBtnDown && getBoundingBoxDrawingInProgressState()) {
     createNewBoundingBoxBtnClicked = false;
     leftMouseBtnDown = false;
@@ -181,15 +183,15 @@ function finishDrawingBoundingBoxFunc(event) {
     drawingFinished = true;
     setReadyToDrawShapeState(false);
     prepareLabelShape(boundingBox, canvas);
-    const pointer = canvas.getPointer(event.e);
+    const pointer = canvas.getPointer(lastMouseEvent.e);
     showLabellerModal(pointer.x, pointer.y);
     setBoundingBoxDrawingInProgressState(false);
     boundingBox = null;
   }
 }
 
-function finishDrawingBoundingBox(event) {
-  finishDrawingBoundingBoxClick(event);
+function finishDrawingBoundingBox() {
+  finishDrawingBoundingBoxClick();
 }
 
 function assignSetEditablePolygonOnClickFunc() {

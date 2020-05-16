@@ -14,8 +14,8 @@ function assignDrawBoundingBoxEvents(canvas) {
     drawBoundingBox(e);
   });
 
-  canvas.on('mouse:up', (e) => {
-    finishDrawingBoundingBox(e);
+  canvas.on('mouse:up', () => {
+    finishDrawingBoundingBox();
   });
 
   canvas.on('mouse:wheel', (e) => {

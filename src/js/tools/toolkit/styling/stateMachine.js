@@ -49,6 +49,10 @@ function setCreateBoundingBoxButtonToDisabled() {
   createBoundingBoxState = state.DISABLED;
 }
 
+function getCreateBoundingBoxButtonState() {
+  return createBoundingBoxState;
+}
+
 function setCreatePolygonButtonToDefault() {
   setButtonToDefault(createPolygonButtonElement);
   createPolygonState = state.DEFAULT;
@@ -240,6 +244,7 @@ export {
   setRemoveImagesButtonsDisabled,
   setRemovePointsButtonToDefault,
   setCreatePolygonButtonToActive,
+  getCreateBoundingBoxButtonState,
   setCreatePolygonButtonToDefault,
   setCreatePolygonButtonToDisabled,
   setPolygonEditingButtonsToDefault,

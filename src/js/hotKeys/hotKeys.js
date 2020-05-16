@@ -14,7 +14,8 @@ import {
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
 } from '../tools/stateMachine';
 import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
-import { getCreatePolygonButtonState } from '../tools/toolkit/styling/stateMachine';
+import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/objects/boundingBox/boundingBox';
+import { getCreatePolygonButtonState, getCreateBoundingBoxButtonState } from '../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 
@@ -34,6 +35,25 @@ function qKeyHandler() {
       window.createNewPolygon();
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
     }
+  }
+}
+
+function wKeyHandler() {
+  if (!isModalOpen() && !isEditingLabelInLabelList() && getCreateBoundingBoxButtonState() !== 'disabled') {
+    finishEditingLabelList();
+    if (getBoundingBoxDrawingInProgressState()) return;
+    if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
+      instantiateNewBoundingBox();
+    } else {
+      window.createNewBndBox();
+      canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
+    }
+  }
+}
+
+function wKeyUpHandler() {
+  if (getBoundingBoxDrawingInProgressState()) {
+    finishDrawingBoundingBox();
   }
 }
 
@@ -134,12 +154,25 @@ function keyDownEventHandler(event) {
       arrowRightKeyHandler();
       break;
     case 'q':
-      qKeyHandler(event);
+      qKeyHandler();
+      break;
+    case 'w':
+      wKeyHandler();
       break;
     default:
       break;
   }
   console.log(event.key);
+}
+
+function keyUpEventHandler(event) {
+  switch (event.key) {
+    case 'w':
+      wKeyUpHandler();
+      break;
+    default:
+      break;
+  }
 }
 
 function assignCanvasForHotKeys(canvasObj) {
@@ -148,6 +181,8 @@ function assignCanvasForHotKeys(canvasObj) {
 
 function registerHotKeys() {
   document.addEventListener('keydown', keyDownEventHandler);
+  document.addEventListener('keyup', keyUpEventHandler);
+
 }
 
 export { registerHotKeys, assignCanvasForHotKeys };
