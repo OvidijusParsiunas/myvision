@@ -16,6 +16,8 @@ import {
 import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
 import { getCreatePolygonButtonState } from '../tools/toolkit/styling/stateMachine';
 
+let canvas = null;
+
 function isModalOpen() {
   return getLabellerModalDisplayedState()
   || getUploadDatasetsModalDisplayedState()
@@ -23,7 +25,6 @@ function isModalOpen() {
 }
 
 function qKeyHandler() {
-  // make sure to automatically refresh the mouse when q is clicked to prepare drawing a new polygon
   if (!isModalOpen() && !isEditingLabelInLabelList() && getCreatePolygonButtonState() !== 'disabled') {
     finishEditingLabelList();
     if ((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
@@ -31,6 +32,7 @@ function qKeyHandler() {
       addPointViaKeyboard();
     } else {
       window.createNewPolygon();
+      canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
     }
   }
 }
@@ -140,8 +142,12 @@ function keyDownEventHandler(event) {
   console.log(event.key);
 }
 
+function assignCanvasForHotKeys(canvasObj) {
+  canvas = canvasObj;
+}
+
 function registerHotKeys() {
   document.addEventListener('keydown', keyDownEventHandler);
 }
 
-export { registerHotKeys as default };
+export { registerHotKeys, assignCanvasForHotKeys };

@@ -11,11 +11,13 @@ import { assignCanvasToDimWindowService } from '../tools/dimWindow/dimWindowServ
 import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
 import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/buttonClickEvents';
+import { assignCanvasForHotKeys } from '../hotKeys/hotKeys';
 import assignCanvasForImageList from '../tools/imageList/canvasManagement';
 
 let currentCanvasInstance = null;
 
 function repopulateCanvasReference(canvas) {
+  assignCanvasForHotKeys(canvas);
   assignCanvasMouseEvents(canvas);
   assignCanvasToDimWindowService(canvas);
   assignCanvasForLabelManipulation(canvas);

@@ -20,6 +20,8 @@ draw on add points events
 
 will need to initialise the editing process using those buttons
 
+concider the fact that after editing a label in continuous drawing mode, we should maybe go back to the drawing mode
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
