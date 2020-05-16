@@ -207,7 +207,10 @@ function clearPolygonData() {
     activeShape = null;
     pointId = 0;
     drawingFinished = false;
+    setReadyToDrawShapeState(false);
     setPolygonDrawingInProgressState(false);
+    lastMouseEvent = null;
+    lastNewPointPosition = { x: -1, y: -1 };
   }
 }
 
@@ -229,18 +232,20 @@ function generatePolygonViaKeyboard() {
 }
 
 function addPointViaKeyboard() {
-  const pointer = canvas.getPointer(lastMouseEvent.e);
-  if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'invisiblePoint') {
-    if (pointArray.length > 2) {
-      generatePolygon();
+  if (lastMouseEvent) {
+    const pointer = canvas.getPointer(lastMouseEvent.e);
+    if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'invisiblePoint') {
+      if (pointArray.length > 2) {
+        generatePolygon();
+      }
+    } else if (
+      (pointer.x === lastNewPointPosition.x && pointer.y === lastNewPointPosition.y)
+      || (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'tempPoint')) {
+      mouseIsDownOnTempPoint = true;
+    } else {
+      setReadyToDrawShapeState(false);
+      addPoint(pointer);
     }
-  } else if (
-    (pointer.x === lastNewPointPosition.x && pointer.y === lastNewPointPosition.y)
-    || (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'tempPoint')) {
-    mouseIsDownOnTempPoint = true;
-  } else {
-    setReadyToDrawShapeState(false);
-    addPoint(pointer);
   }
 }
 

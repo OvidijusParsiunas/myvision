@@ -59,6 +59,10 @@ function setCreatePolygonButtonToDisabled() {
   createPolygonState = state.DISABLED;
 }
 
+function getCreatePolygonButtonState() {
+  return createPolygonState;
+}
+
 function setRemoveImagesButtonDefault() {
   setButtonToGreyDefault(removeImagesButtonElement);
 }
@@ -223,6 +227,7 @@ export {
   setZoomOutButtonToDefault,
   setZoomOutButtonToDisabled,
   setAddPointsButtonToActive,
+  getCreatePolygonButtonState,
   setAddPointsButtonToDefault,
   setEditShapesButtonToActive,
   setRemoveImagesButtonDefault,

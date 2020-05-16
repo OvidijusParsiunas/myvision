@@ -611,6 +611,56 @@ function isEditingLabelInLabelList() {
   return isEditingLabel;
 }
 
+// needs to be exported to global key events
+function finishEditingLabelList(event) {
+  event = event || { target: { classList: [] } };
+  if (isEditingLabel) {
+    if (event.target.matches('.labelDropdownOption')) {
+      const currentlySelectedShapeName = activeShape ? activeShape.shapeName : null;
+      const newText = event.target.innerHTML;
+      activeLabelTextElement.innerHTML = newText;
+      updateAssociatedLabelObjectsText(newText);
+      removeLabelDropDownContent();
+      stopEditing();
+      moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
+      highlightLabel(currentlySelectedShapeName, activeLabelId);
+    } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')
+      || event.target.matches('.chromium-fake-dropdown-border-fix')) {
+      // do nothing
+    } else if (event.target.id === `editButton${activeLabelId}`) {
+      if (!labelHasBeenDeselected) {
+        deselectedEditing = true;
+        switchToHighlightedDefaultIcon(activeEditLabelButton);
+        addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
+        resetLabelElement();
+      }
+    } else if (event.target.nodeName === 'CANVAS' || event.target.className === 'toolkit-button-icon'
+        || event.target.className === 'toolkit-button-text' || event.target.id === activeLabelElementId) {
+      addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
+      stopEditing();
+    } else {
+      addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
+      stopEditing();
+      deselectShape();
+    }
+  } else if (getSettingsPopUpOpenState()) {
+    if (event.target.classList[0] !== 'settings-popup-item') {
+      const settingsPopupElement = document.getElementById('settings-popup');
+      settingsPopupElement.style.display = 'none';
+      setSettingsPopUpOpenState(false);
+    }
+  } else if (getExportDatasetsPopUpOpenState()) {
+    if (event.target.classList[0] !== 'export-labels-popup-item') {
+      const exportPopupElement = document.getElementById('export-labels-popup-parent');
+      exportPopupElement.style.display = 'none';
+      setExportDatasetsPopUpOpenState(false);
+    }
+  // needs to call a function in button events in the changeGeneratedLabelsView
+  } else if (getChangingMLGeneratedLabelNamesState()) {
+    stopEditingMLGeneratedLabelNameBtnClick(event.target);
+  }
+}
+
 function cancelEditingViaKeyboard() {
   activeLabelTextElement.innerHTML = originalLabelText;
   cancelEditingLabelInLabelList();
@@ -739,53 +789,8 @@ window.labelBtnClick = (id) => {
   }
 };
 
-// needs to be exported to global key events
 window.onmousedown = (event) => {
-  if (isEditingLabel) {
-    if (event.target.matches('.labelDropdownOption')) {
-      const currentlySelectedShapeName = activeShape ? activeShape.shapeName : null;
-      const newText = event.target.innerHTML;
-      activeLabelTextElement.innerHTML = newText;
-      updateAssociatedLabelObjectsText(newText);
-      removeLabelDropDownContent();
-      stopEditing();
-      moveSelectedLabelToFrontOfLabelOptions(event.target.id.substring(11, 12), newText);
-      highlightLabel(currentlySelectedShapeName, activeLabelId);
-    } else if (event.target.id === `labelText${activeLabelId}` || event.target.matches('.dropdown-content')
-      || event.target.matches('.chromium-fake-dropdown-border-fix')) {
-      // do nothing
-    } else if (event.target.id === `editButton${activeLabelId}`) {
-      if (!labelHasBeenDeselected) {
-        deselectedEditing = true;
-        switchToHighlightedDefaultIcon(activeEditLabelButton);
-        addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
-        resetLabelElement();
-      }
-    } else if (event.target.nodeName === 'CANVAS' || event.target.className === 'toolkit-button-icon'
-        || event.target.className === 'toolkit-button-text' || event.target.id === activeLabelElementId) {
-      addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
-      stopEditing();
-    } else {
-      addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
-      stopEditing();
-      deselectShape();
-    }
-  } else if (getSettingsPopUpOpenState()) {
-    if (event.target.classList[0] !== 'settings-popup-item') {
-      const settingsPopupElement = document.getElementById('settings-popup');
-      settingsPopupElement.style.display = 'none';
-      setSettingsPopUpOpenState(false);
-    }
-  } else if (getExportDatasetsPopUpOpenState()) {
-    if (event.target.classList[0] !== 'export-labels-popup-item') {
-      const exportPopupElement = document.getElementById('export-labels-popup-parent');
-      exportPopupElement.style.display = 'none';
-      setExportDatasetsPopUpOpenState(false);
-    }
-  // needs to call a function in button events in the changeGeneratedLabelsView
-  } else if (getChangingMLGeneratedLabelNamesState()) {
-    stopEditingMLGeneratedLabelNameBtnClick(event.target);
-  }
+  finishEditingLabelList(event);
 };
 
 window.labelListScroll = () => {
@@ -914,6 +919,7 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
+  finishEditingLabelList,
   moveSelectedLabelToFrontOfLabelOptions, removeAllLabelListItems, repopulateDropdown,
   initialiseLabelListFunctionality, addExistingLabelToList, arrowKeyEventsForLabelList,
   isEditingLabelInLabelList, getCurrentlySelectedLabelShape, addNewLabelToListFromPopUp,

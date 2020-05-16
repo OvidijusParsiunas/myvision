@@ -18,6 +18,8 @@ option to disabled selectable temp points
 
 draw on add points events
 
+will need to initialise the editing process using those buttons
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

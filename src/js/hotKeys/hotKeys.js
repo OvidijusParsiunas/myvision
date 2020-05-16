@@ -2,7 +2,7 @@ import { labelShape, arrowKeyEvents as labellerModalArrowKeyEvents } from '../to
 import {
   isEditingLabelInLabelList, cancelEditingViaKeyboard as cancelEditingLabelList,
   arrowKeyEventsForLabelOtionsList as labelOptionsListArrowKeyEvents,
-  arrowKeyEventsForLabelList as labelListArrowKeyEvents,
+  arrowKeyEventsForLabelList as labelListArrowKeyEvents, finishEditingLabelList,
 } from '../tools/labelList/labelList';
 import { getCurrentlyHighlightedElement } from '../tools/labelList/labelListHighlightUtils';
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
@@ -14,11 +14,24 @@ import {
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
 } from '../tools/stateMachine';
 import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
+import { getCreatePolygonButtonState } from '../tools/toolkit/styling/stateMachine';
+
+function isModalOpen() {
+  return getLabellerModalDisplayedState()
+  || getUploadDatasetsModalDisplayedState()
+  || getMachineLearningModalDisplayedState();
+}
 
 function qKeyHandler() {
-  if ((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
-   || (getReadyToDrawShapeState() && getLastDrawingModeState())) {
-    addPointViaKeyboard();
+  // make sure to automatically refresh the mouse when q is clicked to prepare drawing a new polygon
+  if (!isModalOpen() && !isEditingLabelInLabelList() && getCreatePolygonButtonState() !== 'disabled') {
+    finishEditingLabelList();
+    if ((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
+    || (getReadyToDrawShapeState() && getLastDrawingModeState() === 'polygon')) {
+      addPointViaKeyboard();
+    } else {
+      window.createNewPolygon();
+    }
   }
 }
 
