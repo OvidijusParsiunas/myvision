@@ -14,6 +14,10 @@ help button top right
 
 draw polygon (q, w);
 
+option to disabled selectable temp points
+
+draw on add points events
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

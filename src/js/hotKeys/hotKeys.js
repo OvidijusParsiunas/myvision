@@ -8,11 +8,19 @@ import { getCurrentlyHighlightedElement } from '../tools/labelList/labelListHigh
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
 import {
-  getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState,
+  getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState, getReadyToDrawShapeState,
   getUploadDatasetsModalDisplayedState, getMachineLearningModalDisplayedState,
-  getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
+  getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState, getLastDrawingModeState,
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
 } from '../tools/stateMachine';
+import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
+
+function qKeyHandler() {
+  if ((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
+   || (getReadyToDrawShapeState() && getLastDrawingModeState())) {
+    addPointViaKeyboard();
+  }
+}
 
 function arrowUpKeyHandler() {
   const arrowUp = 'ArrowUp';
@@ -58,6 +66,8 @@ function deleteKeyHandler() {
 function enterKeyHandler() {
   if (getLabellerModalDisplayedState()) {
     labelShape();
+  } else if (getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState()) {
+    generatePolygonViaKeyboard();
   }
 }
 
@@ -107,6 +117,9 @@ function keyDownEventHandler(event) {
       break;
     case 'ArrowRight':
       arrowRightKeyHandler();
+      break;
+    case 'q':
+      qKeyHandler(event);
       break;
     default:
       break;

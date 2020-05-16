@@ -20,14 +20,16 @@ let pointArray = [];
 let polygonMode = true;
 let activeShape = null;
 let pointId = 0;
-let coordinatesOfLastMouseHover = null;
+let lastMouseEvent = null;
 let invisiblePoint = null;
 let drawingFinished = false;
 let mouseUpClick = null;
+let lastNewPointPosition = { x: -1, y: -1 };
+let movedOverflowScroll = false;
 let mouseIsDownOnTempPoint = false;
 
 function isRightMouseButtonClicked(pointer) {
-  if (activeShape && (coordinatesOfLastMouseHover.x !== pointer.x)) {
+  if (activeShape && (canvas.getPointer(lastMouseEvent.e).x !== pointer.x)) {
     return true;
   }
   return false;
@@ -43,9 +45,6 @@ function movePoints(event) {
     };
   }
 }
-
-let movedOverflowScroll = false;
-
 function removeActiveShape() {
   canvas.remove(activeShape);
   activeShape = null;
@@ -71,10 +70,10 @@ function repositionCrosshair(event) {
 }
 
 function drawPolygon(event) {
+  lastMouseEvent = event;
+  const pointer = canvas.getPointer(event.e);
   if (activeShape) {
     if (!movedOverflowScroll) {
-      const pointer = canvas.getPointer(event.e);
-      coordinatesOfLastMouseHover = pointer;
       const points = activeShape.get('points');
       points[pointArray.length] = {
         x: pointer.x,
@@ -102,7 +101,7 @@ function lockMovementIfAssertedByState(polygon) {
   }
 }
 
-function generatePolygon(pointer) {
+function generatePolygon() {
   const points = [];
   pointArray.forEach((point) => {
     points.push({
@@ -125,7 +124,7 @@ function generatePolygon(pointer) {
   polygonMode = false;
   drawingFinished = true;
   prepareLabelShape(polygon, canvas);
-  showLabellerModal(pointer.x, pointer.y);
+  showLabellerModal();
   setPolygonDrawingInProgressState(false);
 }
 
@@ -179,6 +178,8 @@ function addPoint(pointer) {
   pointArray.push(point);
   activeShape.sendToBack();
   canvas.selection = false;
+  const { x, y } = pointer;
+  lastNewPointPosition = { x, y };
 }
 
 function getTempPolygon() {
@@ -221,6 +222,28 @@ function changeInitialPointColour(colour) {
   }
 }
 
+function generatePolygonViaKeyboard() {
+  if (pointArray.length > 2) {
+    generatePolygon();
+  }
+}
+
+function addPointViaKeyboard() {
+  const pointer = canvas.getPointer(lastMouseEvent.e);
+  if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'invisiblePoint') {
+    if (pointArray.length > 2) {
+      generatePolygon();
+    }
+  } else if (
+    (pointer.x === lastNewPointPosition.x && pointer.y === lastNewPointPosition.y)
+    || (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'tempPoint')) {
+    mouseIsDownOnTempPoint = true;
+  } else {
+    setReadyToDrawShapeState(false);
+    addPoint(pointer);
+  }
+}
+
 function instantiatePolygon(event) {
   const pointer = canvas.getPointer(event.e);
   if (!isRightMouseButtonClicked(pointer)) {
@@ -228,7 +251,7 @@ function instantiatePolygon(event) {
     if (event.target && event.target.shapeName) {
       if (event.target.shapeName === 'invisiblePoint') {
         if (pointArray.length > 2) {
-          generatePolygon(pointer);
+          generatePolygon();
         }
       } else if (event.target.shapeName === 'tempPoint') {
         mouseIsDownOnTempPoint = true;
@@ -239,7 +262,7 @@ function instantiatePolygon(event) {
       addPoint(pointer);
     }
     // fix for double click to draw first point bug
-    coordinatesOfLastMouseHover = pointer;
+    lastMouseEvent = event;
   }
 }
 
@@ -292,6 +315,8 @@ function resetDrawPolygonMode() {
   drawingFinished = false;
   clearPolygonData();
   setDrawCursorMode(canvas);
+  lastMouseEvent = null;
+  lastNewPointPosition = { x: -1, y: -1 };
 }
 
 function cleanPolygonFromEmptyPoints() {
@@ -474,12 +499,14 @@ export {
   moveDrawCrosshair,
   shapeScrollEvents,
   instantiatePolygon,
+  addPointViaKeyboard,
   resetNewPolygonData,
   removeInvisiblePoint,
   resetDrawPolygonMode,
   changeInitialPointColour,
   isPolygonDrawingFinished,
   prepareCanvasForNewPolygon,
+  generatePolygonViaKeyboard,
   resumeDrawingAfterRemovePoints,
   placeholderToAddMouseDownEvents,
   createNewPolygonFromCoordinates,
