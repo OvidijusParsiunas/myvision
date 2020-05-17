@@ -13,6 +13,7 @@ import {
   getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState, getLastDrawingModeState,
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
 } from '../tools/stateMachine';
+import { removeFillForAllShapes } from '../canvas/objects/allShapes/allShapes';
 import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
 import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/objects/boundingBox/boundingBox';
 import { getCreatePolygonButtonState, getCreateBoundingBoxButtonState } from '../tools/toolkit/styling/stateMachine';
@@ -33,12 +34,16 @@ function qKeyHandler() {
       addPointViaKeyboard();
     } else {
       window.createNewPolygon();
+      removeFillForAllShapes();
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
     }
   }
 }
 
 function wKeyHandler() {
+  // doesn't work when shapes are deleted in continuous mode
+  // check whether it still works when label options are closed in continuous mode
+  // hodling the button and clicking the mouse
   if (!isModalOpen() && !isEditingLabelInLabelList() && getCreateBoundingBoxButtonState() !== 'disabled') {
     finishEditingLabelList();
     if (getBoundingBoxDrawingInProgressState()) return;
@@ -46,10 +51,27 @@ function wKeyHandler() {
       instantiateNewBoundingBox();
     } else {
       window.createNewBndBox();
+      removeFillForAllShapes();
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
     }
   }
 }
+
+// for clicking to starting drawing bounding box and clicing to finsih drawing it
+// function wKeyHandler() {
+//   if (!isModalOpen() && !isEditingLabelInLabelList()
+//     && getCreateBoundingBoxButtonState() !== 'disabled') {
+//     finishEditingLabelList();
+//     if (getBoundingBoxDrawingInProgressState()) {
+//       finishDrawingBoundingBox();
+//     } else if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
+//       instantiateNewBoundingBox();
+//     } else {
+//       window.createNewBndBox();
+//       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
+//     }
+//   }
+// }
 
 function wKeyUpHandler() {
   if (getBoundingBoxDrawingInProgressState()) {
@@ -182,7 +204,6 @@ function assignCanvasForHotKeys(canvasObj) {
 function registerHotKeys() {
   document.addEventListener('keydown', keyDownEventHandler);
   document.addEventListener('keyup', keyUpEventHandler);
-
 }
 
 export { registerHotKeys, assignCanvasForHotKeys };

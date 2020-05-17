@@ -85,6 +85,14 @@ function defaultShapeFill(id) {
   canvas.renderAll();
 }
 
+function removeFillForAllShapes() {
+  Object.keys(shapes).forEach((key) => {
+    const defaultColor = shapes[key].color.default;
+    shapes[key].shapeRef.set('fill', defaultColor);
+  });
+  canvas.renderAll();
+}
+
 function changeShapeLabelText(id, newText) {
   shapes[id].shapeRef.set('shapeLabelText', newText);
 }
@@ -100,8 +108,9 @@ function assignCanvasForShapeFillManipulation(canvasObj) {
 }
 
 export {
-  getShapeVisibilityById, retrieveAllShapeRefs, addExistingShape, removeAllShapeRefs,
-  changeShapeVisibilityById, assignCanvasForShapeFillManipulation, getNumberOfShapes,
-  addShape, removeShape, highlightShapeFill, defaultShapeFill, addShapeForInvisibleImage,
-  getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText, getAllExistingShapes,
+  changeShapeVisibilityById, getNumberOfShapes, getAllExistingShapes,
+  removeShape, highlightShapeFill, defaultShapeFill, retrieveAllShapeRefs,
+  removeFillForAllShapes, getShapeVisibilityById, addShapeForInvisibleImage,
+  getShapeById, getShapeColorById, changeShapeColorById, changeShapeLabelText,
+  addShape, addExistingShape, removeAllShapeRefs, assignCanvasForShapeFillManipulation,
 };
