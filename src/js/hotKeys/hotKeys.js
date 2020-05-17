@@ -19,6 +19,8 @@ import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/o
 import { getCreatePolygonButtonState, getCreateBoundingBoxButtonState } from '../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
+// only use this if w is going to exhibit the same behaviour
+// let allowTheDrawingOfANewPolygon = true;
 
 function isModalOpen() {
   return getLabellerModalDisplayedState()
@@ -29,10 +31,11 @@ function isModalOpen() {
 function qKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && getCreatePolygonButtonState() !== 'disabled') {
     finishEditingLabelList();
-    if ((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
-    || (getReadyToDrawShapeState() && getLastDrawingModeState() === 'polygon')) {
+    if (((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
+    || (getReadyToDrawShapeState() && getLastDrawingModeState() === 'polygon'))) {
       addPointViaKeyboard();
     } else {
+      // allowTheDrawingOfANewPolygon = false;
       window.createNewPolygon();
       removeFillForAllShapes();
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
@@ -77,6 +80,10 @@ function wKeyUpHandler() {
   if (getBoundingBoxDrawingInProgressState()) {
     finishDrawingBoundingBox();
   }
+}
+
+function qKeyUpHandler() {
+  // allowTheDrawingOfANewPolygon = true;
 }
 
 function arrowUpKeyHandler() {
@@ -189,6 +196,9 @@ function keyDownEventHandler(event) {
 
 function keyUpEventHandler(event) {
   switch (event.key) {
+    case 'q':
+      qKeyUpHandler();
+      break;
     case 'w':
       wKeyUpHandler();
       break;

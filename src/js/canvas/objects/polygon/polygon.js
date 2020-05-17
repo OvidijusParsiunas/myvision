@@ -27,6 +27,7 @@ let drawingFinished = false;
 let mouseUpClick = null;
 let lastNewPointPosition = { x: -1, y: -1 };
 let movedOverflowScroll = false;
+let createdInvisiblePoint = false;
 let mouseIsDownOnTempPoint = false;
 
 function isRightMouseButtonClicked(pointer) {
@@ -208,9 +209,9 @@ function clearPolygonData() {
     activeShape = null;
     pointId = 0;
     drawingFinished = false;
-    setReadyToDrawShapeState(false);
     setPolygonDrawingInProgressState(false);
     lastMouseEvent = null;
+    createdInvisiblePoint = false;
     lastNewPointPosition = { x: -1, y: -1 };
   }
 }
@@ -241,7 +242,8 @@ function addPointViaKeyboard() {
       }
     } else if (
       (pointer.x === lastNewPointPosition.x && pointer.y === lastNewPointPosition.y)
-      || (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'tempPoint')) {
+      || (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'tempPoint')
+      || (createdInvisiblePoint && Number.isNaN(pointer.x))) {
       mouseIsDownOnTempPoint = true;
     } else {
       setReadyToDrawShapeState(false);
@@ -250,6 +252,7 @@ function addPointViaKeyboard() {
         pointer = canvas.getPointer(lastMouseMoveEvent);
       }
       addPoint(pointer);
+      createdInvisiblePoint = true;
     }
   }
 }
@@ -325,8 +328,6 @@ function resetDrawPolygonMode() {
   drawingFinished = false;
   clearPolygonData();
   setDrawCursorMode(canvas);
-  lastMouseEvent = null;
-  lastNewPointPosition = { x: -1, y: -1 };
 }
 
 function cleanPolygonFromEmptyPoints() {
