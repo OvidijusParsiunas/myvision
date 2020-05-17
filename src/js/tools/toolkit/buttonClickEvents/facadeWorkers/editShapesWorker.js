@@ -5,7 +5,7 @@ import {
   getRemovingPolygonPointsState, setRemovingPolygonPointsState,
   setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState,
   getPolygonDrawingInProgressState, setDefaultState, getAlteringPolygonPointsState,
-  setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
+  setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState, setReadyToDrawShapeState,
 } from '../../../stateMachine';
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon, getPolygonIdIfEditing,
@@ -71,6 +71,7 @@ function initiateEditShapesEvent(canvas) {
       setAlteringPolygonPointsState(false);
     }
     setEditShapesButtonToActive();
+    setReadyToDrawShapeState(false);
     setDefaultState(true);
   }
   setPolygonEditingButtonsToDefault();
