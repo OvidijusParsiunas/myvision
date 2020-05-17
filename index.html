@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="updateMouseProperties(event)">
+    <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="trackMouseMoveEvents(event)">
       <div id="canvas-wrapper">
         <div id="canvas-absolute-container-2" class="canvas-absolute-container">
           <canvas id="d"></canvas>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div id="labeller-modal-parent" hidden>
+    <div id="labeller-modal-parent" onmousemove="trackMouseMoveEvents(event)" hidden>
       <div class="small-title">Label name:</div>
       <input type="text" id="labeller-modal-input" onpaste="labellerModalInputPaste()" name="labelName" spellcheck="false" onkeydown="labellerModalKeyDown(event, this)" value="new label">
       <table id="labeller-modal-options">
@@ -354,7 +354,7 @@
     </div>
   </div>
 </div>
-<div id="window-dim">
+<div id="window-dim" onmousemove="trackMouseMoveEvents(event)">
   </div>
 <script src="dist/bundle.js" type="text/javascript"></script>
 </body>

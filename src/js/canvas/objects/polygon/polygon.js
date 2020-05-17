@@ -14,6 +14,7 @@ import {
   setAddPointsButtonToDefault, setRemovePointsButtonToDefault,
   setRemoveShapeButtonToDefault, setCreatePolygonButtonToActive,
 } from '../../../tools/toolkit/styling/stateMachine';
+import getLastMouseMoveEvent from '../../../tools/utils/mouseMoveEvents';
 
 let canvas = null;
 let pointArray = [];
@@ -233,7 +234,7 @@ function generatePolygonViaKeyboard() {
 
 function addPointViaKeyboard() {
   if (lastMouseEvent) {
-    const pointer = canvas.getPointer(lastMouseEvent.e);
+    let pointer = canvas.getPointer(lastMouseEvent.e);
     if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'invisiblePoint') {
       if (pointArray.length > 2) {
         generatePolygon();
@@ -244,6 +245,10 @@ function addPointViaKeyboard() {
       mouseIsDownOnTempPoint = true;
     } else {
       setReadyToDrawShapeState(false);
+      if (!pointer.x || !pointer.y) {
+        const lastMouseMoveEvent = getLastMouseMoveEvent();
+        pointer = canvas.getPointer(lastMouseMoveEvent);
+      }
       addPoint(pointer);
     }
   }

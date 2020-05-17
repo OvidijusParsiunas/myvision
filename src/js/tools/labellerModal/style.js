@@ -4,12 +4,12 @@ import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../dimWi
 import { setLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
+import getLastMousMoveEvent from '../utils/mouseMoveEvents';
 
 let parentElement = null;
 let optionsElement = null;
 let submitButtonElement = null;
 let inputElement = null;
-let mouseProperties = {};
 let defaultListHeightPx = 0;
 let addNewLabelDeltaHeight = 0;
 let currentListHeightPx = 105;
@@ -189,16 +189,11 @@ function resetLabellerModalOptions() {
   });
 }
 
-// needs to be on mouse move as otherwise would not be able to track
-// mouse position when clicked outside of the canvas element
-window.updateMouseProperties = (event) => {
-  mouseProperties = event;
-};
-
 function showLabellerModal() {
   dimWindow(dimTimePeriod, dimIntensity);
-  parentElement.style.top = `${mouseProperties.clientY}px`;
-  parentElement.style.left = `${mouseProperties.clientX}px`;
+  const lastMouseMoveEvent = getLastMousMoveEvent();
+  parentElement.style.top = `${lastMouseMoveEvent.clientY}px`;
+  parentElement.style.left = `${lastMouseMoveEvent.clientX}px`;
   getLabelOptions();
   deleteAndAddLastRowToRefreshDiv();
   parentElement.style.display = 'block';
@@ -220,8 +215,8 @@ function setLabellerPopupDimProperties(lightupTimePeriodArg, dimTimePeriodArg, d
 }
 
 export {
-  resetLabellerModalOptions, getLabellerModalInputText,
+  setLabellerPopupDimProperties, validateFullModalVisibile,
   changeStyleWhenInputInvalid, initialiseLabellerModalOptionsList,
   showLabellerModal, hideLabellerModal, changeStyleWhenInputEmpty,
-  setLabellerPopupDimProperties, validateFullModalVisibile, changeStyleToAllowSubmit,
+  resetLabellerModalOptions, getLabellerModalInputText, changeStyleToAllowSubmit,
 };
