@@ -19,8 +19,6 @@ import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/o
 import { getCreatePolygonButtonState, getCreateBoundingBoxButtonState } from '../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
-// only use this if w is going to exhibit the same behaviour
-// let allowTheDrawingOfANewPolygon = true;
 
 function isModalOpen() {
   return getLabellerModalDisplayedState()
@@ -35,7 +33,6 @@ function qKeyHandler() {
     || (getReadyToDrawShapeState() && getLastDrawingModeState() === 'polygon'))) {
       addPointViaKeyboard();
     } else {
-      // allowTheDrawingOfANewPolygon = false;
       window.createNewPolygon();
       removeFillForAllShapes();
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
@@ -44,9 +41,6 @@ function qKeyHandler() {
 }
 
 function wKeyHandler() {
-  // doesn't work when shapes are deleted in continuous mode
-  // check whether it still works when label options are closed in continuous mode
-  // hodling the button and clicking the mouse
   if (!isModalOpen() && !isEditingLabelInLabelList() && getCreateBoundingBoxButtonState() !== 'disabled') {
     finishEditingLabelList();
     if (getBoundingBoxDrawingInProgressState()) return;
@@ -80,10 +74,6 @@ function wKeyUpHandler() {
   if (getBoundingBoxDrawingInProgressState()) {
     finishDrawingBoundingBox();
   }
-}
-
-function qKeyUpHandler() {
-  // allowTheDrawingOfANewPolygon = true;
 }
 
 function arrowUpKeyHandler() {
@@ -196,9 +186,6 @@ function keyDownEventHandler(event) {
 
 function keyUpEventHandler(event) {
   switch (event.key) {
-    case 'q':
-      qKeyUpHandler();
-      break;
     case 'w':
       wKeyUpHandler();
       break;

@@ -12,6 +12,7 @@ import { getImageProperties } from '../../../tools/imageList/uploadImages/drawIm
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/stateMachine';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
+import getLastMouseMoveEvent from '../../../tools/utils/mouseMoveEvents';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -24,9 +25,13 @@ let finishDrawingBoundingBoxClick = null;
 let rightBoundingBoxDelta = 0;
 
 function instantiateNewBoundingBox() {
-  if (createNewBoundingBoxBtnClicked) {
+  if (createNewBoundingBoxBtnClicked && !getBoundingBoxDrawingInProgressState()) {
     leftMouseBtnDown = true;
-    const pointer = canvas.getPointer(lastMouseEvent.e);
+    let pointer = canvas.getPointer(lastMouseEvent.e);
+    if (!pointer.x || !pointer.y) {
+      const lastMouseMoveEvent = getLastMouseMoveEvent();
+      pointer = canvas.getPointer(lastMouseMoveEvent);
+    }
     boundingBoxProps.origX = pointer.x < 0 ? 0 : pointer.x;
     boundingBoxProps.origY = pointer.y < 0 ? 0 : pointer.y;
     boundingBox = new fabric.Rect(boundingBoxProperties.tempBoundingBoxProps(boundingBoxProps));

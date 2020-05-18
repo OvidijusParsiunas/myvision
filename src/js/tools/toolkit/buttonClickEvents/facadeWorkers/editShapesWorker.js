@@ -2,10 +2,10 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
-  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
   setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState,
   getPolygonDrawingInProgressState, setDefaultState, getAlteringPolygonPointsState,
-  setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState, setReadyToDrawShapeState,
+  setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState, setReadyToDrawShapeState,
 } from '../../../stateMachine';
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon, getPolygonIdIfEditing,

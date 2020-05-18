@@ -8,8 +8,9 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
 import {
+  getRemovingPolygonPointsState, setRemovingPolygonPointsState,
+  getBoundingBoxDrawingInProgressState, getPolygonDrawingInProgressState,
   getAddingPolygonPointsState, getContinuousDrawingState, getCurrentImageId,
-  getRemovingPolygonPointsState, setRemovingPolygonPointsState, getPolygonDrawingInProgressState,
 } from '../../../stateMachine';
 import { isLabelling, removeTargetShape } from '../../../labellerModal/labellingProcess';
 import { hideLabellerModal } from '../../../labellerModal/style';
@@ -32,6 +33,10 @@ function removeBoundingBox(canvas, mLGeneratedObject) {
     removeLabel(activeObject.id, canvas);
     removeActiveLabelObject();
     removeLabelFromListOnShapeDelete(activeObject.id);
+    clearBoundingBoxData();
+    return true;
+  }
+  if (getBoundingBoxDrawingInProgressState()) {
     clearBoundingBoxData();
     return true;
   }

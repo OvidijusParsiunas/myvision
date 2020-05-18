@@ -20,7 +20,6 @@ draw on add points events
 
 will need to initialise the editing process using those buttons
 
-concider the fact that after editing a label in continuous drawing mode, we should maybe go back to the drawing mode
 
 ---------------------------------------------
 
@@ -34,6 +33,8 @@ make sure the dim effect is not choppy for slower pcs
 -------------------------------------------------
 
 UX:
+
+concider the fact that after editing a label in continuous drawing mode, we should maybe go back to the drawing mode
 
 check whether it is more approriate to add bounding boxes by holding key or clicking it multiple times
 
