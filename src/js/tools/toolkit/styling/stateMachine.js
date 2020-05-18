@@ -109,6 +109,10 @@ function setRemovePointsActive() {
   removePointsState = state.ACTIVE;
 }
 
+function getRemovePointsButtonState() {
+  return removePointsState;
+}
+
 function setRemoveShapeButtonToDefault() {
   setButtonToDefault(removeShapeButtonElement);
 }
@@ -234,6 +238,7 @@ export {
   setZoomInButtonToDefault,
   setZoomInButtonToDisabled,
   setZoomOutButtonToDefault,
+  getRemovePointsButtonState,
   setZoomOutButtonToDisabled,
   setAddPointsButtonToActive,
   getCreatePolygonButtonState,

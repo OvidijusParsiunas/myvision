@@ -53,9 +53,8 @@ function removeActiveShape() {
   setPolygonDrawingInProgressState(false);
 }
 
-function repositionCrosshair(event) {
+function repositionCrosshair(pointer) {
   const points = activeShape.get('points');
-  const pointer = canvas.getPointer(event.e);
   points[pointArray.length] = {
     x: pointer.x,
     y: pointer.y,
@@ -71,9 +70,7 @@ function repositionCrosshair(event) {
   setPolygonDrawingInProgressState(true);
 }
 
-function drawPolygon(event) {
-  lastMouseEvent = event;
-  const pointer = canvas.getPointer(event.e);
+function drawTemporaryShape(pointer) {
   if (activeShape) {
     if (!movedOverflowScroll) {
       const points = activeShape.get('points');
@@ -86,10 +83,16 @@ function drawPolygon(event) {
       });
       canvas.renderAll();
     } else {
-      repositionCrosshair(event);
+      repositionCrosshair(pointer);
       movedOverflowScroll = false;
     }
   }
+}
+
+function drawPolygon(event) {
+  lastMouseEvent = event;
+  const pointer = canvas.getPointer(event.e);
+  drawTemporaryShape(pointer);
 }
 
 function lockMovementIfAssertedByState(polygon) {
@@ -381,6 +384,12 @@ function resumeDrawingAfterRemovePoints() {
     invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(position));
     canvas.add(invisiblePoint);
   }
+  setTimeout(() => {
+    const lastMouseMoveEvent = getLastMouseMoveEvent();
+    lastMouseEvent = lastMouseMoveEvent;
+    const pointer = canvas.getPointer(lastMouseMoveEvent);
+    drawTemporaryShape(pointer);
+  });
 }
 
 function removeInvisiblePoint() {

@@ -16,7 +16,11 @@ import {
 import { removeFillForAllShapes } from '../canvas/objects/allShapes/allShapes';
 import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
 import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/objects/boundingBox/boundingBox';
-import { getCreatePolygonButtonState, getCreateBoundingBoxButtonState, getEditShapesButtonState } from '../tools/toolkit/styling/stateMachine';
+import {
+  getEditShapesButtonState, getRemovePointsButtonState,
+  getCreatePolygonButtonState, getCreateBoundingBoxButtonState,
+} from '../tools/toolkit/styling/stateMachine';
+import { removeTempPointViaKeyboard } from '../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 
 let canvas = null;
 
@@ -77,6 +81,21 @@ function wKeyHandler() {
 //     }
 //   }
 // }
+
+function rKeyHandler() {
+  if (!isModalOpen() && !isEditingLabelInLabelList() && getRemovePointsButtonState() !== 'disabled') {
+    finishEditingLabelList();
+    if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {
+      removeTempPointViaKeyboard();
+    } else if (!getPolygonDrawingInProgressState() && getRemovingPolygonPointsState) {
+      //
+    } else {
+      window.createNewPolygon();
+      removeFillForAllShapes();
+      canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
+    }
+  }
+}
 
 function wKeyUpHandler() {
   if (getBoundingBoxDrawingInProgressState()) {
@@ -188,6 +207,9 @@ function keyDownEventHandler(event) {
       break;
     case 'w':
       wKeyHandler();
+      break;
+    case 'r':
+      rKeyHandler();
       break;
     default:
       break;

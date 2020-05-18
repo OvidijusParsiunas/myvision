@@ -4,6 +4,7 @@ import {
 
 let removingPoints = false;
 let canvas = null;
+let currentlyHoveredTempPoint = null;
 
 function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
   canvas = canvasObj;
@@ -19,10 +20,15 @@ function pointMouseDownEvents(event) {
   }
 }
 
+function removeTempPointViaKeyboard() {
+  if (currentlyHoveredTempPoint) removePolygonPoint(currentlyHoveredTempPoint.pointId);
+}
+
 function pointMouseOverEvents(event) {
   if (event.target && event.target.shapeName === 'point' && event.target.fill === 'red') {
     event.target.stroke = 'red';
     canvas.renderAll();
+    currentlyHoveredTempPoint = event.target;
   }
 }
 
@@ -34,6 +40,7 @@ function pointMouseOutEvents(event) {
   if (event.target && event.target.shapeName === 'point') {
     event.target.stroke = 'black';
     canvas.renderAll();
+    currentlyHoveredTempPoint = false;
   }
 }
 
@@ -46,8 +53,8 @@ function setRemovingPointsStateToFalse() {
 }
 
 export {
-  setRemovingPointsStateToFalse,
   pointMouseUpEvents, pointMouseOutEvents,
   pointMouseDownEvents, pointMouseOverEvents,
   setRemovablePointsEventsCanvas, getRemovingPointsState,
+  setRemovingPointsStateToFalse, removeTempPointViaKeyboard,
 };
