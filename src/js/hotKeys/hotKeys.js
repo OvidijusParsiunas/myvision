@@ -16,7 +16,7 @@ import {
 import { removeFillForAllShapes } from '../canvas/objects/allShapes/allShapes';
 import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
 import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/objects/boundingBox/boundingBox';
-import { getCreatePolygonButtonState, getCreateBoundingBoxButtonState } from '../tools/toolkit/styling/stateMachine';
+import { getCreatePolygonButtonState, getCreateBoundingBoxButtonState, getEditShapesButtonState } from '../tools/toolkit/styling/stateMachine';
 
 let canvas = null;
 
@@ -37,6 +37,14 @@ function qKeyHandler() {
       removeFillForAllShapes();
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
     }
+  }
+}
+
+function eKeyHandler() {
+  if (!isModalOpen() && !isEditingLabelInLabelList() && getEditShapesButtonState() !== 'disabled') {
+    finishEditingLabelList();
+    window.editShapes();
+    canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   }
 }
 
@@ -174,6 +182,9 @@ function keyDownEventHandler(event) {
       break;
     case 'q':
       qKeyHandler();
+      break;
+    case 'e':
+      eKeyHandler();
       break;
     case 'w':
       wKeyHandler();

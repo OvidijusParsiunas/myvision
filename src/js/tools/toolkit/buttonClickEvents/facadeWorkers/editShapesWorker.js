@@ -2,10 +2,10 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
-  setAddingPolygonPointsState, getDefaultState, getAddingPolygonPointsState,
-  getPolygonDrawingInProgressState, setDefaultState, getAlteringPolygonPointsState,
   setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
-  getRemovingPolygonPointsState, setRemovingPolygonPointsState, setReadyToDrawShapeState,
+  getBoundingBoxDrawingInProgressState, getAddingPolygonPointsState, setReadyToDrawShapeState,
+  setAddingPolygonPointsState, getDefaultState, setDefaultState, setRemovingPolygonPointsState,
+  getPolygonDrawingInProgressState, getAlteringPolygonPointsState, getRemovingPolygonPointsState,
 } from '../../../stateMachine';
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon, getPolygonIdIfEditing,
@@ -16,6 +16,7 @@ import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon'
 import {
   setPolygonEditingButtonsToDefault, setRemoveShapeButtonToDisabled, setEditShapesButtonToActive,
 } from '../../styling/stateMachine';
+import { clearBoundingBoxData } from '../../../../canvas/objects/boundingBox/boundingBox';
 
 function dismissAddPointsEvents(canvas) {
   if (isAddingPointsToPolygon()) {
@@ -51,6 +52,9 @@ function dismissOtherEvents(canvas) {
   if (getPolygonDrawingInProgressState()) {
     resetNewPolygonData();
     setRemoveShapeButtonToDisabled();
+  }
+  if (getBoundingBoxDrawingInProgressState()) {
+    clearBoundingBoxData();
   }
   purgeCanvasMouseEvents(canvas);
   assignDefaultEvents(canvas, null, getAddingPolygonPointsState());

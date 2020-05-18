@@ -39,6 +39,10 @@ function setEditShapesButtonToDisabled() {
   editShapesState = state.DISABLED;
 }
 
+function getEditShapesButtonState() {
+  return editShapesState;
+}
+
 function setCreateBoundingBoxButtonToDefault() {
   setButtonToDefault(createBoundingBoxButtonElement);
   createBoundingBoxState = state.DEFAULT;
@@ -226,6 +230,7 @@ function initiateToolkitButtonsStyling() {
 }
 
 export {
+  getEditShapesButtonState,
   setZoomInButtonToDefault,
   setZoomInButtonToDisabled,
   setZoomOutButtonToDefault,
