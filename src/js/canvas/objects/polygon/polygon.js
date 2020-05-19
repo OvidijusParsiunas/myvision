@@ -189,6 +189,7 @@ function addPoint(pointer) {
   }
   preventOutOfBoundsPointsOnMove(point, canvas);
   pointArray.push(point);
+  drawTemporaryShape(pointer);
   activeShape.sendToBack();
   canvas.selection = false;
   const { x, y } = pointer;
@@ -397,7 +398,6 @@ function cleanPolygonFromEmptyPoints() {
   pointArray = tempPointArray;
   pointId = currentPointId;
   canvas.renderAll();
-
   points[pointArray.length] = {
     x: points[0].x,
     y: points[0].y,
