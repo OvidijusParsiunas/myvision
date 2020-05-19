@@ -1,8 +1,8 @@
 import {
+  polygonMouseOverEvents, polygonMouseOutEvents,
   instantiatePolygon, prepareCanvasForNewPolygon,
+  placeholderToAddMouseDownEvents, shapeScrollEvents,
   drawPolygon, movePoints, resumeDrawingAfterRemovePoints,
-  placeholderToAddMouseDownEvents, changeInitialPointColour,
-  shapeScrollEvents,
 } from '../../../objects/polygon/polygon';
 
 // should be moved to event worker
@@ -32,19 +32,12 @@ function assignDrawPolygonEvents(canvas, resume) {
     shapeScrollEvents(e);
   });
 
-  // export this logic
   canvas.on('mouse:over', (e) => {
-    if (e.target && e.target.selectable) {
-      if (e.target.shapeName === 'invisiblePoint') {
-        changeInitialPointColour('red');
-      }
-    }
+    polygonMouseOverEvents(e);
   });
 
   canvas.on('mouse:out', (e) => {
-    if (e.target && e.target.shapeName === 'invisiblePoint') {
-      changeInitialPointColour('#333333');
-    }
+    polygonMouseOutEvents(e);
   });
 }
 export { assignDrawPolygonEvents as default };

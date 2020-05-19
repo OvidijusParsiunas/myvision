@@ -85,8 +85,6 @@ function wKeyHandler() {
 
 function rKeyHandler() {
   // clicking q to add the first point, then r, then q without moving the mouse throws an error
-  // switching back to creating polygon and clicking q without moving the mouse does
-  // not generate a new point
   // try to find a way to add new point, click r and remove without moving mouse
   if (!isModalOpen() && !isEditingLabelInLabelList() && getRemovePointsButtonState() !== 'disabled') {
     finishEditingLabelList();

@@ -21,10 +21,13 @@ let pointArray = [];
 let polygonMode = true;
 let activeShape = null;
 let pointId = 0;
+let mouseUpClick = null;
 let lastMouseEvent = null;
+let lastHoveredPoint = null;
+let mouseMoved = false;
 let invisiblePoint = null;
 let drawingFinished = false;
-let mouseUpClick = null;
+let ignoredFirstMouseMovement = false;
 let lastNewPointPosition = { x: -1, y: -1 };
 let movedOverflowScroll = false;
 let createdInvisiblePoint = false;
@@ -90,6 +93,11 @@ function drawTemporaryShape(pointer) {
 }
 
 function drawPolygon(event) {
+  if (ignoredFirstMouseMovement) {
+    mouseMoved = true;
+  } else {
+    ignoredFirstMouseMovement = true;
+  }
   lastMouseEvent = event;
   const pointer = canvas.getPointer(event.e);
   drawTemporaryShape(pointer);
@@ -211,7 +219,9 @@ function clearPolygonData() {
     pointArray = [];
     activeShape = null;
     pointId = 0;
+    mouseMoved = false;
     drawingFinished = false;
+    ignoredFirstMouseMovement = false;
     setPolygonDrawingInProgressState(false);
     lastMouseEvent = null;
     createdInvisiblePoint = false;
@@ -230,6 +240,23 @@ function changeInitialPointColour(colour) {
   }
 }
 
+function polygonMouseOverEvents(event) {
+  if (event.target && event.target.selectable && event.target.shapeName === 'invisiblePoint') {
+    changeInitialPointColour('red');
+  }
+}
+
+function polygonMouseOutEvents(event) {
+  if (event.target) {
+    if (event.target.shapeName === 'invisiblePoint') {
+      changeInitialPointColour('#333333');
+    }
+    if (!mouseMoved) {
+      lastHoveredPoint = event.target;
+    }
+  }
+}
+
 function generatePolygonViaKeyboard() {
   if (pointArray.length > 2) {
     generatePolygon();
@@ -237,9 +264,14 @@ function generatePolygonViaKeyboard() {
 }
 
 function addPointViaKeyboard() {
-  // fix here
+  if (!mouseMoved) {
+    if (lastHoveredPoint && lastHoveredPoint.shapeName === 'tempPoint') {
+      return;
+    }
+    mouseMoved = true;
+  }
   if (lastMouseEvent) {
-    let pointer = canvas.getPointer(lastMouseEvent.e);
+    let pointer = canvas.getPointer(lastMouseEvent.e || lastMouseEvent);
     if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'invisiblePoint') {
       if (pointArray.length > 2) {
         generatePolygon();
@@ -377,8 +409,10 @@ function cleanPolygonFromEmptyPoints() {
 }
 
 function resumeDrawingAfterRemovePoints() {
-  cleanPolygonFromEmptyPoints();
+  mouseMoved = false;
+  ignoredFirstMouseMovement = false;
   activeShape.numberOfNullPolygonPoints = 0;
+  cleanPolygonFromEmptyPoints();
   setDrawCursorMode(canvas);
   if (pointArray.length !== 0) {
     const position = { x: pointArray[0].left, y: pointArray[0].top };
@@ -524,6 +558,8 @@ export {
   resetNewPolygonData,
   removeInvisiblePoint,
   resetDrawPolygonMode,
+  polygonMouseOutEvents,
+  polygonMouseOverEvents,
   changeInitialPointColour,
   isPolygonDrawingFinished,
   prepareCanvasForNewPolygon,
