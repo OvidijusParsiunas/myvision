@@ -154,6 +154,7 @@ function arrowRightKeyHandler() {
 function deleteKeyHandler() {
   if (isEditingLabelInLabelList()) cancelEditingLabelList();
   window.removeShape();
+  canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
 }
 
 function enterKeyHandler() {
@@ -177,12 +178,16 @@ function escapeKeyHandler() {
     closeMachineLearningModal();
   } else if (getPolygonDrawingInProgressState()) {
     window.createNewPolygon();
+    canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   } else if (getBoundingBoxDrawingInProgressState()) {
     window.createNewBndBox();
+    canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   } else if (getAddingPolygonPointsState()) {
     window.addPoints(document.getElementById('add-points-button'));
+    canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   } else if (getRemovingPolygonPointsState()) {
     window.removePoint(document.getElementById('remove-points-button'));
+    canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   } else if (isEditingLabelInLabelList()) {
     cancelEditingLabelList();
   }
