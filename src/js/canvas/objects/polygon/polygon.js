@@ -237,6 +237,7 @@ function generatePolygonViaKeyboard() {
 }
 
 function addPointViaKeyboard() {
+  // fix here
   if (lastMouseEvent) {
     let pointer = canvas.getPointer(lastMouseEvent.e);
     if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'invisiblePoint') {

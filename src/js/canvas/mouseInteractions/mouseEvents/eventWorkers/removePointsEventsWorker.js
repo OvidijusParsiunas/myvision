@@ -11,6 +11,7 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let removedPolygonPoints = false;
+let currentlyHoveredPoint = null;
 let selectedNothing = false;
 
 function selectShape(shapeId) {
@@ -42,6 +43,7 @@ function prepareToEditPolygonPoints(event) {
   setEditablePolygon(canvas, event.target, true);
   selectedPolygonId = event.target.id;
   selectShape(selectedPolygonId);
+  currentlyHoveredPoint = null;
 }
 
 function setPolygonNotEditableOnClick() {
@@ -56,6 +58,7 @@ function pointMouseDownEvents(event) {
     if (event.target.shapeName === 'point') {
       removePolygonPoint(event.target.pointId, true);
       removedPolygonPoints = true;
+      currentlyHoveredPoint = null;
     } else {
       if (event.target.shapeName === 'polygon') {
         newPolygonSelected = (event.target.id !== selectedPolygonId);
@@ -68,10 +71,18 @@ function pointMouseDownEvents(event) {
   }
 }
 
+function removePointViaKeyboard() {
+  if (currentlyHoveredPoint) {
+    removePolygonPoint(currentlyHoveredPoint.pointId, true);
+    currentlyHoveredPoint = null;
+  }
+}
+
 function pointMouseOverEvents(event) {
   if (event.target && event.target.shapeName === 'point' && event.target.fill === 'red') {
     event.target.stroke = 'red';
     canvas.renderAll();
+    currentlyHoveredPoint = event.target;
   }
 }
 
@@ -88,10 +99,11 @@ function pointMouseOutEvents(event) {
   if (event.target && event.target.shapeName === 'point' && event.target.fill === 'red') {
     event.target.stroke = 'black';
     canvas.renderAll();
+    currentlyHoveredPoint = null;
   }
 }
 
 export {
-  pointMouseUpEvents, pointMouseOutEvents, setPolygonNotEditableOnClick,
   setRemovablePointsEventsCanvas, pointMouseOverEvents, pointMouseDownEvents,
+  pointMouseUpEvents, pointMouseOutEvents, setPolygonNotEditableOnClick, removePointViaKeyboard,
 };

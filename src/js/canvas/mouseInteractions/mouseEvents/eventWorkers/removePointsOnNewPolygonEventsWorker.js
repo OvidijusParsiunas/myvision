@@ -4,10 +4,17 @@ import {
 
 let removingPoints = false;
 let canvas = null;
-let currentlyHoveredTempPoint = null;
+let currentlyHoveredPoint = null;
+let ignoredFirstMouseMovement = false;
+let lastHoveredPoint = null;
+let mouseMoved = false;
 
 function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
   canvas = canvasObj;
+  ignoredFirstMouseMovement = false;
+  currentlyHoveredPoint = null;
+  lastHoveredPoint = null;
+  mouseMoved = false;
   // edit this
   if (polygonObj) {
     setEditablePolygon(canvas, polygonObj, true, true);
@@ -17,18 +24,25 @@ function setRemovablePointsEventsCanvas(canvasObj, polygonObj) {
 function pointMouseDownEvents(event) {
   if (event.target && event.target.shapeName === 'point') {
     removePolygonPoint(event.target.pointId);
+    currentlyHoveredPoint = null;
   }
 }
 
 function removeTempPointViaKeyboard() {
-  if (currentlyHoveredTempPoint) removePolygonPoint(currentlyHoveredTempPoint.pointId);
+  if (!mouseMoved) {
+    if (lastHoveredPoint) { removePolygonPoint(lastHoveredPoint.pointId); }
+    mouseMoved = true;
+  } else if (currentlyHoveredPoint) {
+    removePolygonPoint(currentlyHoveredPoint.pointId);
+  }
+  currentlyHoveredPoint = null;
 }
 
 function pointMouseOverEvents(event) {
   if (event.target && event.target.shapeName === 'point' && event.target.fill === 'red') {
     event.target.stroke = 'red';
     canvas.renderAll();
-    currentlyHoveredTempPoint = event.target;
+    currentlyHoveredPoint = event.target;
   }
 }
 
@@ -40,7 +54,18 @@ function pointMouseOutEvents(event) {
   if (event.target && event.target.shapeName === 'point') {
     event.target.stroke = 'black';
     canvas.renderAll();
-    currentlyHoveredTempPoint = false;
+    currentlyHoveredPoint = null;
+    // fix for the bug where upon hovering over a point in another mode and switching it to this
+    // mode - the mouse out event is triggered, highlighting the last hovered shape
+    if (!mouseMoved) lastHoveredPoint = event.target;
+  }
+}
+
+function pointMouseMoveEvents() {
+  if (ignoredFirstMouseMovement) {
+    mouseMoved = true;
+  } else {
+    ignoredFirstMouseMovement = true;
   }
 }
 
@@ -53,8 +78,8 @@ function setRemovingPointsStateToFalse() {
 }
 
 export {
-  pointMouseUpEvents, pointMouseOutEvents,
   pointMouseDownEvents, pointMouseOverEvents,
   setRemovablePointsEventsCanvas, getRemovingPointsState,
   setRemovingPointsStateToFalse, removeTempPointViaKeyboard,
+  pointMouseUpEvents, pointMouseOutEvents, pointMouseMoveEvents,
 };
