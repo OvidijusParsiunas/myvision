@@ -11,8 +11,11 @@ let selectedPolygonId = null;
 let newPolygonSelected = false;
 let canvas = null;
 let removedPolygonPoints = false;
-let currentlyHoveredPoint = null;
 let selectedNothing = false;
+let ignoredFirstMouseMovement = false;
+let currentlyHoveredPoint = null;
+let lastHoveredPoint = null;
+let mouseMoved = false;
 
 function selectShape(shapeId) {
   highlightLabelInTheList(shapeId);
@@ -28,6 +31,10 @@ function setRemovablePointsEventsCanvas(canvasObj) {
   changeExistingPolygonPointsToRemovable(canvasObj);
   canvas = canvasObj;
   selectedPolygonId = getPolygonIdIfEditing();
+  ignoredFirstMouseMovement = false;
+  currentlyHoveredPoint = null;
+  lastHoveredPoint = null;
+  mouseMoved = false;
   if (selectedPolygonId !== null && selectedPolygonId !== undefined) {
     selectShape(selectedPolygonId);
   }
@@ -43,7 +50,10 @@ function prepareToEditPolygonPoints(event) {
   setEditablePolygon(canvas, event.target, true);
   selectedPolygonId = event.target.id;
   selectShape(selectedPolygonId);
+  ignoredFirstMouseMovement = false;
   currentlyHoveredPoint = null;
+  lastHoveredPoint = null;
+  mouseMoved = false;
 }
 
 function setPolygonNotEditableOnClick() {
@@ -72,10 +82,13 @@ function pointMouseDownEvents(event) {
 }
 
 function removePointViaKeyboard() {
-  if (currentlyHoveredPoint) {
+  if (!mouseMoved) {
+    if (lastHoveredPoint) { removePolygonPoint(lastHoveredPoint.pointId); }
+    mouseMoved = true;
+  } else if (currentlyHoveredPoint) {
     removePolygonPoint(currentlyHoveredPoint.pointId, true);
-    currentlyHoveredPoint = null;
   }
+  currentlyHoveredPoint = null;
 }
 
 function pointMouseOverEvents(event) {
@@ -100,10 +113,21 @@ function pointMouseOutEvents(event) {
     event.target.stroke = 'black';
     canvas.renderAll();
     currentlyHoveredPoint = null;
+    // fix for the bug where upon hovering over a point in another mode and switching it to this
+    // mode - the mouse out event is triggered, highlighting the last hovered shape
+    if (!mouseMoved) lastHoveredPoint = event.target;
+  }
+}
+
+function pointMouseMoveEvents() {
+  if (ignoredFirstMouseMovement) {
+    mouseMoved = true;
+  } else {
+    ignoredFirstMouseMovement = true;
   }
 }
 
 export {
-  setRemovablePointsEventsCanvas, pointMouseOverEvents, pointMouseDownEvents,
   pointMouseUpEvents, pointMouseOutEvents, setPolygonNotEditableOnClick, removePointViaKeyboard,
+  setRemovablePointsEventsCanvas, pointMouseOverEvents, pointMouseDownEvents, pointMouseMoveEvents,
 };

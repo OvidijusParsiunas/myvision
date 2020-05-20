@@ -94,6 +94,10 @@ function setAddPointsActive() {
   addPointsState = state.ACTIVE;
 }
 
+function getAddPointsButtonState() {
+  return addPointsState;
+}
+
 function setRemovePointsDefault() {
   setButtonToDefault(removePolygonPointsButtonElement);
   removePointsState = state.DEFAULT;
@@ -234,6 +238,7 @@ function initiateToolkitButtonsStyling() {
 }
 
 export {
+  getAddPointsButtonState,
   getEditShapesButtonState,
   setZoomInButtonToDefault,
   setZoomInButtonToDisabled,

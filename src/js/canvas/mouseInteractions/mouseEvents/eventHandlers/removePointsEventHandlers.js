@@ -1,7 +1,7 @@
 import {
-  pointMouseDownEvents, pointMouseOverEvents,
   pointMouseUpEvents, pointMouseOutEvents,
-  setRemovablePointsEventsCanvas,
+  pointMouseDownEvents, pointMouseOverEvents,
+  setRemovablePointsEventsCanvas, pointMouseMoveEvents,
 } from '../eventWorkers/removePointsEventsWorker';
 
 function assignRemovePointsOnExistingPolygonEvents(canvas) {
@@ -21,6 +21,10 @@ function assignRemovePointsOnExistingPolygonEvents(canvas) {
 
   canvas.on('mouse:out', (e) => {
     pointMouseOutEvents(e);
+  });
+
+  canvas.on('mouse:move', (e) => {
+    pointMouseMoveEvents(e);
   });
 }
 
