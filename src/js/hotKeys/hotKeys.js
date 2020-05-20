@@ -14,7 +14,7 @@ import {
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
 } from '../tools/stateMachine';
 import { removeFillForAllShapes } from '../canvas/objects/allShapes/allShapes';
-import { addPointViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
+import { addPointViaKeyboard as addPointToNewPolygonViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
 import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/objects/boundingBox/boundingBox';
 import {
   getEditShapesButtonState, getRemovePointsButtonState,
@@ -22,6 +22,7 @@ import {
 } from '../tools/toolkit/styling/stateMachine';
 import { removeTempPointViaKeyboard } from '../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { removePointViaKeyboard } from '../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
+import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 
 let canvas = null;
 let rKeyUp = true;
@@ -37,7 +38,7 @@ function qKeyHandler() {
     finishEditingLabelList();
     if (((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
     || (getReadyToDrawShapeState() && getLastDrawingModeState() === 'polygon'))) {
-      addPointViaKeyboard();
+      addPointToNewPolygonViaKeyboard();
     } else {
       window.createNewPolygon();
       removeFillForAllShapes();
@@ -47,6 +48,7 @@ function qKeyHandler() {
 }
 
 function eKeyHandler() {
+  // do not remove fills when clicking edit when already within edit mode
   if (!isModalOpen() && !isEditingLabelInLabelList() && getEditShapesButtonState() !== 'disabled') {
     finishEditingLabelList();
     window.editShapes();
@@ -107,20 +109,13 @@ function rKeyHandler() {
 }
 
 function aKeyHandler() {
+  // try to select a polygon and mess around with the keys to see if modes and buttons change
   if (!isModalOpen() && !isEditingLabelInLabelList() && getAddPointsButtonState() !== 'disabled') {
     finishEditingLabelList();
-    if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {
-      if (rKeyUp) {
-        removeTempPointViaKeyboard();
-        rKeyUp = false;
-      }
-    } else if (!getPolygonDrawingInProgressState() && getRemovingPolygonPointsState()) {
-      if (rKeyUp) {
-        removePointViaKeyboard();
-        rKeyUp = false;
-      }
+    if (getAddingPolygonPointsState()) {
+      addPointToExistingPolygonViaKeyboard();
     } else {
-      window.removePoint(document.getElementById('remove-points-button'));
+      window.addPoints(document.getElementById('add-points-button'));
       removeFillForAllShapes();
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
     }
@@ -256,7 +251,6 @@ function keyDownEventHandler(event) {
     default:
       break;
   }
-  console.log(event.key);
 }
 
 function keyUpEventHandler(event) {

@@ -58,13 +58,12 @@ function createNewLine(...coordinates) {
   canvas.renderAll();
 }
 
-function initializeAddNewPointsImpl(event, canvasObj) {
-  event.target.stroke = '#333333';
+function initializeAddNewPointsImpl(shape, pointer, canvasObj) {
+  shape.stroke = '#333333';
   canvas = canvasObj;
-  setAddPointsMode(canvas, event.target);
-  const pointer = canvas.getPointer(event.e);
-  createNewLine(event.target.left, event.target.top, pointer.x, pointer.y);
-  initialPoint = event.target;
+  setAddPointsMode(canvas, shape);
+  createNewLine(shape.left, shape.top, pointer.x, pointer.y);
+  initialPoint = shape;
   canvas.bringToFront(initialPoint);
   defaultPointHoverMode = false;
 }

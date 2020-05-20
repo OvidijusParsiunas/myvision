@@ -9,6 +9,7 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/stateMachine';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/stateMachine';
+import getLastMouseMoveEvent from '../../../../tools/utils/mouseMoveEvents';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
 
@@ -21,6 +22,11 @@ let addFirstPointMode = false;
 let coordinatesOfLastMouseHover = null;
 let mouseIsDownOnTempPoint = false;
 let activeShape = null;
+let currentlyHoveredPoint = null;
+let lastMouseEvent = null;
+let mouseMoved = false;
+let lastHoveredPoint = null;
+let ignoredFirstMouseMovement = false;
 
 function selectShape(shapeId) {
   highlightLabelInTheList(shapeId);
@@ -41,6 +47,9 @@ function isRightMouseButtonClicked(pointer) {
 
 function mouseOverEvents(event) {
   addPointsMouseOver(event);
+  if (event.target && event.target.shapeName === 'point') {
+    currentlyHoveredPoint = event.target;
+  }
 }
 
 function setAddPointsEventsCanvas(canvasObj) {
@@ -49,6 +58,10 @@ function setAddPointsEventsCanvas(canvasObj) {
   selectedPolygonId = getPolygonIdIfEditing();
   addingPoints = false;
   addFirstPointMode = false;
+  mouseMoved = false;
+  lastHoveredPoint = null;
+  ignoredFirstMouseMovement = false;
+  currentlyHoveredPoint = null;
   resetAddPointProperties(canvasObj);
   if (selectedPolygonId !== null && selectedPolygonId !== undefined) {
     selectShape(selectedPolygonId);
@@ -61,6 +74,10 @@ function prepareToAddPolygonPoints(shape) {
   setEditablePolygon(canvas, shape, false, false, true);
   selectedPolygonId = shape.id;
   selectShape(selectedPolygonId);
+  lastMouseEvent = null;
+  mouseMoved = false;
+  lastHoveredPoint = null;
+  ignoredFirstMouseMovement = false;
 }
 
 function moveAddPoints(event) {
@@ -75,6 +92,12 @@ function mouseMove(event) {
     coordinatesOfLastMouseHover = pointer;
     drawLineOnMouseMove(pointer);
   }
+  if (ignoredFirstMouseMovement) {
+    mouseMoved = true;
+  } else {
+    ignoredFirstMouseMovement = true;
+  }
+  lastMouseEvent = event;
 }
 
 function setPolygonNotEditableOnClick() {
@@ -88,7 +111,8 @@ function pointMouseDownEvents(event) {
     if (event.target) {
       enableActiveObjectsAppearInFront(canvas);
       if (event.target.shapeName === 'point') {
-        initializeAddNewPoints(event);
+        const pointer = canvas.getPointer(event.e);
+        initializeAddNewPoints(event.target, pointer);
         addingPoints = true;
         addFirstPointMode = true;
       } else {
@@ -124,6 +148,49 @@ function pointMouseDownEvents(event) {
   }
 }
 
+function addPointViaKeyboard() {
+  if (!addingPoints) {
+    if (!mouseMoved) {
+      if (lastHoveredPoint && lastHoveredPoint.shapeName === 'point') {
+        const pointer = canvas.getPointer(lastMouseEvent.e);
+        initializeAddNewPoints(lastHoveredPoint, pointer);
+        addingPoints = true;
+        addFirstPointMode = true;
+        selectedNothing = false;
+      } else if (currentlyHoveredPoint) {
+        const pointer = canvas.getPointer(getLastMouseMoveEvent());
+        initializeAddNewPoints(currentlyHoveredPoint, pointer);
+        addingPoints = true;
+        addFirstPointMode = true;
+        selectedNothing = false;
+      }
+      mouseMoved = true;
+    } else if (lastMouseEvent && lastMouseEvent.target && lastMouseEvent.target.shapeName === 'point') {
+      const pointer = canvas.getPointer(lastMouseEvent.e);
+      initializeAddNewPoints(lastMouseEvent && lastMouseEvent.target, pointer);
+      addingPoints = true;
+      addFirstPointMode = true;
+      selectedNothing = false;
+    }
+  } else if (addFirstPointMode) {
+    if (!lastMouseEvent.target
+        || (lastMouseEvent.target && (lastMouseEvent.target.shapeName !== 'point' && lastMouseEvent.target.shapeName !== 'initialAddPoint'))) {
+      addFirstPoint(lastMouseEvent);
+      addFirstPointMode = false;
+    }
+  } else if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'point') {
+    addingPoints = false;
+    completePolygon(lastMouseEvent.target);
+    prepareToAddPolygonPoints(activeShape);
+  } else if (!lastMouseEvent.target
+    || (lastMouseEvent.target && (lastMouseEvent.target.shapeName !== 'initialAddPoint' && lastMouseEvent.target.shapeName !== 'tempPoint'))) {
+    const pointer = canvas.getPointer(lastMouseEvent.e);
+    addPoint(pointer);
+  } else if (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'tempPoint') {
+    mouseIsDownOnTempPoint = true;
+  }
+}
+
 function pointMouseUpEvents(event) {
   mouseIsDownOnTempPoint = false;
   if (event.target && event.target.shapeName === 'polygon' && (newPolygonSelected || selectedNothing)) {
@@ -140,6 +207,13 @@ function pointMouseUpEvents(event) {
 
 function mouseOutEvents(event) {
   addPointsMouseOut(event);
+  if (event.target && event.target.shapeName === 'point') {
+    if (!mouseMoved) {
+      console.log('triggered');
+      lastHoveredPoint = event.target;
+    }
+  }
+  currentlyHoveredPoint = null;
 }
 
 function getSelectedPolygonIdForAddPoints() {
@@ -223,6 +297,7 @@ export {
   mouseOverEvents,
   shapeScrollEvents,
   pointMouseUpEvents,
+  addPointViaKeyboard,
   pointMouseDownEvents,
   setAddPointsEventsCanvas,
   setPolygonNotEditableOnClick,
