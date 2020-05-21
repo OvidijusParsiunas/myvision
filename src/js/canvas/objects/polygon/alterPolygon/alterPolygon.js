@@ -94,6 +94,10 @@ function cleanPolygonPointsArray() {
   polygonPoints = getCleanPolygonPointsArrayImpl(polygon, polygonPoints);
 }
 
+function getPolygonPointsArray() {
+  return polygonPoints;
+}
+
 function removePolygonPoints() {
   if (getLastPolygonActionWasMoveState()) {
     if (getEditingLabelId() === null || getNewShapeSelectedViaLabelListState()) {
@@ -231,7 +235,6 @@ function setEditablePolygon(canvasObj, polygonObj, removablePoints, creatingPoly
 }
 
 export {
-  setEditablePolygon, resetPolygonSelectableArea,
   initializeAddNewPoints, addFirstPoint, addPoint,
   removePolygonPoints, displayPolygonPointsAfterMove,
   completePolygon, drawLineOnMouseMove, moveAddablePoint,
@@ -240,6 +243,7 @@ export {
   changePolygonPointsPropertiesToDefault, getPolygonIdIfEditing,
   removePolygonPoint, getPolygonEditingStatus, getPolygonIfEditing,
   addPointsMouseOver, resetAddPointProperties, cleanPolygonPointsArray,
+  setEditablePolygon, resetPolygonSelectableArea, getPolygonPointsArray,
   movePolygonPoint, sendPolygonPointsToFront, highlightSelectedPolygonViaPoint,
   setEditablePolygonAfterMoving, removePolygon, defaultFillSelectedPolygonViaPoint,
 };
