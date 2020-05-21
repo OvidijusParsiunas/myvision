@@ -87,7 +87,6 @@ function wKeyHandler() {
 // }
 
 function rKeyHandler() {
-  // try to find a way to add new point, click r and remove without moving mouse
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
     finishEditingLabelList();
     if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {

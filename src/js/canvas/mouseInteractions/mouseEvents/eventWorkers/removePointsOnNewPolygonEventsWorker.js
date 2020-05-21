@@ -1,6 +1,7 @@
 import {
   setEditablePolygon, removePolygonPoint,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
+import { getCurrentlyHoveredDrawPoint } from '../../../objects/polygon/polygon';
 
 let removingPoints = false;
 let canvas = null;
@@ -30,7 +31,15 @@ function pointMouseDownEvents(event) {
 
 function removeTempPointViaKeyboard() {
   if (!mouseMoved) {
-    if (lastHoveredPoint) { removePolygonPoint(lastHoveredPoint.pointId); }
+    if (lastHoveredPoint) {
+      removePolygonPoint(lastHoveredPoint.pointId);
+    } else {
+      const currentlyHoveredDrawingPoint = getCurrentlyHoveredDrawPoint();
+      if (currentlyHoveredDrawingPoint) {
+        removePolygonPoint(currentlyHoveredDrawingPoint.pointId);
+        currentlyHoveredDrawingPoint.state = 'removed';
+      }
+    }
     mouseMoved = true;
   } else if (currentlyHoveredPoint) {
     removePolygonPoint(currentlyHoveredPoint.pointId);

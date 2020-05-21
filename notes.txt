@@ -1,7 +1,3 @@
-Escape button should close the settings popup and cancel the shape labeller modal
-
-arrow keys should go down the dropdown options for a label
-
 was not able to check ML generated label list overflow border chrome fix on smaller screens - check vertical
 
 popover for github links
@@ -12,14 +8,7 @@ will have to highlight initial buttons to get users started
 
 help button top right
 
-draw polygon (q, w);
-
 option to disabled selectable temp points
-
-draw on add points events
-
-will need to initialise the editing process using those buttons
-
 
 ---------------------------------------------
 

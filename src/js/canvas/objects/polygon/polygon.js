@@ -27,6 +27,7 @@ let lastHoveredPoint = null;
 let mouseMoved = false;
 let invisiblePoint = null;
 let drawingFinished = false;
+let currentlyHoveredPoint = null;
 let ignoredFirstMouseMovement = false;
 let lastNewPointPosition = { x: -1, y: -1 };
 let movedOverflowScroll = false;
@@ -168,6 +169,7 @@ function addPoint(pointer) {
     canvas.remove(activeShape);
     canvas.add(polygon);
     activeShape = polygon;
+    currentlyHoveredPoint = point;
     canvas.renderAll();
   } else {
     const polyPoint = [{
@@ -203,6 +205,11 @@ function getTempPolygon() {
     return activeShape;
   }
   return null;
+}
+
+
+function getCurrentlyHoveredDrawPoint() {
+  return currentlyHoveredPoint;
 }
 
 function isPolygonDrawingFinished() {
@@ -255,6 +262,7 @@ function polygonMouseOutEvents(event) {
     if (!mouseMoved) {
       lastHoveredPoint = event.target;
     }
+    currentlyHoveredPoint = null;
   }
 }
 
@@ -421,6 +429,8 @@ function resumeDrawingAfterRemovePoints() {
   }
   setTimeout(() => {
     const lastMouseMoveEvent = getLastMouseMoveEvent();
+    if (currentlyHoveredPoint && currentlyHoveredPoint.state === 'removed') lastNewPointPosition = { x: -1, y: -1 };
+    currentlyHoveredPoint = null;
     lastMouseEvent = lastMouseMoveEvent;
     const pointer = canvas.getPointer(lastMouseMoveEvent);
     drawTemporaryShape(pointer);
@@ -564,6 +574,7 @@ export {
   isPolygonDrawingFinished,
   prepareCanvasForNewPolygon,
   generatePolygonViaKeyboard,
+  getCurrentlyHoveredDrawPoint,
   resumeDrawingAfterRemovePoints,
   placeholderToAddMouseDownEvents,
   createNewPolygonFromCoordinates,
