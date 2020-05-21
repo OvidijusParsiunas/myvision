@@ -8,10 +8,11 @@ import { getCurrentlyHighlightedElement } from '../tools/labelList/labelListHigh
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
 import {
-  getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState, getReadyToDrawShapeState,
+  getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState,
+  getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
   getUploadDatasetsModalDisplayedState, getMachineLearningModalDisplayedState,
-  getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState, getLastDrawingModeState,
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
+  getShapeMovingState, getDefaultState, getLastDrawingModeState, getReadyToDrawShapeState,
 } from '../tools/stateMachine';
 import { removeFillForAllShapes } from '../canvas/objects/allShapes/allShapes';
 import { addPointViaKeyboard as addPointToNewPolygonViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
@@ -48,8 +49,7 @@ function qKeyHandler() {
 }
 
 function eKeyHandler() {
-  // do not remove fills when clicking edit when already within edit mode
-  if (!isModalOpen() && !isEditingLabelInLabelList() && getEditShapesButtonState() !== 'disabled') {
+  if (!isModalOpen() && !isEditingLabelInLabelList() && !getDefaultState() && getEditShapesButtonState() !== 'disabled') {
     finishEditingLabelList();
     window.editShapes();
     canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
@@ -88,7 +88,7 @@ function wKeyHandler() {
 
 function rKeyHandler() {
   // try to find a way to add new point, click r and remove without moving mouse
-  if (!isModalOpen() && !isEditingLabelInLabelList() && getRemovePointsButtonState() !== 'disabled') {
+  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
     finishEditingLabelList();
     if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {
       if (rKeyUp) {
@@ -109,10 +109,9 @@ function rKeyHandler() {
 }
 
 function aKeyHandler() {
-  // when polygon being moved and switch mode, the points do not show up correctly
   // aware of when shape completed, not moving mouse, change to remove, but cannot remove
   // also if hovering point on edit, switched to remove, then add without move, can't add
-  if (!isModalOpen() && !isEditingLabelInLabelList() && getAddPointsButtonState() !== 'disabled') {
+  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getAddPointsButtonState() !== 'disabled') {
     finishEditingLabelList();
     if (getAddingPolygonPointsState()) {
       addPointToExistingPolygonViaKeyboard();
@@ -221,29 +220,29 @@ function escapeKeyHandler() {
 }
 
 function keyDownEventHandler(event) {
-  switch (event.key) {
-    case 'Escape':
+  switch (event.key.toLowerCase()) {
+    case 'escape':
       escapeKeyHandler();
       break;
-    case 'Enter':
+    case 'enter':
       enterKeyHandler();
       break;
-    case 'Delete':
+    case 'delete':
       deleteKeyHandler();
       break;
-    case 'Backspace':
+    case 'backspace':
       backspaceKeyHandler();
       break;
-    case 'ArrowUp':
+    case 'arrowup':
       arrowUpKeyHandler();
       break;
-    case 'ArrowDown':
+    case 'arrowdown':
       arrowDownKeyHandler();
       break;
-    case 'ArrowLeft':
+    case 'arrowleft':
       arrowLeftKeyHandler();
       break;
-    case 'ArrowRight':
+    case 'arrowright':
       arrowRightKeyHandler();
       break;
     case 'q':
