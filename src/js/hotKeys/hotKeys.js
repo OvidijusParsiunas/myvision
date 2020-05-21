@@ -171,17 +171,17 @@ function arrowRightKeyHandler() {
 }
 
 function removeKeyHandler() {
-  if (isEditingLabelInLabelList()) cancelEditingLabelList();
   window.removeShape();
   canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
 }
 
 function deleteKeyHandler() {
+  if (isEditingLabelInLabelList()) cancelEditingLabelList();
   removeKeyHandler();
 }
 
 function backspaceKeyHandler() {
-  removeKeyHandler();
+  if (!isEditingLabelInLabelList()) removeKeyHandler();
 }
 
 function enterKeyHandler() {
