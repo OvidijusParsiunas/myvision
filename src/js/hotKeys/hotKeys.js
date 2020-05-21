@@ -109,8 +109,7 @@ function rKeyHandler() {
 }
 
 function aKeyHandler() {
-  // !! see if it works if clicking a and mouse !!
-  // try to select a polygon and mess around with the keys to see if modes and buttons change
+  // when polygon being moved and switch mode, the points do not show up correctly
   // aware of when shape completed, not moving mouse, change to remove, but cannot remove
   // also if hovering point on edit, switched to remove, then add without move, can't add
   if (!isModalOpen() && !isEditingLabelInLabelList() && getAddPointsButtonState() !== 'disabled') {
@@ -171,10 +170,18 @@ function arrowRightKeyHandler() {
   }
 }
 
-function deleteKeyHandler() {
+function removeKeyHandler() {
   if (isEditingLabelInLabelList()) cancelEditingLabelList();
   window.removeShape();
   canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
+}
+
+function deleteKeyHandler() {
+  removeKeyHandler();
+}
+
+function backspaceKeyHandler() {
+  removeKeyHandler();
 }
 
 function enterKeyHandler() {
@@ -224,6 +231,9 @@ function keyDownEventHandler(event) {
     case 'Delete':
       deleteKeyHandler();
       break;
+    case 'Backspace':
+      backspaceKeyHandler();
+      break;
     case 'ArrowUp':
       arrowUpKeyHandler();
       break;
@@ -254,6 +264,7 @@ function keyDownEventHandler(event) {
     default:
       break;
   }
+  console.log(event.key)
 }
 
 function keyUpEventHandler(event) {
