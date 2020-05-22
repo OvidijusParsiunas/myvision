@@ -1,4 +1,5 @@
-import { registerHotKeys } from './hotKeys/hotKeys';
+import { registerHotKeys } from './keyEvents/keyboard/hotKeys';
+import registerWindowMouseEvents from './keyEvents/mouse/registerEvents';
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
@@ -19,6 +20,7 @@ registerHotKeys();
 initialiseToolkit();
 initialiseLabellerModal();
 initialiseSettingsPopup();
+registerWindowMouseEvents();
 initialiseCoreButtonPopovers();
 initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();

@@ -1,29 +1,30 @@
-import { labelShape, arrowKeyEvents as labellerModalArrowKeyEvents } from '../tools/labellerModal/buttonEventHandlers';
+import { labelShape, arrowKeyEvents as labellerModalArrowKeyEvents } from '../../tools/labellerModal/buttonEventHandlers';
 import {
   isEditingLabelInLabelList, cancelEditingViaKeyboard as cancelEditingLabelList,
   arrowKeyEventsForLabelOtionsList as labelOptionsListArrowKeyEvents,
-  arrowKeyEventsForLabelList as labelListArrowKeyEvents, finishEditingLabelList,
-} from '../tools/labelList/labelList';
-import { getCurrentlyHighlightedElement } from '../tools/labelList/labelListHighlightUtils';
-import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../tools/uploadDatasetsModal/views/viewManager';
-import { closeModalViaKeyboard as closeMachineLearningModal } from '../tools/machineLearningModal/views/viewManager';
+  arrowKeyEventsForLabelList as labelListArrowKeyEvents,
+} from '../../tools/labelList/labelList';
+import { getCurrentlyHighlightedElement } from '../../tools/labelList/labelListHighlightUtils';
+import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../../tools/uploadDatasetsModal/views/viewManager';
+import { closeModalViaKeyboard as closeMachineLearningModal } from '../../tools/machineLearningModal/views/viewManager';
 import {
   getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState,
   getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
   getUploadDatasetsModalDisplayedState, getMachineLearningModalDisplayedState,
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
   getShapeMovingState, getDefaultState, getLastDrawingModeState, getReadyToDrawShapeState,
-} from '../tools/stateMachine';
-import { removeFillForAllShapes } from '../canvas/objects/allShapes/allShapes';
-import { addPointViaKeyboard as addPointToNewPolygonViaKeyboard, generatePolygonViaKeyboard } from '../canvas/objects/polygon/polygon';
-import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../canvas/objects/boundingBox/boundingBox';
+} from '../../tools/stateMachine';
+import { removeFillForAllShapes } from '../../canvas/objects/allShapes/allShapes';
+import { addPointViaKeyboard as addPointToNewPolygonViaKeyboard, generatePolygonViaKeyboard } from '../../canvas/objects/polygon/polygon';
+import { instantiateNewBoundingBox, finishDrawingBoundingBox } from '../../canvas/objects/boundingBox/boundingBox';
 import {
   getEditShapesButtonState, getRemovePointsButtonState,
   getCreatePolygonButtonState, getCreateBoundingBoxButtonState, getAddPointsButtonState,
-} from '../tools/toolkit/styling/stateMachine';
-import { removeTempPointViaKeyboard } from '../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
-import { removePointViaKeyboard } from '../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
-import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
+} from '../../tools/toolkit/styling/stateMachine';
+import { removeTempPointViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
+import { removePointViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
+import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
+import closePopUps from '../../tools/utils/closePopUps';
 
 let canvas = null;
 let rKeyUp = true;
@@ -36,7 +37,7 @@ function isModalOpen() {
 
 function qKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && getCreatePolygonButtonState() !== 'disabled') {
-    finishEditingLabelList();
+    window.onmousedown();
     if (((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
     || (getReadyToDrawShapeState() && getLastDrawingModeState() === 'polygon'))) {
       addPointToNewPolygonViaKeyboard();
@@ -50,7 +51,7 @@ function qKeyHandler() {
 
 function eKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getDefaultState() && getEditShapesButtonState() !== 'disabled') {
-    finishEditingLabelList();
+    closePopUps();
     window.editShapes();
     canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   }
@@ -58,7 +59,7 @@ function eKeyHandler() {
 
 function wKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && getCreateBoundingBoxButtonState() !== 'disabled') {
-    finishEditingLabelList();
+    closePopUps();
     if (getBoundingBoxDrawingInProgressState()) return;
     if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
       instantiateNewBoundingBox();
@@ -74,7 +75,7 @@ function wKeyHandler() {
 // function wKeyHandler() {
 //   if (!isModalOpen() && !isEditingLabelInLabelList()
 //     && getCreateBoundingBoxButtonState() !== 'disabled') {
-//     finishEditingLabelList();
+//     closePopUps();
 //     if (getBoundingBoxDrawingInProgressState()) {
 //       finishDrawingBoundingBox();
 //     } else if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
@@ -88,7 +89,7 @@ function wKeyHandler() {
 
 function rKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
-    finishEditingLabelList();
+    closePopUps();
     if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {
       if (rKeyUp) {
         removeTempPointViaKeyboard();
@@ -111,7 +112,7 @@ function aKeyHandler() {
   // aware of when shape completed, not moving mouse, change to remove, but cannot remove
   // also if hovering point on edit, switched to remove, then add without move, can't add
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getAddPointsButtonState() !== 'disabled') {
-    finishEditingLabelList();
+    closePopUps();
     if (getAddingPolygonPointsState()) {
       addPointToExistingPolygonViaKeyboard();
     } else {
@@ -169,6 +170,7 @@ function arrowRightKeyHandler() {
 }
 
 function removeKeyHandler() {
+  closePopUps();
   window.removeShape();
   canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
 }
@@ -262,7 +264,7 @@ function keyDownEventHandler(event) {
     default:
       break;
   }
-  console.log(event.key)
+  console.log(event.key);
 }
 
 function keyUpEventHandler(event) {

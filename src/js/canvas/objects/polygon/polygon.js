@@ -14,7 +14,7 @@ import {
   setAddPointsButtonToDefault, setRemovePointsButtonToDefault,
   setRemoveShapeButtonToDefault, setCreatePolygonButtonToActive,
 } from '../../../tools/toolkit/styling/stateMachine';
-import getLastMouseMoveEvent from '../../../tools/utils/mouseMoveEvents';
+import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 
 let canvas = null;
 let pointArray = [];

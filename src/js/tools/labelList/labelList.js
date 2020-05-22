@@ -5,11 +5,9 @@ import {
 } from '../../canvas/objects/allShapes/allShapes';
 import { removePolygonPoints, isAddingPointsToPolygon } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import {
-  getSettingsPopUpOpenState, setNewShapeSelectedViaLabelListState,
-  getAddingPolygonPointsState, setSettingsPopUpOpenState, setEditingLabelId,
-  getChangingMLGeneratedLabelNamesState, getExportDatasetsPopUpOpenState,
+  setNewShapeSelectedViaLabelListState, getAddingPolygonPointsState,
+  getRemovingPolygonPointsState, setEditingLabelId, getLabelsVisibilityState,
   getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
-  getRemovingPolygonPointsState, setExportDatasetsPopUpOpenState, getLabelsVisibilityState,
 } from '../stateMachine';
 import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../toolkit/styling/stateMachine';
 import {
@@ -32,7 +30,6 @@ import {
 } from './iconHighlightUtils';
 import IS_FIREFOX from '../utils/browserType';
 import { resetLabellerModalOptions } from '../labellerModal/style';
-import { stopEditingMLGeneratedLabelNameBtnClick } from '../machineLearningModal/views/generatedLabels/changeLabels';
 import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyling/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
@@ -611,9 +608,7 @@ function isEditingLabelInLabelList() {
   return isEditingLabel;
 }
 
-// needs to be exported to global key events
 function finishEditingLabelList(event) {
-  event = event || { target: { classList: [] } };
   if (isEditingLabel) {
     if (event.target.matches('.labelDropdownOption')) {
       const currentlySelectedShapeName = activeShape ? activeShape.shapeName : null;
@@ -643,21 +638,6 @@ function finishEditingLabelList(event) {
       stopEditing();
       deselectShape();
     }
-  } else if (getSettingsPopUpOpenState()) {
-    if (event.target.classList[0] !== 'settings-popup-item') {
-      const settingsPopupElement = document.getElementById('settings-popup');
-      settingsPopupElement.style.display = 'none';
-      setSettingsPopUpOpenState(false);
-    }
-  } else if (getExportDatasetsPopUpOpenState()) {
-    if (event.target.classList[0] !== 'export-labels-popup-item') {
-      const exportPopupElement = document.getElementById('export-labels-popup-parent');
-      exportPopupElement.style.display = 'none';
-      setExportDatasetsPopUpOpenState(false);
-    }
-  // needs to call a function in button events in the changeGeneratedLabelsView
-  } else if (getChangingMLGeneratedLabelNamesState()) {
-    stopEditingMLGeneratedLabelNameBtnClick(event.target);
   }
 }
 
@@ -787,10 +767,6 @@ window.labelBtnClick = (id) => {
     }
     isVisibilitySelected = false;
   }
-};
-
-window.onmousedown = (event) => {
-  finishEditingLabelList(event);
 };
 
 window.labelListScroll = () => {

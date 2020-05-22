@@ -4,7 +4,7 @@ import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../dimWi
 import { setLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
-import getLastMousMoveEvent from '../utils/mouseMoveEvents';
+import { getLastMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
 
 let parentElement = null;
 let optionsElement = null;
@@ -191,7 +191,7 @@ function resetLabellerModalOptions() {
 
 function showLabellerModal() {
   dimWindow(dimTimePeriod, dimIntensity);
-  const lastMouseMoveEvent = getLastMousMoveEvent();
+  const lastMouseMoveEvent = getLastMouseMoveEvent();
   parentElement.style.top = `${lastMouseMoveEvent.clientY}px`;
   parentElement.style.left = `${lastMouseMoveEvent.clientX}px`;
   getLabelOptions();

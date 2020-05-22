@@ -12,7 +12,7 @@ import { getImageProperties } from '../../../tools/imageList/uploadImages/drawIm
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/stateMachine';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
-import getLastMouseMoveEvent from '../../../tools/utils/mouseMoveEvents';
+import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;

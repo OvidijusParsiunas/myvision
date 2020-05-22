@@ -9,7 +9,7 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/stateMachine';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/stateMachine';
-import getLastMouseMoveEvent from '../../../../tools/utils/mouseMoveEvents';
+import { getLastMouseMoveEvent } from '../../../../keyEvents/mouse/mouseMove';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
 
