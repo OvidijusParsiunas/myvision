@@ -1354,13 +1354,12 @@ body {
 }
 
 #image-switch-contents {
-  top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
   height: 17px;
   position: absolute;
+  margin-top: 2px;
 }
 
 #image-name {
@@ -1371,7 +1370,7 @@ body {
   vertical-align: bottom;
   padding-bottom: 1px;
   padding-left: 20px;
-  padding-right: 20px;
+  padding-right: 17px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14.7px;
   color: #adadad;
@@ -1383,6 +1382,16 @@ body {
   font-size: 14px;
   color: #adadad;
   cursor: default;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 3px;
+  padding-bottom: 1px;
+  margin-top: 2px;
+}
+
+.image-switch-button-enabled {
+  color: black;
+  cursor: pointer;
 }
 
 #tools-drawing-section {
@@ -1555,6 +1564,9 @@ body {
   input.checkbox {
     margin-top: 2px;
     margin-bottom: 2px;
+  }
+  .image-switch-button {
+    padding-top: 2px;
   }
   .format-option-popover {
     padding-top: 2px;

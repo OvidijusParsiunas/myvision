@@ -5,27 +5,19 @@ let imageNameElementMinWidth = 0;
 const IMAGE_ELEMENT_SIDE_PADDING = 40;
 
 const ACTIVE_COLOR = 'black';
-const ACTIVE_CURSOR = 'pointer';
 const DEFAULT_IMAGE_NAME = 'Image name';
+const ENABLED_TOOLKIT_BUTTON_CLASS = 'toolkit-button-default';
+const DISABLED_TOOLKIT_BUTTON_CLASS = 'toolkit-button-disabled';
+const ENABLED_IMAGE_SWITCH_BUTTON_CLASS = 'image-switch-button-enabled';
 
-function setPreviousButtonElementToActive() {
-  previousButtonElement.style.color = ACTIVE_COLOR;
-  previousButtonElement.style.cursor = ACTIVE_CURSOR;
+function disableButton(element) {
+  element.classList.replace(ENABLED_TOOLKIT_BUTTON_CLASS, DISABLED_TOOLKIT_BUTTON_CLASS);
+  element.classList.remove(ENABLED_IMAGE_SWITCH_BUTTON_CLASS);
 }
 
-function setPreviousButtonElementToDefault() {
-  previousButtonElement.style.color = '';
-  previousButtonElement.style.cursor = '';
-}
-
-function setNextButtonElementToActive() {
-  nextButtonElement.style.color = ACTIVE_COLOR;
-  nextButtonElement.style.cursor = ACTIVE_CURSOR;
-}
-
-function setNextButtonElementToDefault() {
-  nextButtonElement.style.color = '';
-  nextButtonElement.style.cursor = '';
+function enableButton(element) {
+  element.classList.replace(DISABLED_TOOLKIT_BUTTON_CLASS, ENABLED_TOOLKIT_BUTTON_CLASS);
+  element.classList.add(ENABLED_IMAGE_SWITCH_BUTTON_CLASS);
 }
 
 function setImageNameElementToActive() {
@@ -38,8 +30,7 @@ function setImageNameElementToDefault() {
 }
 
 function setNameElementMinWidth() {
-  const imageNameElementWidth = imageNameElement.clientWidth
-    - IMAGE_ELEMENT_SIDE_PADDING;
+  const imageNameElementWidth = imageNameElement.clientWidth - IMAGE_ELEMENT_SIDE_PADDING;
   if (imageNameElementWidth > imageNameElementMinWidth) {
     imageNameElement.style.minWidth = `${imageNameElementWidth}px`;
     imageNameElementMinWidth = imageNameElementWidth;
@@ -52,25 +43,25 @@ function updateImageNameElement(imageName, images, currentlySelectedImageId, fir
   if (images.length === 1) {
     setImageNameElementToActive();
     if (firstFromMany) {
-      setNextButtonElementToActive();
+      enableButton(nextButtonElement);
     } else {
-      setNextButtonElementToDefault();
-      setPreviousButtonElementToDefault();
+      disableButton(nextButtonElement);
+      disableButton(previousButtonElement);
     }
   } else if (images.length > 1) {
     if (images.length - 1 === currentlySelectedImageId) {
       if (firstFromMany) {
-        setNextButtonElementToActive();
+        enableButton(nextButtonElement);
       } else {
-        setNextButtonElementToDefault();
+        disableButton(nextButtonElement);
       }
-      setPreviousButtonElementToActive();
+      enableButton(previousButtonElement);
     } else if (currentlySelectedImageId === 0) {
-      setPreviousButtonElementToDefault();
-      setNextButtonElementToActive();
+      disableButton(previousButtonElement);
+      enableButton(nextButtonElement);
     } else {
-      setNextButtonElementToActive();
-      setPreviousButtonElementToActive();
+      enableButton(nextButtonElement);
+      enableButton(previousButtonElement);
     }
   }
 }
