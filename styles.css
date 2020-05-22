@@ -1376,6 +1376,7 @@ body {
   color: #adadad;
   user-select: text;
   cursor: default;
+  margin-bottom: 2px;
 }
 
 .image-switch-button {
@@ -1385,7 +1386,7 @@ body {
   padding-left: 4px;
   padding-right: 4px;
   padding-top: 3px;
-  padding-bottom: 1px;
+  padding-bottom: 3px;
   margin-top: 2px;
 }
 
