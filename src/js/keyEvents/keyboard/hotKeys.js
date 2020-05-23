@@ -27,7 +27,22 @@ import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../
 import closePopUps from '../../tools/utils/closePopUps';
 
 let canvas = null;
-let rKeyUp = true;
+let isRKeyUp = true;
+let isControlKeyDown = false;
+
+function wKeyUpHandler() {
+  if (getBoundingBoxDrawingInProgressState()) {
+    finishDrawingBoundingBox();
+  }
+}
+
+function rKeyUpHandler() {
+  isRKeyUp = true;
+}
+
+function controlKeyUpHandler() {
+  isControlKeyDown = false;
+}
 
 function isModalOpen() {
   return getLabellerModalDisplayedState()
@@ -91,14 +106,14 @@ function rKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
     closePopUps();
     if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {
-      if (rKeyUp) {
+      if (isRKeyUp) {
         removeTempPointViaKeyboard();
-        rKeyUp = false;
+        isRKeyUp = false;
       }
     } else if (!getPolygonDrawingInProgressState() && getRemovingPolygonPointsState()) {
-      if (rKeyUp) {
+      if (isRKeyUp) {
         removePointViaKeyboard();
-        rKeyUp = false;
+        isRKeyUp = false;
       }
     } else {
       window.removePoint(document.getElementById('remove-points-button'));
@@ -121,16 +136,6 @@ function aKeyHandler() {
       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
     }
   }
-}
-
-function wKeyUpHandler() {
-  if (getBoundingBoxDrawingInProgressState()) {
-    finishDrawingBoundingBox();
-  }
-}
-
-function rKeyUpHandler() {
-  rKeyUp = true;
 }
 
 function arrowUpKeyHandler() {
@@ -157,14 +162,24 @@ function arrowDownKeyHandler() {
 
 function arrowLeftKeyHandler() {
   const arrowLeft = 'ArrowLeft';
-  if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
+  if (isControlKeyDown) {
+    if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
+      closePopUps();
+      window.switchImage('previous');
+    }
+  } else if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
     labelListArrowKeyEvents(arrowLeft);
   }
 }
 
 function arrowRightKeyHandler() {
   const arrowRight = 'ArrowRight';
-  if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
+  if (isControlKeyDown) {
+    if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
+      closePopUps();
+      window.switchImage('next');
+    }
+  } else if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
     labelListArrowKeyEvents(arrowRight);
   }
 }
@@ -182,6 +197,10 @@ function deleteKeyHandler() {
 
 function backspaceKeyHandler() {
   if (!isEditingLabelInLabelList()) removeKeyHandler();
+}
+
+function controlKeyHandler() {
+  isControlKeyDown = true;
 }
 
 function enterKeyHandler() {
@@ -234,6 +253,9 @@ function keyDownEventHandler(event) {
     case 'backspace':
       backspaceKeyHandler();
       break;
+    case 'control':
+      controlKeyHandler();
+      break;
     case 'arrowup':
       arrowUpKeyHandler();
       break;
@@ -264,16 +286,18 @@ function keyDownEventHandler(event) {
     default:
       break;
   }
-  console.log(event.key);
 }
 
 function keyUpEventHandler(event) {
-  switch (event.key) {
+  switch (event.key.toLowerCase()) {
     case 'w':
       wKeyUpHandler();
       break;
     case 'r':
       rKeyUpHandler();
+      break;
+    case 'control':
+      controlKeyUpHandler();
       break;
     default:
       break;

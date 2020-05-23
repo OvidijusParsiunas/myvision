@@ -1385,6 +1385,25 @@ body {
   cursor: pointer;
 }
 
+.image-switch-button-popover-final-bracket {
+  margin-left: 13px;
+  display: inline-block;
+}
+
+.image-switch-button-popover-arrow {
+  font-size: 21px;
+  position: absolute;
+  margin-top: -23px;
+}
+
+.image-switch-button-popover-arrow-left {
+  margin-left: 131px;
+}
+
+.image-switch-button-popover-arrow-right {
+  margin-left: 105px;
+}
+
 #tools-drawing-section {
   border-top: solid;
   border-bottom: solid;
@@ -1418,6 +1437,11 @@ body {
 
 .image-list-button-hover-popover-v-position {
   margin-top: -29px;
+}
+
+.image-switch-button-hover-popover {
+  margin-left: -74px;
+  margin-top: 11px;
 }
 
 .image-list-thumbnail {
@@ -1612,6 +1636,9 @@ body {
   }
   .image-list-button-hover-popover-v-position {
     margin-top: -31px;
+  }
+  .image-switch-button-hover-popover {
+    margin-top: 11px;
   }
 }
 

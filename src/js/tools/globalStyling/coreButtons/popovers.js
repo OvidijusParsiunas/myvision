@@ -24,6 +24,8 @@ function initialiseCoreButtonPopovers() {
   buttonPopovers.settings = document.getElementById('settings-button-popover');
   buttonPopovers.uploadImages = document.getElementById('upload-images-button-popover');
   buttonPopovers.removeImages = document.getElementById('remove-images-button-popover');
+  buttonPopovers.previousImage = document.getElementById('previous-image-button-popover');
+  buttonPopovers.nextImage = document.getElementById('next-image-button-popover');
 }
 
 function removeActiveButtonPopover() {
