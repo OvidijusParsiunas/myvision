@@ -2,13 +2,13 @@ let nextButtonElement = null;
 let previousButtonElement = null;
 let imageNameElement = null;
 let imageNameElementMinWidth = 0;
-const IMAGE_ELEMENT_SIDE_PADDING = 40;
 
 const ACTIVE_COLOR = 'black';
 const DEFAULT_IMAGE_NAME = 'Image name';
 const ENABLED_TOOLKIT_BUTTON_CLASS = 'toolkit-button-default';
 const DISABLED_TOOLKIT_BUTTON_CLASS = 'toolkit-button-disabled';
 const ENABLED_IMAGE_SWITCH_BUTTON_CLASS = 'image-switch-button-enabled';
+const IMAGE_ELEMENT_SIDE_PADDING_LENGTH = 37;
 
 function disableButton(element) {
   element.classList.replace(ENABLED_TOOLKIT_BUTTON_CLASS, DISABLED_TOOLKIT_BUTTON_CLASS);
@@ -30,7 +30,7 @@ function setImageNameElementToDefault() {
 }
 
 function setNameElementMinWidth() {
-  const imageNameElementWidth = imageNameElement.clientWidth - IMAGE_ELEMENT_SIDE_PADDING;
+  const imageNameElementWidth = imageNameElement.clientWidth - IMAGE_ELEMENT_SIDE_PADDING_LENGTH;
   if (imageNameElementWidth > imageNameElementMinWidth) {
     imageNameElement.style.minWidth = `${imageNameElementWidth}px`;
     imageNameElementMinWidth = imageNameElementWidth;

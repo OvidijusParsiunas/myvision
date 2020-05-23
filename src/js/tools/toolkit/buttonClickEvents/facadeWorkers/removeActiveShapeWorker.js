@@ -18,7 +18,7 @@ import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseE
 import { removeLabel } from '../../../../canvas/objects/label/label';
 import { removeLabelFromListOnShapeDelete, getCurrentlySelectedLabelShape } from '../../../labelList/labelList';
 import { removeShape, getNumberOfShapes } from '../../../../canvas/objects/allShapes/allShapes';
-import { removeTickSVGOverImageThumbnail } from '../../../imageList/imageList';
+import { removeTickSVGOverImageThumbnail, getAllImageData } from '../../../imageList/imageList';
 import {
   setRemovePointsButtonToDefault,
   setRemoveShapeButtonToDisabled,
@@ -87,7 +87,7 @@ function removeActiveShapeEvent(canvas) {
     removeEditedPolygonId();
     if (setPolygonEditingButtonsToDisabled()) window.editShapes();
   }
-  if (getNumberOfShapes() === 0) {
+  if (getAllImageData().length > 0 && getNumberOfShapes() === 0) {
     removeTickSVGOverImageThumbnail(getCurrentImageId());
   }
   setRemoveShapeButtonToDisabled();

@@ -7,14 +7,16 @@ import {
 import { setEditShapesButtonToDefault, setCreatePolygonButtonToActive } from '../../styling/stateMachine';
 
 function initiateCreateNewPolygonEvents(canvas) {
-  purgeCanvasMouseEvents(canvas);
-  assignDrawPolygonEvents(canvas);
-  setCreatePolygonButtonToActive();
-  setEditShapesButtonToDefault();
-  setDefaultState(false);
-  setAlteringPolygonPointsState(false);
-  setLastDrawingModeState('polygon');
-  setHasDrawnShapeState(false);
+  if (canvas.backgroundImage) {
+    purgeCanvasMouseEvents(canvas);
+    assignDrawPolygonEvents(canvas);
+    setCreatePolygonButtonToActive();
+    setEditShapesButtonToDefault();
+    setDefaultState(false);
+    setAlteringPolygonPointsState(false);
+    setLastDrawingModeState('polygon');
+    setHasDrawnShapeState(false);
+  }
 }
 
 export { initiateCreateNewPolygonEvents as default };
