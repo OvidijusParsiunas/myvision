@@ -1386,36 +1386,16 @@ body {
 }
 
 .image-switch-button-popover-closing-bracket {
-  margin-left: 25px;
+  margin-left: -6px;
   display: inline-block;
 }
 
-.image-switch-button-popover-plus {
-  position: absolute;
-  margin-top: -14px;
-  font-size: 11px;
-}
-
-#image-switch-button-popover-plus-left {
-  margin-left: 136px;
-}
-
-#image-switch-button-popover-plus-right {
-  margin-left: 110px;
-}
-
 .image-switch-button-popover-arrow {
-  font-size: 22px;
-  position: absolute;
-  margin-top: -24px;
-}
-
-#image-switch-button-popover-arrow-left {
-  margin-left: 142px;
-}
-
-#image-switch-button-popover-arrow-right {
-  margin-left: 116px;
+  height: 0px;
+  display: inline-block;
+  font-size: 25px;
+  margin-left: -4px;
+  margin-top: -26px;
 }
 
 #tools-drawing-section {
