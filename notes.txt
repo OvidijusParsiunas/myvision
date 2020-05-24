@@ -10,6 +10,8 @@ help button top right
 
 option to disabled selectable temp points
 
+use an svg arrow instead of unicode (can set that as a default)
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

@@ -1,5 +1,6 @@
 import { registerHotKeys } from './keyEvents/keyboard/hotKeys';
 import registerWindowMouseEvents from './keyEvents/mouse/registerEvents';
+import { findUserOS } from './tools/OS/OSManager';
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
@@ -15,6 +16,7 @@ import { initialiseGlobalStyleSetup } from './tools/globalStyling/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 
+findUserOS();
 constructCanvas();
 registerHotKeys();
 initialiseToolkit();

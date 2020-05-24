@@ -25,16 +25,13 @@ import { removeTempPointViaKeyboard } from '../../canvas/mouseInteractions/mouse
 import { removePointViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import closePopUps from '../../tools/utils/closePopUps';
+import { getUserOS } from '../../tools/OS/OSManager';
 
 let canvas = null;
 let isRKeyUp = true;
 let isControlKeyDown = false;
-
-function wKeyUpHandler() {
-  if (getBoundingBoxDrawingInProgressState()) {
-    finishDrawingBoundingBox();
-  }
-}
+let wKeyHandler = null;
+let wKeyUpHandler = null;
 
 function rKeyUpHandler() {
   isRKeyUp = true;
@@ -72,8 +69,27 @@ function eKeyHandler() {
   }
 }
 
-function wKeyHandler() {
-  if (!isModalOpen() && !isEditingLabelInLabelList() && getCreateBoundingBoxButtonState() !== 'disabled') {
+// click w to starting drawing bounding box and clicking again to finish drawing it
+function wKeyHandlerLinux() {
+  if (!isModalOpen() && !isEditingLabelInLabelList()
+    && getCreateBoundingBoxButtonState() !== 'disabled') {
+    closePopUps();
+    if (getBoundingBoxDrawingInProgressState()) {
+      finishDrawingBoundingBox();
+    } else if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
+      instantiateNewBoundingBox();
+    } else {
+      window.createNewBndBox();
+      removeFillForAllShapes();
+      canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
+    }
+  }
+}
+
+// click w and hold to draw bounding box and release to finish drawing it
+function wKeyHandlerDefault() {
+  if (!isModalOpen() && !isEditingLabelInLabelList()
+        && getCreateBoundingBoxButtonState() !== 'disabled') {
     closePopUps();
     if (getBoundingBoxDrawingInProgressState()) return;
     if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
@@ -86,21 +102,12 @@ function wKeyHandler() {
   }
 }
 
-// for clicking to starting drawing bounding box and clicing to finsih drawing it
-// function wKeyHandler() {
-//   if (!isModalOpen() && !isEditingLabelInLabelList()
-//     && getCreateBoundingBoxButtonState() !== 'disabled') {
-//     closePopUps();
-//     if (getBoundingBoxDrawingInProgressState()) {
-//       finishDrawingBoundingBox();
-//     } else if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
-//       instantiateNewBoundingBox();
-//     } else {
-//       window.createNewBndBox();
-//       canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
-//     }
-//   }
-// }
+function wKeyUpHandlerDefault() {
+  if (getBoundingBoxDrawingInProgressState()) {
+    finishDrawingBoundingBox();
+  }
+}
+
 
 function rKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
@@ -290,14 +297,14 @@ function keyDownEventHandler(event) {
 
 function keyUpEventHandler(event) {
   switch (event.key.toLowerCase()) {
+    case 'control':
+      controlKeyUpHandler();
+      break;
     case 'w':
       wKeyUpHandler();
       break;
     case 'r':
       rKeyUpHandler();
-      break;
-    case 'control':
-      controlKeyUpHandler();
       break;
     default:
       break;
@@ -308,9 +315,20 @@ function assignCanvasForHotKeys(canvasObj) {
   canvas = canvasObj;
 }
 
+function assignOSSpecificFunctionality() {
+  if (getUserOS() === 'Linux') {
+    wKeyHandler = wKeyHandlerLinux;
+    wKeyUpHandler = () => {};
+  } else {
+    wKeyHandler = wKeyHandlerDefault;
+    wKeyUpHandler = wKeyUpHandlerDefault;
+  }
+}
+
 function registerHotKeys() {
   document.addEventListener('keydown', keyDownEventHandler);
   document.addEventListener('keyup', keyUpEventHandler);
+  assignOSSpecificFunctionality();
 }
 
 export { registerHotKeys, assignCanvasForHotKeys };
