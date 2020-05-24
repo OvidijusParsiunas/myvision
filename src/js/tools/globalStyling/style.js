@@ -1,5 +1,6 @@
 import downloadFonts from './fonts';
 import IS_FIREFOX from '../utils/browserType';
+import applyElementDimensions from './elementDimensions';
 
 let canvasWrapperParentElement = null;
 let zoomOverflowWrapperParentElement = null;
@@ -54,6 +55,7 @@ function findWindowElements() {
 function initialiseGlobalStyleSetup() {
   findWindowElements();
   downloadFonts();
+  applyElementDimensions();
 }
 
 function getFirefoxScrollBarWidth() {
