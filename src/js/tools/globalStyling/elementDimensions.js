@@ -74,8 +74,8 @@ function createElementToDimensionsArray() {
 
 function createElementClassToDimensionsArray() {
   return [
-    { className: 'toolkit-button-icon', defaultDimensions: { width: 30, padding: 8 } },
-    { className: 'toolkit-popover', defaultDimensions: { marginLeft: 62, marginTop: -38, fontSize: 14.5 } },
+    { className: 'toolkit-button-icon', defaultDimensions: { width: 30, padding: 7.5 } },
+    { className: 'toolkit-popover', defaultDimensions: { marginLeft: 62, marginTop: -35, fontSize: 14.5 } },
     { className: 'settings-checkbox', defaultDimensions: { marginTop: 3, marginBottom: 3 } },
     { className: 'settings-table-row-data', defaultDimensions: { fontSize: 14.5, paddingBottom: 3 } },
   ];
