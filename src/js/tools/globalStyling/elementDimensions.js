@@ -60,7 +60,7 @@ function createElementToDimensionsArray() {
       id: 'left-side-bar',
       defaultDimensions: { width: 57 },
       calcDimensions: {
-        maxHeight: { dimension: 39, prefix: '100vh - ', postfix: 'px)' },
+        maxHeight: { dimension: 34, prefix: '100vh - ', postfix: 'px)' },
       },
     },
     {
