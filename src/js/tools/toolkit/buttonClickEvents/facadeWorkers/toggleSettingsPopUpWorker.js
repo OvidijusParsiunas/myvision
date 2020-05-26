@@ -28,7 +28,6 @@ function calculateElementOffset(el) {
 function setPopUpPosition(settingsButton, settingsPopupElement) {
   const divOffset = calculateElementOffset(settingsButton);
   settingsPopupElement.style.top = `${divOffset.top}px`;
-  settingsPopupElement.style.left = '65px';
 }
 
 function toggleSettingsPopUp() {

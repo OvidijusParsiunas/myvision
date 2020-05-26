@@ -889,7 +889,7 @@
 }
 
 #left-side-bar {
-  padding-top: 9px;
+  width: 57px;
   text-align: center;
   float: left;
   background-color: white;
@@ -1221,6 +1221,8 @@ body {
   padding-right: 8px;
   padding-bottom: 4px;
   user-select: none;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* @media only screen and (max-height: 826px) {
