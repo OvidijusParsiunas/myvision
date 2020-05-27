@@ -192,18 +192,18 @@ function arrowRightKeyHandler() {
 }
 
 function removeKeyHandler() {
+  if (isModalOpen() || isEditingLabelInLabelList()) return;
   closePopUps();
   window.removeShape();
   canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
 }
 
 function deleteKeyHandler() {
-  if (isEditingLabelInLabelList()) cancelEditingLabelList();
   removeKeyHandler();
 }
 
 function backspaceKeyHandler() {
-  if (!isEditingLabelInLabelList()) removeKeyHandler();
+  removeKeyHandler();
 }
 
 function controlKeyHandler() {
