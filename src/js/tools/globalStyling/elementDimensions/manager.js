@@ -1,7 +1,3 @@
-import applyElementDimensionsToLeftSideBar from './components/leftSideBar';
-import applyElementDimensionsToRightSideBar from './components/rightSideBar/rightSideBar';
-import applyElementDimensionsToImageSwitchPanel from './components/imageSwitchPanel';
-
 let delta = 1;
 
 // delta uses screen width only
@@ -18,9 +14,7 @@ function getDelta() {
 
 function applyElementDimensions() {
   delta = calculateDesiredScreenSizeDelta();
-  applyElementDimensionsToLeftSideBar(delta);
-  applyElementDimensionsToRightSideBar(delta);
-  applyElementDimensionsToImageSwitchPanel(delta);
+  document.documentElement.style.setProperty('--screen-size-delta', delta);
 }
 
 export { applyElementDimensions, getDelta };

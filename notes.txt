@@ -20,6 +20,8 @@ the labeller modal seems to go out of bounds on mac
 
 fix arrow on next + previous button popovers (use svg)
 
+the add and remove image icons could be a little bigger
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
