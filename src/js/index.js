@@ -12,11 +12,12 @@ import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEv
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import initialiseImageListFunctionality from './tools/imageList/init';
 import { initialiseCoreButtonPopovers } from './tools/globalStyling/coreButtons/popovers';
-import { initialiseGlobalStyleSetup } from './tools/globalStyling/style';
+import { applyStyling } from './tools/globalStyling/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 
 findUserOS();
+applyStyling();
 constructCanvas();
 registerHotKeys();
 initialiseToolkit();
@@ -28,7 +29,6 @@ initialiseUploadDatasetsModal();
 initialiseMachineLearningModal();
 initialiseExportLabelsPopUp();
 assignPassiveEventListeners();
-initialiseGlobalStyleSetup();
 initialiseImageListFunctionality();
 initialiseLabelListFunctionality();
 initialiseImageSwitchPanelFunctionality();

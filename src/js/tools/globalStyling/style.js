@@ -1,6 +1,6 @@
 import downloadFonts from './fonts';
 import IS_FIREFOX from '../utils/browserType';
-import applyElementDimensions from './elementDimensions';
+import { applyElementDimensions } from './elementDimensions/manager';
 
 let canvasWrapperParentElement = null;
 let zoomOverflowWrapperParentElement = null;
@@ -52,12 +52,6 @@ function findWindowElements() {
   rightSideBar = document.getElementById('right-side-bar');
 }
 
-function initialiseGlobalStyleSetup() {
-  findWindowElements();
-  downloadFonts();
-  applyElementDimensions();
-}
-
 function getFirefoxScrollBarWidth() {
   // create a div with the scroll
   const div = document.createElement('div');
@@ -81,7 +75,13 @@ function getScrollbarWidth() {
   return getChromiumScrollBarWidth();
 }
 
+function applyStyling() {
+  findWindowElements();
+  downloadFonts();
+  applyElementDimensions();
+}
+
 export {
+  applyStyling, changeCanvasElementsWidth, windowHasScrollbar,
   getLeftSideBarWidth, getRightSideBarWidth, getScrollbarWidth,
-  initialiseGlobalStyleSetup, changeCanvasElementsWidth, windowHasScrollbar,
 };
