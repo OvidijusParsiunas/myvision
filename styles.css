@@ -970,6 +970,7 @@
 
 .labelListItem {
   padding-left: 4px;
+  padding-bottom: 1px;
 }
 
 #labels-list-overflow-parent {
