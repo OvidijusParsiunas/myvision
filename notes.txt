@@ -22,6 +22,8 @@ fix arrow on next + previous button popovers (use svg)
 
 the add and remove image icons could be a little bigger
 
+the fake border at bot in chrome doesn't seem right
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

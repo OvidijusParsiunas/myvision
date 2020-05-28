@@ -34,7 +34,7 @@
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.3;
-  font-size: 15px;
+  font-size: calc(15px / var(--screen-size-delta));
 }
 
 #labeller-modal-options tbody {
@@ -1005,7 +1005,7 @@
 
 #image-list-title-parent {
   position: relative;
-  height: calc(23px / var(--screen-size-delta));
+  height: calc(25px / var(--screen-size-delta));
 }
 
 #image-list-title-text {
@@ -1019,11 +1019,12 @@
   float: right;
   margin-right: 0px;
   margin-top: 1px;
+  height: calc(23.2px / var(--screen-size-delta));
 }
 
 #upload-images-icon {
   width: calc(14px / var(--screen-size-delta));
-  padding-top: calc(4px / var(--screen-size-delta));
+  padding-top: calc(5px / var(--screen-size-delta));
   padding-bottom: 0px;
   padding-left: calc(3px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
@@ -1040,9 +1041,13 @@
   float: right;
 }
 
+#remove-images-button {
+  height: calc(23px / var(--screen-size-delta));
+}
+
 #remove-images-button-icon {
-  width: calc(15px / var(--screen-size-delta));
-  padding-top: calc(3px / var(--screen-size-delta));
+  width: calc(14.5px / var(--screen-size-delta));
+  padding-top: calc(5px / var(--screen-size-delta));
   padding-left: calc(3px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
 }
