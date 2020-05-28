@@ -347,7 +347,6 @@
 .labelText {
   white-space: pre;
   font-size: calc(15px / var(--screen-size-delta));
-  padding-top: calc(15px - (15px / var(--screen-size-delta)));
 }
 
 .labelText:focus {
@@ -971,7 +970,6 @@
 
 .labelListItem {
   padding-left: 4px;
-  padding-bottom: 1px;
 }
 
 #labels-list-overflow-parent {
