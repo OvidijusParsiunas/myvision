@@ -1,6 +1,7 @@
 import fabric from 'fabric';
 import { getLeftSideBarWidth, getRightSideBarWidth } from '../../globalStyling/style';
 import IS_FIREFOX from '../../utils/browserType';
+import { getDelta } from '../../globalStyling/elementDimensions/manager';
 
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
@@ -78,6 +79,8 @@ function setCanvasWrapperMaximumDimensions() {
 function setNewCanvasProperties() {
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
   const innerHeight = window.innerHeight - 64;
+  /* DYNAMIC ZOOM */
+  // const innerHeight = window.innerHeight - (35 + (29 / getDelta()));
   const innerWidth = window.innerWidth - sideToolsTotalWidth;
   canvasProperties.maximumCanvasHeight = canvasOuterMargin
     ? innerHeight - (window.innerHeight * 0.0382263)

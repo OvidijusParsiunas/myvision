@@ -1,14 +1,16 @@
+import { getDelta } from '../globalStyling/elementDimensions/manager';
+
 let nextButtonElement = null;
 let previousButtonElement = null;
 let imageNameElement = null;
 let imageNameElementMinWidth = 0;
+let imageElementSidePaddingLength = 37;
 
 const ACTIVE_COLOR = 'black';
 const DEFAULT_IMAGE_NAME = 'Image name';
 const ENABLED_TOOLKIT_BUTTON_CLASS = 'toolkit-button-default';
 const DISABLED_TOOLKIT_BUTTON_CLASS = 'toolkit-button-disabled';
 const ENABLED_IMAGE_SWITCH_BUTTON_CLASS = 'image-switch-button-enabled';
-const IMAGE_ELEMENT_SIDE_PADDING_LENGTH = 37;
 
 function disableButton(element) {
   element.classList.replace(ENABLED_TOOLKIT_BUTTON_CLASS, DISABLED_TOOLKIT_BUTTON_CLASS);
@@ -30,7 +32,7 @@ function setImageNameElementToDefault() {
 }
 
 function setNameElementMinWidth() {
-  const imageNameElementWidth = imageNameElement.clientWidth - IMAGE_ELEMENT_SIDE_PADDING_LENGTH;
+  const imageNameElementWidth = imageNameElement.clientWidth - imageElementSidePaddingLength;
   if (imageNameElementWidth > imageNameElementMinWidth) {
     imageNameElement.style.minWidth = `${imageNameElementWidth}px`;
     imageNameElementMinWidth = imageNameElementWidth;
@@ -73,6 +75,7 @@ function findImageSwitchElements() {
 
 function initialiseImageSwitchPanelFunctionality() {
   findImageSwitchElements();
+  imageElementSidePaddingLength /= getDelta();
 }
 
 export {
