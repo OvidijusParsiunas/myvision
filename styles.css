@@ -1624,7 +1624,7 @@ body {
     margin-bottom: 2px;
   }
   .image-switch-button {
-    padding-top: 2px;
+    padding-top: calc(2px / var(--screen-size-delta));
   }
   .format-option-popover {
     padding-top: 2px;

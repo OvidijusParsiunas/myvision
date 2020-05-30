@@ -24,6 +24,8 @@ modal to check if the user is sure they want to remove an image
 
 weird auto horizontal rotate for some images on firefox
 
+the label list contents padding top looks a little too high for firefox
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

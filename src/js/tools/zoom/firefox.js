@@ -148,10 +148,11 @@ function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHei
 
 function heightOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${Math.round(originalWidth) - 1}px`;
-  // check if vertical overflow bar is ok in linux, if not - adjust this
-  const zoomOverflowMaxHeight = `${newCanvasHeight - (5.5 / getDelta())}px`;
+  // this has been changed
+  const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
-  const stubMarginTop = `${originalHeight - scrollWidth - 16}px`;
+  // this has been changed
+  const stubMarginTop = `${originalHeight - scrollWidth - 10}px`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', '', zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', '', stubMarginTop);
@@ -165,7 +166,8 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2) - 1.25}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 - 1}px`;
-  const stubMarginLeft = `${Math.round(originalWidth) - 4.5}px`;
+  // fix for the dynamic height - original = `${Math.round(originalWidth) - 4.5}px`
+  const stubMarginLeft = `${Math.round(originalWidth) - (3.5 / getDelta())}px`;
   const stubMarginTop = `${Math.round(originalHeight) - 16.5 - (currentZoom)}px`;
   const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
   const canvasTop = `calc(50% - ${Math.round(scrollWidth / 2) + 0.5}px)`;
@@ -173,7 +175,8 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');
   setStubElementProperties('', '', stubMarginLeft, stubMarginTop);
   setCanvasElementProperties(canvasLeft, canvasTop);
-  reduceCanvasDimensionsBy(scrollWidth + 0.25, scrollWidth + 1.1);
+  // fix for the dynamic height - original = scrollWidth + 0.25, scrollWidth + 1.1
+  reduceCanvasDimensionsBy(scrollWidth + 0.25, scrollWidth + 0.2);
   setDarkZoomOverflowBackground();
 }
 
@@ -198,6 +201,8 @@ function getScrollWidth() {
 
 function changeElementPropertiesFirefox(heightOverflowed, widthOverflowed, originalWidth,
   originalHeight, newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg) {
+  // fix for the dynamic height
+  console.log(newCanvasHeightArg += 1);
   setTempValues(newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg);
   scrollWidth = getScrollWidth() / 2;
   if (heightOverflowed) {
