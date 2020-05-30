@@ -1,5 +1,6 @@
 import { setDoubleScrollCanvasState } from '../stateMachine';
 import { getCurrentCanvasContainerElement } from '../../canvas/utils/canvasUtils';
+import { getDelta } from '../globalStyling/elementDimensions/manager';
 
 let zoomOverflowWrapperElement;
 let zoomOverflowElement;
@@ -147,7 +148,8 @@ function heightOverflowDoubleVerticalScrollBarOverlap(originalWidth, originalHei
 
 function heightOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowWidth = `${Math.round(originalWidth) - 1}px`;
-  const zoomOverflowMaxHeight = `${newCanvasHeight - 5.5}px`;
+  // check if vertical overflow bar is ok in linux, if not - adjust this
+  const zoomOverflowMaxHeight = `${newCanvasHeight - (5.5 / getDelta())}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
   const stubMarginTop = `${originalHeight - scrollWidth - 16}px`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);

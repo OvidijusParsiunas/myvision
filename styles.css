@@ -1131,17 +1131,22 @@
 /* update these when changing the left side bar width */
 
 #canvas-wrapper-parent {
-  width: calc(100% - 268px);
+  /* width: calc(100% - 268px);
   height: calc(100% - 64.5px);
   left: 59px;
-  top: 64px;
-  /* DYNAMIC ZOOM */
+  top: 64px; */
   /* width: calc(100% - 211px - (57px / var(--screen-size-delta))); */
     /* width: calc(100% - 209px - (59px / var(--screen-size-delta))); */
   /* height: calc(100% - (38px + (29.5px / var(--screen-size-delta)))); */
       /* height: calc(100% - (34.5px + (30px / var(--screen-size-delta)))); */
   /* left: calc(1px + (58px / var(--screen-size-delta))); */
   /* top: calc(37px + (29px / var(--screen-size-delta))); */
+  width: calc(100% - 211px - (57px / var(--screen-size-delta)));
+    /* width: calc(100% - 209px - (59px / var(--screen-size-delta))); */
+  height: calc(100% - (35px + (29.5px / var(--screen-size-delta))));
+      /* height: calc(100% - (34.5px + (30px / var(--screen-size-delta)))); */
+  left: calc(1px + (58px / var(--screen-size-delta)));
+  top: calc(35px + (29px / var(--screen-size-delta)));
   position: absolute;
   display: table;
   background-color: rgb(239, 239, 239);
@@ -1164,20 +1169,18 @@
 }
 
 #zoom-overflow-wrapper-parent {
-  width: calc(100% - 269px);
+  /* width: calc(100% - 269px);
   height: calc(100% - 64px);
   left: 59px;
-  top: 64px;
-  /* DYNAMIC ZOOM */
-  /* width: calc(100% - 210px - (59px / var(--screen-size-delta)));
+  top: 64px; */
+  width: calc(100% - 210px - (59px / var(--screen-size-delta)));
   height: calc(100% - (35px + (29px / var(--screen-size-delta))));
   left: calc(59px / var(--screen-size-delta));
-  top: calc(35px + (29px / var(--screen-size-delta))); */
+  top: calc(35px + (29px / var(--screen-size-delta)));
   position: absolute;
   display: table;
   text-align: center;
   z-index: 1;
-  /* background-color: red; */
 }
 
 #zoom-overflow-wrapper-inner-container {
@@ -1401,7 +1404,7 @@ body {
 #image-name {
   overflow: hidden;
   max-width: 72vw;
-  max-height: 17px;
+  max-height: calc(17px / var(--screen-size-delta));
   display: inline-block;
   vertical-align: bottom;
   padding-bottom: calc(1px / var(--screen-size-delta));
@@ -1412,8 +1415,7 @@ body {
   color: #adadad;
   user-select: text;
   cursor: default;
-  /* will need to submit a conditional variable for calc(2px * var(--variable) if
-     this is the only way I can get this to work */
+  margin-bottom: calc(2px / var(--screen-size-delta));
 }
 
 .image-switch-button {
@@ -1634,13 +1636,13 @@ body {
     margin-top: -28px;
   }
   #canvas-wrapper-parent {
-    width: calc(100% - 268.5px);
-    height: calc(100% - 63px);
-    top: 63px;
+    width: calc(100% - 211.5px - (57px / var(--screen-size-delta)));
+    height: calc(100% - (34px + (29px / var(--screen-size-delta))));
+    top: calc(34px + (29px / var(--screen-size-delta)));
   }
   #zoom-overflow-wrapper-parent {
-    height: calc(100% - 63px);
-    top: 63px;
+    height: calc(100% - (34px + (29px / var(--screen-size-delta))));
+    top: calc(34px + (29px / var(--screen-size-delta)));
   }
   .core-button-hover-popover {
     margin-top: -37px;

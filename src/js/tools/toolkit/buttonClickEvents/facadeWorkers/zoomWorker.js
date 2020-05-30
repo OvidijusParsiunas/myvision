@@ -366,9 +366,6 @@ function loadCanvasElements(browserSpecificSetterCallback) {
 
 function initialiseZoomVariables(canvasObj) {
   canvas = canvasObj;
-  // if firefox
-  // if chromium
-  // use callback here and choose the set canvas properties method
   currentZoom = getCurrentZoomState();
   if (IS_FIREFOX) {
     initialiseVariablesFirefox(canvas);

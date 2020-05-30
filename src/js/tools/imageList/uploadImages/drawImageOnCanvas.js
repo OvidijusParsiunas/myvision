@@ -78,9 +78,7 @@ function setCanvasWrapperMaximumDimensions() {
 
 function setNewCanvasProperties() {
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
-  const innerHeight = window.innerHeight - 64;
-  /* DYNAMIC ZOOM */
-  // const innerHeight = window.innerHeight - (35 + (29 / getDelta()));
+  const innerHeight = window.innerHeight - Math.ceil(35 + (29 / getDelta()));
   const innerWidth = window.innerWidth - sideToolsTotalWidth;
   canvasProperties.maximumCanvasHeight = canvasOuterMargin
     ? innerHeight - (window.innerHeight * 0.0382263)
