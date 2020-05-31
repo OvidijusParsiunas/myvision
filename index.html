@@ -141,17 +141,17 @@
         <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>
       </div>
     </div>
-      <div id="export-labels-popup-parent" class="export-labels-popup-item" style="display: none; width: 173px; height: 203px">
-        <div class="export-labels-popup-item small-title" style="padding-left: 10px; padding-top: 6px; padding-bottom: 3px; border-bottom: 1px solid #e6e6e6">Choose format:</div>
-        <div id="parent-table-element" class="export-labels-popup-item" style="width: 172px;">
+      <div id="export-labels-popup-parent" class="export-labels-popup-item" style="display: none;">
+        <div id="export-labels-popup-title" class="export-labels-popup-item small-title">Choose format:</div>
+        <div id="parent-table-element" class="export-labels-popup-item">
           <table id="export-labels-table" class="export-labels-popup-item">
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
+            <tr><td class="export-labels-popup-item data-format-table-row-data bounding-box-data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('COCO JSON', this)">
             </td></tr>
             <tr><td class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text generic-format-option-text">VGG JSON</div>
               <input class="export-labels-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectLabelExportFormat('VGG JSON', this)">
             </td></tr>
-            <tr><td style="padding-top: 7px;" class="export-labels-popup-item data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
+            <tr><td class="export-labels-popup-item data-format-table-row-data bounding-box-data-format-table-row-data"><div class="export-labels-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopUpInformationPopover(4)" onmouseleave="removeExportPopUpInformationPopover(4)">
                 <div id="format-option-checkbox-popover-4" class="export-labels-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-4" class="export-labels-popup-item arrow text-arrow-position default-arrow-color"></div>
                 CSV

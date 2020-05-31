@@ -21,7 +21,6 @@ function calculateElementOffset(el) {
 function setPopUpPosition(exportLabelsPopupParentElement, exportDatasetsButton) {
   const divOffset = calculateElementOffset(exportDatasetsButton);
   exportLabelsPopupParentElement.style.top = `${divOffset.top}px`;
-  exportLabelsPopupParentElement.style.left = '65px';
 }
 
 function toggleExportDatasetsPopUp() {
