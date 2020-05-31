@@ -173,7 +173,8 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2 + 2)}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 + 3}px`;
   const stubMarginLeft = `${Math.round(originalWidth) - 4}px`;
-  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + 4.5)}px`;
+  // will need work here if delta is 1.2
+  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + (4.5 / getDelta()))}px`;
   const canvasLeft = `calc(50% - ${3.25 * getDelta()}px)`;
   const canvasTop = 'calc(50% - 3.2px)';
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
