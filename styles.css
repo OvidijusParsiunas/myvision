@@ -428,7 +428,7 @@ input:focus {
   /* table distance from the top of popup */
   top: calc(63px / var(--screen-size-delta));
   /* table distance from the right side of popup */
-  right: calc(9px / var(--screen-size-delta));
+  right: calc(8.8px / var(--screen-size-delta));
 }
 
 #chromium-fake-popup-table-bottom-border-fix {

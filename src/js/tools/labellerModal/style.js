@@ -16,6 +16,8 @@ let addNewLabelDeltaHeight = 0;
 let currentListHeightPx = 105 / getDelta();
 let heightIncreasedForNewLabel = false;
 let heightIncreasedForHorizontalScrollbar = false;
+let fakeRightBorderAdded = false;
+let fakeBottomBorderAdded = false;
 let lightupTimePeriod = SLOW_LIGHTUP_MILLISECONDS;
 let dimTimePeriod = SLOW_DIM_SECONDS;
 let dimIntensity = THICK_DIM;
@@ -45,22 +47,22 @@ function isHorizontalScrollPresent() {
 }
 
 function addFakeRightBorder() {
+  if (fakeRightBorderAdded) return;
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
+  fakeRightBorderAdded = true;
 }
 
-let bottomBorderAdded = false;
-
 function addFakeBottomBorder() {
-  if (bottomBorderAdded) return;
+  if (fakeBottomBorderAdded) return;
   const tableDistanceFromTop = Math.ceil(62 / getDelta());
   const chromiumFakeBottomBorderFixElement = document.getElementById('chromium-fake-popup-table-bottom-border-fix');
   chromiumFakeBottomBorderFixElement.style.top = `${Math.floor(tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - (4 * getDelta()))}px`;
   chromiumFakeBottomBorderFixElement.style.display = '';
   optionsElement.style.borderBottom = 'none';
   optionsElement.style.paddingBottom = '0px';
-  bottomBorderAdded = true;
+  fakeBottomBorderAdded = true;
 }
 
 // the following is a bug fix for chromium based browsers where the scroll bars
