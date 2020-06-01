@@ -1,7 +1,8 @@
 let delta = 1;
 
 // when setting delta to bigger than 1.1, will need to consider zoom,
-// image thumbnail width and left side bar border
+// image thumbnail width, left side bar border,
+// labeller modal options width and modal buttons height
 
 // delta uses screen width only
 function calculateDesiredScreenSizeDelta() {

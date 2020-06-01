@@ -5,6 +5,7 @@ import { setLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
 import { getLastMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
+import { getDelta } from '../globalStyling/elementDimensions/manager';
 
 let parentElement = null;
 let optionsElement = null;
@@ -12,7 +13,7 @@ let submitButtonElement = null;
 let inputElement = null;
 let defaultListHeightPx = 0;
 let addNewLabelDeltaHeight = 0;
-let currentListHeightPx = 105;
+let currentListHeightPx = 105 / getDelta();
 let heightIncreasedForNewLabel = false;
 let heightIncreasedForHorizontalScrollbar = false;
 let lightupTimePeriod = SLOW_LIGHTUP_MILLISECONDS;
@@ -49,13 +50,17 @@ function addFakeRightBorder() {
   chromiumFakeRightBorderFixElement.style.display = '';
 }
 
+let bottomBorderAdded = false;
+
 function addFakeBottomBorder() {
-  const tableDistanceFromTop = 62;
+  if (bottomBorderAdded) return;
+  const tableDistanceFromTop = Math.ceil(62 / getDelta());
   const chromiumFakeBottomBorderFixElement = document.getElementById('chromium-fake-popup-table-bottom-border-fix');
-  chromiumFakeBottomBorderFixElement.style.top = `${tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - 4}px`;
+  chromiumFakeBottomBorderFixElement.style.top = `${Math.floor(tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - (4 * getDelta()))}px`;
   chromiumFakeBottomBorderFixElement.style.display = '';
   optionsElement.style.borderBottom = 'none';
   optionsElement.style.paddingBottom = '0px';
+  bottomBorderAdded = true;
 }
 
 // the following is a bug fix for chromium based browsers where the scroll bars
@@ -134,13 +139,19 @@ function validateFullModalVisibile(isWindowResized) {
   }
 }
 
+// fix for a bug where the options list item color would not fill to the very end
+// when delta is 1.1 and the width is 150px as an example
+function setOptionsElementWidth() {
+  optionsElement.style.width = getDelta() > 1.0000001 ? '150.4px' : '165px';
+}
+
 function setListHeightVariables() {
   if (IS_FIREFOX) {
-    defaultListHeightPx = 105.5;
-    addNewLabelDeltaHeight = 21.5;
+    defaultListHeightPx = Math.ceil(105.5 / getDelta());
+    addNewLabelDeltaHeight = Math.ceil(21.5 / getDelta());
   } else {
-    defaultListHeightPx = 105;
-    addNewLabelDeltaHeight = 21;
+    defaultListHeightPx = Math.ceil(105 / getDelta());
+    addNewLabelDeltaHeight = Math.ceil(21 / getDelta());
   }
   currentListHeightPx = defaultListHeightPx;
 }
@@ -158,6 +169,7 @@ function initialiseLabellerModalOptionsList() {
   getLabelOptions().forEach((option) => {
     addLabelToList(option.text, option.color.label);
   });
+  setOptionsElementWidth();
 }
 
 function purgeOptionsFromLabelElement() {

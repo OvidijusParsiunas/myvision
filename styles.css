@@ -8,15 +8,22 @@
   --screen-size-delta: 1;
 }
 
+input:focus {
+  outline:none; 
+}
+
 #labeller-modal-input {
-  width: 161px;
+  width: calc(162px / var(--screen-size-delta));
   border: thin ridge rgb(177, 177, 177);
-  margin: 6px 9px 9px 9px;
+  margin-top: calc(5px / var(--screen-size-delta));
+  margin-left: calc(9px / var(--screen-size-delta));
+  margin-right: calc(8px / var(--screen-size-delta));
+  margin-bottom: calc(9px / var(--screen-size-delta));
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  padding-top: 2px;
-  padding-left: 3px;
-  padding-right: 1px;
+  font-size: calc(15px / var(--screen-size-delta));
+  padding-top: calc(2px / var(--screen-size-delta));
+  padding-left: calc(3px / var(--screen-size-delta));
+  padding-right: calc(1px / var(--screen-size-delta));
   color: black;
 }
 
@@ -42,9 +49,9 @@
 }
 
 .small-title {
-  font-size: calc(16.5px / var(--screen-size-delta));
+  font-size: calc(15.5px / var(--screen-size-delta));
   padding-left: calc(8px / var(--screen-size-delta));
-  padding-top: calc(6px / var(--screen-size-delta));
+  padding-top: calc(7px / var(--screen-size-delta));
   user-select: none;
 }
 
@@ -56,14 +63,14 @@
 }
 
 #labeller-modal-submit-button {
-  width: 61px;
-  margin-right: 4px;
-  padding-bottom: 4px;
+  width: calc(61px / var(--screen-size-delta));
+  margin-right: calc(4px / var(--screen-size-delta));
+  padding-bottom: calc(4px / var(--screen-size-delta));
 }
 
 #labeller-modal-cancel-button {
-  width: 61px;
-  padding-bottom: 4px;
+  width: calc(61px / var(--screen-size-delta));
+  padding-bottom: calc(4px / var(--screen-size-delta));
 }
 
 .dropdown {
@@ -388,15 +395,14 @@
 }
 
 #labeller-modal-options {
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-top: calc(2px / var(--screen-size-delta));
+  padding-bottom: calc(2px / var(--screen-size-delta));
   display: block;
   overflow-x: auto;
-  width: 165px;
   overflow-y: auto;
   border: thin ridge rgb(177, 177, 177);
-  height: 105px;
-  margin-left: 9px;
+  height: calc(105px / var(--screen-size-delta));
+  margin-left: calc(9px / var(--screen-size-delta));
   box-sizing: content-box;
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
@@ -420,17 +426,17 @@
 #chromium-fake-popup-table-right-border-fix {
   background-color: rgb(177, 177, 177);
   /* table distance from the top of popup */
-  top: 63px;
+  top: calc(63px / var(--screen-size-delta));
   /* table distance from the right side of popup */
-  right: 9px;
+  right: calc(9px / var(--screen-size-delta));
 }
 
 #chromium-fake-popup-table-bottom-border-fix {
   background-color: rgb(177, 177, 177);
   /* width of the table */
-  width: 166px;
+  width: calc(166px / var(--screen-size-delta));
   /* table distance from the left side of popup */
-  right: 9px;
+  right: calc(9px / var(--screen-size-delta));
 }
 
 .chromium-right-border-fix {
@@ -466,13 +472,13 @@
 }
 
 .popup-label-button {
-  margin-bottom: 5px;
-  margin-top: 5px;
-  padding-top: 6px;
-  width: 60px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-bottom: 5px;
+  margin-bottom: calc(5px / var(--screen-size-delta));
+  margin-top: calc(5px / var(--screen-size-delta));
+  padding-top: calc(6px / var(--screen-size-delta));
+  width: calc(60px / var(--screen-size-delta));
+  padding-left: calc(8px / var(--screen-size-delta));
+  padding-right: calc(8px / var(--screen-size-delta));
+  padding-bottom: calc(8px / var(--screen-size-delta));
   background-color: rgb(222, 222, 222);
   display: inline-block;
   border-radius: 2px;
@@ -480,13 +486,13 @@
 }
 
 .popup-label-button-disabled {
-  margin-bottom: 5px;
-  margin-top: 5px;
-  padding-top: 6px;
-  width: 60px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-bottom: 5px;
+  margin-bottom: calc(5px / var(--screen-size-delta));
+  margin-top: calc(5px / var(--screen-size-delta));
+  padding-top: calc(6px / var(--screen-size-delta));
+  width: calc(60px / var(--screen-size-delta));
+  padding-left: calc(8px / var(--screen-size-delta));
+  padding-right: calc(8px / var(--screen-size-delta));
+  padding-bottom: calc(5px / var(--screen-size-delta));
   display: inline-block;
   border-radius: 2px;
   cursor: pointer;
@@ -520,7 +526,7 @@
 }
 
 .popup-cancel-button {
-  margin-left: 3px;
+  margin-left: calc(3px / var(--screen-size-delta));
 }
 
 .popup-cancel-button:hover {
@@ -532,7 +538,7 @@
 }
 
 .popup-dimmed-cancel-button {
-  margin-left: 3px;
+  margin-left: calc(3px / var(--screen-size-delta));
 }
 
 .popup-dimmed-cancel-button:hover {
@@ -1033,13 +1039,13 @@
   position: relative;
   float: right;
   margin-right: 0px;
-  margin-top: 1px;
-  height: calc(23.2px / var(--screen-size-delta));
+  margin-top: 2px;
+  height: calc(22.2px / var(--screen-size-delta));
 }
 
 #upload-images-icon {
   width: 14px;
-  padding-top: calc(5px / var(--screen-size-delta));
+  padding-top: calc(3.5px / var(--screen-size-delta));
   padding-bottom: 0px;
   padding-left: calc(3px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
@@ -1050,19 +1056,19 @@
 }
 
 #remove-images-button-container {
-  margin-top: 1px;
+  margin-top: 2px;
   padding-right: 4px;
   padding-top: 0px;
   float: right;
 }
 
 #remove-images-button {
-  height: calc(23px / var(--screen-size-delta));
+  height: calc(22px / var(--screen-size-delta));
 }
 
 #remove-images-button-icon {
   width: 15px;
-  padding-top: calc(4px / var(--screen-size-delta));
+  padding-top: calc(3px / var(--screen-size-delta));
   padding-left: calc(3px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
 }
@@ -1471,7 +1477,7 @@ body {
 
 .core-button-hover-popover {
   margin-left: calc(62px / var(--screen-size-delta));
-  margin-top: calc(-35px / var(--screen-size-delta));
+  margin-top: calc(-36px / var(--screen-size-delta));
   font-size: calc(14.5px / var(--screen-size-delta));
   position: absolute;
   background: black;
@@ -1632,6 +1638,7 @@ body {
 }
 
 @-moz-document url-prefix() {
+  /* check this is ok on ubuntu firefox */
   input.checkbox {
     margin-top: 2px;
     margin-bottom: 2px;
@@ -1640,13 +1647,14 @@ body {
     padding-top: calc(2px / var(--screen-size-delta));
   }
   .format-option-popover {
-    padding-top: 2px;
+    padding-top: calc(2px / var(--screen-size-delta));
   }
   .format-option-checkbox-popover {
-    margin-top: -27px;
+    margin-top: calc(-27px / var(--screen-size-delta));
   }
+  /* check this is ok on ubuntu firefox */
   .format-option-text-popover {
-    margin-top: -28px;
+    margin-top: calc(-27px / var(--screen-size-delta));
   }
   #canvas-wrapper-parent {
     width: calc(100% - 211.5px - (57px / var(--screen-size-delta)));
@@ -1658,10 +1666,10 @@ body {
     top: calc(34px + (29px / var(--screen-size-delta)));
   }
   .core-button-hover-popover {
-    margin-top: -37px;
+    margin-top: calc(-36px / var(--screen-size-delta));
   }
   .small-core-button-hover-popover-v-position {
-    margin-top: -33px;
+    margin-top: calc(-31px / var(--screen-size-delta));
   }
   #export-labels-popup-export-button {
     padding-top: calc(4.5px / var(--screen-size-delta));
@@ -1693,16 +1701,16 @@ body {
     padding-bottom: 4px;
   }
   .image-list-button-hover-popover-v-position {
-    margin-top: -31px;
+    margin-top: calc(-29px / var(--screen-size-delta));
   }
   .image-switch-button-hover-popover {
-    margin-top: 11px;
+    margin-top: calc(11px / var(--screen-size-delta));
   }
   .image-switch-button-popover-plus {
-    margin-top: -15px;
+    margin-top: calc(-15px / var(--screen-size-delta));
   }
   .image-switch-button-popover-arrow {
-    margin-top: -22px;
+    margin-top: calc(-22px / var(--screen-size-delta));
   }
   #upload-images-button {
     margin-top: 2px;
