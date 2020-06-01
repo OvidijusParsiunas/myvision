@@ -51,6 +51,7 @@ function addFakeRightBorder() {
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
+  chromiumFakeRightBorderFixElement.style.right = getDelta() > 1.000001 ? `${9 / getDelta()}px` : '9px';
   fakeRightBorderAdded = true;
 }
 
@@ -149,7 +150,7 @@ function setOptionsElementWidth() {
 
 function setListHeightVariables() {
   if (IS_FIREFOX) {
-    defaultListHeightPx = Math.ceil(105.5 / getDelta());
+    defaultListHeightPx = Math.ceil(107.5 / getDelta());
     addNewLabelDeltaHeight = Math.ceil(21.5 / getDelta());
   } else {
     defaultListHeightPx = Math.ceil(105 / getDelta());
