@@ -4,6 +4,7 @@ import {
   setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent,
 } from '../../../utils/elementCaretUtils';
 import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
+import { getDelta } from '../../../globalStyling/elementDimensions/manager';
 
 let editingActive = false;
 let activeTextRow = null;
@@ -12,6 +13,7 @@ let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
 let objectNames = null;
+const TABLE_MAX_WIDTH = 352 / getDelta();
 
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
@@ -50,12 +52,12 @@ function scrollHorizontallyToAppropriateWidth(text) {
   const context = myCanvas.getContext('2d');
   context.font = getDefaultFont(activeTextElement);
   const metrics = context.measureText(text);
-  let originalParentMaxWidth = 337;
+  let originalParentMaxWidth = 337 / getDelta();
   if (isVerticalScrollPresent(generatedLabelsParentElement)) {
     originalParentMaxWidth -= overflowScrollWidth;
   }
   if (metrics.width > originalParentMaxWidth) {
-    generatedLabelsParentElement.scrollLeft = metrics.width - 312;
+    generatedLabelsParentElement.scrollLeft = metrics.width - 312 / getDelta();
   } else {
     generatedLabelsParentElement.scrollLeft = 0;
   }
@@ -79,12 +81,13 @@ function MLLabelTextPaste(event) {
 
 function updateGeneratedLabelsElementWidth() {
   generatedLabelsParentElement.style.width = `${activeTextRow.clientWidth + overflowScrollWidth}px`;
-  if (!maxWidthStyleAppended && parseInt(generatedLabelsParentElement.style.width, 10) > 352) {
-    generatedLabelsParentElement.style.maxWidth = '352px';
+  if (!maxWidthStyleAppended
+      && parseInt(generatedLabelsParentElement.style.width, 10) > TABLE_MAX_WIDTH) {
+    generatedLabelsParentElement.style.maxWidth = `${TABLE_MAX_WIDTH}px`;
     generatedLabelsParentElement.style.overflowX = 'auto';
     maxWidthStyleAppended = true;
   } else if (maxWidthStyleAppended
-    && parseInt(generatedLabelsParentElement.style.width, 10) < 352) {
+      && parseInt(generatedLabelsParentElement.style.width, 10) < TABLE_MAX_WIDTH) {
     generatedLabelsParentElement.style.maxWidth = '';
     generatedLabelsParentElement.style.overflowX = 'hidden';
     maxWidthStyleAppended = false;
@@ -206,7 +209,7 @@ function calculateContainerDivHeight() {
   const numberOfRows = Object.keys(objectNames).length;
   const baseHeight = numberOfRows > 1 ? 104 : 114;
   const numberOfVisibleRows = numberOfRows > 5 ? 5 : numberOfRows;
-  const newNameHeight = baseHeight + numberOfVisibleRows * 10;
+  const newNameHeight = baseHeight / getDelta() + numberOfVisibleRows * 10;
   return `${newNameHeight}px`;
 }
 
@@ -216,9 +219,9 @@ function changeElementsToVisible() {
 }
 
 function changeElementsToMoveListUpwards() {
-  submitButtonElement.style.marginTop = '2px';
-  submitButtonElement.style.marginBottom = '6px';
-  descriptionElement.style.marginBottom = '6px';
+  submitButtonElement.style.marginTop = `${2 / getDelta()}px`;
+  submitButtonElement.style.marginBottom = `${6 / getDelta()}px`;
+  descriptionElement.style.marginBottom = `${6 / getDelta()}px`;
 }
 
 function resetElementsToMoveListToDefaultPosition() {
@@ -239,6 +242,16 @@ function createLabelElementMarkup(labelText, id) {
   `;
 }
 
+// fix for chrome where upon clicking on a row to edit, the row height
+// would get smaller
+function triggerContentEditableOnce(cell) {
+  const textInput = cell.childNodes[1].childNodes[9];
+  textInput.contentEditable = true;
+  setTimeout(() => {
+    textInput.contentEditable = false;
+  });
+}
+
 function populateGeneratedLabelsTable() {
   let index = 0;
   Object.keys(objectNames).forEach((key) => {
@@ -246,6 +259,7 @@ function populateGeneratedLabelsTable() {
     const cell = newNameRow.insertCell(0);
     cell.innerHTML = createLabelElementMarkup(objectNames[key].pendingName, index);
     index += 1;
+    triggerContentEditableOnce(cell);
   });
   if (index > 4) {
     changeElementsToMoveListUpwards();

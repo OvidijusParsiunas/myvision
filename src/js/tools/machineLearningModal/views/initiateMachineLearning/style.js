@@ -1,4 +1,5 @@
 import IS_FIREFOX from '../../../utils/browserType';
+import { getDelta } from '../../../globalStyling/elementDimensions/manager';
 
 let isNoImagesFoundInfoDisplayed = false;
 
@@ -47,7 +48,7 @@ function displayErrorMessage(errorMessage) {
   removeProgressMessage();
   errorMessagesElement.style.display = '';
   errorMessagesElement.innerHTML = errorMessage;
-  buttonsGroupElement.style.marginTop = '4px';
+  buttonsGroupElement.style.marginTop = `${4 / getDelta()}px`;
 }
 
 function removeErrorMessage() {
@@ -58,7 +59,7 @@ function removeErrorMessage() {
 
 function displayRetryButton() {
   document.getElementById('machine-learning-modal-initiate-retry-button').style.display = '';
-  descriptionElement.style.marginBottom = '6px';
+  descriptionElement.style.marginBottom = `${6 / getDelta()}px`;
 }
 
 function removeRetryButton() {
@@ -74,7 +75,7 @@ function updateProgressMessage(progressMessage) {
 
 function displayInfoMessage(message) {
   infoMessagesElement.innerHTML = message;
-  buttonsGroupElement.style.marginTop = '4px';
+  buttonsGroupElement.style.marginTop = `${4 / getDelta()}px`;
 }
 
 function removeInfoMessage() {
@@ -87,7 +88,7 @@ function displayDescription() {
 }
 
 function displayAllButtons() {
-  buttonsGroupElement.style.marginTop = '-4px';
+  buttonsGroupElement.style.marginTop = `${-4 / getDelta()}px`;
   buttonsGroupElement.style.display = '';
 }
 
@@ -111,8 +112,8 @@ function removeLoadingText() {
 function displayLoaderWheel() {
   removeErrorMessage();
   loadingWheelElement.style.display = '';
-  cancelButtonElement.style.marginRight = '3px';
-  descriptionElement.style.marginBottom = '2px';
+  cancelButtonElement.style.marginRight = `${3 / getDelta()}px`;
+  descriptionElement.style.marginBottom = `${2 / getDelta()}px`;
 }
 
 function removeLoadingWheel() {
@@ -138,12 +139,12 @@ function removeMLCoverageSelectionButtons() {
 
 function displayNextButton() {
   nextButtonElement.style.display = '';
-  descriptionElement.style.marginBottom = '7px';
+  descriptionElement.style.marginBottom = `${7 / getDelta()}px`;
 }
 
 function removeNextButton() {
   nextButtonElement.style.display = 'none';
-  descriptionElement.style.marginBottom = '7px';
+  descriptionElement.style.marginBottom = `${7 / getDelta()}px`;
 }
 
 function displayCancelButton() {
@@ -242,8 +243,8 @@ function changeToNoImagesFoundStyle() {
   displayUploadImagesButton();
   disableStartButton();
   displayInfoMessage('Please upload an image to get started.');
-  setDescriptionElementMarginBottom('3px');
-  const newModalHeight = IS_FIREFOX ? '277px' : '273px';
+  setDescriptionElementMarginBottom(`${3 / getDelta()}px`);
+  const newModalHeight = IS_FIREFOX ? `${277 / getDelta()}px` : `${273 / getDelta()}px`;
   setModalHeight(newModalHeight);
   isNoImagesFoundInfoDisplayed = true;
 }

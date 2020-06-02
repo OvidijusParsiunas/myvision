@@ -43,7 +43,7 @@
     </div>
     <div id="labeller-modal-parent" onmousemove="trackMouseMoveEvents(event)" hidden>
       <div class="small-title">Label name:</div>
-      <input type="text" id="labeller-modal-input" onpaste="labellerModalInputPaste()" name="labelName" spellcheck="false" onkeydown="labellerModalKeyDown(event, this)" value="new label">
+      <input type="text" id="labeller-modal-input" autocomplete="off" onpaste="labellerModalInputPaste()" name="labelName" spellcheck="false" onkeydown="labellerModalKeyDown(event, this)" value="new label">
       <table id="labeller-modal-options">
       </table>
       <div id="chromium-fake-popup-table-right-border-fix" class="chromium-right-border-fix" style="display: none"></div>

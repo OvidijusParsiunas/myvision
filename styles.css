@@ -478,7 +478,7 @@ input:focus {
   width: calc(60px / var(--screen-size-delta));
   padding-left: calc(8px / var(--screen-size-delta));
   padding-right: calc(8px / var(--screen-size-delta));
-  padding-bottom: calc(8px / var(--screen-size-delta));
+  padding-bottom: calc(6px / var(--screen-size-delta));
   background-color: rgb(222, 222, 222);
   display: inline-block;
   border-radius: 2px;
@@ -502,7 +502,7 @@ input:focus {
 }
 
 .popup-proceed-button {
-  margin-right: 3px;
+  margin-right: calc(3px / var(--screen-size-delta));
 }
 
 .popup-proceed-button:hover {
@@ -514,7 +514,7 @@ input:focus {
 }
 
 .popup-back-button {
-  margin-right: 3px;
+  margin-right: calc(3px / var(--screen-size-delta));
 }
 
 .popup-back-button:hover {
@@ -590,7 +590,7 @@ input:focus {
   margin-right: calc(3px / var(--screen-size-delta));
   margin-top: calc(5px / var(--screen-size-delta));
   width: calc(50px / var(--screen-size-delta));
-  padding-top: calc(5px / var(--screen-size-delta));
+  padding-top: calc(6px / var(--screen-size-delta));
 }
 
 .data-format-table-row-data {
@@ -641,7 +641,7 @@ input:focus {
 
 .text-arrow-position {
   margin-top: calc(-6px / var(--screen-size-delta));
-  margin-left: calc(8px / var(--screen-size-delta));;
+  margin-left: calc(8px / var(--screen-size-delta));
 }
 
 .default-arrow-color {
@@ -690,7 +690,7 @@ input:focus {
 .modal-parent {
   position: absolute;
 	font-family: Arial, Helvetica, sans-serif;
-  font-size: 14.5px;
+  font-size: calc(14.5px / var(--screen-size-delta));
   line-height: 1.35;
   background-color: white;
   border-width: 1px;
@@ -704,65 +704,68 @@ input:focus {
 }
 
 .modal-title {
-  margin-top: 4px;
-  margin-left: 10px;
+  margin-top: calc(4px / var(--screen-size-delta));
+  margin-left: calc(10px / var(--screen-size-delta));
 }
 
 .modal-title-border-line {
   width: 100%;
-  margin-top: 5px;
+  margin-top: calc(5px / var(--screen-size-delta));
   border-top: solid 1px #e6e6e6;
 }
 
 .modal-description {
-  margin-left: 22px;
-  margin-top: 10px;
-  margin-bottom: 6px;
-  width: 369px;
+  margin-left: calc(22px / var(--screen-size-delta));
+  margin-top: calc(10px / var(--screen-size-delta));
+  margin-bottom: calc(6px / var(--screen-size-delta));
+  width: calc(369px / var(--screen-size-delta));
   user-select: none;
 }
 
 .modal-buttons {
-  font-size: 14.5px;
+  font-size: calc(14.5px / var(--screen-size-delta));
 }
 
 .modal-messages {
   text-align: center;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: calc(2px / var(--screen-size-delta));
   user-select: none;
+  margin-bottom: calc(5px / var(--screen-size-delta));
+}
+
+.machine-learning-modal-error-messages {
   margin-bottom: 5px;
 }
 
 #machine-learning-modal-parent {
-  height: 269px;
-  width: 415px;
-  left: -151px;
+  height: calc(269px / var(--screen-size-delta));
+  width: calc(415px / var(--screen-size-delta));
+  left: calc(-151px / var(--screen-size-delta));
 }
 
 #machine-learning-modal-description {
-  margin-left: 24px;
-  margin-top: 16px;
+  margin-left: calc(24px / var(--screen-size-delta));
+  margin-top: calc(16px / var(--screen-size-delta));
 }
 
 #machine-learning-modal-initiate-start-button {
-  margin-left: 3px;
+  margin-left: calc(3px / var(--screen-size-delta));
 }
 
 #machine-learning-modal-error-messages {
-  margin-top: 70px;
+  margin-top: calc(70px / var(--screen-size-delta));
   color: red;
 }
 
 #machine-learning-modal-check-mark-parent {
   position: relative;
-  margin-left: 153px;
-  margin-top: 20px;
+  margin-left: calc(153px / var(--screen-size-delta));
+  margin-top: calc(20px / var(--screen-size-delta));
 }
 
 #machine-learning-modal-progress-messages {
-  margin-top: 93px;
-  margin-bottom: 7px;
+  margin-top: calc(93px / var(--screen-size-delta));
+  margin-bottom: 7px / var(--screen-size-delta);
 }
 
 #machine-learning-modal-info-messages {
@@ -812,30 +815,31 @@ input:focus {
 }
 
 #machine-learning-modal-initiate-next-button {
-  width: 60px;
-  margin-left: 3px;
-}
-
-#machine-learning-modal-initiate-all-images-button {
-  margin-right: 3px;
-  padding-left: 5px;
-  padding-right: 5px;
-  width: 81px;
-}
-
-#machine-learning-modal-initiate-new-images-button {
-  margin-left: 3px;
-  width: 81px;
-}
-
-#machine-learning-modal-no-objects-close-button {
+  width: calc(60px / var(--screen-size-delta));
+  margin-left: calc(3px / var(--screen-size-delta));
   margin-top: 5px;
 }
 
+#machine-learning-modal-initiate-all-images-button {
+  margin-right: calc(3px / var(--screen-size-delta));
+  padding-left: calc(5px / var(--screen-size-delta));
+  padding-right: calc(5px / var(--screen-size-delta));
+  width: calc(81px / var(--screen-size-delta));
+}
+
+#machine-learning-modal-initiate-new-images-button {
+  margin-left: calc(3px / var(--screen-size-delta));
+  width: calc(81px / var(--screen-size-delta));
+}
+
+#machine-learning-modal-no-objects-close-button {
+  margin-top: calc(5px / var(--screen-size-delta));
+}
+
 #machine-learning-modal-generated-labels-outer-container {
-  padding-top: 12px;
+  padding-top: calc(12px / var(--screen-size-delta));
   position: relative;
-  height: 152px;
+  height: calc(152px / var(--screen-size-delta));
 }
 
 #machine-learning-modal-generated-labels-inner-container {
@@ -852,7 +856,7 @@ input:focus {
   margin-right: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 100px;
+  max-height: calc(102px / var(--screen-size-delta));
   /* firefox */
   scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
@@ -878,35 +882,37 @@ input:focus {
 }
 
 .machine-learning-modal-generated-labels-row {
-  padding-left: 5px;
-  padding-right: 1px;
+  padding-left: calc(5px / var(--screen-size-delta));
+  padding-right: calc(1px / var(--screen-size-delta));
   cursor: pointer;
   border-bottom: 1px solid #f7f7f7;
 }
 
 .machine-learning-modal-generated-labels-edit-icon {
-  width: 8px;
-  margin-top: 5px;
+  width: calc(8px / var(--screen-size-delta));
+  margin-top: calc(5px / var(--screen-size-delta));
   float: left;
 }
 
 .machine-learning-modal-generated-labels-input {
-  margin-left: 12px;
+  margin-left: calc(12px / var(--screen-size-delta));
   outline: none;
   white-space: pre;
-  padding-right: 5px
+  padding-right: calc(5px / var(--screen-size-delta));
+  font-size: calc(15px / var(--screen-size-delta));
+  padding-left: 1px;
 }
 
 #machine-learning-modal-generated-labels-submit-button {
-  margin-top: 5px;
-  padding-top: 6px;
-  padding-bottom: 5px;
-  margin-left: 3px;
-  width: 60px;
+  margin-top: calc(5px / var(--screen-size-delta));
+  padding-top: calc(6px / var(--screen-size-delta));
+  padding-bottom: calc(6px / var(--screen-size-delta));
+  margin-left: calc(3px / var(--screen-size-delta));
+  width: calc(60px / var(--screen-size-delta));
 }
 
 #machine-learning-modal-generated-labels-buttons {
-  margin-top: 8px;
+  margin-top: calc(8px / var(--screen-size-delta));
 }
 
 .reverse-icon {
@@ -1347,6 +1353,7 @@ body {
   cursor: pointer;
   margin-top: calc(3px / var(--screen-size-delta));
   margin-bottom: calc(3px / var(--screen-size-delta));
+  margin-right: calc(10px / var(--screen-size-delta));
 }
 
 #title-panel {
@@ -1503,7 +1510,7 @@ body {
 
 .image-switch-button-hover-popover {
   margin-left: -74px;
-  margin-top: calc(11px / var(--screen-size-delta));;
+  margin-top: calc(11px / var(--screen-size-delta));
 }
 
 .image-list-thumbnail {
@@ -1579,14 +1586,14 @@ body {
   animation: spin 2s linear infinite;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 56px;
+  margin-top: calc(56px / var(--screen-size-delta));
 }
 
 #machine-learning-modal-loading-text {
   text-align: center;
-    margin-top: 10px;
-    margin-bottom: 7px;
-    margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 7px;
+  margin-left: 5px;
 }
 
 @media only screen and (max-height: 585px) {
