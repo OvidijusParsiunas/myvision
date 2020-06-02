@@ -402,7 +402,7 @@ input:focus {
   overflow-y: auto;
   border: thin ridge rgb(177, 177, 177);
   height: calc(105px / var(--screen-size-delta));
-  margin-left: calc(9px / var(--screen-size-delta));
+  margin-left: calc(9.4px / var(--screen-size-delta));
   box-sizing: content-box;
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
