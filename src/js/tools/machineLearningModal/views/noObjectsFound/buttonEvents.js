@@ -1,6 +1,8 @@
 import { hideNoObjectsFoundViewAssets } from './style';
+import { resetCursor } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
 
 function closeModal(closeModalCallback) {
+  resetCursor();
   closeModalCallback(true);
   hideNoObjectsFoundViewAssets();
 }

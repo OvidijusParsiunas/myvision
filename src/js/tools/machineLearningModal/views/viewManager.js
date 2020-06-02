@@ -54,6 +54,7 @@ function displayNextView() {
       if (isMachineLearningObjectEmpty()) {
         displayNoObjectsFoundView();
         closeModalFunc = () => {
+          resetCursor();
           hideNoObjectsFoundViewAssets();
           return true;
         };

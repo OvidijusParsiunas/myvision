@@ -26,8 +26,6 @@ weird auto horizontal rotate for some images on firefox
 
 the label list contents padding top looks a little too high for firefox
 
-the cursor is messed up after ml has not found any labels and clicked close
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
