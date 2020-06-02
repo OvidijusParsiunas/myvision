@@ -1045,20 +1045,20 @@ input:focus {
   position: relative;
   float: right;
   margin-right: 0px;
-  margin-top: 1.5px;
-  height: calc(22.2px / var(--screen-size-delta));
+  margin-top: 2px;
+  height: calc(21.2px / var(--screen-size-delta));
 }
 
 #upload-images-icon {
   width: 14px;
-  padding-top: calc(3.5px / var(--screen-size-delta));
+  padding-top: calc(3px / var(--screen-size-delta));
   padding-bottom: 0px;
-  padding-left: calc(3px / var(--screen-size-delta));
+  padding-left: calc(2.5px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
 }
 
 #upload-images-button-popover {
-  right: calc(18px / var(--screen-size-delta));
+  right: calc(17px / var(--screen-size-delta));
 }
 
 #remove-images-button-container {
@@ -1069,11 +1069,11 @@ input:focus {
 }
 
 #remove-images-button {
-  height: calc(22px / var(--screen-size-delta));
+  height: calc(21px / var(--screen-size-delta));
 }
 
 #remove-images-button-icon {
-  width: 15px;
+  width: calc(16.5px / var(--screen-size-delta));
   padding-top: calc(2px / var(--screen-size-delta));
   padding-left: calc(3px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
