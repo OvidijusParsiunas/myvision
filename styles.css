@@ -1045,7 +1045,7 @@ input:focus {
   position: relative;
   float: right;
   margin-right: 0px;
-  margin-top: 2px;
+  margin-top: 1.5px;
   height: calc(22.2px / var(--screen-size-delta));
 }
 
@@ -1074,7 +1074,7 @@ input:focus {
 
 #remove-images-button-icon {
   width: 15px;
-  padding-top: calc(3px / var(--screen-size-delta));
+  padding-top: calc(2px / var(--screen-size-delta));
   padding-left: calc(3px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
 }
@@ -1719,21 +1719,8 @@ body {
   .image-switch-button-popover-arrow {
     margin-top: calc(-22px / var(--screen-size-delta));
   }
-  #upload-images-button {
-    margin-top: 2px;
-    height: calc(22.2px / var(--screen-size-delta));
-  }
   #upload-images-icon {
     padding-top: calc(4px / var(--screen-size-delta));
-  }
-  #remove-images-button-container {
-    margin-top: 2px;
-  }
-  #remove-images-button {
-    height: calc(22px / var(--screen-size-delta));
-  }
-  #remove-images-button-icon {
-    padding-top: calc(3px / var(--screen-size-delta));
   }
 }
 
