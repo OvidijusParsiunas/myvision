@@ -3,6 +3,7 @@ import {
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, IMAGES_TABLE_INDICATOR,
 } from '../../consts';
 import IS_FIREFOX from '../../../utils/browserType';
+import { getDelta } from '../../../globalStyling/elementDimensions/manager';
 
 let titleElement = null;
 let table1Element = null;
@@ -64,11 +65,11 @@ function createTableRowElementMarkup(fileName, tableName) {
 function addPopoverArrowMarginLeftStyle(tableName) {
   if (currentTableStrategy === TWO_TABLE_STRATEGY
       && tableName === ANNOTATIONS_TABLE_INDICATOR) {
-    return `style="margin-left: ${(modalWidth / 2 / 2) - 20}px;"`;
+    return `style="margin-left: ${(((modalWidth / 2 / 2) - 20) / getDelta())}px;"`;
   }
   if (currentTableStrategy === THREE_TABLE_STRATEGY
     && tableName === CLASSES_TABLE_INDICATOR) {
-    return `style="margin-left: ${(modalWidth / 3 / 2) + 34}px;"`;
+    return `style="margin-left: ${(((modalWidth / 3 / 2) + 34) / getDelta())}px;"`;
   }
   return '';
 }
@@ -81,7 +82,7 @@ function createTableRowElementMarkupWthPopover(fileName, message, popoverPositio
     <div id="upload-datasets-modal-file-popover-arrow-${index}" ${addPopoverArrowMarginLeftStyle(tableName)} class="arrow ${popoverArrowTheme} ${popoverArrowPositionClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
         <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
-          <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
+          <img src="x-icon-default.svg" class="upload-datasets-modal-remove-file-button" alt="remove">
           <img src="x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
         <div class="upload-datasets-modal-upload-datasets-table-row-text ${textThemeClass}" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFilePopover(${popoverIndex})">${fileName}</div>
@@ -93,9 +94,9 @@ window.displayUploadDatasetsAnnotationFilePopover = (id, tableName) => {
   const tableOuterContainerElement = tableName === ANNOTATIONS_TABLE_INDICATOR
     ? annotationsTableOuterContainerElement : imagesTableOuterContainerElement;
   document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.display = 'block';
-  document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 30}px`;
+  document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 29 / getDelta()}px`;
   document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.display = 'block';
-  document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 4}px`;
+  document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 4 / getDelta()}px`;
 };
 
 window.removeUploadDatasetsAnnotationFilePopover = (id) => {
@@ -324,7 +325,7 @@ function setTitleElement(title) {
 }
 
 function setTitleElementMarginTop(length) {
-  titleElement.style.marginTop = length;
+  titleElement.style.marginTop = `${length / getDelta()}px`;
 }
 
 function resetTitleElementMarginTop() {
@@ -359,7 +360,7 @@ function setButtonGroupElementMarginTop(length) {
 
 function setButtonGroupElementMarginTopByBrowser() {
   if (!IS_FIREFOX) {
-    setButtonGroupElementMarginTop('272px');
+    setButtonGroupElementMarginTop(`${272 / getDelta()}px`);
   } else {
     setButtonGroupElementMarginTop('1px');
   }
@@ -420,8 +421,8 @@ function setAcceptedFileFormatTrigger(format) {
 }
 
 function changeUploadDatasetsModalElementDimensions(width, height) {
-  uploadDatasetsModalElement.style.width = `${width}px`;
-  uploadDatasetsModalElement.style.height = `${height}px`;
+  uploadDatasetsModalElement.style.width = `${width / getDelta()}px`;
+  uploadDatasetsModalElement.style.height = `${height / getDelta()}px`;
 }
 
 function resetUploadDatasetsModalElementDimensions() {
@@ -448,7 +449,7 @@ function displayTableStrategyRelevantAssets(tableStrategy) {
 
 function prepareUploadDatasetsView(formatName, acceptedFileFormats, annotationFileFormat,
   tableStrategy) {
-  setTitleElementMarginTop('9px');
+  setTitleElementMarginTop(9);
   setTitleElement(formatName);
   setAnnotationsTableTitle(annotationFileFormat);
   setAcceptedFileFormatTrigger(acceptedFileFormats);

@@ -1,3 +1,5 @@
+import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+
 let yesButtonElement = null;
 let noButtonElement = null;
 let descriptionElement = null;
@@ -21,7 +23,7 @@ function hideNoButtonElement() {
 }
 
 function setDescriptionElementMarginTop(length) {
-  descriptionElement.style.marginTop = length;
+  descriptionElement.style.marginTop = `${length / getDelta()}px`;
 }
 
 function resetDescriptionElementMarginTop() {
@@ -49,7 +51,7 @@ function hideDescriptionElement() {
 }
 
 function setButtonGroupElementMarginTop(length) {
-  buttonsGroupElement.style.marginTop = length;
+  buttonsGroupElement.style.marginTop = `${length / getDelta()}px`;
 }
 
 function resetButtonGroupElementMarginTop() {
@@ -59,11 +61,11 @@ function resetButtonGroupElementMarginTop() {
 function prepareUseExistingImagesQstnView() {
   setDescriptionElementText(DESCRIPTION_TEXT);
   centerDescriptionElementText();
-  setDescriptionElementMarginTop('61px');
+  setDescriptionElementMarginTop(61);
   displayYesButtonElement();
   displayNoButtonElement();
   displayDescriptionElement();
-  setButtonGroupElementMarginTop('5px');
+  setButtonGroupElementMarginTop(5);
 }
 
 function hideUseExistingImagesViewAssets() {

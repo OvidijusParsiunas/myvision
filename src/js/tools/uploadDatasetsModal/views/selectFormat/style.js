@@ -1,4 +1,5 @@
 import { getAvailableFormats } from '../../stateMachine';
+import { getDelta } from '../../../globalStyling/elementDimensions/manager';
 
 let descriptionElement = null;
 let cancelButtonElement = null;
@@ -77,7 +78,7 @@ function hideDescriptionElement() {
 }
 
 function setButtonGroupElementMarginTop(length) {
-  buttonsGroupElement.style.marginTop = length;
+  buttonsGroupElement.style.marginTop = `${length / getDelta()}px`;
 }
 
 function resetButtonGroupElementMarginTop() {
@@ -85,13 +86,13 @@ function resetButtonGroupElementMarginTop() {
 }
 
 function createTableRow(format, index) {
-  const paddingTop = index === 2 ? 5 : 3;
+  const paddingTop = index === 2 ? 5 / getDelta() : 3 / getDelta();
   return `
     <td style="padding-top: ${paddingTop}px" class="data-format-table-row-data">
-      <div style="padding-left: 5px" class="checkbox-text format-option-text">
+      <div class="checkbox-text format-option-text upload-data-format-row-text">
         ${format}
       </div>
-      <input style="margin-right: 10px" class="checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
+      <input class="checkbox upload-datasets-format-checkbox" type="checkbox" name="something" onclick="selectUploadDatasetsFormat('${format}', this)">
     </td>
   `;
 }
@@ -106,7 +107,7 @@ function populateFormatsTable(formats) {
 
 function prepareSelectFormatView() {
   displayNextButtonElement();
-  setButtonGroupElementMarginTop('5px');
+  setButtonGroupElementMarginTop(5);
   displayCancelButtonElement();
   if (!formatsTablePopulated) { populateFormatsTable(getAvailableFormats()); }
   displaySelectFormatOuterContainerElementView();

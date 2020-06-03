@@ -127,7 +127,7 @@ input:focus {
   display: none;
   z-index: 2;
   position: absolute;
-  font-size: calc(13.5px / var(--screen-size-delta));;
+  font-size: calc(13.5px / var(--screen-size-delta));
   border-radius: 4px;
   user-select: none;
   border-style: solid;
@@ -135,48 +135,48 @@ input:focus {
 }
 
 #upload-datasets-modal-parent {
-  height: 251px;
-  width: 415px;
-  left: -151px;
+  height: calc(251px / var(--screen-size-delta));
+  width: calc(415px / var(--screen-size-delta));
+  left: calc(-151px / var(--screen-size-delta));
 }
 
 #upload-datasets-modal-buttons {
-  margin-top: 272px;
+  margin-top: calc(272px / var(--screen-size-delta));
 }
 
 .upload-datasets-modal-description-break {
-  padding-top: 4px;
+  padding-top: calc(4px / var(--screen-size-delta));
 }
 
 .upload-datsets-modal-title {
   text-align: center;
-  margin-top: 18px;
-  font-size: 16px;
+  margin-top: calc(18px / var(--screen-size-delta));
+  font-size: calc(16px / var(--screen-size-delta));
   user-select: none;
 }
 
 #upload-datsets-modal-select-format-title {
   margin-bottom: 0px;
-  margin-top: 6px;
+  margin-top: calc(6px / var(--screen-size-delta));
 }
 
 #upload-datsets-modal-select-format-inner-container {
   left: 0;
   right: 0;
-  width: 170px;
+  width: calc(170px / var(--screen-size-delta));
   margin-left: auto;
   margin-right: auto;
 }
 
 #upload-datsets-modal-select-format-table {
-  width: 169px;
-  padding: 2px;
-  padding-top: 6px;
-  padding-left: 5px;
+  width: calc(169px / var(--screen-size-delta));
+  padding: calc(2px / var(--screen-size-delta));
+  padding-top: calc(6px / var(--screen-size-delta));
+  padding-left: calc(5px / var(--screen-size-delta));
 }
 
 #upload-datsets-modal-upload-datasets-title {
-  margin-bottom: 5px;
+  margin-bottom: calc(5px / var(--screen-size-delta));
 }
 
 .upload-datsets-modal-upload-datasets-two-table-strategy-section {
@@ -193,45 +193,45 @@ input:focus {
 
 /* cannot reuse these as a class because their elements undergo class replacement */
 #upload-datasets-modal-upload-datasets-upload-button {
-  margin-right: 2px;
-  margin-left: 2px;
+  margin-right: calc(2px / var(--screen-size-delta));
+  margin-left: calc(2px / var(--screen-size-delta));
 }
 
 #upload-datasets-modal-back-button {
-  padding-left: 9px;
-  padding-right: 7px;
+  padding-left: calc(9px / var(--screen-size-delta));
+  padding-right: calc(7px / var(--screen-size-delta));
 }
 
 #upload-datsets-modal-next-button {
-  margin-right: 2px;
-  margin-left: 2px;
+  margin-right: calc(2px / var(--screen-size-delta));
+  margin-left: calc(2px / var(--screen-size-delta));
 }
 
 #upload-datasets-modal-finish-button {
-  margin-left: 3px;
+  margin-left: calc(3px / var(--screen-size-delta));
   margin-right: 0px;
 }
 
 .upload-datsets-modal-upload-datasets {
-  max-width: 281px;
+  max-width: calc(281px / var(--screen-size-delta));
   overflow-x: auto;
   display: inline-block;
 }
 
 .upload-datasets-modal-upload-datasets-table-title {
-  font-size: 15px;
-  margin-top: 5px;
-  margin-bottom: 2px;
+  font-size: calc(15px / var(--screen-size-delta));
+  margin-top: calc(5px / var(--screen-size-delta));
+  margin-bottom: calc(2px / var(--screen-size-delta));
   user-select: none;
 }
 
 .upload-datasets-modal-upload-datasets-table {
-  margin-top: 5px;
+  margin-top: calc(5px / var(--screen-size-delta));
 }
 
 .upload-datasets-table {
-  max-height: 231px;
-  min-height: 231px;
+  max-height: calc(231px / var(--screen-size-delta));
+  min-height: calc(231px / var(--screen-size-delta));
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
   scrollbar-width: thin;
@@ -243,12 +243,12 @@ input:focus {
 
 .upload-datasets-table::-webkit-scrollbar-thumb {
   background: #c7c7c7;
-  border-radius: 10px;
+  border-radius: calc(10px / var(--screen-size-delta));
 }
 
 .upload-datasets-table::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: calc(6px / var(--screen-size-delta));
+  height: calc(6px / var(--screen-size-delta));
 }
 
 .upload-datasets-modal-upload-datasets-table-row {
@@ -262,21 +262,21 @@ input:focus {
   white-space: pre;
   text-align: left;
   user-select: none;
-  padding-right: 12px;
+  padding-right: calc(12px / var(--screen-size-delta));
 }
 
 .upload-datasets-modal-upload-datasets-table-row-text-error {
   color: red;
-  padding-right: 12px;
+  padding-right: calc(12px / var(--screen-size-delta));
 }
 
 .upload-datasets-modal-upload-datasets-table-row-popover {
-  padding-left: 6px;
-  padding-right: 6px;
-  padding-top: 4px;
-  padding-bottom: 3px;
+  padding-left: calc(6px / var(--screen-size-delta));
+  padding-right: calc(6px / var(--screen-size-delta));
+  padding-top: calc(4px / var(--screen-size-delta));
+  padding-bottom: calc(3px / var(--screen-size-delta));
   width: max-content;
-  min-width: 224px;
+  min-width: calc(224px / var(--screen-size-delta));
 }
 
 .error-popover-color-theme {
@@ -312,7 +312,7 @@ input:focus {
 }
 
 .upload-datasets-modal-upload-datasets-table-row-popover-right {
-  right: 5px;
+  right: calc(5px / var(--screen-size-delta));
   margin-right: 0px;
 }
 
@@ -328,25 +328,25 @@ input:focus {
 }
 
 .upload-datasets-modal-upload-datasets-table-row-popover-arrow-right {
-  right: 166px;
+  right: calc(166px / var(--screen-size-delta));
 }
 
 .upload-datasets-modal-remove-file-button {
   float: left;
-  padding-top: 5.5px;
-  margin-right: 5px;
+  padding-top: calc(5.5px / var(--screen-size-delta));
+  margin-right: calc(5px / var(--screen-size-delta));
   cursor: pointer;
-  width: 7.5px;
-  padding-bottom: 6.5px;
+  width: calc(8px / var(--screen-size-delta));
+  padding-bottom: calc(6.5px / var(--screen-size-delta));
   user-select: none;
 }
 
 .upload-datasets-modal-vertical-break-line {
   width: 0.5px;
-  height: 234px;
+  height: calc(234px / var(--screen-size-delta));
   background-color: #ececec;
   float: left;
-  margin-top: 15px;
+  margin-top: calc(15px / var(--screen-size-delta));
 }
 
 .show {display: block;}
@@ -402,7 +402,7 @@ input:focus {
   overflow-y: auto;
   border: thin ridge rgb(177, 177, 177);
   height: calc(105px / var(--screen-size-delta));
-  margin-left: calc(9.4px / var(--screen-size-delta));
+  margin-left: calc(9px / var(--screen-size-delta));
   box-sizing: content-box;
   /* firefox */
   scrollbar-color: #c7c7c7 #f9f9f9;
@@ -492,7 +492,7 @@ input:focus {
   width: calc(60px / var(--screen-size-delta));
   padding-left: calc(8px / var(--screen-size-delta));
   padding-right: calc(8px / var(--screen-size-delta));
-  padding-bottom: calc(5px / var(--screen-size-delta));
+  padding-bottom: calc(6px / var(--screen-size-delta));
   display: inline-block;
   border-radius: 2px;
   cursor: pointer;
@@ -582,6 +582,10 @@ input:focus {
   float: left;
   padding-left: calc(8px / var(--screen-size-delta));
   user-select: none;
+}
+
+.upload-data-format-row-text {
+  padding-left: calc(5px / var(--screen-size-delta));
 }
 
 /* repeating code for the submit buttons */
@@ -1050,11 +1054,11 @@ input:focus {
 }
 
 #upload-images-icon {
-  width: 14px;
+  width: calc(15.4px / var(--screen-size-delta));
   padding-top: calc(3px / var(--screen-size-delta));
   padding-bottom: 0px;
-  padding-left: calc(2.5px / var(--screen-size-delta));
-  padding-right: calc(3px / var(--screen-size-delta));
+  padding-left: calc(3px / var(--screen-size-delta));
+  padding-right: calc(2.8px / var(--screen-size-delta));
 }
 
 #upload-images-button-popover {
@@ -1073,9 +1077,9 @@ input:focus {
 }
 
 #remove-images-button-icon {
-  width: calc(16.5px / var(--screen-size-delta));
-  padding-top: calc(2px / var(--screen-size-delta));
-  padding-left: calc(3px / var(--screen-size-delta));
+  width: calc(15.8px / var(--screen-size-delta));
+  padding-top: calc(2.5px / var(--screen-size-delta));
+  padding-left: calc(3.5px / var(--screen-size-delta));
   padding-right: calc(3px / var(--screen-size-delta));
 }
 
@@ -1318,6 +1322,10 @@ body {
   margin-right: calc(7px / var(--screen-size-delta));
   margin-top: calc(3px / var(--screen-size-delta));
   margin-bottom: calc(3px / var(--screen-size-delta));
+}
+
+.upload-datasets-format-checkbox {
+  margin-right: calc(10px / var(--screen-size-delta));
 }
 
 #settings-popup {
@@ -1685,27 +1693,27 @@ body {
     margin-right: calc(3px / var(--screen-size-delta));
   }
   #upload-datasets-modal-parent {
-    height: 247px;
+    height: calc(247px / var(--screen-size-delta));
   }
   #upload-datasets-modal-back-button {
-    margin-right: 7px;
+    margin-right: calc(7px / var(--screen-size-delta));
   }
   #upload-datasets-modal-finish-button {
     margin-left: -1px;
   }
   #upload-datsets-modal-select-format-title {
-    margin-top: 7px;
+    margin-top: calc(7px / var(--screen-size-delta));
   }
   .upload-datasets-table {
-    max-height: 236px;
-    min-height: 236px;
+    max-height: calc(236px / var(--screen-size-delta));
+    min-height: calc(236px / var(--screen-size-delta));
   }
   .upload-datasets-modal-vertical-break-line {
-    height: 200px;
+    height: calc(200px / var(--screen-size-delta));
   }
   .upload-datasets-modal-upload-datasets-table-row-popover {
-    padding-top: 3px;
-    padding-bottom: 4px;
+    padding-top: calc(3px / var(--screen-size-delta));
+    padding-bottom: calc(4px / var(--screen-size-delta));
   }
   .image-list-button-hover-popover-v-position {
     margin-top: calc(-29px / var(--screen-size-delta));

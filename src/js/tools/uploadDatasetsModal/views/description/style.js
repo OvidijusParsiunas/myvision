@@ -1,3 +1,5 @@
+import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+
 let descriptionElement = null;
 let startButtonElement = null;
 let cancelButtonElement = null;
@@ -20,7 +22,7 @@ function hideStartButtonElement() {
 }
 
 function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = '18px';
+  buttonsGroupElement.style.marginTop = `${18 / getDelta()}px`;
 }
 
 function displayDescription() {
@@ -32,7 +34,7 @@ function hideDescriptionElement() {
 }
 
 function moveDescriptionToLowerPosition() {
-  descriptionElement.style.marginTop = '20px';
+  descriptionElement.style.marginTop = `${20 / getDelta()}px`;
 }
 
 function getDefaultDescriptionMarkup() {
