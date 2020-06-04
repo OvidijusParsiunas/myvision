@@ -554,7 +554,7 @@ input:focus {
   border-color: grey;
   z-index: 3;
   height: calc(203px / var(--screen-size-delta));
-  width: calc(173px / var(--screen-size-delta));
+  width: calc(169px / var(--screen-size-delta));
   font-family: Arial, Helvetica, sans-serif;
   font-size: calc(14.5px / var(--screen-size-delta));
   line-height: calc(1.2 / var(--screen-size-delta));
@@ -591,10 +591,10 @@ input:focus {
 /* repeating code for the submit buttons */
 
 #export-labels-popup-export-button {
-  margin-right: calc(3px / var(--screen-size-delta));
   margin-top: calc(5px / var(--screen-size-delta));
   width: calc(50px / var(--screen-size-delta));
   padding-top: calc(6px / var(--screen-size-delta));
+  margin-right: 0;
 }
 
 .data-format-table-row-data {
@@ -1692,8 +1692,6 @@ body {
   #export-labels-popup-export-button {
     padding-top: calc(4.5px / var(--screen-size-delta));
     margin-top: calc(8px / var(--screen-size-delta));
-    width: calc(50px / var(--screen-size-delta));
-    margin-right: calc(3px / var(--screen-size-delta));
   }
   #upload-datasets-modal-parent {
     height: calc(247px / var(--screen-size-delta));
