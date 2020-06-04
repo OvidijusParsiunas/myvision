@@ -1,11 +1,11 @@
 import { initialiseLabellerModalOptionsList } from './style';
 import {
-  labelShape, selectLabelOption, prepareLabellerModalElements,
+  labelShape, selectLabelOption, initialiseLabellerModalLocalVariables,
   inputKeyDown, pasteLabelText, cancelLabellingProcess,
 } from './buttonEventHandlers';
 
 function initialiseLabellerModal() {
-  prepareLabellerModalElements();
+  initialiseLabellerModalLocalVariables();
   initialiseLabellerModalOptionsList();
   window.labelShape = labelShape;
   window.cancelLabellingProcess = cancelLabellingProcess;

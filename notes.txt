@@ -24,8 +24,6 @@ modal to check if the user is sure they want to remove an image
 
 weird auto horizontal rotate for some images on firefox
 
-firefox labeller modal submit button is not being disabled correctly, could be something to do with set timeouts, check them for firefox
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

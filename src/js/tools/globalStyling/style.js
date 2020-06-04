@@ -1,6 +1,7 @@
 import downloadFonts from './fonts';
 import IS_FIREFOX from '../utils/browserType';
 import { applyElementDimensions } from './elementDimensions/manager';
+import { setKeyDownEventTimeOut } from './timeouts';
 
 let canvasWrapperParentElement = null;
 let zoomOverflowWrapperParentElement = null;
@@ -79,6 +80,7 @@ function applyStyling() {
   findWindowElements();
   downloadFonts();
   applyElementDimensions();
+  setKeyDownEventTimeOut(IS_FIREFOX);
 }
 
 export {

@@ -1730,6 +1730,9 @@ body {
   .image-switch-button-popover-arrow {
     margin-top: calc(-22px / var(--screen-size-delta));
   }
+  .machine-learning-modal-generated-labels-edit-icon {
+    margin-top: calc(6px / var(--screen-size-delta));
+  }
 }
 
 /* removing dotted border when in focus on firefox */

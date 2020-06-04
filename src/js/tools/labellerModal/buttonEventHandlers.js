@@ -6,12 +6,14 @@ import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/bound
 import { getLabelOptions } from '../labelList/labelOptions';
 import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
 import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
+import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
   hideLabellerModal, changeStyleWhenInputEmpty,
   changeStyleWhenInputInvalid, changeStyleToAllowSubmit,
 } from './style';
 
+let keyDownEventTimeOut = 0;
 let textInputElement = null;
 let optionsElement = null;
 let oneOrMoreLabelsAdded = false;
@@ -28,9 +30,10 @@ function changeSubmitButtonStyling() {
   }
 }
 
-function prepareLabellerModalElements() {
+function initialiseLabellerModalLocalVariables() {
   textInputElement = document.getElementById('labeller-modal-input');
   optionsElement = document.getElementById('labeller-modal-options');
+  keyDownEventTimeOut = getKeyDownEventTimeout();
 }
 
 function resetDrawingMode() {
@@ -128,7 +131,7 @@ function inputKeyDown(event) {
         }
       }
       changeSubmitButtonStyling();
-    }, 0);
+    }, keyDownEventTimeOut);
   }
 }
 
@@ -162,6 +165,6 @@ function pasteLabelText() {
 }
 
 export {
-  selectLabelOption, prepareLabellerModalElements, pasteLabelText,
   labelShape, inputKeyDown, cancelLabellingProcess, arrowKeyEvents,
+  selectLabelOption, initialiseLabellerModalLocalVariables, pasteLabelText,
 };

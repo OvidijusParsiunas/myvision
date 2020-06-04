@@ -15,7 +15,7 @@ let displayingRedEditButton = false;
 let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
 let objectNames = null;
-const TABLE_MAX_WIDTH = 352 / getDelta();
+let tableMaxWidth = null;
 
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
@@ -84,12 +84,12 @@ function MLLabelTextPaste(event) {
 function updateGeneratedLabelsElementWidth() {
   generatedLabelsParentElement.style.width = `${activeTextRow.clientWidth + overflowScrollWidth}px`;
   if (!maxWidthStyleAppended
-      && parseInt(generatedLabelsParentElement.style.width, 10) > TABLE_MAX_WIDTH) {
-    generatedLabelsParentElement.style.maxWidth = `${TABLE_MAX_WIDTH}px`;
+      && parseInt(generatedLabelsParentElement.style.width, 10) > tableMaxWidth) {
+    generatedLabelsParentElement.style.maxWidth = `${tableMaxWidth}px`;
     generatedLabelsParentElement.style.overflowX = 'auto';
     maxWidthStyleAppended = true;
   } else if (maxWidthStyleAppended
-      && parseInt(generatedLabelsParentElement.style.width, 10) < TABLE_MAX_WIDTH) {
+      && parseInt(generatedLabelsParentElement.style.width, 10) < tableMaxWidth) {
     generatedLabelsParentElement.style.maxWidth = '';
     generatedLabelsParentElement.style.overflowX = 'hidden';
     maxWidthStyleAppended = false;
@@ -309,6 +309,7 @@ function hideGeneratedLabelsViewAssets() {
 }
 
 function assignGeneratedLabelsViewLocalVariables() {
+  tableMaxWidth = 352 / getDelta();
   descriptionElement = document.getElementById('machine-learning-modal-description');
   generatedLabelsParentElement = document.getElementById('machine-learning-modal-generated-labels');
   submitButtonElement = document.getElementById('machine-learning-modal-generated-labels-submit-button');

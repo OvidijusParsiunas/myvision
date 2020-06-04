@@ -34,12 +34,15 @@ import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyling/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
-  setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent, emptyContentEditableFirefoxBugFix,
+  isVerticalScrollPresent, emptyContentEditableFirefoxBugFix,
+  setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont,
 } from '../utils/elementCaretUtils';
 import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
 import { getDelta } from '../globalStyling/elementDimensions/manager';
+import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
 
 let isEditingLabel = false;
+let keyDownEventTimeOut = 0;
 let isVisibilitySelected = false;
 let isVisibilityRestored = false;
 let activeDropdownElements = null;
@@ -69,7 +72,6 @@ let newFakeDropdownBottomBorderDeltaGenerated = false;
 let chromiumFakeDrodownBottomBorderTopDimension = null;
 let originalActiveDropdownHeight = 0;
 const LABEL_CONTAINER_ELEMENT_ID_PREFIX = 'label-container-';
-const KEY_DOWN_EVENT_TIMEOUT = IS_FIREFOX ? 10 : 0;
 
 function setDropdownElementWidthVariables() {
   if (IS_FIREFOX) {
@@ -95,6 +97,7 @@ function initialiseLabelListFunctionality() {
   findPopupElement();
   setDropdownElementWidthVariables();
   setLabelListElementForHighlights(labelListElement, labelsListOverflowParentElement);
+  keyDownEventTimeOut = getKeyDownEventTimeout();
 }
 
 function createNewDropdown() {
@@ -733,7 +736,7 @@ window.labelTextKeyDown = (event) => {
       }
       changeActiveDropdownElementStyling();
       updateAssociatedLabelObjectsText(activeLabelTextElement.innerHTML);
-    }, KEY_DOWN_EVENT_TIMEOUT);
+    }, keyDownEventTimeOut);
   }
 };
 
