@@ -1,7 +1,8 @@
 import {
+  emptyDivFirefoxBugFix, changeRowToEdit, MLLabelTextPaste,
+  updateGeneratedLabelsElementWidth, hideGeneratedLabelsViewAssets,
+  displayGreyedDefaultEditLabelButton, scrollHorizontallyToAppropriateWidth,
   displayHighlightedDefaultEditLabelButton, displayRedEditButtonIfActiveTextEmpty,
-  displayGreyedDefaultEditLabelButton, changeRowToEdit, hideGeneratedLabelsViewAssets,
-  updateGeneratedLabelsElementWidth, MLLabelTextPaste, scrollHorizontallyToAppropriateWidth,
 } from './style';
 import {
   getGeneratedMachineLearningData, setActiveLabelProperties,
@@ -16,6 +17,7 @@ function MLLabelTextKeyDown(event) {
   } else {
     window.setTimeout(() => {
       updateGeneratedLabelsElementWidth();
+      emptyDivFirefoxBugFix(event.key);
       displayRedEditButtonIfActiveTextEmpty();
     }, 1);
   }

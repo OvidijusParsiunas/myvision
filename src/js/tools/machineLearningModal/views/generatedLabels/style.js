@@ -1,10 +1,12 @@
 import { getScrollbarWidth } from '../../../globalStyling/style';
 import scrollIntoViewIfNeeded from '../../../utils/tableUtils';
 import {
-  setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent,
+  getCaretPositionOnDiv, emptyContentEditableFirefoxBugFix,
+  isVerticalScrollPresent, getDefaultFont, setCaretPositionOnDiv,
 } from '../../../utils/elementCaretUtils';
 import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
 import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import IS_FIREFOX from '../../../utils/browserType';
 
 let editingActive = false;
 let activeTextRow = null;
@@ -186,6 +188,10 @@ function changeRowToEdit(element) {
   }
 }
 
+function emptyDivFirefoxBugFix(key) {
+  if (IS_FIREFOX && key === 'Backspace') emptyContentEditableFirefoxBugFix(activeTextElement);
+}
+
 function displayRedEditButtonIfActiveTextEmpty() {
   const preprocessedText = preprocessLabelText(activeTextElement.innerHTML);
   if (preprocessedText === '') {
@@ -311,10 +317,10 @@ function assignGeneratedLabelsViewLocalVariables() {
 }
 
 export {
-  scrollHorizontallyToAppropriateWidth, displayViewElements,
   displayGreyedDefaultEditLabelButton, changeEditedLabelText,
-  assignGeneratedLabelsViewLocalVariables, canChangeRowToStopEdit,
-  hideGeneratedLabelsViewAssets, changeRowToEdit, MLLabelTextPaste,
+  emptyDivFirefoxBugFix, assignGeneratedLabelsViewLocalVariables,
   stopEditingActiveTextElement, displayRedEditButtonIfActiveTextEmpty,
+  canChangeRowToStopEdit, MLLabelTextPaste, hideGeneratedLabelsViewAssets,
+  scrollHorizontallyToAppropriateWidth, displayViewElements, changeRowToEdit,
   updateGeneratedLabelsElementWidth, displayHighlightedDefaultEditLabelButton,
 };

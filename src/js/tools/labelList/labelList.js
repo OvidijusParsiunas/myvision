@@ -34,7 +34,7 @@ import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
 import { getScrollbarWidth } from '../globalStyling/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
-  setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent,
+  setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont, isVerticalScrollPresent, emptyContentEditableFirefoxBugFix,
 } from '../utils/elementCaretUtils';
 import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
 import { getDelta } from '../globalStyling/elementDimensions/manager';
@@ -69,6 +69,7 @@ let newFakeDropdownBottomBorderDeltaGenerated = false;
 let chromiumFakeDrodownBottomBorderTopDimension = null;
 let originalActiveDropdownHeight = 0;
 const LABEL_CONTAINER_ELEMENT_ID_PREFIX = 'label-container-';
+const KEY_DOWN_EVENT_TIMEOUT = IS_FIREFOX ? 10 : 0;
 
 function setDropdownElementWidthVariables() {
   if (IS_FIREFOX) {
@@ -139,13 +140,13 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
     <div id="${visibility}" onMouseEnter="mouseEnterVisibilityBtn(id, this)" onMouseLeave="mouseLeaveVisibilityBtn(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px; cursor: pointer; padding-top: 1px">
       ${generateLabelVisibilityMarkup(visibility)}
     </div>
-    <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px; cursor: pointer; padding-top: 1px">
+    <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px; cursor: pointer; padding-top: 0.5px">
       <img class="defaultLabelEditIcon" id="editButton${id}" src="edit.svg" style="padding-left: 1px" alt="edit">
       <img class="highlightedLabelEditIcon" id="editButton${id}" src="edit-highlighted.svg" style="display: none" alt="edit">
       <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
       <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
     </div>
-    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: grid; padding-top: ${getDelta() > 1 ? 2 : 0}px;">${labelText}</div>
+    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: flow-root; padding-top: ${getDelta() > 1 ? 2 : 0}px;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
       <div id="chromium-fake-dropdown-border-fix${id}">
@@ -711,6 +712,7 @@ window.labelTextKeyDown = (event) => {
         setCaretPositionOnDiv(currentCaretPosition, activeLabelTextElement,
           true, scrollHorizontallyToAppropriateWidth);
       }
+      if (IS_FIREFOX && event.code === 'Backspace') emptyContentEditableFirefoxBugFix(activeLabelTextElement);
       if (lastSelectedLabelOption) {
         lastSelectedLabelOption.style.backgroundColor = '';
       }
@@ -731,7 +733,7 @@ window.labelTextKeyDown = (event) => {
       }
       changeActiveDropdownElementStyling();
       updateAssociatedLabelObjectsText(activeLabelTextElement.innerHTML);
-    }, 0);
+    }, KEY_DOWN_EVENT_TIMEOUT);
   }
 };
 

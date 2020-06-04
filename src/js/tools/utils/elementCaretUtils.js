@@ -6,6 +6,10 @@ function getDefaultFont(element) {
   return `${size} ${fontFamily}`;
 }
 
+function emptyContentEditableFirefoxBugFix(div) {
+  if (div.innerHTML === '<br>') div.innerHTML = '';
+}
+
 function isVerticalScrollPresent(element) {
   return element.scrollHeight > element.clientHeight;
 }
@@ -72,5 +76,6 @@ function getCaretPositionOnDiv(editableDiv, paste) {
 }
 
 export {
-  setCaretPositionOnDiv, getCaretPositionOnDiv, isVerticalScrollPresent, getDefaultFont,
+  emptyContentEditableFirefoxBugFix, getCaretPositionOnDiv,
+  setCaretPositionOnDiv, isVerticalScrollPresent, getDefaultFont,
 };
