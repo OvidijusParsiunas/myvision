@@ -563,9 +563,10 @@ input:focus {
 
 #export-labels-popup-title {
   padding-left: calc(10px / var(--screen-size-delta));
-  padding-top: calc(6px / var(--screen-size-delta));
-  padding-bottom: calc(3px / var(--screen-size-delta));
+  padding-top: calc(7px / var(--screen-size-delta));
+  padding-bottom: calc(3.5px / var(--screen-size-delta));
   border-bottom: 1px solid #e6e6e6;
+  font-size: calc(16px / var(--screen-size-delta));
 }
 
 #parent-table-element {
