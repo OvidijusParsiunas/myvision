@@ -22,11 +22,16 @@ the fake border at bot in chrome doesn't seem right
 
 modal to check if the user is sure they want to remove an image
 
-weird auto horizontal rotate for some images on firefox
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
+
+weird auto horizontal rotate for some images on firefox
+
+potential fix:
+img {
+    image-orientation: from-image;
+}
 
 shape labeller modal  horizontal and vertical overflow fake borders
 label list dropdown horizontal and vertical overflow fake borders

@@ -94,7 +94,7 @@ window.displayUploadDatasetsAnnotationFilePopover = (id, tableName) => {
   const tableOuterContainerElement = tableName === ANNOTATIONS_TABLE_INDICATOR
     ? annotationsTableOuterContainerElement : imagesTableOuterContainerElement;
   document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.display = 'block';
-  document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 29 / getDelta()}px`;
+  document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 29.4 / getDelta()}px`;
   document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.display = 'block';
   document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 4 / getDelta()}px`;
 };

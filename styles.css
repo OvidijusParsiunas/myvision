@@ -899,7 +899,7 @@ input:focus {
 }
 
 .machine-learning-modal-generated-labels-input {
-  margin-left: calc(12px / var(--screen-size-delta));
+  margin-left: calc(12.5px / var(--screen-size-delta));
   outline: none;
   white-space: pre;
   padding-right: calc(5px / var(--screen-size-delta));
