@@ -51,7 +51,7 @@ function addFakeRightBorder() {
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
-  chromiumFakeRightBorderFixElement.style.right = getDelta() > 1.000001 ? `${9 / getDelta()}px` : '9px';
+  chromiumFakeRightBorderFixElement.style.right = getDelta() > 1.000001 ? `${9 / getDelta()}px` : '9.8px';
   fakeRightBorderAdded = true;
 }
 
