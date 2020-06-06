@@ -658,11 +658,11 @@ function cancelEditingViaKeyboard() {
 function arrowKeyEventsForLabelList(key) {
   const currentlyHighlightedElement = getCurrentlyHighlightedElement()
     .parentElement.parentElement.parentElement;
-  if (key === 'ArrowDown' || key === 'ArrowRight') {
+  if (key === 'ArrowDown') {
     if (currentlyHighlightedElement.nextSibling) {
       currentlyHighlightedElement.nextSibling.childNodes[0].childNodes[0].childNodes[1].dispatchEvent(new Event('click'));
     }
-  } else if (key === 'ArrowUp' || key === 'ArrowLeft') {
+  } else if (key === 'ArrowUp') {
     if (currentlyHighlightedElement.previousSibling) {
       currentlyHighlightedElement.previousSibling.childNodes[0].childNodes[0].childNodes[1].dispatchEvent(new Event('click'));
     }

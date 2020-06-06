@@ -29,16 +29,11 @@ import { getUserOS } from '../../tools/OS/OSManager';
 
 let canvas = null;
 let isRKeyUp = true;
-let isControlKeyDown = false;
 let wKeyHandler = null;
 let wKeyUpHandler = null;
 
 function rKeyUpHandler() {
   isRKeyUp = true;
-}
-
-function controlKeyUpHandler() {
-  isControlKeyDown = false;
 }
 
 function isModalOpen() {
@@ -168,26 +163,16 @@ function arrowDownKeyHandler() {
 }
 
 function arrowLeftKeyHandler() {
-  const arrowLeft = 'ArrowLeft';
-  if (isControlKeyDown) {
-    if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
-      closePopUps();
-      window.switchImage('previous');
-    }
-  } else if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
-    labelListArrowKeyEvents(arrowLeft);
+  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
+    closePopUps();
+    window.switchImage('previous');
   }
 }
 
 function arrowRightKeyHandler() {
-  const arrowRight = 'ArrowRight';
-  if (isControlKeyDown) {
-    if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
-      closePopUps();
-      window.switchImage('next');
-    }
-  } else if (!isEditingLabelInLabelList() && getCurrentlyHighlightedElement()) {
-    labelListArrowKeyEvents(arrowRight);
+  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
+    closePopUps();
+    window.switchImage('next');
   }
 }
 
@@ -204,10 +189,6 @@ function deleteKeyHandler() {
 
 function backspaceKeyHandler() {
   removeKeyHandler();
-}
-
-function controlKeyHandler() {
-  isControlKeyDown = true;
 }
 
 function enterKeyHandler() {
@@ -260,9 +241,6 @@ function keyDownEventHandler(event) {
     case 'backspace':
       backspaceKeyHandler();
       break;
-    case 'control':
-      controlKeyHandler();
-      break;
     case 'arrowup':
       arrowUpKeyHandler();
       break;
@@ -297,9 +275,6 @@ function keyDownEventHandler(event) {
 
 function keyUpEventHandler(event) {
   switch (event.key.toLowerCase()) {
-    case 'control':
-      controlKeyUpHandler();
-      break;
     case 'w':
       wKeyUpHandler();
       break;

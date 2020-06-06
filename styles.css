@@ -563,7 +563,7 @@ input:focus {
 
 #export-labels-popup-title {
   padding-left: calc(10px / var(--screen-size-delta));
-  padding-top: calc(7px / var(--screen-size-delta));
+  padding-top: calc(6.5px / var(--screen-size-delta));
   padding-bottom: calc(3.5px / var(--screen-size-delta));
   border-bottom: 1px solid #e6e6e6;
   font-size: calc(16px / var(--screen-size-delta));
@@ -1476,16 +1476,25 @@ body {
 }
 
 .image-switch-button-popover-closing-bracket {
-  margin-left: -6px;
   display: inline-block;
+}
+
+#image-switch-button-popover-arrow-left {
+  margin-left: calc(-5px / var(--screen-size-delta));
+  margin-right: calc(-5px / var(--screen-size-delta));
+}
+
+#image-switch-button-popover-arrow-right {
+  margin-left: calc(-4.5px / var(--screen-size-delta));
+  margin-right: calc(-5.5px / var(--screen-size-delta));
 }
 
 .image-switch-button-popover-arrow {
   height: 0px;
   display: inline-block;
-  font-size: 25px;
-  margin-left: -4px;
-  margin-top: -26px;
+  font-size: calc(22px / var(--screen-size-delta));
+  margin-top: calc(-6.5px / var(--screen-size-delta));
+  vertical-align: top;
 }
 
 #tools-drawing-section {
@@ -1499,7 +1508,7 @@ body {
 
 .core-button-hover-popover {
   margin-left: calc(62px / var(--screen-size-delta));
-  margin-top: calc(-36px / var(--screen-size-delta));
+  margin-top: calc(-35.5px / var(--screen-size-delta));
   font-size: calc(14.5px / var(--screen-size-delta));
   position: absolute;
   background: black;
@@ -1729,11 +1738,8 @@ body {
   .image-switch-button-hover-popover {
     margin-top: calc(11px / var(--screen-size-delta));
   }
-  .image-switch-button-popover-plus {
-    margin-top: calc(-15px / var(--screen-size-delta));
-  }
   .image-switch-button-popover-arrow {
-    margin-top: calc(-22px / var(--screen-size-delta));
+    margin-top: calc(-6px / var(--screen-size-delta));
   }
   .machine-learning-modal-generated-labels-edit-icon {
     margin-top: calc(6px / var(--screen-size-delta));

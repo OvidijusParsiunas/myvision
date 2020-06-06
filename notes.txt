@@ -22,6 +22,8 @@ the fake border at bot in chrome doesn't seem right
 
 modal to check if the user is sure they want to remove an image
 
+can hit edit shapes when it is disabled
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
