@@ -21,6 +21,7 @@ let fakeBottomBorderAdded = false;
 let lightupTimePeriod = SLOW_LIGHTUP_MILLISECONDS;
 let dimTimePeriod = SLOW_DIM_SECONDS;
 let dimIntensity = THICK_DIM;
+let optionsListBorderWidth = 1;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -51,15 +52,21 @@ function addFakeRightBorder() {
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
-  chromiumFakeRightBorderFixElement.style.right = getDelta() > 1.000001 ? `${9 / getDelta()}px` : '9.8px';
+  chromiumFakeRightBorderFixElement.style.left = optionsElement.getBoundingClientRect().width
+    + getScrollbarWidth() + optionsListBorderWidth + (optionsListBorderWidth / 2);
   fakeRightBorderAdded = true;
 }
 
 function addFakeBottomBorder() {
   if (fakeBottomBorderAdded) return;
-  const tableDistanceFromTop = Math.ceil(62 / getDelta());
   const chromiumFakeBottomBorderFixElement = document.getElementById('chromium-fake-popup-table-bottom-border-fix');
-  chromiumFakeBottomBorderFixElement.style.top = `${Math.floor(tableDistanceFromTop + currentListHeightPx + getScrollbarWidth() - (4 * getDelta()))}px`;
+  const modalTitleElementHeight = document.getElementById('labeller-modal-title').getBoundingClientRect().height;
+  const inputElementHeight = inputElement.getBoundingClientRect().height;
+  const heightOfElementsAboveOptionsList = modalTitleElementHeight + inputElementHeight;
+  const optionsListHeight = optionsElement.getBoundingClientRect().height;
+  const optionsListPaddingTopHeight = 2 / getDelta();
+  chromiumFakeBottomBorderFixElement.style.top = `${heightOfElementsAboveOptionsList + optionsListHeight
+    + (getScrollbarWidth() * 2) - optionsListPaddingTopHeight - optionsListBorderWidth}px`;
   chromiumFakeBottomBorderFixElement.style.display = '';
   optionsElement.style.borderBottom = 'none';
   optionsElement.style.paddingBottom = '0px';
@@ -164,6 +171,7 @@ function setLocalVariables() {
   parentElement = document.getElementById('labeller-modal-parent');
   optionsElement = document.getElementById('labeller-modal-options');
   submitButtonElement = document.getElementById('labeller-modal-submit-button');
+  optionsListBorderWidth = Number(getComputedStyle(optionsElement, null).getPropertyValue('border-left-width').replace(/[^0-9.]+/g, ''));
   setListHeightVariables();
 }
 
