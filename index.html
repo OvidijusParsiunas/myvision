@@ -11,11 +11,7 @@
      other overflows from not being identified -->
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
   <div id="title-panel">
-    <img src="check-box.svg" draggable="false" style="padding-left: 15px;
-    padding-right: 5px;
-    width: 19px;
-    padding-top: 8px;
-    float: left;" alt="visibility">
+    <img id="title-logo" src="check-box.svg" draggable="false" alt="visibility">
     <div id="title-text">MyLabel</div>
     <a href="https://github.com/OvidijusParsiunas/mylabel" target="_blank">
       <img id="title-github-mark" draggable="false" alt="GitHub-Mark-32px.png" src="GitHub-Mark-32px.png">
@@ -351,8 +347,8 @@
         <button id="previous-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('previous')" onmouseenter="mouseEnterCoreButton(event, 'previousImage')" onmouseleave="mouseLeaveCoreButton(event)">
           < 
           <div id="previous-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
-            Previous Image (Ctrl
-            <div class="image-switch-button-popover-arrow">←</div>
+            Previous Image (
+            <div id="image-switch-button-popover-arrow-left" class="image-switch-button-popover-arrow">←</div>
             <div class="image-switch-button-popover-closing-bracket">)</div>
           </div>
         </button>
@@ -360,8 +356,8 @@
         <button id="next-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('next')" onmouseenter="mouseEnterCoreButton(event, 'nextImage')" onmouseleave="mouseLeaveCoreButton(event)">
           >
           <div id="next-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
-            Next Image (Ctrl
-            <div class="image-switch-button-popover-arrow">→</div>
+            Next Image (
+            <div id="image-switch-button-popover-arrow-right" class="image-switch-button-popover-arrow">→</div>
             <div class="image-switch-button-popover-closing-bracket">)</div>
           </div>
         </button>
