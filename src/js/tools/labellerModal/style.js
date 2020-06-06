@@ -22,6 +22,7 @@ let lightupTimePeriod = SLOW_LIGHTUP_MILLISECONDS;
 let dimTimePeriod = SLOW_DIM_SECONDS;
 let dimIntensity = THICK_DIM;
 let optionsListBorderWidth = 1;
+let horizontalScrollSet = false;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -52,8 +53,8 @@ function addFakeRightBorder() {
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
-  chromiumFakeRightBorderFixElement.style.left = optionsElement.getBoundingClientRect().width
-    + getScrollbarWidth() + optionsListBorderWidth + (optionsListBorderWidth / 2);
+  chromiumFakeRightBorderFixElement.style.left = `${optionsElement.getBoundingClientRect().width
+    + getScrollbarWidth() + optionsListBorderWidth + (optionsListBorderWidth)}px`;
   fakeRightBorderAdded = true;
 }
 
@@ -65,10 +66,9 @@ function addFakeBottomBorder() {
   const heightOfElementsAboveOptionsList = modalTitleElementHeight + inputElementHeight;
   const optionsListHeight = optionsElement.getBoundingClientRect().height;
   const optionsListPaddingTopHeight = 2 / getDelta();
-  chromiumFakeBottomBorderFixElement.style.top = `${heightOfElementsAboveOptionsList + optionsListHeight
-    + (getScrollbarWidth() * 2) - optionsListPaddingTopHeight - optionsListBorderWidth}px`;
+  chromiumFakeBottomBorderFixElement.style.top = `${Math.floor(heightOfElementsAboveOptionsList + optionsListHeight
+    + (getScrollbarWidth() * 2) - optionsListPaddingTopHeight + optionsListBorderWidth)}px`;
   chromiumFakeBottomBorderFixElement.style.display = '';
-  optionsElement.style.borderBottom = 'none';
   optionsElement.style.paddingBottom = '0px';
   fakeBottomBorderAdded = true;
 }
@@ -89,13 +89,16 @@ function addFakeBordersForChromium() {
 }
 
 function setLabelOptionsHeight() {
-  let newHeight = currentListHeightPx;
-  if (!heightIncreasedForHorizontalScrollbar && isHorizontalScrollPresent()) {
-    newHeight += getScrollbarWidth();
-    currentListHeightPx = newHeight;
-    heightIncreasedForHorizontalScrollbar = true;
+  if (!horizontalScrollSet) {
+    let newHeight = currentListHeightPx;
+    if (!heightIncreasedForHorizontalScrollbar && isHorizontalScrollPresent()) {
+      newHeight += getScrollbarWidth();
+      currentListHeightPx = newHeight;
+      heightIncreasedForHorizontalScrollbar = true;
+      horizontalScrollSet = true;
+    }
+    optionsElement.style.height = `${newHeight}px`;
   }
-  optionsElement.style.height = `${newHeight}px`;
 }
 
 // should be in label list
