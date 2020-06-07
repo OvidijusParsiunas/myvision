@@ -16,10 +16,6 @@ settings popup seems to generate overflow when scrolling top
 
 the labeller modal seems to go out of bounds on mac
 
-fix arrow on next + previous button popovers (use svg)
-
-the fake border at bot in chrome doesn't seem right
-
 modal to check if the user is sure they want to remove an image
 
 ---------------------------------------------
