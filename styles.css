@@ -1622,49 +1622,49 @@ body {
 
 @media only screen and (max-height: 585px) {
   .toolkit-button-icon {
-    width: 29px;
+    width: calc(29px / var(--screen-size-delta));
   }
 }
 
 @media only screen and (max-height: 569px) {
   .toolkit-button-icon {
-    width: 28px;
+    width: calc(28px / var(--screen-size-delta));
   }
 }
 
 @media only screen and (max-height: 560px) {
   .toolkit-button-icon {
-    width: 27px;
+    width: calc(27px / var(--screen-size-delta));
   }
 }
 
 @media only screen and (max-height: 548px) {
   .toolkit-button-icon {
-    width: 26px;
+    width: calc(26px / var(--screen-size-delta));
   }
 }
 
 @media only screen and (max-height: 540px) {
   .toolkit-button-icon {
-    width: 25px;
+    width: calc(25px / var(--screen-size-delta));
   }
 }
 
 @media only screen and (max-height: 525px) {
   .toolkit-button-icon {
-    width: 24px;
+    width: calc(24px / var(--screen-size-delta));
   }
 }
 
 @media only screen and (max-height: 515px) {
   .toolkit-button-icon {
-    width: 23px;
+    width: calc(23px / var(--screen-size-delta));
   }
 }
 
 @media only screen and (max-height: 505px) {
   .toolkit-button-icon {
-    width: 22px;
+    width: calc(22px / var(--screen-size-delta));
   }
 }
 
@@ -1737,9 +1737,6 @@ body {
   }
   .image-switch-button-hover-popover {
     margin-top: calc(11px / var(--screen-size-delta));
-  }
-  .image-switch-button-popover-arrow {
-    margin-top: calc(-6px / var(--screen-size-delta));
   }
   .machine-learning-modal-generated-labels-edit-icon {
     margin-top: calc(6px / var(--screen-size-delta));

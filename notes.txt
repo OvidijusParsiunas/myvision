@@ -14,8 +14,6 @@ delta for dynamic screen height and firefox
 
 settings popup seems to generate overflow when scrolling top
 
-the labeller modal seems to go out of bounds on mac
-
 modal to check if the user is sure they want to remove an image
 
 ---------------------------------------------
