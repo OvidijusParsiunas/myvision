@@ -16,13 +16,13 @@ let addNewLabelDeltaHeight = 0;
 let currentListHeightPx = null;
 let heightIncreasedForNewLabel = false;
 let heightIncreasedForHorizontalScrollbar = false;
+let horizontalScrollSet = false;
 let fakeRightBorderAdded = false;
 let fakeBottomBorderAdded = false;
 let lightupTimePeriod = SLOW_LIGHTUP_MILLISECONDS;
 let dimTimePeriod = SLOW_DIM_SECONDS;
 let dimIntensity = THICK_DIM;
 let optionsListBorderWidth = 1;
-let horizontalScrollSet = false;
 
 function initialiseParentElement() {
   return document.createElement('div');
@@ -53,8 +53,7 @@ function addFakeRightBorder() {
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
-  chromiumFakeRightBorderFixElement.style.left = `${optionsElement.getBoundingClientRect().width
-    + getScrollbarWidth() + optionsListBorderWidth + (optionsListBorderWidth)}px`;
+  chromiumFakeRightBorderFixElement.style.right = getDelta() > 1.000001 ? `${9 / getDelta()}px` : '9.8px';
   fakeRightBorderAdded = true;
 }
 

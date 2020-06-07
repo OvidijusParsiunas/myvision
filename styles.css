@@ -396,7 +396,7 @@ input:focus {
 
 #labeller-modal-options {
   padding-top: calc(2px / var(--screen-size-delta));
-  padding-bottom: calc(2px / var(--screen-size-delta));
+  padding-bottom: calc(1.9px / var(--screen-size-delta));
   display: block;
   overflow-x: auto;
   overflow-y: auto;
@@ -427,8 +427,6 @@ input:focus {
   background-color: rgb(177, 177, 177);
   /* table distance from the top of popup */
   top: calc(63px / var(--screen-size-delta));
-  /* table distance from the right side of popup */
-  right: calc(9px / var(--screen-size-delta));
 }
 
 #chromium-fake-popup-table-bottom-border-fix {
@@ -1480,7 +1478,7 @@ body {
 }
 
 #image-switch-button-popover-arrow-left {
-  margin-left: calc(-5px / var(--screen-size-delta));
+  margin-left: calc(-5.5px / var(--screen-size-delta));
   margin-right: calc(-5px / var(--screen-size-delta));
 }
 
@@ -1492,8 +1490,8 @@ body {
 .image-switch-button-popover-arrow {
   height: 0px;
   display: inline-block;
-  font-size: calc(22px / var(--screen-size-delta));
-  margin-top: calc(-6.5px / var(--screen-size-delta));
+  font-size: calc(20px / var(--screen-size-delta));
+  margin-top: calc(-4.5px / var(--screen-size-delta));
   vertical-align: top;
 }
 
