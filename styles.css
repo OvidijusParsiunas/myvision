@@ -1622,49 +1622,49 @@ body {
 
 @media only screen and (max-height: 585px) {
   .toolkit-button-icon {
-    width: calc(29px / var(--screen-size-delta));
+    width: 29px;
   }
 }
 
 @media only screen and (max-height: 569px) {
   .toolkit-button-icon {
-    width: calc(28px / var(--screen-size-delta));
+    width: 28px;
   }
 }
 
 @media only screen and (max-height: 560px) {
   .toolkit-button-icon {
-    width: calc(27px / var(--screen-size-delta));
+    width: 27px;
   }
 }
 
 @media only screen and (max-height: 548px) {
   .toolkit-button-icon {
-    width: calc(26px / var(--screen-size-delta));
+    width: 26px;
   }
 }
 
 @media only screen and (max-height: 540px) {
   .toolkit-button-icon {
-    width: calc(25px / var(--screen-size-delta));
+    width: 25px;
   }
 }
 
 @media only screen and (max-height: 525px) {
   .toolkit-button-icon {
-    width: calc(24px / var(--screen-size-delta));
+    width: 24px;
   }
 }
 
 @media only screen and (max-height: 515px) {
   .toolkit-button-icon {
-    width: calc(23px / var(--screen-size-delta));
+    width: 23px;
   }
 }
 
 @media only screen and (max-height: 505px) {
   .toolkit-button-icon {
-    width: calc(22px / var(--screen-size-delta));
+    width: 22px;
   }
 }
 

@@ -2,8 +2,10 @@ import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageLis
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { getCurrentZoomState } from '../stateMachine';
+import { getCurrentZoomState, getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../stateMachine';
 import { validateFullModalVisibile } from '../labellerModal/style';
+import { validateFullPopUpVisible } from '../settingsPopup/style';
+import { validateFullPopUpVisible1 } from '../exportDatasetsPopup/style';
 
 let canvas = null;
 
@@ -15,6 +17,11 @@ window.windowResize = () => {
     const newFileSizeRatio = resizeCanvasAndImage();
     labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
     resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
+  }
+  if (getSettingsPopUpOpenState()) {
+    validateFullPopUpVisible();
+  } else if (getExportDatasetsPopUpOpenState()) {
+    validateFullPopUpVisible1();
   }
   const isWindowResized = true;
   validateFullModalVisibile(isWindowResized);

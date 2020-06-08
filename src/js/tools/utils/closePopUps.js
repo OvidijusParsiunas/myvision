@@ -1,8 +1,7 @@
 import { isEditingLabelInLabelList, finishEditingLabelList } from '../labelList/labelList';
-import {
-  getSettingsPopUpOpenState, setSettingsPopUpOpenState,
-  getExportDatasetsPopUpOpenState, setExportDatasetsPopUpOpenState,
-} from '../stateMachine';
+import { getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../stateMachine';
+import { hideSettingsPopup } from '../settingsPopup/style';
+import { hideExportLabelsPopUp } from '../exportDatasetsPopup/style';
 
 function closePopUps(event) {
   event = event || { target: { classList: [] } };
@@ -10,15 +9,11 @@ function closePopUps(event) {
     finishEditingLabelList(event);
   } else if (getSettingsPopUpOpenState()) {
     if (event.target.classList[0] !== 'settings-popup-item') {
-      const settingsPopupElement = document.getElementById('settings-popup');
-      settingsPopupElement.style.display = 'none';
-      setSettingsPopUpOpenState(false);
+      hideSettingsPopup(false);
     }
   } else if (getExportDatasetsPopUpOpenState()) {
     if (event.target.classList[0] !== 'export-labels-popup-item') {
-      const exportPopupElement = document.getElementById('export-labels-popup-parent');
-      exportPopupElement.style.display = 'none';
-      setExportDatasetsPopUpOpenState(false);
+      hideExportLabelsPopUp();
     }
   }
 }

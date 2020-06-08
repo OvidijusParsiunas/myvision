@@ -7,7 +7,7 @@ import initialiseLabellerModal from './tools/labellerModal/buttons';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportLabelsPopUp from './tools/exportDatasetsPopup/buttonClickEvents';
-import { initialiseSettingsPopup } from './tools/settingsPopup/buttonClickEvents';
+import initialiseSettingsPopup from './tools/settingsPopup/init';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import initialiseImageListFunctionality from './tools/imageList/init';

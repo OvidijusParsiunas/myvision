@@ -5,6 +5,7 @@ let isCheckboxSelected = false;
 let isExportButtonActive = false;
 let currentlyHoveredPopoverId = null;
 let exportButtonElement = null;
+let exportToolkitButtonElement = null;
 let exportLabelsPopupParentElement = null;
 let currentlySelectedCheckboxElement = null;
 let genericFormatOptionsTextElements = null;
@@ -12,6 +13,37 @@ let genericFormatOptionsCheckboxElements = null;
 let boundingBoxFormatOptionsTextElements = null;
 let boundingBoxFormatOptionsCheckboxElements = null;
 const POPOVER_DISPLAY_LAG_MILLISECONDS = 0;
+let isPopupSticky = false;
+let stickCoordinates = false;
+
+function calculateElementOffset(element) {
+  const rect = element.getBoundingClientRect();
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
+}
+
+function setPopUpPosition() {
+  const divOffset = calculateElementOffset(exportToolkitButtonElement);
+  exportLabelsPopupParentElement.style.top = `${divOffset.top}px`;
+}
+
+function validateFullPopUpVisible1() {
+  const settingPopupBottom = exportLabelsPopupParentElement.getBoundingClientRect().bottom;
+  if (!isPopupSticky) {
+    if (settingPopupBottom + 5 > document.body.scrollHeight) {
+      exportLabelsPopupParentElement.style.top = '';
+      exportLabelsPopupParentElement.style.bottom = '5px';
+      stickCoordinates = settingPopupBottom + 10;
+      isPopupSticky = true;
+    }
+  }
+  if (isPopupSticky && stickCoordinates < document.body.scrollHeight) {
+    setPopUpPosition();
+    exportLabelsPopupParentElement.style.bottom = '';
+    isPopupSticky = false;
+  }
+}
 
 function removeExportPopUpInformationPopover(id) {
   currentlyHoveredPopoverId = null;
@@ -130,16 +162,22 @@ function selectFormat(target) {
 }
 
 function displayExportLabelsPopUp() {
-  exportLabelsPopupParentElement.style.display = '';
+  disableFormatOptionsTextIfNoBoundingBoxes();
+  setPopUpPosition();
+  exportLabelsPopupParentElement.style.display = 'block';
+  validateFullPopUpVisible1();
   setExportDatasetsPopUpOpenState(true);
 }
 
 function hideExportLabelsPopUp() {
   exportLabelsPopupParentElement.style.display = 'none';
+  exportLabelsPopupParentElement.style.bottom = '';
+  isPopupSticky = false;
   setExportDatasetsPopUpOpenState(false);
 }
 
-function initialiseExportLabelsPopupElements() {
+function assignExportLabelsPopupElementLocalVariables() {
+  exportToolkitButtonElement = document.getElementById('export-datasets-button');
   exportButtonElement = document.getElementById('export-labels-popup-export-button');
   exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
   boundingBoxFormatOptionsTextElements = document.getElementsByClassName('bounding-box-format-option-text');
@@ -148,8 +186,12 @@ function initialiseExportLabelsPopupElements() {
   genericFormatOptionsCheckboxElements = document.getElementsByClassName('generic-format-option-checkbox');
 }
 
+function initialiseExportLabelsPopupStyling() {
+  assignExportLabelsPopupElementLocalVariables();
+}
+
 export {
-  selectFormat, disableFormatOptionsTextIfNoBoundingBoxes, displayExportPopUpInformationPopover,
-  hideExportLabelsPopUp, initialiseExportLabelsPopupElements, removeExportPopUpInformationPopover,
-  displayExportLabelsPopUp,
+  removeExportPopUpInformationPopover, displayExportLabelsPopUp,
+  validateFullPopUpVisible1, selectFormat, hideExportLabelsPopUp,
+  initialiseExportLabelsPopupStyling, displayExportPopUpInformationPopover,
 };

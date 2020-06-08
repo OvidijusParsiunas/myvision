@@ -1,8 +1,7 @@
 import { selectLabelExportFormat, exportLabels, closeExportLabelsPopUp } from './buttonEventHandlers';
-import { initialiseExportLabelsPopupElements, displayExportPopUpInformationPopover, removeExportPopUpInformationPopover } from './style';
+import { displayExportPopUpInformationPopover, removeExportPopUpInformationPopover } from './style';
 
-function initialiseExportLabelsPopUp() {
-  initialiseExportLabelsPopupElements();
+function assignExportLabelsPopupButtonEventHandlers() {
   window.selectLabelExportFormat = selectLabelExportFormat;
   window.exportLabels = exportLabels;
   window.cancelExportLabels = closeExportLabelsPopUp;
@@ -10,4 +9,4 @@ function initialiseExportLabelsPopUp() {
   window.removeExportPopUpInformationPopover = removeExportPopUpInformationPopover;
 }
 
-export { initialiseExportLabelsPopUp as default };
+export { assignExportLabelsPopupButtonEventHandlers as default };

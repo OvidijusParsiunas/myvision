@@ -8,10 +8,10 @@ function assignCanvasForSettingsPopup(canvasObj) {
   canvas = canvasObj;
 }
 
-function initialiseSettingsPopup() {
+function assignSettingsPopupButtonEventHandlers() {
   window.toggleMovableObjects = changeMovaleObjectsSetting;
   window.toggleContinuousDrawing = changeContinuousDrawingSetting.bind({ canvas });
   window.toggleLabelsVisibility = changeLabelsVisibilitySetting.bind({ canvas });
 }
 
-export { initialiseSettingsPopup, assignCanvasForSettingsPopup };
+export { assignSettingsPopupButtonEventHandlers, assignCanvasForSettingsPopup };
