@@ -200,7 +200,7 @@ function pasteHandlerOnDiv(event) {
     activeLabelTextElement, false, scrollHorizontallyToAppropriateWidth);
 }
 
-function addNewLabelToListFromPopUp(labelText, id, labelColor) {
+function addNewLabelToListFromPopup(labelText, id, labelColor) {
   const labelElement = initialiseParentElement();
   labelElement.id = `${LABEL_CONTAINER_ELEMENT_ID_PREFIX}${id}`;
   labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default');
@@ -908,6 +908,6 @@ export {
   finishEditingLabelList,
   moveSelectedLabelToFrontOfLabelOptions, removeAllLabelListItems, repopulateDropdown,
   initialiseLabelListFunctionality, addExistingLabelToList, arrowKeyEventsForLabelList,
-  isEditingLabelInLabelList, getCurrentlySelectedLabelShape, addNewLabelToListFromPopUp,
+  isEditingLabelInLabelList, getCurrentlySelectedLabelShape, addNewLabelToListFromPopup,
   arrowKeyEventsForLabelOtionsList, removeLabelFromListOnShapeDelete, cancelEditingViaKeyboard,
 };

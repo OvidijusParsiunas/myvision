@@ -1,12 +1,12 @@
-import { displayExportDatasetsPopUp, hideExportDatasetsPopUp } from '../../../exportDatasetsPopup/style';
-import { getExportDatasetsPopUpOpenState } from '../../../stateMachine';
+import { displayExportDatasetsPopup, hideExportDatasetsPopup } from '../../../exportDatasetsPopup/style';
+import { getExportDatasetsPopupOpenState } from '../../../stateMachine';
 
-function toggleExportDatasetsPopUp() {
-  if (!getExportDatasetsPopUpOpenState()) {
-    displayExportDatasetsPopUp();
+function toggleExportDatasetsPopup() {
+  if (!getExportDatasetsPopupOpenState()) {
+    displayExportDatasetsPopup();
   } else {
-    hideExportDatasetsPopUp();
+    hideExportDatasetsPopup();
   }
 }
 
-export { toggleExportDatasetsPopUp as default };
+export { toggleExportDatasetsPopup as default };

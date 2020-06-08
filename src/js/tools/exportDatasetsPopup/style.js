@@ -1,6 +1,6 @@
 import { getNumberOfShapeTypes } from '../globalStatistics/globalStatistics';
-import { setExportDatasetsPopUpOpenState } from '../stateMachine';
-import { setStickyPopupProperties, setPopUpPosition } from '../utils/popups/stickyPopup';
+import { setExportDatasetsPopupOpenState } from '../stateMachine';
+import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup';
 
 let isCheckboxSelected = false;
 let isExportButtonActive = false;
@@ -21,7 +21,7 @@ function setStickyExportDatasetsPopupProperties() {
     exportToolkitButtonElement, stickyProperties);
 }
 
-function removeExportPopUpInformationPopover(id) {
+function removeExportPopupInformationPopover(id) {
   currentlyHoveredPopoverId = null;
   const popover = document.getElementById(`format-option-checkbox-popover-${id}`);
   const arrow = document.getElementById(`format-option-checkbox-arrow-${id}`);
@@ -41,7 +41,7 @@ function displayPopover(id) {
   }, POPOVER_DISPLAY_LAG_MILLISECONDS);
 }
 
-function displayExportPopUpInformationPopover(id) {
+function displayExportPopupInformationPopover(id) {
   if (getNumberOfShapeTypes().polygons > 0) {
     displayPopover(id);
   }
@@ -137,19 +137,19 @@ function selectFormat(target) {
   }
 }
 
-function displayExportDatasetsPopUp() {
+function displayExportDatasetsPopup() {
   disableFormatOptionsTextIfNoBoundingBoxes();
-  setPopUpPosition(exportDatasetsPopupParentElement, exportToolkitButtonElement);
+  setPopupPosition(exportDatasetsPopupParentElement, exportToolkitButtonElement);
   exportDatasetsPopupParentElement.style.display = 'block';
   setStickyExportDatasetsPopupProperties();
-  setExportDatasetsPopUpOpenState(true);
+  setExportDatasetsPopupOpenState(true);
 }
 
-function hideExportDatasetsPopUp() {
+function hideExportDatasetsPopup() {
   exportDatasetsPopupParentElement.style.display = 'none';
   exportDatasetsPopupParentElement.style.bottom = '';
   stickyProperties.isPopupSticky = false;
-  setExportDatasetsPopUpOpenState(false);
+  setExportDatasetsPopupOpenState(false);
 }
 
 function assignExportDatasetsPopupElementLocalVariables() {
@@ -167,7 +167,7 @@ function initialiseExportDatasetsPopupStyling() {
 }
 
 export {
-  removeExportPopUpInformationPopover, displayExportDatasetsPopUp,
-  initialiseExportDatasetsPopupStyling, displayExportPopUpInformationPopover,
-  setStickyExportDatasetsPopupProperties, selectFormat, hideExportDatasetsPopUp,
+  removeExportPopupInformationPopover, displayExportDatasetsPopup,
+  initialiseExportDatasetsPopupStyling, displayExportPopupInformationPopover,
+  setStickyExportDatasetsPopupProperties, selectFormat, hideExportDatasetsPopup,
 };

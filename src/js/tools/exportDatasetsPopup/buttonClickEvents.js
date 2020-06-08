@@ -1,12 +1,12 @@
-import { selectDatasetExportFormat, exportDatasets, closeexportDatasetsPopUp } from './buttonEventHandlers';
-import { displayExportPopUpInformationPopover, removeExportPopUpInformationPopover } from './style';
+import { selectDatasetExportFormat, exportDatasets, closeexportDatasetsPopup } from './buttonEventHandlers';
+import { displayExportPopupInformationPopover, removeExportPopupInformationPopover } from './style';
 
 function assignExportDatasetsPopupButtonEventHandlers() {
   window.selectExportDatasetsFormat = selectDatasetExportFormat;
   window.exportDataset = exportDatasets;
-  window.cancelexportDatasets = closeexportDatasetsPopUp;
-  window.displayExportPopUpInformationPopover = displayExportPopUpInformationPopover;
-  window.removeExportPopUpInformationPopover = removeExportPopUpInformationPopover;
+  window.cancelexportDatasets = closeexportDatasetsPopup;
+  window.displayExportPopupInformationPopover = displayExportPopupInformationPopover;
+  window.removeExportPopupInformationPopover = removeExportPopupInformationPopover;
 }
 
 export { assignExportDatasetsPopupButtonEventHandlers as default };

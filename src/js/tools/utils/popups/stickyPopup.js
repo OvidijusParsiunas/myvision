@@ -5,7 +5,7 @@ function calculateElementOffset(element) {
   return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
 }
 
-function setPopUpPosition(element, elementButton) {
+function setPopupPosition(element, elementButton) {
   const divOffset = calculateElementOffset(elementButton);
   element.style.top = `${divOffset.top}px`;
 }
@@ -22,10 +22,10 @@ function setStickyPopupProperties(element, elementButton, stickyProperties) {
   }
   if (stickyProperties.isPopupSticky
       && stickyProperties.stickCoordinates < document.body.scrollHeight) {
-    setPopUpPosition(element, elementButton);
+    setPopupPosition(element, elementButton);
     element.style.bottom = '';
     stickyProperties.isPopupSticky = false;
   }
 }
 
-export { setStickyPopupProperties, setPopUpPosition };
+export { setStickyPopupProperties, setPopupPosition };

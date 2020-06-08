@@ -2,7 +2,7 @@ import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageLis
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { getCurrentZoomState, getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../stateMachine';
+import { getCurrentZoomState, getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../stateMachine';
 import { validateFullModalVisibile } from '../labellerModal/style';
 import { setStickySettingsPopupProperties } from '../settingsPopup/style';
 import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
@@ -18,9 +18,9 @@ window.windowResize = () => {
     labelProperies.updatePolygonOffsetProperties(newFileSizeRatio);
     resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
   }
-  if (getSettingsPopUpOpenState()) {
+  if (getSettingsPopupOpenState()) {
     setStickySettingsPopupProperties();
-  } else if (getExportDatasetsPopUpOpenState()) {
+  } else if (getExportDatasetsPopupOpenState()) {
     setStickyExportDatasetsPopupProperties();
   }
   const isWindowResized = true;

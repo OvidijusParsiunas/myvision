@@ -16,8 +16,8 @@ let lastPolygonActionWasMoveState = false;
 let newShapeSelectedViaLabelListState = false;
 let currentZoomState = 1;
 let doubleScrollCanvasState = false;
-let settingsPopUpOpenState = false;
-let exportDatasetsPopUpOpenState = false;
+let settingsPopupOpenState = false;
+let exportDatasetsPopupOpenState = false;
 let changingMLGeneratedLabelNamesState = false;
 let currentImageId = false;
 let labellerModalDisplayed = false;
@@ -96,12 +96,12 @@ function getDoubleScrollCanvasState() {
   return doubleScrollCanvasState;
 }
 
-function getSettingsPopUpOpenState() {
-  return settingsPopUpOpenState;
+function getSettingsPopupOpenState() {
+  return settingsPopupOpenState;
 }
 
-function getExportDatasetsPopUpOpenState() {
-  return exportDatasetsPopUpOpenState;
+function getExportDatasetsPopupOpenState() {
+  return exportDatasetsPopupOpenState;
 }
 
 function getCurrentImageId() {
@@ -209,12 +209,12 @@ function setDoubleScrollCanvasState(state) {
   doubleScrollCanvasState = state;
 }
 
-function setSettingsPopUpOpenState(state) {
-  settingsPopUpOpenState = state;
+function setSettingsPopupOpenState(state) {
+  settingsPopupOpenState = state;
 }
 
-function setExportDatasetsPopUpOpenState(state) {
-  exportDatasetsPopUpOpenState = state;
+function setExportDatasetsPopupOpenState(state) {
+  exportDatasetsPopupOpenState = state;
 }
 
 function setCurrentImageId(id) {
@@ -274,8 +274,8 @@ export {
   setReadyToDrawShapeState,
   getLabelsVisibilityState,
   setLabelsVisibilityState,
-  getSettingsPopUpOpenState,
-  setSettingsPopUpOpenState,
+  getSettingsPopupOpenState,
+  setSettingsPopupOpenState,
   getContinuousDrawingState,
   setContinuousDrawingState,
   getBoundingBoxScalingState,
@@ -292,8 +292,8 @@ export {
   setRemovingPolygonPointsState,
   getLabellerModalDisplayedState,
   setLabellerModalDisplayedState,
-  getExportDatasetsPopUpOpenState,
-  setExportDatasetsPopUpOpenState,
+  getExportDatasetsPopupOpenState,
+  setExportDatasetsPopupOpenState,
   getLastPolygonActionWasMoveState,
   setLastPolygonActionWasMoveState,
   getPolygonDrawingInProgressState,

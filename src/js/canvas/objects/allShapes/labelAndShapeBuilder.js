@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
 import labelProperties from '../label/properties';
-import { addNewLabelToListFromPopUp, addExistingLabelToList } from '../../../tools/labelList/labelList';
+import { addNewLabelToListFromPopup, addExistingLabelToList } from '../../../tools/labelList/labelList';
 import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties';
 import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
 import { getLabelsVisibilityState } from '../../../tools/stateMachine';
@@ -74,7 +74,7 @@ function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
   } else {
     generateLabel(textShape);
     addShape(shape, shapeColor, currentId);
-    addNewLabelToListFromPopUp(textShape.text, currentId, shapeColor.label);
+    addNewLabelToListFromPopup(textShape.text, currentId, shapeColor.label);
   }
   setShapeEditingIcons(shape);
   if (isUsingMachineLearning) {

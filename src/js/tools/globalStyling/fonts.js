@@ -1,13 +1,13 @@
-import { getExportDatasetsPopUpOpenState } from '../stateMachine';
+import { getExportDatasetsPopupOpenState } from '../stateMachine';
 import IS_FIREFOX from '../utils/browserType';
 
 function refreshExportDatasetsPopover() {
-  if (!getExportDatasetsPopUpOpenState()) {
+  if (!getExportDatasetsPopupOpenState()) {
     const exportDatasetsPopupParentElement = document.getElementById('export-datasets-popup-parent');
     exportDatasetsPopupParentElement.style.visibility = 'hidden';
     exportDatasetsPopupParentElement.style.display = 'block';
     setTimeout(() => {
-      if (!getExportDatasetsPopUpOpenState()) {
+      if (!getExportDatasetsPopupOpenState()) {
         exportDatasetsPopupParentElement.style.display = 'none';
       }
       exportDatasetsPopupParentElement.style.visibility = '';

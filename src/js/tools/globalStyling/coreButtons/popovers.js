@@ -1,4 +1,4 @@
-import { getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../../stateMachine';
+import { getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../../stateMachine';
 
 const buttonPopovers = {};
 const HOVER_TIMEOUT = 500;
@@ -46,7 +46,7 @@ function displayPopover(middlewareChecks, id) {
 
 function checkIfSettingsButtonNotUp(event) {
   if (event.target.id === 'settings-button') {
-    if (!getSettingsPopUpOpenState()) {
+    if (!getSettingsPopupOpenState()) {
       return true;
     }
     return false;
@@ -56,7 +56,7 @@ function checkIfSettingsButtonNotUp(event) {
 
 function checkIfExportDatasetsButtonNotUp(event) {
   if (event.target.id === 'export-datasets-button') {
-    if (!getExportDatasetsPopUpOpenState()) {
+    if (!getExportDatasetsPopupOpenState()) {
       return true;
     }
     return false;

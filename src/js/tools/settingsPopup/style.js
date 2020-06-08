@@ -1,5 +1,5 @@
-import { setSettingsPopUpOpenState } from '../stateMachine';
-import { setStickyPopupProperties, setPopUpPosition } from '../utils/popups/stickyPopup';
+import { setSettingsPopupOpenState } from '../stateMachine';
+import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup';
 
 let settingsPopupElement = null;
 let settingsToolkitButtonElement = null;
@@ -10,26 +10,26 @@ function setStickySettingsPopupProperties() {
     settingsToolkitButtonElement, stickyProperties);
 }
 
-function displayPopUp() {
+function displayPopup() {
   settingsPopupElement.style.display = 'block';
 }
 
-function hidePopUp() {
+function hidePopup() {
   settingsPopupElement.style.display = 'none';
   settingsPopupElement.style.bottom = '';
 }
 
 function displaySettingsPopup() {
-  setPopUpPosition(settingsPopupElement, settingsToolkitButtonElement);
-  displayPopUp();
+  setPopupPosition(settingsPopupElement, settingsToolkitButtonElement);
+  displayPopup();
   setStickySettingsPopupProperties();
-  setSettingsPopUpOpenState(true);
+  setSettingsPopupOpenState(true);
 }
 
 function hideSettingsPopup() {
-  hidePopUp();
+  hidePopup();
   stickyProperties.isPopupSticky = false;
-  setSettingsPopUpOpenState(false);
+  setSettingsPopupOpenState(false);
 }
 
 function assignSettingsPopupElementLocalVariables() {

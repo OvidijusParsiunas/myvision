@@ -4,10 +4,10 @@ import { removeActiveShapeEvent } from './facadeWorkers/removeActiveShapeWorker'
 import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWorker';
 import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
-import toggleExportDatasetsPopUp from './facadeWorkers/toggleExportDatasetsPopUpWorker';
+import toggleExportDatasetsPopup from './facadeWorkers/toggleExportDatasetsPopupWorker';
 import displayMachineLearningModal from './facadeWorkers/displayMLModalWorker';
 import { zoomCanvas } from './facadeWorkers/zoomWorker';
-import toggleSettingsPopUp from './facadeWorkers/toggleSettingsPopUpWorker';
+import toggleSettingsPopup from './facadeWorkers/toggleSettingsPopupWorker';
 import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
 import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker';
 
@@ -42,7 +42,7 @@ function assignCanvasMouseEvents(canvasObj) {
 }
 
 function exportDatasetsBtnClick() {
-  toggleExportDatasetsPopUp(canvas);
+  toggleExportDatasetsPopup(canvas);
 }
 
 function uploadDatasetsBtnClick() {
@@ -58,7 +58,7 @@ function zoomBtnClick(activity) {
 }
 
 function settingsBtnClick() {
-  toggleSettingsPopUp();
+  toggleSettingsPopup();
 }
 
 function editShapesBtnClick() {

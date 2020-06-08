@@ -8,10 +8,10 @@ import { getCurrentlyHighlightedElement } from '../../tools/labelList/labelListH
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../../tools/machineLearningModal/views/viewManager';
 import {
-  getExportDatasetsPopUpOpenState, getLabellerModalDisplayedState,
+  getExportDatasetsPopupOpenState, getLabellerModalDisplayedState,
   getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
   getUploadDatasetsModalDisplayedState, getMachineLearningModalDisplayedState,
-  getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopUpOpenState,
+  getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopupOpenState,
   getShapeMovingState, getDefaultState, getLastDrawingModeState, getReadyToDrawShapeState,
 } from '../../tools/stateMachine';
 import { removeFillForAllShapes } from '../../canvas/objects/allShapes/allShapes';
@@ -24,7 +24,7 @@ import {
 import { removeTempPointViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { removePointViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
-import closePopUps from '../../tools/utils/popups/closePopups';
+import closeAllPopups from '../../tools/utils/popups/closeAllPopups';
 import { getUserOS } from '../../tools/OS/OSManager';
 
 let canvas = null;
@@ -58,7 +58,7 @@ function qKeyHandler() {
 
 function eKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getDefaultState() && getEditShapesButtonState() !== 'disabled') {
-    closePopUps();
+    closeAllPopups();
     window.editShapes();
     canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   }
@@ -68,7 +68,7 @@ function eKeyHandler() {
 function wKeyHandlerLinux() {
   if (!isModalOpen() && !isEditingLabelInLabelList()
     && getCreateBoundingBoxButtonState() !== 'disabled') {
-    closePopUps();
+    closeAllPopups();
     if (getBoundingBoxDrawingInProgressState()) {
       finishDrawingBoundingBox();
     } else if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
@@ -85,7 +85,7 @@ function wKeyHandlerLinux() {
 function wKeyHandlerDefault() {
   if (!isModalOpen() && !isEditingLabelInLabelList()
         && getCreateBoundingBoxButtonState() !== 'disabled') {
-    closePopUps();
+    closeAllPopups();
     if (getBoundingBoxDrawingInProgressState()) return;
     if (getReadyToDrawShapeState() && getLastDrawingModeState() === 'boundingBox') {
       instantiateNewBoundingBox();
@@ -106,7 +106,7 @@ function wKeyUpHandlerDefault() {
 
 function rKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
-    closePopUps();
+    closeAllPopups();
     if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {
       if (isRKeyUp) {
         removeTempPointViaKeyboard();
@@ -129,7 +129,7 @@ function aKeyHandler() {
   // aware of when shape completed, not moving mouse, change to remove, but cannot remove
   // also if hovering point on edit, switched to remove, then add without move, can't add
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getAddPointsButtonState() !== 'disabled') {
-    closePopUps();
+    closeAllPopups();
     if (getAddingPolygonPointsState()) {
       addPointToExistingPolygonViaKeyboard();
     } else {
@@ -164,21 +164,21 @@ function arrowDownKeyHandler() {
 
 function arrowLeftKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
-    closePopUps();
+    closeAllPopups();
     window.switchImage('previous');
   }
 }
 
 function arrowRightKeyHandler() {
   if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
-    closePopUps();
+    closeAllPopups();
     window.switchImage('next');
   }
 }
 
 function removeKeyHandler() {
   if (isModalOpen() || isEditingLabelInLabelList()) return;
-  closePopUps();
+  closeAllPopups();
   window.removeShape();
   canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
 }
@@ -200,9 +200,9 @@ function enterKeyHandler() {
 }
 
 function escapeKeyHandler() {
-  if (getExportDatasetsPopUpOpenState()) {
+  if (getExportDatasetsPopupOpenState()) {
     window.exportDatasets();
-  } else if (getSettingsPopUpOpenState()) {
+  } else if (getSettingsPopupOpenState()) {
     window.displaySettingsPopup();
   } else if (getLabellerModalDisplayedState()) {
     window.cancelLabellingProcess();

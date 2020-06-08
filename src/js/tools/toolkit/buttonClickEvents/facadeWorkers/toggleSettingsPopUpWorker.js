@@ -1,12 +1,12 @@
-import { getSettingsPopUpOpenState } from '../../../stateMachine';
+import { getSettingsPopupOpenState } from '../../../stateMachine';
 import { displaySettingsPopup, hideSettingsPopup } from '../../../settingsPopup/style';
 
-function toggleSettingsPopUp() {
-  if (!getSettingsPopUpOpenState()) {
+function toggleSettingsPopup() {
+  if (!getSettingsPopupOpenState()) {
     displaySettingsPopup();
   } else {
     hideSettingsPopup();
   }
 }
 
-export { toggleSettingsPopUp as default };
+export { toggleSettingsPopup as default };

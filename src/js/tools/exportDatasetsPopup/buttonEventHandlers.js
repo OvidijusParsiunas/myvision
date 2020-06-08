@@ -1,4 +1,4 @@
-import { selectFormat, hideExportDatasetsPopUp } from './style';
+import { selectFormat, hideExportDatasetsPopup } from './style';
 import downloadCOCOJSON from './fileTypes/COCOJSON';
 import downloadVGGJSON from './fileTypes/VGGJSON';
 import downloadCSV from './fileTypes/CSV';
@@ -35,12 +35,12 @@ function exportDatasets() {
       break;
   }
   if (exported) {
-    hideExportDatasetsPopUp();
+    hideExportDatasetsPopup();
   }
 }
 
-function closeexportDatasetsPopUp() {
-  hideExportDatasetsPopUp();
+function closeexportDatasetsPopup() {
+  hideExportDatasetsPopup();
 }
 
-export { selectDatasetExportFormat, exportDatasets, closeexportDatasetsPopUp };
+export { selectDatasetExportFormat, exportDatasets, closeexportDatasetsPopup };
