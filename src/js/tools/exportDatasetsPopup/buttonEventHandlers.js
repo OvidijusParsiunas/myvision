@@ -1,4 +1,4 @@
-import { selectFormat, hideExportLabelsPopUp } from './style';
+import { selectFormat, hideExportDatasetsPopUp } from './style';
 import downloadCOCOJSON from './fileTypes/COCOJSON';
 import downloadVGGJSON from './fileTypes/VGGJSON';
 import downloadCSV from './fileTypes/CSV';
@@ -7,12 +7,12 @@ import downloadYOLOTXT from './fileTypes/YOLOTXT';
 
 let currentlySelectedFormat = null;
 
-function selectLabelExportFormat(format, target) {
+function selectDatasetExportFormat(format, target) {
   selectFormat(target);
   currentlySelectedFormat = currentlySelectedFormat === format ? '' : format;
 }
 
-function exportLabels() {
+function exportDatasets() {
   let exported = true;
   switch (currentlySelectedFormat) {
     case 'COCO JSON':
@@ -35,12 +35,12 @@ function exportLabels() {
       break;
   }
   if (exported) {
-    hideExportLabelsPopUp();
+    hideExportDatasetsPopUp();
   }
 }
 
-function closeExportLabelsPopUp() {
-  hideExportLabelsPopUp();
+function closeexportDatasetsPopUp() {
+  hideExportDatasetsPopUp();
 }
 
-export { selectLabelExportFormat, exportLabels, closeExportLabelsPopUp };
+export { selectDatasetExportFormat, exportDatasets, closeexportDatasetsPopUp };

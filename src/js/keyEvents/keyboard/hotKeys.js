@@ -24,7 +24,7 @@ import {
 import { removeTempPointViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsOnNewPolygonEventsWorker';
 import { removePointViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
-import closePopUps from '../../tools/utils/closePopUps';
+import closePopUps from '../../tools/utils/popups/closePopups';
 import { getUserOS } from '../../tools/OS/OSManager';
 
 let canvas = null;

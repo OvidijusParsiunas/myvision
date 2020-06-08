@@ -1,22 +1,22 @@
 import { getExportDatasetsPopUpOpenState } from '../stateMachine';
 import IS_FIREFOX from '../utils/browserType';
 
-function refreshExportLabelsPopover() {
+function refreshExportDatasetsPopover() {
   if (!getExportDatasetsPopUpOpenState()) {
-    const exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
-    exportLabelsPopupParentElement.style.visibility = 'hidden';
-    exportLabelsPopupParentElement.style.display = 'block';
+    const exportDatasetsPopupParentElement = document.getElementById('export-datasets-popup-parent');
+    exportDatasetsPopupParentElement.style.visibility = 'hidden';
+    exportDatasetsPopupParentElement.style.display = 'block';
     setTimeout(() => {
       if (!getExportDatasetsPopUpOpenState()) {
-        exportLabelsPopupParentElement.style.display = 'none';
+        exportDatasetsPopupParentElement.style.display = 'none';
       }
-      exportLabelsPopupParentElement.style.visibility = '';
+      exportDatasetsPopupParentElement.style.visibility = '';
     }, 0);
   }
 }
 
 function loadSuccess() {
-  refreshExportLabelsPopover();
+  refreshExportDatasetsPopover();
 }
 
 function loadFailed() {

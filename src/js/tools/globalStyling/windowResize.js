@@ -4,8 +4,8 @@ import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { getCurrentZoomState, getSettingsPopUpOpenState, getExportDatasetsPopUpOpenState } from '../stateMachine';
 import { validateFullModalVisibile } from '../labellerModal/style';
-import { validateFullPopUpVisible } from '../settingsPopup/style';
-import { validateFullPopUpVisible1 } from '../exportDatasetsPopup/style';
+import { setStickySettingsPopupProperties } from '../settingsPopup/style';
+import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
 
 let canvas = null;
 
@@ -19,9 +19,9 @@ window.windowResize = () => {
     resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas);
   }
   if (getSettingsPopUpOpenState()) {
-    validateFullPopUpVisible();
+    setStickySettingsPopupProperties();
   } else if (getExportDatasetsPopUpOpenState()) {
-    validateFullPopUpVisible1();
+    setStickyExportDatasetsPopupProperties();
   }
   const isWindowResized = true;
   validateFullModalVisibile(isWindowResized);

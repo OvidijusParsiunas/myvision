@@ -1,11 +1,11 @@
-import { displayExportLabelsPopUp, hideExportLabelsPopUp } from '../../../exportDatasetsPopup/style';
+import { displayExportDatasetsPopUp, hideExportDatasetsPopUp } from '../../../exportDatasetsPopup/style';
 import { getExportDatasetsPopUpOpenState } from '../../../stateMachine';
 
 function toggleExportDatasetsPopUp() {
   if (!getExportDatasetsPopUpOpenState()) {
-    displayExportLabelsPopUp();
+    displayExportDatasetsPopUp();
   } else {
-    hideExportLabelsPopUp();
+    hideExportDatasetsPopUp();
   }
 }
 

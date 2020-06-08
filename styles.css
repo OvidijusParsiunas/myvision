@@ -543,7 +543,7 @@ input:focus {
   background-color: #e4bebe !important;
 }
 
-#export-labels-popup-parent {
+#export-datasets-popup-parent {
   position: absolute;
   border-radius: 3px;
   background-color: white;
@@ -559,7 +559,7 @@ input:focus {
   left: calc(65px / var(--screen-size-delta));
 }
 
-#export-labels-popup-title {
+#export-datasets-popup-title {
   padding-left: calc(10px / var(--screen-size-delta));
   padding-top: calc(6.5px / var(--screen-size-delta));
   padding-bottom: calc(3.5px / var(--screen-size-delta));
@@ -571,7 +571,7 @@ input:focus {
   width: calc(172px / var(--screen-size-delta));
 }
 
-#export-labels-table {
+#export-datasets-table {
   width: calc(164px / var(--screen-size-delta));
   padding: calc(2px / var(--screen-size-delta));
   padding-left: calc(5px / var(--screen-size-delta));
@@ -589,7 +589,7 @@ input:focus {
 
 /* repeating code for the submit buttons */
 
-#export-labels-popup-export-button {
+#export-datasets-popup-export-button {
   margin-top: calc(5px / var(--screen-size-delta));
   width: calc(50px / var(--screen-size-delta));
   padding-top: calc(6px / var(--screen-size-delta));
@@ -1705,7 +1705,7 @@ body {
   .small-core-button-hover-popover-v-position {
     margin-top: calc(-31px / var(--screen-size-delta));
   }
-  #export-labels-popup-export-button {
+  #export-datasets-popup-export-button {
     padding-top: calc(4.5px / var(--screen-size-delta));
     margin-top: calc(8px / var(--screen-size-delta));
   }

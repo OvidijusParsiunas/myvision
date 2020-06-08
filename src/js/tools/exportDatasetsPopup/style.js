@@ -1,48 +1,24 @@
 import { getNumberOfShapeTypes } from '../globalStatistics/globalStatistics';
 import { setExportDatasetsPopUpOpenState } from '../stateMachine';
+import { setStickyPopupProperties, setPopUpPosition } from '../utils/popups/stickyPopup';
 
 let isCheckboxSelected = false;
 let isExportButtonActive = false;
 let currentlyHoveredPopoverId = null;
 let exportButtonElement = null;
 let exportToolkitButtonElement = null;
-let exportLabelsPopupParentElement = null;
+let exportDatasetsPopupParentElement = null;
 let currentlySelectedCheckboxElement = null;
 let genericFormatOptionsTextElements = null;
 let genericFormatOptionsCheckboxElements = null;
 let boundingBoxFormatOptionsTextElements = null;
 let boundingBoxFormatOptionsCheckboxElements = null;
 const POPOVER_DISPLAY_LAG_MILLISECONDS = 0;
-let isPopupSticky = false;
-let stickCoordinates = false;
+const stickyProperties = { isPopupSticky: false, stickCoordinates: 0 };
 
-function calculateElementOffset(element) {
-  const rect = element.getBoundingClientRect();
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
-}
-
-function setPopUpPosition() {
-  const divOffset = calculateElementOffset(exportToolkitButtonElement);
-  exportLabelsPopupParentElement.style.top = `${divOffset.top}px`;
-}
-
-function validateFullPopUpVisible1() {
-  const settingPopupBottom = exportLabelsPopupParentElement.getBoundingClientRect().bottom;
-  if (!isPopupSticky) {
-    if (settingPopupBottom + 5 > document.body.scrollHeight) {
-      exportLabelsPopupParentElement.style.top = '';
-      exportLabelsPopupParentElement.style.bottom = '5px';
-      stickCoordinates = settingPopupBottom + 10;
-      isPopupSticky = true;
-    }
-  }
-  if (isPopupSticky && stickCoordinates < document.body.scrollHeight) {
-    setPopUpPosition();
-    exportLabelsPopupParentElement.style.bottom = '';
-    isPopupSticky = false;
-  }
+function setStickyExportDatasetsPopupProperties() {
+  setStickyPopupProperties(exportDatasetsPopupParentElement,
+    exportToolkitButtonElement, stickyProperties);
 }
 
 function removeExportPopUpInformationPopover(id) {
@@ -161,37 +137,37 @@ function selectFormat(target) {
   }
 }
 
-function displayExportLabelsPopUp() {
+function displayExportDatasetsPopUp() {
   disableFormatOptionsTextIfNoBoundingBoxes();
-  setPopUpPosition();
-  exportLabelsPopupParentElement.style.display = 'block';
-  validateFullPopUpVisible1();
+  setPopUpPosition(exportDatasetsPopupParentElement, exportToolkitButtonElement);
+  exportDatasetsPopupParentElement.style.display = 'block';
+  setStickyExportDatasetsPopupProperties();
   setExportDatasetsPopUpOpenState(true);
 }
 
-function hideExportLabelsPopUp() {
-  exportLabelsPopupParentElement.style.display = 'none';
-  exportLabelsPopupParentElement.style.bottom = '';
-  isPopupSticky = false;
+function hideExportDatasetsPopUp() {
+  exportDatasetsPopupParentElement.style.display = 'none';
+  exportDatasetsPopupParentElement.style.bottom = '';
+  stickyProperties.isPopupSticky = false;
   setExportDatasetsPopUpOpenState(false);
 }
 
-function assignExportLabelsPopupElementLocalVariables() {
+function assignExportDatasetsPopupElementLocalVariables() {
   exportToolkitButtonElement = document.getElementById('export-datasets-button');
-  exportButtonElement = document.getElementById('export-labels-popup-export-button');
-  exportLabelsPopupParentElement = document.getElementById('export-labels-popup-parent');
+  exportButtonElement = document.getElementById('export-datasets-popup-export-button');
+  exportDatasetsPopupParentElement = document.getElementById('export-datasets-popup-parent');
   boundingBoxFormatOptionsTextElements = document.getElementsByClassName('bounding-box-format-option-text');
   boundingBoxFormatOptionsCheckboxElements = document.getElementsByClassName('bounding-box-format-option-checkbox');
   genericFormatOptionsTextElements = document.getElementsByClassName('generic-format-option-text');
   genericFormatOptionsCheckboxElements = document.getElementsByClassName('generic-format-option-checkbox');
 }
 
-function initialiseExportLabelsPopupStyling() {
-  assignExportLabelsPopupElementLocalVariables();
+function initialiseExportDatasetsPopupStyling() {
+  assignExportDatasetsPopupElementLocalVariables();
 }
 
 export {
-  removeExportPopUpInformationPopover, displayExportLabelsPopUp,
-  validateFullPopUpVisible1, selectFormat, hideExportLabelsPopUp,
-  initialiseExportLabelsPopupStyling, displayExportPopUpInformationPopover,
+  removeExportPopUpInformationPopover, displayExportDatasetsPopUp,
+  initialiseExportDatasetsPopupStyling, displayExportPopUpInformationPopover,
+  setStickyExportDatasetsPopupProperties, selectFormat, hideExportDatasetsPopUp,
 };

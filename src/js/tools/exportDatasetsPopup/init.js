@@ -1,9 +1,9 @@
-import { initialiseExportLabelsPopupStyling } from './style';
-import assignExportLabelsPopupButtonEventHandlers from './buttonClickEvents';
+import { initialiseExportDatasetsPopupStyling } from './style';
+import assignExportDatasetsPopupButtonEventHandlers from './buttonClickEvents';
 
-function initialiseSettingsPopup() {
-  initialiseExportLabelsPopupStyling();
-  assignExportLabelsPopupButtonEventHandlers();
+function initialiseExportDatasetsPopup() {
+  initialiseExportDatasetsPopupStyling();
+  assignExportDatasetsPopupButtonEventHandlers();
 }
 
-export { initialiseSettingsPopup as default };
+export { initialiseExportDatasetsPopup as default };

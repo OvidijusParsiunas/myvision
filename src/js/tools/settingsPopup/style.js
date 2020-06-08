@@ -1,37 +1,13 @@
 import { setSettingsPopUpOpenState } from '../stateMachine';
+import { setStickyPopupProperties, setPopUpPosition } from '../utils/popups/stickyPopup';
 
 let settingsPopupElement = null;
 let settingsToolkitButtonElement = null;
-let stickCoordinates = 0;
-let isPopupSticky = false;
+const stickyProperties = { isPopupSticky: false, stickCoordinates: 0 };
 
-function calculateElementOffset(element) {
-  const rect = element.getBoundingClientRect();
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
-}
-
-function setPopUpPosition() {
-  const divOffset = calculateElementOffset(settingsToolkitButtonElement);
-  settingsPopupElement.style.top = `${divOffset.top}px`;
-}
-
-function validateFullPopUpVisible() {
-  const settingPopupBottom = settingsPopupElement.getBoundingClientRect().bottom;
-  if (!isPopupSticky) {
-    if (settingPopupBottom + 5 > document.body.scrollHeight) {
-      settingsPopupElement.style.top = '';
-      settingsPopupElement.style.bottom = '5px';
-      stickCoordinates = settingPopupBottom + 10;
-      isPopupSticky = true;
-    }
-  }
-  if (isPopupSticky && stickCoordinates < document.body.scrollHeight) {
-    setPopUpPosition();
-    settingsPopupElement.style.bottom = '';
-    isPopupSticky = false;
-  }
+function setStickySettingsPopupProperties() {
+  setStickyPopupProperties(settingsPopupElement,
+    settingsToolkitButtonElement, stickyProperties);
 }
 
 function displayPopUp() {
@@ -44,15 +20,15 @@ function hidePopUp() {
 }
 
 function displaySettingsPopup() {
-  setPopUpPosition();
+  setPopUpPosition(settingsPopupElement, settingsToolkitButtonElement);
   displayPopUp();
-  validateFullPopUpVisible();
+  setStickySettingsPopupProperties();
   setSettingsPopUpOpenState(true);
 }
 
 function hideSettingsPopup() {
   hidePopUp();
-  isPopupSticky = false;
+  stickyProperties.isPopupSticky = false;
   setSettingsPopUpOpenState(false);
 }
 
@@ -66,5 +42,6 @@ function initialiseSettingsPopupStyling() {
 }
 
 export {
-  initialiseSettingsPopupStyling, hideSettingsPopup, displaySettingsPopup, validateFullPopUpVisible,
+  initialiseSettingsPopupStyling, hideSettingsPopup,
+  displaySettingsPopup, setStickySettingsPopupProperties,
 };
