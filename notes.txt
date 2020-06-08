@@ -6,13 +6,9 @@ I beliveve the reason why the bottom of new bounding boxes is not showing up cor
 
 will have to highlight initial buttons to get users started
 
-help button top right
-
 option to disabled selectable temp points
 
 delta for dynamic screen height and firefox
-
-settings popup seems to generate overflow when scrolling top
 
 modal to check if the user is sure they want to remove an image
 

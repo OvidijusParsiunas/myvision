@@ -16,7 +16,7 @@ function setStickyPopupProperties(element, elementButton, stickyProperties) {
     if (settingPopupBottom + 5 > document.body.scrollHeight) {
       element.style.top = '';
       element.style.bottom = '5px';
-      stickyProperties.stickCoordinates = settingPopupBottom + 10;
+      stickyProperties.stickCoordinates = settingPopupBottom + 6;
       stickyProperties.isPopupSticky = true;
     }
   }
