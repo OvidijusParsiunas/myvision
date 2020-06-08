@@ -1377,10 +1377,10 @@ body {
 }
 
 #title-logo {
-  padding-left: calc(15px / var(--screen-size-delta));
-  padding-right: calc(5px / var(--screen-size-delta));
-  width: calc(19px / var(--screen-size-delta));
-  padding-top: calc(8px / var(--screen-size-delta));
+  padding-left: 15px;
+  padding-right: 5px;
+  width: 19px;
+  padding-top: 7px;
   float: left;
 }
 
@@ -1400,18 +1400,18 @@ body {
 } */
 
 #title-text {
-  padding-top: 3.5px;
+  padding-top: 4px;
   padding-left: 4px;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: calc(22px / var(--screen-size-delta));
+  font-size: 22px;
   float: left;
 }
 
 #title-github-mark {
-  padding-top: calc(7px / var(--screen-size-delta));
-  padding-right: calc(20px / var(--screen-size-delta));
-  max-width: calc(22px / var(--screen-size-delta));
-  max-height: calc(22px / var(--screen-size-delta));
+  padding-top: 6px;
+  padding-right: 20px;
+  max-width: 22px;
+  max-height: 22px;
   float: right;
   cursor: pointer;
 }
