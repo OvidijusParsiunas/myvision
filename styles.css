@@ -1086,6 +1086,21 @@ input:focus {
   right: calc(2px / var(--screen-size-delta));
 }
 
+#remove-images-modal-parent {
+  height: calc(187px / var(--screen-size-delta));
+  width: calc(415px / var(--screen-size-delta));
+  left: calc(-151px / var(--screen-size-delta));
+}
+
+#remove-images-modal-description {
+  text-align: center;
+  margin-top: calc(37px / var(--screen-size-delta));
+}
+
+#remove-images-modal-buttons {
+  margin-top: calc(10px / var(--screen-size-delta));
+}
+
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;

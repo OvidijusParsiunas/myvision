@@ -12,6 +12,7 @@ import {
   setCreateBoundingBoxButtonToDisabled, setRemoveImagesButtonsDisabled,
 } from '../../toolkit/styling/stateMachine';
 import { getCurrentImageId } from '../../stateMachine';
+import { displayRemoveImagesModal } from './modal/style';
 
 let canvas = null;
 
@@ -55,18 +56,24 @@ function resetRemainingImageElements() {
   }
 }
 
+function removeImageCallback() {
+  const allImageData = getAllImageData();
+  const index = getCurrentImageId();
+  document.getElementById(index).parentElement.remove();
+  resetRemainingImageElements();
+  const previousImageDataLength = allImageData.length;
+  allImageData.splice(index, 1);
+  removeAllLabelRefs();
+  removeAllShapes();
+  setPolygonEditingButtonsToDisabled();
+  switchImage(index, allImageData, previousImageDataLength);
+}
+
 function removeImage() {
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
-    const index = getCurrentImageId();
-    document.getElementById(index).parentElement.remove();
-    resetRemainingImageElements();
-    const previousImageDataLength = allImageData.length;
-    allImageData.splice(index, 1);
-    removeAllLabelRefs();
-    removeAllShapes();
-    setPolygonEditingButtonsToDisabled();
-    switchImage(index, allImageData, previousImageDataLength);
+    // investigate binding allImageData
+    displayRemoveImagesModal();
   }
 }
 
@@ -74,7 +81,7 @@ function assignCanvasForRemovingImages(canvasArg) {
   canvas = canvasArg;
 }
 
-export { assignCanvasForRemovingImages, removeImage };
+export { assignCanvasForRemovingImages, removeImage, removeImageCallback };
 
 // initial code to get started on the multi-image removal functionality
 

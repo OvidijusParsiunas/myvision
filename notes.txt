@@ -8,6 +8,8 @@ will have to highlight initial buttons to get users started
 
 option to disabled selectable temp points
 
+delta for dynamic screen height and firefox (getDelta syntax)
+
 modal to check if the user is sure they want to remove an image
 
 ---------------------------------------------

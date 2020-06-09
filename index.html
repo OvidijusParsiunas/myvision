@@ -135,6 +135,17 @@
         <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>
       </div>
     </div>
+    <div id="remove-images-modal-parent" style="display: none" class="modal-parent">
+      <div class="modal-title small-title">Remove image</div>
+      <div class="modal-title-border-line"></div>
+      <div id="remove-images-modal-description" class="modal-description">
+        Are you sure you want to remove the selected image?
+      </div>
+      <div id="remove-images-modal-buttons" class="buttons modal-buttons">
+        <div class="popup-label-button popup-proceed-button" onclick="approveRemoveImage()">Yes</div>
+        <div class="popup-label-button popup-cancel-button" onclick="cancelRemoveImage()">No</div>
+      </div>
+    </div>
       <div id="export-datasets-popup-parent" class="export-datasets-popup-item" style="display: none;">
         <div id="export-datasets-popup-title" class="export-datasets-popup-item small-title">Choose format:</div>
         <div id="parent-table-element" class="export-datasets-popup-item">
