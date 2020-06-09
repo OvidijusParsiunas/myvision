@@ -12,12 +12,17 @@ function closeRemoveImagesModal() {
   setRemoveImageModalDisplayedState(false);
 }
 
+function setInitialCheckBoxInputValue() {
+  document.getElementById('remove-images-modal-checkbox').checked = false;
+}
+
 function assignRemoveImagesModalLocalVariables() {
   modalParentElement = document.getElementById('remove-images-modal-parent');
 }
 
 function initialiseRemoveImagesModalStyling() {
   assignRemoveImagesModalLocalVariables();
+  setInitialCheckBoxInputValue();
 }
 
 export { initialiseRemoveImagesModalStyling, displayRemoveImagesModal, closeRemoveImagesModal };

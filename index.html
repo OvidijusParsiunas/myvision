@@ -155,10 +155,10 @@
         <div id="parent-table-element" class="export-datasets-popup-item">
           <table id="export-datasets-table" class="export-datasets-popup-item">
             <tr><td class="export-datasets-popup-item data-format-table-row-data bounding-box-data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
-              <input class="export-datasets-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('COCO JSON', this)">
+              <input id="export-datasets-popup-coco-json-format-checkbox" class="export-datasets-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('COCO JSON', this)">
             </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text generic-format-option-text">VGG JSON</div>
-              <input class="export-datasets-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('VGG JSON', this)">
+              <input id="export-datasets-popup-vgg-json-format-checkbox" class="export-datasets-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('VGG JSON', this)">
             </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data bounding-box-data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopupInformationPopover(4)" onmouseleave="removeExportPopupInformationPopover(4)">
                 <div id="format-option-checkbox-popover-4" class="export-datasets-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
@@ -168,7 +168,7 @@
               <div id="format-option-checkbox-popover-1" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover">Bounding boxes only</div>
               <div id="format-option-checkbox-arrow-1" class="export-datasets-popup-item arrow checkbox-arrow-position default-arrow-color"></div>
               <div onmouseenter="displayExportPopupInformationPopover(1)" onmouseleave="removeExportPopupInformationPopover(1)" class="export-datasets-popup-item">
-                <input class="export-datasets-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('CSV', this)">
+                <input id="export-datasets-popup-csv-format-checkbox" class="export-datasets-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('CSV', this)">
               </div>
               </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopupInformationPopover(5)" onmouseleave="removeExportPopupInformationPopover(5)">
@@ -179,7 +179,7 @@
               <div id="format-option-checkbox-popover-2" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover">Bounding boxes only</div>
               <div id="format-option-checkbox-arrow-2" class="export-datasets-popup-item arrow checkbox-arrow-position default-arrow-color"></div>
               <div onmouseenter="displayExportPopupInformationPopover(2)" onmouseleave="removeExportPopupInformationPopover(2)" class="export-datasets-popup-item">
-                <input class="export-datasets-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('VOC XML', this)">
+                <input id="export-datasets-popup-voc-xml-format-checkbox" class="export-datasets-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('VOC XML', this)">
               </div>
               </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopupInformationPopover(6)" onmouseleave="removeExportPopupInformationPopover(6)">
@@ -190,7 +190,7 @@
               <div id="format-option-checkbox-popover-3" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover">Bounding boxes only</div>
               <div id="format-option-checkbox-arrow-3" class="export-datasets-popup-item arrow checkbox-arrow-position default-arrow-color"></div>
               <div onmouseenter="displayExportPopupInformationPopover(3)" onmouseleave="removeExportPopupInformationPopover(3)" class="export-datasets-popup-item">
-                  <input class="export-datasets-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('YOLO TXT', this)">
+                  <input id="export-datasets-popup-yolo-txt-format-checkbox" class="export-datasets-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('YOLO TXT', this)">
               </div>
               </td></tr>
           </table>
@@ -257,9 +257,9 @@
     <!-- the popup should align itself if it overflows, or align itself to not overflow -->
     <div id="settings-popup" class="settings-popup-item">
       <table id="settings-table" class="settings-popup-item">
-        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Movable Objects</div> <input class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleMovableObjects()" checked></td></tr>
-        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleContinuousDrawing()"></td></tr>
-        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Label visibility</div><input class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()" checked></td></tr>
+        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Movable Objects</div> <input id="settings-popup-movable-objects-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleMovableObjects()"></td></tr>
+        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input id="settings-popup-continuous-drawing-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleContinuousDrawing()"></td></tr>
+        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Label visibility</div><input id="settings-popup-labels-visibility-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()"></td></tr>
       </table>
       <!-- <button id="toolkit-button toolkit-button-default" onclick="movableObjects()">Movable Objects</button> -->
       <!-- <button id="toolkit-button toolkit-button-default" onclick="continuousDrawing()">Continuous Drawing</button>

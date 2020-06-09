@@ -152,6 +152,14 @@ function hideExportDatasetsPopup() {
   setExportDatasetsPopupOpenState(false);
 }
 
+function setInitialCheckBoxInputValues() {
+  document.getElementById('export-datasets-popup-coco-json-format-checkbox').checked = false;
+  document.getElementById('export-datasets-popup-vgg-json-format-checkbox').checked = false;
+  document.getElementById('export-datasets-popup-csv-format-checkbox').checked = false;
+  document.getElementById('export-datasets-popup-voc-xml-format-checkbox').checked = false;
+  document.getElementById('export-datasets-popup-yolo-txt-format-checkbox').checked = false;
+}
+
 function assignExportDatasetsPopupElementLocalVariables() {
   exportToolkitButtonElement = document.getElementById('export-datasets-button');
   exportButtonElement = document.getElementById('export-datasets-popup-export-button');
@@ -164,6 +172,7 @@ function assignExportDatasetsPopupElementLocalVariables() {
 
 function initialiseExportDatasetsPopupStyling() {
   assignExportDatasetsPopupElementLocalVariables();
+  setInitialCheckBoxInputValues();
 }
 
 export {

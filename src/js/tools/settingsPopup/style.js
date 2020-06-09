@@ -32,6 +32,12 @@ function hideSettingsPopup() {
   setSettingsPopupOpenState(false);
 }
 
+function setInitialCheckBoxInputValues() {
+  document.getElementById('settings-popup-movable-objects-checkbox').checked = true;
+  document.getElementById('settings-popup-continuous-drawing-checkbox').checked = false;
+  document.getElementById('settings-popup-labels-visibility-checkbox').checked = true;
+}
+
 function assignSettingsPopupElementLocalVariables() {
   settingsPopupElement = document.getElementById('settings-popup');
   settingsToolkitButtonElement = document.getElementById('settings-button');
@@ -39,6 +45,7 @@ function assignSettingsPopupElementLocalVariables() {
 
 function initialiseSettingsPopupStyling() {
   assignSettingsPopupElementLocalVariables();
+  setInitialCheckBoxInputValues();
 }
 
 export {
