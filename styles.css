@@ -1769,6 +1769,9 @@ body {
   .machine-learning-modal-generated-labels-edit-icon {
     margin-top: calc(6px / var(--screen-size-delta));
   }
+  #remove-images-modal-checkbox-parent {
+    line-height: calc(16.5px / var(--screen-size-delta));
+  }
 }
 
 /* removing dotted border when in focus on firefox */

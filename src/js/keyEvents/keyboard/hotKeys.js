@@ -197,6 +197,8 @@ function backspaceKeyHandler() {
 function enterKeyHandler() {
   if (getLabellerModalDisplayedState()) {
     labelShape();
+  } else if (getRemoveImageModalDisplayedState()) {
+    window.approveRemoveImage();
   } else if (getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState()) {
     generatePolygonViaKeyboard();
   }

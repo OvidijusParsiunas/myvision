@@ -1,10 +1,10 @@
 import { initialiseRemoveImagesModalStyling } from './style';
 import assignRemoveImagesModalButtonEventHandlers from './buttons/buttonClickEvents';
-import { removeImageCallback } from '../removeImages';
+import { removeImage } from '../removeImages';
 
 function initialiseRemoveImagesModal() {
   initialiseRemoveImagesModalStyling();
-  assignRemoveImagesModalButtonEventHandlers(removeImageCallback);
+  assignRemoveImagesModalButtonEventHandlers(removeImage);
 }
 
 export { initialiseRemoveImagesModal as default };

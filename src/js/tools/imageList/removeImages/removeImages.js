@@ -57,8 +57,8 @@ function resetRemainingImageElements() {
   }
 }
 
-function removeImageCallback() {
-  const allImageData = getAllImageData();
+function removeImage(allImageDataArr) {
+  const allImageData = allImageDataArr || getAllImageData();
   const index = getCurrentImageId();
   document.getElementById(index).parentElement.remove();
   resetRemainingImageElements();
@@ -70,12 +70,11 @@ function removeImageCallback() {
   switchImage(index, allImageData, previousImageDataLength);
 }
 
-function removeImage() {
+function triggerRemoveImage() {
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
-    // investigate binding allImageData
     if (getDoNotShowRemoveImageModalAgainState()) {
-      removeImageCallback();
+      removeImage(allImageData);
     } else {
       displayRemoveImagesModal();
     }
@@ -86,7 +85,7 @@ function assignCanvasForRemovingImages(canvasArg) {
   canvas = canvasArg;
 }
 
-export { assignCanvasForRemovingImages, removeImage, removeImageCallback };
+export { assignCanvasForRemovingImages, triggerRemoveImage, removeImage };
 
 // initial code to get started on the multi-image removal functionality
 
