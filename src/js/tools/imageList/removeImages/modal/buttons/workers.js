@@ -1,12 +1,17 @@
-import { hideRemoveImagesModal } from '../style';
+import { closeRemoveImagesModal } from '../style';
+import { setDoNotShowRemoveImageModalAgainState, getDoNotShowRemoveImageModalAgainState } from '../stateMachine';
 
 function removeImage() {
   this.removeImageCallback();
-  hideRemoveImagesModal();
+  closeRemoveImagesModal();
 }
 
 function cancelRemoveImage() {
-  hideRemoveImagesModal();
+  closeRemoveImagesModal();
 }
 
-export { removeImage, cancelRemoveImage };
+function toggleDoNotShowRemoveImageModalAgain() {
+  setDoNotShowRemoveImageModalAgainState(!getDoNotShowRemoveImageModalAgainState());
+}
+
+export { removeImage, cancelRemoveImage, toggleDoNotShowRemoveImageModalAgain };

@@ -1,11 +1,15 @@
+import { setRemoveImageModalDisplayedState } from '../../../stateMachine';
+
 let modalParentElement = null;
 
 function displayRemoveImagesModal() {
   modalParentElement.style.display = 'block';
+  setRemoveImageModalDisplayedState(true);
 }
 
-function hideRemoveImagesModal() {
+function closeRemoveImagesModal() {
   modalParentElement.style.display = 'none';
+  setRemoveImageModalDisplayedState(false);
 }
 
 function assignRemoveImagesModalLocalVariables() {
@@ -16,4 +20,4 @@ function initialiseRemoveImagesModalStyling() {
   assignRemoveImagesModalLocalVariables();
 }
 
-export { initialiseRemoveImagesModalStyling, displayRemoveImagesModal, hideRemoveImagesModal };
+export { initialiseRemoveImagesModalStyling, displayRemoveImagesModal, closeRemoveImagesModal };

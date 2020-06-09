@@ -6,6 +6,7 @@ import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/object
 import { decrementShapeType } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
 import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
+import { getDoNotShowRemoveImageModalAgainState } from './modal/stateMachine';
 import {
   setPolygonEditingButtonsToDisabled, setZoomInButtonToDisabled,
   setCreatePolygonButtonToDisabled, setEditShapesButtonToDisabled,
@@ -73,7 +74,11 @@ function removeImage() {
   const allImageData = getAllImageData();
   if (allImageData.length > 0) {
     // investigate binding allImageData
-    displayRemoveImagesModal();
+    if (getDoNotShowRemoveImageModalAgainState()) {
+      removeImageCallback();
+    } else {
+      displayRemoveImagesModal();
+    }
   }
 }
 

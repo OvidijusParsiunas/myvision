@@ -27,6 +27,7 @@ let boundingBoxScalingState = false;
 let shapeMovingState = false;
 let polygonDrawingInProgressState = false;
 let boundingBoxDrawingInProgressState = false;
+let removeImageModalDisplayedState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -138,6 +139,10 @@ function getUploadDatasetsModalDisplayedState() {
 
 function getMachineLearningModalDisplayedState() {
   return machineLearningModalDisplayedState;
+}
+
+function getRemoveImageModalDisplayedState() {
+  return removeImageModalDisplayedState;
 }
 
 function setDefaultState(state) {
@@ -253,6 +258,10 @@ function setMachineLearningModalDisplayedState(state) {
   machineLearningModalDisplayedState = state;
 }
 
+function setRemoveImageModalDisplayedState(state) {
+  removeImageModalDisplayedState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -298,6 +307,8 @@ export {
   setLastPolygonActionWasMoveState,
   getPolygonDrawingInProgressState,
   setPolygonDrawingInProgressState,
+  getRemoveImageModalDisplayedState,
+  setRemoveImageModalDisplayedState,
   getUploadDatasetsModalDisplayedState,
   setUploadDatasetsModalDisplayedState,
   getNewShapeSelectedViaLabelListState,

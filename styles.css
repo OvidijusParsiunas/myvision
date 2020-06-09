@@ -1087,18 +1087,31 @@ input:focus {
 }
 
 #remove-images-modal-parent {
-  height: calc(187px / var(--screen-size-delta));
+  height: calc(189px / var(--screen-size-delta));
   width: calc(415px / var(--screen-size-delta));
   left: calc(-151px / var(--screen-size-delta));
 }
 
 #remove-images-modal-description {
   text-align: center;
-  margin-top: calc(37px / var(--screen-size-delta));
+  margin-top: calc(39px / var(--screen-size-delta));
 }
 
 #remove-images-modal-buttons {
   margin-top: calc(10px / var(--screen-size-delta));
+}
+
+#remove-images-modal-checkbox-parent {
+  float: right;
+  color: #343333;
+  font-size: calc(13.5px / var(--screen-size-delta));
+  bottom: calc(6.6px / var(--screen-size-delta));
+  right: calc(2.2px / var(--screen-size-delta));
+  position: absolute;
+}
+
+#remove-images-modal-checkbox {
+  margin-left: calc(8px / var(--screen-size-delta));
 }
 
 #image-list-overflow-parent {
