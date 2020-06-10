@@ -51,10 +51,10 @@ function movePoints(event) {
     };
   }
 }
+
 function removeActiveShape() {
   canvas.remove(activeShape);
   activeShape = null;
-  setPolygonDrawingInProgressState(false);
 }
 
 function repositionCrosshair(pointer) {
@@ -293,7 +293,7 @@ function addPointViaKeyboard() {
       (pointer.x === lastNewPointPosition.x && pointer.y === lastNewPointPosition.y)
       || (lastMouseEvent.target && lastMouseEvent.target.shapeName === 'tempPoint')
       || (createdInvisiblePoint && Number.isNaN(pointer.x))) {
-      mouseIsDownOnTempPoint = true;
+      // placeholder
     } else {
       setReadyToDrawShapeState(false);
       if (!pointer.x || !pointer.y) {
