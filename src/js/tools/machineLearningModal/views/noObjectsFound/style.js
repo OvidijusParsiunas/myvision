@@ -1,4 +1,4 @@
-import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let descriptionElement = null;
 let buttonGroupElement = null;
@@ -26,7 +26,7 @@ function displayButtonGroupElement() {
 }
 
 function displayNoObjectsFoundView() {
-  setDescriptionElementMargins(`${19 / getDelta()}px`, `${15 / getDelta()}px`);
+  setDescriptionElementMargins(`${19 / getScreenSizeDelta()}px`, `${15 / getScreenSizeDelta()}px`);
   changeModalDescription();
   displayDescription();
   displayButtonGroupElement();

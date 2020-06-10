@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import { getLeftSideBarWidth, getRightSideBarWidth } from '../../globalStyling/style';
 import IS_FIREFOX from '../../utils/browserType';
-import { getDelta } from '../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../globalStyling/screenSizeDelta';
 
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };
@@ -78,7 +78,7 @@ function setCanvasWrapperMaximumDimensions() {
 
 function setNewCanvasProperties() {
   const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
-  const innerHeight = window.innerHeight - Math.ceil(35 + (29 / getDelta()));
+  const innerHeight = window.innerHeight - Math.ceil(35 + (29 / getScreenSizeDelta()));
   const innerWidth = window.innerWidth - sideToolsTotalWidth;
   canvasProperties.maximumCanvasHeight = canvasOuterMargin
     ? innerHeight - (window.innerHeight * 0.0382263)

@@ -1,8 +1,11 @@
 import { setRemoveImageModalDisplayedState } from '../../../stateMachine';
+import { dimWindow, lightUpWindow } from '../../../dimWindow/dimWindowService';
+import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../../dimWindow/consts';
 
 let modalParentElement = null;
 
 function displayRemoveImagesModal() {
+  dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
   modalParentElement.style.display = 'block';
   setRemoveImageModalDisplayedState(true);
 }
@@ -10,6 +13,7 @@ function displayRemoveImagesModal() {
 function closeRemoveImagesModal() {
   modalParentElement.style.display = 'none';
   setRemoveImageModalDisplayedState(false);
+  lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
 }
 
 function setInitialCheckBoxInputValue() {

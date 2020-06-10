@@ -1,4 +1,4 @@
-let delta = 1;
+let screenSizeDelta = 1;
 
 // when setting delta to bigger than 1.1, will need to consider zoom,
 // image thumbnail width, left side bar border,
@@ -12,13 +12,13 @@ function calculateDesiredScreenSizeDelta() {
   return quotient > 1.1 ? 1.1 : quotient;
 }
 
-function getDelta() {
-  return delta;
+function getScreenSizeDelta() {
+  return screenSizeDelta;
 }
 
-function applyElementDimensions() {
-  delta = calculateDesiredScreenSizeDelta();
-  document.documentElement.style.setProperty('--screen-size-delta', delta);
+function setScreenSizeDelta() {
+  screenSizeDelta = calculateDesiredScreenSizeDelta();
+  document.documentElement.style.setProperty('--screen-size-delta', screenSizeDelta);
 }
 
-export { applyElementDimensions, getDelta };
+export { setScreenSizeDelta, getScreenSizeDelta };

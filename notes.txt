@@ -1,16 +1,12 @@
 was not able to check ML generated label list overflow border chrome fix on smaller screens - check vertical
 
-popover for github links
-
 I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed
 
 will have to highlight initial buttons to get users started
 
-option to disabled selectable temp points
+option to disabled selectable temp points (potentially fix this buy having not selectable on create)
 
-delta for dynamic screen height and firefox (getDelta syntax)
-
-modal to check if the user is sure they want to remove an image
+delta for dynamic screen height and firefox (zoom fix)
 
 ---------------------------------------------
 

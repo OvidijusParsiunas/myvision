@@ -26,6 +26,7 @@ function initialiseCoreButtonPopovers() {
   buttonPopovers.removeImages = document.getElementById('remove-images-button-popover');
   buttonPopovers.previousImage = document.getElementById('previous-image-button-popover');
   buttonPopovers.nextImage = document.getElementById('next-image-button-popover');
+  buttonPopovers.githubMark = document.getElementById('github-mark-button-popover');
 }
 
 function removeActiveButtonPopover() {
@@ -77,7 +78,8 @@ window.mouseEnterLeftSideBar = () => {
 };
 
 window.mouseEnterCoreButton = (event, id) => {
-  if (event.target.tagName === 'BUTTON') {
+  const { tagName } = event.target;
+  if (tagName === 'BUTTON' || tagName === 'A') {
     pendingbuttonPopovers.unshift(buttonPopovers[id]);
     if (persistButtonPopoverDisplay) {
       displayPopover([checkIfSettingsButtonNotUpMiddleware.bind(this, event),
@@ -96,7 +98,8 @@ window.mouseEnterCoreButton = (event, id) => {
 };
 
 window.mouseLeaveCoreButton = (event) => {
-  if (event.target.tagName === 'BUTTON') {
+  const { tagName } = event.target;
+  if (tagName === 'BUTTON' || tagName === 'A') {
     if (activePopover !== null) {
       activePopover.style.display = 'none';
       activePopover = null;

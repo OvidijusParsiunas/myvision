@@ -1,6 +1,6 @@
 import { setDoubleScrollCanvasState } from '../stateMachine';
 import { getCurrentCanvasContainerElement } from '../../canvas/utils/canvasUtils';
-import { getDelta } from '../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
 
 let zoomOverflowWrapperElement;
 let zoomOverflowElement;
@@ -151,8 +151,8 @@ function heightOverflowDefault(originalWidth, originalHeight) {
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth + 1}px`;
   // will need some work here if delta 1.2
-  const stubMarginTop = getDelta() > 1.000001
-    ? `${originalHeight - scrollWidth - (10 / getDelta())}px`
+  const stubMarginTop = getScreenSizeDelta() > 1.000001
+    ? `${originalHeight - scrollWidth - (10 / getScreenSizeDelta())}px`
     : `${originalHeight - scrollWidth - 13}px`;
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', '', zoomOverflowWrapperMarginLeft, '');
@@ -167,8 +167,8 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowMaxHeight = `${newCanvasHeight}px`;
   const zoomOverflowWrapperLeft = `calc(50% - ${Math.round(scrollWidth / 2) - 1.25}px)`;
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 - 1}px`;
-  const stubMarginLeft = getDelta() > 1.000001
-    ? `${Math.round(originalWidth) - (3 / getDelta())}px`
+  const stubMarginLeft = getScreenSizeDelta() > 1.000001
+    ? `${Math.round(originalWidth) - (3 / getScreenSizeDelta())}px`
     : `${Math.round(originalWidth) - 4.5}px`;
   const stubMarginTop = `${Math.round(originalHeight) - 16.5 - (currentZoom)}px`;
   const canvasLeft = `calc(50% - ${Math.round(scrollWidth / 2)}px)`;
@@ -202,7 +202,7 @@ function getScrollWidth() {
 
 function changeElementPropertiesFirefox(heightOverflowed, widthOverflowed, originalWidth,
   originalHeight, newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg) {
-  if (getDelta() > 1.000001) { newCanvasHeightArg += 1; }
+  if (getScreenSizeDelta() > 1.000001) { newCanvasHeightArg += 1; }
   setTempValues(newCanvasWidthArg, newCanvasHeightArg, canvasPropertiesArg, currentZoomArg);
   scrollWidth = getScrollWidth() / 2;
   if (heightOverflowed) {

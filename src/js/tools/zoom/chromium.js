@@ -1,6 +1,6 @@
 import { setDoubleScrollCanvasState } from '../stateMachine';
 import { getCurrentCanvasContainerElement } from '../../canvas/utils/canvasUtils';
-import { getDelta } from '../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
 
 let zoomOverflowWrapperElement;
 let zoomOverflowElement;
@@ -174,8 +174,8 @@ function fullOverflowOfWidthAndHeight(originalWidth, originalHeight) {
   const zoomOverflowWrapperMarginLeft = `${scrollWidth / 2 + 3}px`;
   const stubMarginLeft = `${Math.round(originalWidth) - 4}px`;
   // will need work here if delta is 1.2
-  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + (4.5 / getDelta()))}px`;
-  const canvasLeft = `calc(50% - ${3.25 * getDelta()}px)`;
+  const stubMarginTop = `${Math.round(originalHeight) - 12 - (currentZoom + (4.5 / getScreenSizeDelta()))}px`;
+  const canvasLeft = `calc(50% - ${3.25 * getScreenSizeDelta()}px)`;
   const canvasTop = 'calc(50% - 3.2px)';
   setZoomOverFlowElementProperties(zoomOverflowWidth, '', zoomOverflowMaxHeight);
   setZoomOverFlowWrapperElementProperties('', '', zoomOverflowWrapperLeft, zoomOverflowWrapperMarginLeft, '');

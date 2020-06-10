@@ -1,5 +1,5 @@
 import IS_FIREFOX from '../../../utils/browserType';
-import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let isNoImagesFoundInfoDisplayed = false;
 
@@ -48,7 +48,7 @@ function displayErrorMessage(errorMessage) {
   removeProgressMessage();
   errorMessagesElement.style.display = '';
   errorMessagesElement.innerHTML = errorMessage;
-  buttonsGroupElement.style.marginTop = `${4 / getDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${4 / getScreenSizeDelta()}px`;
 }
 
 function removeErrorMessage() {
@@ -59,7 +59,7 @@ function removeErrorMessage() {
 
 function displayRetryButton() {
   document.getElementById('machine-learning-modal-initiate-retry-button').style.display = '';
-  descriptionElement.style.marginBottom = `${6 / getDelta()}px`;
+  descriptionElement.style.marginBottom = `${6 / getScreenSizeDelta()}px`;
 }
 
 function removeRetryButton() {
@@ -75,7 +75,7 @@ function updateProgressMessage(progressMessage) {
 
 function displayInfoMessage(message) {
   infoMessagesElement.innerHTML = message;
-  buttonsGroupElement.style.marginTop = `${4 / getDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${4 / getScreenSizeDelta()}px`;
 }
 
 function removeInfoMessage() {
@@ -88,7 +88,7 @@ function displayDescription() {
 }
 
 function displayAllButtons() {
-  buttonsGroupElement.style.marginTop = `${-4 / getDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${-4 / getScreenSizeDelta()}px`;
   buttonsGroupElement.style.display = '';
 }
 
@@ -112,8 +112,8 @@ function removeLoadingText() {
 function displayLoaderWheel() {
   removeErrorMessage();
   loadingWheelElement.style.display = '';
-  cancelButtonElement.style.marginRight = `${3 / getDelta()}px`;
-  descriptionElement.style.marginBottom = `${2 / getDelta()}px`;
+  cancelButtonElement.style.marginRight = `${3 / getScreenSizeDelta()}px`;
+  descriptionElement.style.marginBottom = `${2 / getScreenSizeDelta()}px`;
 }
 
 function removeLoadingWheel() {
@@ -139,12 +139,12 @@ function removeMLCoverageSelectionButtons() {
 
 function displayNextButton() {
   nextButtonElement.style.display = '';
-  descriptionElement.style.marginBottom = `${7 / getDelta()}px`;
+  descriptionElement.style.marginBottom = `${7 / getScreenSizeDelta()}px`;
 }
 
 function removeNextButton() {
   nextButtonElement.style.display = 'none';
-  descriptionElement.style.marginBottom = `${7 / getDelta()}px`;
+  descriptionElement.style.marginBottom = `${7 / getScreenSizeDelta()}px`;
 }
 
 function displayCancelButton() {
@@ -243,8 +243,8 @@ function changeToNoImagesFoundStyle() {
   displayUploadImagesButton();
   disableStartButton();
   displayInfoMessage('Please upload an image to get started.');
-  setDescriptionElementMarginBottom(`${3 / getDelta()}px`);
-  const newModalHeight = IS_FIREFOX ? `${277 / getDelta()}px` : `${273 / getDelta()}px`;
+  setDescriptionElementMarginBottom(`${3 / getScreenSizeDelta()}px`);
+  const newModalHeight = IS_FIREFOX ? `${277 / getScreenSizeDelta()}px` : `${273 / getScreenSizeDelta()}px`;
   setModalHeight(newModalHeight);
   isNoImagesFoundInfoDisplayed = true;
 }

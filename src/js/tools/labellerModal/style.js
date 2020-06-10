@@ -5,7 +5,7 @@ import { setLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
 import { getLastMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
-import { getDelta } from '../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
 
 let parentElement = null;
 let optionsElement = null;
@@ -53,7 +53,7 @@ function addFakeRightBorder() {
   const chromiumFakeRightBorderFixElement = document.getElementById('chromium-fake-popup-table-right-border-fix');
   chromiumFakeRightBorderFixElement.style.height = `${currentListHeightPx}px`;
   chromiumFakeRightBorderFixElement.style.display = '';
-  chromiumFakeRightBorderFixElement.style.right = getDelta() > 1.000001 ? `${9 / getDelta()}px` : '9.8px';
+  chromiumFakeRightBorderFixElement.style.right = getScreenSizeDelta() > 1.000001 ? `${9 / getScreenSizeDelta()}px` : '9.8px';
   fakeRightBorderAdded = true;
 }
 
@@ -64,7 +64,7 @@ function addFakeBottomBorder() {
   const inputElementHeight = inputElement.getBoundingClientRect().height;
   const heightOfElementsAboveOptionsList = modalTitleElementHeight + inputElementHeight;
   const optionsListHeight = optionsElement.getBoundingClientRect().height;
-  const optionsListPaddingTopHeight = 2 / getDelta();
+  const optionsListPaddingTopHeight = 2 / getScreenSizeDelta();
   chromiumFakeBottomBorderFixElement.style.top = `${Math.floor(heightOfElementsAboveOptionsList + optionsListHeight
     + (getScrollbarWidth() * 2) - optionsListPaddingTopHeight + optionsListBorderWidth)}px`;
   chromiumFakeBottomBorderFixElement.style.display = '';
@@ -154,16 +154,16 @@ function validateFullModalVisibile(isWindowResized) {
 // fix for a bug where the options list item color would not fill to the very end
 // when delta is 1.1 and the width is 150px as an example
 function setOptionsElementWidth() {
-  optionsElement.style.width = getDelta() > 1.0000001 ? '150.4px' : '165px';
+  optionsElement.style.width = getScreenSizeDelta() > 1.0000001 ? '150.4px' : '165px';
 }
 
 function setListHeightVariables() {
   if (IS_FIREFOX) {
-    defaultListHeightPx = Math.ceil(107.5 / getDelta());
-    addNewLabelDeltaHeight = Math.ceil(21.5 / getDelta());
+    defaultListHeightPx = Math.ceil(107.5 / getScreenSizeDelta());
+    addNewLabelDeltaHeight = Math.ceil(21.5 / getScreenSizeDelta());
   } else {
-    defaultListHeightPx = Math.ceil(105 / getDelta());
-    addNewLabelDeltaHeight = Math.ceil(21 / getDelta());
+    defaultListHeightPx = Math.ceil(105 / getScreenSizeDelta());
+    addNewLabelDeltaHeight = Math.ceil(21 / getScreenSizeDelta());
   }
   currentListHeightPx = defaultListHeightPx;
 }

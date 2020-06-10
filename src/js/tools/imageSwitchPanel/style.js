@@ -1,4 +1,4 @@
-import { getDelta } from '../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
 
 let nextButtonElement = null;
 let previousButtonElement = null;
@@ -75,7 +75,7 @@ function findImageSwitchElements() {
 
 function initialiseImageSwitchPanelFunctionality() {
   findImageSwitchElements();
-  imageElementSidePaddingLength /= getDelta();
+  imageElementSidePaddingLength /= getScreenSizeDelta();
 }
 
 export {

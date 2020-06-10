@@ -1,4 +1,4 @@
-import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let yesButtonElement = null;
 let noButtonElement = null;
@@ -23,7 +23,7 @@ function hideNoButtonElement() {
 }
 
 function setDescriptionElementMarginTop(length) {
-  descriptionElement.style.marginTop = `${length / getDelta()}px`;
+  descriptionElement.style.marginTop = `${length / getScreenSizeDelta()}px`;
 }
 
 function resetDescriptionElementMarginTop() {
@@ -51,7 +51,7 @@ function hideDescriptionElement() {
 }
 
 function setButtonGroupElementMarginTop(length) {
-  buttonsGroupElement.style.marginTop = `${length / getDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${length / getScreenSizeDelta()}px`;
 }
 
 function resetButtonGroupElementMarginTop() {

@@ -3,7 +3,7 @@ import {
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, IMAGES_TABLE_INDICATOR,
 } from '../../consts';
 import IS_FIREFOX from '../../../utils/browserType';
-import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let titleElement = null;
 let table1Element = null;
@@ -65,11 +65,11 @@ function createTableRowElementMarkup(fileName, tableName) {
 function addPopoverArrowMarginLeftStyle(tableName) {
   if (currentTableStrategy === TWO_TABLE_STRATEGY
       && tableName === ANNOTATIONS_TABLE_INDICATOR) {
-    return `style="margin-left: ${(((modalWidth / 2 / 2) - 20) / getDelta())}px;"`;
+    return `style="margin-left: ${(((modalWidth / 2 / 2) - 20) / getScreenSizeDelta())}px;"`;
   }
   if (currentTableStrategy === THREE_TABLE_STRATEGY
     && tableName === CLASSES_TABLE_INDICATOR) {
-    return `style="margin-left: ${(((modalWidth / 3 / 2) + 34) / getDelta())}px;"`;
+    return `style="margin-left: ${(((modalWidth / 3 / 2) + 34) / getScreenSizeDelta())}px;"`;
   }
   return '';
 }
@@ -94,9 +94,9 @@ window.displayUploadDatasetsAnnotationFilePopover = (id, tableName) => {
   const tableOuterContainerElement = tableName === ANNOTATIONS_TABLE_INDICATOR
     ? annotationsTableOuterContainerElement : imagesTableOuterContainerElement;
   document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.display = 'block';
-  document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 29.4 / getDelta()}px`;
+  document.getElementById(`upload-datasets-modal-file-popover-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 29.4 / getScreenSizeDelta()}px`;
   document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.display = 'block';
-  document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 4 / getDelta()}px`;
+  document.getElementById(`upload-datasets-modal-file-popover-arrow-${id}`).style.marginTop = `-${tableOuterContainerElement.scrollTop + 4 / getScreenSizeDelta()}px`;
 };
 
 window.removeUploadDatasetsAnnotationFilePopover = (id) => {
@@ -325,7 +325,7 @@ function setTitleElement(title) {
 }
 
 function setTitleElementMarginTop(length) {
-  titleElement.style.marginTop = `${length / getDelta()}px`;
+  titleElement.style.marginTop = `${length / getScreenSizeDelta()}px`;
 }
 
 function resetTitleElementMarginTop() {
@@ -360,7 +360,7 @@ function setButtonGroupElementMarginTop(length) {
 
 function setButtonGroupElementMarginTopByBrowser() {
   if (!IS_FIREFOX) {
-    setButtonGroupElementMarginTop(`${272 / getDelta()}px`);
+    setButtonGroupElementMarginTop(`${272 / getScreenSizeDelta()}px`);
   } else {
     setButtonGroupElementMarginTop('1px');
   }
@@ -421,8 +421,8 @@ function setAcceptedFileFormatTrigger(format) {
 }
 
 function changeUploadDatasetsModalElementDimensions(width, height) {
-  uploadDatasetsModalElement.style.width = `${width / getDelta()}px`;
-  uploadDatasetsModalElement.style.height = `${height / getDelta()}px`;
+  uploadDatasetsModalElement.style.width = `${width / getScreenSizeDelta()}px`;
+  uploadDatasetsModalElement.style.height = `${height / getScreenSizeDelta()}px`;
 }
 
 function resetUploadDatasetsModalElementDimensions() {

@@ -1,4 +1,4 @@
-import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let descriptionElement = null;
 let startButtonElement = null;
@@ -22,7 +22,7 @@ function hideStartButtonElement() {
 }
 
 function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = `${18 / getDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${18 / getScreenSizeDelta()}px`;
 }
 
 function displayDescription() {
@@ -34,7 +34,7 @@ function hideDescriptionElement() {
 }
 
 function moveDescriptionToLowerPosition() {
-  descriptionElement.style.marginTop = `${20 / getDelta()}px`;
+  descriptionElement.style.marginTop = `${20 / getScreenSizeDelta()}px`;
 }
 
 function getDefaultDescriptionMarkup() {

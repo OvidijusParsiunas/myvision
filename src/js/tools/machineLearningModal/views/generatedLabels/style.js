@@ -5,7 +5,7 @@ import {
   isVerticalScrollPresent, getDefaultFont, setCaretPositionOnDiv,
 } from '../../../utils/elementCaretUtils';
 import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
-import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 import IS_FIREFOX from '../../../utils/browserType';
 
 let editingActive = false;
@@ -54,12 +54,12 @@ function scrollHorizontallyToAppropriateWidth(text) {
   const context = myCanvas.getContext('2d');
   context.font = getDefaultFont(activeTextElement);
   const metrics = context.measureText(text);
-  let originalParentMaxWidth = 337 / getDelta();
+  let originalParentMaxWidth = 337 / getScreenSizeDelta();
   if (isVerticalScrollPresent(generatedLabelsParentElement)) {
     originalParentMaxWidth -= overflowScrollWidth;
   }
   if (metrics.width > originalParentMaxWidth) {
-    generatedLabelsParentElement.scrollLeft = metrics.width - 312 / getDelta();
+    generatedLabelsParentElement.scrollLeft = metrics.width - 312 / getScreenSizeDelta();
   } else {
     generatedLabelsParentElement.scrollLeft = 0;
   }
@@ -215,7 +215,7 @@ function calculateContainerDivHeight() {
   const numberOfRows = Object.keys(objectNames).length;
   const baseHeight = numberOfRows > 1 ? 104 : 114;
   const numberOfVisibleRows = numberOfRows > 5 ? 5 : numberOfRows;
-  const newNameHeight = baseHeight / getDelta() + numberOfVisibleRows * 10;
+  const newNameHeight = baseHeight / getScreenSizeDelta() + numberOfVisibleRows * 10;
   return `${newNameHeight}px`;
 }
 
@@ -225,9 +225,9 @@ function changeElementsToVisible() {
 }
 
 function changeElementsToMoveListUpwards() {
-  submitButtonElement.style.marginTop = `${2 / getDelta()}px`;
-  submitButtonElement.style.marginBottom = `${6 / getDelta()}px`;
-  descriptionElement.style.marginBottom = `${6 / getDelta()}px`;
+  submitButtonElement.style.marginTop = `${2 / getScreenSizeDelta()}px`;
+  submitButtonElement.style.marginBottom = `${6 / getScreenSizeDelta()}px`;
+  descriptionElement.style.marginBottom = `${6 / getScreenSizeDelta()}px`;
 }
 
 function resetElementsToMoveListToDefaultPosition() {
@@ -309,7 +309,7 @@ function hideGeneratedLabelsViewAssets() {
 }
 
 function assignGeneratedLabelsViewLocalVariables() {
-  tableMaxWidth = 352 / getDelta();
+  tableMaxWidth = 352 / getScreenSizeDelta();
   descriptionElement = document.getElementById('machine-learning-modal-description');
   generatedLabelsParentElement = document.getElementById('machine-learning-modal-generated-labels');
   submitButtonElement = document.getElementById('machine-learning-modal-generated-labels-submit-button');

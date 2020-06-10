@@ -1,5 +1,5 @@
 import { getAvailableFormats } from '../../stateMachine';
-import { getDelta } from '../../../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let descriptionElement = null;
 let cancelButtonElement = null;
@@ -78,7 +78,7 @@ function hideDescriptionElement() {
 }
 
 function setButtonGroupElementMarginTop(length) {
-  buttonsGroupElement.style.marginTop = `${length / getDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${length / getScreenSizeDelta()}px`;
 }
 
 function resetButtonGroupElementMarginTop() {
@@ -86,7 +86,7 @@ function resetButtonGroupElementMarginTop() {
 }
 
 function createTableRow(format, index) {
-  const paddingTop = index === 2 ? 5 / getDelta() : 3 / getDelta();
+  const paddingTop = index === 2 ? 5 / getScreenSizeDelta() : 3 / getScreenSizeDelta();
   return `
     <td style="padding-top: ${paddingTop}px" class="data-format-table-row-data">
       <div class="checkbox-text format-option-text upload-data-format-row-text">

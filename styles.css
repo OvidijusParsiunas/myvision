@@ -1444,8 +1444,17 @@ body {
   cursor: pointer;
 }
 
+#title-github-mark:hover {
+  filter: invert(33%) sepia(3%) saturate(131%) hue-rotate(122deg) brightness(89%) contrast(82%);
+}
+
 #settings-table {
   padding: 2px;
+}
+
+#github-mark-button-popover {
+  right: 4px;
+  margin-top: 35px;
 }
 
 #image-switch-parent {

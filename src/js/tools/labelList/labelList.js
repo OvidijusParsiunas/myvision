@@ -38,7 +38,7 @@ import {
   setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont,
 } from '../utils/elementCaretUtils';
 import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
-import { getDelta } from '../globalStyling/elementDimensions/manager';
+import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
 import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
 
 let isEditingLabel = false;
@@ -143,13 +143,13 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
     <div id="${visibility}" onMouseEnter="mouseEnterVisibilityBtn(id, this)" onMouseLeave="mouseLeaveVisibilityBtn(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px; cursor: pointer; padding-top: 1px">
       ${generateLabelVisibilityMarkup(visibility)}
     </div>
-    <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px; cursor: pointer; padding-top: ${getDelta() > 1.000001 ? 0.5 : 0}px">
+    <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px; cursor: pointer; padding-top: ${getScreenSizeDelta() > 1.000001 ? 0.5 : 0}px">
       <img class="defaultLabelEditIcon" id="editButton${id}" src="edit.svg" style="padding-left: 1px" alt="edit">
       <img class="highlightedLabelEditIcon" id="editButton${id}" src="edit-highlighted.svg" style="display: none" alt="edit">
       <img class="defaultLabelEditIcon" id="editButton${id}" src="done-tick.svg" style="display: none" alt="edit">
       <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="done-tick-highlighted.svg" style="display: none" alt="edit">
     </div>
-    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: flow-root; padding-top: ${getDelta() > 1 ? 2 : 0}px;">${labelText}</div>
+    <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: flow-root; padding-top: ${getScreenSizeDelta() > 1 ? 2 : 0}px;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">
       </table>
       <div id="chromium-fake-dropdown-border-fix${id}">
