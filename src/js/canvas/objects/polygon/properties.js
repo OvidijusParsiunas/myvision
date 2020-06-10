@@ -40,7 +40,7 @@ function setZoomOutProperties(pointRatio, polygonRatio) {
   polygonPadding -= 0.05;
 }
 
-function generateNewPoint(pointId, pointer) {
+function generateNewPoint(pointId, pointer, isNewPoint) {
   return {
     radius: defaultPointRadius,
     fill: '#ffffff',
@@ -56,7 +56,7 @@ function generateNewPoint(pointId, pointer) {
     shapeName: 'tempPoint',
     pointId,
     objectCaching: false,
-    hoverCursor: 'move',
+    hoverCursor: isNewPoint ? 'default' : 'move',
   };
 }
 

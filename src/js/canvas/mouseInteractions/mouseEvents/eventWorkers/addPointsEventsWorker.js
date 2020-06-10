@@ -214,9 +214,14 @@ function pointMouseUpEvents(event) {
 
 function mouseOutEvents(event) {
   addPointsMouseOut(event);
-  if (event.target && event.target.shapeName === 'point') {
-    if (!mouseMoved) {
-      lastHoveredPoint = event.target;
+  if (event.target) {
+    const { target } = event;
+    if (target.shapeName === 'point') {
+      if (!mouseMoved) {
+        lastHoveredPoint = target;
+      }
+    } else if (target.shapeName === 'tempPoint' && target.hoverCursor === 'default') {
+      target.hoverCursor = 'move';
     }
   }
   currentlyHoveredPoint = null;

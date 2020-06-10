@@ -156,7 +156,8 @@ if (pointArray.length === 2) {
 
 function addPoint(pointer) {
   setPolygonDrawingInProgressState(true);
-  const point = new fabric.Circle(polygonProperties.newPoint(pointId, pointer));
+  const isNewPoint = true;
+  const point = new fabric.Circle(polygonProperties.newPoint(pointId, pointer, isNewPoint));
   pointId += 1;
   let points = [pointer.x, pointer.y, pointer.x, pointer.y];
   if (activeShape) {
@@ -256,8 +257,11 @@ function polygonMouseOverEvents(event) {
 
 function polygonMouseOutEvents(event) {
   if (event.target) {
-    if (event.target.shapeName === 'invisiblePoint') {
+    const { target } = event;
+    if (target.shapeName === 'invisiblePoint') {
       changeInitialPointColour('#333333');
+    } else if (target.shapeName === 'tempPoint' && target.hoverCursor === 'default') {
+      target.hoverCursor = 'move';
     }
     if (!mouseMoved) {
       lastHoveredPoint = event.target;

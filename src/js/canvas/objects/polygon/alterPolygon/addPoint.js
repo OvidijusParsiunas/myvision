@@ -73,7 +73,8 @@ function addFirstPointImpl(event) {
   const pointer = canvas.getPointer(event.e);
   lineArray.push(activeLine);
   createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
-  const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
+  const isNewPoint = true;
+  const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer, isNewPoint));
   canvas.add(point);
   pointsArray.push(point);
   tempPointIndex += 1;
@@ -84,7 +85,8 @@ function addFirstPointImpl(event) {
 function addPointImpl(pointer) {
   lineArray.push(activeLine);
   createNewLine(pointer.x, pointer.y, pointer.x, pointer.y);
-  const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer));
+  const isNewPoint = true;
+  const point = new fabric.Circle(polygonProperties.newPoint(tempPointIndex, pointer, isNewPoint));
   canvas.add(point);
   pointsArray.push(point);
   preventOutOfBoundsPointsOnMove(point, canvas);
