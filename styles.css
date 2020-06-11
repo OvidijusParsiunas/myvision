@@ -1116,7 +1116,7 @@ input:focus {
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: calc((100vh + 111px) / 2 - 1px);
+  max-height: calc(100vh - (100vh - 287px) / 2 - 37px - (54px / var(--screen-size-delta)));
   scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
 }

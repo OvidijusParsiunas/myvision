@@ -1,7 +1,3 @@
-was not able to check ML generated label list overflow border chrome fix on smaller screens - check vertical
-
-I beliveve the reason why the bottom of new bounding boxes is not showing up correctly is because the maximum canvas height was changed
-
 will have to highlight initial buttons to get users started
 
 delta for dynamic screen height and firefox (zoom fix)
