@@ -11,8 +11,8 @@ let currentImage = null;
 let canvasOuterMargin = true;
 
 function drawResizedImage(newImageDimensions) {
-  canvas.setWidth(newImageDimensions.width);
-  canvas.setHeight(newImageDimensions.height);
+  canvas.setWidth(Math.ceil(newImageDimensions.width));
+  canvas.setHeight(Math.ceil(newImageDimensions.height));
   fabric.Image.fromURL(currentImage.src, (img) => {
     newFileStatus.scaleX = canvas.width / img.width;
     newFileStatus.scaleY = canvas.height / img.height;
@@ -28,8 +28,8 @@ function drawResizedImage(newImageDimensions) {
 }
 
 function drawOriginalImage() {
-  canvas.setWidth(currentImage.width);
-  canvas.setHeight(currentImage.height);
+  canvas.setWidth(Math.ceil(currentImage.width));
+  canvas.setHeight(Math.ceil(currentImage.height));
   fabric.Image.fromURL(currentImage.src, (img) => {
     newFileStatus.originalWidth = img.width;
     newFileStatus.originalHeight = img.height;
@@ -213,15 +213,15 @@ function resizeCanvas() {
     if (canvasProperties.maximumCanvasWidth < newImageDimensions.width) {
       newImageDimensions = resizeWhenImageExceedsMaxWidth(newImageDimensions);
     }
-    canvas.setWidth(newImageDimensions.width);
-    canvas.setHeight(newImageDimensions.height);
+    canvas.setWidth(Math.ceil(newImageDimensions.width));
+    canvas.setHeight(Math.ceil(newImageDimensions.height));
   } else if (canvasProperties.maximumCanvasWidth < currentImage.width) {
     const newImageDimensions = resizeWhenImageExceedsMaxWidth(currentImage);
-    canvas.setWidth(newImageDimensions.width);
-    canvas.setHeight(newImageDimensions.height);
+    canvas.setWidth(Math.ceil(newImageDimensions.width));
+    canvas.setHeight(Math.ceil(newImageDimensions.height));
   } else {
-    canvas.setWidth(currentImage.width);
-    canvas.setHeight(currentImage.height);
+    canvas.setWidth(Math.ceil(currentImage.width));
+    canvas.setHeight(Math.ceil(currentImage.height));
   }
   setCanvasWrapperMaximumDimensions();
 }
