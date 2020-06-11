@@ -9,10 +9,7 @@ import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/obje
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } from '../../../stateMachine';
 import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
-import {
-  changeElementPropertiesChromium, setDOMElementsChromium,
-  initialiseVariablesChromium,
-} from '../../../zoom/chromium';
+import { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium } from '../../../zoom/chromium';
 import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../../../zoom/firefox';
 import IS_FIREFOX from '../../../utils/browserType';
 import { getCurrentCanvasContainerElement } from '../../../../canvas/utils/canvasUtils';
@@ -176,6 +173,10 @@ function setNewCanvasDimensions(changeElements) {
   if (canvasProperties.maximumCanvasWidth < newCanvasWidth) {
     newCanvasWidth = canvasProperties.maximumCanvasWidth;
     widthOverflowed = true;
+  }
+  if (currentZoom === 1) {
+    newCanvasWidth = Math.ceil(newCanvasWidth);
+    newCanvasHeight = Math.ceil(newCanvasHeight);
   }
   if (changeElements) {
     changeElementPropertiesOnZoomFunc(heightOverflowed, widthOverflowed, originalWidth,
