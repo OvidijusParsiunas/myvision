@@ -859,7 +859,6 @@ input:focus {
   margin-right: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: calc(102px / var(--screen-size-delta));
   /* firefox */
   scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;

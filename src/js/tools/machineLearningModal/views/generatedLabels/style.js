@@ -16,6 +16,7 @@ let maxWidthStyleAppended = false;
 let overflowScrollWidth = 0;
 let objectNames = null;
 let tableMaxWidth = null;
+let isTableMaxHeightSet = false;
 
 let generatedLabelsParentElement = null;
 let generatedLabelsTableElement = null;
@@ -219,6 +220,14 @@ function calculateContainerDivHeight() {
   return `${newNameHeight}px`;
 }
 
+function setLabelsParentElementMaxHeight() {
+  const tableElement = generatedLabelsParentElement.childNodes[1].childNodes[1];
+  if (tableElement.childNodes.length > 0) {
+    generatedLabelsParentElement.style.maxHeight = `${generatedLabelsParentElement.childNodes[1].childNodes[1].childNodes[0].getBoundingClientRect().height * 5}px`;
+    isTableMaxHeightSet = true;
+  }
+}
+
 function changeElementsToVisible() {
   generatedLabelsOuterContainerElement.style.display = '';
   generatedLabelsOuterContainerElement.style.height = calculateContainerDivHeight();
@@ -293,6 +302,7 @@ function displayViewElements(objectNamesArg) {
   displayDescription();
   populateGeneratedLabelsTable();
   changeElementsToVisible();
+  if (!isTableMaxHeightSet) setLabelsParentElementMaxHeight();
   updateGeneratedLabelsParentElementWidthOnStartup();
 }
 
