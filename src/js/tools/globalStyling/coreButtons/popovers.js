@@ -9,40 +9,10 @@ let activePopover = null;
 let persistButtonPopoverDisplay = false;
 let doNotDisplayButtonAfterTimeoutState = false;
 
-function initialiseCoreButtonPopovers() {
-  buttonPopovers.default = document.getElementById('default-button-popover');
-  buttonPopovers.boundingBox = document.getElementById('bounding-box-button-popover');
-  buttonPopovers.polygon = document.getElementById('polygon-button-popover');
-  buttonPopovers.addPoints = document.getElementById('add-points-button-popover');
-  buttonPopovers.removePoints = document.getElementById('remove-points-button-popover');
-  buttonPopovers.removeShape = document.getElementById('remove-shape-button-popover');
-  buttonPopovers.exportDatasets = document.getElementById('export-datasets-button-popover');
-  buttonPopovers.uploadDatasets = document.getElementById('upload-datasets-button-popover');
-  buttonPopovers.machineLearning = document.getElementById('machine-learning-button-popover');
-  buttonPopovers.zoomIn = document.getElementById('zoom-in-button-popover');
-  buttonPopovers.zoomOut = document.getElementById('zoom-out-button-popover');
-  buttonPopovers.settings = document.getElementById('settings-button-popover');
-  buttonPopovers.uploadImages = document.getElementById('upload-images-button-popover');
-  buttonPopovers.removeImages = document.getElementById('remove-images-button-popover');
-  buttonPopovers.previousImage = document.getElementById('previous-image-button-popover');
-  buttonPopovers.nextImage = document.getElementById('next-image-button-popover');
-  buttonPopovers.githubMark = document.getElementById('github-mark-button-popover');
-}
-
-function removeActiveButtonPopover() {
-  doNotDisplayButtonAfterTimeoutState = true;
-  if (activePopover) {
-    activePopover.style.display = 'none';
-    activePopover = null;
-  }
-}
-
-function displayPopover(middlewareChecks, id) {
-  for (let i = 0; i < middlewareChecks.length; i += 1) {
-    if (!middlewareChecks[i]()) return;
-  }
-  pendingbuttonPopovers[0].style.display = 'block';
-  activePopover = buttonPopovers[id];
+function assignLeftSideBarMouseEnterEvent() {
+  document.getElementById('left-side-bar').addEventListener('mouseenter', () => {
+    doNotDisplayButtonAfterTimeoutState = false;
+  });
 }
 
 function checkIfSettingsButtonNotUp(event) {
@@ -65,6 +35,22 @@ function checkIfExportDatasetsButtonNotUp(event) {
   return true;
 }
 
+function displayPopover(middlewareChecks, id) {
+  for (let i = 0; i < middlewareChecks.length; i += 1) {
+    if (!middlewareChecks[i]()) return;
+  }
+  pendingbuttonPopovers[0].style.display = 'block';
+  activePopover = buttonPopovers[id];
+}
+
+function removeActiveButtonPopover() {
+  doNotDisplayButtonAfterTimeoutState = true;
+  if (activePopover) {
+    activePopover.style.display = 'none';
+    activePopover = null;
+  }
+}
+
 function checkIfSettingsButtonNotUpMiddleware(event) {
   return checkIfSettingsButtonNotUp(event);
 }
@@ -73,11 +59,7 @@ function checkIfExportDatasetsButtonNotUpMiddleware(event) {
   return checkIfExportDatasetsButtonNotUp(event);
 }
 
-window.mouseEnterLeftSideBar = () => {
-  doNotDisplayButtonAfterTimeoutState = false;
-};
-
-window.mouseEnterCoreButton = (event, id) => {
+function mouseEnterCoreButton(event, id) {
   const { tagName } = event.target;
   if (tagName === 'BUTTON' || tagName === 'A') {
     pendingbuttonPopovers.unshift(buttonPopovers[id]);
@@ -95,9 +77,9 @@ window.mouseEnterCoreButton = (event, id) => {
       }, HOVER_TIMEOUT);
     }
   }
-};
+}
 
-window.mouseLeaveCoreButton = (event) => {
+function mouseLeaveCoreButton(event) {
   const { tagName } = event.target;
   if (tagName === 'BUTTON' || tagName === 'A') {
     if (activePopover !== null) {
@@ -111,6 +93,43 @@ window.mouseLeaveCoreButton = (event) => {
     pendingbuttonPopovers.pop();
   }
   doNotDisplayButtonAfterTimeoutState = false;
-};
+}
+
+function addPopoverFunctionalityToButton(buttonElementId, popoverElementId) {
+  const buttonElement = document.getElementById(buttonElementId);
+  const popoverElement = document.getElementById(popoverElementId);
+  buttonElement.addEventListener('mouseenter', (event) => {
+    mouseEnterCoreButton(event, popoverElement.id);
+  });
+  buttonElement.addEventListener('mouseleave', (event) => {
+    mouseLeaveCoreButton(event);
+  });
+  buttonPopovers[popoverElement.id] = popoverElement;
+}
+
+function addPopoverFunctionalityToButtons() {
+  addPopoverFunctionalityToButton('edit-shapes-button', 'default-button-popover');
+  addPopoverFunctionalityToButton('create-bounding-box-button', 'bounding-box-button-popover');
+  addPopoverFunctionalityToButton('create-polygon-button', 'polygon-button-popover');
+  addPopoverFunctionalityToButton('add-points-button', 'add-points-button-popover');
+  addPopoverFunctionalityToButton('remove-points-button', 'remove-points-button-popover');
+  addPopoverFunctionalityToButton('remove-shape-button', 'remove-shape-button-popover');
+  addPopoverFunctionalityToButton('upload-datasets-button', 'upload-datasets-button-popover');
+  addPopoverFunctionalityToButton('export-datasets-button', 'export-datasets-button-popover');
+  addPopoverFunctionalityToButton('machine-learning-button', 'machine-learning-button-popover');
+  addPopoverFunctionalityToButton('zoom-in-button', 'zoom-in-button-popover');
+  addPopoverFunctionalityToButton('zoom-out-button', 'zoom-out-button-popover');
+  addPopoverFunctionalityToButton('settings-button', 'settings-button-popover');
+  addPopoverFunctionalityToButton('upload-images-button', 'upload-images-button-popover');
+  addPopoverFunctionalityToButton('remove-images-button', 'remove-images-button-popover');
+  addPopoverFunctionalityToButton('previous-image-button', 'previous-image-button-popover');
+  addPopoverFunctionalityToButton('next-image-button-popover', 'next-image-button-popover');
+  addPopoverFunctionalityToButton('title-github-mark', 'github-mark-button-popover');
+}
+
+function initialiseCoreButtonPopovers() {
+  addPopoverFunctionalityToButtons();
+  assignLeftSideBarMouseEnterEvent();
+}
 
 export { initialiseCoreButtonPopovers, removeActiveButtonPopover };

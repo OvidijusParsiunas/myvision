@@ -174,13 +174,13 @@ function setNewCanvasDimensions(changeElements) {
     newCanvasWidth = canvasProperties.maximumCanvasWidth;
     widthOverflowed = true;
   }
+  if (currentZoom === 1) {
+    newCanvasWidth = Math.ceil(newCanvasWidth);
+    newCanvasHeight = Math.ceil(newCanvasHeight);
+  }
   if (changeElements) {
-    changeElementPropertiesOnZoomFunc(
-      heightOverflowed, widthOverflowed,
-      originalWidth, originalHeight,
-      Math.ceil(newCanvasWidth), Math.ceil(newCanvasHeight),
-      canvasProperties, currentZoom,
-    );
+    changeElementPropertiesOnZoomFunc(heightOverflowed, widthOverflowed, originalWidth,
+      originalHeight, newCanvasWidth, newCanvasHeight, canvasProperties, currentZoom);
   }
   return !widthOverflowed && !heightOverflowed;
 }

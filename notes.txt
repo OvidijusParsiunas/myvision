@@ -1,6 +1,10 @@
 will have to highlight initial buttons to get users started
 
-delta for dynamic screen height and firefox (zoom fix)
+zoom fix - check how it looks after making the original image full height
+
+label list colors
+
+minimum dimensions warning overlay image
 
 ---------------------------------------------
 

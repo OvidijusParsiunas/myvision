@@ -1,8 +1,13 @@
 import { changeImageThumbnailBorderColorToRed, resetImageThumbnailBorderColor } from '../imageList';
 
 function initialiseImageListButtonHoverEvents() {
-  window.changeImageThumbnailBorderColorToRed = changeImageThumbnailBorderColorToRed;
-  window.resetImageThumbnailBorderColor = resetImageThumbnailBorderColor;
+  const removeButtonElement = document.getElementById('remove-images-button');
+  removeButtonElement.addEventListener('mouseenter', () => {
+    changeImageThumbnailBorderColorToRed();
+  });
+  removeButtonElement.addEventListener('mouseleave', () => {
+    resetImageThumbnailBorderColor();
+  });
 }
 
 export { initialiseImageListButtonHoverEvents as default };

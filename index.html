@@ -11,7 +11,7 @@
   <div id="title-panel">
     <img id="title-logo" src="check-box.svg" draggable="false" alt="visibility">
     <div id="title-text">MyLabel</div>
-    <a href="https://github.com/OvidijusParsiunas/mylabel" target="_blank" onmouseenter="mouseEnterCoreButton(event, 'githubMark')" onmouseleave="mouseLeaveCoreButton(event)">
+    <a href="https://github.com/OvidijusParsiunas/mylabel" target="_blank">
       <img id="title-github-mark" draggable="false" alt="GitHub-Mark-32px.png" src="GitHub-Mark-32px.png">
     </a>
     <div id="github-mark-button-popover" class="core-button-hover-popover">GitHub</div>
@@ -269,54 +269,54 @@
     <!-- resize icons on screen size -->
     <!-- think the icons and font could be smaller on startup -->
 
-    <div id="left-side-bar" onmouseenter="mouseEnterLeftSideBar()">
+    <div id="left-side-bar">
       <div id="left-side-bar-top-border"></div>
-      <button id="edit-shapes-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="editShapes(this)" onmouseenter="mouseEnterCoreButton(event, 'default')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="edit-shapes-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="editShapes(this)">
         <img id="edit-shapes-icon" src="interface.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="default-button-popover">Edit Shapes (E)</div>
-      <button id="create-bounding-box-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="createNewBndBox()" onmouseenter="mouseEnterCoreButton(event, 'boundingBox')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="create-bounding-box-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="createNewBndBox()">
         <img id="new-bounding-box-icon" src="method-draw-image (13).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="bounding-box-button-popover">New Bounding box (W)</div>
-      <button id="create-polygon-button" class="toolkit-button toolkit-button-default" type="button" style="display: table-cell" onmouseup="createNewPolygon()" onmouseenter="mouseEnterCoreButton(event, 'polygon')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="create-polygon-button" class="toolkit-button toolkit-button-default" type="button" style="display: table-cell" onmouseup="createNewPolygon()">
         <img id="new-polygon-icon" src="method-draw-image (60).svg" draggable="false" class="toolkit-button-icon" alt="visibility"></img>
       </button>
       <div class="core-button-hover-popover" id="polygon-button-popover">New Polygon (Q)</div>
-      <button id="add-points-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="addPoints(this)" onmouseenter="mouseEnterCoreButton(event, 'addPoints')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="add-points-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="addPoints(this)">
         <img id="add-points-icon" src="method-draw-image (70).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="add-points-button-popover">Add Points to Polygon (A)</div>
-      <button id="remove-points-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="removePoint(this)" onmouseenter="mouseEnterCoreButton(event, 'removePoints')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="remove-points-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="removePoint(this)">
         <img id="remove-points-icon" src="method-draw-image (69).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="remove-points-button-popover">Remove Polygon Points (R)</div>
-      <button id="remove-shape-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="removeShape()" onmouseenter="mouseEnterCoreButton(event, 'removeShape')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="remove-shape-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="removeShape()">
         <img id="remove-shape-icon" src="method-draw-image (79).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="remove-shape-button-popover">Remove Shape (Del)</div>
       <div id="left-side-bar-separator"></div>
-      <button class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="uploadDatasets()" onmouseenter="mouseEnterCoreButton(event, 'uploadDatasets')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="upload-datasets-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="uploadDatasets()">
         <img id="upload-datasets-icon" src="method-draw-image (99).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="upload-datasets-button-popover">Upload Datasets</div>
-      <button id="export-datasets-button" class="export-datasets-popup-item toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="exportDatasets()" onmouseenter="mouseEnterCoreButton(event, 'exportDatasets')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="export-datasets-button" class="export-datasets-popup-item toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="exportDatasets()">
         <img id="export-datasets-icon" src="method-draw-image - 2020-05-03T194003.376.svg" draggable="false" class="export-datasets-popup-item toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="export-datasets-button-popover">Export Datasets</div>
-      <button class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="displayMachineLearningModal()" onmouseenter="mouseEnterCoreButton(event, 'machineLearning')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="machine-learning-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="displayMachineLearningModal()">
         <img id="machine-learning-icon" src="electronics.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="machine-learning-button-popover">Machine Learning</div>
-      <button id="zoom-in-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="zoom('in')" onmouseenter="mouseEnterCoreButton(event, 'zoomIn')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="zoom-in-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="zoom('in')">
         <img id="zoom-in-icon" src="multimedia (1).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="zoom-in-button-popover">Zoom In</div>
-      <button id="zoom-out-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="zoom('out')" onmouseenter="mouseEnterCoreButton(event, 'zoomOut')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="zoom-out-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="zoom('out')">
         <img id="zoom-out-icon" src="magnifying-glass.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="zoom-out-button-popover">Zoom Out</div>
-      <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default" style="display: table-cell;" onmouseup="displaySettingsPopup()" onmouseenter="mouseEnterCoreButton(event, 'settings')" onmouseleave="mouseLeaveCoreButton(event)">
+      <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default" style="display: table-cell;" onmouseup="displaySettingsPopup()">
         <img id="settings-icon" src="cogwheels.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
         <!-- <img id="settings-icon" src="miscellaneous.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility"> -->
       </button>
@@ -334,13 +334,13 @@
           <div id="image-list-title-parent" class="right-side-bar-component-title">
             <div id="image-list-title-text">Uploads:</div>
             <div id="remove-images-button-container">
-              <button id="remove-images-button" class="toolkit-button toolkit-button-default" onmouseenter="mouseEnterCoreButton(event, 'removeImages'); changeImageThumbnailBorderColorToRed()" onmouseleave="mouseLeaveCoreButton(event); resetImageThumbnailBorderColor()">
+              <button id="remove-images-button" class="toolkit-button toolkit-button-default">
                 <img id="remove-images-button-icon" src="rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeImage()">
               </button>
             </div>
             <div class="core-button-hover-popover image-list-button-hover-popover-v-position" id="remove-images-button-popover">Remove Image</div>
             <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
-            <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload()" onmouseenter="mouseEnterCoreButton(event, 'uploadImages')" onmouseleave="mouseLeaveCoreButton(event)">
+            <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload()">
               <img id="upload-images-icon" src="method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
             </button>
             <div class="core-button-hover-popover image-list-button-hover-popover-v-position" id="upload-images-button-popover">Upload Images</div>
@@ -358,7 +358,7 @@
     -->
     <div id="image-switch-parent">
       <div id="image-switch-contents">
-        <button id="previous-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('previous')" onmouseenter="mouseEnterCoreButton(event, 'previousImage')" onmouseleave="mouseLeaveCoreButton(event)">
+        <button id="previous-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('previous')">
           < 
           <div id="previous-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
             Previous Image (
@@ -367,7 +367,7 @@
           </div>
         </button>
         <div id="image-name">Image name</div>
-        <button id="next-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('next')" onmouseenter="mouseEnterCoreButton(event, 'nextImage')" onmouseleave="mouseLeaveCoreButton(event)">
+        <button id="next-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('next')">
           >
           <div id="next-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
             Next Image (
