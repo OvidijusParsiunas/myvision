@@ -65,12 +65,12 @@ input:focus {
 #labeller-modal-submit-button {
   width: calc(61px / var(--screen-size-delta));
   margin-right: calc(4px / var(--screen-size-delta));
-  padding-bottom: calc(4px / var(--screen-size-delta));
+  padding-bottom: calc(5px / var(--screen-size-delta));
 }
 
 #labeller-modal-cancel-button {
   width: calc(61px / var(--screen-size-delta));
-  padding-bottom: calc(4px / var(--screen-size-delta));
+  padding-bottom: calc(5px / var(--screen-size-delta));
 }
 
 .dropdown {
@@ -466,13 +466,13 @@ input:focus {
   margin-top: calc(3px / var(--screen-size-delta));
   margin-bottom: calc(2px / var(--screen-size-delta));
   user-select: none;
-  line-height: calc(1.35 / var(--screen-size-delta));
+  line-height: initial;
 }
 
 .popup-label-button {
   margin-bottom: calc(5px / var(--screen-size-delta));
   margin-top: calc(5px / var(--screen-size-delta));
-  padding-top: calc(6px / var(--screen-size-delta));
+  padding-top: calc(7px / var(--screen-size-delta));
   width: calc(60px / var(--screen-size-delta));
   padding-left: calc(8px / var(--screen-size-delta));
   padding-right: calc(8px / var(--screen-size-delta));
@@ -1706,6 +1706,9 @@ body {
 
 @-moz-document url-prefix() {
   /* check this is ok on ubuntu firefox */
+  .buttons {
+    line-height: calc(1.35 / var(--screen-size-delta));
+  }
   input.checkbox {
     margin-top: 2px;
     margin-bottom: 2px;
@@ -1742,8 +1745,10 @@ body {
     margin-top: calc(-31px / var(--screen-size-delta));
   }
   #export-datasets-popup-export-button {
-    padding-top: calc(4.5px / var(--screen-size-delta));
+    padding-top: calc(6px / var(--screen-size-delta));
+    padding-bottom: calc(6px / var(--screen-size-delta));
     margin-top: calc(8px / var(--screen-size-delta));
+    line-height: inherit;
   }
   #upload-datasets-modal-parent {
     height: calc(247px / var(--screen-size-delta));
