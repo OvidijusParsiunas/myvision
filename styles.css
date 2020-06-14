@@ -588,7 +588,6 @@ input:focus {
 #export-datasets-popup-export-button {
   margin-top: calc(5px / var(--screen-size-delta));
   width: calc(50px / var(--screen-size-delta));
-  padding-top: calc(6px / var(--screen-size-delta));
   margin-right: 0;
 }
 
@@ -1741,8 +1740,6 @@ body {
     margin-top: calc(-31px / var(--screen-size-delta));
   }
   #export-datasets-popup-export-button {
-    padding-top: calc(6px / var(--screen-size-delta));
-    padding-bottom: calc(6px / var(--screen-size-delta));
     margin-top: calc(8px / var(--screen-size-delta));
     line-height: inherit;
   }

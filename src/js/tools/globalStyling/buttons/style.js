@@ -1,3 +1,5 @@
+import IS_FIREFOX from '../../utils/browserType';
+
 function applyStylingToElementsArray(elementsArray, property, value) {
   for (let i = 0; i < elementsArray.length; i += 1) {
     elementsArray[i].style[property] = value;
@@ -9,6 +11,12 @@ function applyLargeScreenButtonsStyle(buttonElements) {
   buttonElements.labellerModalCancelButtonElement.style.paddingBottom = '4px';
   applyStylingToElementsArray(buttonElements.buttonClassElements, 'lineHeight', 1.35);
   applyStylingToElementsArray(buttonElements.popupLabelButtonClassElements, 'paddingTop', '6px');
+  if (IS_FIREFOX) {
+    buttonElements.exportDatasetsPopupExportButton.style.paddingTop = '5px';
+    buttonElements.exportDatasetsPopupExportButton.style.paddingBottom = '7px';
+  } else {
+    buttonElements.exportDatasetsPopupExportButton.style.paddingTop = '6px';
+  }
 }
 
 function applySmallScreenButtonsStyle(buttonElements, screenSizeDelta) {
@@ -16,6 +24,7 @@ function applySmallScreenButtonsStyle(buttonElements, screenSizeDelta) {
   buttonElements.labellerModalCancelButtonElement.style.paddingBottom = `${5 / screenSizeDelta}px`;
   applyStylingToElementsArray(buttonElements.buttonClassElements, 'lineHeight', 'initial');
   applyStylingToElementsArray(buttonElements.popupLabelButtonClassElements, 'paddingTop', `${7 / screenSizeDelta}px`);
+  buttonElements.exportDatasetsPopupExportButton.style.paddingTop = `${6 / screenSizeDelta}px`;
 }
 
 function getButtonElements() {
@@ -24,6 +33,7 @@ function getButtonElements() {
   buttons.labellerModalCancelButtonElement = document.getElementById('labeller-modal-cancel-button');
   buttons.buttonClassElements = document.getElementsByClassName('buttons');
   buttons.popupLabelButtonClassElements = document.getElementsByClassName('popup-label-button');
+  buttons.exportDatasetsPopupExportButton = document.getElementById('export-datasets-popup-export-button');
   return buttons;
 }
 
