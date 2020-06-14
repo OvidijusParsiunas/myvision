@@ -2,6 +2,7 @@ import downloadFonts from './fonts';
 import IS_FIREFOX from '../utils/browserType';
 import { setScreenSizeDelta } from './screenSizeDelta';
 import { setKeyDownEventTimeOut } from './timeouts';
+import setButtonsStyle from './buttons/style';
 
 let canvasWrapperParentElement = null;
 let zoomOverflowWrapperParentElement = null;
@@ -60,7 +61,8 @@ function getScrollbarWidth() {
 function applyStyling() {
   findWindowElements();
   downloadFonts();
-  setScreenSizeDelta();
+  const screenSizeDelta = setScreenSizeDelta();
+  setButtonsStyle(screenSizeDelta);
   setKeyDownEventTimeOut(IS_FIREFOX);
 }
 

@@ -19,6 +19,7 @@ function getScreenSizeDelta() {
 function setScreenSizeDelta() {
   screenSizeDelta = calculateDesiredScreenSizeDelta();
   document.documentElement.style.setProperty('--screen-size-delta', screenSizeDelta);
+  return screenSizeDelta;
 }
 
 export { setScreenSizeDelta, getScreenSizeDelta };

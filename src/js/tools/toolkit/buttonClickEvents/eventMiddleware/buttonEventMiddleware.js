@@ -3,7 +3,7 @@ import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { getContinuousDrawingState, getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../../stateMachine';
-import { removeActiveButtonPopover } from '../../../globalStyling/coreButtons/popovers';
+import { removeActiveButtonPopover } from '../../../globalStyling/buttons/popovers';
 
 function interruptAllCanvasEventsBeforeFunc(func) {
   removeActiveButtonPopover();

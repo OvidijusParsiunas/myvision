@@ -12,7 +12,7 @@ import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEv
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import initialiseImageListFunctionality from './tools/imageList/init';
 import initialiseRemoveImagesModal from './tools/imageList/removeImages/modal/init';
-import { initialiseCoreButtonPopovers } from './tools/globalStyling/coreButtons/popovers';
+import { initialiseCoreButtonPopovers } from './tools/globalStyling/buttons/popovers';
 import { applyStyling } from './tools/globalStyling/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';

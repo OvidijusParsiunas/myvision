@@ -1,6 +1,6 @@
 import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
 import { interruptAllCanvasEvents } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
-import { removeActiveButtonPopover } from '../../globalStyling/coreButtons/popovers';
+import { removeActiveButtonPopover } from '../../globalStyling/buttons/popovers';
 import { canSwitchImage } from '../imageList';
 
 function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) {

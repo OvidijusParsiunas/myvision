@@ -6,6 +6,8 @@ label list colors
 
 minimum dimensions warning overlay image
 
+fix exports button (firefox - larger screen)
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
