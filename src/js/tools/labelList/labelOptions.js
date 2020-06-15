@@ -4,13 +4,11 @@ let maxUsedLabelIndex = 0;
 const defaultShapeColors = [
   'hsl(0, 100%, 48%',
   'hsl(321, 94%, 34%',
-  'hsl(175,75%,51%',
-  'hsl(241,86%,49%',
-  'hsl(64,99%,40%',
-  'hsl(45,77%,53%',
+  'hsl(175, 75%, 51%',
+  'hsl(241, 86%, 49%',
+  'hsl(64, 99%, 40%',
   'hsl(106, 85%, 49%',
   'hsl(355, 80%, 56%',
-  'hsl(154, 98%, 54%',
   'hsl(182, 46%, 60%',
   'hsl(7, 93%, 41%',
   'hsl(220, 65%, 39%',
@@ -21,12 +19,52 @@ const defaultShapeColors = [
   'hsl(294, 100%, 37%',
 ];
 
+// for cat
+// {default: 'hsl(142,77%,53%,0.01)', highlight: 'hsl(142,77%,53%,0.3)', stroke: 'hsl(142,77%,53%)', label: 'hsl(142,77%,53%, 0.25)'}
+// {default: 'hsl(60,98%,40%,0.01)', highlight: 'hsl(60,98%,40%,0.3)', stroke: 'hsl(60,98%,40%)', label: 'hsl(60,98%,40%, 0.25)'}
+// {default: 'hsl(45, 77%, 53%,0.01)', highlight: 'hsl(45, 77%, 53%,0.3)', stroke: 'hsl(45, 77%, 53%)', label: 'hsl(45, 77%, 53%,0.28)'}
+
+// next one should alwasy be
+// {default: 'hsl(220, 100%, 48%,0.01)', highlight: 'hsl(220, 100%, 48%,0.3)', stroke: 'hsl(220, 100%, 48%)', label: 'hsl(220, 100%, 48%,0.28)'}
+// or
+// {default: 'hsl(154, 98%, 54%,0.01)', highlight: 'hsl(154, 98%, 54%,0.3)', stroke: 'hsl(154, 98%, 54%)', label: 'hsl(154, 98%, 54%,0.28)'}
+
 const defaultLabelOptions = [
-  { text: 'dog', default: true, color: { highlight: 'red', default: 'hsl(130, 100%, 50%)' } },
-  { text: 'cat', default: true, color: { highlight: 'black', default: 'grey' } },
-  { text: 'chicken', default: true, color: { highlight: 'blue', default: 'purple' } },
-  { text: 'dolphin', default: true, color: 'yellow' },
-  { text: 'panda', default: true, color: 'purple' },
+  {
+    text: 'dog',
+    default: true,
+    color: {
+      default: 'hsl(82, 93%, 45%, 0.01)', highlight: 'hsl(82, 93%, 45%, 0.3)', stroke: 'hsl(82, 93%, 45%)', label: 'hsl(82, 93%, 45%, 0.25)',
+    },
+  },
+  {
+    text: 'cat',
+    default: true,
+    color: {
+      default: 'hsl(45, 77%, 53%, 0.01)', highlight: 'hsl(45, 77%, 53%, 0.3)', stroke: 'hsl(45, 77%, 53%)', label: 'hsl(45, 77%, 53%, 0.28)',
+    },
+  },
+  {
+    text: 'chicken',
+    default: true,
+    color: {
+      default: 'hsl(338 ,100%, 68%, 0.01)', highlight: 'hsl(338, 100%, 68%, 0.3)', stroke: 'hsl(338, 100%, 68%)', label: 'hsl(338, 100%, 68%, 0.28)',
+    },
+  },
+  {
+    text: 'dolphin',
+    default: true,
+    color: {
+      default: 'hsl(198, 98%, 61%, 0.01)', highlight: 'hsl(198, 98%, 61% ,0.3)', stroke: 'hsl(198, 98%, 61%)', label: 'hsl(198, 98%, 61%, 0.25)',
+    },
+  },
+  {
+    text: 'panda',
+    default: true,
+    color: {
+      default: 'hsl(21, 70%, 40%, 0.01)', highlight: 'hsl(21, 70%, 40% ,0.3)', stroke: 'hsl(21, 70%, 40%)', label: 'hsl(21, 70%, 40%, 0.25)',
+    },
+  },
 ];
 
 const labelOptions = defaultLabelOptions;
@@ -109,7 +147,17 @@ function getRandomlyGeneratedShapeColor() {
   };
 }
 
+function getFirstNewLabelColor() {
+  defaultShapeColorIndex += 1;
+  return {
+    default: 'hsl(154, 98%, 54%,0.01)', highlight: 'hsl(154, 98%, 54%,0.3)', stroke: 'hsl(154, 98%, 54%)', label: 'hsl(154, 98%, 54%,0.28)',
+  };
+}
+
 function generateRandomHSLColor() {
+  if (defaultShapeColorIndex === 0) {
+    return getFirstNewLabelColor();
+  }
   if (defaultShapeColorIndex < 17) {
     return getDefaultShapeColor();
   }

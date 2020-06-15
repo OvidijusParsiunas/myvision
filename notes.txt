@@ -2,11 +2,7 @@ will have to highlight initial buttons to get users started
 
 zoom fix - check how it looks after making the original image full height
 
-label list colors
-
 minimum dimensions warning overlay image
-
-fix exports button (firefox - larger screen)
 
 ---------------------------------------------
 
