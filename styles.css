@@ -12,6 +12,23 @@ input:focus {
   outline:none; 
 }
 
+#welcome-modal-parent {
+  height: calc(340px / var(--screen-size-delta));
+  width: calc(415px / var(--screen-size-delta));
+  left: calc(-151px / var(--screen-size-delta));
+}
+
+#welcome-modal-description {
+  margin-left: calc(24px / var(--screen-size-delta));
+  margin-top: calc(16px / var(--screen-size-delta));
+  margin-bottom: calc(16px / var(--screen-size-delta));
+}
+
+#welcome-modal-buttons {
+  line-height: initial;
+  margin-top: -1.63636px;
+}
+
 #labeller-modal-input {
   width: calc(162px / var(--screen-size-delta));
   border: thin ridge rgb(177, 177, 177);

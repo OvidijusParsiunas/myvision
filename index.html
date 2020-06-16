@@ -8,6 +8,26 @@
   <link rel="stylesheet" href="styles.css?v=1.0">
 </head>
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
+  <div id="welcome-modal-parent" class="modal-parent" onmousemove="trackMouseMoveEvents(event)">
+    <div class="modal-title small-title">Welcome</div>
+    <div class="modal-title-border-line"></div>
+    <div id="welcome-modal-description" class="modal-description">
+      Vision.ai is a free computer vision based training data creation tool.
+      <br>
+      <br>
+      It supports a multitude of popular data formats to help you build a model that suits your needs.
+      <br>
+      <br>
+      Use an embedded machine learning model to label your images automatically.
+      <br>
+      <br>
+      No data will ever leave the privacy of your computer as this tool is built to operate locally on your browser.
+    </div>
+    <div id="welcome-modal-buttons" class="buttons modal-buttons">
+      <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="startMachineLearning()">Start</div>
+      <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelMLModal()">Cancel</div>
+    </div>
+  </div>
   <div id="title-panel">
   <img id="title-logo" src="eye 88.svg" style="width: 30px; padding-right: 2px;" draggable="false" alt="visibility">
   <!-- eye 48.svg
@@ -18,6 +38,7 @@
   eye 63.svg
   eye 69.svg
   eye 73.svg
+  eye 87.svg
   eye 88.svg
   eye 89.svg -->
   <!-- 62 can be used for bigger logos -->
