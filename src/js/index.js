@@ -1,8 +1,10 @@
 import { registerHotKeys } from './keyEvents/keyboard/hotKeys';
 import registerWindowMouseEvents from './keyEvents/mouse/registerEvents';
+
 import { findUserOS } from './tools/OS/OSManager';
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
+import initialiseWelcomeModal from './tools/welcomeModal/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
@@ -35,3 +37,4 @@ initialiseImageListFunctionality();
 initialiseLabelListFunctionality();
 initialiseImageSwitchPanelFunctionality();
 initialiseShapeManipulationDeltas();
+initialiseWelcomeModal();

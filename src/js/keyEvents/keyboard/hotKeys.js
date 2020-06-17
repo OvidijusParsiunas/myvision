@@ -8,12 +8,12 @@ import { getCurrentlyHighlightedElement } from '../../tools/labelList/labelListH
 import { closeModalViaKeyboard as closeUploadDatasetsModal } from '../../tools/uploadDatasetsModal/views/viewManager';
 import { closeModalViaKeyboard as closeMachineLearningModal } from '../../tools/machineLearningModal/views/viewManager';
 import {
-  getRemoveImageModalDisplayedState, getReadyToDrawShapeState,
   getShapeMovingState, getDefaultState, getLastDrawingModeState,
   getExportDatasetsPopupOpenState, getLabellerModalDisplayedState,
   getPolygonDrawingInProgressState, getBoundingBoxDrawingInProgressState,
   getUploadDatasetsModalDisplayedState, getMachineLearningModalDisplayedState,
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getSettingsPopupOpenState,
+  getRemoveImageModalDisplayedState, getReadyToDrawShapeState, getWelcomeModalDisplayedState,
 } from '../../tools/stateMachine';
 import { removeFillForAllShapes } from '../../canvas/objects/allShapes/allShapes';
 import { addPointViaKeyboard as addPointToNewPolygonViaKeyboard, generatePolygonViaKeyboard } from '../../canvas/objects/polygon/polygon';
@@ -28,6 +28,7 @@ import { removePointViaKeyboard } from '../../canvas/mouseInteractions/mouseEven
 import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import closeAllPopups from '../../tools/utils/popups/closeAllPopups';
 import { getUserOS } from '../../tools/OS/OSManager';
+import { closeWelcomeModal } from '../../tools/welcomeModal/style';
 
 let canvas = null;
 let isRKeyUp = true;
@@ -42,7 +43,8 @@ function isModalOpen() {
   return getLabellerModalDisplayedState()
   || getUploadDatasetsModalDisplayedState()
   || getMachineLearningModalDisplayedState()
-  || getRemoveImageModalDisplayedState();
+  || getRemoveImageModalDisplayedState()
+  || getWelcomeModalDisplayedState();
 }
 
 function qKeyHandler() {
@@ -199,6 +201,8 @@ function enterKeyHandler() {
     labelShape();
   } else if (getRemoveImageModalDisplayedState()) {
     window.approveRemoveImage();
+  } else if (getWelcomeModalDisplayedState()) {
+    closeWelcomeModal();
   } else if (getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState()) {
     generatePolygonViaKeyboard();
   }
@@ -217,6 +221,8 @@ function escapeKeyHandler() {
     closeMachineLearningModal();
   } else if (getRemoveImageModalDisplayedState()) {
     closeRemoveImagesModal();
+  } else if (getWelcomeModalDisplayedState()) {
+    closeWelcomeModal();
   } else if (getPolygonDrawingInProgressState()) {
     window.createNewPolygon();
     canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));

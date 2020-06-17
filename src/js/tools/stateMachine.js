@@ -28,6 +28,7 @@ let shapeMovingState = false;
 let polygonDrawingInProgressState = false;
 let boundingBoxDrawingInProgressState = false;
 let removeImageModalDisplayedState = false;
+let welcomeModalDisplayedState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -143,6 +144,10 @@ function getMachineLearningModalDisplayedState() {
 
 function getRemoveImageModalDisplayedState() {
   return removeImageModalDisplayedState;
+}
+
+function getWelcomeModalDisplayedState() {
+  return welcomeModalDisplayedState;
 }
 
 function setDefaultState(state) {
@@ -262,6 +267,10 @@ function setRemoveImageModalDisplayedState(state) {
   removeImageModalDisplayedState = state;
 }
 
+function setWelcomeModalDisplayedState(state) {
+  welcomeModalDisplayedState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -295,6 +304,8 @@ export {
   setAddingPolygonPointsState,
   getCancelledReadyToDrawState,
   setCancelledReadyToDrawState,
+  getWelcomeModalDisplayedState,
+  setWelcomeModalDisplayedState,
   getAlteringPolygonPointsState,
   setAlteringPolygonPointsState,
   getRemovingPolygonPointsState,
