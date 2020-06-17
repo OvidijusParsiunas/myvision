@@ -16,15 +16,16 @@ input:focus {
   height: calc(342px / var(--screen-size-delta));
   width: calc(450px / var(--screen-size-delta));
   left: calc(-151px / var(--screen-size-delta));
-  position:fixed;
-  display:table;
-  z-index:4;
-  transform:scale(0);
+  background-color: rgba(0,0,0,0);
 }
 
+#welcome-modal-parent2 {
+  height: calc(342px / var(--screen-size-delta));
+  width: calc(450px / var(--screen-size-delta));
+  left: calc(-151px / var(--screen-size-delta));
+}
 .modal-background {
   display: table-cell;
-  background: rgba(0, 0, 0, 0.8);
   text-align: center;
   vertical-align: middle;
 }
@@ -59,55 +60,34 @@ input:focus {
   stroke-dashoffset: 2000;
 }
 
-#modal-container {
-  position: fixed;
-  display: table;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  transform: scale(0);
-  z-index: 1;
-}
-#modal-container.six {
+#welcome-modal-parentr.six {
   transform: scale(1);
 }
-#modal-container.six .modal-background .modal {
-  background-color: transparent;
-  animation: modalFadeIn 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-#modal-container.six .modal-background .modal h2, #modal-container.six .modal-background .modal p {
-  opacity: 0;
-  position: relative;
-  animation: modalContentFadeIn 0.5s 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-#modal-container.six .modal-background .modal .modal-svg rect {
+#welcome-modal-parent.six .modal-background .modal .modal-svg rect {
   animation: sketchIn 0.5s 0.3s cubic-bezier(1, 0.84, 1, 1) forwards;
 }
-#modal-container .modal-background {
+#welcome-modal-parent .modal-background {
   display: table-cell;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(48, 43, 43, 0.8);
   text-align: center;
   vertical-align: middle;
 }
-#modal-container .modal-background .modal {
-  background: white;
-  padding: 100px;
+#welcome-modal-parent .modal-background .modal {
   display: inline-block;
   border-radius: 3px;
   font-weight: 300;
   position: relative;
 }
-#modal-container .modal-background .modal h2 {
+#welcome-modal-parent .modal-background .modal h2 {
   font-size: 25px;
   line-height: 25px;
   margin-bottom: 15px;
 }
-#modal-container .modal-background .modal p {
+#welcome-modal-parent .modal-background .modal p {
   font-size: 50px;
   line-height: 50px;
 }
-#modal-container .modal-background .modal .modal-svg {
+#welcome-modal-parent .modal-background .modal .modal-svg {
   position: absolute;
   top: 0;
   left: 0;
@@ -115,7 +95,7 @@ input:focus {
   width: 100%;
   border-radius: 3px;
 }
-#modal-container .modal-background .modal .modal-svg rect {
+#welcome-modal-parent .modal-background .modal .modal-svg rect {
   stroke: #fff;
   stroke-width: 2px;
   stroke-dasharray: 2000;
@@ -161,11 +141,9 @@ input:focus {
 @keyframes modalContentFadeIn {
   0% {
     opacity:0;
-    top:-20px;
   }
   100% {
     opacity:1;
-    top:0;
   }
 }
 
@@ -1330,6 +1308,8 @@ input:focus {
 }
 
 #window-dim {
+  position: absolute;
+  background-color: rgba(0,0,0,0.25);
   top: 0px;
   width: 100%;
   height: 100%;

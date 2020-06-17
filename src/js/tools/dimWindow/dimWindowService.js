@@ -18,6 +18,7 @@ function dimWindow(transitionDurationSeconds, backgroundColor) {
   baseDiv.style.backgroundColor = backgroundColor;
 }
 
+// refactor to use the same element here
 function assignCanvasToDimWindowService(canvasObj) {
   canvas = canvasObj;
 }

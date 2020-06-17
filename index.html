@@ -8,44 +8,36 @@
   <link rel="stylesheet" href="styles.css?v=1.0">
 </head>
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
-  <div id="welcome-modal-parent" class="modal-parent" onmousemove="trackMouseMoveEvents(event)">
-    <div class="modal-background"> 
-      <!-- these -->
-      <div class="modal">
-        <div class="modal-title small-title">Welcome</div>
-        <div class="modal-title-border-line"></div>
-        <div id="welcome-modal-description" class="modal-description">
-          <h2>I'm a Modal</h2>
-         <p>Hear me roar.</p>
-          <img id="welcome-modal-vision-ai-logo" src="eye 88.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
-          Vision.ai is a free computer vision based training data creation tool.
-          <br>
-          <br>
-          <img src="documents.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
-          It supports a multitude of popular data formats to help you build a model that suits your needs.
-          <br>
-          <br>
-          <img src="electronics.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
-          Use an embedded machine learning model to label your images automatically.
-          <br>
-          <br>
-          <img src="password3.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
-          No data will ever leave the privacy of your computer as this tool is built to operate locally on your browser.
-        </div>
-        <div id="welcome-modal-buttons" class="buttons modal-buttons">
-          <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="closeWelcomeModal()">Start</div>
-          <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="closeWelcomeModal()">Cancel</div>
-        </div>
-      </div>
+  <div id="welcome-modal-parent2" style="position: none; z-index: 12; opacity: 0;" class="modal-parent" onmousemove="trackMouseMoveEvents(event)">
+    <div class="modal-title small-title">Welcome</div>
+    <div class="modal-title-border-line"></div>
+    <div id="welcome-modal-description" class="modal-description">
+      <img id="welcome-modal-vision-ai-logo" src="eye 88.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      Vision.ai is a free computer vision based training data creation tool.
+      <br>
+      <br>
+      <img src="documents.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      It supports a multitude of popular data formats to help you build a model that suits your needs.
+      <br>
+      <br>
+      <img src="electronics.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      Use an embedded machine learning model to label your images automatically.
+      <br>
+      <br>
+      <img src="password3.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      No data will ever leave the privacy of your computer as this tool is built to operate locally on your browser.
+    </div>
+    <div id="welcome-modal-buttons" class="buttons modal-buttons">
+      <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="closeWelcomeModal()">Start</div>
+      <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="closeWelcomeModal()">Cancel</div>
     </div>
   </div>
-  <div id="modal-container">
-    <div class="modal-background">
+  <div id="welcome-modal-parent" style="border: none" class="modal-parent" onmousemove="trackMouseMoveEvents(event)">
+    <div style="position: absolute; top: -13px" class="modal-background"> 
+      <!-- these -->
       <div class="modal">
-        <h2>I'm a Modal</h2>
-        <p>Hear me roar.</p>
-        <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
-          <rect x="0" y="0" fill="none" width="400" height="362" rx="3" ry="3"></rect>
+        <svg class="modal-svg" style="width: 408px; height: 311px;" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <rect x="0" y="0" fill="none" width="408" height="311" rx="3" ry="3"></rect>
         </svg>
       </div>
     </div>
