@@ -18,6 +18,7 @@ import { initialiseCoreButtonPopovers } from './tools/globalStyling/buttons/popo
 import { applyStyling } from './tools/globalStyling/style';
 import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
+import { initialiseWindowDimService } from './tools/dimWindow/dimWindowService';
 
 findUserOS();
 applyStyling();
@@ -27,6 +28,7 @@ initialiseToolkit();
 initialiseLabellerModal();
 initialiseSettingsPopup();
 registerWindowMouseEvents();
+initialiseWindowDimService();
 initialiseCoreButtonPopovers();
 initialiseExportDatasetsPopup();
 initialiseUploadDatasetsModal();
