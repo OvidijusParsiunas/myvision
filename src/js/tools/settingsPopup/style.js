@@ -34,7 +34,7 @@ function hideSettingsPopup() {
 
 function setInitialCheckBoxInputValues() {
   document.getElementById('settings-popup-movable-objects-checkbox').checked = true;
-  document.getElementById('settings-popup-continuous-drawing-checkbox').checked = false;
+  document.getElementById('settings-popup-continuous-drawing-checkbox').checked = true;
   document.getElementById('settings-popup-labels-visibility-checkbox').checked = true;
 }
 

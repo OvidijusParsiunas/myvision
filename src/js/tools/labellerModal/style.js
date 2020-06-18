@@ -1,6 +1,6 @@
 import { getLabelOptions } from '../labelList/labelOptions';
 import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
-import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../dimWindow/consts';
+import { QUICK_LIGHTUP_MILLISECONDS, QUICK_DIM_SECONDS, THIN_DIM } from '../dimWindow/consts';
 import { setLabellerModalDisplayedState } from '../stateMachine';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
@@ -19,9 +19,9 @@ let heightIncreasedForHorizontalScrollbar = false;
 let horizontalScrollSet = false;
 let fakeRightBorderAdded = false;
 let fakeBottomBorderAdded = false;
-let lightupTimePeriod = SLOW_LIGHTUP_MILLISECONDS;
-let dimTimePeriod = SLOW_DIM_SECONDS;
-let dimIntensity = THICK_DIM;
+let lightupTimePeriod = QUICK_LIGHTUP_MILLISECONDS;
+let dimTimePeriod = QUICK_DIM_SECONDS;
+let dimIntensity = THIN_DIM;
 let optionsListBorderWidth = 1;
 
 function initialiseParentElement() {
