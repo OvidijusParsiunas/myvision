@@ -4,7 +4,7 @@ let canvas = null;
 function lightUpWindow(transitionDurationMillisonds) {
   windowDimElement.style.backgroundColor = 'rgba(0,0,0,0)';
   window.setTimeout(() => {
-    windowDimElement.style.position = '';
+    windowDimElement.style.position = 'unset';
     canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   }, transitionDurationMillisonds);
 }

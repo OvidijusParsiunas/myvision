@@ -22,7 +22,6 @@ function displayWelcomeModal() {
 function closeWelcomeModal() {
   modalParentElement.style.display = 'none';
   modalConntourParentElement.style.display = 'none';
-
   setWelcomeModalDisplayedState(false);
   lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
 }
