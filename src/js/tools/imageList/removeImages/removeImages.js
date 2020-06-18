@@ -28,6 +28,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
   } else {
     resetZoom(false);
     updateCurrentImageIds(0, 0);
+    window.editShapes();
     setImageNameElementToDefault();
     removeAllLabelListItems();
     setCreateBoundingBoxButtonToDisabled();

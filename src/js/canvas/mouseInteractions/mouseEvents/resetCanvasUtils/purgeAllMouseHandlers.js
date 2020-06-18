@@ -4,7 +4,7 @@ import { getCanvasReferences } from '../../../utils/fabricUtils';
 // and when switching between older and newer ones
 function setScalingEventListeners() {
   const { canvas1, canvas2 } = getCanvasReferences();
-  if (canvas1.__eventListeners['object:scaling'].length > 1) {
+  if (canvas1.__eventListeners['object:scaling'] && canvas1.__eventListeners['object:scaling'].length > 1) {
     canvas1.__eventListeners['object:scaling'].pop();
   }
   if (canvas2 && canvas2.__eventListeners
