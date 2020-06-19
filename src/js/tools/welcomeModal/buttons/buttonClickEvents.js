@@ -1,7 +1,7 @@
-import { cancelRemoveImage } from './workers';
+import { closeWelcomeModal } from './workers';
 
 function assignWelcomeModalButtonEventHandlers() {
-  window.closeWelcomeModal = cancelRemoveImage;
+  window.closeWelcomeModal = closeWelcomeModal;
 }
 
 export { assignWelcomeModalButtonEventHandlers as default };

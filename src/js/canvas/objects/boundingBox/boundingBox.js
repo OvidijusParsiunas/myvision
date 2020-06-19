@@ -26,12 +26,14 @@ let rightBoundingBoxDelta = 0;
 
 function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked && !getBoundingBoxDrawingInProgressState()) {
-    leftMouseBtnDown = true;
     let pointer = canvas.getPointer(lastMouseEvent.e);
     if (!pointer.x || !pointer.y) {
       const lastMouseMoveEvent = getLastMouseMoveEvent();
+      const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
+      if (!lastCanvasPointer.x || !lastCanvasPointer.y) return;
       pointer = canvas.getPointer(lastMouseMoveEvent);
     }
+    leftMouseBtnDown = true;
     boundingBoxProps.origX = pointer.x < 0 ? 0 : pointer.x;
     boundingBoxProps.origY = pointer.y < 0 ? 0 : pointer.y;
     boundingBox = new fabric.Rect(boundingBoxProperties.tempBoundingBoxProps(boundingBoxProps));

@@ -1,11 +1,11 @@
-import { closeWelcomeModal } from '../style';
+import { closeWelcomeModal as closeWelcomeModalStyle } from '../style';
 
-function cancelRemoveImage() {
-  closeWelcomeModal();
+function closeWelcomeModal() {
+  closeWelcomeModalStyle();
 }
 
 function initUserGuide() {
-
+  // clicking the button before modal is displayed
 }
 
-export { cancelRemoveImage, initUserGuide };
+export { closeWelcomeModal, initUserGuide };

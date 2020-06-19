@@ -1,5 +1,3 @@
-// should be exported outside
-
 let defaultState = false;
 let removingPolygonPointsState = false;
 let addingPolygonPointsState = false;

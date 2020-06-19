@@ -1,6 +1,6 @@
 let lastMouseMoveEvent = null;
 
-function onMouseMove(event) {
+function onMouseMoveEvent(event) {
   lastMouseMoveEvent = event;
 }
 
@@ -9,7 +9,7 @@ function getLastMouseMoveEvent() {
 }
 
 function registerMouseMoveEvents() {
-  window.trackMouseMoveEvents = onMouseMove;
+  window.trackMouseMoveEvents = onMouseMoveEvent;
 }
 
-export { registerMouseMoveEvents, getLastMouseMoveEvent };
+export { registerMouseMoveEvents, getLastMouseMoveEvent, onMouseMoveEvent };

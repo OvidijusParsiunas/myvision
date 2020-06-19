@@ -1,3 +1,5 @@
+import { onMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
+
 let windowDimElement = null;
 let canvas = null;
 
@@ -5,6 +7,7 @@ function lightUpWindow(transitionDurationMillisonds) {
   windowDimElement.style.backgroundColor = 'rgba(0,0,0,0)';
   window.setTimeout(() => {
     windowDimElement.style.position = 'unset';
+    // if the mouse is not refreshing correctly, consider setting a timeout for dispatchevent
     canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
   }, transitionDurationMillisonds);
 }
@@ -20,8 +23,17 @@ function assignCanvasToDimWindowService(canvasObj) {
   canvas = canvasObj;
 }
 
-function initialiseWindowDimService() {
+function addMouseMoveEventListener() {
+  windowDimElement.addEventListener('mousemove', onMouseMoveEvent);
+}
+
+function assignLocalVariables() {
   windowDimElement = document.getElementById('window-dim');
+}
+
+function initialiseWindowDimService() {
+  assignLocalVariables();
+  addMouseMoveEventListener();
 }
 
 export {

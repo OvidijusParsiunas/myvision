@@ -4,6 +4,9 @@ zoom fix - check how it looks after making the original image full height
 
 minimum dimensions warning overlay image
 
+investigate why it is possible to start drawing bounding box on the very edge of bottom and right, but can't draw to the same edges when starting
+somewhere else
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

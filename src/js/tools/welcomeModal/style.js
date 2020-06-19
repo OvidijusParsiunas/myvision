@@ -1,6 +1,7 @@
 import { setWelcomeModalDisplayedState } from '../stateMachine';
 import { lightUpWindow } from '../dimWindow/dimWindowService';
 import { SLOW_LIGHTUP_MILLISECONDS } from '../dimWindow/consts';
+import { onMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
 
 let modalParentElement = null;
 let modalConntourParentElement = null;
@@ -13,9 +14,9 @@ function fadeInModal() {
 }
 
 function displayWelcomeModal() {
+  setWelcomeModalDisplayedState(true);
   setTimeout(() => {
     fadeInModal();
-    setWelcomeModalDisplayedState(true);
   }, CONTOUR_DRAWING_DURATION_MILLISECONDS);
 }
 
@@ -26,6 +27,10 @@ function closeWelcomeModal() {
   lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
 }
 
+function addMouseMoveEventListener() {
+  modalParentElement.addEventListener('mousemove', onMouseMoveEvent);
+}
+
 function assignWelcomeModalLocalVariables() {
   modalParentElement = document.getElementById('welcome-modal-parent');
   modalConntourParentElement = document.getElementById('welcome-modal-contour-animation-parent');
@@ -33,6 +38,7 @@ function assignWelcomeModalLocalVariables() {
 
 function initialiseWelcomeModalStyling() {
   assignWelcomeModalLocalVariables();
+  addMouseMoveEventListener();
   displayWelcomeModal();
 }
 

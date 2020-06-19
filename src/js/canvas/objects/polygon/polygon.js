@@ -295,11 +295,13 @@ function addPointViaKeyboard() {
       || (createdInvisiblePoint && Number.isNaN(pointer.x))) {
       // placeholder
     } else {
-      setReadyToDrawShapeState(false);
       if (!pointer.x || !pointer.y) {
         const lastMouseMoveEvent = getLastMouseMoveEvent();
+        const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
+        if (!lastCanvasPointer.x || !lastCanvasPointer.y) return;
         pointer = canvas.getPointer(lastMouseMoveEvent);
       }
+      setReadyToDrawShapeState(false);
       addPoint(pointer);
       createdInvisiblePoint = true;
     }
