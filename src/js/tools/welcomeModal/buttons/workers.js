@@ -11,6 +11,7 @@ function initUserGuide() {
 
 export { closeWelcomeModal, initUserGuide };
 
+// Gradient fade animation for imagelist header
 // function setBackground(titleContainerElement, uploadImagesButtonContainerElement) {
 //   titleContainerElement.style.backgroundColor = 'rgb(210, 210, 210)';
 //   // uploadImagesButtonContainerElement.style.backgroundColor = 'rgb(241, 228, 190)';

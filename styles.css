@@ -1273,25 +1273,18 @@ input:focus {
 /* update these when changing the left side bar width */
 
 #canvas-wrapper-parent {
-  /* width: calc(100% - 268px);
-  height: calc(100% - 64.5px);
-  left: 59px;
-  top: 64px; */
-  /* width: calc(100% - 211px - (57px / var(--screen-size-delta))); */
-    /* width: calc(100% - 209px - (59px / var(--screen-size-delta))); */
-  /* height: calc(100% - (38px + (29.5px / var(--screen-size-delta)))); */
-      /* height: calc(100% - (34.5px + (30px / var(--screen-size-delta)))); */
-  /* left: calc(1px + (58px / var(--screen-size-delta))); */
-  /* top: calc(37px + (29px / var(--screen-size-delta))); */
   width: calc(100% - 211px - (57px / var(--screen-size-delta)));
-    /* width: calc(100% - 209px - (59px / var(--screen-size-delta))); */
   height: calc(100% - (35px + (29.5px / var(--screen-size-delta))));
-      /* height: calc(100% - (34.5px + (30px / var(--screen-size-delta)))); */
   left: calc(1px + (58px / var(--screen-size-delta)));
   top: calc(35px + (29px / var(--screen-size-delta)));
   position: absolute;
   display: table;
-  background-color: rgb(239, 239, 239);
+  background: url(presenting\ 24.svg);
+  background-attachment: fixed;
+  background-position: center;
+  background-position-x: 515px;
+  /*   background: url(presenting\ 9.svg); */
+  background-repeat: no-repeat;
   text-align: center;
 }
 
