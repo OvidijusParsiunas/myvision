@@ -290,7 +290,7 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
 // NOTE: some of the code to fix a similar bug is located in the purgeAllMouseEvents.js file
 function fixForObjectScalingBugOnCanvasSwitch() {
   const { canvas1, canvas2 } = getCanvasReferences();
-  if (canvas1.__eventListeners['object:scaling'].length > 1) {
+  if (canvas1.__eventListeners['object:scaling'] && canvas1.__eventListeners['object:scaling'].length > 1) {
     assignDefaultEvents(canvas2, null, false);
   }
 }

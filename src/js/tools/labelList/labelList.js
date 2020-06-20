@@ -71,6 +71,7 @@ let chromiumFakeDropdownBorderElementTopDelta = 0;
 let newFakeDropdownBottomBorderDeltaGenerated = false;
 let chromiumFakeDrodownBottomBorderTopDimension = null;
 let originalActiveDropdownHeight = 0;
+const NEW_ITEM_ANIMATION_DURATION_MILLISECONDS = 300;
 const LABEL_CONTAINER_ELEMENT_ID_PREFIX = 'label-container-';
 
 function setDropdownElementWidthVariables() {
@@ -139,7 +140,7 @@ function generateLabelVisibilityMarkup(shapeVisibile) {
 // change to label list item click
 function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
   return `
-  <div id="labelId${id}" onMouseEnter="mouseEnterLabel(${id})" onMouseLeave="mouseLeaveLabel(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}">
+  <div id="labelId${id}" onMouseEnter="mouseEnterLabel(${id})" onMouseLeave="mouseLeaveLabel(${id})" onClick="labelBtnClick(${id})" class="label${id} labelListItem" style="background-color: ${backgroundColor}; transition: ${NEW_ITEM_ANIMATION_DURATION_MILLISECONDS / 1000}s; transform: translateX(-100%);">
     <div id="${visibility}" onMouseEnter="mouseEnterVisibilityBtn(id, this)" onMouseLeave="mouseLeaveVisibilityBtn(id, this)" onClick="visibilityBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 12px; cursor: pointer; padding-top: 1px">
       ${generateLabelVisibilityMarkup(visibility)}
     </div>
@@ -200,16 +201,31 @@ function pasteHandlerOnDiv(event) {
     activeLabelTextElement, false, scrollHorizontallyToAppropriateWidth);
 }
 
+function triggerSlideAnimation(labelId) {
+  const labelInnerElement = document.getElementById(`labelId${labelId}`);
+  setTimeout(() => {
+    // begin animation once the element has been added
+    labelInnerElement.style.transform = 'translateX(0%)';
+  });
+  setTimeout(() => {
+    // remove animation properties to prevent dropdown aligment issues and further animations
+    labelInnerElement.style.transform = '';
+    labelInnerElement.style.transition = '';
+  }, NEW_ITEM_ANIMATION_DURATION_MILLISECONDS);
+}
+
 function addNewLabelToListFromPopup(labelText, id, labelColor) {
   const labelElement = initialiseParentElement();
   labelElement.id = `${LABEL_CONTAINER_ELEMENT_ID_PREFIX}${id}`;
-  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default');
+  const newLabel = true;
+  labelElement.innerHTML = createLabelElementMarkup(labelText, id, labelColor, 'default', newLabel);
   const newRow = labelListElement.insertRow(-1);
   const cell = newRow.insertCell(0);
   cell.appendChild(labelElement);
   labelListElement.scrollLeft = 0;
   labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
   repopulateDropdown();
+  triggerSlideAnimation(id);
   cell.scrollIntoView();
 }
 
@@ -228,6 +244,7 @@ function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
   cell.appendChild(labelElement);
   labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
   repopulateDropdown();
+  triggerSlideAnimation(id);
   cell.scrollIntoView();
 }
 
