@@ -190,6 +190,7 @@ function highlightCancelButton() {
   cancelButtonElement.style.backgroundColor = '#e2acac';
 }
 
+// will potentially need to refactor this for different screen size
 function displayUploadImagesButton() {
   toolkitUploadImagesButton.style.zIndex = 3;
   toolkitUploadImagesButton.style.border = '2px solid rgb(73, 178, 218)';

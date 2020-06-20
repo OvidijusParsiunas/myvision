@@ -42,7 +42,7 @@ function getDefaultDescriptionMarkup() {
     Upload existing images/datasets and continue working on them in MyLabel.
     <br>
     <div class="upload-datasets-modal-description-break"></div>
-    It is important to note that everything you upload here will never leave the privacy of your computer.`;
+    It is important to note that everything you upload will never leave the privacy of your computer.`;
 }
 
 function prepareDescriptionView() {
