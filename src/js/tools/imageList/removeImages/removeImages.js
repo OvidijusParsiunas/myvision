@@ -7,6 +7,7 @@ import { decrementShapeType } from '../../globalStatistics/globalStatistics';
 import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
 import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { getDoNotShowRemoveImageModalAgainState } from './modal/stateMachine';
+import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark';
 import {
   setPolygonEditingButtonsToDisabled, setZoomInButtonToDisabled,
   setCreatePolygonButtonToDisabled, setEditShapesButtonToDisabled,
@@ -31,6 +32,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
     window.editShapes();
     setImageNameElementToDefault();
     removeAllLabelListItems();
+    drawWatermarkOnCanvasAreaBackground();
     setCreateBoundingBoxButtonToDisabled();
     setCreatePolygonButtonToDisabled();
     setRemoveImagesButtonsDisabled();

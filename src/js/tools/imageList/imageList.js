@@ -22,6 +22,7 @@ import { updateImageNameElement } from '../imageSwitchPanel/style';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { changeExistingImagesMovability } from '../settingsPopup/options/movableObjects';
+import { removeWatermarkFromCanvasAreaBackground } from '../../canvas/utils/watermark';
 
 let currentlyActiveElement = null;
 const images = [];
@@ -30,7 +31,7 @@ let canvas = null;
 let newImageId = 0;
 let imageListOverflowParent = null;
 let hasCurrentImageThumbnailRedBorder = false;
-const INCREASE_SIZE_ANIMATION_DURATION_MILLISECONDS = 300;
+const ANIMATION_DURATION_MILLISECONDS = 300;
 
 function updateCurrentImageIds(currentId, newId) {
   currentlySelectedImageId = currentId;
@@ -77,16 +78,16 @@ function initiateDivElement() {
 }
 
 function appendAnimationReadyStyling(imageThumbnailElement) {
-  imageThumbnailElement.style.transition = `${INCREASE_SIZE_ANIMATION_DURATION_MILLISECONDS / 1000}s`;
+  imageThumbnailElement.style.transition = `${ANIMATION_DURATION_MILLISECONDS / 1000}s`;
   imageThumbnailElement.style.maxHeight = '0%';
 }
 
-function triggerIncreaseSizeAnimation(imageThumbnailElement) {
+function triggerAnimation(imageThumbnailElement) {
   setTimeout(() => {
     imageThumbnailElement.style.maxHeight = '100%';
     setTimeout(() => {
       imageThumbnailElement.style.transition = '';
-    }, INCREASE_SIZE_ANIMATION_DURATION_MILLISECONDS);
+    }, ANIMATION_DURATION_MILLISECONDS);
   });
 }
 
@@ -109,7 +110,7 @@ function addNewItemToImageList(imageData) {
   parentThumbnailDivElement.appendChild(colorOverlayElement);
   parentThumbnailDivElement.appendChild(tickSVGElement);
   imageListOverflowParent.appendChild(parentThumbnailDivElement);
-  triggerIncreaseSizeAnimation(imageThumbnailElement);
+  triggerAnimation(imageThumbnailElement);
   return parentThumbnailDivElement;
 }
 
@@ -284,6 +285,7 @@ function addSingleImageToList(imageMetadata, imageData) {
   changeCurrentImageNameElementText(imageMetadata.name);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   setDefaultImageProperties(images[newImageId], imageMetadata);
+  removeWatermarkFromCanvasAreaBackground();
   setToolkitStylingOnNewImage();
   newImageId += 1;
 }
@@ -296,6 +298,7 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
     saveAndRemoveCurrentImageDetails();
     changeCurrentImageNameElementText(imageMetadata.name, firstFromMany);
     images[newImageId].thumbnailElementRef.scrollIntoView();
+    removeWatermarkFromCanvasAreaBackground();
     setToolkitStylingOnNewImage();
   }
   newImageId += 1;

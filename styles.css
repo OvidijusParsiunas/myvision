@@ -1279,13 +1279,12 @@ input:focus {
   top: calc(35px + (29px / var(--screen-size-delta)));
   position: absolute;
   display: table;
-  background: url(presenting\ 24.svg);
+  /* background: url(presenting\ 24.svg);
   background-attachment: fixed;
   background-position: center;
   background-position-x: calc((100% - 210px - (59px / var(--screen-size-delta))) / 2 + 70px);
   background-size: 500px 220px;
-  /*   background: url(presenting\ 9.svg); */
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   text-align: center;
 }
 

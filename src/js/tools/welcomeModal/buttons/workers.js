@@ -1,7 +1,9 @@
 import { closeWelcomeModal as closeWelcomeModalStyle } from '../style';
+import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark';
 
 function closeWelcomeModal() {
   closeWelcomeModalStyle();
+  drawWatermarkOnCanvasAreaBackground();
   // flashUploadImagesButton();
 }
 
