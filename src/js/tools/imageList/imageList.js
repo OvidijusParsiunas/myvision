@@ -30,6 +30,7 @@ let canvas = null;
 let newImageId = 0;
 let imageListOverflowParent = null;
 let hasCurrentImageThumbnailRedBorder = false;
+const INCREASE_SIZE_ANIMATION_DURATION_MILLISECONDS = 300;
 
 function updateCurrentImageIds(currentId, newId) {
   currentlySelectedImageId = currentId;
@@ -75,11 +76,26 @@ function initiateDivElement() {
   return document.createElement('div');
 }
 
+function appendAnimationReadyStyling(imageThumbnailElement) {
+  imageThumbnailElement.style.transition = `${INCREASE_SIZE_ANIMATION_DURATION_MILLISECONDS / 1000}s`;
+  imageThumbnailElement.style.maxHeight = '0%';
+}
+
+function triggerIncreaseSizeAnimation(imageThumbnailElement) {
+  setTimeout(() => {
+    imageThumbnailElement.style.maxHeight = '100%';
+    setTimeout(() => {
+      imageThumbnailElement.style.transition = '';
+    }, INCREASE_SIZE_ANIMATION_DURATION_MILLISECONDS);
+  });
+}
+
 function addNewItemToImageList(imageData) {
   const imageThumbnailElement = initialiseImageElement();
   imageThumbnailElement.id = newImageId;
   imageThumbnailElement.classList.add('image-list-thumbnail-image');
   imageThumbnailElement.src = imageData.src;
+  appendAnimationReadyStyling(imageThumbnailElement);
   const colorOverlayElement = initiateDivElement();
   colorOverlayElement.classList.add('image-list-thumbnail-color-overlay');
   colorOverlayElement.classList.add('image-list-thumbnail-default');
@@ -93,6 +109,7 @@ function addNewItemToImageList(imageData) {
   parentThumbnailDivElement.appendChild(colorOverlayElement);
   parentThumbnailDivElement.appendChild(tickSVGElement);
   imageListOverflowParent.appendChild(parentThumbnailDivElement);
+  triggerIncreaseSizeAnimation(imageThumbnailElement);
   return parentThumbnailDivElement;
 }
 
@@ -290,7 +307,7 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) 
 // NOTE: some of the code to fix a similar bug is located in the purgeAllMouseEvents.js file
 function fixForObjectScalingBugOnCanvasSwitch() {
   const { canvas1, canvas2 } = getCanvasReferences();
-  if (canvas1.__eventListeners['object:scaling'] && canvas1.__eventListeners['object:scaling'].length > 1) {
+  if (canvas1 && canvas1.__eventListeners && canvas1.__eventListeners['object:scaling'] && canvas1.__eventListeners['object:scaling'].length > 1) {
     assignDefaultEvents(canvas2, null, false);
   }
 }

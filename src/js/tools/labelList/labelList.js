@@ -201,6 +201,12 @@ function pasteHandlerOnDiv(event) {
     activeLabelTextElement, false, scrollHorizontallyToAppropriateWidth);
 }
 
+function unsetAnimationProperties(labelInnerElement) {
+  // remove animation properties to prevent dropdown aligment issues and further animations
+  labelInnerElement.style.transform = '';
+  labelInnerElement.style.transition = '';
+}
+
 function triggerSlideAnimation(labelId) {
   const labelInnerElement = document.getElementById(`labelId${labelId}`);
   setTimeout(() => {
@@ -208,10 +214,18 @@ function triggerSlideAnimation(labelId) {
     labelInnerElement.style.transform = 'translateX(0%)';
   });
   setTimeout(() => {
-    // remove animation properties to prevent dropdown aligment issues and further animations
-    labelInnerElement.style.transform = '';
-    labelInnerElement.style.transition = '';
+    unsetAnimationProperties(labelInnerElement);
   }, NEW_ITEM_ANIMATION_DURATION_MILLISECONDS);
+}
+
+// the reason for using this is because firefox label list options overlap during bulk animation
+function triggerAnimationChromeOnly(labelId) {
+  if (IS_FIREFOX) {
+    const labelInnerElement = document.getElementById(`labelId${labelId}`);
+    unsetAnimationProperties(labelInnerElement);
+  } else {
+    triggerSlideAnimation(labelId);
+  }
 }
 
 function addNewLabelToListFromPopup(labelText, id, labelColor) {
@@ -244,7 +258,7 @@ function addExistingLabelToList(labelText, id, labelColor, shapeVisible) {
   cell.appendChild(labelElement);
   labelElement.childNodes[1].addEventListener('paste', pasteHandlerOnDiv);
   repopulateDropdown();
-  triggerSlideAnimation(id);
+  triggerAnimationChromeOnly(id);
   cell.scrollIntoView();
 }
 

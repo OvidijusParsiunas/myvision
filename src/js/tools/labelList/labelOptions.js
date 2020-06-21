@@ -158,7 +158,7 @@ function generateRandomHSLColor() {
   if (defaultShapeColorIndex === 0) {
     return getFirstNewLabelColor();
   }
-  if (defaultShapeColorIndex < 17) {
+  if (defaultShapeColorIndex < defaultShapeColors.length) {
     return getDefaultShapeColor();
   }
   return getRandomlyGeneratedShapeColor();

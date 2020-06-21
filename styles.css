@@ -1791,6 +1791,9 @@ body {
   .buttons {
     line-height: calc(1.35 / var(--screen-size-delta));
   }
+  #welcome-modal-start-button {
+    margin-top: calc(2px / var(--screen-size-delta))
+  }
   input.checkbox {
     margin-top: 2px;
     margin-bottom: 2px;
