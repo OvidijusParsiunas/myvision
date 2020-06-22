@@ -1834,7 +1834,7 @@ body {
     height: unset;
   }
   #export-datasets-popup-export-button {
-    margin-top: calc(8px / var(--screen-size-delta));
+    margin-top: calc(6px / var(--screen-size-delta));
     line-height: inherit;
   }
   #upload-datasets-modal-parent {
