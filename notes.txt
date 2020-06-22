@@ -1,11 +1,11 @@
-will have to highlight initial buttons to get users started
-
 zoom fix - check how it looks after making the original image full height
 
 minimum dimensions warning overlay image
 
 investigate why it is possible to start drawing bounding box on the very edge of bottom and right, but can't draw to the same edges when starting
 somewhere else
+
+after adding an image then removing, overflow is generated beyond 500px
 
 ---------------------------------------------
 

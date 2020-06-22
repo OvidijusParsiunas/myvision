@@ -1249,6 +1249,30 @@ input:focus {
   -o-transition-timing-function: linear;
 }
 
+#inadequate-client-resources-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  top: 0px;
+  z-index: 4;
+}
+
+#inadequate-client-resources-overlay-contents {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#inadequate-client-resources-overlay-text {
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin-top: 15px;
+  margin-left: -23px;
+}
+
 #zoom-overflow {
   overflow: auto;
   z-index: 1;

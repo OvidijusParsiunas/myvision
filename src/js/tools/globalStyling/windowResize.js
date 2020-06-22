@@ -6,10 +6,12 @@ import { getCurrentZoomState, getSettingsPopupOpenState, getExportDatasetsPopupO
 import { validateFullModalVisibile } from '../labellerModal/style';
 import { setStickySettingsPopupProperties } from '../settingsPopup/style';
 import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
+import validateClientBrowserDimensions from './inadequateResourcesOverlay';
 
 let canvas = null;
 
 window.windowResize = () => {
+  validateClientBrowserDimensions();
   if (getCurrentZoomState() > 1) {
     resizeCanvas();
     zoomCanvas(canvas, null, true);
