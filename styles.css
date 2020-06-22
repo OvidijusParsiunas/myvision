@@ -1271,6 +1271,7 @@ input:focus {
   text-align: center;
   margin-top: 15px;
   margin-left: -23px;
+  max-width: 458px;
 }
 
 #zoom-overflow {
