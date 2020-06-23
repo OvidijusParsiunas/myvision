@@ -1260,9 +1260,13 @@ input:focus {
 
 #inadequate-client-resources-overlay-contents {
   position: absolute;
-  left: 50%;
+  left: 48%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+#inadequate-client-resources-overlay-image {
+  width: 383px;
 }
 
 #inadequate-client-resources-overlay-text {
@@ -1270,8 +1274,7 @@ input:focus {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   margin-top: 15px;
-  margin-left: -23px;
-  max-width: 458px;
+  max-width: 556px;
 }
 
 #zoom-overflow {

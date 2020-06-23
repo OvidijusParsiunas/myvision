@@ -9,6 +9,7 @@ function validateClientBrowserDimensions() {
     const inadequateClientResourcesOverlay = document.getElementById('inadequate-client-resources-overlay');
     const inadequateClientResourcesOverlayText = document.getElementById('inadequate-client-resources-overlay-text');
     inadequateClientResourcesOverlayText.innerHTML = 'Minimum window size is 500 x 800';
+    inadequateClientResourcesOverlayText.style.marginLeft = '-28px';
     inadequateClientResourcesOverlay.style.display = 'block';
     displayingDimensionsOverlay = true;
   } else {
@@ -25,7 +26,9 @@ function validateCanvasSupport() {
   if (!isCanvasSupported) {
     const inadequateClientResourcesOverlay = document.getElementById('inadequate-client-resources-overlay');
     const inadequateClientResourcesOverlayText = document.getElementById('inadequate-client-resources-overlay-text');
+    const inadequateClientResourcesOverlayImage = document.getElementById('inadequate-client-resources-overlay-image');
     inadequateClientResourcesOverlayText.innerHTML = `Your browser does not support the Canvas feature, please update or choose another one from <a href="${CANVAS_BROWSER_SUPPORT_URL}" target="_blank">here</a>`;
+    inadequateClientResourcesOverlayImage.style.marginLeft = '96px';
     inadequateClientResourcesOverlay.style.display = 'block';
     displayingCanvasSupportOverlay = true;
   }

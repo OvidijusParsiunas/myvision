@@ -24,6 +24,27 @@ let drawingFinished = false;
 let finishDrawingBoundingBoxClick = null;
 let rightBoundingBoxDelta = 0;
 
+function checkCanvasBoundaries(pointer) {
+  if (getCurrentZoomState() > 1.00001) {
+    const { height, width } = getImageProperties();
+    const imageHeight = height * getCurrentZoomState();
+    const imageWidth = width * getCurrentZoomState();
+    if (pointer.x > imageWidth / getCurrentZoomState() - getCurrentZoomState()) {
+      pointer.x = imageWidth / getCurrentZoomState() - 2;
+    }
+    if (pointer.y > imageHeight / getCurrentZoomState() - getCurrentZoomState()) {
+      pointer.y = imageHeight / getCurrentZoomState() - 1.5;
+    }
+  } else {
+    if (pointer.x > canvas.width - rightBoundingBoxDelta) {
+      pointer.x = canvas.width - rightBoundingBoxDelta;
+    }
+    if (pointer.y > canvas.height - 1.5) {
+      pointer.y = canvas.height - 1.5;
+    }
+  }
+}
+
 function instantiateNewBoundingBox() {
   if (createNewBoundingBoxBtnClicked && !getBoundingBoxDrawingInProgressState()) {
     let pointer = canvas.getPointer(lastMouseEvent.e);
@@ -33,6 +54,7 @@ function instantiateNewBoundingBox() {
       if (!lastCanvasPointer.x || !lastCanvasPointer.y) return;
       pointer = canvas.getPointer(lastMouseMoveEvent);
     }
+    checkCanvasBoundaries(pointer);
     leftMouseBtnDown = true;
     boundingBoxProps.origX = pointer.x < 0 ? 0 : pointer.x;
     boundingBoxProps.origY = pointer.y < 0 ? 0 : pointer.y;

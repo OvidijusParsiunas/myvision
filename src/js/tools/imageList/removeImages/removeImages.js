@@ -13,10 +13,33 @@ import {
   setCreatePolygonButtonToDisabled, setEditShapesButtonToDisabled,
   setCreateBoundingBoxButtonToDisabled, setRemoveImagesButtonsDisabled,
 } from '../../toolkit/styling/stateMachine';
-import { getCurrentImageId } from '../../stateMachine';
+import {
+  getCurrentImageId, getContinuousDrawingState, getLastDrawingModeState, setDefaultState,
+} from '../../stateMachine';
 import { displayRemoveImagesModal } from './modal/style';
 
 let canvas = null;
+
+function resetEverything() {
+  resetZoom(false);
+  updateCurrentImageIds(0, 0);
+  const lastDrawingModeState = getContinuousDrawingState() ? getLastDrawingModeState : false;
+  window.editShapes();
+  // the following is preparation to set an active drawing mode on a new image upload
+  if (lastDrawingModeState) setDefaultState(false);
+  setImageNameElementToDefault();
+  removeAllLabelListItems();
+  drawWatermarkOnCanvasAreaBackground();
+  setCreateBoundingBoxButtonToDisabled();
+  setCreatePolygonButtonToDisabled();
+  setRemoveImagesButtonsDisabled();
+  setEditShapesButtonToDisabled();
+  setZoomInButtonToDisabled();
+  canvas.clear();
+  // the following deals with an overflow bug when resizing an empty canvas with previous dimensions
+  canvas.setDimensions({ width: 1, height: 1 });
+  setCurrentImage(null);
+}
 
 function switchImage(index, allImageData, previousImageDataLength) {
   if (index < allImageData.length) {
@@ -27,19 +50,7 @@ function switchImage(index, allImageData, previousImageDataLength) {
     updateCurrentImageIds(-1, allImageData.length);
     window.switchImage(allImageData.length - 1);
   } else {
-    resetZoom(false);
-    updateCurrentImageIds(0, 0);
-    window.editShapes();
-    setImageNameElementToDefault();
-    removeAllLabelListItems();
-    drawWatermarkOnCanvasAreaBackground();
-    setCreateBoundingBoxButtonToDisabled();
-    setCreatePolygonButtonToDisabled();
-    setRemoveImagesButtonsDisabled();
-    setEditShapesButtonToDisabled();
-    setZoomInButtonToDisabled();
-    canvas.clear();
-    setCurrentImage(null);
+    resetEverything();
   }
 }
 
