@@ -15,7 +15,7 @@ import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes
 
 function getFileName() {
   const currentDate = new Date();
-  return `myLabel-${currentDate.getDay()}-
+  return `visionai-${currentDate.getDay()}-
     ${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
 }
 

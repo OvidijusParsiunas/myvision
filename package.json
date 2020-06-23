@@ -8,14 +8,14 @@
       "child_process": false,
       "fs": false
     },
-    "jszip": "^3.2.2",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5"
+    "jszip": "^3.5.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.0"
+    "eslint-plugin-import": "^2.21.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

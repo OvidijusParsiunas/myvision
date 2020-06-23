@@ -1,7 +1,5 @@
 zoom fix - check how it looks after making the original image full height
 
-minimum dimensions warning overlay image
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
