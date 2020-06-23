@@ -13,7 +13,7 @@ const decimalPlaces = 2;
 
 function getJSONFileName() {
   const currentDate = new Date();
-  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.json`;
+  return `visionai-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.json`;
 }
 
 function generateTempDownloadableJSONElement(json) {

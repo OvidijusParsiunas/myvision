@@ -28,7 +28,7 @@ function downloadZip(xml) {
 */
 function getFileName() {
   const currentDate = new Date();
-  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
+  return `visionai-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
 }
 
 function downloadZip(xml) {

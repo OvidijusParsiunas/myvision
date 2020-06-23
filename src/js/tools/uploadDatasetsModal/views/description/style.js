@@ -39,7 +39,7 @@ function moveDescriptionToLowerPosition() {
 
 function getDefaultDescriptionMarkup() {
   return `
-    Upload existing images/datasets and continue working on them in MyLabel.
+    Upload existing images/datasets and continue working on them in Vision.ai.
     <br>
     <div class="upload-datasets-modal-description-break"></div>
     It is important to note that everything you upload will never leave the privacy of your computer.`;

@@ -17,7 +17,7 @@ const columnHeaders = {
 
 function getJSONFileName() {
   const currentDate = new Date();
-  return `myLabel-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.csv`;
+  return `visionai-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.csv`;
 }
 
 function generateTempDownloadableJSONElement(json) {
