@@ -1,22 +1,34 @@
-# visionai
-This is an image labelling tool for generating computer vision training data on the web.
-
-To-do
-export xml for multiple bounding boxes
-be able to edit bounding box label
-multiple files
-scroll through files
-styling
+# Vision.ai
+picture before or after
 
 
-only highlight bounding box when hovered over
-multi page annotating
+Description:
 
+Vision.ai is a free online image annotation tool for generating computer vision based training data that is used by machine learning models. It is designed with a data analysts first approach, offering features that speed up the labelling process and  most importantly maintain accuracy to help yield the best machine learning models.
 
-disable box label name
+Features:
 
-generate XML for all shapes
-redraw shape on mouse up when stretching
+Draw Bounding Boxes and Polygons
+
+Edit polygons
+
+Supported formats
+
+COCO JSON
+
+VGG JSON
+
+Tensorflow CSV
+
+VOC XML
+
+YOLO TXT
+
+Machine Learning
+
+Upload Existing Datasets
+
+Setup guide
 
 #webpack installation
 npm install --save-dev webpack
