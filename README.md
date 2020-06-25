@@ -16,18 +16,11 @@ To simplify the polygon manipulation process, Vision.ai<nolink> provides extensi
 
 Supported dataset formats:
 
-<center>
+|       Format          | COCO JSON | VGG JSON | TensorFlow CSV | VOC XML | YOLO TXT |
+|:---------------------:|:---------:|:--------:|:--------------:|:-------:|:--------:|
+| **Bounding Box**      |     ✓     |    ✓    |        ✓       |     ✓   |    ✓    |
+| **Polygon**           |     ✓     |    ✓    |        ✗       |     ✗   |    ✗    |
 
-|       Format          | Bounding Box | Polygon |
-|:---------------------:|:------------:|:-------:|
-| **COCO JSON**         |       ✓      |    ✓   |
-| **VGG JSON**          |       ✓      |    ✓   |
-| **TensorFlow CSV**    |       ✓      |    ✗   |
-| **VOC XML**           |       ✓      |    ✗   |
-| **YOLO TXT**          |       ✓      |    ✗   |
-
-
-<center>
 
 Annotating objects can be a difficult task... You can skip all the hard work and use a pre-trained machine learning model to automatically annotate the objects for you. Vision.ai<nolink> leverages the popular 'COCO-SSD' model to generate bounding boxes for your images and by operating locally on your browser, retain all data within the privacy of your computer.
 
