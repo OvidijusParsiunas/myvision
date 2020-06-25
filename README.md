@@ -1,7 +1,8 @@
-# Vision.ai
+<h1 align="center">Vision.ai</h1>
 
-picture before or after
-
+<p align="center"> 
+    <img width="300" src="./presenting 5.png" alt="Logo">
+</p>
 
 Description:
 
