@@ -1,19 +1,21 @@
 # Vision.ai
+
 picture before or after
 
 
 Description:
 
-Vision.ai is a free online image annotation tool for generating computer vision based training data that is used by machine learning models. It is designed with a data analysts first approach, offering features that speed up the labelling process and  most importantly maintain accuracy to help yield the best machine learning models.
+Vision.ai<nolink> is a free online image annotation tool used for generating computer vision based ML training data. It is designed with the user in mind, offering features to speed up the labelling process and reduce the complexity of large ML projects.
 
 Features:
 
-Draw Bounding Boxes and Polygons
+Draw polygons and bounding boxes to label your objects:
 
-Edit polygons
+To simplify the polygon manipulation process, Vision.ai<nolink> provides extensive features to edit, remove and add new points to your existing and currently drawn polygons:
 
-Supported formats
+Supported dataset formats:
 
+Table: Bounding box, Polygon
 COCO JSON
 
 VGG JSON
@@ -24,9 +26,11 @@ VOC XML
 
 YOLO TXT
 
-Machine Learning
+Annotating objects can be a difficult task... You can skip all the hard work and use a pre-trained machine learning model to automatically annotate the objects for you. Vision.ai<nolink> leverages the popular 'COCO-SSD' model to generate bounding boxes for your images and by operating locally on your browser, retain all data within the privacy of your computer.
 
-Upload Existing Datasets
+
+You can import existing annotation projects and continue working on them in Vision.ai<nolink>. This process can also be used to convert datasets from one format to another:
+
 
 Setup guide
 
