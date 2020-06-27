@@ -150,11 +150,6 @@ function zoomOutObjectsOnImageSelect(previousShapes, previousLabels) {
   });
 }
 
-// show the zoom percentage as a little fade just like google chrome resolution on resize
-function displayZoomMetrics() {
-  //
-}
-
 // explore zoomToPoint
 // option to always highlight
 // need to click twice on polygon for points to be above label

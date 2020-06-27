@@ -15,6 +15,7 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.21.2",
     "minimist": "^1.2.5"
   },

@@ -4,10 +4,10 @@ import { removeActiveShapeEvent } from './facadeWorkers/removeActiveShapeWorker'
 import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWorker';
 import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
-import toggleExportDatasetsPopup from './facadeWorkers/toggleExportDatasetsPopupWorker';
+import toggleExportDatasetsPopup from './facadeWorkers/toggleExportDatasetsPopUpWorker';
 import displayMachineLearningModal from './facadeWorkers/displayMLModalWorker';
 import { zoomCanvas } from './facadeWorkers/zoomWorker';
-import toggleSettingsPopup from './facadeWorkers/toggleSettingsPopupWorker';
+import toggleSettingsPopup from './facadeWorkers/toggleSettingsPopUpWorker';
 import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
 import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker';
 

@@ -19,16 +19,6 @@ const defaultShapeColors = [
   'hsl(294, 100%, 37%',
 ];
 
-// for cat
-// {default: 'hsl(142,77%,53%,0.01)', highlight: 'hsl(142,77%,53%,0.3)', stroke: 'hsl(142,77%,53%)', label: 'hsl(142,77%,53%, 0.25)'}
-// {default: 'hsl(60,98%,40%,0.01)', highlight: 'hsl(60,98%,40%,0.3)', stroke: 'hsl(60,98%,40%)', label: 'hsl(60,98%,40%, 0.25)'}
-// {default: 'hsl(45, 77%, 53%,0.01)', highlight: 'hsl(45, 77%, 53%,0.3)', stroke: 'hsl(45, 77%, 53%)', label: 'hsl(45, 77%, 53%,0.28)'}
-
-// next one should alwasy be
-// {default: 'hsl(220, 100%, 48%,0.01)', highlight: 'hsl(220, 100%, 48%,0.3)', stroke: 'hsl(220, 100%, 48%)', label: 'hsl(220, 100%, 48%,0.28)'}
-// or
-// {default: 'hsl(154, 98%, 54%,0.01)', highlight: 'hsl(154, 98%, 54%,0.3)', stroke: 'hsl(154, 98%, 54%)', label: 'hsl(154, 98%, 54%,0.28)'}
-
 const defaultLabelOptions = [
   {
     text: 'dog',

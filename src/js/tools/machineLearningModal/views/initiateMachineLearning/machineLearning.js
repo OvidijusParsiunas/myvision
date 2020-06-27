@@ -63,7 +63,7 @@ function executeModel(images, results, predictionIdToImageId,
       executeModel(images, results, predictionIdToImageId,
         nextViewCallback, setMachineLearningDataFunc, coverage);
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       errorHandler();
     });
   } else {

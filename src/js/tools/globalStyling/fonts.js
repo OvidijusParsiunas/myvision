@@ -20,7 +20,7 @@ function loadSuccess() {
 }
 
 function loadFailed() {
-  console.log('Failed to load custom fonts');
+  console.error('Failed to load custom fonts');
 }
 
 // fix for a bug where the loading of the script would stop all elements from being

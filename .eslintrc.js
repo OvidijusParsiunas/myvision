@@ -6,6 +6,7 @@ module.exports = {
       "no-param-reassign": 0,
       "import/no-unresolved": [2, {ignore: ['fabric']}],
       "prefer-destructuring": ["error",{"object": true, "array": false}],
+      "no-console": ["warn", { allow: ["warn", "error"] }],
     },
     "env": {
       "browser": true
