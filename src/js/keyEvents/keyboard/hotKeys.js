@@ -28,7 +28,7 @@ import { removePointViaKeyboard } from '../../canvas/mouseInteractions/mouseEven
 import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import closeAllPopups from '../../tools/utils/popups/closeAllPopups';
 import { getUserOS } from '../../tools/OS/OSManager';
-import { closeWelcomeModal } from '../../tools/welcomeModal/style';
+import { closeWelcomeModal } from '../../tools/welcomeModal/buttons/workers';
 
 let canvas = null;
 let isRKeyUp = true;
