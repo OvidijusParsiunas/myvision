@@ -7,6 +7,7 @@ module.exports = {
     fabric: 'fabric',
   },
   module: {
+    // comment out the following to not display warnings/errors in console when developing
     rules: [
       {
         test: /\.js$/,
