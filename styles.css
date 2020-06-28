@@ -1515,9 +1515,9 @@ body {
 }
 
 #title-logo {
+  width: 30px;
   padding-left: 15px;
-  padding-right: 5px;
-  width: 19px;
+  padding-right: 2px;
   padding-top: 7px;
   float: left;
 }
