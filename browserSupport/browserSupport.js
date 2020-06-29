@@ -8,6 +8,8 @@ function validateCanvasSupport() {
     const inadequateClientResourcesOverlayText = document.getElementById('inadequate-client-resources-overlay-text');
     inadequateClientResourcesOverlayText.innerHTML = `Your browser does not support the Canvas feature, please update or choose another one from <a href="${CANVAS_BROWSER_SUPPORT_URL}" target="_blank">here</a>`;
     inadequateClientResourcesOverlay.style.display = 'block';
+  } else {
+    console.log('canvas appears to be supported');
   }
 }
 
