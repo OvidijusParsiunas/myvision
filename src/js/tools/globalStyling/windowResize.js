@@ -6,7 +6,7 @@ import { getCurrentZoomState, getSettingsPopupOpenState, getExportDatasetsPopupO
 import { validateFullModalVisibile } from '../labellerModal/style';
 import { setStickySettingsPopupProperties } from '../settingsPopup/style';
 import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
-import { validateClientBrowserDimensions } from './inadequateResourcesOverlay';
+import validateClientBrowserDimensions from './inadequateResourcesOverlay';
 
 let canvas = null;
 

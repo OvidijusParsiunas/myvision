@@ -1,4 +1,18 @@
-module.exports = {
+module.exports = [{
+  entry: './browserSupport/index.js',
+  output: {
+    filename: './browserSupport.js',
+  },
+  module: {
+    rules: [
+      {
+        loader: 'eslint-loader',
+      },
+    ],
+  },
+  watch: true,
+  mode: 'development',
+}, {
   entry: './src/js/index.js',
   output: {
     filename: './bundle.js',
@@ -18,4 +32,4 @@ module.exports = {
   },
   watch: true,
   mode: 'development',
-};
+}];

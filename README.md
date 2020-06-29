@@ -1,7 +1,7 @@
 <h1 align="center">MyVision.ai<nolink></h1>
 
 <p align="center"> 
-    <img width="300" src="./presenting 5.png" alt="Logo">
+    <img width="300" src="./presenting 41.png" alt="Logo">
 </p>
 
 ## Description

@@ -1265,6 +1265,10 @@ input:focus {
   transform: translate(-50%, -50%);
 }
 
+#inadequate-client-resources-overlay-image-container {
+  text-align: center;
+}
+
 #inadequate-client-resources-overlay-image {
   width: 383px;
 }
