@@ -1,3 +1,4 @@
-import validateCanvasSupport from './browserSupport';
+import { validateBrowserType, validateCanvasSupport } from './browserSupport';
 
+validateBrowserType();
 validateCanvasSupport();
