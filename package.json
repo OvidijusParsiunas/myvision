@@ -4,6 +4,9 @@
   "description": "This is an image labelling tool for generating computer vision training data on the web.",
   "main": "index.js",
   "dependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "babel-loader": "^8.1.0",
     "browser": {
       "child_process": false,
       "fs": false

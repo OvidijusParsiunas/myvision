@@ -5,8 +5,8 @@ let displayingBrowserSupportOverlay = false;
 function validateBrowserType() {
   console.log('called first');
   const agent = navigator.userAgent.toLowerCase();
-  console.log(agent.indexOf('chrome') > -1 || agent.indexOf('edg') > -1 || agent.indexOf('firefox') > -1);
-  if (agent.indexOf('chrome') > -1 || agent.indexOf('edg') > -1 || agent.indexOf('firefox') > -1) return;
+  console.log(agent.indexOf('chrome') > -1 || agent.indexOf('edg/') > -1 || agent.indexOf('firefox') > -1);
+  if (agent.indexOf('chrome') > -1 || agent.indexOf('edg/') > -1 || agent.indexOf('firefox') > -1) return;
   const inadequateClientResourcesOverlay = document.getElementById('inadequate-client-resources-overlay');
   const inadequateClientResourcesOverlayText = document.getElementById('inadequate-client-resources-overlay-text');
   inadequateClientResourcesOverlayText.innerHTML = `Please switch to a <a href="${CHROMIUM_SUPPORT_URL}" target="_blank">Chromium</a> based browser or Firefox to use MyVision`;
