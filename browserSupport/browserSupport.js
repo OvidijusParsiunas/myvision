@@ -3,7 +3,9 @@ const CHROMIUM_SUPPORT_URL = 'https://www.zdnet.com/pictures/all-the-chromium-ba
 let displayingBrowserSupportOverlay = false;
 
 function validateBrowserType() {
+  console.log('called first');
   const agent = navigator.userAgent.toLowerCase();
+  console.log(agent.indexOf('chrome') > -1 || agent.indexOf('edg') > -1 || agent.indexOf('firefox') > -1);
   if (agent.indexOf('chrome') > -1 || agent.indexOf('edg') > -1 || agent.indexOf('firefox') > -1) return;
   const inadequateClientResourcesOverlay = document.getElementById('inadequate-client-resources-overlay');
   const inadequateClientResourcesOverlayText = document.getElementById('inadequate-client-resources-overlay-text');
@@ -18,6 +20,7 @@ function validateCanvasSupport() {
   if (displayingBrowserSupportOverlay) return;
   const canvasElement = document.createElement('canvas');
   const isCanvasSupported = !!(canvasElement.getContext && canvasElement.getContext('2d'));
+  console.log(isCanvasSupported);
   if (!isCanvasSupported) {
     const inadequateClientResourcesOverlay = document.getElementById('inadequate-client-resources-overlay');
     const inadequateClientResourcesOverlayText = document.getElementById('inadequate-client-resources-overlay-text');

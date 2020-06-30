@@ -1,6 +1,7 @@
 let displayingDimensionsOverlay = false;
 
 function validateClientBrowserDimensions() {
+  console.log('called second');
   // will need to figure out how to share this variable
   // if (displayingCanvasSupportOverlay) return;
   if (window.innerHeight < 500 || window.innerWidth < 800) {
