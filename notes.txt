@@ -1,5 +1,21 @@
 zoom fix - check how it looks after making the original image full height
 
+fix bundle problem - fixed
+
+create npm scripts to build webpack and watch with and without the browser support bundle, errors and no errors
+
+transpile the support bundle to es5
+
+fix edges for overlays
+
+add name to the readme title logo
+
+buy the domain name
+
+configure github actions to run npm when it loads up
+
+add gifs
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

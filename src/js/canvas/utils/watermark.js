@@ -3,7 +3,7 @@ let watermarkDisplayed = false;
 function drawWatermarkOnCanvasAreaBackground() {
   if (watermarkDisplayed) return;
   const canvasWrapperParentElement = document.getElementById('canvas-wrapper-parent');
-  canvasWrapperParentElement.style.backgroundImage = 'url(\'presenting 35.svg\')';
+  canvasWrapperParentElement.style.backgroundImage = 'url(\'watermark 1.svg\')';
   /*
     background: url(presenting\ 34.svg);
   */

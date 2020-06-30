@@ -1,12 +1,14 @@
 <h1 align="center">MyVision.ai<nolink></h1>
 
 <p align="center"> 
-    <img width="300" src="./presenting 41.png" alt="Logo">
+    <img width="300" src="./presenting 43.png" alt="Logo">
+    <!-- <img width="300" src="./presenting 41.png" alt="Logo"> -->
+    
 </p>
 
 ## Description
 
-MyVision is a free online image annotation tool used for generating computer vision based ML training data. It is designed with the user in mind, offering features to speed up the labelling process and maintain workflows with large datasets.
+MyVision is a free online image annotation tool used for generating computer vision based ML training data. It is designed with the user in mind, offering features to speed up the labelling process and help maintain workflows with large datasets.
 
 ## Features
 
@@ -28,6 +30,7 @@ Supported dataset formats:
 | **Bounding Box**|✓|✓|✓|✓|✓|
 | **Polygon**     |✓|✓|✗|✗|✗|
 
+<br />
 Annotating objects can be a difficult task... You can skip all the hard work and use a pre-trained machine learning model to automatically annotate the objects for you. MyVision leverages the popular 'COCO-SSD' model to generate bounding boxes for your images and by operating locally on your browser - retain all data within the privacy of your computer.
 
 
