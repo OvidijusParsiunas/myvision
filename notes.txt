@@ -10,8 +10,6 @@ configure github actions to run npm when it loads up
 
 add gifs
 
-check the overlay names are ok
-
 remove comments in webpack production mode
 
 think about the lincense

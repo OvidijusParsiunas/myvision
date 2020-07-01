@@ -1,6 +1,7 @@
 let displayingDimensionsOverlay = false;
 
 function validateClientBrowserDimensions() {
+  console.log('logging');
   if (window.innerHeight < 500 || window.innerWidth < 800) {
     // code to not overwrite the overlay if already shown by browser support module
     const inadequateClientResourcesOverlay = document.getElementById('inadequate-client-resources-overlay');
