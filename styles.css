@@ -1267,6 +1267,7 @@ input:focus {
 
 #inadequate-client-resources-overlay-image-container {
   text-align: center;
+  width: 80vw;
 }
 
 #inadequate-client-resources-overlay-image {

@@ -2,17 +2,19 @@ zoom fix - check how it looks after making the original image full height
 
 create npm scripts to build webpack and watch with and without the browser support bundle, errors and no errors
 
-transpile the support bundle to es5
-
 fix edges for overlays
 
 add name to the readme title logo
 
-auto enforce ssl for domain
-
 configure github actions to run npm when it loads up
 
 add gifs
+
+check the overlay names are ok
+
+remove comments in webpack production mode
+
+think about the lincense
 
 ---------------------------------------------
 
