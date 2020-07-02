@@ -1,3 +1,5 @@
+const env = process.env.NODE_ENV || 'development';
+
 module.exports = [{
   entry: './browserSupport/index.js',
   output: {
@@ -22,8 +24,7 @@ module.exports = [{
       },
     ],
   },
-  watch: true,
-  mode: 'development',
+  mode: env,
 }, {
   entry: './src/js/index.js',
   output: {
@@ -52,6 +53,5 @@ module.exports = [{
       },
     ],
   },
-  watch: true,
-  mode: 'development',
+  mode: env,
 }];

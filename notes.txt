@@ -1,7 +1,5 @@
 zoom fix - check how it looks after making the original image full height
 
-create npm scripts to build webpack and watch with and without the browser support bundle, errors and no errors
-
 fix edges for overlays
 
 add name to the readme title logo
@@ -13,6 +11,8 @@ add gifs
 remove comments in webpack production mode
 
 think about the lincense
+
+connect to travis ci / github pages is for varifying the new code - testing - performance - security
 
 ---------------------------------------------
 
