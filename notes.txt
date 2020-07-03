@@ -71,6 +71,9 @@ https://github.com/AKSHAYUBHAT/ImageSegmentation
 
 The nice to haves:
 
+Use the following to identify the browser:
+https://github.com/WhichBrowser/Parser-JavaScript?fbclid=IwAR0pxGzSJEdjUKMkWRryUI8N5c81h5YyiK1fVXCK_IamftA_vCpD21DygyM
+
 select multiple images or shapes to delete (via ctrl)
 
 can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
