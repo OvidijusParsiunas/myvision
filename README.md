@@ -1,6 +1,5 @@
-<br>
 <br><p align="center"> 
-    <img style="margin-left: -20px" width="475" src="./logo with text 23.png" alt="Logo">    
+    <img style="margin-left: -25px" width="500" src="./logo with text 23.png" alt="Logo">    
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
 
