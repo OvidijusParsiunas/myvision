@@ -1,8 +1,7 @@
-<h1 align="center">MyVision.ai<nolink></h1>
-
-<p align="center"> 
-    <img width="300" src="./presenting 69.png" alt="Logo">    
-    <!-- <img width="300" src="./presenting 59.png" alt="Logo">     -->
+<br>
+<br><p align="center"> 
+    <img style="margin-left: -20px" width="475" src="./logo with text 23.png" alt="Logo">    
+    <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
 
 ## Description
@@ -40,20 +39,13 @@ You can import existing annotation projects and continue working on them in MyVi
 
 No setup is required to run this project. However, if you want to make changes or contribute to this repository, please follow the outlined instructions:
 
-```
-#webpack installation
-npm install --save-dev webpack
-npm install --save-dev webpack-cli
-```
+Prerequisites: `Node version 8+` and `NPM version 6+`:
+
 
 ```
-#start webpack (win)
-.\node_modules\.bin\webpack
-```
+# Install node dependencies:
+$ npm install
 
-```
-#start eslint (win)
-.\node_modules\.bin\eslint .
-or
-npx eslint .
+# Run the project in watch mode:
+$ npm run watch
 ```

@@ -11,6 +11,7 @@
       "child_process": false,
       "fs": false
     },
+    "fail-on-errors-webpack-plugin": "^3.0.0",
     "jszip": "^3.5.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"

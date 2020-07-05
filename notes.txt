@@ -1,7 +1,5 @@
 zoom fix - check how it looks after making the original image full height
 
-fix edges for overlays
-
 add name to the readme title logo
 
 configure github actions to run npm when it loads up
@@ -12,8 +10,9 @@ remove comments in webpack production mode
 
 think about the lincense
 
-connect to travis ci / github pages is for varifying the new code - testing - performance - security
+potentially use 'logo with ai.png' as a github background, or just use the eye 
 
+add environment variables on github actions
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
