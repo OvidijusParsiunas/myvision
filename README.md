@@ -2,7 +2,7 @@
     <img style="margin-left: -25px" width="70%" src="./logo with text 23.png" alt="Logo">    
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
-<!-- <br> -->
+<br>
 
 ## Description
 
@@ -23,11 +23,10 @@ Polygon manipulation is enriched with additional features to edit, remove and ad
 
 Supported dataset formats:
 
-|| COCO JSON|VGG JSON| TensorFlow CSV|VOC XML|YOLO TXT|
-|:---------------:|:-:|:-:|:-:|:-:|:-:|
-| **Bounding Box**|✓|✓|✓|✓|✓|
-| **Polygon**     |✓|✓|✗|✗|✗|
 
+<img width="100%" src="./table.png" alt="Logo">    
+
+<br />
 <br />
 Annotating objects can be a difficult task... You can skip all the hard work and use a pre-trained machine learning model to automatically annotate the objects for you. MyVision leverages the popular 'COCO-SSD' model to generate bounding boxes for your images and by operating locally on your browser - retain all data within the privacy of your computer:
 
@@ -54,8 +53,3 @@ $ npm install
 # Run the project in watch mode:
 $ npm run watch
 ```
-<style>
-table {
-    width:100%;
-}
-</style>

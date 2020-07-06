@@ -25,5 +25,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: master # The branch the action should deploy to.
-          FOLDER: dist # The folder the action should deploy. There is nothing in that folder at the moment, hence didn't need to deploy anything to parent
-          TARGET_FOLDER: dist # The folder the action should deploy. There is nothing in that folder at the moment, hence didn't need to deploy anything to parent
+          FOLDER: dist # The folder the action should deploy from (source branch).
+          TARGET_FOLDER: dist # The folder the action should deploy to (destination branch).
