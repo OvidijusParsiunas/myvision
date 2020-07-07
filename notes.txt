@@ -2,17 +2,16 @@ zoom fix - check how it looks after making the original image full height
 
 add name to the readme title logo
 
-configure github actions to run npm when it loads up
-
 add gifs
-
-remove comments in webpack production mode
 
 think about the lincense
 
 potentially use 'logo with ai.png' as a github background, or just use the eye 
 
-add environment variables on github actions
+check whether the build fails with comments
+
+check production deploy without comments (set node environment in npm-workflow to be production)
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
@@ -53,6 +52,8 @@ Or maybe having the 'Download Datasets' popover and Export button is clear enoug
 Change the HTML naming conventions with the final decisions!!!!
 
 --------------------------------------------------
+
+the dimensions used for recording examples were 1920x822
 
 The export datasets button is not disabled on load time to enable the user explore the formats available
 

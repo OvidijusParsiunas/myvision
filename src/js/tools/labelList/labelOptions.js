@@ -27,6 +27,8 @@ const defaultLabelOptions = [
       default: 'hsl(82, 93%, 45%, 0.01)', highlight: 'hsl(82, 93%, 45%, 0.3)', stroke: 'hsl(82, 93%, 45%)', label: 'hsl(82, 93%, 45%, 0.25)',
     },
   },
+  // default: 'hsl(186, 75%, 51%, 0.01)', highlight: 'hsl(186, 75%, 51%, 0.3)',
+  // stroke: 'hsl(186, 75%, 51%)', label: 'hsl(186, 75%, 51%, 0.25)',
   {
     text: 'cat',
     default: true,

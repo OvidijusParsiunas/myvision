@@ -1,8 +1,7 @@
 <p align="center"> 
-    <img style="margin-left: -25px" width="70%" src="./logo with text 23.png" alt="Logo">    
+    <img style="margin-left: -25px; margin-bottom: 14px" width="70%" src="./logo with text 23.png" alt="Logo">    
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
-<br>
 
 ## Description
 
@@ -10,21 +9,20 @@ MyVision is a free online image annotation tool used for generating computer vis
 
 ## Features
 
-Draw polygons and bounding boxes to label your objects:
+Draw bounding boxes and polygons to label your objects:
 <p align="center">
-    <img width="1000" src="./2020-06-26%2021-48-26%20(1).gif" alt="Logo">
+    <img width="1000" src="./2020-07-06 22-11-21.gif" alt="Logo">
 </p>
 
 Polygon manipulation is enriched with additional features to edit, remove and add new points:
 
 <p align="center"> 
-    <img width="1000" src="./2020-06-26%2022-30-03.gif" alt="Logo">
+    <img width="1000" src="./2020-07-07 00-23-41.gif" alt="Logo">
 </p>
 
 Supported dataset formats:
 
-
-<img width="100%" src="./table.png" alt="Logo">    
+<img width="90%" style="margin-left: 5%" src="./table.png" alt="Logo">    
 
 <br />
 <br />
