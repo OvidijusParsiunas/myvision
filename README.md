@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img style="margin-left: -25px; margin-bottom: 14px" width="70%" src="./logo with text 23.png" alt="Logo">    
+    <img style="margin-left: -25px; margin-bottom: 18px" width="70%" src="./logo with text 23.png" alt="Logo">    
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
 
@@ -22,7 +22,9 @@ Polygon manipulation is enriched with additional features to edit, remove and ad
 
 Supported dataset formats:
 
-<img width="90%" style="margin-left: 5%" src="./table.png" alt="Logo">    
+<p align="center"> 
+    <img width="90%" style="margin-left: 5%" src="./table.png" alt="Logo">    
+</p>
 
 <br />
 <br />

@@ -4,7 +4,6 @@ const env = process.env.NODE_ENV || 'development';
 
 module.exports = () => {
   let plugins = [];
-  console.log('the environment is', env);
   if (env === 'development' || env === 'production') {
     plugins = [
       new FailOnErrorsPlugin({

@@ -8,9 +8,9 @@ think about the lincense
 
 potentially use 'logo with ai.png' as a github background, or just use the eye 
 
-check whether the build fails with comments
-
 check production deploy without comments (set node environment in npm-workflow to be production)
+
+rename mylabel to myvision
 
 ---------------------------------------------
 
