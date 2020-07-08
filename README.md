@@ -1,7 +1,9 @@
-<p align="center" style="margin-bottom: 20px"> 
+<p align="center"> 
     <img style="margin-left: -25px" width="70%" src="./logo with text 23.png" alt="Logo">    
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
+
+<p style="margin-bottom: 50px"></p>
 
 ## Description
 
