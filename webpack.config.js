@@ -1,6 +1,6 @@
 const FailOnErrorsPlugin = require('fail-on-errors-webpack-plugin');
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'production';
 
 module.exports = () => {
   let plugins = [];
@@ -69,5 +69,9 @@ module.exports = () => {
       },
       mode: env,
       plugins,
+      performance: {
+        maxEntrypointSize: 340000,
+        maxAssetSize: 340000,
+      },
     }];
 };
