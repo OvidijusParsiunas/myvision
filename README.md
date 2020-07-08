@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img style="margin-left: -25px; margin-bottom: 20px" width="70%" src="./logo with text 23.png" alt="Logo">    
+    <img style="margin-left: -25px; margin-bottom: 24px" width="70%" src="./logo with text 23.png" alt="Logo">    
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
 
@@ -17,7 +17,7 @@ Draw bounding boxes and polygons to label your objects:
 Polygon manipulation is enriched with additional features to edit, remove and add new points:
 
 <p align="center"> 
-    <img width="1000" src="./2020-07-08 12-08-33.gif" alt="Logo">
+    <img width="1000" src="./2020-07-08 22-27-13.gif" alt="Logo">
 </p>
 
 Supported dataset formats:
