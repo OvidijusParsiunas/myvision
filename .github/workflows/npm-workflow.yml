@@ -27,4 +27,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: master # The branch the action should deploy to.
+          FOLDER: dist2 # The folder the action should deploy from (source branch). # try changing the name of this folder or changing the files contents as it appears that nothing was changed
           TARGET_FOLDER: dist # The folder the action should deploy to (destination branch).

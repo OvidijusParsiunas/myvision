@@ -1,9 +1,9 @@
+<!-- do a long readme -->
 <p align="center"> 
-    <img style="margin-left: -25px" width="70%" src="./logo with text 23.png" alt="Logo">    
+    <img style="margin-left: -25px" width="70%" src="./logo with text 29.png" alt="Logo">
+    <!-- <img style="margin-left: -25px" width="70%" src="./logo with text 31.png" alt="Logo">     -->
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
-
-<p style="margin-bottom: 50px"></p>
 
 ## Description
 
@@ -17,6 +17,10 @@ Draw bounding boxes and polygons to label your objects:
 </p>
 
 Polygon manipulation is enriched with additional features to edit, remove and add new points:
+
+<p align="center"> 
+    <img width="1000" src="./ezgif.com-gif-maker 3.gif" alt="Logo">
+</p>
 
 <p align="center"> 
     <img width="1000" src="./2020-07-08 22-27-13.gif" alt="Logo">
