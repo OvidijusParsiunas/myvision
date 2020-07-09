@@ -9,7 +9,7 @@ function validateClientBrowserDimensions() {
     inadequateClientResourcesOverlayText.innerHTML = 'Minimum window size to use MyVision is 500 x 800 px';
     inadequateClientResourcesOverlayText.style.marginLeft = '-28px';
     inadequateClientResourcesOverlayText.style.maxWidth = 'none';
-    inadequateClientResourcesOverlay.style.display = 'block';
+    inadequateClientResourcesOverlay.style.display = 'grid';
     displayingDimensionsOverlay = true;
   } else {
     if (!displayingDimensionsOverlay) return;
