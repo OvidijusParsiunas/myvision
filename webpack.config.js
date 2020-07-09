@@ -15,7 +15,7 @@ module.exports = () => {
     {
       entry: './browserSupport/index.js',
       output: {
-        filename: './browserSupportBundle.js',
+        filename: './browserSupportBundle22.js',
       },
       module: {
         rules: [
@@ -42,7 +42,7 @@ module.exports = () => {
     {
       entry: './src/js/index.js',
       output: {
-        filename: './appBundle.js',
+        filename: './appBundle22.js',
       },
       externals: {
         fabric: 'fabric',

@@ -72,6 +72,9 @@ https://github.com/AKSHAYUBHAT/ImageSegmentation
 The nice to haves:
 
 when a user tries to drop an image on top of the app screen, it should automatically trigger uplaod (or in the case of uploading datasets - add to the mdodal)
+https://webpack.js.org/guides/caching/#extracting-boilerplate
+
+split up the result bundle into chunks to increase download
 
 Use the following to identify the browser:
 https://github.com/WhichBrowser/Parser-JavaScript?fbclid=IwAR0pxGzSJEdjUKMkWRryUI8N5c81h5YyiK1fVXCK_IamftA_vCpD21DygyM
