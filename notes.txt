@@ -12,6 +12,21 @@ check production deploy without comments (set node environment in npm-workflow t
 
 rename mylabel to myvision
 
+attach minified css to webpack
+
+---------------------------------------------
+
+dist/
+index.html
+readme/
+config/
+src/
+    assets/
+        css/
+        images/
+    js/
+    indexTemplate.html
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
@@ -53,9 +68,13 @@ Change the HTML naming conventions with the final decisions!!!!
 
 --------------------------------------------------
 
+ideally should write new code in a separate module to enable code splitting into separate chunks (check is sharing is required)
+
 the dimensions used for recording examples were 1920x822
 
 The export datasets button is not disabled on load time to enable the user explore the formats available
+
+encode all non-alphanumeric symbols in index into entity code
 
 Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
 would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation
