@@ -1,6 +1,6 @@
 <!-- do a long readme -->
 <p align="center"> 
-    <img style="margin-left: -25px" width="70%" src="./logo with text 34.png" alt="Logo">
+    <img style="margin-left: -25px" width="70%" src="./logo with text 35.png" alt="Logo">
     <!-- <img style="margin-left: -25px" width="70%" src="./logo with text 31.png" alt="Logo">     -->
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
