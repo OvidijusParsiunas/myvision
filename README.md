@@ -1,6 +1,6 @@
 <!-- do a long readme -->
 <p align="center"> 
-    <img style="margin-left: -25px" width="70%" src="./logo with text 33.png" alt="Logo">
+    <img style="margin-left: -25px" width="70%" src="./logo with text 34.png" alt="Logo">
     <!-- <img style="margin-left: -25px" width="70%" src="./logo with text 31.png" alt="Logo">     -->
     <!-- <img width="300" src="./presenting 76.png" alt="Logo">     -->
 </p>
@@ -65,8 +65,8 @@ You can import existing annotation projects and continue working on them in MyVi
 </p>
 
 ## Local setup
-
-No setup is required to run this project! However, if you want to make changes or contribute to this repository, please follow the instructions below:
+<!-- link to the file or bring the screen up to there -->
+No setup is required to run this project, open the index.html file and you are all set! However, if you want to make changes or contribute to this repository, please follow the instructions below:
 
 ```
 # Requirements: Node version 8+ and NPM version 6+

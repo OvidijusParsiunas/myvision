@@ -8,24 +8,22 @@ think about the lincense
 
 potentially use 'logo with ai.png' as a github background, or just use the eye 
 
-check production deploy without comments (set node environment in npm-workflow to be production)
-
 rename mylabel to myvision
 
 attach minified css to webpack
 
 ---------------------------------------------
 
-dist/
-index.html
+dist/ done
+index.html done
 readme/
 config/
-src/
+src/ done
     assets/
         css/
         images/
-    js/
-    indexTemplate.html
+    js/ done
+    indexTemplate.html done
 
 ---------------------------------------------
 

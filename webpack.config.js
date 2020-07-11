@@ -1,12 +1,17 @@
 const FailOnErrorsPlugin = require('fail-on-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const env = process.env.NODE_ENV || 'development';
 
 module.exports = () => {
+  const bundlesDirectoryName = env === 'production' ? 'dist' : 'devBundles';
   let plugins = [];
   if (env === 'development' || env === 'production') {
     plugins = [
+      new CleanWebpackPlugin({
+        cleanOnceBeforeBuildPatterns: [`./${bundlesDirectoryName}/*`],
+      }),
       new FailOnErrorsPlugin({
         failOnErrors: true,
         failOnWarnings: true,
@@ -14,6 +19,7 @@ module.exports = () => {
       new HtmlWebpackPlugin({
         title: 'Caching',
         template: 'src/indexTemplate.html',
+        minify: false,
       }),
     ];
   }
@@ -23,7 +29,7 @@ module.exports = () => {
       mainAppBundle: './src/js/index.js',
     },
     output: {
-      filename: 'dist/[name].[contenthash].js',
+      filename: `${bundlesDirectoryName}/[name].[contenthash].js`,
       path: __dirname,
     },
     externals: {

@@ -11,6 +11,7 @@
       "child_process": false,
       "fs": false
     },
+    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-loader": "^4.0.2",
