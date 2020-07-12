@@ -6,6 +6,7 @@ const env = process.env.NODE_ENV || 'development';
 
 module.exports = () => {
   const bundlesDirectoryName = env === 'production' ? 'dist' : 'devBundles';
+  const fabricjsFileExtension = env === 'production' ? '.min.js' : '.js';
   let plugins = [];
   if (env === 'development' || env === 'production') {
     plugins = [
@@ -17,7 +18,7 @@ module.exports = () => {
         failOnWarnings: true,
       }),
       new HtmlWebpackPlugin({
-        title: 'Caching',
+        fabricjsFileExtension,
         template: 'src/indexTemplate.html',
         minify: false,
       }),
@@ -25,8 +26,8 @@ module.exports = () => {
   }
   return {
     entry: {
-      browserSupportBundle: './browserSupport/index.js',
-      mainAppBundle: './src/js/index.js',
+      browserSupportBundle: './src/browserSupport/index.js',
+      appBundle: './src/app/index.js',
     },
     output: {
       filename: `${bundlesDirectoryName}/[name].[contenthash].js`,

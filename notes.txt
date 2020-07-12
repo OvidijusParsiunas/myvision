@@ -1,7 +1,5 @@
 zoom fix - check how it looks after making the original image full height
 
-add name to the readme title logo
-
 add gifs
 
 think about the lincense
@@ -12,18 +10,13 @@ rename mylabel to myvision
 
 attach minified css to webpack
 
----------------------------------------------
+uploading three images from desktop does not change the title to black
 
-dist/ done
-index.html done
-readme/
-config/
-src/ done
-    assets/
-        css/
-        images/
-    js/ done
-    indexTemplate.html done
+draw polygon and click the edit button on the label list - error
+
+drag and drop images onto the screen
+
+remove unused asset files
 
 ---------------------------------------------
 
