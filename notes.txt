@@ -12,11 +12,11 @@ attach minified css to webpack
 
 uploading three images from desktop does not change the title to black
 
-draw polygon and click the edit button on the label list - error
-
 drag and drop images onto the screen
 
 remove unused asset files
+
+rename edit polygons to edit shapes
 
 ---------------------------------------------
 

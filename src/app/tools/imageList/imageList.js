@@ -262,6 +262,7 @@ function setToolkitStylingOnNewImage() {
       setCreateBoundingBoxButtonToActive();
       setCreatePolygonButtonToDefault();
     } else {
+      assignDefaultEvents(canvas, null, false);
       setCreatePolygonButtonToDefault();
       setCreateBoundingBoxButtonToDefault();
     }

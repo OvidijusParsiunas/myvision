@@ -29,6 +29,6 @@ function getCanvasReferences() {
 }
 
 export {
-  setBoundingBoxEditToolsToBeTransparent, createNewCanvas,
   reasignCanvas, getCanvasReferences,
+  setBoundingBoxEditToolsToBeTransparent, createNewCanvas,
 };
