@@ -1,5 +1,5 @@
 import setDrawingMode from './setDrawingMode';
-import { removeEditedPolygonId } from '../eventWorkers/editPolygonEventsWorker';
+import { removeEditedPolygonId } from '../eventWorkers/defaultEventsWorker';
 import { getLastDrawingModeState } from '../../../../tools/state';
 
 let resetCanvasEventsFunc = null;

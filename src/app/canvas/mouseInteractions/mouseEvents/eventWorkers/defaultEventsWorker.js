@@ -306,7 +306,7 @@ function skipMouseUpEvent() {
   assignSetEditablePolygonOnClickFunc();
 }
 
-function setEditPolygonEventObjects(canvasObj, polygonObjId, afterAddPoints) {
+function prepareCanvasForDefaultEvents(canvasObj, polygonObjId, afterAddPoints) {
   canvas = canvasObj;
   zoomOverflowElement = document.getElementById('zoom-overflow');
   // selected add then remove -> remve will null it
@@ -460,5 +460,5 @@ export {
   shapeScrollEvents, removeActiveLabelObject, shapeMouseOverEvents,
   polygonMouseDownEvents, polygonMouseUpEvents, shapeMouseOutEvents,
   programaticallySelectBoundingBox, setShapeToInvisible, polygonMoveEvents,
-  setEditPolygonEventObjects, boundingBoxScalingEvents, removeEditedPolygonId,
+  prepareCanvasForDefaultEvents, boundingBoxScalingEvents, removeEditedPolygonId,
 };

@@ -3,7 +3,7 @@ import {
 } from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
 import { resetNewPolygonData, isPolygonDrawingFinished, resetDrawPolygonMode } from '../../../../canvas/objects/polygon/polygon';
 import { clearBoundingBoxData, isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../../../canvas/objects/boundingBox/boundingBox';
-import { removeEditedPolygonId, removeActiveLabelObject } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
+import { removeEditedPolygonId, removeActiveLabelObject } from '../../../../canvas/mouseInteractions/mouseEvents/eventWorkers/defaultEventsWorker';
 import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';

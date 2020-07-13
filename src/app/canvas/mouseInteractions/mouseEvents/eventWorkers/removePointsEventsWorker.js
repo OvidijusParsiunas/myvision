@@ -3,7 +3,7 @@ import {
   getPolygonIdIfEditing, cleanPolygonPointsArray, changeExistingPolygonPointsToRemovable,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { removeEditedPolygonId } from './editPolygonEventsWorker';
+import { removeEditedPolygonId } from './defaultEventsWorker';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/state';
 

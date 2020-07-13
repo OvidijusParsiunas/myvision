@@ -13,7 +13,7 @@ import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '.
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,
-} from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/editPolygonEventsWorker';
+} from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/defaultEventsWorker';
 import { pointMouseDownEvents, pointMouseUpEvents, setPolygonNotEditableOnClick } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
 import { pointMouseDownEvents as addPointsMouseDownEvents, pointMouseUpEvents as addPointsMouseUpEvents, setPolygonNotEditableOnClick as addPointsPolygonNotEditable } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
 import {

@@ -1,4 +1,4 @@
-import { removeEditedPolygonId } from './editPolygonEventsWorker';
+import { removeEditedPolygonId } from './defaultEventsWorker';
 import {
   removePolygonPoints, getPolygonEditingStatus, setEditablePolygon,
   getPolygonIfEditing, initializeAddNewPoints, addFirstPoint, getPolygonIdIfEditing,

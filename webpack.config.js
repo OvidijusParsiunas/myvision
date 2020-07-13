@@ -5,24 +5,23 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const env = process.env.NODE_ENV || 'development';
 
 module.exports = () => {
-  const bundlesDirectoryName = env === 'production' ? 'dist' : 'devBundles';
+  const bundleDirectory = env === 'production' ? 'dist' : 'devBundles';
+  const outputFileName = env === 'production' ? `${bundleDirectory}/[name].[contenthash].js` : `${bundleDirectory}/[name].js`;
   const fabricjsFileExtension = env === 'production' ? '.min.js' : '.js';
-  let plugins = [];
-  if (env === 'development' || env === 'production') {
-    plugins = [
-      new CleanWebpackPlugin({
-        cleanOnceBeforeBuildPatterns: [`./${bundlesDirectoryName}/*`],
-      }),
-      new FailOnErrorsPlugin({
-        failOnErrors: true,
-        failOnWarnings: true,
-      }),
-      new HtmlWebpackPlugin({
-        fabricjsFileExtension,
-        template: 'src/indexTemplate.html',
-        minify: false,
-      }),
-    ];
+  const plugins = [
+    new FailOnErrorsPlugin({
+      failOnErrors: true,
+      failOnWarnings: true,
+    }),
+    new HtmlWebpackPlugin({
+      fabricjsFileExtension,
+      template: 'src/indexTemplate.html',
+      minify: false,
+    })];
+  if (env === 'production') {
+    plugins.push(new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [`./${bundleDirectory}/*`],
+    }));
   }
   return {
     entry: {
@@ -30,7 +29,7 @@ module.exports = () => {
       appBundle: './src/app/index.js',
     },
     output: {
-      filename: `${bundlesDirectoryName}/[name].[contenthash].js`,
+      filename: outputFileName,
       path: __dirname,
     },
     externals: {

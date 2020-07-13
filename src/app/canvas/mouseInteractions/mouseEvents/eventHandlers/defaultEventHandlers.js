@@ -1,12 +1,12 @@
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents,
-  shapeMouseOutEvents, shapeMouseOverEvents, setEditPolygonEventObjects,
+  shapeMouseOutEvents, shapeMouseOverEvents, prepareCanvasForDefaultEvents,
   boundingBoxScalingEvents, shapeScrollEvents,
-} from '../eventWorkers/editPolygonEventsWorker';
+} from '../eventWorkers/defaultEventsWorker';
 
 // not just for polygon
 function assignDefaultEvents(canvas, polygonId, afterAddPoints) {
-  setEditPolygonEventObjects(canvas, polygonId, afterAddPoints);
+  prepareCanvasForDefaultEvents(canvas, polygonId, afterAddPoints);
 
   canvas.on('mouse:down', (e) => {
     polygonMouseDownEvents(e);
