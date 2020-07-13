@@ -22,10 +22,6 @@ Polygon manipulation is enriched with additional features to edit, remove and ad
     <img width="1000" src="./assets/readme/ezgif.com-gif-maker 3.gif" alt="Logo">
 </p>
 
-<p align="center"> 
-    <img width="1000" src="./assets/readme/2020-07-08 22-27-13.gif" alt="Logo">
-</p>
-
 Supported dataset formats:
 
 <p align="center"> 
@@ -33,29 +29,10 @@ Supported dataset formats:
 </p>
 
 <br />
-<br />
 Annotating objects can be a difficult task... You can skip all the hard work and use a pre-trained machine learning model to automatically annotate the objects for you. MyVision leverages the popular 'COCO-SSD' model to generate bounding boxes for your images and by operating locally on your browser - retain all data within the privacy of your computer:
 
 <p align="center"> 
     <img width="1000" src="./assets/readme/2020-07-08 00-10-36.gif" alt="Logo">
-</p>
-
-You can import existing annotation projects and continue working on them in MyVision. This process can also be used to convert datasets from one format to another:
-
-<p align="center"> 
-    <img width="1000" src="./assets/readme/2020-07-07 00-23-41.gif" alt="Logo">
-</p>
-
-You can import existing annotation projects and continue working on them in MyVision. This process can also be used to convert datasets from one format to another:
-
-<p align="center"> 
-    <img width="1000" src="./assets/readme/2020-07-08 00-12-31.gif" alt="Logo">
-</p>
-
-You can import existing annotation projects and continue working on them in MyVision. This process can also be used to convert datasets from one format to another:
-
-<p align="center"> 
-    <img width="1000" src="./assets/readme/2020-07-08 00-16-12.gif" alt="Logo">
 </p>
 
 You can import existing annotation projects and continue working on them in MyVision. This process can also be used to convert datasets from one format to another:
