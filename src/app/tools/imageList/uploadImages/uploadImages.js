@@ -10,13 +10,13 @@ function onFileLoad(imageMetaData, e) {
   removeNoImagesFoundOnMLModalStyle();
 }
 
-function onMultiFileLoad(imageMetadata, firstImage, e) {
+function onMultiFileLoad(imageMetadata, isfirstImage, e) {
   const image = new Image();
   image.src = e.target.result;
-  if (firstImage) {
+  if (isfirstImage) {
     image.onload = onImageLoad;
   }
-  addImageFromMultiUploadToList(imageMetadata, image, firstImage);
+  addImageFromMultiUploadToList(imageMetadata, image, isfirstImage);
   removeNoImagesFoundOnMLModalStyle();
 }
 
@@ -30,8 +30,8 @@ function uploadImages(uploadData) {
     } else {
       for (let i = 0; i < uploadData.files.length; i += 1) {
         const reader = new FileReader();
-        const firstImage = i === 0;
-        reader.onload = onMultiFileLoad.bind(this, uploadData.files[i], firstImage);
+        const isfirstImage = i === 0;
+        reader.onload = onMultiFileLoad.bind(this, uploadData.files[i], isfirstImage);
         reader.readAsDataURL(uploadData.files[i]);
       }
     }

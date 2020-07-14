@@ -275,8 +275,8 @@ function setToolkitStylingOnNewImage() {
   setZoomInButtonToDefault();
 }
 
-function changeCurrentImageNameElementText(imageName, firstFromMany) {
-  updateImageNameElement(imageName, images, currentlySelectedImageId, firstFromMany);
+function changeCurrentImageNameElementText(imageName, isfirstFromMany) {
+  updateImageNameElement(imageName, images, currentlySelectedImageId, isfirstFromMany);
 }
 
 function addSingleImageToList(imageMetadata, imageData) {
@@ -291,13 +291,13 @@ function addSingleImageToList(imageMetadata, imageData) {
   newImageId += 1;
 }
 
-function addImageFromMultiUploadToList(imageMetadata, imageData, firstFromMany) {
+function addImageFromMultiUploadToList(imageMetadata, imageData, isfirstFromMany) {
   addNewImage(imageMetadata.name, imageData);
   setDefaultImageProperties(images[newImageId], imageMetadata);
-  if (firstFromMany) {
+  if (images.length === 1 || isfirstFromMany) {
     highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     saveAndRemoveCurrentImageDetails();
-    changeCurrentImageNameElementText(imageMetadata.name, firstFromMany);
+    changeCurrentImageNameElementText(imageMetadata.name, isfirstFromMany);
     images[newImageId].thumbnailElementRef.scrollIntoView();
     removeWatermarkFromCanvasAreaBackground();
     setToolkitStylingOnNewImage();

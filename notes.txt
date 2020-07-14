@@ -10,8 +10,6 @@ rename mylabel to myvision
 
 attach minified css to webpack
 
-uploading three images from desktop does not change the title to black
-
 drag and drop images onto the screen
 
 remove unused asset files

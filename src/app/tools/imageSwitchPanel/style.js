@@ -39,12 +39,12 @@ function setNameElementMinWidth() {
   }
 }
 
-function updateImageNameElement(imageName, images, currentlySelectedImageId, firstFromMany) {
+function updateImageNameElement(imageName, images, currentlySelectedImageId, isfirstFromMany) {
   imageNameElement.innerHTML = imageName;
   setNameElementMinWidth();
   if (images.length === 1) {
     setImageNameElementToActive();
-    if (firstFromMany) {
+    if (isfirstFromMany) {
       enableButton(nextButtonElement);
     } else {
       disableButton(nextButtonElement);
@@ -52,7 +52,7 @@ function updateImageNameElement(imageName, images, currentlySelectedImageId, fir
     }
   } else if (images.length > 1) {
     if (images.length - 1 === currentlySelectedImageId) {
-      if (firstFromMany) {
+      if (isfirstFromMany) {
         enableButton(nextButtonElement);
       } else {
         disableButton(nextButtonElement);
