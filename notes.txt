@@ -16,8 +16,6 @@ drag and drop images onto the screen
 
 remove unused asset files
 
-rename edit polygons to edit shapes
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
