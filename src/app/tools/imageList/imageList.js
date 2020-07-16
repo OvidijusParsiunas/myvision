@@ -25,11 +25,11 @@ import { changeExistingImagesMovability } from '../settingsPopup/options/movable
 import { removeWatermarkFromCanvasAreaBackground } from '../../canvas/utils/watermark';
 
 let currentlyActiveElement = null;
+let imageContainerElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
 let canvas = null;
 let newImageId = 0;
-let imageListOverflowParent = null;
 let hasCurrentImageThumbnailRedBorder = false;
 const ANIMATION_DURATION_MILLISECONDS = 300;
 
@@ -38,12 +38,12 @@ function updateCurrentImageIds(currentId, newId) {
   newImageId = newId;
 }
 
-function findImageListElement() {
-  imageListOverflowParent = document.getElementById('image-list-overflow-parent');
+function findImageContainerElement() {
+  imageContainerElement = document.getElementById('image-list-image-container');
 }
 
 function initialiseImageList() {
-  findImageListElement();
+  findImageContainerElement();
   initialiseImageListML(images);
 }
 
@@ -109,7 +109,7 @@ function addNewItemToImageList(imageData) {
   parentThumbnailDivElement.appendChild(imageThumbnailElement);
   parentThumbnailDivElement.appendChild(colorOverlayElement);
   parentThumbnailDivElement.appendChild(tickSVGElement);
-  imageListOverflowParent.appendChild(parentThumbnailDivElement);
+  imageContainerElement.appendChild(parentThumbnailDivElement);
   triggerAnimation(imageThumbnailElement);
   return parentThumbnailDivElement;
 }
@@ -348,7 +348,7 @@ function changeToExistingImage(id) {
   }
   setCurrentImageId(id);
   highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
-  scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageListOverflowParent);
+  scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageContainerElement);
   fixForObjectScalingBugOnCanvasSwitch();
   currentlySelectedImageId = id;
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);

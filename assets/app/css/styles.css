@@ -1201,7 +1201,7 @@ input:focus {
   margin-left: calc(8px / var(--screen-size-delta));
 }
 
-#image-list-overflow-parent {
+#image-list-image-container {
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100vh - (100vh - 287px) / 2 - 37px - (54px / var(--screen-size-delta)));
@@ -1211,31 +1211,27 @@ input:focus {
 
 #image-list-drag-and-drop-overlay {
   position: absolute;
-  overflow-x: hidden;
-  overflow-y: auto;
   height: calc(100vh - (100vh - 287px) / 2 - 45px - (54px / var(--screen-size-delta)));
   border: 4px dashed #68c7fb;
-  scrollbar-color: #8c8c8c #f9f9f9;
-  scrollbar-width: thin;
   width: 200px;
   z-index: 1;
   background-color: rgba(42, 177, 171, 0.12);
 }
 
-#image-list-overflow-parent div:nth-child(odd) {
+#image-list-image-container div:nth-child(odd) {
   border-right: 1px solid #4e4b4b26;
 }
 
-#image-list-overflow-parent::-webkit-scrollbar-track {
+#image-list-image-container::-webkit-scrollbar-track {
   background: #f9f9f9;
 }
 
-#image-list-overflow-parent::-webkit-scrollbar-thumb {
+#image-list-image-container::-webkit-scrollbar-thumb {
   background: #8c8c8c;
   border-radius: 10px;
 }
 
-#image-list-overflow-parent::-webkit-scrollbar {
+#image-list-image-container::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }

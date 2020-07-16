@@ -63,6 +63,8 @@ Change the HTML naming conventions with the final decisions!!!!
 
 --------------------------------------------------
 
+the word "current" is used heavily within this project and should be replaced with "active"
+
 ideally should write new code in a separate module to enable code splitting into separate chunks (check is sharing is required)
 
 the dimensions used for recording examples were 1920x822
