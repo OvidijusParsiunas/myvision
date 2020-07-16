@@ -1204,9 +1204,22 @@ input:focus {
 #image-list-overflow-parent {
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: calc(100vh - (100vh - 287px) / 2 - 37px - (54px / var(--screen-size-delta)));
+  height: calc(100vh - (100vh - 287px) / 2 - 37px - (54px / var(--screen-size-delta)));
   scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
+}
+
+#image-list-drag-and-drop-overlay {
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100vh - (100vh - 287px) / 2 - 45px - (54px / var(--screen-size-delta)));
+  border: 4px dashed #68c7fb;
+  scrollbar-color: #8c8c8c #f9f9f9;
+  scrollbar-width: thin;
+  width: 200px;
+  z-index: 1;
+  background-color: rgba(42, 177, 171, 0.12);
 }
 
 #image-list-overflow-parent div:nth-child(odd) {
@@ -1247,6 +1260,15 @@ input:focus {
   -o-transition-property: background-color;
   -o-transition-duration: 0.5s;
   -o-transition-timing-function: linear;
+}
+
+#window-drag-and-drop-overlay {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  background-color: rgba(255, 243, 242, 0.01);
 }
 
 #inadequate-client-resources-overlay {
