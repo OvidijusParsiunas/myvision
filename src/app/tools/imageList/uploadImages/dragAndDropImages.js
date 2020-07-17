@@ -1,4 +1,5 @@
 import uploadImages from './uploadImages';
+import isAnyModalOpen from '../../utils/modals/status';
 
 let bodyElement = null;
 let imageListDragAndDropOverlayElement = null;
@@ -15,11 +16,13 @@ function dropHandler(event) {
 }
 
 function displayDragAndDropOverlays() {
+  if (isAnyModalOpen()) return;
   imageListDragAndDropOverlayElement.style.display = 'block';
   windowDragAndDropOverlayElement.style.display = 'block';
 }
 
 function hideDragAndDropOverlays() {
+  if (isAnyModalOpen()) return;
   imageListDragAndDropOverlayElement.style.display = 'none';
   windowDragAndDropOverlayElement.style.display = 'none';
 }

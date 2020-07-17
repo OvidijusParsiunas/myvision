@@ -16,6 +16,7 @@ module.exports = () => {
     new HtmlWebpackPlugin({
       fabricjsFileExtension,
       template: 'src/indexTemplate.html',
+      file: 'index.html',
       minify: false,
     })];
   if (env === 'production') {

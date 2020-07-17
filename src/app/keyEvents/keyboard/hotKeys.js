@@ -29,6 +29,7 @@ import { addPointViaKeyboard as addPointToExistingPolygonViaKeyboard } from '../
 import closeAllPopups from '../../tools/utils/popups/closeAllPopups';
 import { getUserOS } from '../../tools/OS/OSManager';
 import { closeWelcomeModal } from '../../tools/welcomeModal/buttons/workers';
+import isAnyModalOpen from '../../tools/utils/modals/status';
 
 let canvas = null;
 let isRKeyUp = true;
@@ -39,16 +40,8 @@ function rKeyUpHandler() {
   isRKeyUp = true;
 }
 
-function isModalOpen() {
-  return getLabellerModalDisplayedState()
-  || getUploadDatasetsModalDisplayedState()
-  || getMachineLearningModalDisplayedState()
-  || getRemoveImageModalDisplayedState()
-  || getWelcomeModalDisplayedState();
-}
-
 function qKeyHandler() {
-  if (!isModalOpen() && !isEditingLabelInLabelList() && getCreatePolygonButtonState() !== 'disabled') {
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList() && getCreatePolygonButtonState() !== 'disabled') {
     window.onmousedown();
     if (((getPolygonDrawingInProgressState() && !getRemovingPolygonPointsState())
     || (getReadyToDrawShapeState() && getLastDrawingModeState() === 'polygon'))) {
@@ -62,7 +55,7 @@ function qKeyHandler() {
 }
 
 function eKeyHandler() {
-  if (!isModalOpen() && !isEditingLabelInLabelList() && !getDefaultState() && getEditShapesButtonState() !== 'disabled') {
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList() && !getDefaultState() && getEditShapesButtonState() !== 'disabled') {
     closeAllPopups();
     window.editShapes();
     canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
@@ -71,7 +64,7 @@ function eKeyHandler() {
 
 // click w to starting drawing bounding box and clicking again to finish drawing it
 function wKeyHandlerLinux() {
-  if (!isModalOpen() && !isEditingLabelInLabelList()
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList()
     && getCreateBoundingBoxButtonState() !== 'disabled') {
     closeAllPopups();
     if (getBoundingBoxDrawingInProgressState()) {
@@ -88,7 +81,7 @@ function wKeyHandlerLinux() {
 
 // click w and hold to draw bounding box and release to finish drawing it
 function wKeyHandlerDefault() {
-  if (!isModalOpen() && !isEditingLabelInLabelList()
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList()
         && getCreateBoundingBoxButtonState() !== 'disabled') {
     closeAllPopups();
     if (getBoundingBoxDrawingInProgressState()) return;
@@ -110,7 +103,7 @@ function wKeyUpHandlerDefault() {
 
 
 function rKeyHandler() {
-  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
     closeAllPopups();
     if ((getPolygonDrawingInProgressState() && getRemovingPolygonPointsState())) {
       if (isRKeyUp) {
@@ -133,7 +126,7 @@ function rKeyHandler() {
 function aKeyHandler() {
   // aware of when shape completed, not moving mouse, change to remove, but cannot remove
   // also if hovering point on edit, switched to remove, then add without move, can't add
-  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getAddPointsButtonState() !== 'disabled') {
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getAddPointsButtonState() !== 'disabled') {
     closeAllPopups();
     if (getAddingPolygonPointsState()) {
       addPointToExistingPolygonViaKeyboard();
@@ -168,21 +161,21 @@ function arrowDownKeyHandler() {
 }
 
 function arrowLeftKeyHandler() {
-  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
     closeAllPopups();
     window.switchImage('previous');
   }
 }
 
 function arrowRightKeyHandler() {
-  if (!isModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
+  if (!isAnyModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState()) {
     closeAllPopups();
     window.switchImage('next');
   }
 }
 
 function removeKeyHandler() {
-  if (isModalOpen() || isEditingLabelInLabelList()) return;
+  if (isAnyModalOpen() || isEditingLabelInLabelList()) return;
   closeAllPopups();
   window.removeShape();
   canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
