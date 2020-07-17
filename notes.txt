@@ -22,6 +22,8 @@ there are two core ways of using index.html with deploys (try travis ci):
 
 social media preview image for https://myvision.ai
 
+npm install sets the new package-lock to specify a dependency with a vulnerability
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
