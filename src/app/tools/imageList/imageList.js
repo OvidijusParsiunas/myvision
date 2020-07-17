@@ -102,7 +102,7 @@ function addNewItemToImageList(imageData) {
   colorOverlayElement.classList.add('image-list-thumbnail-default');
   const tickSVGElement = initialiseImageElement();
   tickSVGElement.classList.add('image-list-thumbnail-SVG-tick-icon');
-  tickSVGElement.src = 'assets/app/svg/done-tick-highlighted.svg';
+  tickSVGElement.src = '../assets/app/svg/done-tick-highlighted.svg';
   const parentThumbnailDivElement = initiateDivElement();
   parentThumbnailDivElement.classList.add('image-list-thumbnail');
   parentThumbnailDivElement.onclick = window.switchImage.bind(this, newImageId);

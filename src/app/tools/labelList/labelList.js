@@ -123,17 +123,17 @@ function repopulateDropdown() {
 function generateLabelVisibilityMarkup(shapeVisibile) {
   if (shapeVisibile === 'default') {
     return `
-      <img class="defaultVisibilityIcon" src="assets/app/svg/visibility-button.svg" alt="visibility">
-      <img class="highlightedVisibilityIcon" src="assets/app/svg/visibility-button-highlighted.svg" style="display: none" alt="visibility">
-      <img class="defaultVisibilityIcon" src="assets/app/svg/invisible-button.svg" style="display: none" alt="visibility">
-      <img class="highlightedVisibilityIcon" src="assets/app/svg/invisible-button-highlighted.svg" style="display: none" alt="visibility">
+      <img class="defaultVisibilityIcon" src="../assets/app/svg/visibility-button.svg" alt="visibility">
+      <img class="highlightedVisibilityIcon" src="../assets/app/svg/visibility-button-highlighted.svg" style="display: none" alt="visibility">
+      <img class="defaultVisibilityIcon" src="../assets/app/svg/invisible-button.svg" style="display: none" alt="visibility">
+      <img class="highlightedVisibilityIcon" src="../assets/app/svg/invisible-button-highlighted.svg" style="display: none" alt="visibility">
     `;
   }
   return `
-    <img class="defaultVisibilityIcon" src="assets/app/svg/visibility-button.svg" style="display: none" alt="visibility">
-    <img class="highlightedVisibilityIcon" src="assets/app/svg/visibility-button-highlighted.svg" style="display: none" alt="visibility">
-    <img class="defaultVisibilityIcon" src="assets/app/svg/invisible-button.svg" alt="visibility">
-    <img class="highlightedVisibilityIcon" src="assets/app/svg/invisible-button-highlighted.svg" style="display: none" alt="visibility">
+    <img class="defaultVisibilityIcon" src="../assets/app/svg/visibility-button.svg" style="display: none" alt="visibility">
+    <img class="highlightedVisibilityIcon" src="../assets/app/svg/visibility-button-highlighted.svg" style="display: none" alt="visibility">
+    <img class="defaultVisibilityIcon" src="../assets/app/svg/invisible-button.svg" alt="visibility">
+    <img class="highlightedVisibilityIcon" src="../assets/app/svg/invisible-button-highlighted.svg" style="display: none" alt="visibility">
   `;
 }
 
@@ -145,10 +145,10 @@ function createLabelElementMarkup(labelText, id, backgroundColor, visibility) {
       ${generateLabelVisibilityMarkup(visibility)}
     </div>
     <div id="editButton${id}" onMouseEnter="mouseEnterLabelEditBtn(this)" onMouseLeave="mouseLeaveLabelEditBtn(this)" onClick="labelEditBtnClick(${id}, this)" style="float:left; user-select: none; padding-right: 5px; width: 11px; cursor: pointer; padding-top: ${getScreenSizeDelta() > 1.000001 ? 0.5 : 0}px">
-      <img class="defaultLabelEditIcon" id="editButton${id}" src="assets/app/svg/edit.svg" style="padding-left: 1px" alt="edit">
-      <img class="highlightedLabelEditIcon" id="editButton${id}" src="assets/app/svg/edit-highlighted.svg" style="display: none" alt="edit">
-      <img class="defaultLabelEditIcon" id="editButton${id}" src="assets/app/svg/done-tick.svg" style="display: none" alt="edit">
-      <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="assets/app/svg/done-tick-highlighted.svg" style="display: none" alt="edit">
+      <img class="defaultLabelEditIcon" id="editButton${id}" src="../assets/app/svg/edit.svg" style="padding-left: 1px" alt="edit">
+      <img class="highlightedLabelEditIcon" id="editButton${id}" src="../assets/app/svg/edit-highlighted.svg" style="display: none" alt="edit">
+      <img class="defaultLabelEditIcon" id="editButton${id}" src="../assets/app/svg/done-tick.svg" style="display: none" alt="edit">
+      <img class="highlightedLabelEditTickIcon" id="editButton${id}" src="../assets/app/svg/done-tick-highlighted.svg" style="display: none" alt="edit">
     </div>
     <div id="labelText${id}" spellcheck="false" onkeydown="labelTextKeyDown(event)" ondblclick="labelDblClicked(${id})" class="labelText" contentEditable="false" style="user-select: none; padding-right: 32px; border: 1px solid transparent; display: flow-root; padding-top: ${getScreenSizeDelta() > 1 ? 2 : 0}px;">${labelText}</div>
       <table class="dropdown-content labelDropdown${id}">

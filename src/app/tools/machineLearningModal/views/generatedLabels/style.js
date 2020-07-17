@@ -248,10 +248,10 @@ function resetElementsToMoveListToDefaultPosition() {
 function createLabelElementMarkup(labelText, id) {
   return `
     <div class="machine-learning-modal-generated-labels-row" onClick="editMachineLearningLabel(this)" onMouseEnter="displayMachineLearningModalEditLabelButton(this)" onMouseLeave="hideMachineLearningModalEditLabelButton(this)">
-      <img class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" src="assets/app/svg/edit-disabled.svg" alt="edit">
-      <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" style="display: none" src="assets/app/svg/edit.svg" alt="edit">
-      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="assets/app/svg/edit-blue.svg" alt="edit">
-      <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="assets/app/svg/edit-red.svg" alt="edit">
+      <img class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" src="../assets/app/svg/edit-disabled.svg" alt="edit">
+      <img id="MLLabelHighlightedEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon" style="display: none" src="../assets/app/svg/edit.svg" alt="edit">
+      <img id="MLLabelActiveEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="../assets/app/svg/edit-blue.svg" alt="edit">
+      <img id="MLLabelDisabledEditButton${id}" class="defaultLabelEditIcon machine-learning-modal-generated-labels-edit-icon reverse-icon" style="display: none" src="../assets/app/svg/edit-red.svg" alt="edit">
       <div id="MLLabelText${id}" class="machine-learning-modal-generated-labels-input" spellcheck="false" onkeydown="MLLabelTextKeyDown(event)" onpaste="MLLabelTextPaste(event)">${labelText}</div>
     </div>
   `;

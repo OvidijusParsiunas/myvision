@@ -54,8 +54,8 @@ function createTableRowElementMarkup(fileName, tableName) {
   return `
     <div class="upload-datasets-modal-upload-datasets-table-row">
         <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
-          <img src="assets/app/svg/x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
-          <img src="assets/app/svg/x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
+          <img src="../assets/app/svg/x-icon-default.svg" class="upload-datasets-modal-remove-file-button"  alt="remove">
+          <img src="../assets/app/svg/x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
       <div class="upload-datasets-modal-upload-datasets-table-row-text">${fileName}</div>
     </div>
@@ -82,8 +82,8 @@ function createTableRowElementMarkupWthPopover(fileName, message, popoverPositio
     <div id="upload-datasets-modal-file-popover-arrow-${index}" ${addPopoverArrowMarginLeftStyle(tableName)} class="arrow ${popoverArrowTheme} ${popoverArrowPositionClass}"></div>
     <div class="upload-datasets-modal-upload-datasets-table-row">
         <div onmouseenter="displayActiveRemoveFileIcon(this)" onmouseleave="displayDefaultRemoveFileIcon(this)" onclick="removeFileFromUploadDatasetFiles('${fileName}', '${tableName}')">
-          <img src="assets/app/svg/x-icon-default.svg" class="upload-datasets-modal-remove-file-button" alt="remove">
-          <img src="assets/app/svg/x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
+          <img src="../assets/app/svg/x-icon-default.svg" class="upload-datasets-modal-remove-file-button" alt="remove">
+          <img src="../assets/app/svg/x-icon-active.svg" style="display: none" class="upload-datasets-modal-remove-file-button" alt="remove">
         </div>
         <div class="upload-datasets-modal-upload-datasets-table-row-text ${textThemeClass}" onmouseenter="displayUploadDatasetsAnnotationFilePopover(${index}, '${tableName}')" onmouseleave="removeUploadDatasetsAnnotationFilePopover(${popoverIndex})">${fileName}</div>
     </div>

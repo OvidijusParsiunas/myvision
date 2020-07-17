@@ -1,12 +1,12 @@
 const FailOnErrorsPlugin = require('fail-on-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path');
 
 const env = process.env.NODE_ENV || 'development';
 
 module.exports = () => {
-  const bundleDirectory = env === 'production' ? 'dist' : 'devBundles';
-  const outputFileName = env === 'production' ? `${bundleDirectory}/[name].[contenthash].js` : `${bundleDirectory}/[name].js`;
+  const outputFileName = env === 'production' ? '[name].[contenthash].js' : '[name].js';
   const fabricjsFileExtension = env === 'production' ? '.min.js' : '.js';
   const plugins = [
     new FailOnErrorsPlugin({
@@ -15,12 +15,12 @@ module.exports = () => {
     }),
     new HtmlWebpackPlugin({
       fabricjsFileExtension,
-      template: 'src/indexTemplate.html',
+      template: 'src/devTemplate.html',
       minify: false,
     })];
   if (env === 'production') {
     plugins.push(new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [`./${bundleDirectory}/*`],
+      cleanOnceBeforeBuildPatterns: ['./public/*'],
     }));
   }
   return {
@@ -30,7 +30,7 @@ module.exports = () => {
     },
     output: {
       filename: outputFileName,
-      path: __dirname,
+      path: path.resolve(__dirname, './public'),
     },
     externals: {
       fabric: 'fabric',
