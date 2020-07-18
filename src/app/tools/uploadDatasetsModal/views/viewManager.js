@@ -152,6 +152,10 @@ function displayNextView() {
   }
 }
 
+function getCurrentViewNumber() {
+  return currentViewNumber;
+}
+
 function displayModal() {
   setTimeout(() => {
     modalElement.style.display = '';
@@ -219,5 +223,6 @@ function initialiseUploadDatasetsModal() {
 }
 
 export {
-  displayModal, initialiseUploadDatasetsModal, closeModal, closeModalViaKeyboard,
+  displayModal, getCurrentViewNumber, closeModal,
+  closeModalViaKeyboard, initialiseUploadDatasetsModal,
 };

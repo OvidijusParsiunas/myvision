@@ -416,6 +416,10 @@ function hideUploadDatasetsOuterContainerElement() {
   uploadDatasetsOuterContainerElement.style.display = 'none';
 }
 
+function getAcceptedFileFormat() {
+  return uploadDatasetFilesTriggerElement.accept;
+}
+
 function setAcceptedFileFormatTrigger(format) {
   uploadDatasetFilesTriggerElement.accept = format;
 }
@@ -499,8 +503,8 @@ function assignUploadDatasetsViewLocalVariables() {
 }
 
 export {
+  insertRowToClassesTable, changeClassesRowToDefault, getAcceptedFileFormat,
+  changeAnnotationRowToDefault, removeRow, enableFinishButton, disableFinishButton,
   hideUploadDatasetsViewAssets, insertRowToImagesTable, changeAllImagesTableRowsToDefault,
   assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, insertRowToAnnotationsTable,
-  changeAnnotationRowToDefault, removeRow, enableFinishButton, disableFinishButton,
-  insertRowToClassesTable, changeClassesRowToDefault,
 };

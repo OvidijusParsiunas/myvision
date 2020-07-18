@@ -1,4 +1,5 @@
 import { IMAGE_FILE_INDICATOR } from '../../consts';
+import { getAcceptedFileFormat } from './style';
 import parseFile from './fileParser';
 
 let addFileFunc = null;
@@ -22,12 +23,24 @@ function readFile(reader, file) {
   }
 }
 
+function getAcceptedDataFormat() {
+  const rawFileFormatString = getAcceptedFileFormat().split(',')[0];
+  return rawFileFormatString.substring(1, rawFileFormatString.length);
+}
+
+function validateFileFormat(file, acceptedDataFormat) {
+  return file.type.includes(acceptedDataFormat) || file.type.includes('image/');
+}
+
 function uploadDatasetFilesHandler(uploadData) {
   if (uploadData.files && uploadData.files.length > 0) {
+    const acceptedDataFormat = getAcceptedDataFormat();
     for (let i = 0; i < uploadData.files.length; i += 1) {
-      const reader = new FileReader();
-      reader.onload = onFileLoad.bind(this, uploadData.files[i]);
-      readFile(reader, uploadData.files[i]);
+      if (validateFileFormat(uploadData.files[i], acceptedDataFormat)) {
+        const reader = new FileReader();
+        reader.onload = onFileLoad.bind(this, uploadData.files[i]);
+        readFile(reader, uploadData.files[i]);
+      }
     }
   }
 }
@@ -57,6 +70,6 @@ function setAddFile(addFileFuncArg) {
 }
 
 export {
-  uploadDatasetFilesHandler, addAlreadyUploadedImages,
   setTableUpdater, setFormatValidator, setAddFile,
+  uploadDatasetFilesHandler, addAlreadyUploadedImages,
 };

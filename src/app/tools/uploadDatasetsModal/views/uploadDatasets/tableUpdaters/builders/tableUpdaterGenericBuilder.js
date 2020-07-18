@@ -104,8 +104,9 @@ function updateAnnotationTableWhenMultipleAnnotationFilesAllowed(fileName, valid
 }
 
 function updateTables(parsedObj, validationResult) {
-  const datasetObject = this.datasetObjectManager.getDatasetObject();
+  if (!parsedObj.body) return;
   const fileName = parsedObj.body.fileMetaData.name;
+  const datasetObject = this.datasetObjectManager.getDatasetObject();
   if (parsedObj.fileFormat === IMAGE_FILE_INDICATOR) {
     insertRowToImagesTable(fileName, validationResult);
     if (validationResult.valid) { enableFinishButton(); }

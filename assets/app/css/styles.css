@@ -281,6 +281,15 @@ input:focus {
   float: left;
 }
 
+#upload-datasets-drag-and-drop-overlay {
+  width: calc(100% - 50px);
+  margin-left: 21px;
+  position: absolute;
+  border: 4px dashed #68c7fb;
+  z-index: 1;
+  background-color: rgba(42, 177, 171, 0.12);
+}
+
 /* cannot reuse these as a class because their elements undergo class replacement */
 #upload-datasets-modal-upload-datasets-upload-button {
   margin-right: calc(2px / var(--screen-size-delta));
@@ -680,7 +689,7 @@ input:focus {
 
 #export-datasets-popup-export-button {
   margin-top: calc(5px / var(--screen-size-delta));
-  width: calc(50px / var(--screen-size-delta));
+  width: calc(52px / var(--screen-size-delta));
   margin-right: 0;
 }
 
@@ -1263,7 +1272,7 @@ input:focus {
   top: 0px;
   width: 100%;
   height: 100%;
-  z-index: 4;
+  z-index: 5;
   background-color: rgba(255, 243, 242, 0.01);
 }
 

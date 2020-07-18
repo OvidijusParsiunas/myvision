@@ -24,6 +24,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: master # The branch the action should deploy to.
-          FOLDER: . # The folder the action should deploy from (source branch).
+          FOLDER: public # The folder the action should deploy from (source branch).
           CLEAN: true
-          CLEAN_EXCLUDE: '[".github", "assets", "src", ".eslintrc.js", ".gitignore", "CNAME", "jsconfig.json", "LICENSE", "notes.txt", "package.json", "package-lock-json", "README.md", "webpack.config.js"]'
