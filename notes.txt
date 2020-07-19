@@ -10,19 +10,11 @@ rename mylabel to myvision
 
 attach minified css to webpack
 
-drag and drop images onto the screen
-
 remove unused asset files
 
 remove 9999 for upload images when want to trigger the ci/cd
 
-there are two core ways of using index.html with deploys (try travis ci):
-  1. have it in root and not change the bundle hashes
-  2. have it in a public folder, along with the bundles and use that instead (cannot place that in .gitignore because that needs to be committed)
-
 social media preview image for https://myvision.ai
-
-npm install sets the new package-lock to specify a dependency with a vulnerability
 
 ---------------------------------------------
 
