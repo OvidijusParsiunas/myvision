@@ -1,0 +1,119 @@
+zoom fix - check how it looks after making the original image full height
+
+add gifs
+
+think about the lincense
+
+potentially use 'logo with ai.png' as a github background, or just use the eye 
+
+rename mylabel to myvision
+
+attach minified css to webpack
+
+remove unused asset files
+
+remove 9999 for upload images when want to trigger the ci/cd
+
+social media preview image for https://myvision.ai
+
+---------------------------------------------
+
+Things to check on chrome browsers on other pcs:
+
+weird auto horizontal rotate for some images on firefox
+
+potential fix:
+img {
+    image-orientation: from-image;
+}
+
+shape labeller modal  horizontal and vertical overflow fake borders
+label list dropdown horizontal and vertical overflow fake borders
+machine learning generated labels horizontal and vertical overflow fake borders
+make sure the dim effect is not choppy for slower pcs
+
+-------------------------------------------------
+
+UX:
+
+concider the fact that after editing a label in continuous drawing mode, we should maybe go back to the drawing mode
+
+check whether it is more approriate to add bounding boxes by holding key or clicking it multiple times
+
+highlight shapes to indicate that the user needs to click on them to start adding/removing points - check if really needed
+
+Check to see if the upload images and remove image button are not too high up, causing the user to click remove image when
+their actual intention is to remove a shape. To fix this, can potentially move the buttons lower by increasing their padding top
+or highlight the image to be removed (in red) on remove image button hover (border or potentially overlay)
+Check to see if the new border functionality is not causing users to think that on hovering the delete shape button, the shape would
+be highlighted
+
+check if export datasets is enough of an indicator that it is a download functionality
+(reason not using download is because the word is long for the popup)
+
+Or maybe having the 'Download Datasets' popover and Export button is clear enough
+
+Change the HTML naming conventions with the final decisions!!!!
+
+--------------------------------------------------
+
+the word "current" is used heavily within this project and should be replaced with "active"
+
+ideally should write new code in a separate module to enable code splitting into separate chunks (check is sharing is required)
+
+the dimensions used for recording examples were 1920x822
+
+The export datasets button is not disabled on load time to enable the user explore the formats available
+
+encode all non-alphanumeric symbols in index into entity code
+
+Decided not to have a continue to edit polygon button on the popup as it made it look vulgar and does is not a functionality that users
+would really want from the get-go as the rest of the polygon edit tools would enable them to ammend their polygons post creation
+
+Decided not to use image segmentation because it works on pixel bases, where each and every boundary is drawn by an array of pixels
+However, can be achieved by generating an algorithm that will draw polygons based on the boundaries found on the pixels variable's value
+on line 318, file called as segment-annotator.js.
+
+https://github.com/kyamagu/js-segment-annotator
+
+The following repo does use fabricjs, but to only draw a line;
+https://github.com/AKSHAYUBHAT/ImageSegmentation
+
+The nice to haves:
+
+when a user tries to drop an image on top of the app screen, it should automatically trigger uplaod (or in the case of uploading datasets - add to the mdodal)
+https://webpack.js.org/guides/caching/#extracting-boilerplate
+
+split up the result bundle into chunks to increase download
+
+Use the following to identify the browser:
+https://github.com/WhichBrowser/Parser-JavaScript?fbclid=IwAR0pxGzSJEdjUKMkWRryUI8N5c81h5YyiK1fVXCK_IamftA_vCpD21DygyM
+
+select multiple images or shapes to delete (via ctrl)
+
+can update the image list thumbnails by taking screenshot from farbicjs canvas when something changes
+
+the label should not track off the screen
+
+polygon size reduction when zoomed in is a little bit off
+
+I believe the bounding box drawing bottom edge is not working in horizontally narrow images going by the trend
+
+control the darkness of the background
+
+control the thickness of shape corner sizes
+
+control the size of labels
+
+change label colors
+
+rebind keys
+
+export custom settings
+
+animations for image upload, new label create
+
+should alert the user when unsaved changes before leaving (potentially too intrusive for new people)
+
+
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
