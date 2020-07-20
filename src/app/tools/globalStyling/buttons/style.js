@@ -11,6 +11,7 @@ function applyLargeScreenButtonsStyle(buttonElements) {
   buttonElements.labellerModalCancelButtonElement.style.paddingBottom = '4px';
   applyStylingToElementsArray(buttonElements.buttonClassElements, 'lineHeight', 1.35);
   applyStylingToElementsArray(buttonElements.popupLabelButtonClassElements, 'paddingTop', '6px');
+  applyStylingToElementsArray(buttonElements.popupLabelDisabledButtonClassElements, 'paddingTop', '6px');
   if (IS_FIREFOX) {
     buttonElements.exportDatasetsPopupExportButton.style.paddingTop = '5px';
     buttonElements.exportDatasetsPopupExportButton.style.paddingBottom = '7px';
