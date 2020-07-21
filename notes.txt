@@ -2,8 +2,6 @@ zoom fix - check how it looks after making the original image full height
 
 add gifs
 
-think about the lincense
-
 rename mylabel to myvision
 
 attach minified css to webpack
