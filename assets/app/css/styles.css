@@ -1733,7 +1733,8 @@ body {
   right: 0;
   margin: auto;
   max-width: 100%;
-  max-height: 100%
+  max-height: 100%;
+  user-select: none;
 }
 
 .image-list-thumbnail-color-overlay {

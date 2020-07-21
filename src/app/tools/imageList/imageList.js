@@ -96,6 +96,8 @@ function addNewItemToImageList(imageData) {
   imageThumbnailElement.id = newImageId;
   imageThumbnailElement.classList.add('image-list-thumbnail-image');
   imageThumbnailElement.src = imageData.src;
+  imageThumbnailElement.setAttribute('draggable', false);
+  imageThumbnailElement.setAttribute('ondragstart', 'return false');
   appendAnimationReadyStyling(imageThumbnailElement);
   const colorOverlayElement = initiateDivElement();
   colorOverlayElement.classList.add('image-list-thumbnail-color-overlay');

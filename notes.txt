@@ -4,8 +4,6 @@ add gifs
 
 think about the lincense
 
-potentially use 'logo with ai.png' as a github background, or just use the eye 
-
 rename mylabel to myvision
 
 attach minified css to webpack
