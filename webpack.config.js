@@ -10,22 +10,27 @@ module.exports = () => {
   const loggingLevel = env === 'production' ? 'normal' : { assets: false, modules: false, children: false };
   const outputDirectory = env === 'production' ? 'public' : 'publicDev';
   const outputFileName = env === 'production' ? '[name].[contenthash].js' : '[name].js';
-  const fabricjsFileExtension = env === 'production' ? '.min.js' : '.js';
+  const externalsFileExtension = env === 'production' ? '.min.js' : '.js';
+  const externalsDirectory = env === 'production' ? 'externalsProd' : 'externalsDev';
   const plugins = [
     new FailOnErrorsPlugin({
       failOnErrors: true,
       failOnWarnings: true,
     }),
     new HtmlWebpackPlugin({
-      fabricjsFileExtension,
+      externalsFileExtension,
       template: 'src/devIndexTemplate.html',
       minify: false,
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: './src/assets', to: 'assets' },
+        { from: './src/assets/css', to: 'assets/css' },
+        { from: './src/assets/images', to: 'assets/images' },
+        { from: './src/assets/svg', to: 'assets/svg' },
+        { from: `./src/assets/externals/${externalsDirectory}`, to: 'assets/externals' },
       ],
-    })];
+    }),
+  ];
   if (env === 'production') {
     plugins.push(new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [`./${outputDirectory}/*`],

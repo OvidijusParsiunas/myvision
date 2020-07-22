@@ -4,8 +4,6 @@ add gifs
 
 rename mylabel to myvision
 
-attach minified css to webpack
-
 remove unused asset files
 
 remove 9999 for upload images when want to trigger the ci/cd
