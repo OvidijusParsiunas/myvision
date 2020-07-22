@@ -43,7 +43,7 @@ module.exports = () => {
     },
     output: {
       filename: outputFileName,
-      path: path.resolve(__dirname, './publicDev'),
+      path: path.resolve(__dirname, `./${outputDirectory}`),
     },
     externals: {
       fabric: 'fabric',
