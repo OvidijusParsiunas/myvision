@@ -7,18 +7,35 @@ const path = require('path');
 const env = process.env.NODE_ENV || 'development';
 
 module.exports = () => {
-  const loggingLevel = env === 'production' ? 'normal' : { assets: false, modules: false, children: false };
-  const outputDirectory = env === 'production' ? 'public' : 'publicDev';
-  const outputFileName = env === 'production' ? '[name].[contenthash].js' : '[name].js';
-  const externalsFileExtension = env === 'production' ? '.min.js' : '.js';
-  const externalsDirectory = env === 'production' ? 'externalsProd' : 'externalsDev';
-  const plugins = [
+  let plugins = [];
+  let config = {};
+  if (env === 'production') {
+    config = {
+      loggingLevel: 'normal',
+      outputDirectory: 'public',
+      outputFileName: '[name].[contenthash].js',
+      externalsFileExtension: '.min.js',
+      externalsDirectory: 'externalsProd',
+    };
+    plugins.push(new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [`./${config.outputDirectory}/*`],
+    }));
+  } else {
+    config = {
+      loggingLevel: { assets: false, modules: false, children: false },
+      outputDirectory: 'publicDev',
+      outputFileName: '[name].js',
+      externalsFileExtension: '.js',
+      externalsDirectory: 'externalsDev',
+    };
+  }
+  plugins = plugins.concat([
     new FailOnErrorsPlugin({
       failOnErrors: true,
       failOnWarnings: true,
     }),
     new HtmlWebpackPlugin({
-      externalsFileExtension,
+      externalsFileExtension: config.externalsFileExtension,
       template: 'src/devIndexTemplate.html',
       minify: false,
     }),
@@ -27,23 +44,18 @@ module.exports = () => {
         { from: './src/assets/css', to: 'assets/css' },
         { from: './src/assets/images', to: 'assets/images' },
         { from: './src/assets/svg', to: 'assets/svg' },
-        { from: `./src/assets/externals/${externalsDirectory}`, to: 'assets/externals' },
+        { from: `./src/assets/externals/${config.externalsDirectory}`, to: 'assets/externals' },
       ],
     }),
-  ];
-  if (env === 'production') {
-    plugins.push(new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [`./${outputDirectory}/*`],
-    }));
-  }
+  ]);
   return {
     entry: {
       browserSupportBundle: './src/browserSupport/index.js',
       appBundle: './src/app/index.js',
     },
     output: {
-      filename: outputFileName,
-      path: path.resolve(__dirname, `./${outputDirectory}`),
+      filename: config.outputFileName,
+      path: path.resolve(__dirname, `./${config.outputDirectory}`),
     },
     externals: {
       fabric: 'fabric',
@@ -68,7 +80,7 @@ module.exports = () => {
       ],
     },
     mode: env,
-    stats: loggingLevel,
+    stats: config.loggingLevel,
     plugins,
     performance: {
       maxEntrypointSize: 340000,
