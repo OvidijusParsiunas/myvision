@@ -12,6 +12,7 @@
       "fs": false
     },
     "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-loader": "^4.0.2",
@@ -37,5 +38,10 @@
   "bugs": {
     "url": "https://github.com/OvidijusParsiunas/mylabel/issues"
   },
-  "homepage": "https://github.com/OvidijusParsiunas/mylabel#readme"
+  "homepage": "https://github.com/OvidijusParsiunas/mylabel#readme",
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "file-loader": "^6.0.0",
+    "style-loader": "^1.2.1"
+  }
 }
