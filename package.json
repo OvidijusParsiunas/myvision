@@ -1,5 +1,5 @@
 {
-  "name": "mylabel",
+  "name": "myvision",
   "version": "1.0.0",
   "description": "This is an image labelling tool for generating computer vision training data on the web.",
   "main": "index.js",
@@ -31,15 +31,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OvidijusParsiunas/mylabel.git"
+    "url": "git+https://github.com/OvidijusParsiunas/myvision.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/OvidijusParsiunas/mylabel/issues"
+    "url": "https://github.com/OvidijusParsiunas/myvision/issues"
   },
-  "homepage": "https://github.com/OvidijusParsiunas/mylabel#readme",
+  "homepage": "https://github.com/OvidijusParsiunas/myvision#readme",
   "devDependencies": {
+    "cname-webpack-plugin": "^2.0.1",
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
     "style-loader": "^1.2.1"

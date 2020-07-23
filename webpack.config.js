@@ -1,7 +1,8 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FailOnErrorsPlugin = require('fail-on-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CNAMEWebpackPlugin = require('cname-webpack-plugin');
 const path = require('path');
 
 const env = process.env.NODE_ENV || 'development';
@@ -17,9 +18,13 @@ module.exports = () => {
       externalsFileExtension: '.min.js',
       externalsDirectory: 'externalsProd',
     };
-    plugins.push(new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [`./${config.outputDirectory}/*`],
-    }));
+    plugins = plugins.concat([
+      new CleanWebpackPlugin({
+        cleanOnceBeforeBuildPatterns: [`./${config.outputDirectory}/*`],
+      }),
+      new CNAMEWebpackPlugin({
+        domain: 'myvision.ai',
+      })]);
   } else {
     config = {
       loggingLevel: { assets: false, modules: false, children: false },

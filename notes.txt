@@ -2,8 +2,6 @@ zoom fix - check how it looks after making the original image full height
 
 add gifs
 
-rename mylabel to myvision
-
 remove unused asset files
 
 remove 9999 for upload images when want to trigger the ci/cd
@@ -11,6 +9,8 @@ remove 9999 for upload images when want to trigger the ci/cd
 social media preview image for https://myvision.ai
 
 delete travis-ci webhook if not going to be using it
+
+delete CNAME
 
 ---------------------------------------------
 
