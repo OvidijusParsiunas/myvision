@@ -30,6 +30,7 @@ function repopulateCanvasReference(canvas) {
   assignCanvasForSettingsPopup(canvas);
   assignCanvasForImageList(canvas);
   initialiseZoomVariables(canvas);
+  console.log('incorrect');
 }
 
 function constructCanvas() {
