@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <title>MyVision</title>
   <meta name="description" content="MyVision">
-  <script src="public/assets/externals/fabricjs/fabric.min.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="public/assets/css/styles.css?v=1.0">
-  <link rel="icon" href="public/assets/images/favicon 29.png">
+  <script src="assets/externals/fabricjs/fabric.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
+  <link rel="icon" href="assets/images/favicon 29.png">
   <title></title>
 </head>
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
@@ -15,13 +15,13 @@
     <div class="modal-title small-title">Welcome</div>
     <div class="modal-title-border-line"></div>
     <div id="welcome-modal-description" class="modal-description">
-      <img id="welcome-modal-vision-ai-logo" src="public/assets/svg/eye 88.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      <img id="welcome-modal-vision-ai-logo" src="assets/svg/eye 88.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
       MyVision is a free computer vision based training data generation tool.
-      <br><br><img src="public/assets/svg/documents.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      <br><br><img src="assets/svg/documents.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
       It supports a variety of popular data formats to help you build a model that suits your needs.
-      <br><br><img src="public/assets/svg/electronics.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      <br><br><img src="assets/svg/electronics.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
       Label all your images automatically by utilizing an embedded machine learning model.
-      <br><br><img src="public/assets/svg/password3.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
+      <br><br><img src="assets/svg/password3.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
       No data will ever leave the privacy of your computer as this tool is built to operate locally on your browser.
     </div>
     <div id="welcome-modal-buttons" class="buttons modal-buttons">
@@ -34,10 +34,10 @@
     </svg>
   </div>
   <div id="title-panel">
-  <img id="title-logo" src="public/assets/svg/eye 88.svg" draggable="false" alt="visibility">
+  <img id="title-logo" src="assets/svg/eye 88.svg" draggable="false" alt="visibility">
     <div id="title-text">MyVision</div>
     <a id="title-github-mark-container" href="https://github.com/OvidijusParsiunas/mylabel" target="_blank">
-      <img id="title-github-mark" draggable="false" alt="GitHub-Mark-32px.png" src="public/assets/images/GitHub-Mark-32px.png">
+      <img id="title-github-mark" draggable="false" alt="GitHub-Mark-32px.png" src="assets/images/GitHub-Mark-32px.png">
     </a>
     <div id="github-mark-button-popover" class="core-button-hover-popover">GitHub</div>
   </div>
@@ -236,52 +236,52 @@
     <div id="left-side-bar">
       <div id="left-side-bar-top-border"></div>
       <button id="edit-shapes-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="editShapes(this)">
-        <img id="edit-shapes-icon" src="public/assets/svg/interface.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="edit-shapes-icon" src="assets/svg/interface.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="default-button-popover">Edit Shapes (E)</div>
       <button id="create-bounding-box-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="createNewBndBox()">
-        <img id="new-bounding-box-icon" src="public/assets/svg/method-draw-image (13).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="new-bounding-box-icon" src="assets/svg/method-draw-image (13).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="bounding-box-button-popover">New Bounding box (W)</div>
       <button id="create-polygon-button" class="toolkit-button toolkit-button-default" type="button" style="display: table-cell" onmouseup="createNewPolygon()">
-        <img id="new-polygon-icon" src="public/assets/svg/method-draw-image (60).svg" draggable="false" class="toolkit-button-icon" alt="visibility"></img>
+        <img id="new-polygon-icon" src="assets/svg/method-draw-image (60).svg" draggable="false" class="toolkit-button-icon" alt="visibility"></img>
       </button>
       <div class="core-button-hover-popover" id="polygon-button-popover">New Polygon (Q)</div>
       <button id="add-points-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="addPoints(this)">
-        <img id="add-points-icon" src="public/assets/svg/method-draw-image (70).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="add-points-icon" src="assets/svg/method-draw-image (70).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="add-points-button-popover">Add Points to Polygon (A)</div>
       <button id="remove-points-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="removePoint(this)">
-        <img id="remove-points-icon" src="public/assets/svg/method-draw-image (69).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="remove-points-icon" src="assets/svg/method-draw-image (69).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="remove-points-button-popover">Remove Polygon Points (R)</div>
       <button id="remove-shape-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="removeShape()">
-        <img id="remove-shape-icon" src="public/assets/svg/method-draw-image (79).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="remove-shape-icon" src="assets/svg/method-draw-image (79).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="remove-shape-button-popover">Remove Shape (Del)</div>
       <div id="left-side-bar-separator"></div>
       <button id="upload-datasets-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="uploadDatasets()">
-        <img id="upload-datasets-icon" src="public/assets/svg/method-draw-image (99).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="upload-datasets-icon" src="assets/svg/method-draw-image (99).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="upload-datasets-button-popover">Upload Datasets</div>
       <button id="export-datasets-button" class="export-datasets-popup-item toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="exportDatasets()">
-        <img id="export-datasets-icon" src="public/assets/svg/method-draw-image - 2020-05-03T194003.376.svg" draggable="false" class="export-datasets-popup-item toolkit-button-icon" alt="visibility">
+        <img id="export-datasets-icon" src="assets/svg/method-draw-image - 2020-05-03T194003.376.svg" draggable="false" class="export-datasets-popup-item toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="export-datasets-button-popover">Export Datasets</div>
       <button id="machine-learning-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="displayMachineLearningModal()">
-        <img id="machine-learning-icon" src="public/assets/svg/electronics.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="machine-learning-icon" src="assets/svg/electronics.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="machine-learning-button-popover">Machine Learning</div>
       <button id="zoom-in-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="zoom('in')">
-        <img id="zoom-in-icon" src="public/assets/svg/multimedia (1).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="zoom-in-icon" src="assets/svg/multimedia (1).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="zoom-in-button-popover">Zoom In</div>
       <button id="zoom-out-button" class="toolkit-button toolkit-button-default" style="display: table-cell" onmouseup="zoom('out')">
-        <img id="zoom-out-icon" src="public/assets/svg/magnifying-glass.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        <img id="zoom-out-icon" src="assets/svg/magnifying-glass.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="zoom-out-button-popover">Zoom Out</div>
       <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default" style="display: table-cell;" onmouseup="displaySettingsPopup()">
-        <img id="settings-icon" src="public/assets/svg/cogwheels.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
+        <img id="settings-icon" src="assets/svg/cogwheels.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="settings-button-popover">Settings</div>
     </div>
@@ -298,13 +298,13 @@
             <div id="image-list-title-text">Images:</div>
             <div id="remove-images-button-container">
               <button id="remove-images-button" class="toolkit-button toolkit-button-default">
-                <img id="remove-images-button-icon" src="public/assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeImage()">
+                <img id="remove-images-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeImage()">
               </button>
             </div>
             <div id="remove-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Remove Image</div>
             <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
             <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload()">
-              <img id="upload-images-icon" src="public/assets/svg/method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
+              <img id="upload-images-icon" src="assets/svg/method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
             </button>
             <div id="upload-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position" >Upload Images</div>
           </div>
@@ -340,9 +340,9 @@
   <div id="inadequate-client-resources-overlay" style="display: none">
   <div id="inadequate-client-resources-overlay-contents">
     <div id="inadequate-client-resources-overlay-image-container">
-      <img id="inadequate-client-resources-overlay-image" src="public/assets/svg/overlay 16.svg" draggable="false" alt="visibility">
+      <img id="inadequate-client-resources-overlay-image" src="assets/svg/overlay 16.svg" draggable="false" alt="visibility">
     </div>
     <div id="inadequate-client-resources-overlay-text"></div>
   </div>
-<script src="public/browserSupportBundle.b5251de0268b25af727e.js"></script><script src="public/appBundle.81abeabb8b68b95e388a.js"></script></body>
+<script src="browserSupportBundle.b5251de0268b25af727e.js"></script><script src="appBundle.da700624f12b1c4ff790.js"></script></body>
 </html>
