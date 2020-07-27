@@ -8,7 +8,6 @@ import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteract
 import assignCanvasForResizeWhenWindowResize from '../tools/globalStyling/windowResize';
 import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
 import { assignCanvasToDimWindowService } from '../tools/dimWindow/dimWindowService';
-import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
 import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/buttonClickEvents';
 import { assignCanvasForHotKeys } from '../keyEvents/keyboard/hotKeys';
@@ -29,7 +28,6 @@ function repopulateCanvasReference(canvas) {
   assignCanvasForLabelAndShapeBuilder(canvas);
   assignCanvasForSettingsPopup(canvas);
   assignCanvasForImageList(canvas);
-  initialiseZoomVariables(canvas);
 }
 
 function constructCanvas() {
