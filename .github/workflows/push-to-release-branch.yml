@@ -25,6 +25,7 @@ jobs:
           BRANCH: releases/test # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy from (source branch).
           TARGET_FOLDER: public
+          CLEAN: true
       - name: Deploy 2 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
