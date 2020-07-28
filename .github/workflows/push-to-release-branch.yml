@@ -25,3 +25,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: releases/test # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy from (source branch).
+          TARGET_FOLDER: public
