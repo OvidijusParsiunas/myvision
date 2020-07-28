@@ -22,13 +22,15 @@
     "html-webpack-plugin": "^4.3.0",
     "jszip": "^3.5.0",
     "minimist": "^1.2.5",
+    "rimraf": "^3.0.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack",
+    "delete": "rimraf public"
   },
   "repository": {
     "type": "git",

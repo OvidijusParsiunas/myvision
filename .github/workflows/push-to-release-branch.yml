@@ -17,6 +17,7 @@ jobs:
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
           npm install
+          npm run delete
           npm run build
       - name: Deploy 1 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -24,5 +25,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: releases/test # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy from (source branch).
-          TARGET_FOLDER: public
-          CLEAN: true
