@@ -1,0 +1,11 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="358.4375" x2="49" y1="288.4375" x1="49" stroke-width="25.5" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="345.4375" x2="56" y1="345.4375" x1="345" stroke-width="25.5" stroke="#000" fill="none"/>
+  <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="358.4375" x2="352" y1="284.437497" x1="352" stroke-width="25.5" fill="none"/>
+  <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="301.4375" x2="200" y1="32.437502" x1="200" fill-opacity="null" stroke-opacity="null" stroke-width="30.5" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="290.4375" x2="204" y1="190.4375" x1="280" fill-opacity="null" stroke-opacity="null" stroke-width="30.5" stroke="#000" fill="none"/>
+  <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_11" y2="192.437496" x2="117.000004" y1="289.4375" x1="196" fill-opacity="null" stroke-opacity="null" stroke-width="30.5" fill="none"/>
+ </g>
+</svg>
