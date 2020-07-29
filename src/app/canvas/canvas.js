@@ -9,9 +9,7 @@ import assignCanvasForResizeWhenWindowResize from '../tools/globalStyling/window
 import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
 import { assignCanvasToDimWindowService } from '../tools/dimWindow/dimWindowService';
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
-import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/buttonClickEvents';
 import { assignCanvasForHotKeys } from '../keyEvents/keyboard/hotKeys';
-import assignCanvasForImageList from '../tools/imageList/canvasManagement';
 
 let currentCanvasInstance = null;
 
@@ -26,8 +24,6 @@ function repopulateCanvasReference(canvas) {
   assignCanvasForDrawingShapesViaCoordinates(canvas);
   assignCanvasForResizeWhenWindowResize(canvas);
   assignCanvasForLabelAndShapeBuilder(canvas);
-  assignCanvasForSettingsPopup(canvas);
-  assignCanvasForImageList(canvas);
 }
 
 function constructCanvas() {
