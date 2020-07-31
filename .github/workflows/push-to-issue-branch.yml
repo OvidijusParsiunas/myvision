@@ -2,7 +2,7 @@ name: push to issue branch and check if the build is successful
 on:
   push:
     branches:
-    - issue/*
+    - releases/*
 
 jobs:
   build-and-deploy:
