@@ -1,6 +1,6 @@
-name: push to master branch and deploy to gh-pages branch
+name: pull request to master branch and deploy to the gh-pages branch
 on:
-  push:
+  pull_request:
     branches:
     - master
 

@@ -1,8 +1,8 @@
-name: MyVision build
+name: pull request to master branch and deploy to its public folder
 on:
-  push:
+  pull_request:
     branches:
-    - releases/*
+    - master
 
 jobs:
   build-and-deploy:
@@ -22,6 +22,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: releases/test # The branch the action should deploy to.
+          BRANCH: master # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy from (source branch).
           TARGET_FOLDER: public
