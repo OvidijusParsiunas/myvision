@@ -12,6 +12,8 @@ delete travis-ci webhook if not going to be using it
 
 delete CNAME
 
+add margin to the description of the upload datasets modal
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
