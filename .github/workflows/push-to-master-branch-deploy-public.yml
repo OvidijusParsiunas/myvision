@@ -1,6 +1,6 @@
 name: push to master branch and deploy to its public folder
 on:
-  pull_request:
+  push:
     branches:
     - master
 
