@@ -1,4 +1,4 @@
-name: push to master branch and deploy to gh-pages branch
+name: push to master branch and deploy to the gh-pages branch
 on:
   push:
     branches:

@@ -1,4 +1,4 @@
-name: pull request to master branch and deploy to its public folder
+name: pull request to master branch and check if the build is successful
 on:
   pull_request:
     branches:
@@ -18,10 +18,3 @@ jobs:
         run: |
           npm install
           npm run build
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: master # The branch the action should deploy to.
-          FOLDER: public # The folder the action should deploy from (source branch).
-          TARGET_FOLDER: public

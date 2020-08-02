@@ -1,4 +1,4 @@
-name: pull request to master branch and deploy to the gh-pages branch
+name: push to master branch and deploy to its public folder
 on:
   pull_request:
     branches:
@@ -22,5 +22,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
+          BRANCH: master # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy from (source branch).
+          TARGET_FOLDER: public
