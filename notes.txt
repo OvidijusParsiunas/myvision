@@ -12,6 +12,10 @@ delete travis-ci webhook if not going to be using it
 
 delete CNAME
 
+add margin to the description of the upload datasets modal
+
+the labeller modal padding bottom looks low for higher screen scale
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

@@ -1,8 +1,8 @@
-name: MyVision build
+name: pull request to master branch and check if the build is successful
 on:
-  push:
+  pull_request:
     branches:
-    - releases/*
+    - master
 
 jobs:
   build-and-deploy:
