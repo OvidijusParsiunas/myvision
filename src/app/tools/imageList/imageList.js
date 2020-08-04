@@ -296,7 +296,7 @@ function addSingleImageToList(imageMetadata, imageData) {
 function addImageFromMultiUploadToList(imageMetadata, imageData, isfirstFromMany) {
   addNewImage(imageMetadata.name, imageData);
   setDefaultImageProperties(images[newImageId], imageMetadata);
-  if (images.length === 1 || isfirstFromMany || images.length === 9996) {
+  if (images.length === 1 || isfirstFromMany || images.length === 9995) {
     highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
     saveAndRemoveCurrentImageDetails();
     changeCurrentImageNameElementText(imageMetadata.name, isfirstFromMany);
