@@ -19,7 +19,9 @@ module.exports = () => {
       externalsDirectory: 'externalsProd',
     };
     plugins = plugins.concat([
-      new CleanWebpackPlugin(),
+      new CleanWebpackPlugin({
+        cleanOnceBeforeBuildPatterns: [`./${config.outputDirectory}/*`],
+      }),
       new CNAMEWebpackPlugin({
         domain: 'myvision.ai',
       })]);
