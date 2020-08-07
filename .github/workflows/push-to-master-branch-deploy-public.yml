@@ -23,6 +23,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: master # The branch the action should deploy to.
-          FOLDER: public # The folder the action should deploy from (source branch).
+          FOLDER: tempDeployFolder # The folder the action should deploy from (source branch).
           TARGET_FOLDER: public
           CLEAN: true
