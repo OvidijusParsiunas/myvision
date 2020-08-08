@@ -4,8 +4,6 @@ add gifs
 
 remove unused asset files
 
-remove 9999 for upload images when want to trigger the ci/cd
-
 social media preview image for https://myvision.ai
 
 delete travis-ci webhook if not going to be using it
@@ -15,6 +13,8 @@ delete CNAME
 add margin to the description of the upload datasets modal
 
 the labeller modal padding bottom looks low for higher screen scale
+
+check whethere the hyperlink to index.html in the readme is enough
 
 ---------------------------------------------
 
