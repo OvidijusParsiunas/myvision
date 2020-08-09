@@ -1,4 +1,3 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FailOnErrorsPlugin = require('fail-on-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -19,7 +18,6 @@ module.exports = () => {
       externalsDirectory: 'externalsProd',
     };
     plugins = plugins.concat([
-      new CleanWebpackPlugin(),
       new CNAMEWebpackPlugin({
         domain: 'myvision.ai',
       })]);
