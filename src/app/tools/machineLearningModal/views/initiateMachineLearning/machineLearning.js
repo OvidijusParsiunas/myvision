@@ -142,14 +142,14 @@ function downloadScript(script, url, resolve, reject) {
 function downloadCOCOSSD(status) {
   markScriptDownloadSuccessfull(status);
   return new Promise((resolve, reject) => {
-    downloadScript(cocoSSDScript, 'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@1.1.0',
+    downloadScript(cocoSSDScript, 'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.1.0',
       resolve, reject);
   });
 }
 
 function downloadTensorflowJS() {
   return new Promise((resolve, reject) => {
-    downloadScript(tensorflowJSScript, 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0',
+    downloadScript(tensorflowJSScript, 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.1',
       resolve, reject);
   });
 }

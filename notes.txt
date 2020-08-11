@@ -14,6 +14,14 @@ the labeller modal padding bottom looks low for higher screen scale
 
 check whethere the hyperlink to index.html in the readme is enough
 
+the submit button on the machine learning modal does not seem to have enough padding at the bottom
+
+potentially move machine learning modal generated labels a little bit to the left if their width is short (startup only - remove if user has typed)
+
+welcome modal button margin top needs to be reduced by 1px for smaller screens
+
+the current tfjs library version displays a lot of warnings in the console, look out for a new tfjs version to remove them (which supports source maps)
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
