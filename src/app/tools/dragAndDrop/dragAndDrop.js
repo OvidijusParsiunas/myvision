@@ -58,7 +58,7 @@ function assignListener(element, events, handler) {
 function assignEventListeners() {
   assignListener(windowDragAndDropOverlayElement, ['dragenter', 'dragover', 'dragleave', 'drop'], preventDefaults);
   assignListener(windowDragAndDropOverlayElement, ['drop'], dropHandler);
-  assignListener(windowDragAndDropOverlayElement, ['dragleave', 'drop'], hideDragAndDropOverlays);
+  assignListener(windowDragAndDropOverlayElement, ['dragleave', 'drop', 'mouseup'], hideDragAndDropOverlays);
   assignListener(bodyElement, ['dragenter'], displayDragAndDropOverlays);
 }
 

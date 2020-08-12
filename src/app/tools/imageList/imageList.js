@@ -97,6 +97,7 @@ function addNewItemToImageList(imageData) {
   imageThumbnailElement.classList.add('image-list-thumbnail-image');
   imageThumbnailElement.src = imageData.src;
   imageThumbnailElement.setAttribute('draggable', false);
+  // for firefox
   imageThumbnailElement.setAttribute('ondragstart', 'return false');
   appendAnimationReadyStyling(imageThumbnailElement);
   const colorOverlayElement = initiateDivElement();
