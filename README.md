@@ -45,7 +45,7 @@ You can import existing annotation projects and continue working on them in MyVi
 No setup is required to run this project, open the [index.html](public/index.html) file and you are all set! However, if you want to make changes or contribute to this repository, please follow the instructions below:
 
 ```
-# Requirements: Node version 8+ and NPM version 6+
+# Requirements: Node version 10+ and NPM version 6+
 
 # Install node dependencies:
 $ npm install
