@@ -1933,6 +1933,9 @@ body {
   #remove-images-modal-checkbox-parent {
     line-height: calc(16.5px / var(--screen-size-delta));
   }
+  #welcome-modal-description {
+    margin-bottom: calc(14px / var(--screen-size-delta));
+  }
 }
 
 /* removing dotted border when in focus on firefox */
