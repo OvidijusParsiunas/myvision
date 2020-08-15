@@ -689,7 +689,9 @@ input:focus {
   padding-left: calc(5px / var(--screen-size-delta));
 }
 
-/* repeating code for the submit buttons */
+#export-datasets-popup-export-button-container {
+  margin-top: 0px;
+}
 
 #export-datasets-popup-export-button {
   margin-top: calc(5px / var(--screen-size-delta));
