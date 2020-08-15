@@ -154,6 +154,10 @@ input:focus {
   text-decoration: none;
 }
 
+#labeller-modal-buttons {
+  margin-bottom: calc(3px / var(--screen-size-delta));
+}
+
 #labeller-modal-submit-button {
   width: calc(61px / var(--screen-size-delta));
   margin-right: calc(4px / var(--screen-size-delta));
