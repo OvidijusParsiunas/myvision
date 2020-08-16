@@ -52,6 +52,8 @@ $ npm install
 
 # Run the project in watch mode:
 $ npm run watch
+
+# All changes should be made in the src directory and observed in publicDev
 ```
 
 ## Citation

@@ -68,7 +68,7 @@
       </table>
       <div id="chromium-fake-popup-table-right-border-fix" class="chromium-right-border-fix" style="display: none"></div>
       <div id="chromium-fake-popup-table-bottom-border-fix" class="chromium-bottom-border-fix" style="display: none"></div>
-      <div class="buttons popup-label-buttons">
+      <div id="labeller-modal-buttons" class="buttons popup-label-buttons">
         <div id="labeller-modal-submit-button" class="popup-label-button popup-proceed-button" onclick="labelShape()">Submit</div>
         <div id="labeller-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelLabellingProcess()">Cancel</div>
       </div>
@@ -222,7 +222,7 @@
               </td></tr>
           </table>
         </div>
-      <div class="export-datasets-popup-item button buttons popup-label-buttons" style="margin-top: 0px">
+      <div id="export-datasets-popup-export-button-container" class="export-datasets-popup-item button buttons popup-label-buttons">
         <div id="export-datasets-popup-export-button" class="export-datasets-popup-item popup-label-button-disabled" onclick="exportDataset()">Export</div>
       </div>
     </div>
@@ -306,7 +306,7 @@
             <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload()">
               <img id="upload-images-icon" src="assets/svg/method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
             </button>
-            <div id="upload-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position" >Upload Images</div>
+            <div id="upload-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Upload Images</div>
           </div>
           <div id="image-list-drag-and-drop-overlay" style="display: none"></div>
           <div id="image-list-image-container"></div>

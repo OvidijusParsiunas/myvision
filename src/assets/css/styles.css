@@ -154,6 +154,10 @@ input:focus {
   text-decoration: none;
 }
 
+#labeller-modal-buttons {
+  margin-bottom: calc(3px / var(--screen-size-delta));
+}
+
 #labeller-modal-submit-button {
   width: calc(61px / var(--screen-size-delta));
   margin-right: calc(4px / var(--screen-size-delta));
@@ -685,7 +689,9 @@ input:focus {
   padding-left: calc(5px / var(--screen-size-delta));
 }
 
-/* repeating code for the submit buttons */
+#export-datasets-popup-export-button-container {
+  margin-top: 0px;
+}
 
 #export-datasets-popup-export-button {
   margin-top: calc(5px / var(--screen-size-delta));
@@ -1712,7 +1718,7 @@ body {
 }
 
 .image-switch-button-hover-popover {
-  margin-left: -74px;
+  margin-left: -50px;
   margin-top: calc(11px / var(--screen-size-delta));
 }
 
@@ -1932,6 +1938,9 @@ body {
   }
   #remove-images-modal-checkbox-parent {
     line-height: calc(16.5px / var(--screen-size-delta));
+  }
+  #welcome-modal-description {
+    margin-bottom: calc(14px / var(--screen-size-delta));
   }
 }
 

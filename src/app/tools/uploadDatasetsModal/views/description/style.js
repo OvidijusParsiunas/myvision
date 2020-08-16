@@ -22,7 +22,7 @@ function hideStartButtonElement() {
 }
 
 function moveButtonsGroupElementToLowerPosition() {
-  buttonsGroupElement.style.marginTop = `${18 / getScreenSizeDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${14 / getScreenSizeDelta()}px`;
 }
 
 function displayDescription() {
@@ -34,7 +34,7 @@ function hideDescriptionElement() {
 }
 
 function moveDescriptionToLowerPosition() {
-  descriptionElement.style.marginTop = `${20 / getScreenSizeDelta()}px`;
+  descriptionElement.style.marginTop = `${26 / getScreenSizeDelta()}px`;
 }
 
 function getDefaultDescriptionMarkup() {
