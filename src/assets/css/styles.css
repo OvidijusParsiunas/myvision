@@ -1718,7 +1718,7 @@ body {
 }
 
 .image-switch-button-hover-popover {
-  margin-left: -74px;
+  margin-left: -50px;
   margin-top: calc(11px / var(--screen-size-delta));
 }
 

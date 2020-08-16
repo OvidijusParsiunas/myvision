@@ -1,8 +1,10 @@
 import { getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../../state';
+import IS_FIREFOX from '../../utils/browserType';
 
 const buttonPopovers = {};
 const HOVER_TIMEOUT = 500;
 const SWITCH_BUTTON_DISPLAY_PERSISTANCE_TIMEOUT = 200;
+let hasUploadImagesButtonBeenClicked = false;
 
 const pendingbuttonPopovers = [];
 let activePopover = null;
@@ -43,8 +45,21 @@ function displayPopover(middlewareChecks, id) {
   activePopover = buttonPopovers[id];
 }
 
+function checkIfButtonShouldBeDisplayedAfterAfterTimeout() {
+  // in firefox, removeActiveButtonPopover is only triggered when an image/images
+  // have started to upload, resultantly setting the doNotDisplayButtonAfterTimeoutState
+  // property after mouseleave has been triggered, this is a fix to the issue
+  if (IS_FIREFOX && hasUploadImagesButtonBeenClicked) {
+    hasUploadImagesButtonBeenClicked = false;
+    return false;
+  }
+  return true;
+}
+
 function removeActiveButtonPopover() {
-  doNotDisplayButtonAfterTimeoutState = true;
+  if (checkIfButtonShouldBeDisplayedAfterAfterTimeout()) {
+    doNotDisplayButtonAfterTimeoutState = true;
+  }
   if (activePopover) {
     activePopover.style.display = 'none';
     activePopover = null;
@@ -107,6 +122,14 @@ function addPopoverFunctionalityToButton(buttonElementId, popoverElementId) {
   buttonPopovers[popoverElement.id] = popoverElement;
 }
 
+// firefox bug fix for displaying popovers after uploading an image
+function removeUploadImagesButtonPopoverBugFix() {
+  const uploadDatasetsButton = document.getElementById('upload-images-button');
+  uploadDatasetsButton.addEventListener('mouseup', () => {
+    hasUploadImagesButtonBeenClicked = true;
+  });
+}
+
 function addPopoverFunctionalityToButtons() {
   addPopoverFunctionalityToButton('edit-shapes-button', 'default-button-popover');
   addPopoverFunctionalityToButton('create-bounding-box-button', 'bounding-box-button-popover');
@@ -123,13 +146,14 @@ function addPopoverFunctionalityToButtons() {
   addPopoverFunctionalityToButton('upload-images-button', 'upload-images-button-popover');
   addPopoverFunctionalityToButton('remove-images-button', 'remove-images-button-popover');
   addPopoverFunctionalityToButton('previous-image-button', 'previous-image-button-popover');
-  addPopoverFunctionalityToButton('next-image-button-popover', 'next-image-button-popover');
+  addPopoverFunctionalityToButton('next-image-button', 'next-image-button-popover');
   addPopoverFunctionalityToButton('title-github-mark-container', 'github-mark-button-popover');
 }
 
 function initialiseCoreButtonPopovers() {
   addPopoverFunctionalityToButtons();
   assignLeftSideBarMouseEnterEvent();
+  if (IS_FIREFOX) removeUploadImagesButtonPopoverBugFix();
 }
 
 export { initialiseCoreButtonPopovers, removeActiveButtonPopover };
