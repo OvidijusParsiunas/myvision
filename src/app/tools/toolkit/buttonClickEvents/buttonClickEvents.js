@@ -1,3 +1,4 @@
+import { removeButtonPopoverIfActive, doNothingIfNotLeftMouseButtonPressWthArg } from '../../utils/buttons/clickMiddleware';
 import {
   createNewBndBoxBtnClick, createNewPolygonBtnClick, settingsBtnClick,
   addPointsBtnClick, removeActiveShapeBtnClick, removePolygonPointBtnClick,
@@ -5,9 +6,9 @@ import {
   zoomBtnClick, machineLearningBtnClick, uploadDatasetsBtnClick,
 } from './facade';
 import {
+  interruptAllCanvasEventsBeforeMultipleFunc, doNothingIfLabellingInProgress,
   doNothingIfLabellingOrAddingNewPoints, interruptNewShapeDrawingWthFunc1OrExecFunc2,
-  interruptAllCanvasEventsBeforeMultipleFunc, func1IfDrawRemovePointsElseInterruptAllWthFunc2,
-  doNothingIfLabellingInProgress, removeButtonPopoverIfActive, interruptAllCanvasEventsBeforeFunc,
+  interruptAllCanvasEventsBeforeFunc, func1IfDrawRemovePointsElseInterruptAllWthFunc2,
 } from './eventMiddleware/buttonEventMiddleware';
 
 function assignToolkitButtonEventHandlers() {
@@ -20,12 +21,12 @@ function assignToolkitButtonEventHandlers() {
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
   window.exportDatasets = removeButtonPopoverIfActive.bind(this, exportDatasetsBtnClick);
   window.uploadDatasets = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
-    resetCanvasEventsToDefault, removeButtonPopoverIfActive, uploadDatasetsBtnClick);
+    [resetCanvasEventsToDefault, removeButtonPopoverIfActive, uploadDatasetsBtnClick]);
   window.displayMachineLearningModal = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
-    resetCanvasEventsToDefault, removeButtonPopoverIfActive, machineLearningBtnClick);
+    [resetCanvasEventsToDefault, removeButtonPopoverIfActive, machineLearningBtnClick]);
   window.removeShape = interruptNewShapeDrawingWthFunc1OrExecFunc2.bind(this,
     resetCanvasEventsToDefault, removeActiveShapeBtnClick);
-  window.zoom = zoomBtnClick;
+  window.zoom = doNothingIfNotLeftMouseButtonPressWthArg.bind(this, zoomBtnClick);
   window.displaySettingsPopup = removeButtonPopoverIfActive.bind(this, settingsBtnClick);
 }
 

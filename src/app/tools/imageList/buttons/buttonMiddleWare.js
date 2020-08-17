@@ -2,6 +2,7 @@ import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
 import { interruptAllCanvasEvents } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { removeActiveButtonPopover } from '../../globalStyling/buttons/popovers';
 import { canSwitchImage } from '../imageList';
+import isLeftMouseButtonClick from '../../utils/buttons/clickEvents';
 
 function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) {
   removeActiveButtonPopover();
@@ -10,12 +11,8 @@ function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) 
   funcObj.uploadImageFiles(input);
 }
 
-function removeButtonPopoverIfActive(func) {
-  removeActiveButtonPopover();
-  if (func) func();
-}
-
-function replaceExistingCanvas(func, func2, direction) {
+function replaceExistingCanvas(func, func2, direction, event) {
+  if (event && !isLeftMouseButtonClick(event)) return;
   removeActiveButtonPopover();
   if (canSwitchImage(direction)) {
     reassignReferenceToNewCanvas();
@@ -26,5 +23,5 @@ function replaceExistingCanvas(func, func2, direction) {
 }
 
 export {
-  interruptAllCanvasEventsBeforeFuncWInputs, removeButtonPopoverIfActive, replaceExistingCanvas,
+  interruptAllCanvasEventsBeforeFuncWInputs, replaceExistingCanvas,
 };

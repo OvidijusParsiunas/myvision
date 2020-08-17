@@ -4,14 +4,19 @@ import {
 } from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { getContinuousDrawingState, getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../../state';
 import { removeActiveButtonPopover } from '../../../globalStyling/buttons/popovers';
+import isLeftMouseButtonClick from '../../../utils/buttons/clickEvents';
+import isElement from '../../../utils/elementType';
 
-function interruptAllCanvasEventsBeforeFunc(func) {
+
+function interruptAllCanvasEventsBeforeFunc(func, event) {
+  if (event && !isLeftMouseButtonClick(event)) return;
   removeActiveButtonPopover();
   interruptAllCanvasEvents();
   if (func) func();
 }
 
-function func1IfDrawRemovePointsElseInterruptAllWthFunc2(func1, func2) {
+function func1IfDrawRemovePointsElseInterruptAllWthFunc2(func1, func2, event) {
+  if (event && !isLeftMouseButtonClick(event)) return;
   removeActiveButtonPopover();
   if (getRemovingPolygonPointsState() && getPolygonDrawingInProgressState()) {
     if (func1) func1();
@@ -21,7 +26,8 @@ function func1IfDrawRemovePointsElseInterruptAllWthFunc2(func1, func2) {
   }
 }
 
-function interruptAllCanvasEventsBeforeMultipleFunc(...funcs) {
+function interruptAllCanvasEventsBeforeMultipleFunc(funcs, event) {
+  if (event && !isLeftMouseButtonClick(event)) return;
   removeActiveButtonPopover();
   interruptAllCanvasEvents();
   funcs.forEach((func) => { func(); });
@@ -37,11 +43,8 @@ function interruptNewShapeDrawingWthFunc1OrExecFunc2(func1, func2) {
   }
 }
 
-function isElement(element) {
-  return element instanceof Element || element instanceof HTMLDocument;
-}
-
-function doNothingIfLabellingInProgress(func, element) {
+function doNothingIfLabellingInProgress(func, element, event) {
+  if (event && !isLeftMouseButtonClick(event)) return;
   if (isElement(element) && element.classList.contains('toolkit-button-disabled')) return;
   removeActiveButtonPopover();
   if (!isLabelling()) {
@@ -49,7 +52,8 @@ function doNothingIfLabellingInProgress(func, element) {
   }
 }
 
-function doNothingIfLabellingOrAddingNewPoints(func, element) {
+function doNothingIfLabellingOrAddingNewPoints(func, element, event) {
+  if (event && !isLeftMouseButtonClick(event)) return;
   if (isElement(element) && element.classList.contains('toolkit-button-disabled')) return;
   removeActiveButtonPopover();
   if (!isLabelling() && !getPolygonDrawingInProgressState()) {
@@ -66,13 +70,7 @@ function interruptAllCanvasEventsIfLabellingInProgress(func) {
   if (func) func();
 }
 
-function removeButtonPopoverIfActive(func) {
-  removeActiveButtonPopover();
-  if (func) func();
-}
-
 export {
-  removeButtonPopoverIfActive,
   doNothingIfLabellingInProgress,
   interruptAllCanvasEventsBeforeFunc,
   doNothingIfLabellingOrAddingNewPoints,
