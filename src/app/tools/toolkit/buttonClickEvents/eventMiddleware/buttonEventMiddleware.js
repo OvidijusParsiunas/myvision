@@ -33,7 +33,9 @@ function interruptAllCanvasEventsBeforeMultipleFunc(funcs, event) {
   funcs.forEach((func) => { func(); });
 }
 
-function interruptNewShapeDrawingWthFunc1OrExecFunc2(func1, func2) {
+function interruptNewShapeDrawingWthFunc1OrExecFunc2(func1, func2, element, event) {
+  if (event && !isLeftMouseButtonClick(event)) return;
+  if (isElement(element) && element.classList.contains('toolkit-button-disabled')) return;
   removeActiveButtonPopover();
   if ((getPolygonDrawingInProgressState() || isLabelling()) && !getContinuousDrawingState()) {
     interruptAllCanvasEvents();
