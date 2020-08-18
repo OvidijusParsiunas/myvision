@@ -9,7 +9,7 @@ import {
   getRemovingPolygonPointsState, setEditingLabelId, getLabelsVisibilityState,
   getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
 } from '../state';
-import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../toolkit/styling/state';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../toolkit/styling/state';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,
@@ -40,6 +40,7 @@ import {
 import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
 import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
 import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
+import { setDoNotDisplayButtonAfterTimeoutStateToFalse } from '../globalStyling/buttons/popovers';
 
 let isEditingLabel = false;
 let keyDownEventTimeOut = 0;
@@ -93,7 +94,7 @@ function findPopupElement() {
   popuplabelOptionsElement = document.getElementById('labeller-modal-options');
 }
 
-function initialiseLabelListFunctionality() {
+function initialiseLabelList() {
   findLabelListElement();
   findPopupElement();
   setDropdownElementWidthVariables();
@@ -451,9 +452,11 @@ function setToShapeEditModeWhenDrawing() {
     if (getRemovingPolygonPointsState()) {
       if (getPolygonDrawingInProgressState()) {
         window.editShapes();
+        setDoNotDisplayButtonAfterTimeoutStateToFalse();
       }
     } else {
       window.editShapes();
+      setDoNotDisplayButtonAfterTimeoutStateToFalse();
     }
   }
 }
@@ -485,7 +488,7 @@ function selectShape() {
 
 function deselectShape() {
   removeHighlightOfListLabel();
-  setRemoveShapeButtonToDisabled();
+  setRemoveLabelsButtonToDisabled();
   if (getRemovingPolygonPointsState()) {
     pointMouseDownEvents({});
     pointMouseUpEvents({});
@@ -622,11 +625,11 @@ function highlightLabel(currentlySelectedShapeName, idArg) {
   if (getRemovingPolygonPointsState() || getAddingPolygonPointsState()) {
     if (currentlySelectedShapeName !== 'bndBox') {
       highlightLabelInTheList(id);
-      setRemoveShapeButtonToDefault();
+      setRemoveLabelsButtonToDefault();
     }
   } else {
     highlightLabelInTheList(id);
-    setRemoveShapeButtonToDefault();
+    setRemoveLabelsButtonToDefault();
   }
 }
 
@@ -936,9 +939,9 @@ window.mouseLeaveLabel = (id) => {
 };
 
 export {
-  finishEditingLabelList,
-  moveSelectedLabelToFrontOfLabelOptions, removeAllLabelListItems, repopulateDropdown,
-  initialiseLabelListFunctionality, addExistingLabelToList, arrowKeyEventsForLabelList,
-  isEditingLabelInLabelList, getCurrentlySelectedLabelShape, addNewLabelToListFromPopup,
-  arrowKeyEventsForLabelOtionsList, removeLabelFromListOnShapeDelete, cancelEditingViaKeyboard,
+  arrowKeyEventsForLabelOtionsList, removeLabelFromListOnShapeDelete,
+  finishEditingLabelList, initialiseLabelList, cancelEditingViaKeyboard,
+  moveSelectedLabelToFrontOfLabelOptions, getCurrentlySelectedLabelShape,
+  isEditingLabelInLabelList, removeAllLabelListItems, repopulateDropdown,
+  addExistingLabelToList, arrowKeyEventsForLabelList, addNewLabelToListFromPopup,
 };

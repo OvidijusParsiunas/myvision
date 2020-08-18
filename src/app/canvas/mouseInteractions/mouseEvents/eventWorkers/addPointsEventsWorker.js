@@ -8,7 +8,7 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/state';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
-import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/state';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
 import { getLastMouseMoveEvent } from '../../../../keyEvents/mouse/mouseMove';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
@@ -30,12 +30,12 @@ let ignoredFirstMouseMovement = false;
 
 function selectShape(shapeId) {
   highlightLabelInTheList(shapeId);
-  setRemoveShapeButtonToDefault();
+  setRemoveLabelsButtonToDefault();
 }
 
 function deselectShape() {
   removeHighlightOfListLabel();
-  setRemoveShapeButtonToDisabled();
+  setRemoveLabelsButtonToDisabled();
 }
 
 function isRightMouseButtonClicked(pointer) {

@@ -6,7 +6,7 @@ import initiateResetCanvasEventsToDefaultEvent from '../../../tools/toolkit/butt
 import { setDefaultCursorMode } from '../../mouseInteractions/cursorModes/defaultMode';
 import { resetLabellerModalOptions } from '../../../tools/labellerModal/style';
 import { getCurrentImageId } from '../../../tools/state';
-import { removeBoundingBox } from '../../../tools/toolkit/buttonClickEvents/facadeWorkers/removeActiveShapeWorker';
+import { removeBoundingBox } from '../../../tools/labelList/removeLabels/removeLabels';
 import { getAllExistingShapes } from '../../objects/allShapes/allShapes';
 import { getNumberOfShapeTypes } from '../../../tools/globalStatistics/globalStatistics';
 import { getCanvasReferences } from '../fabricUtils';

@@ -1,14 +1,14 @@
 import { removeButtonPopoverIfActive, doNothingIfNotLeftMouseButtonPressWthArg } from '../../utils/buttons/clickMiddleware';
 import {
-  createNewBndBoxBtnClick, createNewPolygonBtnClick, settingsBtnClick,
-  addPointsBtnClick, removeActiveShapeBtnClick, removePolygonPointBtnClick,
-  exportDatasetsBtnClick, resetCanvasEventsToDefault, editShapesBtnClick,
+  removePolygonPointBtnClick, createNewPolygonBtnClick,
   zoomBtnClick, machineLearningBtnClick, uploadDatasetsBtnClick,
+  resetCanvasEventsToDefault, editShapesBtnClick, settingsBtnClick,
+  addPointsBtnClick, createNewBndBoxBtnClick, exportDatasetsBtnClick,
 } from './facade';
 import {
+  func1IfDrawRemovePointsElseInterruptAllWthFunc2,
+  doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeFunc,
   interruptAllCanvasEventsBeforeMultipleFunc, doNothingIfLabellingInProgress,
-  doNothingIfLabellingOrAddingNewPoints, interruptNewShapeDrawingWthFunc1OrExecFunc2,
-  interruptAllCanvasEventsBeforeFunc, func1IfDrawRemovePointsElseInterruptAllWthFunc2,
 } from './eventMiddleware/buttonEventMiddleware';
 
 function assignToolkitButtonEventHandlers() {
@@ -24,8 +24,6 @@ function assignToolkitButtonEventHandlers() {
     [resetCanvasEventsToDefault, removeButtonPopoverIfActive, uploadDatasetsBtnClick]);
   window.displayMachineLearningModal = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
     [resetCanvasEventsToDefault, removeButtonPopoverIfActive, machineLearningBtnClick]);
-  window.removeShape = interruptNewShapeDrawingWthFunc1OrExecFunc2.bind(this,
-    resetCanvasEventsToDefault, removeActiveShapeBtnClick);
   window.zoom = doNothingIfNotLeftMouseButtonPressWthArg.bind(this, zoomBtnClick);
   window.displaySettingsPopup = removeButtonPopoverIfActive.bind(this, settingsBtnClick);
 }

@@ -1061,7 +1061,6 @@ input:focus {
 
 #right-side-bar {
   width: 208px;
-  padding-top: calc(8px / var(--screen-size-delta));
   float: right;
   background-color: white;
   height: calc(100vh - 43px);
@@ -1079,7 +1078,6 @@ input:focus {
 .right-side-bar-component {
   display: block;
   left: 0;
-  padding-top: calc(3px / var(--screen-size-delta));
 }
 
 .right-side-bar-component-title {
@@ -1098,6 +1096,39 @@ input:focus {
 
 #label-list {
   width: 100%;
+}
+
+#label-list-title-parent {
+  position: relative;
+  height: calc(29px / var(--screen-size-delta));
+}
+
+#label-list-title-text {
+  position: absolute;
+  bottom: 0.5px;
+}
+
+#remove-labels-button-container {
+  margin-top: calc(7px / var(--screen-size-delta));
+  padding-right: 4px;
+  padding-top: 0px;
+  float: right;
+}
+
+#remove-labels-button {
+  height: calc(21px / var(--screen-size-delta));
+}
+
+#remove-labels-button-icon {
+  width: calc(15.8px / var(--screen-size-delta));
+  padding-top: calc(2.5px / var(--screen-size-delta));
+  padding-left: calc(3.5px / var(--screen-size-delta));
+  padding-right: calc(3px / var(--screen-size-delta));
+}
+
+#remove-labels-button-popover {
+  right: calc(29px / var(--screen-size-delta));
+  margin-top: calc(3px / var(--screen-size-delta));
 }
 
 .labelListItem {
@@ -1585,7 +1616,7 @@ body {
 
 #title-github-mark {
   padding-top: 6px;
-  padding-right: 20px;
+  padding-right: 5px;
   max-width: 22px;
   max-height: 22px;
   float: right;
@@ -1601,8 +1632,8 @@ body {
 }
 
 #github-mark-button-popover {
-  right: 4px;
-  margin-top: 35px;
+  right: 33px;
+  margin-top: 6px;
 }
 
 #image-switch-parent {
@@ -1715,6 +1746,11 @@ body {
 
 .image-list-button-hover-popover-v-position {
   margin-top: calc(-29px / var(--screen-size-delta));
+}
+
+/* should be assigned to the popover id */
+.label-list-button-hover-popover-v-poisition {
+  margin-top: calc(33px / var(--screen-size-delta));
 }
 
 .image-switch-button-hover-popover {

@@ -1,6 +1,5 @@
 import initiateCreateNewBndBoxEvents from './facadeWorkers/createNewBndBoxWorker';
 import initiateCreateNewPolygonEvents from './facadeWorkers/createNewPolygonWorker';
-import { removeActiveShapeEvent } from './facadeWorkers/removeActiveShapeWorker';
 import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWorker';
 import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
 import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
@@ -23,10 +22,6 @@ function createNewPolygonBtnClick() {
 
 function addPointsBtnClick() {
   initiateAddPolygonPointsEvents(canvas);
-}
-
-function removeActiveShapeBtnClick() {
-  removeActiveShapeEvent(canvas);
 }
 
 function resetCanvasEventsToDefault() {
@@ -70,7 +65,6 @@ export {
   createNewBndBoxBtnClick,
   createNewPolygonBtnClick,
   resetCanvasEventsToDefault,
-  removeActiveShapeBtnClick,
   removePolygonPointBtnClick,
   exportDatasetsBtnClick,
   uploadDatasetsBtnClick,

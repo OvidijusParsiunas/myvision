@@ -12,7 +12,7 @@ let createPolygonState = state.DEFAULT;
 let editShapesState = state.DEFAULT;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
-let removeShapeButtonElement = null;
+let removeLabelsButtonElement = null;
 let editShapesButtonElement = null;
 let zoomInButtonElement = null;
 let zoomOutButtonElement = null;
@@ -117,12 +117,12 @@ function getRemovePointsButtonState() {
   return removePointsState;
 }
 
-function setRemoveShapeButtonToDefault() {
-  setButtonToDefault(removeShapeButtonElement);
+function setRemoveLabelsButtonToDefault() {
+  setButtonToDefault(removeLabelsButtonElement);
 }
 
-function setRemoveShapeButtonToDisabled() {
-  setButtonToDisabled(removeShapeButtonElement);
+function setRemoveLabelsButtonToDisabled() {
+  setButtonToDisabled(removeLabelsButtonElement);
 }
 
 function setZoomInButtonToDefault() {
@@ -215,7 +215,7 @@ function setInitialToolkitButtonStyling() {
   setEditShapesButtonToDisabled();
   setRemoveImagesButtonsDisabled();
   setCreatePolygonButtonToActive();
-  setRemoveShapeButtonToDisabled();
+  setRemoveLabelsButtonToDisabled();
   setCreatePolygonButtonToDisabled();
   setCreateBoundingBoxButtonToDisabled();
 }
@@ -224,7 +224,7 @@ function identifyToolkitButtons() {
   editShapesButtonElement = document.getElementById('edit-shapes-button');
   removePolygonPointsButtonElement = document.getElementById('remove-points-button');
   addPolygonPointsButtonElement = document.getElementById('add-points-button');
-  removeShapeButtonElement = document.getElementById('remove-shape-button');
+  removeLabelsButtonElement = document.getElementById('remove-labels-button');
   zoomInButtonElement = document.getElementById('zoom-in-button');
   zoomOutButtonElement = document.getElementById('zoom-out-button');
   createBoundingBoxButtonElement = document.getElementById('create-bounding-box-button');
@@ -254,11 +254,11 @@ export {
   setRemovePointsButtonToActive,
   setEditShapesButtonToDisabled,
   initiateToolkitButtonsStyling,
-  setRemoveShapeButtonToDefault,
-  setRemoveShapeButtonToDisabled,
+  setRemoveLabelsButtonToDefault,
   setRemoveImagesButtonsDisabled,
   setRemovePointsButtonToDefault,
   setCreatePolygonButtonToActive,
+  setRemoveLabelsButtonToDisabled,
   getCreateBoundingBoxButtonState,
   setCreatePolygonButtonToDefault,
   setCreatePolygonButtonToDisabled,

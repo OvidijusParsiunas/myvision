@@ -5,7 +5,7 @@ import {
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
 import { removeEditedPolygonId } from './defaultEventsWorker';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
-import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/state';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -19,12 +19,12 @@ let mouseMoved = false;
 
 function selectShape(shapeId) {
   highlightLabelInTheList(shapeId);
-  setRemoveShapeButtonToDefault();
+  setRemoveLabelsButtonToDefault();
 }
 
 function deselectShape() {
   removeHighlightOfListLabel();
-  setRemoveShapeButtonToDisabled();
+  setRemoveLabelsButtonToDisabled();
 }
 
 function setRemovablePointsEventsCanvas(canvasObj) {

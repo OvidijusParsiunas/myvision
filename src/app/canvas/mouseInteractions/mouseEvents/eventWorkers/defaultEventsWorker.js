@@ -19,7 +19,7 @@ import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/ima
 import { getImageProperties } from '../../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
 import { preventOutOfBoundsPointsOnMove, preventOutOfBoundsShapesOnMove, validateAndFixOutOfBoundsPolygonShapePointsAfterMove } from '../../../objects/sharedUtils/moveBlockers';
-import { setRemoveShapeButtonToDefault, setRemoveShapeButtonToDisabled } from '../../../../tools/toolkit/styling/state';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
 
 let canvas = null;
 let labelObject = null;
@@ -47,12 +47,12 @@ function programaticallyDeselectBoundingBox() {
 
 function selectShape(shape) {
   highlightLabelInTheList(shape);
-  setRemoveShapeButtonToDefault();
+  setRemoveLabelsButtonToDefault();
 }
 
 function deselectShape() {
   removeHighlightOfListLabel();
-  setRemoveShapeButtonToDisabled();
+  setRemoveLabelsButtonToDisabled();
 }
 
 function setEditablePolygonOnClickFunc(event) {

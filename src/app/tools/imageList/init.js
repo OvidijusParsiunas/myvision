@@ -1,6 +1,6 @@
 import { initialiseImageList } from './imageList';
-import initialiseImageListButtonClickEvents from './buttons/buttonClickEvents';
-import initialiseImageListButtonHoverEvents from './buttons/buttonHoverEvents';
+import initialiseImageListButtonClickEvents from './panelButtons/buttonClickEvents';
+import initialiseImageListButtonHoverEvents from './panelButtons/buttonHoverEvents';
 
 function initialiseImageListFunctionality() {
   initialiseImageList();

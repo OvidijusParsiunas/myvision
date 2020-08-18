@@ -1,4 +1,4 @@
-import { assignCanvasForDiscardingObjects } from './buttons/discardActiveObject';
+import { assignCanvasForDiscardingObjects } from './panelButtons/discardActiveObject';
 import { assignCanvasForRemovingImages } from './removeImages/removeImages';
 import { assignCanvasForDrawingImage } from './uploadImages/drawImageOnCanvas';
 import { assignCanvasToImageList } from './imageList';

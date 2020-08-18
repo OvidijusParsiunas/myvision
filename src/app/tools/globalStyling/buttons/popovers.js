@@ -11,6 +11,10 @@ let activePopover = null;
 let persistButtonPopoverDisplay = false;
 let doNotDisplayButtonAfterTimeoutState = false;
 
+function setDoNotDisplayButtonAfterTimeoutStateToFalse() {
+  doNotDisplayButtonAfterTimeoutState = false;
+}
+
 function assignLeftSideBarMouseEnterEvent() {
   document.getElementById('left-side-bar').addEventListener('mouseenter', () => {
     doNotDisplayButtonAfterTimeoutState = false;
@@ -136,7 +140,6 @@ function addPopoverFunctionalityToButtons() {
   addPopoverFunctionalityToButton('create-polygon-button', 'polygon-button-popover');
   addPopoverFunctionalityToButton('add-points-button', 'add-points-button-popover');
   addPopoverFunctionalityToButton('remove-points-button', 'remove-points-button-popover');
-  addPopoverFunctionalityToButton('remove-shape-button', 'remove-shape-button-popover');
   addPopoverFunctionalityToButton('upload-datasets-button', 'upload-datasets-button-popover');
   addPopoverFunctionalityToButton('export-datasets-button', 'export-datasets-button-popover');
   addPopoverFunctionalityToButton('machine-learning-button', 'machine-learning-button-popover');
@@ -144,6 +147,7 @@ function addPopoverFunctionalityToButtons() {
   addPopoverFunctionalityToButton('zoom-out-button', 'zoom-out-button-popover');
   addPopoverFunctionalityToButton('settings-button', 'settings-button-popover');
   addPopoverFunctionalityToButton('upload-images-button', 'upload-images-button-popover');
+  addPopoverFunctionalityToButton('remove-labels-button', 'remove-labels-button-popover');
   addPopoverFunctionalityToButton('remove-images-button', 'remove-images-button-popover');
   addPopoverFunctionalityToButton('previous-image-button', 'previous-image-button-popover');
   addPopoverFunctionalityToButton('next-image-button', 'next-image-button-popover');
@@ -156,4 +160,8 @@ function initialiseCoreButtonPopovers() {
   if (IS_FIREFOX) removeUploadImagesButtonPopoverBugFix();
 }
 
-export { initialiseCoreButtonPopovers, removeActiveButtonPopover };
+export {
+  removeActiveButtonPopover,
+  initialiseCoreButtonPopovers,
+  setDoNotDisplayButtonAfterTimeoutStateToFalse,
+};

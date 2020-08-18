@@ -14,7 +14,7 @@ import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/
 import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
 import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
 import {
-  setPolygonEditingButtonsToDefault, setRemoveShapeButtonToDisabled, setEditShapesButtonToActive,
+  setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled, setEditShapesButtonToActive,
 } from '../../styling/state';
 import { clearBoundingBoxData } from '../../../../canvas/objects/boundingBox/boundingBox';
 
@@ -34,7 +34,7 @@ function dismissAddPointsEvents(canvas) {
 function dismissRemovePointsEvents(canvas) {
   if (getPolygonDrawingInProgressState()) {
     resetNewPolygonData();
-    setRemoveShapeButtonToDisabled();
+    setRemoveLabelsButtonToDisabled();
   }
   purgeCanvasMouseEvents(canvas);
   cleanPolygonPointsArray();
@@ -51,7 +51,7 @@ function dismissOtherEvents(canvas) {
   }
   if (getPolygonDrawingInProgressState()) {
     resetNewPolygonData();
-    setRemoveShapeButtonToDisabled();
+    setRemoveLabelsButtonToDisabled();
   }
   if (getBoundingBoxDrawingInProgressState()) {
     clearBoundingBoxData();

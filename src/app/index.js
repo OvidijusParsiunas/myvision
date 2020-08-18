@@ -14,10 +14,10 @@ import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEv
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import initialiseDragAndDropFunctionality from './tools/dragAndDrop/dragAndDrop';
 import initialiseImageListFunctionality from './tools/imageList/init';
+import initialiseLabelListFunctionality from './tools/labelList/init';
 import initialiseRemoveImagesModal from './tools/imageList/removeImages/modal/init';
 import { initialiseCoreButtonPopovers } from './tools/globalStyling/buttons/popovers';
 import { applyStyling } from './tools/globalStyling/style';
-import { initialiseLabelListFunctionality } from './tools/labelList/labelList';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 import { initialiseWindowDimService } from './tools/dimWindow/dimWindowService';
 

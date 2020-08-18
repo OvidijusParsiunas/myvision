@@ -8,7 +8,7 @@ import { getLabelsVisibilityState } from '../../../tools/state';
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils';
-import { setPolygonEditingButtonsToDefault, setRemoveShapeButtonToDisabled } from '../../../tools/toolkit/styling/state';
+import { setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled } from '../../../tools/toolkit/styling/state';
 
 let currentId = 0;
 let canvas = null;
@@ -16,7 +16,7 @@ let canvas = null;
 function setShapeEditingIcons(shape) {
   if (shape.shapeName === 'polygon') {
     setPolygonEditingButtonsToDefault();
-    setRemoveShapeButtonToDisabled();
+    setRemoveLabelsButtonToDisabled();
   }
 }
 

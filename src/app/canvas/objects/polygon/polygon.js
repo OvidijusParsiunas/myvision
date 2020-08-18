@@ -12,7 +12,7 @@ import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import {
   setAddPointsButtonToDefault, setRemovePointsButtonToDefault,
-  setRemoveShapeButtonToDefault, setCreatePolygonButtonToActive,
+  setRemoveLabelsButtonToDefault, setCreatePolygonButtonToActive,
 } from '../../../tools/toolkit/styling/state';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 
@@ -188,7 +188,7 @@ function addPoint(pointer) {
     point.set(polygonProperties.firstPoint());
     setAddPointsButtonToDefault();
     setRemovePointsButtonToDefault();
-    setRemoveShapeButtonToDefault();
+    setRemoveLabelsButtonToDefault();
   }
   preventOutOfBoundsPointsOnMove(point, canvas);
   pointArray.push(point);

@@ -2,7 +2,7 @@ import { isLabelling } from '../../../labellerModal/labellingProcess';
 import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
 } from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
-import { getContinuousDrawingState, getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../../state';
+import { getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../../state';
 import { removeActiveButtonPopover } from '../../../globalStyling/buttons/popovers';
 import isLeftMouseButtonClick from '../../../utils/buttons/clickEvents';
 import isElement from '../../../utils/elementType';
@@ -31,18 +31,6 @@ function interruptAllCanvasEventsBeforeMultipleFunc(funcs, event) {
   removeActiveButtonPopover();
   interruptAllCanvasEvents();
   funcs.forEach((func) => { func(); });
-}
-
-function interruptNewShapeDrawingWthFunc1OrExecFunc2(func1, func2, element, event) {
-  if (event && !isLeftMouseButtonClick(event)) return;
-  if (isElement(element) && element.classList.contains('toolkit-button-disabled')) return;
-  removeActiveButtonPopover();
-  if ((getPolygonDrawingInProgressState() || isLabelling()) && !getContinuousDrawingState()) {
-    interruptAllCanvasEvents();
-    func1();
-  } else if (func2) {
-    func2();
-  }
 }
 
 function doNothingIfLabellingInProgress(func, element, event) {
@@ -77,7 +65,6 @@ export {
   interruptAllCanvasEventsBeforeFunc,
   doNothingIfLabellingOrAddingNewPoints,
   interruptAllCanvasEventsBeforeMultipleFunc,
-  interruptNewShapeDrawingWthFunc1OrExecFunc2,
   interruptAllCanvasEventsIfLabellingInProgress,
   func1IfDrawRemovePointsElseInterruptAllWthFunc2,
 };
