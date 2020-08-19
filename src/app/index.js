@@ -1,6 +1,5 @@
 import { registerHotKeys } from './keyEvents/keyboard/hotKeys';
 import registerWindowMouseEvents from './keyEvents/mouse/registerEvents';
-
 import { findUserOS } from './tools/OS/OSManager';
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
@@ -20,6 +19,7 @@ import { initialiseCoreButtonPopovers } from './tools/globalStyling/buttons/popo
 import { applyStyling } from './tools/globalStyling/style';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 import { initialiseWindowDimService } from './tools/dimWindow/dimWindowService';
+import initialiseBrowserExitHandler from './tools/browserExit/browserExitHandler';
 
 findUserOS();
 applyStyling();
@@ -41,4 +41,5 @@ initialiseLabelListFunctionality();
 initialiseDragAndDropFunctionality();
 initialiseImageSwitchPanelFunctionality();
 initialiseShapeManipulationDeltas();
+initialiseBrowserExitHandler();
 initialiseWelcomeModal();

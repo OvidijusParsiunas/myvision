@@ -4,9 +4,9 @@ import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess
 import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import {
-  getMovableObjectsState, getAddingPolygonPointsState, getCurrentZoomState,
-  setBoundingBoxDrawingInProgressState, getBoundingBoxDrawingInProgressState,
-  getDoubleScrollCanvasState, setReadyToDrawShapeState, setAddingPolygonPointsState,
+  getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
+  getMovableObjectsState, getBoundingBoxDrawingInProgressState, setReadyToDrawShapeState,
+  setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState, setSessionDirtyState,
 } from '../../../tools/state';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
@@ -216,6 +216,7 @@ function finishDrawingBoundingBoxFunc() {
     showLabellerModal(pointer.x, pointer.y);
     setBoundingBoxDrawingInProgressState(false);
     boundingBox = null;
+    setSessionDirtyState(true);
   }
 }
 

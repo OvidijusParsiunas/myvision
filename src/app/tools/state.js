@@ -27,6 +27,7 @@ let polygonDrawingInProgressState = false;
 let boundingBoxDrawingInProgressState = false;
 let removeImageModalDisplayedState = false;
 let welcomeModalDisplayedState = false;
+let sessionDirty = false;
 
 function getDefaultState() {
   return defaultState;
@@ -146,6 +147,10 @@ function getRemoveImageModalDisplayedState() {
 
 function getWelcomeModalDisplayedState() {
   return welcomeModalDisplayedState;
+}
+
+function getSessionDirtyState() {
+  return sessionDirty;
 }
 
 function setDefaultState(state) {
@@ -269,6 +274,10 @@ function setWelcomeModalDisplayedState(state) {
   welcomeModalDisplayedState = state;
 }
 
+function setSessionDirtyState(state) {
+  sessionDirty = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -280,6 +289,8 @@ export {
   setShapeMovingState,
   getCurrentZoomState,
   setCurrentZoomState,
+  getSessionDirtyState,
+  setSessionDirtyState,
   getHasDrawnShapeState,
   setHasDrawnShapeState,
   getMovableObjectsState,

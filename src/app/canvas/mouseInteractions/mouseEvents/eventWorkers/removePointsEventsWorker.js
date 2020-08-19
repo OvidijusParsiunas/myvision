@@ -6,6 +6,7 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { removeEditedPolygonId } from './defaultEventsWorker';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
+import { setSessionDirtyState } from '../../../../tools/state';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;
@@ -69,6 +70,7 @@ function pointMouseDownEvents(event) {
       removePolygonPoint(event.target.pointId, true);
       removedPolygonPoints = true;
       currentlyHoveredPoint = null;
+      setSessionDirtyState(true);
     } else {
       if (event.target.shapeName === 'polygon') {
         newPolygonSelected = (event.target.id !== selectedPolygonId);
@@ -83,10 +85,14 @@ function pointMouseDownEvents(event) {
 
 function removePointViaKeyboard() {
   if (!mouseMoved) {
-    if (lastHoveredPoint) { removePolygonPoint(lastHoveredPoint.pointId); }
+    if (lastHoveredPoint) {
+      removePolygonPoint(lastHoveredPoint.pointId);
+      setSessionDirtyState(true);
+    }
     mouseMoved = true;
   } else if (currentlyHoveredPoint) {
     removePolygonPoint(currentlyHoveredPoint.pointId, true);
+    setSessionDirtyState(true);
   }
   currentlyHoveredPoint = null;
 }

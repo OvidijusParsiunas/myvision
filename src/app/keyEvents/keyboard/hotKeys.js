@@ -203,9 +203,9 @@ function enterKeyHandler() {
 
 function escapeKeyHandler() {
   if (getExportDatasetsPopupOpenState()) {
-    window.exportDatasets();
+    window.toggleExportDatasetsPopup();
   } else if (getSettingsPopupOpenState()) {
-    window.displaySettingsPopup();
+    window.toggleSettingsPopup();
   } else if (getLabellerModalDisplayedState()) {
     window.cancelLabellingProcess();
   } else if (getUploadDatasetsModalDisplayedState()) {

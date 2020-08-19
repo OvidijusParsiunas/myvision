@@ -1,4 +1,5 @@
 import { selectFormat, hideExportDatasetsPopup } from './style';
+import { setSessionDirtyState } from '../state';
 import downloadCOCOJSON from './fileTypes/COCOJSON';
 import downloadVGGJSON from './fileTypes/VGGJSON';
 import downloadCSV from './fileTypes/CSV';
@@ -36,6 +37,7 @@ function exportDatasets() {
   }
   if (exported) {
     hideExportDatasetsPopup();
+    setSessionDirtyState(false);
   }
 }
 

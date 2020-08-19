@@ -4,8 +4,8 @@ import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/c
 import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess';
 import {
-  getMovableObjectsState, getAddingPolygonPointsState,
   setPolygonDrawingInProgressState, setAddingPolygonPointsState,
+  getMovableObjectsState, getAddingPolygonPointsState, setSessionDirtyState,
   setReadyToDrawShapeState, getCurrentZoomState, getDoubleScrollCanvasState,
 } from '../../../tools/state';
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
@@ -140,6 +140,7 @@ function generatePolygon() {
   prepareLabelShape(polygon, canvas);
   showLabellerModal();
   setPolygonDrawingInProgressState(false);
+  setSessionDirtyState(true);
 }
 
 /* initial point should begin with one color and switch when there are 3

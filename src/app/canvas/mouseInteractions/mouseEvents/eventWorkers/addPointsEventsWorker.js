@@ -6,7 +6,7 @@ import {
   addPointsMouseOver, resetAddPointProperties, addPointsMouseOut,
 } from '../../../objects/polygon/alterPolygon/alterPolygon';
 import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { getCurrentZoomState, getDoubleScrollCanvasState } from '../../../../tools/state';
+import { getCurrentZoomState, getDoubleScrollCanvasState, setSessionDirtyState } from '../../../../tools/state';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
 import { getLastMouseMoveEvent } from '../../../../keyEvents/mouse/mouseMove';
@@ -134,6 +134,7 @@ function addPoints(event) {
     prepareToAddPolygonPoints(activeShape);
     currentlyHoveredPoint = getPointInArrayClosestToGivenCoordinates(getPolygonPointsArray(),
       event.target);
+    setSessionDirtyState(true);
   } else if (!event.target
       || (event.target && (event.target.shapeName !== 'initialAddPoint' && event.target.shapeName !== 'tempPoint'))) {
     const pointer = canvas.getPointer(event.e);

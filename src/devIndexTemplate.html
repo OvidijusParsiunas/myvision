@@ -260,7 +260,7 @@
         <img id="upload-datasets-icon" src="assets/svg/method-draw-image (99).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="upload-datasets-button-popover">Upload Datasets</div>
-      <button id="export-datasets-button" class="export-datasets-popup-item toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="exportDatasets(event)">
+      <button id="export-datasets-button" class="export-datasets-popup-item toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="toggleExportDatasetsPopup(event)">
         <img id="export-datasets-icon" src="assets/svg/method-draw-image - 2020-05-03T194003.376.svg" draggable="false" class="export-datasets-popup-item toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="export-datasets-button-popover">Export Datasets</div>
@@ -276,12 +276,11 @@
         <img id="zoom-out-icon" src="assets/svg/magnifying-glass.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="zoom-out-button-popover">Zoom Out</div>
-      <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="displaySettingsPopup(event)">
+      <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="toggleSettingsPopup(event)">
         <img id="settings-icon" src="assets/svg/cogwheels.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="settings-button-popover">Settings</div>
     </div>
-    <!-- remove the table-cell styling -->
     <div id="right-side-bar">
       <div id="right-side-bar-components">
         <div id="label-list-component" class="right-side-bar-component">

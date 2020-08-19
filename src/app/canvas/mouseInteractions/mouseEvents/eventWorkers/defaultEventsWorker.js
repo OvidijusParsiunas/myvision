@@ -8,10 +8,10 @@ import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } f
 import { getLabelById } from '../../../objects/label/label';
 import labelProperies from '../../../objects/label/properties';
 import {
-  getShapeMovingState, setShapeMovingState,
-  getBoundingBoxScalingState, setBoundingBoxScalingState,
+  getRemovingPointsAfterCancelDrawState, getCurrentZoomState,
+  getShapeMovingState, setShapeMovingState, setSessionDirtyState,
   setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
-  getRemovingPointsAfterCancelDrawState, getCurrentZoomState, getDoubleScrollCanvasState,
+  getBoundingBoxScalingState, setBoundingBoxScalingState, getDoubleScrollCanvasState,
 } from '../../../../tools/state';
 import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
 import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
@@ -213,6 +213,7 @@ function polygonMouseUpEvents(event) {
     canvas.bringToFront(labelObject);
   } else if (polygonPointMoved) {
     resetPolygonSelectableAreaAfterPointMoved();
+    setSessionDirtyState(true);
   } else if (event.target && event.target.shapeName === 'polygon') {
     selectShape(event.target.id);
     sendPolygonPointsToFront(canvas);
@@ -226,6 +227,7 @@ function polygonMouseUpEvents(event) {
   if (getShapeMovingState()) {
     handleShapeFillAfterMove(event);
     if (polygonMoved) { polygonMoved = false; }
+    setSessionDirtyState(true);
   }
 }
 
@@ -266,6 +268,7 @@ function polygonMoveEvents(event) {
 
 function boundingBoxScalingEvents(event) {
   handleBoundingBoxScalingEvents(event, labelObject, canvas);
+  setSessionDirtyState(true);
 }
 
 function shapeMouseOverEvents(event) {

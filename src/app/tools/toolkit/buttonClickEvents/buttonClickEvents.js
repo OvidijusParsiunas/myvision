@@ -19,13 +19,13 @@ function assignToolkitButtonEventHandlers() {
   window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);
   window.removePoint = doNothingIfLabellingInProgress.bind(this, removePolygonPointBtnClick);
   window.cancel = interruptAllCanvasEventsBeforeFunc.bind(this, resetCanvasEventsToDefault);
-  window.exportDatasets = removeButtonPopoverIfActive.bind(this, exportDatasetsBtnClick);
+  window.toggleExportDatasetsPopup = removeButtonPopoverIfActive.bind(this, exportDatasetsBtnClick);
   window.uploadDatasets = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
     [resetCanvasEventsToDefault, removeButtonPopoverIfActive, uploadDatasetsBtnClick]);
   window.displayMachineLearningModal = interruptAllCanvasEventsBeforeMultipleFunc.bind(this,
     [resetCanvasEventsToDefault, removeButtonPopoverIfActive, machineLearningBtnClick]);
   window.zoom = doNothingIfNotLeftMouseButtonPressWthArg.bind(this, zoomBtnClick);
-  window.displaySettingsPopup = removeButtonPopoverIfActive.bind(this, settingsBtnClick);
+  window.toggleSettingsPopup = removeButtonPopoverIfActive.bind(this, settingsBtnClick);
 }
 
 export { assignToolkitButtonEventHandlers as default };
