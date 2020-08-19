@@ -1474,6 +1474,10 @@ body {
     /* background-color: #d8d8d8; */
 }
 
+.toolkit-button-table-cell {
+  display: table-cell;
+}
+
 .toolkit-button-disabled {
   cursor: default;
 }
