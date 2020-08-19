@@ -1139,7 +1139,7 @@ input:focus {
   padding-bottom: 1px;
 }
 
-#labels-list-overflow-parent {
+#label-list-overflow-parent {
   overflow-x: auto;
   overflow-y: auto;
   height: calc((100vh - 287px) / 2);
@@ -1151,16 +1151,16 @@ input:focus {
   scrollbar-width: thin;
 }
 
-#labels-list-overflow-parent::-webkit-scrollbar-track {
+#label-list-overflow-parent::-webkit-scrollbar-track {
   background: #f9f9f9;
 }
 
-#labels-list-overflow-parent::-webkit-scrollbar-thumb {
+#label-list-overflow-parent::-webkit-scrollbar-thumb {
   background: #8c8c8c;
   border-radius: 10px;
 }
 
-#labels-list-overflow-parent::-webkit-scrollbar {
+#label-list-overflow-parent::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
@@ -2181,7 +2181,7 @@ body {
   border-bottom-width: 1px;
 }
 
-#labels-list-component {
+#label-list-component {
   height: calc((100vh - 250px) / 2);
 }
 

@@ -62,7 +62,7 @@ let originalLabelText = null;
 let availableListOptions = [];
 let dropdownElementsWidthDefault = 0;
 let dropdownElementsWidthFull = 0;
-let labelsListOverflowParentElement = null;
+let labelListOverflowParentElement = null;
 let horizontalScrollPresentWhenEditAndScroll = false;
 let mouseHoveredOnLabelEditButton = false;
 let currentlyActiveLabelOptionIndex = 0;
@@ -87,7 +87,7 @@ function setDropdownElementWidthVariables() {
 
 function findLabelListElement() {
   labelListElement = document.getElementById('label-list');
-  labelsListOverflowParentElement = document.getElementById('labels-list-overflow-parent');
+  labelListOverflowParentElement = document.getElementById('label-list-overflow-parent');
 }
 
 function findPopupElement() {
@@ -98,7 +98,7 @@ function initialiseLabelList() {
   findLabelListElement();
   findPopupElement();
   setDropdownElementWidthVariables();
-  setLabelListElementForHighlights(labelListElement, labelsListOverflowParentElement);
+  setLabelListElementForHighlights(labelListElement, labelListOverflowParentElement);
   keyDownEventTimeOut = getKeyDownEventTimeout();
 }
 
@@ -172,19 +172,19 @@ function scrollHorizontallyToAppropriateWidth(text) {
   const context = myCanvas.getContext('2d');
   context.font = getDefaultFont(activeLabelTextElement);
   const metrics = context.measureText(text);
-  if (isVerticalScrollPresent(labelsListOverflowParentElement)
+  if (isVerticalScrollPresent(labelListOverflowParentElement)
       && metrics.width > 170 - getScrollbarWidth()) {
-    labelsListOverflowParentElement.scrollLeft = metrics.width - 165 + getScrollbarWidth() / 2;
-  } else if (!isVerticalScrollPresent(labelsListOverflowParentElement) && metrics.width > 170) {
-    labelsListOverflowParentElement.scrollLeft = metrics.width - 165;
+    labelListOverflowParentElement.scrollLeft = metrics.width - 165 + getScrollbarWidth() / 2;
+  } else if (!isVerticalScrollPresent(labelListOverflowParentElement) && metrics.width > 170) {
+    labelListOverflowParentElement.scrollLeft = metrics.width - 165;
   } else {
-    labelsListOverflowParentElement.scrollLeft = 0;
+    labelListOverflowParentElement.scrollLeft = 0;
   }
   myCanvas = null;
 }
 
 function isHorizontalScrollPresent() {
-  return labelsListOverflowParentElement.scrollWidth > labelsListOverflowParentElement.clientWidth;
+  return labelListOverflowParentElement.scrollWidth > labelListOverflowParentElement.clientWidth;
 }
 
 function pasteHandlerOnDiv(event) {
@@ -398,9 +398,9 @@ function setFakeDropdownBorderFixForChromium(id) {
 
 function changeActiveDropdownElementStyling() {
   const labelListElementScrollLeftVSDropdownMarginLeft = Math.max(-4,
-    31 - labelsListOverflowParentElement.scrollLeft);
+    31 - labelListOverflowParentElement.scrollLeft);
   const labelListElementScrollLeftVSDropdownWidth = Math.min(dropdownElementsWidthFull,
-    dropdownElementsWidthDefault + labelsListOverflowParentElement.scrollLeft);
+    dropdownElementsWidthDefault + labelListOverflowParentElement.scrollLeft);
   activeDropdownElements[0].style.marginLeft = `${labelListElementScrollLeftVSDropdownMarginLeft}px`;
   activeDropdownElements[0].style.width = `${labelListElementScrollLeftVSDropdownWidth}px`;
   setFakeDropdownBorderFixForChromium(activeLabelId);
@@ -428,7 +428,7 @@ function prepareLabelDivForEditing(id) {
 function initLabelEditing(id) {
   prepareLabelDivForEditing(id);
   deleteAndAddLastRowToRefreshDropdownDiv(activeDropdownElements[0]);
-  scrollIntoViewIfNeeded(activeLabelTextElement, labelsListOverflowParentElement);
+  scrollIntoViewIfNeeded(activeLabelTextElement, labelListOverflowParentElement);
   positionDropDownCorrectlyOnScreen();
   // change this to match wider div
   // const labelDropdownOptions = getLabelOptions();
@@ -442,7 +442,7 @@ function initLabelEditing(id) {
   // AND THEN SCROLL FURTHER
 
   availableListOptions = getLabelOptions();
-  currentTableElementScrollPosition = labelsListOverflowParentElement.scrollTop;
+  currentTableElementScrollPosition = labelListOverflowParentElement.scrollTop;
   horizontalScrollPresentWhenEditAndScroll = isHorizontalScrollPresent();
   isEditingLabel = true;
 }
@@ -542,7 +542,7 @@ function resetLabelElement() {
   activeLabelTextElement.style.borderColor = 'transparent';
   activeLabelTextElement.style.paddingLeft = '';
   activeEditLabelButton.style.paddingRight = '5px';
-  labelsListOverflowParentElement.scrollLeft = 0;
+  labelListOverflowParentElement.scrollLeft = 0;
   setEditingLabelId(null);
 }
 
@@ -592,13 +592,13 @@ function highlightDropdownLabelOption(labelOptionsIndex, divIndex) {
 
 function wasLabelListHorizontalScrollManipulated() {
   if (!horizontalScrollPresentWhenEditAndScroll && isHorizontalScrollPresent()) {
-    currentTableElementScrollPosition = labelsListOverflowParentElement.scrollTop;
+    currentTableElementScrollPosition = labelListOverflowParentElement.scrollTop;
     horizontalScrollPresentWhenEditAndScroll = true;
     positionDropDownCorrectlyOnScreen();
     return true;
   }
   if (horizontalScrollPresentWhenEditAndScroll && !isHorizontalScrollPresent()) {
-    currentTableElementScrollPosition = labelsListOverflowParentElement.scrollTop;
+    currentTableElementScrollPosition = labelListOverflowParentElement.scrollTop;
     horizontalScrollPresentWhenEditAndScroll = false;
     positionDropDownCorrectlyOnScreen();
     return true;
@@ -814,7 +814,7 @@ window.labelBtnClick = (id) => {
 };
 
 window.labelListScroll = () => {
-  if (currentTableElementScrollPosition !== labelsListOverflowParentElement.scrollTop) {
+  if (currentTableElementScrollPosition !== labelListOverflowParentElement.scrollTop) {
     if (!wasLabelListHorizontalScrollManipulated()) {
       if (activeDropdownElements && activeDropdownElements[0] && activeDropdownElements[0].classList.contains('show')) {
         addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
