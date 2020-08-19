@@ -10,8 +10,6 @@ check whether the hyperlink to index.html in the readme is enough
 
 potentially move machine learning modal generated labels a little bit to the left if their width is short (startup only - remove if user has typed)
 
-the next image button's popup is not working
-
 when user holds ctrl and scrolls, should zoom-in on the image (be ware of use cases where the user may be drawing or editing shapes)
 
 the remove images modal should be smaller

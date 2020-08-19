@@ -25,7 +25,9 @@ import {
   setPolygonEditingButtonsToDisabled,
 } from '../../toolkit/styling/state';
 
-function removeBoundingBox(canvas, mLGeneratedObject) {
+let canvas = null;
+
+function removeBoundingBox(mLGeneratedObject) {
   const activeObject = mLGeneratedObject || canvas.getActiveObject()
     || getCurrentlySelectedLabelShape();
   if (activeObject && activeObject.shapeName === 'bndBox') {
@@ -43,7 +45,7 @@ function removeBoundingBox(canvas, mLGeneratedObject) {
   return false;
 }
 
-function removeIfContinuousDrawing(canvas) {
+function removeIfContinuousDrawing() {
   if (getContinuousDrawingState()) {
     if (isLabelling()) {
       if (isPolygonDrawingFinished()) {
@@ -71,8 +73,8 @@ function removeIfContinuousDrawing(canvas) {
   return false;
 }
 
-function removeActiveLabel(canvas) {
-  if (!removeIfContinuousDrawing(canvas) && !removeBoundingBox(canvas)) {
+function removeActiveLabel() {
+  if (!removeIfContinuousDrawing() && !removeBoundingBox()) {
     if (isAddingPointsToPolygon()) {
       purgeCanvasMouseEvents(canvas);
       assignAddPointsOnExistingPolygonEvents(canvas);
@@ -93,4 +95,8 @@ function removeActiveLabel(canvas) {
   setRemoveLabelsButtonToDisabled();
 }
 
-export { removeActiveLabel, removeBoundingBox };
+function assignCanvasForRemovingLabels(canvasObj) {
+  canvas = canvasObj;
+}
+
+export { assignCanvasForRemovingLabels, removeActiveLabel, removeBoundingBox };

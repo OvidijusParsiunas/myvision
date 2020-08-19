@@ -1,9 +1,9 @@
-import initialiseImageListButtonClickEvents from './panelButtons/buttonClickEvents';
+import initialiseLabelListButtonClickEvents from './panelButtons/buttonClickEvents';
 import { initialiseLabelList } from './labelList';
 
 function initialiseLabelListFunctionality() {
   initialiseLabelList();
-  initialiseImageListButtonClickEvents();
+  initialiseLabelListButtonClickEvents();
 }
 
 export { initialiseLabelListFunctionality as default };

@@ -94,7 +94,7 @@ function removeMLShapesOnImage(imageData, currentImage) {
     const shape = shapes[key].shapeRef;
     if (shape.isGeneratedViaML) {
       if (currentImage) {
-        removeBoundingBox(canvas, shape);
+        removeBoundingBox(shape);
       } else {
         delete shapes[key];
       }

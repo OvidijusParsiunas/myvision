@@ -177,7 +177,7 @@ function arrowRightKeyHandler() {
 function removeKeyHandler() {
   if (isAnyModalOpen() || isEditingLabelInLabelList()) return;
   closeAllPopups();
-  window.removeShape();
+  window.removeLabel();
   canvas.upperCanvasEl.dispatchEvent(new Event('mousemove'));
 }
 

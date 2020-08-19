@@ -286,10 +286,10 @@
       <div id="right-side-bar-components">
         <div id="labels-list-component" class="right-side-bar-component">
           <div id="label-list-title-parent" class="right-side-bar-component-title">
-            <div id="label-list-title-text">Labels:</div>
-            <div id="remove-labels-button-container">
-              <button id="remove-labels-button" class="toolkit-button toolkit-button-default">
-                <img id="remove-labels-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeShape(this, event)">
+            <div class="right-side-bar-title-text">Labels:</div>
+            <div id="remove-labels-button-container" class="remove-objects-button-container">
+              <button id="remove-labels-button" class="toolkit-button toolkit-button-default remove-objects-button">
+                <img class="remove-objects-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeLabel(this, event)">
               </button>
             </div>
             <div id="remove-labels-button-popover" class="core-button-hover-popover label-list-button-hover-popover-v-poisition">Remove Label</div>
@@ -300,10 +300,10 @@
         </div>
         <div id="image-list-component" class="right-side-bar-component">
           <div id="image-list-title-parent" class="right-side-bar-component-title">
-            <div id="image-list-title-text">Images:</div>
-            <div id="remove-images-button-container">
-              <button id="remove-images-button" class="toolkit-button toolkit-button-default">
-                <img id="remove-images-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeImage(event)">
+            <div class="right-side-bar-title-text">Images:</div>
+            <div id="remove-images-button-container" class="remove-objects-button-container">
+              <button id="remove-images-button" class="toolkit-button toolkit-button-default remove-objects-button">
+                <img class="remove-objects-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeImage(event)">
               </button>
             </div>
             <div id="remove-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Remove Image</div>

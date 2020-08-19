@@ -12,6 +12,7 @@ import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/faca
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
 import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/buttonClickEvents';
 import { assignCanvasForHotKeys } from '../keyEvents/keyboard/hotKeys';
+import assignCanvasForLabelList from '../tools/labelList/canvasManagement';
 import assignCanvasForImageList from '../tools/imageList/canvasManagement';
 
 let currentCanvasInstance = null;
@@ -28,6 +29,7 @@ function repopulateCanvasReference(canvas) {
   assignCanvasForResizeWhenWindowResize(canvas);
   assignCanvasForLabelAndShapeBuilder(canvas);
   assignCanvasForSettingsPopup(canvas);
+  assignCanvasForLabelList(canvas);
   assignCanvasForImageList(canvas);
   initialiseZoomVariables(canvas);
 }
