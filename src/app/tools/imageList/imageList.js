@@ -4,14 +4,6 @@ import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/l
 import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { removeAllLabelListItems } from '../labelList/labelList';
-import {
-  getDefaultState, setCurrentImageId, getContinuousDrawingState, getLastDrawingModeState,
-} from '../state';
-import {
-  setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
-  setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault, setEditShapesButtonToActive,
-  setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
-} from '../toolkit/styling/state';
 import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
 import labelProperties from '../../canvas/objects/label/properties';
 import { initialiseImageListML } from './imageListML';
@@ -23,6 +15,16 @@ import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { changeExistingImagesMovability } from '../settingsPopup/options/movableObjects';
 import { removeWatermarkFromCanvasAreaBackground } from '../../canvas/utils/watermark';
+import initiateButtonPulseAnimation from '../utils/buttons/pulseAnimation';
+import {
+  setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
+  setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault, setEditShapesButtonToActive,
+  setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
+} from '../toolkit/styling/state';
+import {
+  getDefaultState, setCurrentImageId, getContinuousDrawingState, getLastDrawingModeState,
+  getHasMachineLearningButtonBeenHighligtedState, setHasMachineLearningButtonBeenHighligtedState,
+} from '../state';
 
 let currentlyActiveElement = null;
 let imageContainerElement = null;
@@ -281,6 +283,15 @@ function changeCurrentImageNameElementText(imageName, isfirstFromMany) {
   updateImageNameElement(imageName, images, currentlySelectedImageId, isfirstFromMany);
 }
 
+function highlightMachineLearningButton() {
+  if (!getHasMachineLearningButtonBeenHighligtedState()) {
+    const beginAnimationImmediately = true;
+    initiateButtonPulseAnimation(document.getElementById('machine-learning-button'),
+      'rgb(184 233 179)', 'white', 4, beginAnimationImmediately);
+    setHasMachineLearningButtonBeenHighligtedState(true);
+  }
+}
+
 function addSingleImageToList(imageMetadata, imageData) {
   addNewImage(imageMetadata.name, imageData);
   highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
@@ -290,6 +301,7 @@ function addSingleImageToList(imageMetadata, imageData) {
   setDefaultImageProperties(images[newImageId], imageMetadata);
   removeWatermarkFromCanvasAreaBackground();
   setToolkitStylingOnNewImage();
+  highlightMachineLearningButton();
   newImageId += 1;
 }
 
@@ -303,6 +315,7 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, isfirstFromMany
     images[newImageId].thumbnailElementRef.scrollIntoView();
     removeWatermarkFromCanvasAreaBackground();
     setToolkitStylingOnNewImage();
+    highlightMachineLearningButton();
   }
   newImageId += 1;
 }

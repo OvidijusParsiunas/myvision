@@ -21,6 +21,7 @@ let currentImageId = false;
 let labellerModalDisplayed = false;
 let uploadDatasetsModalDisplayedState = false;
 let machineLearningModalDisplayedState = false;
+let hasMachineLearningButtonBeenHighligted = false;
 let boundingBoxScalingState = false;
 let shapeMovingState = false;
 let polygonDrawingInProgressState = false;
@@ -153,6 +154,10 @@ function getSessionDirtyState() {
   return sessionDirty;
 }
 
+function getHasMachineLearningButtonBeenHighligtedState() {
+  return hasMachineLearningButtonBeenHighligted;
+}
+
 function setDefaultState(state) {
   defaultState = state;
 }
@@ -278,6 +283,10 @@ function setSessionDirtyState(state) {
   sessionDirty = state;
 }
 
+function setHasMachineLearningButtonBeenHighligtedState(state) {
+  hasMachineLearningButtonBeenHighligted = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -341,4 +350,6 @@ export {
   setRemovingPointsAfterCancelDrawState,
   getChangingMLGeneratedLabelNamesState,
   setChangingMLGeneratedLabelNamesState,
+  getHasMachineLearningButtonBeenHighligtedState,
+  setHasMachineLearningButtonBeenHighligtedState,
 };

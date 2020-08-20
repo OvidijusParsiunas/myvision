@@ -80,7 +80,7 @@ input:focus {
 #welcome-modal-description {
   margin-left: calc(19px / var(--screen-size-delta));
   margin-top: calc(16px / var(--screen-size-delta));
-  margin-bottom: calc(16px / var(--screen-size-delta));
+  margin-bottom: calc(15px / var(--screen-size-delta));
   width: calc(396px / var(--screen-size-delta));
 }
 
