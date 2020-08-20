@@ -1061,10 +1061,9 @@ input:focus {
 
 #right-side-bar {
   width: 208px;
-  padding-top: calc(8px / var(--screen-size-delta));
   float: right;
   background-color: white;
-  height: calc(100vh - 43px);
+  height: calc(100vh - 34px);
   border-right: solid;
   border-left: solid;
   border-width: 1px;
@@ -1079,10 +1078,10 @@ input:focus {
 .right-side-bar-component {
   display: block;
   left: 0;
-  padding-top: calc(3px / var(--screen-size-delta));
 }
 
 .right-side-bar-component-title {
+  position: relative;
   height: calc(18px / var(--screen-size-delta));
   font-size: calc(16px / var(--screen-size-delta));
   padding-left: 5px;
@@ -1096,8 +1095,43 @@ input:focus {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.right-side-bar-title-text {
+  position: absolute;
+  bottom: 0.5px;
+}
+
+.remove-objects-button-container {
+  padding-right: 4px;
+  padding-top: 0px;
+  float: right;
+}
+
+.remove-objects-button {
+  height: calc(21px / var(--screen-size-delta));
+}
+
+.remove-objects-button-icon {
+  width: calc(15.8px / var(--screen-size-delta));
+  padding-top: calc(2.5px / var(--screen-size-delta));
+  padding-left: calc(3.5px / var(--screen-size-delta));
+  padding-right: calc(3px / var(--screen-size-delta));
+}
+
 #label-list {
   width: 100%;
+}
+
+#label-list-title-parent {
+  height: calc(29px / var(--screen-size-delta));
+}
+
+#remove-labels-button-container {
+  margin-top: calc(7px / var(--screen-size-delta));
+}
+
+#remove-labels-button-popover {
+  right: calc(29px / var(--screen-size-delta));
+  margin-top: calc(3px / var(--screen-size-delta));
 }
 
 .labelListItem {
@@ -1136,13 +1170,7 @@ input:focus {
 }
 
 #image-list-title-parent {
-  position: relative;
   height: calc(25px / var(--screen-size-delta));
-}
-
-#image-list-title-text {
-  position: absolute;
-  bottom: 0.5px;
 }
 
 #upload-images-button {
@@ -1168,20 +1196,6 @@ input:focus {
 
 #remove-images-button-container {
   margin-top: 2px;
-  padding-right: 4px;
-  padding-top: 0px;
-  float: right;
-}
-
-#remove-images-button {
-  height: calc(21px / var(--screen-size-delta));
-}
-
-#remove-images-button-icon {
-  width: calc(15.8px / var(--screen-size-delta));
-  padding-top: calc(2.5px / var(--screen-size-delta));
-  padding-left: calc(3.5px / var(--screen-size-delta));
-  padding-right: calc(3px / var(--screen-size-delta));
 }
 
 #remove-images-button-popover {
@@ -1460,6 +1474,10 @@ body {
     /* background-color: #d8d8d8; */
 }
 
+.toolkit-button-table-cell {
+  display: table-cell;
+}
+
 .toolkit-button-disabled {
   cursor: default;
 }
@@ -1585,7 +1603,7 @@ body {
 
 #title-github-mark {
   padding-top: 6px;
-  padding-right: 20px;
+  padding-right: 5px;
   max-width: 22px;
   max-height: 22px;
   float: right;
@@ -1601,8 +1619,8 @@ body {
 }
 
 #github-mark-button-popover {
-  right: 4px;
-  margin-top: 35px;
+  right: 33px;
+  margin-top: 6px;
 }
 
 #image-switch-parent {
@@ -1715,6 +1733,11 @@ body {
 
 .image-list-button-hover-popover-v-position {
   margin-top: calc(-29px / var(--screen-size-delta));
+}
+
+/* should be assigned to the popover id */
+.label-list-button-hover-popover-v-poisition {
+  margin-top: calc(33px / var(--screen-size-delta));
 }
 
 .image-switch-button-hover-popover {
