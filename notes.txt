@@ -8,8 +8,6 @@ social media preview image for https://myvision.ai
 
 check whether the hyperlink to index.html in the readme is enough
 
-potentially move machine learning modal generated labels a little bit to the left if their width is short (startup only - remove if user has typed)
-
 when user holds ctrl and scrolls, should zoom-in on the image (be ware of use cases where the user may be drawing or editing shapes)
 
 the remove images modal should be smaller
@@ -22,11 +20,11 @@ potentially decrease the height of the upload datasets modal
 
 upon viewing an image with ml shapes on it and then moving to another one, the shape's fill should disappear
 
-move remove shape button to the labels section
-
 add an optional crosshair that is generated via html and not canvas
 
-think about chaching some of the 'do not show again' modal data
+think about caching some of the 'do not show again' modal data
+
+remove button highlight functionality toggle
 
 ---------------------------------------------
 

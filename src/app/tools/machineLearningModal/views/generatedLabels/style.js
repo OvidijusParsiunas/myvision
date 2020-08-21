@@ -267,20 +267,29 @@ function triggerContentEditableOnce(cell) {
   });
 }
 
+function changeModalStylingOnGeneratedLabelData(numberOfItems, longestName) {
+  if (numberOfItems > 4) {
+    changeElementsToMoveListUpwards();
+  } else {
+    resetElementsToMoveListToDefaultPosition();
+  }
+  generatedLabelsTableElement.style.marginLeft = longestName <= 3 ? 'unset' : 'auto';
+}
+
 function populateGeneratedLabelsTable() {
   let index = 0;
+  let longestName = 0;
   Object.keys(objectNames).forEach((key) => {
     const newNameRow = generatedLabelsTableElement.insertRow(-1);
     const cell = newNameRow.insertCell(0);
     cell.innerHTML = createLabelElementMarkup(objectNames[key].pendingName, index);
     index += 1;
+    if (longestName < objectNames[key].pendingName.length) {
+      longestName = objectNames[key].pendingName.length;
+    }
     triggerContentEditableOnce(cell);
   });
-  if (index > 4) {
-    changeElementsToMoveListUpwards();
-  } else {
-    resetElementsToMoveListToDefaultPosition();
-  }
+  changeModalStylingOnGeneratedLabelData(index, longestName);
 }
 
 function changeModalDescription() {
