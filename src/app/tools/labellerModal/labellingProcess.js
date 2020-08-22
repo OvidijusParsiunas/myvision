@@ -1,10 +1,12 @@
 import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
+import { resetObjectCrosshairCursors } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { getLabellerModalInputText, hideLabellerModal, resetLabellerModalOptions } from './style';
 import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 
 let labellingState = false;
 let targetShape = null;
 let canvas = null;
+const IS_CROSSHAIR_MODE_ON = true;
 
 function prepareLabelShape(shape, canvasObj) {
   waitingForLabelCursorMode(canvasObj);
@@ -18,10 +20,19 @@ function removeTargetShape() {
   labellingState = false;
 }
 
+function setCursorMode() {
+  // && getBoundingBoxDrawingInProgress
+  if (IS_CROSSHAIR_MODE_ON) {
+    resetObjectCrosshairCursors(canvas);
+  } else {
+    resetObjectCursors(canvas);
+  }
+}
+
 function createLabelShape() {
   hideLabellerModal();
   generateLabelShapeGroup(targetShape, getLabellerModalInputText());
-  resetObjectCursors(canvas);
+  setCursorMode();
   resetLabellerModalOptions();
   labellingState = false;
 }

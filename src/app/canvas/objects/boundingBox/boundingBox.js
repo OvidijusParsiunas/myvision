@@ -13,6 +13,7 @@ import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers'
 import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
+import { setDrawWithCrosshairMode, drawFullCanvasCrosshair } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -23,8 +24,7 @@ let lastMouseEvent = null;
 let drawingFinished = false;
 let finishDrawingBoundingBoxClick = null;
 let rightBoundingBoxDelta = 0;
-let crosshairLineX = null;
-let crosshairLineY = null;
+const IS_CROSSHAIR_MODE_ON = true;
 
 function checkCanvasBoundaries(pointer) {
   if (getCurrentZoomState() > 1.00001) {
@@ -73,10 +73,18 @@ function deselectBoundingBox() {
   }
 }
 
+function setCursorMode() {
+  if (IS_CROSSHAIR_MODE_ON) {
+    setDrawWithCrosshairMode(canvas);
+  } else {
+    setDrawCursorMode(canvas);
+  }
+}
+
 function resetDrawBoundingBoxMode() {
   setCreateBoundingBoxButtonToActive();
   setReadyToDrawShapeState(true);
-  setDrawCursorMode(canvas);
+  setCursorMode();
   createNewBoundingBoxBtnClicked = true;
   drawingFinished = false;
   setBoundingBoxDrawingInProgressState(false);
@@ -95,6 +103,7 @@ function clearBoundingBoxData() {
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
 
+
 // crosshair should only appear in draw bounding box mode
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
@@ -102,6 +111,9 @@ function clearBoundingBoxData() {
 // initial crosshair should not be visible
 // on mouse leave - crosshair should disappear
 // crosshair mouse properties
+// remove lines when disabled
+// on image resize
+// mouse should not even be visible on dim out of the submit labels button
 
 // reset crosshair when switching images
 // turn off crosshair when not adding bounding boxes
@@ -109,26 +121,13 @@ function clearBoundingBoxData() {
 // crosshair fix for zoom
 
 // export crosshair functionality to crosshair service file
-function drawFullCanvasCrosshair(event) {
-  const crosshairPixelDelta = 0.3;
-  const crosshairPixelDelta2 = 0.7;
-  crosshairLineX.set({
-    x1: event.pointer.x + crosshairPixelDelta2,
-    x2: event.pointer.x + crosshairPixelDelta2,
-  });
-  crosshairLineY.set({
-    y1: event.pointer.y - crosshairPixelDelta,
-    y2: event.pointer.y - crosshairPixelDelta,
-  });
-  canvas.renderAll();
-}
 
 let mouseMovedLeft = false;
 let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
   lastMouseEvent = event;
-  drawFullCanvasCrosshair(event);
+  if (IS_CROSSHAIR_MODE_ON) drawFullCanvasCrosshair(event, canvas);
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {
@@ -269,39 +268,13 @@ function setRightBoundingBoxDrawingDelta(delta) {
   rightBoundingBoxDelta = delta;
 }
 
-// extract this
-function newCrosshairLine() {
-  return new fabric.Line([0, 0, 0, 0], {
-    fill: 'white',
-    stroke: 'white',
-    strokeWidth: 1,
-    selectable: false,
-    evented: false,
-  });
-}
-
-function removeCanvasCrosshair() {
-  crosshairLineX.set({ x1: -10, x2: -10, y2: canvas.height });
-  crosshairLineY.set({ y1: -10, y2: -10, x2: canvas.width });
-  canvas.renderAll();
-}
-
-function addCanvasCrosshairLines() {
-  crosshairLineX = newCrosshairLine();
-  crosshairLineY = newCrosshairLine();
-  canvas.add(crosshairLineX);
-  canvas.add(crosshairLineY);
-  removeCanvasCrosshair();
-}
-
 function prepareCanvasForNewBoundingBox(canvasObj) {
   canvas = canvasObj;
   createNewBoundingBoxBtnClicked = true;
   drawingFinished = false;
-  setDrawCursorMode(canvas);
+  setCursorMode();
   setReadyToDrawShapeState(true);
   canvas.discardActiveObject();
-  addCanvasCrosshairLines();
   if (getAddingPolygonPointsState()) {
     setAddPointsButtonToDefault();
     setAddingPolygonPointsState(false);
@@ -313,7 +286,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
 
 function prepareCanvasForNewBoundingBoxesFromExternalSources(canvasObj) {
   canvas = canvasObj;
-  setDrawCursorMode(canvas);
+  setCursorMode();
 }
 
 function topOverflowScroll(event, zoomOverflowElement) {
@@ -400,7 +373,6 @@ export {
   shapeScrollEvents,
   deselectBoundingBox,
   clearBoundingBoxData,
-  removeCanvasCrosshair,
   resetDrawBoundingBoxMode,
   finishDrawingBoundingBox,
   instantiateNewBoundingBox,
