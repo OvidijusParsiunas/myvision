@@ -26,6 +26,10 @@ think about caching some of the 'do not show again' modal data
 
 remove button highlight functionality toggle
 
+default canvas does appear to have highlight (multiple shape) capabilities, investigate
+
+choose the color of crosshair
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

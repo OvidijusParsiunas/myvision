@@ -23,6 +23,8 @@ let lastMouseEvent = null;
 let drawingFinished = false;
 let finishDrawingBoundingBoxClick = null;
 let rightBoundingBoxDelta = 0;
+let crosshairLineX = null;
+let crosshairLineY = null;
 
 function checkCanvasBoundaries(pointer) {
   if (getCurrentZoomState() > 1.00001) {
@@ -95,11 +97,21 @@ function clearBoundingBoxData() {
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
 
+function drawFullCanvasCrosshair(event) {
+  const crosshairPixelDelta = 0.3;
+  const crosshairPixelDelta2 = 0.7;
+  crosshairLineX.set({ x1: event.pointer.x + crosshairPixelDelta2, x2: event.pointer.x + crosshairPixelDelta2 });
+  crosshairLineY.set({ y1: event.pointer.y - crosshairPixelDelta, y2: event.pointer.y - crosshairPixelDelta });
+  // crosshairLineY.points(0, event.pointer.y, canvas.width, event.pointer.y);
+  canvas.renderAll();
+}
+
 let mouseMovedLeft = false;
 let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
   lastMouseEvent = event;
+  drawFullCanvasCrosshair(event);
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {
@@ -240,6 +252,29 @@ function setRightBoundingBoxDrawingDelta(delta) {
   rightBoundingBoxDelta = delta;
 }
 
+// extract this
+function newCrosshairLine() {
+  return new fabric.Line([0, 0, 0, 0], {
+    fill: 'white',
+    stroke: 'hsla(112, 57%, 50%, 1)',
+    strokeWidth: 1,
+  });
+}
+
+function removeCanvasCrosshair() {
+  crosshairLineX.set({ x1: -10, x2: -10, y2: canvas.height });
+  crosshairLineY.set({ y1: -10, y2: -10, x2: canvas.width });
+  canvas.renderAll();
+}
+
+function addCanvasCrosshairLines() {
+  crosshairLineX = newCrosshairLine();
+  crosshairLineY = newCrosshairLine();
+  canvas.add(crosshairLineX);
+  canvas.add(crosshairLineY);
+  removeCanvasCrosshair();
+}
+
 function prepareCanvasForNewBoundingBox(canvasObj) {
   canvas = canvasObj;
   createNewBoundingBoxBtnClicked = true;
@@ -247,6 +282,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
   setDrawCursorMode(canvas);
   setReadyToDrawShapeState(true);
   canvas.discardActiveObject();
+  addCanvasCrosshairLines();
   if (getAddingPolygonPointsState()) {
     setAddPointsButtonToDefault();
     setAddingPolygonPointsState(false);
@@ -345,6 +381,7 @@ export {
   shapeScrollEvents,
   deselectBoundingBox,
   clearBoundingBoxData,
+  removeCanvasCrosshair,
   resetDrawBoundingBoxMode,
   finishDrawingBoundingBox,
   instantiateNewBoundingBox,

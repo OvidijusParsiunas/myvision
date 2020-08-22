@@ -1,4 +1,5 @@
 import {
+  removeCanvasCrosshair,
   prepareCanvasForNewBoundingBox, instantiateNewBoundingBox,
   drawBoundingBox, finishDrawingBoundingBox, shapeScrollEvents,
 } from '../../../objects/boundingBox/boundingBox';
@@ -20,6 +21,10 @@ function assignDrawBoundingBoxEvents(canvas) {
 
   canvas.on('mouse:wheel', (e) => {
     shapeScrollEvents(e);
+  });
+
+  canvas.on('mouse:out', () => {
+    removeCanvasCrosshair();
   });
 }
 

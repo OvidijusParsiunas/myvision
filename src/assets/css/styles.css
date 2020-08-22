@@ -1829,6 +1829,11 @@ body {
   margin-left: 5px;
 }
 
+.moveAble {
+    position: absolute;
+    pointer-events: none;
+}
+
 @media only screen and (max-height: 585px) {
   .toolkit-button-icon {
     width: 29px;
