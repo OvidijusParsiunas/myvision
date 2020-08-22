@@ -1834,6 +1834,16 @@ body {
     pointer-events: none;
 }
 
+#crosshair-line-v {
+  height: calc(100% - (35px + (29px / var(--screen-size-delta))));
+  margin-top: calc(35px + (29px / var(--screen-size-delta)));
+}
+
+#crosshair-line-x {
+  left: calc(59px / var(--screen-size-delta));
+  width: calc(100% - 209px - (59px / var(--screen-size-delta)));
+}
+
 @media only screen and (max-height: 585px) {
   .toolkit-button-icon {
     width: 29px;

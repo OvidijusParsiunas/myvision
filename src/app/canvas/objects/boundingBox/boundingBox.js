@@ -92,17 +92,34 @@ function clearBoundingBoxData() {
   setBoundingBoxDrawingInProgressState(false);
 }
 
-// check whether the results are truncated
-
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
 
+// crosshair should only appear in draw bounding box mode
+// increase overall crosshair thickness for firefox
+// create button to toggle crosshair in settings
+// when modal open, no crosshair should be there
+// initial crosshair should not be visible
+// on mouse leave - crosshair should disappear
+// crosshair mouse properties
+
+// reset crosshair when switching images
+// turn off crosshair when not adding bounding boxes
+
+// crosshair fix for zoom
+
+// export crosshair functionality to crosshair service file
 function drawFullCanvasCrosshair(event) {
   const crosshairPixelDelta = 0.3;
   const crosshairPixelDelta2 = 0.7;
-  crosshairLineX.set({ x1: event.pointer.x + crosshairPixelDelta2, x2: event.pointer.x + crosshairPixelDelta2 });
-  crosshairLineY.set({ y1: event.pointer.y - crosshairPixelDelta, y2: event.pointer.y - crosshairPixelDelta });
-  // crosshairLineY.points(0, event.pointer.y, canvas.width, event.pointer.y);
+  crosshairLineX.set({
+    x1: event.pointer.x + crosshairPixelDelta2,
+    x2: event.pointer.x + crosshairPixelDelta2,
+  });
+  crosshairLineY.set({
+    y1: event.pointer.y - crosshairPixelDelta,
+    y2: event.pointer.y - crosshairPixelDelta,
+  });
   canvas.renderAll();
 }
 
@@ -256,8 +273,10 @@ function setRightBoundingBoxDrawingDelta(delta) {
 function newCrosshairLine() {
   return new fabric.Line([0, 0, 0, 0], {
     fill: 'white',
-    stroke: 'hsla(112, 57%, 50%, 1)',
+    stroke: 'white',
     strokeWidth: 1,
+    selectable: false,
+    evented: false,
   });
 }
 
