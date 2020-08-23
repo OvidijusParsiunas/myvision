@@ -30,6 +30,8 @@ default canvas does appear to have highlight (multiple shape) capabilities, inve
 
 choose the color of crosshair
 
+every 10 mins after the last save, should get a brief notification to remember to save the work
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

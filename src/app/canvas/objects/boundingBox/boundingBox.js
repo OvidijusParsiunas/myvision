@@ -103,7 +103,6 @@ function clearBoundingBoxData() {
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
 
-
 // crosshair should only appear in draw bounding box mode
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
@@ -114,6 +113,7 @@ function clearBoundingBoxData() {
 // remove lines when disabled
 // on image resize
 // mouse should not even be visible on dim out of the submit labels button
+// should redraw the crosshair after submit has been clicked
 
 // reset crosshair when switching images
 // turn off crosshair when not adding bounding boxes

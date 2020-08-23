@@ -18,18 +18,10 @@ function resetObjectCrosshairCursors(canvas) {
     });
   } else {
     canvas.forEachObject((iteratedObj) => {
-      iteratedObj.hoverCursor = 'default';
+      iteratedObj.hoverCursor = 'none';
     });
   }
   canvas.renderAll();
-}
-
-// check if this one is not redundant
-function waitingForLabelCursorMode(canvas) {
-  canvas.forEachObject((iteratedObj) => {
-    iteratedObj.hoverCursor = 'default';
-  });
-  canvas.defaultCursor = 'default';
 }
 
 function drawFullCanvasCrosshair(event, canvas) {
@@ -111,6 +103,6 @@ function setDrawWithCrosshairMode(canvas) {
 }
 
 export {
-  waitingForLabelCursorMode, resetObjectCrosshairCursors,
-  setDrawWithCrosshairMode, drawFullCanvasCrosshair, removeCanvasCrosshair,
+  drawFullCanvasCrosshair, removeCanvasCrosshair,
+  resetObjectCrosshairCursors, setDrawWithCrosshairMode,
 };

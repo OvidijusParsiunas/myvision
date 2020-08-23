@@ -1,7 +1,8 @@
-import { resetObjectCursors, waitingForLabelCursorMode } from '../../canvas/mouseInteractions/cursorModes/drawMode';
+import { resetObjectCursors } from '../../canvas/mouseInteractions/cursorModes/drawMode';
 import { resetObjectCrosshairCursors } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { getLabellerModalInputText, hideLabellerModal, resetLabellerModalOptions } from './style';
 import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
+import waitingForLabelCursorMode from '../../canvas/mouseInteractions/cursorModes/waitingForLabelSubmissionMode';
 
 let labellingState = false;
 let targetShape = null;
