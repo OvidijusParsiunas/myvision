@@ -22,6 +22,7 @@ function purgeCanvasMouseEvents(canvas) {
     canvas.__eventListeners['mouse:move'] = [];
     canvas.__eventListeners['mouse:up'] = [];
     canvas.__eventListeners['mouse:wheel'] = [];
+    canvas.__eventListeners['mouse:out'] = [];
     canvas.__eventListeners['object:moving'] = [];
     setScalingEventListeners();
   }

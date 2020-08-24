@@ -287,7 +287,7 @@ function highlightMachineLearningButton() {
   if (!getHasMachineLearningButtonBeenHighligtedState()) {
     const beginAnimationImmediately = true;
     initiateButtonPulseAnimation(document.getElementById('machine-learning-button'),
-      'rgb(184 233 179)', 'white', 4, beginAnimationImmediately);
+      'rgb(184 233 179)', 'white', 5, beginAnimationImmediately);
     setHasMachineLearningButtonBeenHighligtedState(true);
   }
 }

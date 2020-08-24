@@ -1,8 +1,10 @@
 import fabric from 'fabric';
 import { getMovableObjectsState } from '../../../tools/state';
 
-let crosshairLineX = null;
-let crosshairLineY = null;
+let canvasCrosshairLineX = null;
+let canvasCrosshairLineY = null;
+const crosshairXDelta = 0.3;
+const crosshairYDelta = 0.7;
 
 function setAllObjectsToUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {
@@ -25,22 +27,20 @@ function resetObjectCrosshairCursors(canvas) {
 }
 
 function drawFullCanvasCrosshair(event, canvas) {
-  const crosshairPixelDelta = 0.3;
-  const crosshairPixelDelta2 = 0.7;
-  crosshairLineX.set({
-    x1: event.pointer.x + crosshairPixelDelta2,
-    x2: event.pointer.x + crosshairPixelDelta2,
+  canvasCrosshairLineX.set({
+    x1: event.pointer.x + crosshairYDelta,
+    x2: event.pointer.x + crosshairYDelta,
   });
-  crosshairLineY.set({
-    y1: event.pointer.y - crosshairPixelDelta,
-    y2: event.pointer.y - crosshairPixelDelta,
+  canvasCrosshairLineY.set({
+    y1: event.pointer.y - crosshairXDelta,
+    y2: event.pointer.y - crosshairXDelta,
   });
   canvas.renderAll();
 }
 
 function removeCanvasCrosshair(canvas) {
-  crosshairLineX.set({ x1: -10, x2: -10, y2: canvas.height });
-  crosshairLineY.set({ y1: -10, y2: -10, x2: canvas.width });
+  canvasCrosshairLineX.set({ x1: -10, x2: -10, y2: canvas.height });
+  canvasCrosshairLineY.set({ y1: -10, y2: -10, x2: canvas.width });
   canvas.renderAll();
 }
 
@@ -55,40 +55,44 @@ function newCrosshairLine() {
 }
 
 function addCanvasCrosshairLines(canvas) {
-  crosshairLineX = newCrosshairLine();
-  crosshairLineY = newCrosshairLine();
-  canvas.add(crosshairLineX);
-  canvas.add(crosshairLineY);
+  canvasCrosshairLineX = newCrosshairLine();
+  canvasCrosshairLineY = newCrosshairLine();
+  canvas.add(canvasCrosshairLineX);
+  canvas.add(canvasCrosshairLineY);
   removeCanvasCrosshair(canvas);
+}
+
+function addmouseMoveEventHandler(element, crosshairX, crosshairY) {
+  element.addEventListener('mousemove', (event) => {
+    const top = `${event.pageY - crosshairXDelta}px`;
+    crosshairX.style.top = top;
+    const left = `${event.pageX + crosshairYDelta}px`;
+    crosshairY.style.left = left;
+  });
 }
 
 // need to remove these event listeners later on
 function addCrosshairOutsideOfCanvas() {
-  const corsshairLineX = document.getElementById('crosshair-line-x');
-  const corsshairLineV = document.getElementById('crosshair-line-v');
-  document.getElementById('zoom-overflow-wrapper-parent').addEventListener('mousemove', (event) => {
-    const top = `${event.pageY}px`;
-    corsshairLineX.style.top = top;
-    const left = `${event.pageX}px`;
-    corsshairLineV.style.left = left;
-  });
-  document.getElementById('canvas-absolute-container-2').addEventListener('mousemove', (event) => {
-    const top = `${event.pageY - 0.3}px`;
-    corsshairLineX.style.top = top;
-    const left = `${event.pageX + 0.7}px`;
-    corsshairLineV.style.left = left;
-  });
-  document.getElementById('canvas-absolute-container-1').addEventListener('mousemove', (event) => {
-    const top = `${event.pageY - 0.3}px`;
-    corsshairLineX.style.top = top;
-    const left = `${event.pageX + 0.7}px`;
-    corsshairLineV.style.left = left;
-  });
+  const outsideCrossshairLineX = document.getElementById('crosshair-line-x');
+  const outsideCrosshairLineV = document.getElementById('crosshair-line-v');
+  addmouseMoveEventHandler(document.getElementById('canvas-absolute-container-2'), outsideCrossshairLineX, outsideCrosshairLineV);
+  addmouseMoveEventHandler(document.getElementById('canvas-absolute-container-1'), outsideCrossshairLineX, outsideCrosshairLineV);
+  // document.getElementById('zoom-overflow-wrapper-parent')
+  // .addEventListener('mousemove', (event) => {
+  //   // crosshair deltas
+  //   const top = `${event.pageY}px`;
+  //   outsideCrossshairLineX.style.top = top;
+  //   const left = `${event.pageX}px`;
+  //   outsideCrosshairLineV.style.left = left;
+  // });
+  // get UX help: one of the two, full crosshair in grey space or no crosshair in greenspace
+  // with the crosshair being only in the canvas area
+  // document.getElementById('zoom-overflow-wrapper-parent').style.cursor = 'none';
 }
 
 function removeCrosshairLinesIfExisting(canvas) {
-  if (crosshairLineX) canvas.remove(crosshairLineX);
-  if (crosshairLineY) canvas.remove(crosshairLineY);
+  if (canvasCrosshairLineX) canvas.remove(canvasCrosshairLineX);
+  if (canvasCrosshairLineY) canvas.remove(canvasCrosshairLineY);
 }
 
 function setDrawWithCrosshairMode(canvas) {
