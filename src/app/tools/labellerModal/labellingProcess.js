@@ -1,5 +1,5 @@
-import { resetObjectCursors } from '../../canvas/mouseInteractions/cursorModes/drawMode';
-import { resetObjectCrosshairCursors } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { resetObjectCursors as resetObjectCursorsForDefaultDraw } from '../../canvas/mouseInteractions/cursorModes/drawMode';
+import { resetObjectCursors as resetObjectCursorsForCrosshairDraw } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { getLabellerModalInputText, hideLabellerModal, resetLabellerModalOptions } from './style';
 import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import waitingForLabelCursorMode from '../../canvas/mouseInteractions/cursorModes/waitingForLabelSubmissionMode';
@@ -24,9 +24,9 @@ function removeTargetShape() {
 function setCursorMode() {
   // && getBoundingBoxDrawingInProgress
   if (IS_CROSSHAIR_MODE_ON) {
-    resetObjectCrosshairCursors(canvas);
+    resetObjectCursorsForCrosshairDraw(canvas);
   } else {
-    resetObjectCursors(canvas);
+    resetObjectCursorsForDefaultDraw(canvas);
   }
 }
 

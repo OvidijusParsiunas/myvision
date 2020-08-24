@@ -3,17 +3,10 @@ import { getMovableObjectsState } from '../../../tools/state';
 
 let canvasCrosshairLineX = null;
 let canvasCrosshairLineY = null;
-const crosshairXDelta = 0.3;
-const crosshairYDelta = 0.7;
+const horizontalDelta = 0.3;
+const verticalDelta = 0.7;
 
-function setAllObjectsToUneditable(canvas) {
-  canvas.forEachObject((iteratedObj) => {
-    iteratedObj.selectable = false;
-    iteratedObj.hoverCursor = 'none';
-  });
-}
-
-function resetObjectCrosshairCursors(canvas) {
+function resetObjectCursors(canvas) {
   if (getMovableObjectsState()) {
     canvas.forEachObject((iteratedObj) => {
       iteratedObj.hoverCursor = null;
@@ -26,14 +19,14 @@ function resetObjectCrosshairCursors(canvas) {
   canvas.renderAll();
 }
 
-function drawFullCanvasCrosshair(event, canvas) {
+function moveCanvasCrosshair(event, canvas) {
   canvasCrosshairLineX.set({
-    x1: event.pointer.x + crosshairYDelta,
-    x2: event.pointer.x + crosshairYDelta,
+    x1: event.pointer.x + verticalDelta,
+    x2: event.pointer.x + verticalDelta,
   });
   canvasCrosshairLineY.set({
-    y1: event.pointer.y - crosshairXDelta,
-    y2: event.pointer.y - crosshairXDelta,
+    y1: event.pointer.y - horizontalDelta,
+    y2: event.pointer.y - horizontalDelta,
   });
   canvas.renderAll();
 }
@@ -44,7 +37,7 @@ function removeCanvasCrosshair(canvas) {
   canvas.renderAll();
 }
 
-function newCrosshairLine() {
+function newCanvasCrosshairLine() {
   return new fabric.Line([0, 0, 0, 0], {
     fill: 'white',
     stroke: 'white',
@@ -55,18 +48,18 @@ function newCrosshairLine() {
 }
 
 function addCanvasCrosshairLines(canvas) {
-  canvasCrosshairLineX = newCrosshairLine();
-  canvasCrosshairLineY = newCrosshairLine();
+  canvasCrosshairLineX = newCanvasCrosshairLine();
+  canvasCrosshairLineY = newCanvasCrosshairLine();
   canvas.add(canvasCrosshairLineX);
   canvas.add(canvasCrosshairLineY);
   removeCanvasCrosshair(canvas);
 }
 
-function addmouseMoveEventHandler(element, crosshairX, crosshairY) {
+function addMouseMoveEventHandlerToElement(element, crosshairX, crosshairY) {
   element.addEventListener('mousemove', (event) => {
-    const top = `${event.pageY - crosshairXDelta}px`;
+    const top = `${event.pageY - horizontalDelta}px`;
     crosshairX.style.top = top;
-    const left = `${event.pageX + crosshairYDelta}px`;
+    const left = `${event.pageX + verticalDelta}px`;
     crosshairY.style.left = left;
   });
 }
@@ -75,8 +68,8 @@ function addmouseMoveEventHandler(element, crosshairX, crosshairY) {
 function addCrosshairOutsideOfCanvas() {
   const outsideCrossshairLineX = document.getElementById('crosshair-line-x');
   const outsideCrosshairLineV = document.getElementById('crosshair-line-v');
-  addmouseMoveEventHandler(document.getElementById('canvas-absolute-container-2'), outsideCrossshairLineX, outsideCrosshairLineV);
-  addmouseMoveEventHandler(document.getElementById('canvas-absolute-container-1'), outsideCrossshairLineX, outsideCrosshairLineV);
+  addMouseMoveEventHandlerToElement(document.getElementById('canvas-absolute-container-2'), outsideCrossshairLineX, outsideCrosshairLineV);
+  addMouseMoveEventHandlerToElement(document.getElementById('canvas-absolute-container-1'), outsideCrossshairLineX, outsideCrosshairLineV);
   // document.getElementById('zoom-overflow-wrapper-parent')
   // .addEventListener('mousemove', (event) => {
   //   // crosshair deltas
@@ -95,6 +88,13 @@ function removeCrosshairLinesIfExisting(canvas) {
   if (canvasCrosshairLineY) canvas.remove(canvasCrosshairLineY);
 }
 
+function setAllObjectsToUneditable(canvas) {
+  canvas.forEachObject((iteratedObj) => {
+    iteratedObj.selectable = false;
+    iteratedObj.hoverCursor = 'none';
+  });
+}
+
 function setDrawWithCrosshairMode(canvas) {
   canvas.discardActiveObject();
   setAllObjectsToUneditable(canvas);
@@ -107,6 +107,6 @@ function setDrawWithCrosshairMode(canvas) {
 }
 
 export {
-  drawFullCanvasCrosshair, removeCanvasCrosshair,
-  resetObjectCrosshairCursors, setDrawWithCrosshairMode,
+  moveCanvasCrosshair, removeCanvasCrosshair,
+  setDrawWithCrosshairMode, resetObjectCursors,
 };

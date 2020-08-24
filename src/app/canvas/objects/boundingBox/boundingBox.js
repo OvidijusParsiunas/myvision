@@ -13,7 +13,7 @@ import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers'
 import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
-import { setDrawWithCrosshairMode, drawFullCanvasCrosshair } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { setDrawWithCrosshairMode, moveCanvasCrosshair } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -127,7 +127,7 @@ let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
   lastMouseEvent = event;
-  if (IS_CROSSHAIR_MODE_ON) drawFullCanvasCrosshair(event, canvas);
+  if (IS_CROSSHAIR_MODE_ON) moveCanvasCrosshair(event, canvas);
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {
