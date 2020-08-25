@@ -1,38 +1,38 @@
 let isMouseOnCanvasStatus = false;
-let canvasOverCallback = null;
-let canvasOutCallback = null;
+let mouseOverCallback = null;
+let mouseOutCallback = null;
 
 function getIsMouseOnCanvasStatus() {
   return isMouseOnCanvasStatus;
 }
 
 function removeExecutedFunctionOnMouseOver() {
-  canvasOverCallback = null;
+  mouseOverCallback = null;
 }
 
 function removeExecutedFunctionOnMouseOut() {
-  canvasOverCallback = null;
+  mouseOutCallback = null;
 }
 
 function mouseOverCanvas() {
   isMouseOnCanvasStatus = true;
-  if (canvasOverCallback) {
-    canvasOverCallback();
+  if (mouseOverCallback) {
+    mouseOverCallback();
     removeExecutedFunctionOnMouseOver();
   }
 }
 
 function mouseOutCanvas() {
   isMouseOnCanvasStatus = false;
-  if (canvasOutCallback) canvasOutCallback();
+  if (mouseOutCallback) mouseOutCallback();
 }
 
 function executeFunctionOnceOnMouseOver(func) {
-  canvasOverCallback = func;
+  mouseOverCallback = func;
 }
 
-function executeFunctionOnceOnMouseOut(func) {
-  canvasOutCallback = func;
+function executeFunctionOnMouseOut(func) {
+  mouseOutCallback = func;
 }
 
 function registerMouseOverOutEvents() {
@@ -43,5 +43,5 @@ function registerMouseOverOutEvents() {
 export {
   executeFunctionOnceOnMouseOver, registerMouseOverOutEvents,
   removeExecutedFunctionOnMouseOver, getIsMouseOnCanvasStatus,
-  executeFunctionOnceOnMouseOut, removeExecutedFunctionOnMouseOut,
+  executeFunctionOnMouseOut, removeExecutedFunctionOnMouseOut,
 };

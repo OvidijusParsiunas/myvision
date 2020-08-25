@@ -4,6 +4,10 @@ import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess
 import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import {
+  setDrawWithCrosshairMode, moveCanvasCrosshair,
+  removeOutsideCrosshairEventListeners, hideCrosshair,
+} from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
+import {
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
   getMovableObjectsState, getBoundingBoxDrawingInProgressState, setReadyToDrawShapeState,
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState, setSessionDirtyState,
@@ -13,7 +17,7 @@ import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers'
 import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
-import { setDrawWithCrosshairMode, moveCanvasCrosshair } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { removeExecutedFunctionOnMouseOver, removeExecutedFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;
@@ -98,30 +102,23 @@ function clearBoundingBoxData() {
     leftMouseBtnDown = false;
   }
   setBoundingBoxDrawingInProgressState(false);
-  // remove the extra event handler on mouse over out
+  removeExecutedFunctionOnMouseOver();
+  removeExecutedFunctionOnMouseOut();
+  removeOutsideCrosshairEventListeners();
+  hideCrosshair(canvas);
 }
 
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
 
-// crosshair should only appear in draw bounding box mode
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
 // when modal open, no crosshair should be there
-// initial crosshair should not be visible
-// on mouse leave - crosshair should disappear
 // crosshair mouse properties
-// remove lines when disabled
 // on image resize
-// mouse should not even be visible on dim out of the submit labels button
-// should redraw the crosshair after submit has been clicked
-
 // reset crosshair when switching images
-// turn off crosshair when not adding bounding boxes
 
 // crosshair fix for zoom
-
-// export crosshair functionality to crosshair service file
 
 let mouseMovedLeft = false;
 let mouseMovedTop = false;
