@@ -1,5 +1,5 @@
 import { resetObjectCursors as resetObjectCursorsForDefaultDraw } from '../../canvas/mouseInteractions/cursorModes/drawMode';
-import { resetObjectCursors as resetObjectCursorsForCrosshairDraw } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { setAllObjectsToUneditable as resetObjectCursorsForCrosshairDraw } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { getLabellerModalInputText, hideLabellerModal, resetLabellerModalOptions } from './style';
 import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import waitingForLabelCursorMode from '../../canvas/mouseInteractions/cursorModes/waitingForLabelSubmissionMode';

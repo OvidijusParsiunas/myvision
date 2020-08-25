@@ -1,6 +1,6 @@
 import fabric from 'fabric';
-import { getMovableObjectsState } from '../../../tools/state';
-import { getIsMouseOnCanvasStatus } from '../../../keyEvents/mouse/mouseOverOut';
+import { getIsMouseOnCanvasStatus, executeFunctionOnceOnMouseOver, executeFunctionOnceOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
+import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 
 let canvasCrosshairLineX = null;
 let canvasCrosshairLineY = null;
@@ -9,20 +9,8 @@ let outsideCrosshairLineY = null;
 const HORIZONTAL_DELTA = 0.3;
 const VERTICAL_DELTA = 0.7;
 
-function resetObjectCursors(canvas) {
-  if (getMovableObjectsState()) {
-    canvas.forEachObject((iteratedObj) => {
-      iteratedObj.hoverCursor = null;
-    });
-  } else {
-    canvas.forEachObject((iteratedObj) => {
-      iteratedObj.hoverCursor = 'none';
-    });
-  }
-  canvas.renderAll();
-}
-
 function moveCanvasCrosshair(event, canvas) {
+  if (!event.pointer.x) return;
   canvasCrosshairLineX.set({
     x1: event.pointer.x + VERTICAL_DELTA,
     x2: event.pointer.x + VERTICAL_DELTA,
@@ -45,7 +33,8 @@ function hideOutsideCrosshair() {
   outsideCrosshairLineY.style.left = '-10px';
 }
 
-function hideCrosshair(canvas) {
+function hideCrosshair(canvasObj) {
+  const canvas = canvasObj || this;
   hideCanvasCrosshair(canvas);
   hideOutsideCrosshair();
 }
@@ -68,8 +57,13 @@ function addCanvasCrosshairLines(canvas) {
   hideCanvasCrosshair(canvas);
 }
 
+// decided not move the outer crosshair upon mouse click or redrawing of a shape
+// to prevent extra mouse listeners
 function addMouseMoveEventHandlerToElement(element, crosshairX, crosshairY) {
   element.addEventListener('mousemove', (event) => {
+    if (!event.pageY) {
+      event = getLastMouseMoveEvent();
+    }
     crosshairX.style.top = `${event.pageY - HORIZONTAL_DELTA}px`;
     crosshairY.style.left = `${event.pageX + VERTICAL_DELTA}px`;
   });
@@ -106,26 +100,36 @@ function setAllObjectsToUneditable(canvas) {
   });
 }
 
-function redrawCrosshairOnLastPosition() {
-  // retrieve the last canvas position and draw
-  // remove the handler
+function moveCrosshairToPosition(canvasArg) {
+  const canvas = canvasArg || this;
+  const lastMouseMoveEvent = getLastMouseMoveEvent();
+  const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
+  const pointerEvent = { pointer: lastCanvasPointer };
+  moveCanvasCrosshair(pointerEvent, canvas);
+  document.getElementById('canvas-absolute-container-1').dispatchEvent(new Event('mousemove'));
+  document.getElementById('canvas-absolute-container-2').dispatchEvent(new Event('mousemove'));
 }
 
 function setDrawWithCrosshairMode(canvas, resetting) {
-  if (resetting) return; // append the function for drawing
   canvas.discardActiveObject();
-  setAllObjectsToUneditable(canvas);
   canvas.defaultCursor = 'none';
   canvas.hoverCursor = 'none';
-  removeCrosshairLinesIfExisting(canvas);
-  console.log(getIsMouseOnCanvasStatus()); // use the last mouse position to draw the cursors
-  // const lastCanvasPointer = canvas.getPointer(lastCanvasPosition);
-  addCanvasCrosshairLines(canvas);
-  addCrosshairOutsideOfCanvas();
-  canvas.renderAll();
+  setAllObjectsToUneditable(canvas);
+  executeFunctionOnceOnMouseOut(hideCrosshair.bind(canvas));
+  // upon attempting to draw after labelling a shape, wait for the onmouseenter event
+  // to be emitted by the canvas
+  if (resetting) {
+    executeFunctionOnceOnMouseOver(moveCrosshairToPosition.bind(canvas));
+  } else {
+    removeCrosshairLinesIfExisting(canvas);
+    addCanvasCrosshairLines(canvas);
+    addCrosshairOutsideOfCanvas();
+    if (getIsMouseOnCanvasStatus()) moveCrosshairToPosition(canvas);
+    canvas.renderAll();
+  }
 }
 
 export {
-  moveCanvasCrosshair, resetObjectCursors,
   setDrawWithCrosshairMode, hideCrosshair,
+  setAllObjectsToUneditable, moveCanvasCrosshair,
 };
