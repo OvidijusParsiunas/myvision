@@ -2,7 +2,7 @@ import {
   prepareCanvasForNewBoundingBox, instantiateNewBoundingBox,
   drawBoundingBox, finishDrawingBoundingBox, shapeScrollEvents,
 } from '../../../objects/boundingBox/boundingBox';
-import { removeCanvasCrosshair } from '../../cursorModes/drawWithCrosshairMode';
+import { hideCrosshair } from '../../cursorModes/drawWithCrosshairMode';
 
 function assignDrawBoundingBoxEvents(canvas) {
   prepareCanvasForNewBoundingBox(canvas);
@@ -24,7 +24,7 @@ function assignDrawBoundingBoxEvents(canvas) {
   });
 
   canvas.on('mouse:out', () => {
-    removeCanvasCrosshair(canvas);
+    hideCrosshair(canvas);
   });
 }
 

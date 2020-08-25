@@ -73,9 +73,9 @@ function deselectBoundingBox() {
   }
 }
 
-function setCursorMode() {
+function setCursorMode(resetting) {
   if (IS_CROSSHAIR_MODE_ON) {
-    setDrawWithCrosshairMode(canvas);
+    setDrawWithCrosshairMode(canvas, resetting);
   } else {
     setDrawCursorMode(canvas);
   }
@@ -84,7 +84,7 @@ function setCursorMode() {
 function resetDrawBoundingBoxMode() {
   setCreateBoundingBoxButtonToActive();
   setReadyToDrawShapeState(true);
-  setCursorMode();
+  setCursorMode(true);
   createNewBoundingBoxBtnClicked = true;
   drawingFinished = false;
   setBoundingBoxDrawingInProgressState(false);
@@ -98,6 +98,7 @@ function clearBoundingBoxData() {
     leftMouseBtnDown = false;
   }
   setBoundingBoxDrawingInProgressState(false);
+  // remove the extra event handler on mouse over out
 }
 
 // if the right or bottom side of the drawn bounding box look a bit too far,
@@ -286,7 +287,7 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
 
 function prepareCanvasForNewBoundingBoxesFromExternalSources(canvasObj) {
   canvas = canvasObj;
-  setCursorMode();
+  setDrawCursorMode(canvas);
 }
 
 function topOverflowScroll(event, zoomOverflowElement) {

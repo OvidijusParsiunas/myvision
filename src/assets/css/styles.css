@@ -1834,7 +1834,7 @@ body {
     pointer-events: none;
 }
 
-#crosshair-line-v {
+#crosshair-line-y {
   height: calc(100% - (35px + (29px / var(--screen-size-delta))));
   margin-top: calc(35px + (29px / var(--screen-size-delta)));
 }

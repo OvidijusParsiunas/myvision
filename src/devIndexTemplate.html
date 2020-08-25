@@ -11,7 +11,7 @@
   <title></title>
 </head>
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
-  <div id="crosshair-line-v" style="background-color: white;
+  <div id="crosshair-line-y" style="background-color: white;
   z-index: 2;
   width: 1px;" class="moveAble">
   </div>
@@ -60,7 +60,7 @@
       </div>
     </div>
     <div id="canvas-wrapper-parent" oncontextmenu="return false;" onmousemove="trackMouseMoveEvents(event)">
-      <div id="canvas-wrapper">
+      <div id="canvas-wrapper" onmouseover="mouseOverCanvas()" onmouseout="mouseOutCanvas()">
         <div id="canvas-absolute-container-2" class="canvas-absolute-container">
           <canvas id="d"></canvas>
         </div>
