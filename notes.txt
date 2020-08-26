@@ -32,6 +32,8 @@ choose the color of crosshair
 
 every 10 mins after the last save, should get a brief notification to remember to save the work
 
+can't use enter in machine learning modal
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

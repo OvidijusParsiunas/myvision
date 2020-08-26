@@ -48,6 +48,7 @@ import {
 import { getContinuousDrawingState, getLastDrawingModeState, setUploadDatasetsModalDisplayedState } from '../../state';
 import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/state';
 import { getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState } from '../state';
+import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 let currentViewNumber = 1;
 let modalElement = null;
@@ -169,6 +170,7 @@ function resetContinuousShapeButtons() {
     if (getLastDrawingModeState() === 'polygon') {
       setCreatePolygonButtonToActive();
     } else if (getLastDrawingModeState() === 'boundingBox') {
+      moveCanvasCrosshairViaLastCanvasPositionAsync();
       setCreateBoundingBoxButtonToActive();
     }
   }

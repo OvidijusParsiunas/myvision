@@ -345,10 +345,6 @@ function resetCanvasForUnseenShapes() {
 // a promise as the image is drawn hence we do not have it at this time
 // (for the new image)
 function changeToExistingImage(id) {
-  // things to take before evaluatng the current shapes on the current image
-  // get shapes
-  // zoomOutObjectOnImageSelect
-  // make sure the scales are correct
   if (currentlySelectedImageId >= 0) { captureCurrentImageData(); }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);

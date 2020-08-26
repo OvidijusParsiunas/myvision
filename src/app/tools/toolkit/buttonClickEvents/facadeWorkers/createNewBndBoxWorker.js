@@ -5,6 +5,7 @@ import {
   setDefaultState, setAlteringPolygonPointsState,
   setLastDrawingModeState, setHasDrawnShapeState,
 } from '../../../state';
+import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 function initiateCreateNewBndBoxEvents(canvas) {
   // cancel drawing polygon
@@ -12,6 +13,8 @@ function initiateCreateNewBndBoxEvents(canvas) {
   if (canvas.backgroundImage) {
     purgeCanvasMouseEvents(canvas);
     assignDrawBoundingBoxEvents(canvas);
+    // redraw crosshair after mouse move has been triggered when switching images with keyboard
+    moveCanvasCrosshairViaLastCanvasPositionAsync(canvas);
     setEditShapesButtonToDefault();
     setDefaultState(false);
     setCreateBoundingBoxButtonToActive();

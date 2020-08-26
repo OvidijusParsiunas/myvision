@@ -2,10 +2,11 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
 import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
 import {
+  getLastDrawingModeState, getBoundingBoxDrawingInProgressState,
+  setAddingPolygonPointsState, getDefaultState, getRemovingPolygonPointsState,
+  getPolygonDrawingInProgressState, setDefaultState, getAlteringPolygonPointsState,
+  getAddingPolygonPointsState, setReadyToDrawShapeState, setRemovingPolygonPointsState,
   setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
-  getBoundingBoxDrawingInProgressState, getAddingPolygonPointsState, setReadyToDrawShapeState,
-  setAddingPolygonPointsState, getDefaultState, setDefaultState, setRemovingPolygonPointsState,
-  getPolygonDrawingInProgressState, getAlteringPolygonPointsState, getRemovingPolygonPointsState,
 } from '../../../state';
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon, getPolygonIdIfEditing,
@@ -53,7 +54,7 @@ function dismissOtherEvents(canvas) {
     resetNewPolygonData();
     setRemoveLabelsButtonToDisabled();
   }
-  if (getBoundingBoxDrawingInProgressState()) {
+  if (getBoundingBoxDrawingInProgressState() || getLastDrawingModeState() === 'boundingBox') {
     clearBoundingBoxData();
   }
   purgeCanvasMouseEvents(canvas);

@@ -12,6 +12,9 @@ import {
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
 import { getCurrentImage } from '../../../imageList/uploadImages/drawImageOnCanvas';
+import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+
+const IS_CROSSHAIR_MODE_ON = true;
 
 function setNewState(canvas) {
   if (getContinuousDrawingState()) {
@@ -20,6 +23,8 @@ function setNewState(canvas) {
       assignDrawPolygonEvents(canvas);
     } else if (getLastDrawingModeState() === 'boundingBox') {
       assignDrawBoundingBoxEvents(canvas);
+      // redraw crosshair after mouse move has been triggered when switching images with keyboard
+      if (IS_CROSSHAIR_MODE_ON) moveCanvasCrosshairViaLastCanvasPositionAsync(canvas);
     }
     setDefaultState(false);
   } else {

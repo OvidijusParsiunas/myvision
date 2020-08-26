@@ -4,8 +4,7 @@ import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess
 import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import {
-  setDrawWithCrosshairMode, moveCanvasCrosshair,
-  removeOutsideCrosshairEventListeners, hideCrosshair,
+  setDrawWithCrosshairMode, moveCanvasCrosshair, removeCrosshair,
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
@@ -104,8 +103,7 @@ function clearBoundingBoxData() {
   setBoundingBoxDrawingInProgressState(false);
   removeExecutedFunctionOnMouseOver();
   removeExecutedFunctionOnMouseOut();
-  removeOutsideCrosshairEventListeners();
-  hideCrosshair(canvas);
+  removeCrosshair(canvas);
 }
 
 // if the right or bottom side of the drawn bounding box look a bit too far,
@@ -113,8 +111,6 @@ function clearBoundingBoxData() {
 
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
-// when modal open, no crosshair should be there
-// crosshair mouse properties
 // on image resize
 // reset crosshair when switching images
 

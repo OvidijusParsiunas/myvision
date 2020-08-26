@@ -2,6 +2,7 @@ import fabric from 'fabric';
 import { getIsMouseOnCanvasStatus, executeFunctionOnceOnMouseOver, executeFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 
+let optionalCanvas = null;
 let canvasCrosshairLineX = null;
 let canvasCrosshairLineY = null;
 let outsideCrosshairLineXElement = null;
@@ -107,6 +108,12 @@ function removeCrosshairLinesIfExisting(canvas) {
   if (canvasCrosshairLineY) canvas.remove(canvasCrosshairLineY);
 }
 
+function removeCrosshair(canvas) {
+  removeCrosshairLinesIfExisting(canvas);
+  hideOutsideCrosshair();
+  removeOutsideCrosshairEventListeners();
+}
+
 function setAllObjectsToUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {
     iteratedObj.selectable = false;
@@ -114,12 +121,22 @@ function setAllObjectsToUneditable(canvas) {
   });
 }
 
-function moveCrosshairToPosition(canvasArg) {
-  const canvas = canvasArg || this;
+function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
   const lastMouseMoveEvent = getLastMouseMoveEvent();
   const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
   const pointerEvent = { pointer: lastCanvasPointer };
   moveCanvasCrosshair(pointerEvent, canvas);
+}
+
+function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas) {
+  setTimeout(() => {
+    moveCanvasCrosshairViaLastCanvasPosition(canvas || optionalCanvas);
+  });
+}
+
+function moveCrosshairToPosition(canvasArg) {
+  const canvas = canvasArg || this;
+  moveCanvasCrosshairViaLastCanvasPosition(canvas);
   canvasAbsolutelContainer1Element.dispatchEvent(new Event('mousemove'));
   canvasAbsolutelContainer2Element.dispatchEvent(new Event('mousemove'));
 }
@@ -132,6 +149,7 @@ function assignLocalVariables() {
 }
 
 function setDrawWithCrosshairMode(canvas, resetting) {
+  optionalCanvas = canvas;
   assignLocalVariables();
   canvas.discardActiveObject();
   canvas.defaultCursor = 'none';
@@ -152,6 +170,8 @@ function setDrawWithCrosshairMode(canvas, resetting) {
 }
 
 export {
-  setAllObjectsToUneditable, moveCanvasCrosshair, hideCrosshair,
+  moveCanvasCrosshairViaLastCanvasPositionAsync,
+  removeCrosshairLinesIfExisting, addCanvasCrosshairLines,
   setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
+  setAllObjectsToUneditable, moveCanvasCrosshair, removeCrosshair,
 };
