@@ -109,6 +109,10 @@ function clearBoundingBoxData() {
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
 
+// set special dim and light up modal modes, have quick for remove images modal, rapid for
+// machine learning and upload datasets modals
+// check when not in continuous mode, might need to override with quick mode
+// make sure that switching images is ok
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
 // on image resize

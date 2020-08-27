@@ -55,6 +55,7 @@ let modalElement = null;
 let hideViewOnCancelFunc = null;
 let closeModalFunc = null;
 let goBackToSelectFormatViewFunc = null;
+const IS_CROSSHAIR_MODE_ON = true;
 
 function prepareChosenFormatFunctionality() {
   switch (getFormatState()) {
@@ -170,7 +171,7 @@ function resetContinuousShapeButtons() {
     if (getLastDrawingModeState() === 'polygon') {
       setCreatePolygonButtonToActive();
     } else if (getLastDrawingModeState() === 'boundingBox') {
-      moveCanvasCrosshairViaLastCanvasPositionAsync();
+      if (IS_CROSSHAIR_MODE_ON) { moveCanvasCrosshairViaLastCanvasPositionAsync(); }
       setCreateBoundingBoxButtonToActive();
     }
   }
