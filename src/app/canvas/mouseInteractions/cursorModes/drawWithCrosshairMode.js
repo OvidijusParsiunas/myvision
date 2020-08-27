@@ -29,8 +29,8 @@ function moveCanvasCrosshair(event, canvas) {
 
 function hideCanvasCrosshair(canvas) {
   if (!canvasCrosshairLineX || !canvasCrosshairLineY) return;
-  canvasCrosshairLineX.set({ x1: -10, x2: -10, y2: canvas.height });
-  canvasCrosshairLineY.set({ y1: -10, y2: -10, x2: canvas.width });
+  canvasCrosshairLineX.set({ x1: -10, x2: -10 });
+  canvasCrosshairLineY.set({ y1: -10, y2: -10 });
   canvas.renderAll();
 }
 
@@ -60,8 +60,8 @@ function newCanvasCrosshairLine() {
 function addCanvasCrosshairLines(canvas) {
   canvasCrosshairLineX = newCanvasCrosshairLine();
   canvasCrosshairLineY = newCanvasCrosshairLine();
-  canvasCrosshairLineX.set({ orientation: 'x' });
-  canvasCrosshairLineY.set({ orientation: 'y' });
+  canvasCrosshairLineX.set({ orientation: 'x', y2: canvas.height });
+  canvasCrosshairLineY.set({ orientation: 'y', x2: canvas.width });
   canvas.add(canvasCrosshairLineX);
   canvas.add(canvasCrosshairLineY);
   hideCanvasCrosshair(canvas);

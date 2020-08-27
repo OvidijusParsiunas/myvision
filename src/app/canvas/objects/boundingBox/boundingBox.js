@@ -113,7 +113,6 @@ function clearBoundingBoxData() {
 //   otherwise use case statements to speed up the dimming in a variety of modes
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
-// on image resize
 
 // crosshair fix for zoom
 
