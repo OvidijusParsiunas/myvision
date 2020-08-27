@@ -49,6 +49,7 @@ function hideCrosshair(canvasObj) {
 function newCanvasCrosshairLine() {
   return new fabric.Line([0, 0, 0, 0], {
     fill: 'white',
+    shapeName: 'crosshairLine',
     stroke: 'white',
     strokeWidth: 1,
     selectable: false,
@@ -59,6 +60,8 @@ function newCanvasCrosshairLine() {
 function addCanvasCrosshairLines(canvas) {
   canvasCrosshairLineX = newCanvasCrosshairLine();
   canvasCrosshairLineY = newCanvasCrosshairLine();
+  canvasCrosshairLineX.set({ orientation: 'x' });
+  canvasCrosshairLineY.set({ orientation: 'y' });
   canvas.add(canvasCrosshairLineX);
   canvas.add(canvasCrosshairLineY);
   hideCanvasCrosshair(canvas);
@@ -123,6 +126,7 @@ function setAllObjectsToUneditable(canvas) {
 
 function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
   const lastMouseMoveEvent = getLastMouseMoveEvent();
+  if (!lastMouseMoveEvent) return;
   const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
   const pointerEvent = { pointer: lastCanvasPointer };
   moveCanvasCrosshair(pointerEvent, canvas);

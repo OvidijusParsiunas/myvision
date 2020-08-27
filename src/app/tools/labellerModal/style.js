@@ -142,7 +142,7 @@ function hideLabellerModal() {
   setLabellerModalDisplayedState(false);
 }
 
-function validateFullModalVisibile(isWindowResized) {
+function validateFullLabellerModalVisibile(isWindowResized) {
   if (windowHasScrollbar()) {
     parentElement.style.top = '';
     parentElement.style.bottom = '5px';
@@ -224,7 +224,7 @@ function showLabellerModal() {
   setLabelOptionsHeight();
   addFakeBordersForChromium();
   resetLabelOptionsListScroll();
-  validateFullModalVisibile();
+  validateFullLabellerModalVisibile();
   setLabellerModalDisplayedState(true);
   window.setTimeout(() => {
     inputElement.select();
@@ -239,8 +239,8 @@ function setLabellerPopupDimProperties(lightupTimePeriodArg, dimTimePeriodArg, d
 }
 
 export {
-  setLabellerPopupDimProperties, validateFullModalVisibile,
   changeStyleWhenInputInvalid, initialiseLabellerModalOptionsList,
   showLabellerModal, hideLabellerModal, changeStyleWhenInputEmpty,
+  setLabellerPopupDimProperties, validateFullLabellerModalVisibile,
   resetLabellerModalOptions, getLabellerModalInputText, changeStyleToAllowSubmit,
 };

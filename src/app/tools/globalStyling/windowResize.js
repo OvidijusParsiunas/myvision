@@ -3,7 +3,7 @@ import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/ob
 import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { getCurrentZoomState, getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../state';
-import { validateFullModalVisibile } from '../labellerModal/style';
+import { validateFullLabellerModalVisibile } from '../labellerModal/style';
 import { setStickySettingsPopupProperties } from '../settingsPopup/style';
 import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
 import validateClientBrowserDimensions from './inadequateResourcesOverlay';
@@ -26,7 +26,7 @@ window.windowResize = () => {
     setStickyExportDatasetsPopupProperties();
   }
   const isWindowResized = true;
-  validateFullModalVisibile(isWindowResized);
+  validateFullLabellerModalVisibile(isWindowResized);
 };
 
 function assignCanvasForResizeWhenWindowResize(canvasObj) {

@@ -64,6 +64,14 @@ function resetPolygonSelectableArea(currentPolygon) {
   currentPolygon.setCoords();
 }
 
+function crosshair(object, canvas) {
+  if (object.orientation === 'x') {
+    object.set({ y2: canvas.height });
+  } else if (object.orientation === 'y') {
+    object.set({ x2: canvas.width });
+  }
+}
+
 function resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas) {
   canvas.forEachObject((object) => {
     switch (object.shapeName) {
@@ -109,7 +117,11 @@ function resizeAllObjectsDimensionsByDoubleScale(newFileSizeRatio, canvas) {
       default:
         break;
     }
-    object.setCoords();
+    if (object.shapeName === 'crosshairLine') {
+      crosshair(object, canvas);
+    } else {
+      object.setCoords();
+    }
   });
   canvas.renderAll();
 }
@@ -168,9 +180,9 @@ function resizeAllPassedObjectsDimensionsBySingleScale(object, newFileSizeRatio)
 export {
   setObjectPropertiesToDefault,
   setObjectsHoverCursorToDefault,
+  resizeLabelDimensionsBySingleScale,
   prepareObjectsForEditablePolygonPoints,
+  resizeAllObjectsDimensionsByDoubleScale,
   setObjectPropertiesToDefaultWhenReadyToDraw,
   resizeAllPassedObjectsDimensionsBySingleScale,
-  resizeLabelDimensionsBySingleScale,
-  resizeAllObjectsDimensionsByDoubleScale,
 };
