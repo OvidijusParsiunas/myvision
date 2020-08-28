@@ -7,10 +7,10 @@ import {
   setDrawWithCrosshairMode, moveCanvasCrosshair, removeCrosshair,
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
-  getMovableObjectsState, getBoundingBoxDrawingInProgressState,
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
   getCrosshairModeOnState, setSessionDirtyState, setReadyToDrawShapeState,
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
+  getMovableObjectsState, getBoundingBoxDrawingInProgressState, setcrosshairModeOnState,
 } from '../../../tools/state';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
@@ -77,6 +77,7 @@ function deselectBoundingBox() {
 }
 
 function setCursorMode(resetting) {
+  setcrosshairModeOnState(true);
   if (getCrosshairModeOnState()) {
     setDrawWithCrosshairMode(canvas, resetting);
   } else {

@@ -29,7 +29,7 @@ let boundingBoxDrawingInProgressState = false;
 let removeImageModalDisplayedState = false;
 let welcomeModalDisplayedState = false;
 let sessionDirty = false;
-let crosshairModeOnState = true;
+let crosshairModeOnState = false;
 
 function getDefaultState() {
   return defaultState;

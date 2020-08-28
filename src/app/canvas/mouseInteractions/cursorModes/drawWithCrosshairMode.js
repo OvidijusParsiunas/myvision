@@ -140,6 +140,7 @@ function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
 
 function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas) {
   setTimeout(() => {
+    if (!getIsMouseOnCanvasStatus()) return;
     moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef);
   });
 }

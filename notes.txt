@@ -34,6 +34,8 @@ every 10 mins after the last save, should get a brief notification to remember t
 
 can't use enter in machine learning modal
 
+the labeller overflow still does happen, check if some properties have changed
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
