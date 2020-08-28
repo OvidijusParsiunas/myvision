@@ -45,17 +45,20 @@ import {
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, YOLO_TXT_FORMAT,
   COCO_JSON_FORMAT, VGG_JSON_FORMAT, CSV_FORMAT, VOC_XML_FORMAT,
 } from '../consts';
-import { getContinuousDrawingState, getLastDrawingModeState, setUploadDatasetsModalDisplayedState } from '../../state';
+import {
+  getContinuousDrawingState, getLastDrawingModeState,
+  setUploadDatasetsModalDisplayedState, getCrosshairModeOnState,
+} from '../../state';
 import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/state';
 import { getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState } from '../state';
-import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { moveCrosshair } from '../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { executeFunctionOnceOnMouseOver } from '../../../keyEvents/mouse/mouseOverOut';
 
 let currentViewNumber = 1;
 let modalElement = null;
 let hideViewOnCancelFunc = null;
 let closeModalFunc = null;
 let goBackToSelectFormatViewFunc = null;
-const IS_CROSSHAIR_MODE_ON = true;
 
 function prepareChosenFormatFunctionality() {
   switch (getFormatState()) {
@@ -171,7 +174,7 @@ function resetContinuousShapeButtons() {
     if (getLastDrawingModeState() === 'polygon') {
       setCreatePolygonButtonToActive();
     } else if (getLastDrawingModeState() === 'boundingBox') {
-      if (IS_CROSSHAIR_MODE_ON) { moveCanvasCrosshairViaLastCanvasPositionAsync(); }
+      if (getCrosshairModeOnState()) executeFunctionOnceOnMouseOver(moveCrosshair);
       setCreateBoundingBoxButtonToActive();
     }
   }

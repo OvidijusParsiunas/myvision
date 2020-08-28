@@ -1,10 +1,10 @@
-import { setRemoveImageModalDisplayedState } from '../../../state';
-import { dimWindow, lightUpWindow } from '../../../dimWindow/dimWindowService';
+import { setRemoveImageModalDisplayedState, getCrosshairModeOnState } from '../../../state';
 import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../../dimWindow/consts';
-import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { dimWindow, lightUpWindow } from '../../../dimWindow/dimWindowService';
+import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
 
 let modalParentElement = null;
-const IS_CROSSHAIR_MODE_ON = true;
 
 function displayRemoveImagesModal() {
   dimWindow(SLOW_DIM_SECONDS, THICK_DIM);
@@ -16,7 +16,7 @@ function closeRemoveImagesModal() {
   modalParentElement.style.display = 'none';
   setRemoveImageModalDisplayedState(false);
   lightUpWindow(SLOW_LIGHTUP_MILLISECONDS);
-  if (IS_CROSSHAIR_MODE_ON) { moveCanvasCrosshairViaLastCanvasPositionAsync(); }
+  if (getCrosshairModeOnState()) executeFunctionOnceOnMouseOver(moveCrosshair);
 }
 
 function setInitialCheckBoxInputValue() {

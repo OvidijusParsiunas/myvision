@@ -29,6 +29,7 @@ let boundingBoxDrawingInProgressState = false;
 let removeImageModalDisplayedState = false;
 let welcomeModalDisplayedState = false;
 let sessionDirty = false;
+let crosshairModeOnState = true;
 
 function getDefaultState() {
   return defaultState;
@@ -156,6 +157,10 @@ function getSessionDirtyState() {
 
 function getHasMachineLearningButtonBeenHighligtedState() {
   return hasMachineLearningButtonBeenHighligted;
+}
+
+function getCrosshairModeOnState() {
+  return crosshairModeOnState;
 }
 
 function setDefaultState(state) {
@@ -287,6 +292,10 @@ function setHasMachineLearningButtonBeenHighligtedState(state) {
   hasMachineLearningButtonBeenHighligted = state;
 }
 
+function setcrosshairModeOnState(state) {
+  crosshairModeOnState = state;
+}
+
 export {
   getDefaultState,
   setDefaultState,
@@ -304,6 +313,8 @@ export {
   setHasDrawnShapeState,
   getMovableObjectsState,
   setMovableObjectsState,
+  getCrosshairModeOnState,
+  setcrosshairModeOnState,
   getLastDrawingModeState,
   setLastDrawingModeState,
   getReadyToDrawShapeState,

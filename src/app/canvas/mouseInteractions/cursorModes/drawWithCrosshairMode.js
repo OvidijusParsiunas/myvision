@@ -2,7 +2,7 @@ import fabric from 'fabric';
 import { getIsMouseOnCanvasStatus, executeFunctionOnceOnMouseOver, executeFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 
-let optionalCanvas = null;
+let canvasRef = null;
 let canvasCrosshairLineX = null;
 let canvasCrosshairLineY = null;
 let outsideCrosshairLineXElement = null;
@@ -29,8 +29,8 @@ function moveCanvasCrosshair(event, canvas) {
 
 function hideCanvasCrosshair(canvas) {
   if (!canvasCrosshairLineX || !canvasCrosshairLineY) return;
-  canvasCrosshairLineX.set({ x1: -10, x2: -10 });
-  canvasCrosshairLineY.set({ y1: -10, y2: -10 });
+  canvasCrosshairLineX.set({ x1: -10, x2: -10, y2: canvas.height });
+  canvasCrosshairLineY.set({ y1: -10, y2: -10, x2: canvas.width });
   canvas.renderAll();
 }
 
@@ -40,9 +40,8 @@ function hideOutsideCrosshair() {
   outsideCrosshairLineYElement.style.left = '-10px';
 }
 
-function hideCrosshair(canvasObj) {
-  const canvas = canvasObj || this;
-  hideCanvasCrosshair(canvas);
+function hideCrosshair(canvas) {
+  hideCanvasCrosshair(canvas || canvasRef);
   hideOutsideCrosshair();
 }
 
@@ -134,13 +133,13 @@ function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
 
 function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas) {
   setTimeout(() => {
-    moveCanvasCrosshairViaLastCanvasPosition(canvas || optionalCanvas);
+    moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef);
   });
 }
 
-function moveCrosshairToPosition(canvasArg) {
-  const canvas = canvasArg || this;
-  moveCanvasCrosshairViaLastCanvasPosition(canvas);
+function moveCrosshair(canvas) {
+  moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef);
+  if (!canvasAbsolutelContainer1Element) return;
   canvasAbsolutelContainer1Element.dispatchEvent(new Event('mousemove'));
   canvasAbsolutelContainer2Element.dispatchEvent(new Event('mousemove'));
 }
@@ -153,7 +152,7 @@ function assignLocalVariables() {
 }
 
 function setDrawWithCrosshairMode(canvas, resetting) {
-  optionalCanvas = canvas;
+  canvasRef = canvas;
   assignLocalVariables();
   canvas.discardActiveObject();
   canvas.defaultCursor = 'none';
@@ -162,20 +161,20 @@ function setDrawWithCrosshairMode(canvas, resetting) {
   // upon attempting to draw after labelling a shape, wait for the onmouseenter event
   // to be emitted by the canvas wrapper element
   if (resetting) {
-    executeFunctionOnceOnMouseOver(moveCrosshairToPosition.bind(canvas));
+    executeFunctionOnceOnMouseOver(moveCrosshair);
   } else {
     removeCrosshairLinesIfExisting(canvas);
     addCanvasCrosshairLines(canvas);
     addCrosshairOutsideOfCanvas();
-    if (getIsMouseOnCanvasStatus()) moveCrosshairToPosition(canvas);
-    executeFunctionOnMouseOut(hideCrosshair.bind(canvas));
+    if (getIsMouseOnCanvasStatus()) moveCrosshair(canvas);
+    executeFunctionOnMouseOut(hideCrosshair);
     canvas.renderAll();
   }
 }
 
 export {
-  moveCanvasCrosshairViaLastCanvasPositionAsync,
   removeCrosshairLinesIfExisting, addCanvasCrosshairLines,
+  moveCanvasCrosshairViaLastCanvasPositionAsync, moveCrosshair,
   setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
   setAllObjectsToUneditable, moveCanvasCrosshair, removeCrosshair,
 };

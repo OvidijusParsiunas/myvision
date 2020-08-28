@@ -2,12 +2,11 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 import { setPolygonEditingButtonsToDefault, setEditShapesButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../styling/state';
 import {
-  setDefaultState, setAlteringPolygonPointsState,
-  setLastDrawingModeState, setHasDrawnShapeState,
+  setAlteringPolygonPointsState, setLastDrawingModeState,
+  setHasDrawnShapeState, getCrosshairModeOnState, setDefaultState,
 } from '../../../state';
-import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-
-const IS_CROSSHAIR_MODE_ON = true;
+import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
 
 function initiateCreateNewBndBoxEvents(canvas) {
   // cancel drawing polygon
@@ -15,8 +14,7 @@ function initiateCreateNewBndBoxEvents(canvas) {
   if (canvas.backgroundImage) {
     purgeCanvasMouseEvents(canvas);
     assignDrawBoundingBoxEvents(canvas);
-    // redraw crosshair after mouse move has been triggered when switching images with keyboard
-    if (IS_CROSSHAIR_MODE_ON) { moveCanvasCrosshairViaLastCanvasPositionAsync(); }
+    if (getCrosshairModeOnState()) executeFunctionOnceOnMouseOver(moveCrosshair);
     setEditShapesButtonToDefault();
     setDefaultState(false);
     setCreateBoundingBoxButtonToActive();

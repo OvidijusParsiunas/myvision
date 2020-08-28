@@ -22,9 +22,11 @@ import {
   setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
 } from '../toolkit/styling/state';
 import {
-  getDefaultState, setCurrentImageId, getContinuousDrawingState, getLastDrawingModeState,
-  getHasMachineLearningButtonBeenHighligtedState, setHasMachineLearningButtonBeenHighligtedState,
+  getDefaultState, setCurrentImageId, getContinuousDrawingState,
+  setHasMachineLearningButtonBeenHighligtedState, getCrosshairModeOnState,
+  getHasMachineLearningButtonBeenHighligtedState, getLastDrawingModeState,
 } from '../state';
+import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 let currentlyActiveElement = null;
 let imageContainerElement = null;
@@ -365,6 +367,8 @@ function changeToExistingImage(id) {
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);
   resetCanvasForUnseenShapes();
   setToolkitStylingOnNewImage();
+  // wait for mouse move trigger on image change via keyboard
+  if (getCrosshairModeOnState()) { moveCanvasCrosshairViaLastCanvasPositionAsync(); }
 }
 
 function switchImage(direction) {

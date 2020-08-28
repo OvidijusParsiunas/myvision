@@ -7,9 +7,10 @@ import {
   setDrawWithCrosshairMode, moveCanvasCrosshair, removeCrosshair,
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
+  getMovableObjectsState, getBoundingBoxDrawingInProgressState,
+  setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
+  getCrosshairModeOnState, setSessionDirtyState, setReadyToDrawShapeState,
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
-  getMovableObjectsState, getBoundingBoxDrawingInProgressState, setReadyToDrawShapeState,
-  setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState, setSessionDirtyState,
 } from '../../../tools/state';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
@@ -27,7 +28,6 @@ let lastMouseEvent = null;
 let drawingFinished = false;
 let finishDrawingBoundingBoxClick = null;
 let rightBoundingBoxDelta = 0;
-const IS_CROSSHAIR_MODE_ON = true;
 
 function checkCanvasBoundaries(pointer) {
   if (getCurrentZoomState() > 1.00001) {
@@ -77,7 +77,7 @@ function deselectBoundingBox() {
 }
 
 function setCursorMode(resetting) {
-  if (IS_CROSSHAIR_MODE_ON) {
+  if (getCrosshairModeOnState()) {
     setDrawWithCrosshairMode(canvas, resetting);
   } else {
     setDrawCursorMode(canvas);
@@ -113,15 +113,16 @@ function clearBoundingBoxData() {
 //   otherwise use case statements to speed up the dimming in a variety of modes
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
-
 // crosshair fix for zoom
+// check bug where drawing on a small image, upload a bigger image and the crosshair is jagged
+// use a crosshairDisplayedStatus
 
 let mouseMovedLeft = false;
 let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
   lastMouseEvent = event;
-  if (IS_CROSSHAIR_MODE_ON) moveCanvasCrosshair(event, canvas);
+  if (getCrosshairModeOnState()) moveCanvasCrosshair(event, canvas);
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {
