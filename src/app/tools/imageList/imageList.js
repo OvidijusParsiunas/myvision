@@ -1,4 +1,5 @@
 import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from './uploadImages/drawImageOnCanvas';
+import { moveCanvasCrosshairViaLastCanvasPositionAsync, updatedLinesWithNewCanvasDimensionsAsync } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
@@ -26,7 +27,6 @@ import {
   setHasMachineLearningButtonBeenHighligtedState, getCrosshairModeOnState,
   getHasMachineLearningButtonBeenHighligtedState, getLastDrawingModeState,
 } from '../state';
-import { moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 let currentlyActiveElement = null;
 let imageContainerElement = null;
@@ -294,16 +294,21 @@ function highlightMachineLearningButton() {
   }
 }
 
-function addSingleImageToList(imageMetadata, imageData) {
-  addNewImage(imageMetadata.name, imageData);
+function displayUploadedImage(imageMetadata, isfirstFromMany) {
   highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
   saveAndRemoveCurrentImageDetails();
-  changeCurrentImageNameElementText(imageMetadata.name);
+  changeCurrentImageNameElementText(imageMetadata.name, isfirstFromMany);
   images[newImageId].thumbnailElementRef.scrollIntoView();
-  setDefaultImageProperties(images[newImageId], imageMetadata);
   removeWatermarkFromCanvasAreaBackground();
   setToolkitStylingOnNewImage();
   highlightMachineLearningButton();
+  if (getCrosshairModeOnState()) { updatedLinesWithNewCanvasDimensionsAsync(canvas); }
+}
+
+function addSingleImageToList(imageMetadata, imageData) {
+  addNewImage(imageMetadata.name, imageData);
+  setDefaultImageProperties(images[newImageId], imageMetadata);
+  displayUploadedImage(imageMetadata, false);
   newImageId += 1;
 }
 
@@ -311,13 +316,7 @@ function addImageFromMultiUploadToList(imageMetadata, imageData, isfirstFromMany
   addNewImage(imageMetadata.name, imageData);
   setDefaultImageProperties(images[newImageId], imageMetadata);
   if (images.length === 1 || isfirstFromMany) {
-    highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
-    saveAndRemoveCurrentImageDetails();
-    changeCurrentImageNameElementText(imageMetadata.name, isfirstFromMany);
-    images[newImageId].thumbnailElementRef.scrollIntoView();
-    removeWatermarkFromCanvasAreaBackground();
-    setToolkitStylingOnNewImage();
-    highlightMachineLearningButton();
+    displayUploadedImage(imageMetadata, isfirstFromMany);
   }
   newImageId += 1;
 }

@@ -29,8 +29,8 @@ function moveCanvasCrosshair(event, canvas) {
 
 function hideCanvasCrosshair(canvas) {
   if (!canvasCrosshairLineX || !canvasCrosshairLineY) return;
-  canvasCrosshairLineX.set({ x1: -10, x2: -10, y2: canvas.height });
-  canvasCrosshairLineY.set({ y1: -10, y2: -10, x2: canvas.width });
+  canvasCrosshairLineX.set({ x1: -10, x2: -10 });
+  canvasCrosshairLineY.set({ y1: -10, y2: -10 });
   canvas.renderAll();
 }
 
@@ -56,11 +56,17 @@ function newCanvasCrosshairLine() {
   });
 }
 
+function updateLinesWithNewCanvasDimensions(canvas) {
+  canvasCrosshairLineX.set({ y2: canvas.height });
+  canvasCrosshairLineY.set({ x2: canvas.width });
+}
+
 function addCanvasCrosshairLines(canvas) {
   canvasCrosshairLineX = newCanvasCrosshairLine();
   canvasCrosshairLineY = newCanvasCrosshairLine();
-  canvasCrosshairLineX.set({ orientation: 'x', y2: canvas.height });
-  canvasCrosshairLineY.set({ orientation: 'y', x2: canvas.width });
+  canvasCrosshairLineX.set({ orientation: 'x' });
+  canvasCrosshairLineY.set({ orientation: 'y' });
+  updateLinesWithNewCanvasDimensions(canvas);
   canvas.add(canvasCrosshairLineX);
   canvas.add(canvasCrosshairLineY);
   hideCanvasCrosshair(canvas);
@@ -108,6 +114,7 @@ function addCrosshairOutsideOfCanvas() {
 function removeCrosshairLinesIfExisting(canvas) {
   if (canvasCrosshairLineX) canvas.remove(canvasCrosshairLineX);
   if (canvasCrosshairLineY) canvas.remove(canvasCrosshairLineY);
+  removeOutsideCrosshairEventListeners();
 }
 
 function removeCrosshair(canvas) {
@@ -134,6 +141,12 @@ function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
 function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas) {
   setTimeout(() => {
     moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef);
+  });
+}
+
+function updatedLinesWithNewCanvasDimensionsAsync(canvas) {
+  setTimeout(() => {
+    updateLinesWithNewCanvasDimensions(canvas || canvasRef);
   });
 }
 
@@ -173,8 +186,9 @@ function setDrawWithCrosshairMode(canvas, resetting) {
 }
 
 export {
-  removeCrosshairLinesIfExisting, addCanvasCrosshairLines,
+  setAllObjectsToUneditable, addCanvasCrosshairLines,
+  removeCrosshairLinesIfExisting, moveCanvasCrosshair,
+  updatedLinesWithNewCanvasDimensionsAsync, removeCrosshair,
   moveCanvasCrosshairViaLastCanvasPositionAsync, moveCrosshair,
   setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
-  setAllObjectsToUneditable, moveCanvasCrosshair, removeCrosshair,
 };
