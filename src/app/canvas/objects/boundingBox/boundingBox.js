@@ -3,8 +3,9 @@ import boundingBoxProperties from './properties';
 import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess';
 import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
+// v123
 import {
-  setDrawWithCrosshairMode, moveCanvasCrosshair, removeCrosshair,
+  setDrawWithCrosshairMode, moveCanvasCrosshair, removeCrosshair, moveCanvasCrosshair2, moveCanvasCrosshairViaLastCanvasPositionAsync
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
@@ -115,7 +116,6 @@ function clearBoundingBoxData() {
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
 // crosshair fix for zoom
-// check bug where drawing on a small image, upload a bigger image and the crosshair is jagged
 // use a crosshairDisplayedStatus
 
 let mouseMovedLeft = false;
@@ -123,7 +123,9 @@ let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
   lastMouseEvent = event;
-  if (getCrosshairModeOnState()) moveCanvasCrosshair(event, canvas);
+  // v123
+  // use event.e with a different function when zoomed in
+  if (getCrosshairModeOnState()) moveCanvasCrosshair(event.e, canvas);
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {
@@ -321,8 +323,8 @@ function defaultScroll(event) {
 }
 
 function shapeScrollEvents(event) {
+  const currentZoom = getCurrentZoomState();
   if (leftMouseBtnDown) {
-    const currentZoom = getCurrentZoomState();
     if (currentZoom > 1.00001) {
       const stubElement = document.getElementById('stub');
       const stubMarginTop = stubElement.style.marginTop;
@@ -345,6 +347,9 @@ function shapeScrollEvents(event) {
       }
       canvas.renderAll();
     }
+  }
+  if (getCrosshairModeOnState() && currentZoom > 1.00001) {
+    moveCanvasCrosshairViaLastCanvasPositionAsync(canvas);
   }
 }
 

@@ -36,6 +36,8 @@ can't use enter in machine learning modal
 
 the labeller overflow still does happen, check if some properties have changed
 
+start button on welcome modal looks a little low on a smaller screen
+
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:

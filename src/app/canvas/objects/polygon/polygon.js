@@ -551,7 +551,7 @@ function shapeScrollEvents(event) {
   }
 }
 
-function moveDrawCrosshair() {
+function scrolledViaScrollbar() {
   if (activeShape) {
     movedOverflowScroll = true;
   }
@@ -568,11 +568,11 @@ export {
   movePoints,
   drawPolygon,
   getTempPolygon,
-  moveDrawCrosshair,
   shapeScrollEvents,
   instantiatePolygon,
   addPointViaKeyboard,
   resetNewPolygonData,
+  scrolledViaScrollbar,
   removeInvisiblePoint,
   resetDrawPolygonMode,
   polygonMouseOutEvents,

@@ -8,7 +8,7 @@ import labelProperties from '../../../../canvas/objects/label/properties';
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } from '../../../state';
-import { moveDrawCrosshair } from '../../../../canvas/objects/polygon/polygon';
+import { scrolledViaScrollbar } from '../../../../canvas/objects/polygon/polygon';
 import { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium } from '../../../zoom/chromium';
 import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../../../zoom/firefox';
 import IS_FIREFOX from '../../../utils/browserType';
@@ -182,7 +182,8 @@ function setNewCanvasDimensions(changeElements) {
 
 function resetObjectsCoordinates() {
   canvas.forEachObject((iteratedObj) => {
-    iteratedObj.setCoords();
+    // v123 check if this is actually required
+    if (iteratedObj.shapeName !== 'crosshairLine') iteratedObj.setCoords();
   });
   canvas.renderAll();
 }
@@ -384,7 +385,7 @@ window.zoomOverflowScroll = (element) => {
   canvas.viewportTransform[4] = -element.scrollLeft;
   canvas.viewportTransform[5] = -element.scrollTop;
   if (!scrollWheelUsed) {
-    moveDrawCrosshair(element);
+    scrolledViaScrollbar(element);
   } else {
     scrollWheelUsed = false;
   }
