@@ -7,7 +7,7 @@ import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
-import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState } from '../../../state';
+import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState, getCrosshairModeOnState } from '../../../state';
 import { scrolledViaScrollbar } from '../../../../canvas/objects/polygon/polygon';
 import { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium } from '../../../zoom/chromium';
 import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../../../zoom/firefox';
@@ -17,6 +17,7 @@ import {
   setZoomInButtonToDefault, setZoomInButtonToDisabled,
   setZoomOutButtonToDefault, setZoomOutButtonToDisabled,
 } from '../../styling/state';
+import { resetMoveCanvasCrosshairFunc } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 let currentZoom = null;
 let canvas = null;
@@ -288,6 +289,7 @@ function zoomCanvas(canvasObj, action, windowResize) {
       zoomOut();
     }
   }
+  if (getCrosshairModeOnState()) { resetMoveCanvasCrosshairFunc(); }
 }
 
 function setCanvasElementProperties(left, top) {
@@ -344,6 +346,7 @@ function resetZoom(switchImage) {
   setCurrentZoomState(currentZoom);
   enableCanvasOuterMargin();
   setZoomOutButtonToDisabled();
+  if (getCrosshairModeOnState()) { resetMoveCanvasCrosshairFunc(); }
   return timesNeededToZoomOut;
 }
 

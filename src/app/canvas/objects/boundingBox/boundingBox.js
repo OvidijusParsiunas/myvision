@@ -3,9 +3,9 @@ import boundingBoxProperties from './properties';
 import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess';
 import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
-// v123
 import {
-  setDrawWithCrosshairMode, moveCanvasCrosshair, removeCrosshair, moveCanvasCrosshair2, moveCanvasCrosshairViaLastCanvasPositionAsync
+  setDrawWithCrosshairMode, moveCanvasCrosshair,
+  removeCrosshair, moveCanvasCrosshairViaLastCanvasPositionAsync,
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
@@ -123,9 +123,7 @@ let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
   lastMouseEvent = event;
-  // v123
-  // use event.e with a different function when zoomed in
-  if (getCrosshairModeOnState()) moveCanvasCrosshair(event.e, canvas);
+  if (getCrosshairModeOnState()) moveCanvasCrosshair(event, canvas);
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {

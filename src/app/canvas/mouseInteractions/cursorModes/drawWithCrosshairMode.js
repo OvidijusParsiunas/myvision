@@ -10,16 +10,26 @@ let outsideCrosshairLineXElement = null;
 let outsideCrosshairLineYElement = null;
 let canvasAbsolutelContainer1Element = null;
 let canvasAbsolutelContainer2Element = null;
+let moveCanvasCrosshairFunc = null;
 
 const HORIZONTAL_DELTA = 0.3;
 const VERTICAL_DELTA = 0.7;
 
-// v123
-// this one should be used on-mouse draw when in zoom
-function moveCanvasCrosshair(event, canvas) {
-  // the following check is used in the scenario where the mousemove event has been dispatched
-  // if (!event.pointer.x) return;
-  // when zoomed in
+function moveCanvasCrosshairDefault(event, canvas) {
+  if (!event.pointer.x) return;
+  canvasCrosshairLineX.set({
+    x1: event.pointer.x + VERTICAL_DELTA,
+    x2: event.pointer.x + VERTICAL_DELTA,
+  });
+  canvasCrosshairLineY.set({
+    y1: event.pointer.y - HORIZONTAL_DELTA,
+    y2: event.pointer.y - HORIZONTAL_DELTA,
+  });
+  canvas.renderAll();
+}
+
+function moveCanvasCrosshairOnZoom(event, canvas) {
+  if (!event.pointer.x) return;
   const pointer = canvas.getPointer(event.e);
   canvasCrosshairLineX.set({
     x1: pointer.x + VERTICAL_DELTA,
@@ -31,38 +41,16 @@ function moveCanvasCrosshair(event, canvas) {
   });
   canvasCrosshairLineX.setCoords();
   canvasCrosshairLineY.setCoords();
-
-  // should be a different method
-  // when on default zoom
-  // if (!event.pointer.x) return;
-  // canvasCrosshairLineX.set({
-  //   x1: event.pointer.x + VERTICAL_DELTA,
-  //   x2: event.pointer.x + VERTICAL_DELTA,
-  // });
-  // canvasCrosshairLineY.set({
-  //   y1: event.pointer.y - HORIZONTAL_DELTA,
-  //   y2: event.pointer.y - HORIZONTAL_DELTA,
-  // });
   canvas.renderAll();
 }
 
-// this one should be used for normal endeavours
-function moveCanvasCrosshair2(event, canvas) {
-  // the following check is used in the scenario where the mousemove event has been dispatched
-  if (!event.pointer.x) return;
-  canvasCrosshairLineX.set({
-    x1: event.pointer.x + VERTICAL_DELTA,
-    x2: event.pointer.x + VERTICAL_DELTA,
-  });
-  canvasCrosshairLineY.set({
-    y1: event.pointer.y - HORIZONTAL_DELTA,
-    y2: event.pointer.y - HORIZONTAL_DELTA,
-  });
-  // v123
-  // should only be executed when in zoom
-  canvasCrosshairLineX.setCoords();
-  canvasCrosshairLineY.setCoords();
-  canvas.renderAll();
+function moveCanvasCrosshair(event, canvas) {
+  moveCanvasCrosshairFunc(event, canvas);
+}
+
+function resetMoveCanvasCrosshairFunc() {
+  moveCanvasCrosshairFunc = getCurrentZoomState() > 1.000001
+    ? moveCanvasCrosshairOnZoom : moveCanvasCrosshairDefault;
 }
 
 function hideCanvasCrosshair(canvas) {
@@ -173,8 +161,7 @@ function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
   if (!lastMouseMoveEvent) return;
   const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
   const pointerEvent = { pointer: lastCanvasPointer };
-  // v123
-  moveCanvasCrosshair2(pointerEvent, canvas);
+  moveCanvasCrosshair(pointerEvent, canvas);
 }
 
 function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas) {
@@ -211,6 +198,7 @@ function setDrawWithCrosshairMode(canvas, resetting) {
   canvas.defaultCursor = 'none';
   canvas.hoverCursor = 'none';
   setAllObjectsToUneditable(canvas);
+  resetMoveCanvasCrosshairFunc();
   // upon attempting to draw after labelling a shape, wait for the onmouseenter event
   // to be emitted by the canvas wrapper element
   if (resetting) {
@@ -226,11 +214,9 @@ function setDrawWithCrosshairMode(canvas, resetting) {
 }
 
 export {
-  // v123
-  moveCanvasCrosshair2,
-  setAllObjectsToUneditable, addCanvasCrosshairLines,
-  removeCrosshairLinesIfExisting, moveCanvasCrosshair,
-  updatedLinesWithNewCanvasDimensionsAsync, removeCrosshair,
   moveCanvasCrosshairViaLastCanvasPositionAsync, moveCrosshair,
   setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
+  setAllObjectsToUneditable, addCanvasCrosshairLines, removeCrosshair,
+  updatedLinesWithNewCanvasDimensionsAsync, resetMoveCanvasCrosshairFunc,
+  moveCanvasCrosshairOnZoom, moveCanvasCrosshair, removeCrosshairLinesIfExisting,
 };
