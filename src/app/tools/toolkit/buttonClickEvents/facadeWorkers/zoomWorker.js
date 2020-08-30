@@ -183,8 +183,7 @@ function setNewCanvasDimensions(changeElements) {
 
 function resetObjectsCoordinates() {
   canvas.forEachObject((iteratedObj) => {
-    // v123 check if this is actually required
-    if (iteratedObj.shapeName !== 'crosshairLine') iteratedObj.setCoords();
+    iteratedObj.setCoords();
   });
   canvas.renderAll();
 }
