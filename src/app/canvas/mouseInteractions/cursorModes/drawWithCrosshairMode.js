@@ -161,7 +161,7 @@ function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
   if (!lastMouseMoveEvent) return;
   const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
   const pointerEvent = { pointer: lastCanvasPointer };
-  moveCanvasCrosshair(pointerEvent, canvas);
+  moveCanvasCrosshairDefault(pointerEvent, canvas);
 }
 
 function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas) {
@@ -214,9 +214,9 @@ function setDrawWithCrosshairMode(canvas, resetting) {
 }
 
 export {
-  moveCanvasCrosshairViaLastCanvasPositionAsync, moveCrosshair,
-  setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
   setAllObjectsToUneditable, addCanvasCrosshairLines, removeCrosshair,
   updatedLinesWithNewCanvasDimensionsAsync, resetMoveCanvasCrosshairFunc,
+  moveCanvasCrosshairViaLastCanvasPositionAsync, moveCanvasCrosshairDefault,
+  setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners, moveCrosshair,
   moveCanvasCrosshairOnZoom, moveCanvasCrosshair, removeCrosshairLinesIfExisting,
 };
