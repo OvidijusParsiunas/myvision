@@ -14,8 +14,8 @@ let canvasAbsolutelContainer1Element = null;
 let canvasAbsolutelContainer2Element = null;
 let moveCanvasCrosshairFunc = null;
 
-const HORIZONTAL_DELTA = 0.3;
-let VERTICAL_DELTA = 0.7;
+let horizontalDelta = 0.3;
+let verticalDelta = 0.7;
 
 function setCanvasCrosshairCoordinates() {
   canvasCrosshairLineX.setCoords();
@@ -25,13 +25,14 @@ function setCanvasCrosshairCoordinates() {
 function moveCanvasCrosshairDefault(event, canvas) {
   if (!event.pointer.x) return;
   canvasCrosshairLineX.set({
-    x1: event.pointer.x + VERTICAL_DELTA,
-    x2: event.pointer.x + VERTICAL_DELTA,
+    x1: event.pointer.x + verticalDelta,
+    x2: event.pointer.x + verticalDelta,
   });
   canvasCrosshairLineY.set({
-    y1: event.pointer.y - HORIZONTAL_DELTA,
-    y2: event.pointer.y - HORIZONTAL_DELTA,
+    y1: event.pointer.y - horizontalDelta,
+    y2: event.pointer.y - horizontalDelta,
   });
+  setCanvasCrosshairCoordinates();
   canvas.renderAll();
 }
 
@@ -39,12 +40,12 @@ function moveCanvasCrosshairOnZoom(event, canvas) {
   if (!event.pointer.x) return;
   const pointer = canvas.getPointer(event.e);
   canvasCrosshairLineX.set({
-    x1: pointer.x + VERTICAL_DELTA,
-    x2: pointer.x + VERTICAL_DELTA,
+    x1: pointer.x + verticalDelta,
+    x2: pointer.x + verticalDelta,
   });
   canvasCrosshairLineY.set({
-    y1: pointer.y - HORIZONTAL_DELTA,
-    y2: pointer.y - HORIZONTAL_DELTA,
+    y1: pointer.y - horizontalDelta - 1.2,
+    y2: pointer.y - horizontalDelta - 1.2,
   });
   setCanvasCrosshairCoordinates();
   canvas.renderAll();
@@ -59,9 +60,16 @@ function resetMoveCanvasCrosshairFunc() {
     ? moveCanvasCrosshairOnZoom : moveCanvasCrosshairDefault;
 }
 
+function resetCanvasCrosshairStrokeWidth(canvas) {
+  canvasCrosshairLineX.set({ strokeWidth: 1 });
+  canvasCrosshairLineY.set({ strokeWidth: 1 });
+  canvas.renderAll();
+}
+
 function setCrosshairAfterZoom() {
   moveCanvasCrosshairFunc = moveCanvasCrosshairOnZoom;
-  VERTICAL_DELTA = crosshairProps.verticalDelta();
+  verticalDelta = crosshairProps.verticalDelta();
+  horizontalDelta = crosshairProps.horizontalDelta();
 }
 
 function hideCanvasCrosshair(canvas) {
@@ -89,6 +97,7 @@ function newCanvasCrosshairLine() {
 function updateLinesWithNewCanvasDimensions(canvas) {
   canvasCrosshairLineX.set({ y2: canvas.height });
   canvasCrosshairLineY.set({ x2: canvas.width });
+  canvas.renderAll();
 }
 
 function addCanvasCrosshairLines(canvas) {
@@ -107,8 +116,9 @@ function mouseMoveEventHandler(event) {
   if (!event.pageY) {
     event = getLastMouseMoveEvent();
   }
-  outsideCrosshairLineXElement.style.top = `${event.pageY - HORIZONTAL_DELTA}px`;
-  outsideCrosshairLineYElement.style.left = `${event.pageX + VERTICAL_DELTA}px`;
+  // fix this for the zoom
+  outsideCrosshairLineXElement.style.top = `${event.pageY - horizontalDelta}px`;
+  outsideCrosshairLineYElement.style.left = `${event.pageX + verticalDelta}px`;
 }
 
 function removeMouseMoveEventListener(element) {
@@ -211,10 +221,10 @@ function setDrawWithCrosshairMode(canvas, resetting) {
 }
 
 export {
-  setCanvasCrosshairCoordinates,
+  setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
+  setAllObjectsToUneditable, removeCrosshair, setCrosshairAfterZoom,
   updatedLinesWithNewCanvasDimensionsAsync, resetMoveCanvasCrosshairFunc,
+  resetCanvasCrosshairStrokeWidth, addCanvasCrosshairLines, moveCrosshair,
   moveCanvasCrosshairViaLastCanvasPositionAsync, moveCanvasCrosshairDefault,
   moveCanvasCrosshairOnZoom, moveCanvasCrosshair, removeCrosshairLinesIfExisting,
-  setAllObjectsToUneditable, moveCrosshair, removeCrosshair, setCrosshairAfterZoom,
-  setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners, addCanvasCrosshairLines,
 };

@@ -1,16 +1,23 @@
 const crosshairProps = {};
 
-let strokeWidth = 2;
+let strokeWidth = 1;
 let verticalDelta = 0.7;
+let horizontalDelta = 0.3;
 
 function setZoomInProperties(crosshairRatio) {
   strokeWidth -= strokeWidth * crosshairRatio;
   verticalDelta -= verticalDelta * crosshairRatio;
+  horizontalDelta -= horizontalDelta * crosshairRatio;
 }
 
 function setZoomOutProperties(crosshairRatio) {
   strokeWidth *= crosshairRatio;
-  verticalDelta *= verticalDelta;
+  verticalDelta *= crosshairRatio;
+  horizontalDelta *= crosshairRatio;
+}
+
+function getHorizontalDelta() {
+  return horizontalDelta;
 }
 
 function getVerticalDelta() {
@@ -22,7 +29,7 @@ function getCrosshairProps() {
     fill: 'white',
     shapeName: 'crosshairLine',
     stroke: 'white',
-    strokeWidth: 1,
+    strokeWidth,
     selectable: false,
     evented: false,
   };
@@ -32,6 +39,7 @@ function getCrosshairProps() {
 (function setProperties() {
   crosshairProps.crosshairProps = getCrosshairProps;
   crosshairProps.verticalDelta = getVerticalDelta;
+  crosshairProps.horizontalDelta = getHorizontalDelta;
   crosshairProps.setZoomInProperties = setZoomInProperties;
   crosshairProps.setZoomOutProperties = setZoomOutProperties;
 }());

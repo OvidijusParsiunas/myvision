@@ -19,7 +19,7 @@ import {
   setZoomInButtonToDefault, setZoomInButtonToDisabled,
   setZoomOutButtonToDefault, setZoomOutButtonToDisabled,
 } from '../../styling/state';
-import { setCrosshairAfterZoom } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { setCrosshairAfterZoom, resetCanvasCrosshairStrokeWidth } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import crosshairProps from '../../../../canvas/objects/crosshair/properties';
 
 let currentZoom = null;
@@ -356,7 +356,10 @@ function resetZoom(switchImage) {
   setCurrentZoomState(currentZoom);
   enableCanvasOuterMargin();
   setZoomOutButtonToDisabled();
-  if (getCrosshairModeOnState()) setCrosshairAfterZoom();
+  if (getCrosshairModeOnState()) {
+    setCrosshairAfterZoom();
+    resetCanvasCrosshairStrokeWidth(canvas);
+  }
   return timesNeededToZoomOut;
 }
 
