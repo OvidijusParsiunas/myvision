@@ -1,5 +1,5 @@
 import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from './uploadImages/drawImageOnCanvas';
-import { moveCanvasCrosshairViaLastCanvasPositionAsync, updatedLinesWithNewCanvasDimensionsAsync } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { moveCanvasCrosshairViaLastCanvasPositionAsync, updatedLinesWithNewCanvasDimensionsAsync, moveCanvasCrosshairDefault, moveCanvasCrosshairOnZoom } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
 import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label';
 import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
@@ -302,7 +302,7 @@ function displayUploadedImage(imageMetadata, isfirstFromMany) {
   removeWatermarkFromCanvasAreaBackground();
   setToolkitStylingOnNewImage();
   highlightMachineLearningButton();
-  if (getCrosshairModeOnState()) { updatedLinesWithNewCanvasDimensionsAsync(canvas); }
+  if (getCrosshairModeOnState()) updatedLinesWithNewCanvasDimensionsAsync(canvas);
 }
 
 function addSingleImageToList(imageMetadata, imageData) {

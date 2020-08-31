@@ -4,8 +4,8 @@ import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess
 import { showLabellerModal } from '../../../tools/labellerModal/style';
 import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
 import {
-  setDrawWithCrosshairMode, moveCanvasCrosshair,
   removeCrosshair, moveCanvasCrosshairViaLastCanvasPositionAsync,
+  setDrawWithCrosshairMode, moveCanvasCrosshair, moveCanvasCrosshairDefault,
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
@@ -115,8 +115,9 @@ function clearBoundingBoxData() {
 //   otherwise use case statements to speed up the dimming in a variety of modes
 // increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
-// crosshair fix for zoom
 // use a crosshairDisplayedStatus
+// ----
+// check if drawing on a small image and uploading bigger should keep crosshair at original position
 
 let mouseMovedLeft = false;
 let mouseMovedTop = false;
@@ -347,7 +348,7 @@ function shapeScrollEvents(event) {
     }
   }
   if (getCrosshairModeOnState() && currentZoom > 1.00001) {
-    moveCanvasCrosshairViaLastCanvasPositionAsync(canvas);
+    moveCanvasCrosshairViaLastCanvasPositionAsync(canvas, moveCanvasCrosshairDefault);
   }
 }
 

@@ -7,7 +7,9 @@ import polygonProperties from '../../../../canvas/objects/polygon/properties';
 import labelProperties from '../../../../canvas/objects/label/properties';
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
-import { setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState, getCrosshairModeOnState } from '../../../state';
+import {
+  setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState, getCrosshairModeOnState,
+} from '../../../state';
 import { scrolledViaScrollbar } from '../../../../canvas/objects/polygon/polygon';
 import { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium } from '../../../zoom/chromium';
 import { changeElementPropertiesFirefox, setDOMElementsFirefox, initialiseVariablesFirefox } from '../../../zoom/firefox';
@@ -17,7 +19,8 @@ import {
   setZoomInButtonToDefault, setZoomInButtonToDisabled,
   setZoomOutButtonToDefault, setZoomOutButtonToDisabled,
 } from '../../styling/state';
-import { resetMoveCanvasCrosshairFunc } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { setCrosshairAfterZoom } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import crosshairProps from '../../../../canvas/objects/crosshair/properties';
 
 let currentZoom = null;
 let canvas = null;
@@ -35,7 +38,7 @@ let movedPolygonPathOffsetReduced = false;
 
 const reduceShapeSizeRatios = {};
 const increaseShapeSizeRatios = {
-  polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104, popup: 0.1,
+  polygon: 0.104, point: 0.1, label: 0.08, bndBox: 0.104, popup: 0.1, crosshair: 0.104,
 };
 
 function updateShapesPropertiesForZoomOut() {
@@ -44,6 +47,7 @@ function updateShapesPropertiesForZoomOut() {
   );
   labelProperties.setZoomOutProperties(reduceShapeSizeRatios.label);
   boundingBoxProps.setZoomOutProperties(reduceShapeSizeRatios.bndBox);
+  crosshairProps.setZoomOutProperties(reduceShapeSizeRatios.crosshair);
 }
 
 function calculateNewShapeSizeRatios() {
@@ -52,6 +56,7 @@ function calculateNewShapeSizeRatios() {
   );
   labelProperties.setZoomInProperties(increaseShapeSizeRatios.label);
   boundingBoxProps.setZoomInProperties(increaseShapeSizeRatios.bndBox);
+  crosshairProps.setZoomInProperties(increaseShapeSizeRatios.crosshair);
 }
 
 function zoomInObjects() {
@@ -87,6 +92,9 @@ function zoomInObjects() {
         break;
       case 'bndBox':
         iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.bndBox;
+        break;
+      case 'crosshairLine':
+        iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.crosshair;
         break;
       default:
         break;
@@ -130,6 +138,9 @@ function zoomOutObject(object) {
       break;
     case 'bndBox':
       object.strokeWidth *= reduceShapeSizeRatios.bndBox;
+      break;
+    case 'crosshairLine':
+      object.strokeWidth *= reduceShapeSizeRatios.crosshair;
       break;
     default:
       break;
@@ -287,8 +298,8 @@ function zoomCanvas(canvasObj, action, windowResize) {
     } else if (action === 'out' && currentZoom > 1.0001) {
       zoomOut();
     }
+    if (getCrosshairModeOnState()) setCrosshairAfterZoom();
   }
-  if (getCrosshairModeOnState()) { resetMoveCanvasCrosshairFunc(); }
 }
 
 function setCanvasElementProperties(left, top) {
@@ -345,7 +356,7 @@ function resetZoom(switchImage) {
   setCurrentZoomState(currentZoom);
   enableCanvasOuterMargin();
   setZoomOutButtonToDisabled();
-  if (getCrosshairModeOnState()) { resetMoveCanvasCrosshairFunc(); }
+  if (getCrosshairModeOnState()) setCrosshairAfterZoom();
   return timesNeededToZoomOut;
 }
 

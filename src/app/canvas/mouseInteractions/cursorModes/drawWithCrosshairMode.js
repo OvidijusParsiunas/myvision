@@ -1,7 +1,9 @@
 import fabric from 'fabric';
+import crosshairProps from '../../objects/crosshair/properties';
 import { getIsMouseOnCanvasStatus, executeFunctionOnceOnMouseOver, executeFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 import { getCurrentZoomState } from '../../../tools/state';
+import IS_FIREFOX from '../../../tools/utils/browserType';
 
 let canvasRef = null;
 let canvasCrosshairLineX = null;
@@ -13,7 +15,12 @@ let canvasAbsolutelContainer2Element = null;
 let moveCanvasCrosshairFunc = null;
 
 const HORIZONTAL_DELTA = 0.3;
-const VERTICAL_DELTA = 0.7;
+let VERTICAL_DELTA = 0.7;
+
+function setCanvasCrosshairCoordinates() {
+  canvasCrosshairLineX.setCoords();
+  canvasCrosshairLineY.setCoords();
+}
 
 function moveCanvasCrosshairDefault(event, canvas) {
   if (!event.pointer.x) return;
@@ -39,8 +46,7 @@ function moveCanvasCrosshairOnZoom(event, canvas) {
     y1: pointer.y - HORIZONTAL_DELTA,
     y2: pointer.y - HORIZONTAL_DELTA,
   });
-  canvasCrosshairLineX.setCoords();
-  canvasCrosshairLineY.setCoords();
+  setCanvasCrosshairCoordinates();
   canvas.renderAll();
 }
 
@@ -51,6 +57,11 @@ function moveCanvasCrosshair(event, canvas) {
 function resetMoveCanvasCrosshairFunc() {
   moveCanvasCrosshairFunc = getCurrentZoomState() > 1.000001
     ? moveCanvasCrosshairOnZoom : moveCanvasCrosshairDefault;
+}
+
+function setCrosshairAfterZoom() {
+  moveCanvasCrosshairFunc = moveCanvasCrosshairOnZoom;
+  VERTICAL_DELTA = crosshairProps.verticalDelta();
 }
 
 function hideCanvasCrosshair(canvas) {
@@ -72,14 +83,7 @@ function hideCrosshair(canvas) {
 }
 
 function newCanvasCrosshairLine() {
-  return new fabric.Line([0, 0, 0, 0], {
-    fill: 'white',
-    shapeName: 'crosshairLine',
-    stroke: 'white',
-    strokeWidth: 1,
-    selectable: false,
-    evented: false,
-  });
+  return new fabric.Line([0, 0, 0, 0], crosshairProps.crosshairProps());
 }
 
 function updateLinesWithNewCanvasDimensions(canvas) {
@@ -120,21 +124,9 @@ function addMouseMoveEventHandlerToElement(element) {
   element.addEventListener('mousemove', mouseMoveEventHandler);
 }
 
-// need to remove these event listeners later on
 function addCrosshairOutsideOfCanvas() {
   addMouseMoveEventHandlerToElement(canvasAbsolutelContainer1Element);
   addMouseMoveEventHandlerToElement(canvasAbsolutelContainer2Element);
-  // document.getElementById('zoom-overflow-wrapper-parent')
-  // .addEventListener('mousemove', (event) => {
-  //   // crosshair deltas
-  //   const top = `${event.pageY}px`;
-  //   outsideCrossshairLineX.style.top = top;
-  //   const left = `${event.pageX}px`;
-  //   outsideCrosshairLineYElement.style.left = left;
-  // });
-  // get UX help: one of the two, full crosshair in grey space or no crosshair in greenspace
-  // with the crosshair being only in the canvas area
-  // document.getElementById('zoom-overflow-wrapper-parent').style.cursor = 'none';
 }
 
 function removeCrosshairLinesIfExisting(canvas) {
@@ -156,29 +148,33 @@ function setAllObjectsToUneditable(canvas) {
   });
 }
 
-function moveCanvasCrosshairViaLastCanvasPosition(canvas) {
+function moveCanvasCrosshairViaLastCanvasPosition(canvas, func) {
   const lastMouseMoveEvent = getLastMouseMoveEvent();
   if (!lastMouseMoveEvent) return;
   const lastCanvasPointer = canvas.getPointer(lastMouseMoveEvent);
   const pointerEvent = { pointer: lastCanvasPointer };
-  moveCanvasCrosshairDefault(pointerEvent, canvas);
+  if (func) {
+    func(pointerEvent, canvas);
+  } else {
+    moveCanvasCrosshair(pointerEvent, canvas);
+  }
 }
 
-function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas) {
+function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas, func) {
   setTimeout(() => {
     if (!getIsMouseOnCanvasStatus()) return;
-    moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef);
-  });
+    moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef, func);
+  }, IS_FIREFOX ? 10 : 0);
 }
 
 function updatedLinesWithNewCanvasDimensionsAsync(canvas) {
   setTimeout(() => {
     updateLinesWithNewCanvasDimensions(canvas || canvasRef);
-  });
+  }, IS_FIREFOX ? 10 : 0);
 }
 
-function moveCrosshair(canvas) {
-  moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef);
+function moveCrosshair(canvas, func) {
+  moveCanvasCrosshairViaLastCanvasPosition(canvas || canvasRef, func);
   if (!canvasAbsolutelContainer1Element) return;
   canvasAbsolutelContainer1Element.dispatchEvent(new Event('mousemove'));
   canvasAbsolutelContainer2Element.dispatchEvent(new Event('mousemove'));
@@ -207,16 +203,18 @@ function setDrawWithCrosshairMode(canvas, resetting) {
     removeCrosshairLinesIfExisting(canvas);
     addCanvasCrosshairLines(canvas);
     addCrosshairOutsideOfCanvas();
-    if (getIsMouseOnCanvasStatus()) moveCrosshair(canvas);
+    if (getIsMouseOnCanvasStatus()) moveCrosshair(canvas, moveCanvasCrosshairDefault);
+    if (getCurrentZoomState() > 1.00001) setCanvasCrosshairCoordinates();
     executeFunctionOnMouseOut(hideCrosshair);
     canvas.renderAll();
   }
 }
 
 export {
-  setAllObjectsToUneditable, addCanvasCrosshairLines, removeCrosshair,
+  setCanvasCrosshairCoordinates,
   updatedLinesWithNewCanvasDimensionsAsync, resetMoveCanvasCrosshairFunc,
   moveCanvasCrosshairViaLastCanvasPositionAsync, moveCanvasCrosshairDefault,
-  setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners, moveCrosshair,
   moveCanvasCrosshairOnZoom, moveCanvasCrosshair, removeCrosshairLinesIfExisting,
+  setAllObjectsToUneditable, moveCrosshair, removeCrosshair, setCrosshairAfterZoom,
+  setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners, addCanvasCrosshairLines,
 };
