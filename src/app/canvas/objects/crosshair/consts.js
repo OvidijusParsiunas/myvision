@@ -1,0 +1,3 @@
+export const DEFAULT_STROKE_WIDTH = 1;
+export const DEFAULT_VERTICAL_DELTA = 0.7;
+export const DEFAULT_HORIZONTAL_DELTA = 0.3;

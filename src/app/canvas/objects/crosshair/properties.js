@@ -1,8 +1,10 @@
+import { DEFAULT_STROKE_WIDTH, DEFAULT_VERTICAL_DELTA, DEFAULT_HORIZONTAL_DELTA } from './consts';
+
 const crosshairProps = {};
 
-let strokeWidth = 1;
-let verticalDelta = 0.7;
-let horizontalDelta = 0.3;
+let strokeWidth = DEFAULT_STROKE_WIDTH;
+let verticalDelta = DEFAULT_VERTICAL_DELTA;
+let horizontalDelta = DEFAULT_HORIZONTAL_DELTA;
 
 function setZoomInProperties(crosshairRatio) {
   strokeWidth -= strokeWidth * crosshairRatio;
@@ -14,6 +16,10 @@ function setZoomOutProperties(crosshairRatio) {
   strokeWidth *= crosshairRatio;
   verticalDelta *= crosshairRatio;
   horizontalDelta *= crosshairRatio;
+}
+
+function getStrokeWidth() {
+  return strokeWidth;
 }
 
 function getHorizontalDelta() {
@@ -38,6 +44,7 @@ function getCrosshairProps() {
 // http://fabricjs.com/controls-customization
 (function setProperties() {
   crosshairProps.crosshairProps = getCrosshairProps;
+  crosshairProps.strokeWidth = getStrokeWidth;
   crosshairProps.verticalDelta = getVerticalDelta;
   crosshairProps.horizontalDelta = getHorizontalDelta;
   crosshairProps.setZoomInProperties = setZoomInProperties;
