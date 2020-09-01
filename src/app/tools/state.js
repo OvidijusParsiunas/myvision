@@ -29,7 +29,7 @@ let boundingBoxDrawingInProgressState = false;
 let removeImageModalDisplayedState = false;
 let welcomeModalDisplayedState = false;
 let sessionDirty = false;
-let crosshairModeOnState = false;
+let crosshairUsedOnCanvasState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -159,8 +159,8 @@ function getHasMachineLearningButtonBeenHighligtedState() {
   return hasMachineLearningButtonBeenHighligted;
 }
 
-function getCrosshairModeOnState() {
-  return crosshairModeOnState;
+function getCrosshairUsedOnCanvasState() {
+  return crosshairUsedOnCanvasState;
 }
 
 function setDefaultState(state) {
@@ -292,8 +292,8 @@ function setHasMachineLearningButtonBeenHighligtedState(state) {
   hasMachineLearningButtonBeenHighligted = state;
 }
 
-function setcrosshairModeOnState(state) {
-  crosshairModeOnState = state;
+function setCrosshairUsedOnCanvasState(state) {
+  crosshairUsedOnCanvasState = state;
 }
 
 export {
@@ -313,8 +313,6 @@ export {
   setHasDrawnShapeState,
   getMovableObjectsState,
   setMovableObjectsState,
-  getCrosshairModeOnState,
-  setcrosshairModeOnState,
   getLastDrawingModeState,
   setLastDrawingModeState,
   getReadyToDrawShapeState,
@@ -333,6 +331,8 @@ export {
   setAddingPolygonPointsState,
   getCancelledReadyToDrawState,
   setCancelledReadyToDrawState,
+  getCrosshairUsedOnCanvasState,
+  setCrosshairUsedOnCanvasState,
   getWelcomeModalDisplayedState,
   setWelcomeModalDisplayedState,
   getAlteringPolygonPointsState,

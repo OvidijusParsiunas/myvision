@@ -244,6 +244,9 @@ function setDrawWithCrosshairMode(canvas, resetting) {
   }
 }
 
+// dev note - crosshair is not redrawn directly upon uploading an image because js cannot track
+// mouse movcements when the user is selecting an image
+
 export {
   resetCanvasCrosshairStrokeWidth, addCanvasCrosshairLines,
   moveCanvasCrosshairOnZoom, moveCanvasCrosshair, moveCrosshair,

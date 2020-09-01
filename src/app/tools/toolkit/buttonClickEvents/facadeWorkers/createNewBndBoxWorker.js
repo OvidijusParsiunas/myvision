@@ -3,7 +3,7 @@ import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mo
 import { setPolygonEditingButtonsToDefault, setEditShapesButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../styling/state';
 import {
   setAlteringPolygonPointsState, setLastDrawingModeState,
-  setHasDrawnShapeState, getCrosshairModeOnState, setDefaultState,
+  setHasDrawnShapeState, getCrosshairUsedOnCanvasState, setDefaultState,
 } from '../../../state';
 import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
@@ -14,7 +14,7 @@ function initiateCreateNewBndBoxEvents(canvas) {
   if (canvas.backgroundImage) {
     purgeCanvasMouseEvents(canvas);
     assignDrawBoundingBoxEvents(canvas);
-    if (getCrosshairModeOnState()) executeFunctionOnceOnMouseOver(moveCrosshair);
+    if (getCrosshairUsedOnCanvasState()) executeFunctionOnceOnMouseOver(moveCrosshair);
     setEditShapesButtonToDefault();
     setDefaultState(false);
     setCreateBoundingBoxButtonToActive();

@@ -47,7 +47,7 @@ import {
 } from '../consts';
 import {
   getContinuousDrawingState, getLastDrawingModeState,
-  setUploadDatasetsModalDisplayedState, getCrosshairModeOnState,
+  setUploadDatasetsModalDisplayedState, getCrosshairUsedOnCanvasState,
 } from '../../state';
 import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/state';
 import { getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState } from '../state';
@@ -174,7 +174,7 @@ function resetContinuousShapeButtons() {
     if (getLastDrawingModeState() === 'polygon') {
       setCreatePolygonButtonToActive();
     } else if (getLastDrawingModeState() === 'boundingBox') {
-      if (getCrosshairModeOnState()) executeFunctionOnceOnMouseOver(moveCrosshair);
+      if (getCrosshairUsedOnCanvasState()) executeFunctionOnceOnMouseOver(moveCrosshair);
       setCreateBoundingBoxButtonToActive();
     }
   }

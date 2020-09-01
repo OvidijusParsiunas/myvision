@@ -8,7 +8,8 @@ import labelProperties from '../../../../canvas/objects/label/properties';
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../../../canvas/objects/objectsProperties/changeProperties';
 import boundingBoxProps from '../../../../canvas/objects/boundingBox/properties';
 import {
-  setCurrentZoomState, getCurrentZoomState, setDoubleScrollCanvasState, getCrosshairModeOnState,
+  setDoubleScrollCanvasState, getCurrentZoomState,
+  getCrosshairUsedOnCanvasState, setCurrentZoomState,
 } from '../../../state';
 import { scrolledViaScrollbar } from '../../../../canvas/objects/polygon/polygon';
 import { changeElementPropertiesChromium, setDOMElementsChromium, initialiseVariablesChromium } from '../../../zoom/chromium';
@@ -298,7 +299,7 @@ function zoomCanvas(canvasObj, action, windowResize) {
     } else if (action === 'out' && currentZoom > 1.0001) {
       zoomOut();
     }
-    if (getCrosshairModeOnState()) setCrosshairAfterZoom();
+    if (getCrosshairUsedOnCanvasState()) setCrosshairAfterZoom();
   }
 }
 
@@ -356,7 +357,7 @@ function resetZoom(switchImage) {
   setCurrentZoomState(currentZoom);
   enableCanvasOuterMargin();
   setZoomOutButtonToDisabled();
-  if (getCrosshairModeOnState()) {
+  if (getCrosshairUsedOnCanvasState()) {
     setCrosshairAfterZoom();
     resetCanvasCrosshairStrokeWidth(canvas);
   }

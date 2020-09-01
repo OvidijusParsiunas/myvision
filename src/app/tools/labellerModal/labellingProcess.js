@@ -3,7 +3,7 @@ import { setAllObjectsToUneditable as resetObjectCursorsForCrosshairDraw } from 
 import { getLabellerModalInputText, hideLabellerModal, resetLabellerModalOptions } from './style';
 import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
 import waitingForLabelCursorMode from '../../canvas/mouseInteractions/cursorModes/waitingForLabelSubmissionMode';
-import { getCrosshairModeOnState } from '../state';
+import { getCrosshairUsedOnCanvasState } from '../state';
 
 let labellingState = false;
 let targetShape = null;
@@ -22,7 +22,7 @@ function removeTargetShape() {
 }
 
 function setCursorMode() {
-  if (getCrosshairModeOnState()) {
+  if (getCrosshairUsedOnCanvasState()) {
     resetObjectCursorsForCrosshairDraw(canvas);
   } else {
     resetObjectCursorsForDefaultDraw(canvas);

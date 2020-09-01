@@ -9,9 +9,9 @@ import {
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
-  getCrosshairModeOnState, setSessionDirtyState, setReadyToDrawShapeState,
+  getCrosshairUsedOnCanvasState, setSessionDirtyState, setReadyToDrawShapeState,
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
-  getMovableObjectsState, getBoundingBoxDrawingInProgressState, setcrosshairModeOnState,
+  getMovableObjectsState, getBoundingBoxDrawingInProgressState, setCrosshairUsedOnCanvasState,
 } from '../../../tools/state';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
@@ -78,8 +78,8 @@ function deselectBoundingBox() {
 }
 
 function setCursorMode(resetting) {
-  setcrosshairModeOnState(true);
-  if (getCrosshairModeOnState()) {
+  setCrosshairUsedOnCanvasState(true);
+  if (getCrosshairUsedOnCanvasState()) {
     setDrawWithCrosshairMode(canvas, resetting);
   } else {
     setDrawCursorMode(canvas);
@@ -111,20 +111,14 @@ function clearBoundingBoxData() {
 // if the right or bottom side of the drawn bounding box look a bit too far,
 // then reduce the delta values
 
-// confirm dimming timings are appropriate for redrawing the crosshair when the user closes a modal
-//   otherwise use case statements to speed up the dimming in a variety of modes
-// increase overall crosshair thickness for firefox
 // create button to toggle crosshair in settings
-// use a crosshairDisplayedStatus
-// ----
-// check if drawing on a small image and uploading bigger should keep crosshair at original position
 
 let mouseMovedLeft = false;
 let mouseMovedTop = false;
 
 function drawBoundingBox(event) {
   lastMouseEvent = event;
-  if (getCrosshairModeOnState()) moveCanvasCrosshair(event, canvas);
+  if (getCrosshairUsedOnCanvasState()) moveCanvasCrosshair(event, canvas);
   if (!leftMouseBtnDown) return;
   const pointer = canvas.getPointer(event.e);
   if (getCurrentZoomState() > 1.00001) {
@@ -347,7 +341,7 @@ function shapeScrollEvents(event) {
       canvas.renderAll();
     }
   }
-  if (getCrosshairModeOnState() && currentZoom > 1.00001) {
+  if (getCrosshairUsedOnCanvasState() && currentZoom > 1.00001) {
     moveCanvasCrosshairViaLastCanvasPositionAsync(canvas, moveCanvasCrosshairDefault);
   }
 }

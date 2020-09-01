@@ -6,7 +6,7 @@ import {
   setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault,
 } from '../../styling/state';
 import {
-  getCrosshairModeOnState, setAlteringPolygonPointsState,
+  getCrosshairUsedOnCanvasState, setAlteringPolygonPointsState,
   getDefaultState, getAddingPolygonPointsState, getLastDrawingModeState,
   setDefaultState, getAlteringPolygonPointsState, getContinuousDrawingState,
 } from '../../../state';
@@ -23,7 +23,7 @@ function setNewState(canvas) {
       assignDrawPolygonEvents(canvas);
     } else if (getLastDrawingModeState() === 'boundingBox') {
       assignDrawBoundingBoxEvents(canvas);
-      if (getCrosshairModeOnState()) {
+      if (getCrosshairUsedOnCanvasState()) {
         executeFunctionOnceOnMouseOver(moveCrosshair);
       }
     }

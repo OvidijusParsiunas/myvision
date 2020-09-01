@@ -1,6 +1,6 @@
 import { onMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
 import { QUICK_DIM_SECONDS, THIN_DIM, QUICK_LIGHTUP_MILLISECONDS } from './consts';
-import { getCrosshairModeOnState } from '../state';
+import { getCrosshairUsedOnCanvasState } from '../state';
 
 let windowDimElement = null;
 let canvas = null;
@@ -17,7 +17,7 @@ function initiateLightUp(transitionDurationMilliseconds) {
 function overrideLightUpIfSpecialState() {
   // if the modal is not being closed fast enough for the crosshair, consider setting this to 0 and
   // using a lighter dim color - previous findings may favour such case for upload and ML modals
-  if (getCrosshairModeOnState()) {
+  if (getCrosshairUsedOnCanvasState()) {
     initiateLightUp(QUICK_LIGHTUP_MILLISECONDS);
     return true;
   }
@@ -38,7 +38,7 @@ function initiateDim(transitionDurationSeconds, backgroundColor) {
 }
 
 function overrideDimIfSpecialState() {
-  if (getCrosshairModeOnState()) {
+  if (getCrosshairUsedOnCanvasState()) {
     initiateDim(QUICK_DIM_SECONDS, THIN_DIM);
     return true;
   }

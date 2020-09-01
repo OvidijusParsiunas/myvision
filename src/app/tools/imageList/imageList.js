@@ -24,7 +24,7 @@ import {
 } from '../toolkit/styling/state';
 import {
   getDefaultState, setCurrentImageId, getContinuousDrawingState,
-  setHasMachineLearningButtonBeenHighligtedState, getCrosshairModeOnState,
+  setHasMachineLearningButtonBeenHighligtedState, getCrosshairUsedOnCanvasState,
   getHasMachineLearningButtonBeenHighligtedState, getLastDrawingModeState,
 } from '../state';
 
@@ -302,7 +302,7 @@ function displayUploadedImage(imageMetadata, isfirstFromMany) {
   removeWatermarkFromCanvasAreaBackground();
   setToolkitStylingOnNewImage();
   highlightMachineLearningButton();
-  if (getCrosshairModeOnState()) updatedLinesWithNewCanvasDimensionsAsync(canvas);
+  if (getCrosshairUsedOnCanvasState()) updatedLinesWithNewCanvasDimensionsAsync(canvas);
 }
 
 function addSingleImageToList(imageMetadata, imageData) {
@@ -366,7 +366,7 @@ function changeToExistingImage(id) {
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);
   resetCanvasForUnseenShapes();
   setToolkitStylingOnNewImage();
-  if (getCrosshairModeOnState()) moveCanvasCrosshairViaLastCanvasPositionAsync();
+  if (getCrosshairUsedOnCanvasState()) moveCanvasCrosshairViaLastCanvasPositionAsync();
 }
 
 function switchImage(direction) {
