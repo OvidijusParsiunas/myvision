@@ -199,8 +199,11 @@ function addCanvasCrosshairLines(canvas) {
   hideCanvasCrosshair(canvas);
 }
 
-function updatedLinesWithNewCanvasDimensionsAsync(canvas) {
+// crosshair is not redrawn directly upon uploading an image because js cannot track mouse movements
+// during the time when the user is selecting an image from their personal machine
+function updateCrosshairDimensionsAndHideAsync(canvas) {
   setTimeout(() => {
+    hideCrosshair(canvas);
     updateLinesWithNewCanvasDimensions(canvas || canvasRef);
   }, IS_FIREFOX ? 10 : 0);
 }
@@ -244,14 +247,11 @@ function setDrawWithCrosshairMode(canvas, resetting) {
   }
 }
 
-// dev note - crosshair is not redrawn directly upon uploading an image because js cannot track
-// mouse movcements when the user is selecting an image
-
 export {
   resetCanvasCrosshairStrokeWidth, addCanvasCrosshairLines,
   moveCanvasCrosshairOnZoom, moveCanvasCrosshair, moveCrosshair,
   setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
   setAllObjectsToUneditable, removeCrosshair, setCrosshairAfterZoom,
-  updatedLinesWithNewCanvasDimensionsAsync, removeCrosshairLinesIfExisting,
+  updateCrosshairDimensionsAndHideAsync, removeCrosshairLinesIfExisting,
   moveCanvasCrosshairViaLastCanvasPositionAsync, moveCanvasCrosshairDefault,
 };
