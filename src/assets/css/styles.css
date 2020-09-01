@@ -1829,19 +1829,23 @@ body {
   margin-left: 5px;
 }
 
-.moveAble {
-    position: absolute;
-    pointer-events: none;
+#crosshair-line-x {
+  left: calc(59px / var(--screen-size-delta));
+  width: calc(100% - 209px - (59px / var(--screen-size-delta)));
+  height: 1px;
 }
 
 #crosshair-line-y {
   height: calc(100% - (35px + (29px / var(--screen-size-delta))));
   margin-top: calc(35px + (29px / var(--screen-size-delta)));
+  width: 1px;
 }
 
-#crosshair-line-x {
-  left: calc(59px / var(--screen-size-delta));
-  width: calc(100% - 209px - (59px / var(--screen-size-delta)));
+.crosshair-line {
+  position: absolute;
+  pointer-events: none;
+  background-color: white;
+  z-index: 2;
 }
 
 @media only screen and (max-height: 585px) {
