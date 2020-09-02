@@ -8,6 +8,10 @@ import {
 import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
 
+function displayCrosshairButton() {
+  document.getElementById('button-container').classList.toggle('section1');
+}
+
 function initiateCreateNewBndBoxEvents(canvas) {
   // cancel drawing polygon
   // or hold on since polygons will not be drawin with no canvas
@@ -22,6 +26,7 @@ function initiateCreateNewBndBoxEvents(canvas) {
     setAlteringPolygonPointsState(false);
     setLastDrawingModeState('boundingBox');
     setHasDrawnShapeState(false);
+    displayCrosshairButton();
   }
 }
 

@@ -1848,6 +1848,29 @@ body {
   z-index: 2;
 }
 
+#button-container {
+  overflow: hidden;
+  height: 100px;
+  max-height: 38px;
+  transition: max-height 0.3s ease-in-out;
+}
+
+#button-container.section1 {
+  max-height: 84px;
+  transition: max-height 0.3s ease-in-out;
+  /* height:300px;
+  transition-property: height;
+  transition-duration: 800ms;
+  transition-timing-function: ease-in-out;
+  -webkit-transition-property: height;
+  -webkit-transition-duration: 800ms;
+  -webkit-transition-timing-function: ease-in-out; */
+}
+
+#crosshair-icon {
+  filter: invert(54%) sepia(52%) saturate(682%) hue-rotate(163deg) brightness(95%) contrast(87%);
+}
+
 @media only screen and (max-height: 585px) {
   .toolkit-button-icon {
     width: 29px;

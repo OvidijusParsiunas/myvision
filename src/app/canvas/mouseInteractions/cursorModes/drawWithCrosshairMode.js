@@ -3,7 +3,6 @@ import crosshairProps from '../../objects/crosshair/properties';
 import { getIsMouseOnCanvasStatus, executeFunctionOnceOnMouseOver, executeFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 import { getCurrentZoomState } from '../../../tools/state';
-import IS_FIREFOX from '../../../tools/utils/browserType';
 import { getCurrentCanvasContainerElement } from '../../utils/canvasUtils';
 
 let canvasRef = null;
@@ -17,6 +16,9 @@ let moveCanvasCrosshairFunc = null;
 let moveOutsideCrosshairFunc = null;
 let horizontalDelta = null;
 let verticalDelta = null;
+
+const CROSSHAIR_DRAW_DELAY_MILLISECONDS = 15;
+const CROSSHAIR_DIMENSIONS_UPDATE_DELAY_MILLISECONDS = CROSSHAIR_DRAW_DELAY_MILLISECONDS + 1;
 
 function setCanvasCrosshairCoordinates() {
   canvasCrosshairLineX.setCoords();
@@ -162,7 +164,7 @@ function moveCanvasCrosshairViaLastCanvasPositionAsync(canvas, func) {
     } else {
       hideCrosshair(canvas);
     }
-  }, 15);
+  }, CROSSHAIR_DRAW_DELAY_MILLISECONDS);
 }
 
 function moveCrosshair(canvas, func) {
@@ -199,13 +201,13 @@ function addCanvasCrosshairLines(canvas) {
   hideCanvasCrosshair(canvas);
 }
 
-// crosshair is not redrawn directly upon uploading an image because js cannot track mouse movements
-// during the time when the user is selecting an image from their personal machine
+// crosshair is not redrawn directly upon uploading an image because the browser cannot track mouse
+// movements during the time when the user is selecting an image on their personal machine
 function updateCrosshairDimensionsAndHideAsync(canvas) {
   setTimeout(() => {
     hideCrosshair(canvas);
     updateLinesWithNewCanvasDimensions(canvas || canvasRef);
-  }, IS_FIREFOX ? 10 : 0);
+  }, CROSSHAIR_DIMENSIONS_UPDATE_DELAY_MILLISECONDS);
 }
 
 function setAllObjectsToUneditable(canvas) {

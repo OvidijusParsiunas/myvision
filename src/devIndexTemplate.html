@@ -241,10 +241,16 @@
         <img id="edit-shapes-icon" src="assets/svg/interface.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
       <div class="core-button-hover-popover" id="default-button-popover">Edit Shapes (E)</div>
-      <button id="create-bounding-box-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="createNewBndBox(event)">
-        <img id="new-bounding-box-icon" src="assets/svg/method-draw-image (13).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
-      </button>
-      <div class="core-button-hover-popover" id="bounding-box-button-popover">New Bounding box (W)</div>
+      <div id="button-container">
+        <button id="create-bounding-box-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="createNewBndBox(event)">
+          <img id="new-bounding-box-icon" src="assets/svg/method-draw-image (13).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        </button>
+        <div class="core-button-hover-popover" id="bounding-box-button-popover">New Bounding box (W)</div>
+        <button id="crosshair-button" style="background-color: rgb(241, 245, 253); margin-top: 2px;" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="createNewBndBox(event)">
+          <img id="crosshair-icon" style="width: 25px" src="assets/svg/crosshair4.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
+        </button>
+        <div class="core-button-hover-popover" id="crosshair-button-popover">Crosshair</div>
+      </div>
       <button id="create-polygon-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" type="button" onmouseup="createNewPolygon(event)">
         <img id="new-polygon-icon" src="assets/svg/method-draw-image (60).svg" draggable="false" class="toolkit-button-icon" alt="visibility"></img>
       </button>
