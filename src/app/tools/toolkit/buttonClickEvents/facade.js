@@ -9,11 +9,16 @@ import { zoomCanvas } from './facadeWorkers/zoomWorker';
 import toggleSettingsPopup from './facadeWorkers/toggleSettingsPopUpWorker';
 import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
 import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker';
+import toggleCrosshair from './facadeWorkers/toggleCrosshairWorker';
 
 let canvas = null;
 
 function createNewBndBoxBtnClick() {
   initiateCreateNewBndBoxEvents(canvas);
+}
+
+function crosshairBtnClick() {
+  toggleCrosshair();
 }
 
 function createNewPolygonBtnClick() {
@@ -63,6 +68,7 @@ function editShapesBtnClick() {
 export {
   assignCanvasMouseEvents,
   createNewBndBoxBtnClick,
+  crosshairBtnClick,
   createNewPolygonBtnClick,
   resetCanvasEventsToDefault,
   removePolygonPointBtnClick,
