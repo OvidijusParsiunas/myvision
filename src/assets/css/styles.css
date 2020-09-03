@@ -1856,7 +1856,8 @@ body {
 }
 
 #button-container.section1 {
-  max-height: 84px;
+  /* max-height: 80px; */
+  max-height: 75px;
   transition: max-height 0.3s ease-in-out;
   /* height:300px;
   transition-property: height;

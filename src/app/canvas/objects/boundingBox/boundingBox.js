@@ -15,7 +15,7 @@ import {
 } from '../../../tools/state';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state';
+import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive, getCrosshairButtonState } from '../../../tools/toolkit/styling/state';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 import { removeExecutedFunctionOnMouseOver, removeExecutedFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
@@ -78,9 +78,10 @@ function deselectBoundingBox() {
 }
 
 function setCursorMode(resetting) {
-  setCrosshairUsedOnCanvasState(true);
-  if (getCrosshairUsedOnCanvasState()) {
+  // 123
+  if (getCrosshairButtonState() === 'active') {
     setDrawWithCrosshairMode(canvas, resetting);
+    setCrosshairUsedOnCanvasState(true);
   } else {
     setDrawCursorMode(canvas);
   }
@@ -103,6 +104,9 @@ function clearBoundingBoxData() {
     leftMouseBtnDown = false;
   }
   setBoundingBoxDrawingInProgressState(false);
+  // 123
+  // check if the following is in the right place
+  setCrosshairUsedOnCanvasState(false);
   removeExecutedFunctionOnMouseOver();
   removeExecutedFunctionOnMouseOut();
   removeCrosshair(canvas);

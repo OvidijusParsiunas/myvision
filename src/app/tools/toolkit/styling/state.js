@@ -1,7 +1,7 @@
 import {
   setButtonToActive, setButtonToDefault, setButtonToDisabled, setButtonToGreyDefault,
 } from './styling';
-import { getPolygonDrawingInProgressState } from '../../state';
+import { getPolygonDrawingInProgressState, setCrosshairUsedOnCanvasState } from '../../state';
 import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 
 const state = { ACTIVE: 'active', DEFAULT: 'default', DISABLED: 'disabled' };
@@ -48,11 +48,19 @@ function getEditShapesButtonState() {
 function setCreateBoundingBoxButtonToDefault() {
   setButtonToDefault(createBoundingBoxButtonElement);
   createBoundingBoxState = state.DEFAULT;
+  // 123
+  if (document.getElementById('button-container').classList.contains('section1')) {
+    document.getElementById('button-container').classList.remove('section1');
+  }
 }
 
 function setCreateBoundingBoxButtonToDisabled() {
   setButtonToDisabled(createBoundingBoxButtonElement);
   createBoundingBoxState = state.DISABLED;
+  // 123
+  if (document.getElementById('button-container').classList.contains('section1')) {
+    document.getElementById('button-container').classList.remove('section1');
+  }
 }
 
 function getCreateBoundingBoxButtonState() {
@@ -206,6 +214,10 @@ function setCreateBoundingBoxButtonToActive() {
   createBoundingBoxState = state.ACTIVE;
   if (editShapesState === state.ACTIVE) setEditShapesButtonToDefault();
   if (createPolygonState === state.ACTIVE) setCreatePolygonButtonToDefault();
+  // 123
+  if (!document.getElementById('button-container').classList.contains('section1')) {
+    document.getElementById('button-container').classList.add('section1');
+  }
 }
 
 function setAddPointsButtonToActive() {

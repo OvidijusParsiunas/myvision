@@ -2,19 +2,14 @@ import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEv
 import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
 import {
   setPolygonEditingButtonsToDefault, setEditShapesButtonToDefault,
-  setCreateBoundingBoxButtonToActive, getCrosshairButtonState,
+  setCreateBoundingBoxButtonToActive,
 } from '../../styling/state';
 import {
   setAlteringPolygonPointsState, setLastDrawingModeState, setDefaultState,
-  setHasDrawnShapeState, getCrosshairUsedOnCanvasState, setCrosshairUsedOnCanvasState,
+  setHasDrawnShapeState, getCrosshairUsedOnCanvasState,
 } from '../../../state';
 import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
-
-function displayCrosshairButton() {
-  document.getElementById('button-container').classList.toggle('section1');
-  if (getCrosshairButtonState() === 'active') setCrosshairUsedOnCanvasState(true);
-}
 
 function initiateCreateNewBndBoxEvents(canvas) {
   // cancel drawing polygon
@@ -30,7 +25,6 @@ function initiateCreateNewBndBoxEvents(canvas) {
     setAlteringPolygonPointsState(false);
     setLastDrawingModeState('boundingBox');
     setHasDrawnShapeState(false);
-    displayCrosshairButton();
   }
 }
 

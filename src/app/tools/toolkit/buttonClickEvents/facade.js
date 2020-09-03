@@ -18,7 +18,7 @@ function createNewBndBoxBtnClick() {
 }
 
 function crosshairBtnClick() {
-  toggleCrosshair();
+  toggleCrosshair(canvas);
 }
 
 function createNewPolygonBtnClick() {
