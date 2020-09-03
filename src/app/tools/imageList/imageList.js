@@ -16,7 +16,7 @@ import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { changeExistingImagesMovability } from '../settingsPopup/options/movableObjects';
 import { removeWatermarkFromCanvasAreaBackground } from '../../canvas/utils/watermark';
-import initiateButtonPulseAnimation from '../utils/buttons/pulseAnimation';
+import { initiateButtonPulseAnimation } from '../utils/buttons/pulseAnimation';
 import {
   setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
   setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault, setEditShapesButtonToActive,

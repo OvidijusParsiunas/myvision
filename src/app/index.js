@@ -18,6 +18,7 @@ import initialiseRemoveImagesModal from './tools/imageList/removeImages/modal/in
 import { initialiseCoreButtonPopovers } from './tools/globalStyling/buttons/popovers';
 import { applyStyling } from './tools/globalStyling/style';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
+import { initialisePulseAnimationCancelling } from './tools/utils/buttons/pulseAnimation';
 import { initialiseWindowDimService } from './tools/dimWindow/dimWindowService';
 import initialiseBrowserExitHandler from './tools/browserExit/browserExitHandler';
 
@@ -40,6 +41,7 @@ initialiseImageListFunctionality();
 initialiseLabelListFunctionality();
 initialiseDragAndDropFunctionality();
 initialiseImageSwitchPanelFunctionality();
+initialisePulseAnimationCancelling();
 initialiseShapeManipulationDeltas();
 initialiseBrowserExitHandler();
 initialiseWelcomeModal();

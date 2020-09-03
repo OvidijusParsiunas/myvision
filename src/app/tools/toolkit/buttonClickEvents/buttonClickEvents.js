@@ -11,7 +11,7 @@ import {
   interruptAllCanvasEventsBeforeMultipleFunc, doNothingIfLabellingInProgress,
 } from './eventMiddleware/buttonEventMiddleware';
 
-function assignToolkitButtonEventHandlers() {
+function assignToolkitButtonClickEventHandlers() {
   window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
   window.toggleCrosshair = doNothingIfNotLeftMouseButtonPressWthArg.bind(this, crosshairBtnClick);
@@ -29,4 +29,4 @@ function assignToolkitButtonEventHandlers() {
   window.toggleSettingsPopup = removeButtonPopoverIfActive.bind(this, settingsBtnClick);
 }
 
-export { assignToolkitButtonEventHandlers as default };
+export { assignToolkitButtonClickEventHandlers as default };

@@ -1,15 +1,18 @@
 const SINGLE_PULSE_DURATION_MILLISECONDS = 700;
+let buttonElementPulseIsActiveOn = null;
+let pulseActive = false;
 
 function endAnimation(buttonElement) {
   buttonElement.style.backgroundColor = '';
   setTimeout(() => {
     buttonElement.style.transitionDuration = '';
   }, SINGLE_PULSE_DURATION_MILLISECONDS);
+  buttonElementPulseIsActiveOn = null;
 }
 
 function pulse(buttonElement, primaryColor, secondaryColor, numOfAlterationsLeft) {
   setTimeout(() => {
-    if (numOfAlterationsLeft === 0) {
+    if (numOfAlterationsLeft === 0 || !pulseActive) {
       endAnimation(buttonElement);
       return;
     }
@@ -20,8 +23,6 @@ function pulse(buttonElement, primaryColor, secondaryColor, numOfAlterationsLeft
 
 function initiateButtonPulseAnimation(buttonElement, primaryColor, secondaryColor, pulseCount,
   beginAnimationImmediately) {
-  const toggleOff = true;
-  if (toggleOff) return;
   buttonElement.style.transitionDuration = `${SINGLE_PULSE_DURATION_MILLISECONDS / 1000}s`;
   buttonElement.style.backgroundColor = beginAnimationImmediately ? primaryColor : '';
   const numOfAlterationsLeft = beginAnimationImmediately ? pulseCount * 2 - 1 : pulseCount * 2;
@@ -30,6 +31,18 @@ function initiateButtonPulseAnimation(buttonElement, primaryColor, secondaryColo
   } else {
     pulse(buttonElement, secondaryColor, primaryColor, numOfAlterationsLeft);
   }
+  buttonElementPulseIsActiveOn = buttonElement;
+  pulseActive = true;
 }
 
-export { initiateButtonPulseAnimation as default };
+function cancelPulseAnimation(element) {
+  if (buttonElementPulseIsActiveOn === element && pulseActive) {
+    pulseActive = false;
+  }
+}
+
+function initialisePulseAnimationCancelling() {
+  window.cancelPulseAnimation = cancelPulseAnimation;
+}
+
+export { initiateButtonPulseAnimation, initialisePulseAnimationCancelling };
