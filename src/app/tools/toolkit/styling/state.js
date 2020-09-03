@@ -1,7 +1,7 @@
 import {
   setButtonToActive, setButtonToDefault, setButtonToDisabled, setButtonToGreyDefault,
 } from './styling';
-import { getPolygonDrawingInProgressState, setCrosshairUsedOnCanvasState } from '../../state';
+import { getPolygonDrawingInProgressState } from '../../state';
 import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 
 const state = { ACTIVE: 'active', DEFAULT: 'default', DISABLED: 'disabled' };

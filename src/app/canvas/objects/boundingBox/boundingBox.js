@@ -116,6 +116,8 @@ function clearBoundingBoxData() {
 // then reduce the delta values
 
 // create button to toggle crosshair in settings
+// if going with an expanding button, consider whether the bbox draw button should stay blue after
+// clicking it again, also consider screen size scaling
 
 let mouseMovedLeft = false;
 let mouseMovedTop = false;

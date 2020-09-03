@@ -36,6 +36,8 @@ function setInitialCheckBoxInputValues() {
   document.getElementById('settings-popup-movable-objects-checkbox').checked = true;
   document.getElementById('settings-popup-continuous-drawing-checkbox').checked = true;
   document.getElementById('settings-popup-labels-visibility-checkbox').checked = true;
+  // 123
+  document.getElementById('settings-bounding-box-crosshair-checkbox').checked = true;
 }
 
 function assignSettingsPopupElementLocalVariables() {
