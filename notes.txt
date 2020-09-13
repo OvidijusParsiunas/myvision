@@ -12,19 +12,13 @@ when user holds ctrl and scrolls, should zoom-in on the image (be ware of use ca
 
 the remove images modal should be smaller
 
-when the user uploads an image for the first time, pulsate the machine learning button
-
 potentially emit the use of the publicDev folder
 
 potentially decrease the height of the upload datasets modal
 
 upon viewing an image with ml shapes on it and then moving to another one, the shape's fill should disappear
 
-add an optional crosshair that is generated via html and not canvas
-
 think about caching some of the 'do not show again' modal data
-
-remove button highlight functionality toggle
 
 default canvas does appear to have highlight (multiple shape) capabilities, investigate
 
@@ -36,7 +30,9 @@ can't use enter in machine learning modal
 
 the labeller overflow still does happen, check if some properties have changed
 
-start button on welcome modal looks a little low on a smaller screen
+check start button on other laptops - code under the //verify comments
+
+the remove labels popover is a little low
 
 ---------------------------------------------
 
