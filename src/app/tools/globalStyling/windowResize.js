@@ -2,11 +2,15 @@ import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageLis
 import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/objectsProperties/changeProperties';
 import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { getCurrentZoomState, getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../state';
+import {
+  getSettingsPopupOpenState, getExportDatasetsPopupOpenState,
+  getCurrentZoomState, getBoundingBoxCrosshairPopoverOpenState,
+} from '../state';
 import { validateFullLabellerModalVisibile } from '../labellerModal/style';
 import { setStickySettingsPopupProperties } from '../settingsPopup/style';
 import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
 import validateClientBrowserDimensions from './inadequateResourcesOverlay';
+import { setStickyBoundingBoxCrosshairPopoverProperties } from '../settingsPopup/options/boundingBoxCrosshairPopover/style';
 
 let canvas = null;
 
@@ -22,6 +26,9 @@ window.windowResize = () => {
   }
   if (getSettingsPopupOpenState()) {
     setStickySettingsPopupProperties();
+    if (getBoundingBoxCrosshairPopoverOpenState()) {
+      setStickyBoundingBoxCrosshairPopoverProperties();
+    }
   } else if (getExportDatasetsPopupOpenState()) {
     setStickyExportDatasetsPopupProperties();
   }

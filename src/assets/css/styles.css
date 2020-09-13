@@ -1529,12 +1529,6 @@ body {
   left: calc(65px / var(--screen-size-delta));
   padding-top: calc(4px / var(--screen-size-delta));
   padding-bottom: calc(1px / var(--screen-size-delta));
-  /* padding-top: 3px;
-  padding-bottom: 2px; */
-
-   /* CHANGE THIS  */
-
-  /* original */
   border: 1px solid grey;
   display: none;
 }
@@ -1555,6 +1549,27 @@ body {
   margin-top: calc(3px / var(--screen-size-delta));
   margin-bottom: calc(3px / var(--screen-size-delta));
   margin-right: calc(10px / var(--screen-size-delta));
+}
+
+#settings-popup-bounding-box-crosshair-popover-trigger {
+  /* change for screen size? */
+  margin-top: 1px; color: #747474;
+}
+
+#bounding-box-crosshair-popover {
+  position: absolute;
+  border-radius: 3px;
+  z-index: 3;
+  background: white;
+  padding-top: calc(4px / var(--screen-size-delta));
+  padding-bottom: calc(1px / var(--screen-size-delta));
+  border: 1px solid grey;
+  display: none;
+}
+
+.bounding-box-crosshair-popover-icon {
+  /* change for screen size? */
+  margin-left: 20px;
 }
 
 #title-panel {

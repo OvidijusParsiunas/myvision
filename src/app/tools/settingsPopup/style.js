@@ -1,5 +1,6 @@
 import { setSettingsPopupOpenState } from '../state';
 import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup';
+import { initialiseBoundingBoxCrosshairPopoverStyling } from './options/boundingBoxCrosshairPopover/style';
 
 let settingsPopupElement = null;
 let settingsToolkitButtonElement = null;
@@ -10,7 +11,7 @@ function setStickySettingsPopupProperties() {
     settingsToolkitButtonElement, stickyProperties);
 }
 
-function displayPopup() {
+function setDisplayPropertyToBlock() {
   settingsPopupElement.style.display = 'block';
 }
 
@@ -21,7 +22,7 @@ function hidePopup() {
 
 function displaySettingsPopup() {
   setPopupPosition(settingsPopupElement, settingsToolkitButtonElement);
-  displayPopup();
+  setDisplayPropertyToBlock();
   setStickySettingsPopupProperties();
   setSettingsPopupOpenState(true);
 }
@@ -36,8 +37,6 @@ function setInitialCheckBoxInputValues() {
   document.getElementById('settings-popup-movable-objects-checkbox').checked = true;
   document.getElementById('settings-popup-continuous-drawing-checkbox').checked = true;
   document.getElementById('settings-popup-labels-visibility-checkbox').checked = true;
-  // 123
-  document.getElementById('settings-bounding-box-crosshair-checkbox').checked = true;
 }
 
 function assignSettingsPopupElementLocalVariables() {
@@ -48,6 +47,7 @@ function assignSettingsPopupElementLocalVariables() {
 function initialiseSettingsPopupStyling() {
   assignSettingsPopupElementLocalVariables();
   setInitialCheckBoxInputValues();
+  initialiseBoundingBoxCrosshairPopoverStyling(settingsPopupElement);
 }
 
 export {
