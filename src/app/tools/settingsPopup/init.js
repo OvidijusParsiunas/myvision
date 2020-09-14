@@ -1,5 +1,5 @@
 import { initialiseSettingsPopupStyling } from './style';
-import { assignSettingsPopupButtonEventHandlers } from './buttonClickEvents';
+import { assignSettingsPopupButtonEventHandlers } from './buttonEvents';
 
 function initialiseSettingsPopup() {
   initialiseSettingsPopupStyling();

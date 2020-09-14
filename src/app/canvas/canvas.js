@@ -10,7 +10,7 @@ import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAn
 import { assignCanvasToDimWindowService } from '../tools/dimWindow/dimWindowService';
 import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
-import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/buttonClickEvents';
+import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/buttonEvents';
 import { assignCanvasForHotKeys } from '../keyEvents/keyboard/hotKeys';
 import assignCanvasForLabelList from '../tools/labelList/canvasManagement';
 import assignCanvasForImageList from '../tools/imageList/canvasManagement';
