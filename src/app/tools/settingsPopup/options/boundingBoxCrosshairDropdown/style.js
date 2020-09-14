@@ -53,14 +53,14 @@ function setInitialCheckBoxInputValues() {
   document.getElementById('settings-popup-bounding-box-crosshair-visibility-checkbox').checked = true;
 }
 
-function assignBoundingBoxCrosshairDropdownLocalVariables(settingsPopUpElementArg) {
-  BoundingBoxCrosshairDropdownElement = document.getElementById('bounding-box-crosshair-popover');
+function assignBoundingBoxCrosshairDropdownLocalVariables() {
+  settingsPopUpElement = document.getElementById('settings-popup');
+  BoundingBoxCrosshairDropdownElement = document.getElementById('bounding-box-crosshair-dropdown');
   BoundingBoxCrosshairDropdownTriggerElement = document.getElementById('settings-popup-bounding-box-crosshair-dropdown-trigger');
-  settingsPopUpElement = settingsPopUpElementArg;
 }
 
-function initialiseBoundingBoxCrosshairDropdownStyling(settingsPopUpElementArg) {
-  assignBoundingBoxCrosshairDropdownLocalVariables(settingsPopUpElementArg);
+function initialiseBoundingBoxCrosshairDropdownStyling() {
+  assignBoundingBoxCrosshairDropdownLocalVariables();
   setInitialCheckBoxInputValues();
 }
 

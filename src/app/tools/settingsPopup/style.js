@@ -1,6 +1,6 @@
 import { setSettingsPopupOpenState } from '../state';
 import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup';
-import { initialiseBoundingBoxCrosshairDropdownStyling, hideBoundingBoxCrosshairDropdown } from './options/boundingBoxCrosshairDropdown/style';
+import { hideBoundingBoxCrosshairDropdown } from './options/boundingBoxCrosshairDropdown/style';
 
 let settingsPopupElement = null;
 let settingsToolkitButtonElement = null;
@@ -48,7 +48,6 @@ function assignSettingsPopupElementLocalVariables() {
 function initialiseSettingsPopupStyling() {
   assignSettingsPopupElementLocalVariables();
   setInitialCheckBoxInputValues();
-  initialiseBoundingBoxCrosshairDropdownStyling(settingsPopupElement);
 }
 
 export {

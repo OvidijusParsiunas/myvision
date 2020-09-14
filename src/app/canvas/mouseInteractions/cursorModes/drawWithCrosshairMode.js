@@ -20,6 +20,18 @@ let verticalDelta = null;
 const CROSSHAIR_DRAW_DELAY_MILLISECONDS = 15;
 const CROSSHAIR_DIMENSIONS_UPDATE_DELAY_MILLISECONDS = CROSSHAIR_DRAW_DELAY_MILLISECONDS + 1;
 
+function setCrosshairColor(element) {
+  if (outsideCrosshairLineXElement) {
+    outsideCrosshairLineXElement.style.backgroundColor = element.value;
+    outsideCrosshairLineYElement.style.backgroundColor = element.value;
+  }
+  if (canvasCrosshairLineX) {
+    canvasCrosshairLineX.set({ fill: element.value, stroke: element.value });
+    canvasCrosshairLineY.set({ fill: element.value, stroke: element.value });
+    canvasRef.renderAll();
+  }
+}
+
 function setCanvasCrosshairCoordinates() {
   canvasCrosshairLineX.setCoords();
   canvasCrosshairLineY.setCoords();
@@ -234,6 +246,7 @@ function setDrawWithCrosshairMode(canvas, resetting) {
   canvas.hoverCursor = 'none';
   setAllObjectsToUneditable(canvas);
   resetMoveCrosshairFuncs();
+  setCrosshairColor(document.getElementById('settings-popup-bounding-box-crosshair-color-picker'));
   if (resetting) {
     // upon attempting to draw after labelling a shape, wait for the onmouseenter event
     // to be emitted by the canvas wrapper element
@@ -250,10 +263,10 @@ function setDrawWithCrosshairMode(canvas, resetting) {
 }
 
 export {
-  resetCanvasCrosshairStrokeWidth, addCanvasCrosshairLines,
   moveCanvasCrosshairOnZoom, moveCanvasCrosshair, moveCrosshair,
   setDrawWithCrosshairMode, removeOutsideCrosshairEventListeners,
   setAllObjectsToUneditable, removeCrosshair, setCrosshairAfterZoom,
   updateCrosshairDimensionsAndHideAsync, removeCrosshairLinesIfExisting,
   moveCanvasCrosshairViaLastCanvasPositionAsync, moveCanvasCrosshairDefault,
+  resetCanvasCrosshairStrokeWidth, addCanvasCrosshairLines, setCrosshairColor,
 };

@@ -1552,7 +1552,7 @@ body {
   margin-top: 1px; color: #747474;
 }
 
-#bounding-box-crosshair-popover {
+#bounding-box-crosshair-dropdown {
   position: absolute;
   border-radius: 3px;
   z-index: 3;
@@ -1563,9 +1563,24 @@ body {
   display: none;
 }
 
-.bounding-box-crosshair-popover-icon {
+#bounding-box-crosshair-dropdown-table {
+  padding: 2px;
+  padding-bottom: 0px
+}
+
+.bounding-box-crosshair-dropdown-icon {
   /* change for screen size? */
   margin-left: 20px;
+}
+
+#settings-popup-bounding-box-crosshair-color-picker {  
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: calc(9px / var(--screen-size-delta));
+  width: 16px;
+  height: 20px;
+  margin-top: -2px;
 }
 
 #title-panel {
@@ -1855,7 +1870,7 @@ body {
 .crosshair-line {
   position: absolute;
   pointer-events: none;
-  background-color: white;
+  background-color: #ffffff;
   z-index: 2;
 }
 
@@ -2018,6 +2033,18 @@ body {
   }
   #welcome-modal-description {
     margin-bottom: calc(14px / var(--screen-size-delta));
+  }
+  #bounding-box-crosshair-dropdown-table {
+    padding: 2px;
+  }
+  #settings-popup-bounding-box-crosshair-color-picker {  
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: calc(10px / var(--screen-size-delta));
+    width: 13px;
+    height: 13px;
+    margin-top: 2px;
   }
 }
 

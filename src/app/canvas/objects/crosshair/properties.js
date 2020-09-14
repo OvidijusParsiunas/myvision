@@ -31,10 +31,11 @@ function getVerticalDelta() {
 }
 
 function getCrosshairProps() {
+  const crosshairColor = document.getElementById('settings-popup-bounding-box-crosshair-color-picker').value;
   return {
-    fill: 'white',
+    fill: crosshairColor,
     shapeName: 'crosshairLine',
-    stroke: 'white',
+    stroke: crosshairColor,
     strokeWidth,
     selectable: false,
     evented: false,
