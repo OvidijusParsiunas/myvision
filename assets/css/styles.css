@@ -1529,12 +1529,6 @@ body {
   left: calc(65px / var(--screen-size-delta));
   padding-top: calc(4px / var(--screen-size-delta));
   padding-bottom: calc(1px / var(--screen-size-delta));
-  /* padding-top: 3px;
-  padding-bottom: 2px; */
-
-   /* CHANGE THIS  */
-
-  /* original */
   border: 1px solid grey;
   display: none;
 }
@@ -1542,10 +1536,6 @@ body {
 .settings-table-row-data {
   padding-top: 2px;
   padding-bottom: calc(3px / var(--screen-size-delta));
-  /* font-family: "Source Sans Pro", sans-serif;
-  font-size: 15px; */
-  /* CHANGE THIS  */
-
   font-family: Arial, Helvetica, sans-serif;
   font-size: calc(14.5px / var(--screen-size-delta));
 }
@@ -1555,6 +1545,44 @@ body {
   margin-top: calc(3px / var(--screen-size-delta));
   margin-bottom: calc(3px / var(--screen-size-delta));
   margin-right: calc(10px / var(--screen-size-delta));
+}
+
+#settings-popup-bounding-box-crosshair-dropdown-trigger {
+  /* change for screen size? */
+  margin-top: 1px;
+  color: #747474;
+  user-select: none;
+}
+
+#bounding-box-crosshair-dropdown {
+  position: absolute;
+  border-radius: 3px;
+  z-index: 3;
+  background: white;
+  padding-top: calc(4px / var(--screen-size-delta));
+  padding-bottom: calc(1px / var(--screen-size-delta));
+  border: 1px solid grey;
+  display: none;
+}
+
+#bounding-box-crosshair-dropdown-table {
+  padding: 2px;
+  padding-bottom: 0px
+}
+
+.bounding-box-crosshair-dropdown-icon {
+  /* change for screen size? */
+  margin-left: 20px;
+}
+
+#settings-popup-bounding-box-crosshair-color-picker {  
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: calc(9px / var(--screen-size-delta));
+  width: 16px;
+  height: 20px;
+  margin-top: -2px;
 }
 
 #title-panel {
@@ -1829,6 +1857,29 @@ body {
   margin-left: 5px;
 }
 
+#crosshair-line-x {
+  left: calc(59px / var(--screen-size-delta));
+  width: calc(100% - 209px - (59px / var(--screen-size-delta)));
+  height: 1px;
+}
+
+#crosshair-line-y {
+  height: calc(100% - (35px + (29px / var(--screen-size-delta))));
+  margin-top: calc(35px + (29px / var(--screen-size-delta)));
+  width: 1px;
+}
+
+.crosshair-line {
+  position: absolute;
+  pointer-events: none;
+  background-color: #ffffff;
+  z-index: 2;
+}
+
+#crosshair-icon {
+  filter: invert(54%) sepia(52%) saturate(682%) hue-rotate(163deg) brightness(95%) contrast(87%);
+}
+
 @media only screen and (max-height: 585px) {
   .toolkit-button-icon {
     width: 29px;
@@ -1964,6 +2015,18 @@ body {
   }
   #welcome-modal-description {
     margin-bottom: calc(14px / var(--screen-size-delta));
+  }
+  #bounding-box-crosshair-dropdown-table {
+    padding: 2px;
+  }
+  #settings-popup-bounding-box-crosshair-color-picker {  
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: calc(10px / var(--screen-size-delta));
+    width: 13px;
+    height: 13px;
+    margin-top: 2px;
   }
 }
 
