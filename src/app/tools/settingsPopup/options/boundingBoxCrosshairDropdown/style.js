@@ -1,42 +1,50 @@
 import { getBoundingBoxCrosshairDropdownOpenState, setBoundingBoxCrosshairDropdownOpenState } from '../../../state';
 import { setStickyPopupProperties } from '../../../utils/popups/stickyPopup';
 
-let BoundingBoxCrosshairDropdownTriggerElement = null;
-let BoundingBoxCrosshairDropdownElement = null;
+let boundingBoxCrosshairDropdownTriggerElement = null;
+let boundingBoxCrosshairDropdownElement = null;
 let settingsPopUpElement = null;
 const stickyProperties = { isPopupSticky: false, stickCoordinates: 0, bottomPxOverride: '-1px' };
 
 function setPopoverPosition() {
-  BoundingBoxCrosshairDropdownElement.style.right = `-${(settingsPopUpElement.getBoundingClientRect().width + 2) / 2 + 13}px`;
-  BoundingBoxCrosshairDropdownElement.style.top = `${document.getElementsByClassName('settings-table-row-data')[0].getBoundingClientRect().height * 3 + 3}px`;
-  BoundingBoxCrosshairDropdownElement.style.bottom = '';
+  boundingBoxCrosshairDropdownElement.style.right = `-${(settingsPopUpElement.getBoundingClientRect().width + 2) / 2 + 13}px`;
+  boundingBoxCrosshairDropdownElement.style.top = `${document.getElementsByClassName('settings-table-row-data')[0].getBoundingClientRect().height * 3 + 3}px`;
+  boundingBoxCrosshairDropdownElement.style.bottom = '';
 }
 
 function setStickyBoundingBoxCrosshairDropdownProperties() {
-  setStickyPopupProperties(BoundingBoxCrosshairDropdownElement,
-    BoundingBoxCrosshairDropdownTriggerElement, stickyProperties);
+  setStickyPopupProperties(boundingBoxCrosshairDropdownElement,
+    boundingBoxCrosshairDropdownTriggerElement, stickyProperties);
 }
 
 function setDisplayToBlock() {
-  BoundingBoxCrosshairDropdownElement.style.display = 'block';
+  boundingBoxCrosshairDropdownElement.style.display = 'block';
+}
+
+function setTriggerElementToDefault() {
+  boundingBoxCrosshairDropdownTriggerElement.style.color = '#747474';
+}
+
+function setTriggerElementToActive() {
+  boundingBoxCrosshairDropdownTriggerElement.style.color = '#c4c4c4';
 }
 
 function displayBoundingBoxCrosshairDropdown() {
   setPopoverPosition();
   setDisplayToBlock();
-  // may not need the following line if we are hiding before displaying again
-  stickyProperties.isPopupSticky = false;
+  setTriggerElementToActive();
   setStickyBoundingBoxCrosshairDropdownProperties();
   setBoundingBoxCrosshairDropdownOpenState(true);
 }
 
-function hidePopover() {
-  BoundingBoxCrosshairDropdownElement.style.display = 'none';
-  BoundingBoxCrosshairDropdownElement.style.bottom = '';
+function hideDropdownElement() {
+  boundingBoxCrosshairDropdownElement.style.display = 'none';
+  boundingBoxCrosshairDropdownElement.style.bottom = '';
 }
 
 function hideBoundingBoxCrosshairDropdown() {
-  hidePopover();
+  hideDropdownElement();
+  setTriggerElementToDefault();
   stickyProperties.isPopupSticky = false;
   setBoundingBoxCrosshairDropdownOpenState(false);
 }
@@ -55,8 +63,8 @@ function setInitialCheckBoxInputValues() {
 
 function assignBoundingBoxCrosshairDropdownLocalVariables() {
   settingsPopUpElement = document.getElementById('settings-popup');
-  BoundingBoxCrosshairDropdownElement = document.getElementById('bounding-box-crosshair-dropdown');
-  BoundingBoxCrosshairDropdownTriggerElement = document.getElementById('settings-popup-bounding-box-crosshair-dropdown-trigger');
+  boundingBoxCrosshairDropdownElement = document.getElementById('bounding-box-crosshair-dropdown');
+  boundingBoxCrosshairDropdownTriggerElement = document.getElementById('settings-popup-bounding-box-crosshair-dropdown-trigger');
 }
 
 function initialiseBoundingBoxCrosshairDropdownStyling() {

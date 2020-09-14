@@ -1549,7 +1549,8 @@ body {
 
 #settings-popup-bounding-box-crosshair-dropdown-trigger {
   /* change for screen size? */
-  margin-top: 1px; color: #747474;
+  margin-top: 1px;
+  color: #747474;
   user-select: none;
 }
 

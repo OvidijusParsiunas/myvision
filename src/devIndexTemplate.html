@@ -1,4 +1,4 @@
-<!-- ATTENTION: All dev work must be done in the src/devIndexTemplate.html file and the changes can be viewed in public/index.htmml -->
+<!-- ATTENTION: All dev work must be done in the src/devIndexTemplate.html file and the changes can be viewed in publicDev/index.htmml -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -230,14 +230,14 @@
     </div>
     <div id="settings-popup" class="settings-popup-item">
       <table id="settings-table" class="settings-popup-item">
-        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Label Visibility</div><input id="settings-popup-labels-visibility-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()"></td></tr>
-        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Movable Objects</div><input id="settings-popup-movable-objects-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleMovableObjects()"></td></tr>
-        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Continuous Drawing</div><input id="settings-popup-continuous-drawing-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleContinuousDrawing()"></td></tr>
+        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleLabelsVisibility(true)">Label Visibility</div><input id="settings-popup-labels-visibility-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()"></td></tr>
+        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleMovableObjects(true)">Movable Objects</div><input id="settings-popup-movable-objects-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleMovableObjects()"></td></tr>
+        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleContinuousDrawing(true)">Continuous Drawing</div><input id="settings-popup-continuous-drawing-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleContinuousDrawing()"></td></tr>
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Bounding box Crosshair</div><div id="settings-popup-bounding-box-crosshair-dropdown-trigger" class="settings-popup-item checkbox settings-checkbox" name="something" onclick="toggleBoundingBoxCrosshairDropdown()">&#x25BA;</div>
           <div id="bounding-box-crosshair-dropdown" class="settings-popup-item">
             <table id="bounding-box-crosshair-dropdown-table" class="settings-popup-item">
-              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Visibility</div><input id="settings-popup-bounding-box-crosshair-visibility-checkbox" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="checkbox" checked="true" name="something" onclick="toggleCrosshair(null, event)"></td></tr>
-              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Color</div><input id="settings-popup-bounding-box-crosshair-color-picker" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="color" value="#ffffff" oninput="crosshairColorChange(this)"></td></tr>
+              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleCrosshair(true)">Visibility</div><input id="settings-popup-bounding-box-crosshair-visibility-checkbox" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="checkbox" checked="true" name="something" onclick="toggleCrosshair(null, event)"></td></tr>
+              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="crosshairColorChange(true)">Color</div><input id="settings-popup-bounding-box-crosshair-color-picker" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="color" value="#ffffff" oninput="crosshairColorChange(this)"></td></tr>
            </table>
           </div>
         </td>

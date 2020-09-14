@@ -23,10 +23,19 @@ function assignSettingsPopupButtonHoverEventHandlers() {
   window.hideBoundingBoxCrosshairDropdown = hideBoundingBoxCrosshairDropdown;
 }
 
+function toggleCheckbox(func, isText) {
+  func(canvas);
+  if (isText) { this.checked = !this.checked; }
+}
+
 function assignSettingsPopupButtonClickEventHandlers() {
   window.toggleMovableObjects = changeMovaleObjectsSetting;
-  window.toggleContinuousDrawing = changeContinuousDrawingSetting.bind({ canvas });
-  window.toggleLabelsVisibility = changeLabelsVisibilitySetting.bind({ canvas });
+  window.toggleContinuousDrawing = toggleCheckbox.bind(
+    document.getElementById('settings-popup-continuous-drawing-checkbox'), changeContinuousDrawingSetting,
+  );
+  window.toggleLabelsVisibility = toggleCheckbox.bind(
+    document.getElementById('settings-popup-labels-visibility-checkbox'), changeLabelsVisibilitySetting,
+  );
   window.toggleBoundingBoxCrosshairDropdown = triggerBoundingBoxCrosshairDropdown;
 }
 
