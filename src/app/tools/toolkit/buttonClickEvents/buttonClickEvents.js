@@ -1,9 +1,9 @@
 import { removeButtonPopoverIfActive, doNothingIfNotLeftMouseButtonPressWthArg } from '../../utils/buttons/clickMiddleware';
 import {
+  removePolygonPointBtnClick, createNewPolygonBtnClick,
   zoomBtnClick, machineLearningBtnClick, uploadDatasetsBtnClick,
   resetCanvasEventsToDefault, editShapesBtnClick, settingsBtnClick,
   addPointsBtnClick, createNewBndBoxBtnClick, exportDatasetsBtnClick,
-  removePolygonPointBtnClick, createNewPolygonBtnClick, crosshairBtnClick,
 } from './facade';
 import {
   func1IfDrawRemovePointsElseInterruptAllWthFunc2,
@@ -14,7 +14,6 @@ import {
 function assignToolkitButtonClickEventHandlers() {
   window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);
   window.createNewBndBox = interruptAllCanvasEventsBeforeFunc.bind(this, createNewBndBoxBtnClick);
-  window.toggleCrosshair = doNothingIfNotLeftMouseButtonPressWthArg.bind(this, crosshairBtnClick);
   window.createNewPolygon = func1IfDrawRemovePointsElseInterruptAllWthFunc2.bind(this,
     removePolygonPointBtnClick, createNewPolygonBtnClick);
   window.addPoints = doNothingIfLabellingOrAddingNewPoints.bind(this, addPointsBtnClick);

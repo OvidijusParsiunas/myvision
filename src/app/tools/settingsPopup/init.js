@@ -1,7 +1,13 @@
 import { initialiseSettingsPopupStyling } from './style';
-import { assignSettingsPopupButtonEventHandlers } from './buttonEvents';
+import { assignCanvasForSettingsPopupOptionsClickEvents, assignSettingsPopupButtonEventHandlers } from './buttonEvents';
 import { initialiseBoundingBoxCrosshairDropdownStyling } from './options/boundingBoxCrosshairDropdown/style';
 import assignBoundingBoxCrosshairDropdownButtonEventHandlers from './options/boundingBoxCrosshairDropdown/buttonEvents';
+import { assignCanvasForCrosshairToggle } from './options/boundingBoxCrosshairDropdown/toggleCrosshairWorker';
+
+function assignCanvasForSettingsPopup(canvas) {
+  assignCanvasForCrosshairToggle(canvas);
+  assignCanvasForSettingsPopupOptionsClickEvents(canvas);
+}
 
 function initialiseSettingsPopup() {
   initialiseSettingsPopupStyling();
@@ -10,4 +16,4 @@ function initialiseSettingsPopup() {
   assignBoundingBoxCrosshairDropdownButtonEventHandlers();
 }
 
-export { initialiseSettingsPopup as default };
+export { assignCanvasForSettingsPopup, initialiseSettingsPopup };

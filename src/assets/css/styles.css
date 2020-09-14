@@ -1550,6 +1550,7 @@ body {
 #settings-popup-bounding-box-crosshair-dropdown-trigger {
   /* change for screen size? */
   margin-top: 1px; color: #747474;
+  user-select: none;
 }
 
 #bounding-box-crosshair-dropdown {
@@ -1872,26 +1873,6 @@ body {
   pointer-events: none;
   background-color: #ffffff;
   z-index: 2;
-}
-
-#button-container {
-  overflow: hidden;
-  height: 100px;
-  max-height: 38px;
-  transition: max-height 0.3s ease-in-out;
-}
-
-#button-container.section1 {
-  /* max-height: 80px; */
-  max-height: 75px;
-  transition: max-height 0.3s ease-in-out;
-  /* height:300px;
-  transition-property: height;
-  transition-duration: 800ms;
-  transition-timing-function: ease-in-out;
-  -webkit-transition-property: height;
-  -webkit-transition-duration: 800ms;
-  -webkit-transition-timing-function: ease-in-out; */
 }
 
 #crosshair-icon {

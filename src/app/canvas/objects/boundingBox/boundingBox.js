@@ -8,14 +8,14 @@ import {
   setDrawWithCrosshairMode, moveCanvasCrosshair, moveCanvasCrosshairDefault,
 } from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
 import {
+  getMovableObjectsState, getBoundingBoxDrawingInProgressState,
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
-  getCrosshairUsedOnCanvasState, setSessionDirtyState, setReadyToDrawShapeState,
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
-  getMovableObjectsState, getBoundingBoxDrawingInProgressState, setCrosshairUsedOnCanvasState,
+  getCrosshairUsedOnCanvasState, setSessionDirtyState, setReadyToDrawShapeState,
 } from '../../../tools/state';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive, getCrosshairButtonState } from '../../../tools/toolkit/styling/state';
+import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 import { removeExecutedFunctionOnMouseOver, removeExecutedFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
@@ -78,10 +78,8 @@ function deselectBoundingBox() {
 }
 
 function setCursorMode(resetting) {
-  // 123
-  if (getCrosshairButtonState() === 'active') {
+  if (getCrosshairUsedOnCanvasState()) {
     setDrawWithCrosshairMode(canvas, resetting);
-    setCrosshairUsedOnCanvasState(true);
   } else {
     setDrawCursorMode(canvas);
   }
@@ -104,9 +102,6 @@ function clearBoundingBoxData() {
     leftMouseBtnDown = false;
   }
   setBoundingBoxDrawingInProgressState(false);
-  // 123
-  // check if the following is in the right place
-  setCrosshairUsedOnCanvasState(false);
   removeExecutedFunctionOnMouseOver();
   removeExecutedFunctionOnMouseOut();
   removeCrosshair(canvas);

@@ -187,12 +187,14 @@ function moveCrosshair(canvas, func) {
 }
 
 function resetCanvasCrosshairStrokeWidth(canvas) {
+  if (!canvasCrosshairLineX) return;
   canvasCrosshairLineX.set({ strokeWidth: crosshairProps.strokeWidth() });
   canvasCrosshairLineY.set({ strokeWidth: crosshairProps.strokeWidth() });
   canvas.renderAll();
 }
 
 function updateLinesWithNewCanvasDimensions(canvas) {
+  if (!canvasCrosshairLineX) return;
   canvasCrosshairLineX.set({ y2: canvas.height });
   canvasCrosshairLineY.set({ x2: canvas.width });
   canvas.renderAll();

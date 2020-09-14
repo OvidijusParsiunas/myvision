@@ -8,7 +8,7 @@ import initialiseLabellerModal from './tools/labellerModal/buttons';
 import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import initialiseExportDatasetsPopup from './tools/exportDatasetsPopup/init';
-import initialiseSettingsPopup from './tools/settingsPopup/init';
+import { initialiseSettingsPopup } from './tools/settingsPopup/init';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import initialiseDragAndDropFunctionality from './tools/dragAndDrop/dragAndDrop';

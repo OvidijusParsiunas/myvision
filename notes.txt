@@ -34,7 +34,7 @@ check start button on other laptops - code under the //verify comments
 
 the remove labels popover is a little low
 
-check for // 123 and change for screen size? comments
+check for change for screen size? comment
 
 ---------------------------------------------
 

@@ -9,7 +9,7 @@ import {
 
 let canvas = null;
 
-function assignCanvasForSettingsPopup(canvasObj) {
+function assignCanvasForSettingsPopupOptionsClickEvents(canvasObj) {
   canvas = canvasObj;
 }
 
@@ -35,4 +35,4 @@ function assignSettingsPopupButtonEventHandlers() {
   assignSettingsPopupButtonHoverEventHandlers();
 }
 
-export { assignSettingsPopupButtonEventHandlers, assignCanvasForSettingsPopup };
+export { assignSettingsPopupButtonEventHandlers, assignCanvasForSettingsPopupOptionsClickEvents };

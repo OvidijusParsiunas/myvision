@@ -10,7 +10,6 @@ let addPointsState = state.DEFAULT;
 let createBoundingBoxState = state.DEFAULT;
 let createPolygonState = state.DEFAULT;
 let editShapesState = state.DEFAULT;
-let crosshairState = state.ACTIVE;
 let removePolygonPointsButtonElement = null;
 let addPolygonPointsButtonElement = null;
 let removeLabelsButtonElement = null;
@@ -20,7 +19,6 @@ let zoomOutButtonElement = null;
 let createBoundingBoxButtonElement = null;
 let createPolygonButtonElement = null;
 let removeImagesButtonElement = null;
-let crosshairButtonElement = null;
 
 function polygonsPresentInCurrentImage() {
   const currentShapes = getAllExistingShapes();
@@ -48,37 +46,15 @@ function getEditShapesButtonState() {
 function setCreateBoundingBoxButtonToDefault() {
   setButtonToDefault(createBoundingBoxButtonElement);
   createBoundingBoxState = state.DEFAULT;
-  // 123
-  if (document.getElementById('button-container').classList.contains('section1')) {
-    document.getElementById('button-container').classList.remove('section1');
-  }
 }
 
 function setCreateBoundingBoxButtonToDisabled() {
   setButtonToDisabled(createBoundingBoxButtonElement);
   createBoundingBoxState = state.DISABLED;
-  // 123
-  if (document.getElementById('button-container').classList.contains('section1')) {
-    document.getElementById('button-container').classList.remove('section1');
-  }
 }
 
 function getCreateBoundingBoxButtonState() {
   return createBoundingBoxState;
-}
-
-function setCrosshairButtonToDefault() {
-  setButtonToDefault(crosshairButtonElement);
-  crosshairState = state.DEFAULT;
-}
-
-function setCrosshairButtonToActive() {
-  setButtonToActive(crosshairButtonElement);
-  crosshairState = state.ACTIVE;
-}
-
-function getCrosshairButtonState() {
-  return crosshairState;
 }
 
 function setCreatePolygonButtonToDefault() {
@@ -214,10 +190,6 @@ function setCreateBoundingBoxButtonToActive() {
   createBoundingBoxState = state.ACTIVE;
   if (editShapesState === state.ACTIVE) setEditShapesButtonToDefault();
   if (createPolygonState === state.ACTIVE) setCreatePolygonButtonToDefault();
-  // 123
-  if (!document.getElementById('button-container').classList.contains('section1')) {
-    document.getElementById('button-container').classList.add('section1');
-  }
 }
 
 function setAddPointsButtonToActive() {
@@ -239,7 +211,6 @@ function setInitialToolkitButtonStyling() {
   setAddPointsDisabled();
   setRemovePointsDisabled();
   setZoomInButtonToDisabled();
-  setCrosshairButtonToActive();
   setZoomOutButtonToDisabled();
   setEditShapesButtonToDisabled();
   setRemoveImagesButtonsDisabled();
@@ -259,7 +230,6 @@ function identifyToolkitButtons() {
   createBoundingBoxButtonElement = document.getElementById('create-bounding-box-button');
   createPolygonButtonElement = document.getElementById('create-polygon-button');
   removeImagesButtonElement = document.getElementById('remove-images-button');
-  crosshairButtonElement = document.getElementById('crosshair-button');
 }
 
 function initiateToolkitButtonsStyling() {
@@ -269,17 +239,14 @@ function initiateToolkitButtonsStyling() {
 
 export {
   getAddPointsButtonState,
-  getCrosshairButtonState,
   getEditShapesButtonState,
   setZoomInButtonToDefault,
   setZoomInButtonToDisabled,
   setZoomOutButtonToDefault,
-  setCrosshairButtonToActive,
   getRemovePointsButtonState,
   setZoomOutButtonToDisabled,
   setAddPointsButtonToActive,
   getCreatePolygonButtonState,
-  setCrosshairButtonToDefault,
   setAddPointsButtonToDefault,
   setEditShapesButtonToActive,
   setRemoveImagesButtonDefault,
