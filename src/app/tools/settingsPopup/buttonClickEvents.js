@@ -1,8 +1,7 @@
 import { changeMovaleObjectsSetting } from './options/movableObjects';
 import changeContinuousDrawingSetting from './options/continuousDrawing';
 import changeLabelsVisibilitySetting from './options/labelsVisibility';
-import toggleCrosshair from '../toolkit/buttonClickEvents/facadeWorkers/toggleCrosshairWorker';
-import { displayBoundingBoxCrosshairPopover } from './options/boundingBoxCrosshairPopover/style';
+import { triggerBoundingBoxCrosshairDropdown } from './options/boundingBoxCrosshairDropdown/style';
 
 let canvas = null;
 
@@ -15,7 +14,7 @@ function assignSettingsPopupButtonEventHandlers() {
   window.toggleContinuousDrawing = changeContinuousDrawingSetting.bind({ canvas });
   window.toggleLabelsVisibility = changeLabelsVisibilitySetting.bind({ canvas });
   // 123
-  window.toggleBoundingBoxCrosshairPopover = displayBoundingBoxCrosshairPopover;
+  window.toggleBoundingBoxCrosshairDropdown = triggerBoundingBoxCrosshairDropdown;
 }
 
 export { assignSettingsPopupButtonEventHandlers, assignCanvasForSettingsPopup };

@@ -4,13 +4,13 @@ import labelProperies from '../../canvas/objects/label/properties';
 import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
 import {
   getSettingsPopupOpenState, getExportDatasetsPopupOpenState,
-  getCurrentZoomState, getBoundingBoxCrosshairPopoverOpenState,
+  getCurrentZoomState, getBoundingBoxCrosshairDropdownOpenState,
 } from '../state';
 import { validateFullLabellerModalVisibile } from '../labellerModal/style';
 import { setStickySettingsPopupProperties } from '../settingsPopup/style';
 import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
 import validateClientBrowserDimensions from './inadequateResourcesOverlay';
-import { setStickyBoundingBoxCrosshairPopoverProperties } from '../settingsPopup/options/boundingBoxCrosshairPopover/style';
+import { setStickyBoundingBoxCrosshairDropdownProperties } from '../settingsPopup/options/boundingBoxCrosshairDropdown/style';
 
 let canvas = null;
 
@@ -26,8 +26,8 @@ window.windowResize = () => {
   }
   if (getSettingsPopupOpenState()) {
     setStickySettingsPopupProperties();
-    if (getBoundingBoxCrosshairPopoverOpenState()) {
-      setStickyBoundingBoxCrosshairPopoverProperties();
+    if (getBoundingBoxCrosshairDropdownOpenState()) {
+      setStickyBoundingBoxCrosshairDropdownProperties();
     }
   } else if (getExportDatasetsPopupOpenState()) {
     setStickyExportDatasetsPopupProperties();

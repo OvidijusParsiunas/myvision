@@ -15,15 +15,18 @@ function setStickyPopupProperties(element, elementButton, stickyProperties) {
   if (!stickyProperties.isPopupSticky) {
     if (settingPopupBottom + 5 > document.body.scrollHeight) {
       element.style.top = '';
-      element.style.bottom = '5px';
+      element.style.bottom = stickyProperties.bottomPxOverride || '5px';
       stickyProperties.stickCoordinates = settingPopupBottom + 6;
       stickyProperties.isPopupSticky = true;
     }
   }
   if (stickyProperties.isPopupSticky
       && stickyProperties.stickCoordinates < document.body.scrollHeight) {
-    setPopupPosition(element, elementButton);
-    element.style.bottom = '';
+    // the bounding box crosshair dropdown does not require a reset due to its own bottom px
+    if (stickyProperties.bottomPxOverride === undefined) {
+      setPopupPosition(element, elementButton);
+      element.style.bottom = '';
+    }
     stickyProperties.isPopupSticky = false;
   }
 }

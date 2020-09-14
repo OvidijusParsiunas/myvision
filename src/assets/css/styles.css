@@ -1536,10 +1536,6 @@ body {
 .settings-table-row-data {
   padding-top: 2px;
   padding-bottom: calc(3px / var(--screen-size-delta));
-  /* font-family: "Source Sans Pro", sans-serif;
-  font-size: 15px; */
-  /* CHANGE THIS  */
-
   font-family: Arial, Helvetica, sans-serif;
   font-size: calc(14.5px / var(--screen-size-delta));
 }
@@ -1551,7 +1547,7 @@ body {
   margin-right: calc(10px / var(--screen-size-delta));
 }
 
-#settings-popup-bounding-box-crosshair-popover-trigger {
+#settings-popup-bounding-box-crosshair-dropdown-trigger {
   /* change for screen size? */
   margin-top: 1px; color: #747474;
 }

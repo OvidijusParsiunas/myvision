@@ -30,7 +30,7 @@ let removeImageModalDisplayedState = false;
 let welcomeModalDisplayedState = false;
 let sessionDirty = false;
 let crosshairUsedOnCanvasState = false;
-let boundingBoxCrosshairPopoverOpenState = false;
+let boundingBoxCrosshairDropdownOpenState = false;
 
 function getDefaultState() {
   return defaultState;
@@ -164,8 +164,8 @@ function getCrosshairUsedOnCanvasState() {
   return crosshairUsedOnCanvasState;
 }
 
-function getBoundingBoxCrosshairPopoverOpenState() {
-  return boundingBoxCrosshairPopoverOpenState;
+function getBoundingBoxCrosshairDropdownOpenState() {
+  return boundingBoxCrosshairDropdownOpenState;
 }
 
 function setDefaultState(state) {
@@ -301,8 +301,8 @@ function setCrosshairUsedOnCanvasState(state) {
   crosshairUsedOnCanvasState = state;
 }
 
-function setBoundingBoxCrosshairPopoverOpenState(state) {
-  boundingBoxCrosshairPopoverOpenState = state;
+function setBoundingBoxCrosshairDropdownOpenState(state) {
+  boundingBoxCrosshairDropdownOpenState = state;
 }
 
 export {
@@ -370,8 +370,8 @@ export {
   setRemovingPointsAfterCancelDrawState,
   getChangingMLGeneratedLabelNamesState,
   setChangingMLGeneratedLabelNamesState,
-  getBoundingBoxCrosshairPopoverOpenState,
-  setBoundingBoxCrosshairPopoverOpenState,
+  getBoundingBoxCrosshairDropdownOpenState,
+  setBoundingBoxCrosshairDropdownOpenState,
   getHasMachineLearningButtonBeenHighligtedState,
   setHasMachineLearningButtonBeenHighligtedState,
 };
