@@ -1,3 +1,4 @@
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 import { getBoundingBoxCrosshairDropdownOpenState, setBoundingBoxCrosshairDropdownOpenState } from '../../../state';
 import { setStickyPopupProperties } from '../../../utils/popups/stickyPopup';
 
@@ -7,7 +8,7 @@ let settingsPopUpElement = null;
 const stickyProperties = { isPopupSticky: false, stickCoordinates: 0, bottomPxOverride: '-1px' };
 
 function setPopoverPosition() {
-  boundingBoxCrosshairDropdownElement.style.right = `-${(settingsPopUpElement.getBoundingClientRect().width + 2) / 2 + 13}px`;
+  boundingBoxCrosshairDropdownElement.style.right = `-${(settingsPopUpElement.getBoundingClientRect().width + 2) / 2 + (11.5 * getScreenSizeDelta())}px`;
   boundingBoxCrosshairDropdownElement.style.top = `${document.getElementsByClassName('settings-table-row-data')[0].getBoundingClientRect().height * 3 + 3}px`;
   boundingBoxCrosshairDropdownElement.style.bottom = '';
 }

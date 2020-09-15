@@ -27,13 +27,11 @@ function applySmallScreenButtonsStyle(buttonElements, screenSizeDelta) {
   applyStylingToElementsArray(buttonElements.popupLabelButtonClassElements, 'paddingTop', `${7 / screenSizeDelta}px`);
   applyStylingToElementsArray(buttonElements.popupLabelDisabledButtonClassElements, 'paddingTop', `${7 / screenSizeDelta}px`);
   buttonElements.exportDatasetsPopupExportButton.style.paddingTop = `${6 / screenSizeDelta}px`;
-  // verify
-  if (!IS_FIREFOX) buttonElements.welcomeModalStartButton.style.marginTop = `${2.5 / screenSizeDelta}px`; // can use a const if needed
+  if (!IS_FIREFOX) buttonElements.welcomeModalStartButton.style.marginTop = `${3.5 / screenSizeDelta}px`;
 }
 
 function getButtonElements() {
   const buttons = {};
-  // verify
   buttons.welcomeModalStartButton = document.getElementById('welcome-modal-start-button');
   buttons.labellerModalSubmitButtonElement = document.getElementById('labeller-modal-submit-button');
   buttons.labellerModalCancelButtonElement = document.getElementById('labeller-modal-cancel-button');

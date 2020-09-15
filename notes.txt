@@ -28,10 +28,6 @@ can't use enter in machine learning modal
 
 the labeller overflow still does happen, check if some properties have changed
 
-check start button on other laptops - code under the //verify comments
-
-check for change for screen size? comment
-
 ---------------------------------------------
 
 Things to check on chrome browsers on other pcs:
