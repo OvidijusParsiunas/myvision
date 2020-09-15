@@ -1,6 +1,9 @@
 import { createLabelShape, removeTargetShape, isLabelling } from './labellingProcess';
 import { resetCanvasEventsToDefault } from '../toolkit/buttonClickEvents/facade';
-import { getContinuousDrawingState, getLastDrawingModeState, setHasDrawnShapeState } from '../state';
+import {
+  getLastDrawingModeState, setHasDrawnShapeState,
+  getContinuousDrawingState, getCrosshairUsedOnCanvasState,
+} from '../state';
 import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';
@@ -12,6 +15,7 @@ import {
   hideLabellerModal, changeStyleWhenInputEmpty,
   changeStyleWhenInputInvalid, changeStyleToAllowSubmit,
 } from './style';
+import { removeOutsideCrosshairEventListeners } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 let keyDownEventTimeOut = 0;
 let textInputElement = null;
@@ -39,6 +43,9 @@ function initialiseLabellerModalLocalVariables() {
 function resetDrawingMode() {
   if (!getContinuousDrawingState()) {
     resetCanvasEventsToDefault();
+    if (getCrosshairUsedOnCanvasState()) {
+      removeOutsideCrosshairEventListeners();
+    }
   } else if (getLastDrawingModeState() === 'polygon') {
     resetDrawPolygonMode();
   } else if (getLastDrawingModeState() === 'boundingBox') {

@@ -1,4 +1,4 @@
-import { getCrosshairUsedOnCanvasState, setCrosshairUsedOnCanvasState } from '../../../state';
+import { getCrosshairForBoundingBoxVisibleState, setCrosshairForBoundingBoxVisibleState, setCrosshairUsedOnCanvasState } from '../../../state';
 import { getCreateBoundingBoxButtonState } from '../../../toolkit/styling/state';
 import { setDrawCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/drawMode';
 import { setDrawWithCrosshairMode, removeCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
@@ -10,17 +10,19 @@ function assignCanvasForCrosshairToggle(canvasObj) {
 }
 
 function toggleCrosshair() {
-  if (getCrosshairUsedOnCanvasState()) {
+  if (getCrosshairForBoundingBoxVisibleState()) {
     if (getCreateBoundingBoxButtonState() === 'active') {
       removeCrosshair(canvas);
       setDrawCursorMode(canvas);
     }
     setCrosshairUsedOnCanvasState(false);
+    setCrosshairForBoundingBoxVisibleState(false);
   } else {
     if (getCreateBoundingBoxButtonState() === 'active') {
       setDrawWithCrosshairMode(canvas);
     }
     setCrosshairUsedOnCanvasState(true);
+    setCrosshairForBoundingBoxVisibleState(true);
   }
 }
 

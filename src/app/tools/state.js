@@ -29,7 +29,8 @@ let boundingBoxDrawingInProgressState = false;
 let removeImageModalDisplayedState = false;
 let welcomeModalDisplayedState = false;
 let sessionDirty = false;
-let crosshairUsedOnCanvasState = true;
+let crosshairForBoundingBoxVisibleState = true;
+let crosshairUsedOnCanvasState = false;
 let boundingBoxCrosshairDropdownOpenState = false;
 
 function getDefaultState() {
@@ -158,6 +159,10 @@ function getSessionDirtyState() {
 
 function getHasMachineLearningButtonBeenHighligtedState() {
   return hasMachineLearningButtonBeenHighligted;
+}
+
+function getCrosshairForBoundingBoxVisibleState() {
+  return crosshairForBoundingBoxVisibleState;
 }
 
 function getCrosshairUsedOnCanvasState() {
@@ -297,6 +302,10 @@ function setHasMachineLearningButtonBeenHighligtedState(state) {
   hasMachineLearningButtonBeenHighligted = state;
 }
 
+function setCrosshairForBoundingBoxVisibleState(state) {
+  crosshairForBoundingBoxVisibleState = state;
+}
+
 function setCrosshairUsedOnCanvasState(state) {
   crosshairUsedOnCanvasState = state;
 }
@@ -370,6 +379,8 @@ export {
   setRemovingPointsAfterCancelDrawState,
   getChangingMLGeneratedLabelNamesState,
   setChangingMLGeneratedLabelNamesState,
+  getCrosshairForBoundingBoxVisibleState,
+  setCrosshairForBoundingBoxVisibleState,
   getBoundingBoxCrosshairDropdownOpenState,
   setBoundingBoxCrosshairDropdownOpenState,
   getHasMachineLearningButtonBeenHighligtedState,

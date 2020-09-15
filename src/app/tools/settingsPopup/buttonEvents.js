@@ -29,7 +29,9 @@ function toggleCheckbox(func, isText) {
 }
 
 function assignSettingsPopupButtonClickEventHandlers() {
-  window.toggleMovableObjects = changeMovaleObjectsSetting;
+  window.toggleMovableObjects = toggleCheckbox.bind(
+    document.getElementById('settings-popup-movable-objects-checkbox'), changeMovaleObjectsSetting,
+  );
   window.toggleContinuousDrawing = toggleCheckbox.bind(
     document.getElementById('settings-popup-continuous-drawing-checkbox'), changeContinuousDrawingSetting,
   );

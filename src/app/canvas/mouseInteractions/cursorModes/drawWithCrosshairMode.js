@@ -20,6 +20,13 @@ let verticalDelta = null;
 const CROSSHAIR_DRAW_DELAY_MILLISECONDS = 15;
 const CROSSHAIR_DIMENSIONS_UPDATE_DELAY_MILLISECONDS = CROSSHAIR_DRAW_DELAY_MILLISECONDS + 1;
 
+function bringCanvasCrosshairToFront(canvas) {
+  if (!canvasCrosshairLineX) return;
+  canvas.bringToFront(canvasCrosshairLineX);
+  canvas.bringToFront(canvasCrosshairLineY);
+  canvas.renderAll();
+}
+
 function setCrosshairColor(element) {
   if (outsideCrosshairLineXElement) {
     outsideCrosshairLineXElement.style.backgroundColor = element.value;
@@ -253,6 +260,7 @@ function setDrawWithCrosshairMode(canvas, resetting) {
     // upon attempting to draw after labelling a shape, wait for the onmouseenter event
     // to be emitted by the canvas wrapper element
     executeFunctionOnceOnMouseOver(moveCrosshair);
+    bringCanvasCrosshairToFront(canvas);
   } else {
     removeCrosshairLinesIfExisting(canvas);
     addCanvasCrosshairLines(canvas);

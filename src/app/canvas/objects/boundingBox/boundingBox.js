@@ -10,6 +10,7 @@ import {
 import {
   getMovableObjectsState, getBoundingBoxDrawingInProgressState,
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
+  getCrosshairForBoundingBoxVisibleState, setCrosshairUsedOnCanvasState,
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
   getCrosshairUsedOnCanvasState, setSessionDirtyState, setReadyToDrawShapeState,
 } from '../../../tools/state';
@@ -78,8 +79,9 @@ function deselectBoundingBox() {
 }
 
 function setCursorMode(resetting) {
-  if (getCrosshairUsedOnCanvasState()) {
+  if (getCrosshairForBoundingBoxVisibleState()) {
     setDrawWithCrosshairMode(canvas, resetting);
+    setCrosshairUsedOnCanvasState(true);
   } else {
     setDrawCursorMode(canvas);
   }
@@ -102,6 +104,7 @@ function clearBoundingBoxData() {
     leftMouseBtnDown = false;
   }
   setBoundingBoxDrawingInProgressState(false);
+  setCrosshairUsedOnCanvasState(false);
   removeExecutedFunctionOnMouseOver();
   removeExecutedFunctionOnMouseOut();
   removeCrosshair(canvas);

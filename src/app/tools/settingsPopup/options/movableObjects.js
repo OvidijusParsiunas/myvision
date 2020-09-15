@@ -1,4 +1,4 @@
-import { getMovableObjectsState, setMovableObjectsState } from '../../state';
+import { getDefaultState, getMovableObjectsState, setMovableObjectsState } from '../../state';
 import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
 
 function changeExistingImagesMovability(shapes) {
@@ -8,7 +8,7 @@ function changeExistingImagesMovability(shapes) {
       if (object.shapeName === 'polygon' || object.shapeName === 'bndBox') {
         object.lockMovementX = false;
         object.lockMovementY = false;
-        object.hoverCursor = 'move';
+        if (getDefaultState()) object.hoverCursor = 'move';
       }
     });
   } else {
@@ -17,7 +17,7 @@ function changeExistingImagesMovability(shapes) {
       if (object.shapeName === 'polygon' || object.shapeName === 'bndBox') {
         object.lockMovementX = true;
         object.lockMovementY = true;
-        object.hoverCursor = 'default';
+        if (getDefaultState()) object.hoverCursor = 'default';
       }
     });
   }

@@ -1131,7 +1131,7 @@ input:focus {
 
 #remove-labels-button-popover {
   right: calc(29px / var(--screen-size-delta));
-  margin-top: calc(3px / var(--screen-size-delta));
+  margin-top: calc(2px / var(--screen-size-delta));
 }
 
 .labelListItem {
@@ -1860,13 +1860,13 @@ body {
 #crosshair-line-x {
   left: calc(59px / var(--screen-size-delta));
   width: calc(100% - 209px - (59px / var(--screen-size-delta)));
-  height: 1px;
+  height: 1.5px;
 }
 
 #crosshair-line-y {
   height: calc(100% - (35px + (29px / var(--screen-size-delta))));
   margin-top: calc(35px + (29px / var(--screen-size-delta)));
-  width: 1px;
+  width: 1.5px;
 }
 
 .crosshair-line {
