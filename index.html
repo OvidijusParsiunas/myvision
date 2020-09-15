@@ -4,10 +4,18 @@
 <head>
   <meta charset="utf-8">
   <title>MyVision</title>
-  <meta name="description" content="MyVision">
+  <meta name="description" content="Online computer vision based ML training data generation tool.">
   <script src="assets/externals/fabricjs/fabric.min.js" type="text/javascript"></script>
   <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
   <link rel="icon" href="assets/images/favicon 29.png">
+  <meta property="og:title" content="MyVision">
+  <meta property="og:description" content="Computer vision based ML training data generation tool">
+  <meta property="og:image" content="https://raw.githubusercontent.com/OvidijusParsiunas/myvision/gh-pages/assets/images/social%20preview%20screenshot%20-%206.PNG">
+  <meta property="og:url" content="https://myvision.ai/">
+  <meta name="twitter:title" content="MyVision">
+  <meta name="twitter:description" content="Computer vision based ML training data generation tool">
+  <meta name="twitter:image" content=" https://raw.githubusercontent.com/OvidijusParsiunas/myvision/gh-pages/assets/images/social%20preview%20screenshot%20-%206.PNG">
+  <meta name="twitter:card" content="summary_large_image">
   <title></title>
 </head>
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
@@ -236,8 +244,8 @@
         <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Bounding box Crosshair</div><div id="settings-popup-bounding-box-crosshair-dropdown-trigger" class="settings-popup-item checkbox settings-checkbox" name="something" onclick="toggleBoundingBoxCrosshairDropdown()">&#x25BA;</div>
           <div id="bounding-box-crosshair-dropdown" class="settings-popup-item">
             <table id="bounding-box-crosshair-dropdown-table" class="settings-popup-item">
-              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleCrosshair(true)">Visibility</div><input id="settings-popup-bounding-box-crosshair-visibility-checkbox" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="checkbox" checked="true" name="something" onclick="toggleCrosshair(null, event)"></td></tr>
-              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="crosshairColorChange(true)">Color</div><input id="settings-popup-bounding-box-crosshair-color-picker" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="color" value="#ffffff" oninput="crosshairColorChange(this)"></td></tr>
+              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleCrosshair(true)">Visibility</div><input id="settings-popup-bounding-box-crosshair-visibility-checkbox" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="checkbox" checked="true" name="something" onclick="toggleCrosshair()"></td></tr>
+              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Color</div><input id="settings-popup-bounding-box-crosshair-color-picker" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="color" value="#ffffff" oninput="crosshairColorChange(this)"></td></tr>
            </table>
           </div>
         </td>
@@ -359,5 +367,5 @@
     </div>
     <div id="inadequate-client-resources-overlay-text"></div>
   </div>
-<script src="browserSupportBundle.b5251de0268b25af727e.js"></script><script src="appBundle.23adc1a36465d9b9efe7.js"></script></body>
+<script src="browserSupportBundle.b5251de0268b25af727e.js"></script><script src="appBundle.46983956427fd735d353.js"></script></body>
 </html>
