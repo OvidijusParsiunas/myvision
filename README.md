@@ -31,13 +31,13 @@ Supported dataset formats:
 Annotating objects can be a difficult task... You can skip all the hard work and use a pre-trained machine learning model to automatically annotate the objects for you. MyVision leverages the popular 'COCO-SSD' model to generate bounding boxes for your images and by operating locally on your browser - retain all data within the privacy of your computer:
 
 <p align="center">
-    <img width="1000" src="./readme/gifs/2020-07-08 00-10-36.gif" alt="Logo">
+    <img width="1000" src="./readme/gifs/2020-07-08 00-13-39.gif" alt="Logo">
 </p>
 
 You can import existing annotation projects and continue working on them in MyVision. This process can also be used to convert datasets from one format to another:
 
 <p align="center">
-    <img width="1000" src="./readme/gifs/2020-07-08 00-13-39.gif" alt="Logo">
+    <img width="1000" src="./readme/gifs/ezgif.com-gif-maker 4.gif" alt="Logo">
 </p>
 
 ## Local setup
