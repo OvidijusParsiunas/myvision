@@ -1,6 +1,19 @@
 import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
 
+function isBoundingBox(segmentation, bbox) {
+  if (segmentation.length === 8) {
+    const [left, top, width, height] = bbox;
+    if (segmentation[0] === left && segmentation[1] === top
+      && segmentation[2] === (left + width) && segmentation[3] === top
+      && segmentation[4] === (left + width) && segmentation[5] === (top + height)
+      && segmentation[6] === left && segmentation[7] === (top + height)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes) {
   const shapeObj = {
     type: null, coordinates: {}, imageName,
@@ -12,14 +25,14 @@ function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes)
       break;
     }
   }
-  if (annotationData.segmentation.length === 1) {
-    shapeObj.coordinates.points = annotationData.segmentation[0];
-    shapeObj.type = 'polygon';
-    shapes.polygons.push(shapeObj);
-  } else {
+  if (isBoundingBox(annotationData.segmentation[0], annotationData.bbox)) {
     shapeObj.coordinates.bbox = annotationData.bbox;
     shapeObj.type = 'boundingBox';
     shapes.boundingBoxes.push(shapeObj);
+  } else {
+    shapeObj.coordinates.points = annotationData.segmentation[0];
+    shapeObj.type = 'polygon';
+    shapes.polygons.push(shapeObj);
   }
 }
 
