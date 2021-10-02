@@ -1,3 +1,7 @@
+when opening up the labeller modal, there is a scrollbar
+
+the label trashcan has a stronger tint than the image
+
 zoom fix - check how it looks after making the original image full height
 
 add gifs
