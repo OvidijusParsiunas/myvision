@@ -84,7 +84,7 @@ module.exports = () => {
     stats: config.loggingLevel,
     plugins,
     performance: {
-      maxEntrypointSize: 340000,
+      maxEntrypointSize: 345000,
       maxAssetSize: 345000,
     },
   };
