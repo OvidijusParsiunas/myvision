@@ -1,9 +1,4 @@
-<!-- do a long readme -->
-<p align="center"> 
-    <img style="margin-left: -25px" width="70%" src="./readme/images/logo with text 35.png" alt="Logo">
-    <!-- <img style="margin-left: -25px" width="70%" src="./readme/logo with text 31.png" alt="Logo">     -->
-    <!-- <img width="300" src="./readme/presenting 76.png" alt="Logo">     -->
-</p>
+# Online Image Annotation
 
 ## Description
 
@@ -42,26 +37,4 @@ You can import existing annotation projects and continue working on them in MyVi
 
 ## Local setup
 <!-- link to the file or bring the screen up to there -->
-No setup is required to run this project, open the [index.html](public/index.html) file and you are all set! However, if you want to make changes or contribute to this repository, please follow the instructions below:
-
-```
-# Requirements: Node version 10+ and NPM version 6+
-
-# Install node dependencies:
-$ npm install
-
-# Run the project in watch mode:
-$ npm run watch
-
-# All changes should be made in the src directory and observed in publicDev
-```
-
-## Citation
-```
-@MISC{MyVision,
-   author = {Ovidijus Parsiunas},
-   title = {{MyVision}},
-   howpublished = {\url{https://github.com/OvidijusParsiunas/myvision}},
-   year = {2019},
-}
-```
+No setup is required to run this project, open the [index.html](src/index.html) file and you are all set! However, if you want to make changes or contribute to this repository, please follow the instructions below:
