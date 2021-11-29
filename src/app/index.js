@@ -44,4 +44,4 @@ initialiseImageSwitchPanelFunctionality();
 initialisePulseAnimationCancelling();
 initialiseShapeManipulationDeltas();
 initialiseBrowserExitHandler();
-initialiseWelcomeModal();
+// initialiseWelcomeModal();
