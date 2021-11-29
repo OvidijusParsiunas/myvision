@@ -1,8 +1,8 @@
-import uploadImages from '../imageList/uploadImages/uploadImages';
-import isAnyModalOpen from '../utils/modals/status';
-import { getUploadDatasetsModalDisplayedState } from '../state';
-import { getCurrentViewNumber } from '../uploadDatasetsModal/views/viewManager';
-import { uploadDatasetFilesHandler } from '../uploadDatasetsModal/views/uploadDatasets/uploadDatasetFilesHandler';
+import uploadImages from '../imageList/uploadImages/uploadImages.js';
+import isAnyModalOpen from '../utils/modals/status.js';
+import { getUploadDatasetsModalDisplayedState } from '../state.js';
+import { getCurrentViewNumber } from '../uploadDatasetsModal/views/viewManager.js';
+import { uploadDatasetFilesHandler } from '../uploadDatasetsModal/views/uploadDatasets/uploadDatasetFilesHandler.js';
 
 let bodyElement = null;
 let imageListDragAndDropOverlayElement = null;

@@ -1,5 +1,5 @@
-import { getLabelsVisibilityState, setLabelsVisibilityState } from '../../state';
-import { setAllLabelsVisibilityProperty } from '../../../canvas/objects/label/label';
+import { getLabelsVisibilityState, setLabelsVisibilityState } from '../../state.js';
+import { setAllLabelsVisibilityProperty } from '../../../canvas/objects/label/label.js';
 
 function changeLabelsVisibilitySetting(canvas) {
   if (getLabelsVisibilityState()) {

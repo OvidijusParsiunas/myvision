@@ -1,10 +1,10 @@
-import { selectFormat, hideExportDatasetsPopup } from './style';
-import { setSessionDirtyState } from '../state';
-import downloadCOCOJSON from './fileTypes/COCOJSON';
-import downloadVGGJSON from './fileTypes/VGGJSON';
-import downloadCSV from './fileTypes/CSV';
-import downloadXML from './fileTypes/XML';
-import downloadYOLOTXT from './fileTypes/YOLOTXT';
+import { selectFormat, hideExportDatasetsPopup } from './style.js';
+import { setSessionDirtyState } from '../state.js';
+import downloadCOCOJSON from './fileTypes/COCOJSON.js';
+import downloadVGGJSON from './fileTypes/VGGJSON.js';
+import downloadCSV from './fileTypes/CSV.js';
+import downloadXML from './fileTypes/XML.js';
+import downloadYOLOTXT from './fileTypes/YOLOTXT.js';
 
 let currentlySelectedFormat = null;
 

@@ -1,5 +1,5 @@
-import { removeLabel } from '../../label/label';
-import { removeShape } from '../../allShapes/allShapes';
+import { removeLabel } from '../../label/label.js';
+import { removeShape } from '../../allShapes/allShapes.js';
 
 function removePolygonImpl(canvas, polygon) {
   const polygonId = polygon.id;

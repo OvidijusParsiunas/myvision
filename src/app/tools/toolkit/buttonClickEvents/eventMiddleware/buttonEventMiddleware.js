@@ -1,11 +1,11 @@
-import { isLabelling } from '../../../labellerModal/labellingProcess';
+import { isLabelling } from '../../../labellerModal/labellingProcess.js';
 import {
   interruptAllCanvasEvents, interruptCanvasToStartAddPoints,
-} from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
-import { getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../../state';
-import { removeActiveButtonPopover } from '../../../globalStyling/buttons/popovers';
-import isLeftMouseButtonClick from '../../../utils/buttons/clickEvents';
-import isElement from '../../../utils/elementType';
+} from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState.js';
+import { getRemovingPolygonPointsState, getPolygonDrawingInProgressState } from '../../../state.js';
+import { removeActiveButtonPopover } from '../../../globalStyling/buttons/popovers.js';
+import isLeftMouseButtonClick from '../../../utils/buttons/clickEvents.js';
+import isElement from '../../../utils/elementType.js';
 
 
 function interruptAllCanvasEventsBeforeFunc(func, event) {

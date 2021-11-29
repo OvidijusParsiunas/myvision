@@ -1,6 +1,6 @@
-import interruptNewShapeDrawingWthFunc1OrExecFunc2 from './buttonMiddleWare';
-import { resetCanvasEventsToDefault } from '../../toolkit/buttonClickEvents/facade';
-import { removeActiveLabel } from '../removeLabels/removeLabels';
+import interruptNewShapeDrawingWthFunc1OrExecFunc2 from './buttonMiddleWare.js';
+import { resetCanvasEventsToDefault } from '../../toolkit/buttonClickEvents/facade.js';
+import { removeActiveLabel } from '../removeLabels/removeLabels.js';
 
 function removeActiveLabelBtnClick() {
   removeActiveLabel();

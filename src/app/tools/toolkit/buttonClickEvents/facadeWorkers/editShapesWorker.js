@@ -1,23 +1,23 @@
-import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
-import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
+import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers.js';
+import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode.js';
+import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers.js';
 import {
   getLastDrawingModeState, getBoundingBoxDrawingInProgressState,
   setAddingPolygonPointsState, getDefaultState, getRemovingPolygonPointsState,
   getPolygonDrawingInProgressState, setDefaultState, getAlteringPolygonPointsState,
   getAddingPolygonPointsState, setReadyToDrawShapeState, setRemovingPolygonPointsState,
   setCancelledReadyToDrawState, getReadyToDrawShapeState, setAlteringPolygonPointsState,
-} from '../../../state';
+} from '../../../state.js';
 import {
   cleanPolygonPointsArray, resetAddPoints, isAddingPointsToPolygon, getPolygonIdIfEditing,
-} from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
-import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
-import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon';
+} from '../../../../canvas/objects/polygon/alterPolygon/alterPolygon.js';
+import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode.js';
+import assignAddPointsOnExistingPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers.js';
+import { resetNewPolygonData } from '../../../../canvas/objects/polygon/polygon.js';
 import {
   setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled, setEditShapesButtonToActive,
-} from '../../styling/state';
-import { clearBoundingBoxData } from '../../../../canvas/objects/boundingBox/boundingBox';
+} from '../../styling/state.js';
+import { clearBoundingBoxData } from '../../../../canvas/objects/boundingBox/boundingBox.js';
 
 function dismissAddPointsEvents(canvas) {
   if (isAddingPointsToPolygon()) {

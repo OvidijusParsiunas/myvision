@@ -1,4 +1,4 @@
-import IS_FIREFOX from '../../tools/utils/browserType';
+import IS_FIREFOX from '../../tools/utils/browserType.js';
 
 let canvasElement1Displaying = true;
 let oldCanvas = null;

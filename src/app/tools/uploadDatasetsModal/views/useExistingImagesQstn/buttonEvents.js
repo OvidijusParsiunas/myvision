@@ -1,5 +1,5 @@
-import { hideUseExistingImagesViewAssets } from './style';
-import { setReuseAlreadyUploadedImagesState } from '../../state';
+import { hideUseExistingImagesViewAssets } from './style.js';
+import { setReuseAlreadyUploadedImagesState } from '../../state.js';
 
 function moveToNextView(nextViewCallback, reuseAlreadyUploadedImages) {
   setReuseAlreadyUploadedImagesState(reuseAlreadyUploadedImages);

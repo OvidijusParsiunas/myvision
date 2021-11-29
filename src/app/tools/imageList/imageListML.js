@@ -1,4 +1,4 @@
-import { getCurrentImageId } from '../state';
+import { getCurrentImageId } from '../state.js';
 
 let allImageDataRef = null;
 

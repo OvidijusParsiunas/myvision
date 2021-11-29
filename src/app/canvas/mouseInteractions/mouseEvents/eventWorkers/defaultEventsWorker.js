@@ -3,23 +3,23 @@ import {
   setEditablePolygonAfterMoving, resetPolygonSelectableArea,
   setEditablePolygon, movePolygonPoint, highlightSelectedPolygonViaPoint,
   sendPolygonPointsToFront, getPolygonEditingStatus, defaultFillSelectedPolygonViaPoint,
-} from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { getLabelById } from '../../../objects/label/label';
-import labelProperies from '../../../objects/label/properties';
+} from '../../../objects/polygon/alterPolygon/alterPolygon.js';
+import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils.js';
+import { getLabelById } from '../../../objects/label/label.js';
+import labelProperies from '../../../objects/label/properties.js';
 import {
   getRemovingPointsAfterCancelDrawState, getCurrentZoomState,
   getShapeMovingState, setShapeMovingState, setSessionDirtyState,
   setRemovingPointsAfterCancelDrawState, setLastPolygonActionWasMoveState,
   getBoundingBoxScalingState, setBoundingBoxScalingState, getDoubleScrollCanvasState,
-} from '../../../../tools/state';
-import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
-import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes';
-import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML';
-import { getImageProperties } from '../../../../tools/imageList/uploadImages/drawImageOnCanvas';
-import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling';
-import { preventOutOfBoundsPointsOnMove, preventOutOfBoundsShapesOnMove, validateAndFixOutOfBoundsPolygonShapePointsAfterMove } from '../../../objects/sharedUtils/moveBlockers';
-import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
+} from '../../../../tools/state.js';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils.js';
+import { highlightShapeFill, defaultShapeFill } from '../../../objects/allShapes/allShapes.js';
+import { updateNumberOfUncheckedMLImages } from '../../../../tools/imageList/imageListML.js';
+import { getImageProperties } from '../../../../tools/imageList/uploadImages/drawImageOnCanvas.js';
+import { setInitialBoundingBoxCoordinates, handleBoundingBoxScalingEvents, clearControlSelectedObject } from '../../../objects/boundingBox/scaling.js';
+import { preventOutOfBoundsPointsOnMove, preventOutOfBoundsShapesOnMove, validateAndFixOutOfBoundsPolygonShapePointsAfterMove } from '../../../objects/sharedUtils/moveBlockers.js';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state.js';
 
 let canvas = null;
 let labelObject = null;

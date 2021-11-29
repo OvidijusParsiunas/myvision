@@ -1,4 +1,4 @@
-import labelProperies from './properties';
+import labelProperies from './properties.js';
 
 let canvas = null;
 // be careful about this as we will need to look into doing this for multiple

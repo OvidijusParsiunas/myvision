@@ -1,6 +1,6 @@
-import { setDoubleScrollCanvasState } from '../state';
-import { getCurrentCanvasContainerElement } from '../../canvas/utils/canvasUtils';
-import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
+import { setDoubleScrollCanvasState } from '../state.js';
+import { getCurrentCanvasContainerElement } from '../../canvas/utils/canvasUtils.js';
+import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta.js';
 
 let zoomOverflowWrapperElement;
 let zoomOverflowElement;

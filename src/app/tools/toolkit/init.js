@@ -1,5 +1,5 @@
-import { initiateToolkitButtonsStyling } from './styling/state';
-import assignToolkitButtonClickEventHandlers from './buttonClickEvents/buttonClickEvents';
+import { initiateToolkitButtonsStyling } from './styling/state.js';
+import assignToolkitButtonClickEventHandlers from './buttonClickEvents/buttonClickEvents.js';
 
 function initialiseToolkit() {
   initiateToolkitButtonsStyling();

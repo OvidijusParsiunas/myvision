@@ -1,18 +1,18 @@
-import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
-import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../objects/boundingBox/boundingBox';
-import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoordinates } from '../../objects/polygon/polygon';
-import { generateLabelShapeGroup } from '../../objects/allShapes/labelAndShapeBuilder';
-import initiateResetCanvasEventsToDefaultEvent from '../../../tools/toolkit/buttonClickEvents/facadeWorkers/resetCanvasEventsToDefaultWorker';
-import { setDefaultCursorMode } from '../../mouseInteractions/cursorModes/defaultMode';
-import { resetLabellerModalOptions } from '../../../tools/labellerModal/style';
-import { getCurrentImageId } from '../../../tools/state';
-import { removeBoundingBox } from '../../../tools/labelList/removeLabels/removeLabels';
-import { getAllExistingShapes } from '../../objects/allShapes/allShapes';
-import { getNumberOfShapeTypes } from '../../../tools/globalStatistics/globalStatistics';
-import { getCanvasReferences } from '../fabricUtils';
-import assignDefaultEvents from '../../mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
-import { repopulateDropdown } from '../../../tools/labelList/labelList';
-import purgeCanvasMouseEvents from '../../mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
+import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas.js';
+import { prepareCanvasForNewBoundingBoxesFromExternalSources, createNewBoundingBoxFromCoordinates } from '../../objects/boundingBox/boundingBox.js';
+import { prepareCanvasForNewPolygonsFromExternalSources, createNewPolygonFromCoordinates } from '../../objects/polygon/polygon.js';
+import { generateLabelShapeGroup } from '../../objects/allShapes/labelAndShapeBuilder.js';
+import initiateResetCanvasEventsToDefaultEvent from '../../../tools/toolkit/buttonClickEvents/facadeWorkers/resetCanvasEventsToDefaultWorker.js';
+import { setDefaultCursorMode } from '../../mouseInteractions/cursorModes/defaultMode.js';
+import { resetLabellerModalOptions } from '../../../tools/labellerModal/style.js';
+import { getCurrentImageId } from '../../../tools/state.js';
+import { removeBoundingBox } from '../../../tools/labelList/removeLabels/removeLabels.js';
+import { getAllExistingShapes } from '../../objects/allShapes/allShapes.js';
+import { getNumberOfShapeTypes } from '../../../tools/globalStatistics/globalStatistics.js';
+import { getCanvasReferences } from '../fabricUtils.js';
+import assignDefaultEvents from '../../mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers.js';
+import { repopulateDropdown } from '../../../tools/labelList/labelList.js';
+import purgeCanvasMouseEvents from '../../mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers.js';
 import {
   getAllImageData,
   getLastImageIdByName,
@@ -22,7 +22,7 @@ import {
   removeSelectedMLThumbnailHighlight,
   setDefaultImageThumbnailHighlightToML,
   setDefaultImageThumbnailHighlightToMLSelected,
-} from '../../../tools/imageList/imageList';
+} from '../../../tools/imageList/imageList.js';
 
 let canvas = null;
 const tempShapes = [];

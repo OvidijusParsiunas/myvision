@@ -1,4 +1,4 @@
-import { changeImageThumbnailBorderColorToRed, resetImageThumbnailBorderColor } from '../imageList';
+import { changeImageThumbnailBorderColorToRed, resetImageThumbnailBorderColor } from '../imageList.js';
 
 function initialiseImageListButtonHoverEvents() {
   const removeButtonElement = document.getElementById('remove-images-button');

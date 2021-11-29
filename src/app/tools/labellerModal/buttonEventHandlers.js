@@ -1,21 +1,21 @@
-import { createLabelShape, removeTargetShape, isLabelling } from './labellingProcess';
-import { resetCanvasEventsToDefault } from '../toolkit/buttonClickEvents/facade';
+import { createLabelShape, removeTargetShape, isLabelling } from './labellingProcess.js';
+import { resetCanvasEventsToDefault } from '../toolkit/buttonClickEvents/facade.js';
 import {
   getLastDrawingModeState, setHasDrawnShapeState,
   getContinuousDrawingState, getCrosshairUsedOnCanvasState,
-} from '../state';
-import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
-import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
-import { getLabelOptions } from '../labelList/labelOptions';
-import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
-import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
-import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
-import scrollIntoViewIfNeeded from '../utils/tableUtils';
+} from '../state.js';
+import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon.js';
+import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox.js';
+import { getLabelOptions } from '../labelList/labelOptions.js';
+import { displayTickSVGOverImageThumbnail } from '../imageList/imageList.js';
+import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils.js';
+import { getKeyDownEventTimeout } from '../globalStyling/timeouts.js';
+import scrollIntoViewIfNeeded from '../utils/tableUtils.js';
 import {
   hideLabellerModal, changeStyleWhenInputEmpty,
   changeStyleWhenInputInvalid, changeStyleToAllowSubmit,
-} from './style';
-import { removeOutsideCrosshairEventListeners } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+} from './style.js';
+import { removeOutsideCrosshairEventListeners } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
 
 let keyDownEventTimeOut = 0;
 let textInputElement = null;

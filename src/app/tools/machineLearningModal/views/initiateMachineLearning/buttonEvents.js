@@ -1,12 +1,12 @@
 import {
   startMachineLearning, getProgressStatus,
   cancelMachineLearning, isFractionOfImagesAnalysedByML,
-} from './machineLearning';
+} from './machineLearning.js';
 import {
   prepareInstantiateMachineLearningView, hideInitiateMachineLearningViewAssets,
   removeStartButton, removeCancelButton, displayMLCoverageSelectionButtons, removeRetryButton,
   removeMLCoverageSelectionButtons,
-} from './style';
+} from './style.js';
 
 function cancelMLModal(closeModal) {
   if (getProgressStatus()) {

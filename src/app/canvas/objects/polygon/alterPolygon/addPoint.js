@@ -1,11 +1,11 @@
-import fabric from 'fabric';
-import polygonProperties from '../properties';
-import labelProperties from '../../label/properties';
-import setAddPointsMode from '../../../mouseInteractions/cursorModes/addPointsMode';
-import { changePolygonPointsToAddImpl } from './changePointsStyle';
-import { getLabelById } from '../../label/label';
-import { preventOutOfBoundsPointsOnMove } from '../../sharedUtils/moveBlockers';
-import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
+// import fabric from 'fabric.js';
+import polygonProperties from '../properties.js';
+import labelProperties from '../../label/properties.js';
+import setAddPointsMode from '../../../mouseInteractions/cursorModes/addPointsMode.js';
+import { changePolygonPointsToAddImpl } from './changePointsStyle.js';
+import { getLabelById } from '../../label/label.js';
+import { preventOutOfBoundsPointsOnMove } from '../../sharedUtils/moveBlockers.js';
+import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode.js';
 
 let canvas = null;
 let activeLine = null;

@@ -1,5 +1,5 @@
-import { getDefaultState, getMovableObjectsState, setMovableObjectsState } from '../../state';
-import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
+import { getDefaultState, getMovableObjectsState, setMovableObjectsState } from '../../state.js';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes.js';
 
 function changeExistingImagesMovability(shapes) {
   if (getMovableObjectsState()) {

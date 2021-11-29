@@ -1,5 +1,5 @@
-import { setCrosshairColor } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { toggleCrosshair } from './toggleCrosshairWorker';
+import { setCrosshairColor } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
+import { toggleCrosshair } from './toggleCrosshairWorker.js';
 
 function toggleCheckbox(func, isText) {
   func();

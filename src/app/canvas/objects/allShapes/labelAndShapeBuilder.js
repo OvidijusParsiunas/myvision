@@ -1,14 +1,14 @@
-import fabric from 'fabric';
-import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label';
-import labelProperties from '../label/properties';
-import { addNewLabelToListFromPopup, addExistingLabelToList } from '../../../tools/labelList/labelList';
-import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties';
-import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions';
-import { getLabelsVisibilityState } from '../../../tools/state';
-import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
-import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils';
-import { setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled } from '../../../tools/toolkit/styling/state';
+// import fabric from 'fabric.js';
+import { addLabelRef, setPolygonLabelOffsetProps } from '../label/label.js';
+import labelProperties from '../label/properties.js';
+import { addNewLabelToListFromPopup, addExistingLabelToList } from '../../../tools/labelList/labelList.js';
+import { resizeAllPassedObjectsDimensionsBySingleScale, resizeLabelDimensionsBySingleScale } from '../objectsProperties/changeProperties.js';
+import { addToLabelOptions, getLabelColor } from '../../../tools/labelList/labelOptions.js';
+import { getLabelsVisibilityState } from '../../../tools/state.js';
+import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes.js';
+import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers.js';
+import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils.js';
+import { setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled } from '../../../tools/toolkit/styling/state.js';
 
 let currentId = 0;
 let canvas = null;

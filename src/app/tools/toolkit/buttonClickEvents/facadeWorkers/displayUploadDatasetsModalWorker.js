@@ -1,4 +1,4 @@
-import { displayModal } from '../../../uploadDatasetsModal/views/viewManager';
+import { displayModal } from '../../../uploadDatasetsModal/views/viewManager.js';
 
 function displayUploadDatasetsModal() {
   displayModal();

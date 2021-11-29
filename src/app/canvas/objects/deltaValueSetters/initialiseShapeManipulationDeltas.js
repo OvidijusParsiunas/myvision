@@ -1,8 +1,8 @@
-import { setRightBoundingBoxDrawingDelta } from '../boundingBox/boundingBox';
-import { setRightBoundingBoxMovingDelta } from '../sharedUtils/moveBlockers';
-import { setRightBoundingBoxNewObjectDelta } from '../sharedUtils/newObjectBlockers';
-import { setRightBoundingBoxScalingDelta } from '../boundingBox/scaling';
-import IS_FIREFOX from '../../../tools/utils/browserType';
+import { setRightBoundingBoxDrawingDelta } from '../boundingBox/boundingBox.js';
+import { setRightBoundingBoxMovingDelta } from '../sharedUtils/moveBlockers.js';
+import { setRightBoundingBoxNewObjectDelta } from '../sharedUtils/newObjectBlockers.js';
+import { setRightBoundingBoxScalingDelta } from '../boundingBox/scaling.js';
+import IS_FIREFOX from '../../../tools/utils/browserType.js';
 
 function initialiseShapeManipulationDeltas() {
   if (!IS_FIREFOX && window.screen.width < 1500) {

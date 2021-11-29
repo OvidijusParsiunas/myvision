@@ -1,11 +1,11 @@
 import {
   IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
   XML_POSTFIX, TAGS_STRING, ANNOTATION_FILE_INDICATOR,
-} from '../../../consts';
-import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
-import { getReuseAlreadyUploadedImagesState } from '../../../state';
-import { checkObjectProperties } from './sharedUtils';
+} from '../../../consts.js';
+import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager.js';
+import { getAllImageData } from '../../../../imageList/imageList.js';
+import { getReuseAlreadyUploadedImagesState } from '../../../state.js';
+import { checkObjectProperties } from './sharedUtils.js';
 
 function setCurrentAnnotationFilesToInactive(annotationFiles) {
   annotationFiles.forEach((annotationFile) => {

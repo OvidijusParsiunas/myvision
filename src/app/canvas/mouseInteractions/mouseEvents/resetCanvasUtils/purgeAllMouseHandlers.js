@@ -1,4 +1,4 @@
-import { getCanvasReferences } from '../../../utils/fabricUtils';
+import { getCanvasReferences } from '../../../utils/fabricUtils.js';
 
 // the following is used to fix bounding box stretching bugs within a canvas
 // and when switching between older and newer ones

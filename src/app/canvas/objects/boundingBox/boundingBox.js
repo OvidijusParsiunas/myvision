@@ -1,25 +1,25 @@
-import fabric from 'fabric';
-import boundingBoxProperties from './properties';
-import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess';
-import { showLabellerModal } from '../../../tools/labellerModal/style';
-import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode';
+// import fabric from 'fabric.js';
+import boundingBoxProperties from './properties.js';
+import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess.js';
+import { showLabellerModal } from '../../../tools/labellerModal/style.js';
+import { setDrawCursorMode } from '../../mouseInteractions/cursorModes/drawMode.js';
 import {
   removeCrosshair, moveCanvasCrosshairViaLastCanvasPositionAsync,
   setDrawWithCrosshairMode, moveCanvasCrosshair, moveCanvasCrosshairDefault,
-} from '../../mouseInteractions/cursorModes/drawWithCrosshairMode';
+} from '../../mouseInteractions/cursorModes/drawWithCrosshairMode.js';
 import {
   getMovableObjectsState, getBoundingBoxDrawingInProgressState,
   setBoundingBoxDrawingInProgressState, getAddingPolygonPointsState,
   getCrosshairForBoundingBoxVisibleState, setCrosshairUsedOnCanvasState,
   getDoubleScrollCanvasState, getCurrentZoomState, setAddingPolygonPointsState,
   getCrosshairUsedOnCanvasState, setSessionDirtyState, setReadyToDrawShapeState,
-} from '../../../tools/state';
-import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
-import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state';
-import { getScrollbarWidth } from '../../../tools/globalStyling/style';
-import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
-import { removeExecutedFunctionOnMouseOver, removeExecutedFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
+} from '../../../tools/state.js';
+import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas.js';
+import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers.js';
+import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state.js';
+import { getScrollbarWidth } from '../../../tools/globalStyling/style.js';
+import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove.js';
+import { removeExecutedFunctionOnMouseOver, removeExecutedFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut.js';
 
 let canvas = null;
 let createNewBoundingBoxBtnClicked = false;

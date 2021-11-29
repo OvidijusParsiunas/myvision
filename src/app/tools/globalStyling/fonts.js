@@ -1,5 +1,5 @@
-import { getExportDatasetsPopupOpenState } from '../state';
-import IS_FIREFOX from '../utils/browserType';
+import { getExportDatasetsPopupOpenState } from '../state.js';
+import IS_FIREFOX from '../utils/browserType.js';
 
 function refreshExportDatasetsPopover() {
   if (!getExportDatasetsPopupOpenState()) {

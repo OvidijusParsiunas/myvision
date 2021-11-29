@@ -3,12 +3,12 @@ import {
   updateGeneratedLabelsElementWidth, hideGeneratedLabelsViewAssets,
   displayGreyedDefaultEditLabelButton, scrollHorizontallyToAppropriateWidth,
   displayHighlightedDefaultEditLabelButton, displayRedEditButtonIfActiveTextEmpty,
-} from './style';
+} from './style.js';
 import {
   getGeneratedMachineLearningData, setActiveLabelProperties,
   stopEditingMLGeneratedLabelName, submitNewLabelNames,
-} from './changeLabels';
-import { drawShapesViaCoordinates } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+} from './changeLabels.js';
+import { drawShapesViaCoordinates } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates.js';
 
 function MLLabelTextKeyDown(event) {
   if (event.key === 'Enter') {

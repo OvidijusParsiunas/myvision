@@ -1,11 +1,11 @@
 import {
   CSV_POSTFIX, PROPERTIES_STRING, ACTIVE_ANNOTATION_FILE,
   ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
-} from '../../../consts';
-import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
-import { getReuseAlreadyUploadedImagesState } from '../../../state';
-import { checkObjectProperties } from './sharedUtils';
+} from '../../../consts.js';
+import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager.js';
+import { getAllImageData } from '../../../../imageList/imageList.js';
+import { getReuseAlreadyUploadedImagesState } from '../../../state.js';
+import { checkObjectProperties } from './sharedUtils.js';
 
 function checkObject(JSONObject, validators) {
   for (let i = 0; i < validators.length; i += 1) {

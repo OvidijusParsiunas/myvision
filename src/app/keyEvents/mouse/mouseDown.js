@@ -1,6 +1,6 @@
-import { getChangingMLGeneratedLabelNamesState } from '../../tools/state';
-import { stopEditingMLGeneratedLabelNameBtnClick } from '../../tools/machineLearningModal/views/generatedLabels/changeLabels';
-import closeAllPopups from '../../tools/utils/popups/closeAllPopups';
+import { getChangingMLGeneratedLabelNamesState } from '../../tools/state.js';
+import { stopEditingMLGeneratedLabelNameBtnClick } from '../../tools/machineLearningModal/views/generatedLabels/changeLabels.js';
+import closeAllPopups from '../../tools/utils/popups/closeAllPopups.js';
 
 function onMouseDown(event) {
   closeAllPopups(event);

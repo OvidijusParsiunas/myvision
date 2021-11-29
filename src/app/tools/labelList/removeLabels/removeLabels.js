@@ -1,29 +1,29 @@
 import {
   removePolygon, clearAllAddPointsData, isAddingPointsToPolygon, removePolygonPoints,
-} from '../../../canvas/objects/polygon/alterPolygon/alterPolygon';
-import { resetNewPolygonData, isPolygonDrawingFinished, resetDrawPolygonMode } from '../../../canvas/objects/polygon/polygon';
-import { clearBoundingBoxData, isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../../canvas/objects/boundingBox/boundingBox';
-import { removeEditedPolygonId, removeActiveLabelObject } from '../../../canvas/mouseInteractions/mouseEvents/eventWorkers/defaultEventsWorker';
-import purgeCanvasMouseEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import assignAddPointsOnExistingPolygonEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers';
-import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode';
+} from '../../../canvas/objects/polygon/alterPolygon/alterPolygon.js';
+import { resetNewPolygonData, isPolygonDrawingFinished, resetDrawPolygonMode } from '../../../canvas/objects/polygon/polygon.js';
+import { clearBoundingBoxData, isBoundingBoxDrawingFinished, resetDrawBoundingBoxMode } from '../../../canvas/objects/boundingBox/boundingBox.js';
+import { removeEditedPolygonId, removeActiveLabelObject } from '../../../canvas/mouseInteractions/mouseEvents/eventWorkers/defaultEventsWorker.js';
+import purgeCanvasMouseEvents from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers.js';
+import assignAddPointsOnExistingPolygonEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/addPointsEventHandlers.js';
+import setInitialStageOfAddPointsOnExistingPolygonMode from '../../../canvas/mouseInteractions/cursorModes/initialiseAddPointsOnExistingPolygonMode.js';
 import {
   getRemovingPolygonPointsState, setRemovingPolygonPointsState,
   getBoundingBoxDrawingInProgressState, getPolygonDrawingInProgressState,
   getAddingPolygonPointsState, getContinuousDrawingState, getCurrentImageId,
-} from '../../state';
-import { isLabelling, removeTargetShape } from '../../labellerModal/labellingProcess';
-import { hideLabellerModal } from '../../labellerModal/style';
-import assignDrawPolygonEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
-import { removeLabel } from '../../../canvas/objects/label/label';
-import { removeLabelFromListOnShapeDelete, getCurrentlySelectedLabelShape } from '../labelList';
-import { removeShape, getNumberOfShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { removeTickSVGOverImageThumbnail, getAllImageData } from '../../imageList/imageList';
+} from '../../state.js';
+import { isLabelling, removeTargetShape } from '../../labellerModal/labellingProcess.js';
+import { hideLabellerModal } from '../../labellerModal/style.js';
+import assignDrawPolygonEvents from '../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers.js';
+import { removeLabel } from '../../../canvas/objects/label/label.js';
+import { removeLabelFromListOnShapeDelete, getCurrentlySelectedLabelShape } from '../labelList.js';
+import { removeShape, getNumberOfShapes } from '../../../canvas/objects/allShapes/allShapes.js';
+import { removeTickSVGOverImageThumbnail, getAllImageData } from '../../imageList/imageList.js';
 import {
   setRemovePointsButtonToDefault,
   setRemoveLabelsButtonToDisabled,
   setPolygonEditingButtonsToDisabled,
-} from '../../toolkit/styling/state';
+} from '../../toolkit/styling/state.js';
 
 let canvas = null;
 

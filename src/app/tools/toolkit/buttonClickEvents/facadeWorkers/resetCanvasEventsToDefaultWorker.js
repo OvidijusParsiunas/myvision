@@ -1,20 +1,20 @@
-import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode';
-import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
+import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers.js';
+import { setDefaultCursorModeAfterAlteringPolygonPoints, setDefaultCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/defaultMode.js';
+import assignDefaultEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers.js';
 import {
   setPolygonEditingButtonsToDefault, setEditShapesButtonToActive,
   setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault,
-} from '../../styling/state';
+} from '../../styling/state.js';
 import {
   getCrosshairUsedOnCanvasState, setAlteringPolygonPointsState,
   getDefaultState, getAddingPolygonPointsState, getLastDrawingModeState,
   setDefaultState, getAlteringPolygonPointsState, getContinuousDrawingState,
-} from '../../../state';
-import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
-import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers';
-import { getCurrentImage } from '../../../imageList/uploadImages/drawImageOnCanvas';
-import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
+} from '../../../state.js';
+import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers.js';
+import assignDrawPolygonEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawPolygonEventHandlers.js';
+import { getCurrentImage } from '../../../imageList/uploadImages/drawImageOnCanvas.js';
+import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
+import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut.js';
 
 function setNewState(canvas) {
   if (getContinuousDrawingState()) {

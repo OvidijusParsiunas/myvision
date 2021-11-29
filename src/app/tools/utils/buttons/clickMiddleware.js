@@ -1,5 +1,5 @@
-import { removeActiveButtonPopover } from '../../globalStyling/buttons/popovers';
-import isLeftMouseButtonClick from './clickEvents';
+import { removeActiveButtonPopover } from '../../globalStyling/buttons/popovers.js';
+import isLeftMouseButtonClick from './clickEvents.js';
 
 function removeButtonPopoverIfActive(func, event) {
   if (event && !isLeftMouseButtonClick(event)) return;

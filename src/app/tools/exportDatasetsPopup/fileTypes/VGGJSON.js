@@ -1,8 +1,8 @@
-import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
-import { getAllImageData } from '../../imageList/imageList';
-import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { getCurrentImageId } from '../../state';
-import { adjustIncorrectBoundingBoxCoordinates, adjustIncorrectPolygonPointCoordinates } from '../sharedUtils/adjustShapeCoordinates';
+import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas.js';
+import { getAllImageData } from '../../imageList/imageList.js';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes.js';
+import { getCurrentImageId } from '../../state.js';
+import { adjustIncorrectBoundingBoxCoordinates, adjustIncorrectPolygonPointCoordinates } from '../sharedUtils/adjustShapeCoordinates.js';
 
 function getJSONPolygonPointsCoordinates(polygon, imageDimensions) {
   const coordinatesObj = {

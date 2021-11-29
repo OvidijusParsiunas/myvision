@@ -1,5 +1,5 @@
-import { getAvailableFormats } from '../../state';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getAvailableFormats } from '../../state.js';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta.js';
 
 let descriptionElement = null;
 let cancelButtonElement = null;

@@ -1,14 +1,14 @@
-import initiateCreateNewBndBoxEvents from './facadeWorkers/createNewBndBoxWorker';
-import initiateCreateNewPolygonEvents from './facadeWorkers/createNewPolygonWorker';
-import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWorker';
-import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker';
-import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker';
-import toggleExportDatasetsPopup from './facadeWorkers/toggleExportDatasetsPopUpWorker';
-import displayMachineLearningModal from './facadeWorkers/displayMLModalWorker';
-import { zoomCanvas } from './facadeWorkers/zoomWorker';
-import toggleSettingsPopup from './facadeWorkers/toggleSettingsPopUpWorker';
-import initiateEditShapesEvent from './facadeWorkers/editShapesWorker';
-import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker';
+import initiateCreateNewBndBoxEvents from './facadeWorkers/createNewBndBoxWorker.js';
+import initiateCreateNewPolygonEvents from './facadeWorkers/createNewPolygonWorker.js';
+import initiateAddPolygonPointsEvents from './facadeWorkers/addPolygonPointsWorker.js';
+import initiateResetCanvasEventsToDefaultEvent from './facadeWorkers/resetCanvasEventsToDefaultWorker.js';
+import initiateRemovePolygonPointsEvents from './facadeWorkers/removePolygonPointsWorker.js';
+import toggleExportDatasetsPopup from './facadeWorkers/toggleExportDatasetsPopUpWorker.js';
+import displayMachineLearningModal from './facadeWorkers/displayMLModalWorker.js';
+import { zoomCanvas } from './facadeWorkers/zoomWorker.js';
+import toggleSettingsPopup from './facadeWorkers/toggleSettingsPopUpWorker.js';
+import initiateEditShapesEvent from './facadeWorkers/editShapesWorker.js';
+import displayUploadDatasetsModal from './facadeWorkers/displayUploadDatasetsModalWorker.js';
 
 let canvas = null;
 

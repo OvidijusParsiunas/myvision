@@ -1,4 +1,4 @@
-import { displayModal } from '../../../machineLearningModal/views/viewManager';
+import { displayModal } from '../../../machineLearningModal/views/viewManager.js';
 
 function displayMachineLearningModal() {
   displayModal();

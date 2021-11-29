@@ -1,5 +1,5 @@
-import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
+import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager.js';
+import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts.js';
 
 function isBoundingBox(segmentation, bbox) {
   if (segmentation.length === 8) {

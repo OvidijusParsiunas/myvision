@@ -1,4 +1,4 @@
-import { hideDescriptionViewAssets } from './style';
+import { hideDescriptionViewAssets } from './style.js';
 
 function moveToNextView(nextViewCallback) {
   hideDescriptionViewAssets();

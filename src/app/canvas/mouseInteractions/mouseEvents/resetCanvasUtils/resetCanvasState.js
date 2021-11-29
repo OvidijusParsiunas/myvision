@@ -1,18 +1,18 @@
 import {
   changePolygonPointsPropertiesToDefault, removePolygonPoints,
   cleanPolygonPointsArray, clearAllAddPointsData,
-} from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { resetNewPolygonData } from '../../../objects/polygon/polygon';
-import { clearBoundingBoxData, deselectBoundingBox } from '../../../objects/boundingBox/boundingBox';
-import { cancelLabellingProcess } from '../../../../tools/labellerModal/buttonEventHandlers';
-import { removeEditedPolygonId } from '../eventWorkers/defaultEventsWorker';
+} from '../../../objects/polygon/alterPolygon/alterPolygon.js';
+import { resetNewPolygonData } from '../../../objects/polygon/polygon.js';
+import { clearBoundingBoxData, deselectBoundingBox } from '../../../objects/boundingBox/boundingBox.js';
+import { cancelLabellingProcess } from '../../../../tools/labellerModal/buttonEventHandlers.js';
+import { removeEditedPolygonId } from '../eventWorkers/defaultEventsWorker.js';
 import {
   getAddingPolygonPointsState, getRemovingPolygonPointsState, getAlteringPolygonPointsState,
   setAlteringPolygonPointsState, setReadyToDrawShapeState, setCancelledReadyToDrawState,
   getReadyToDrawShapeState,
-} from '../../../../tools/state';
-import { removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
-import { setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
+} from '../../../../tools/state.js';
+import { removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils.js';
+import { setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state.js';
 
 function interruptCanvasEventsWithoutRemovingExistingPoints() {
   removeHighlightOfListLabel();

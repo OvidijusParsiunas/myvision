@@ -1,11 +1,11 @@
-import { changeMovaleObjectsSetting } from './options/movableObjects';
-import changeContinuousDrawingSetting from './options/continuousDrawing';
-import changeLabelsVisibilitySetting from './options/labelsVisibility';
-import { getBoundingBoxCrosshairDropdownOpenState } from '../state';
+import { changeMovaleObjectsSetting } from './options/movableObjects.js';
+import changeContinuousDrawingSetting from './options/continuousDrawing.js';
+import changeLabelsVisibilitySetting from './options/labelsVisibility.js';
+import { getBoundingBoxCrosshairDropdownOpenState } from '../state.js';
 import {
   hideBoundingBoxCrosshairDropdown as hideBoundingBoxCrosshairDropdownHandler,
   triggerBoundingBoxCrosshairDropdown,
-} from './options/boundingBoxCrosshairDropdown/style';
+} from './options/boundingBoxCrosshairDropdown/style.js';
 
 let canvas = null;
 

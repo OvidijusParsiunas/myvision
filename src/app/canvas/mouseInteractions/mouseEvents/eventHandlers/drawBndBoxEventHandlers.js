@@ -1,7 +1,7 @@
 import {
   prepareCanvasForNewBoundingBox, instantiateNewBoundingBox,
   drawBoundingBox, finishDrawingBoundingBox, shapeScrollEvents,
-} from '../../../objects/boundingBox/boundingBox';
+} from '../../../objects/boundingBox/boundingBox.js';
 
 function assignDrawBoundingBoxEvents(canvas) {
   prepareCanvasForNewBoundingBox(canvas);

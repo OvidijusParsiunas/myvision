@@ -1,6 +1,6 @@
-import { setBoundingBoxScalingState, getCurrentZoomState } from '../../../tools/state';
-import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
-import labelProperies from '../label/properties';
+import { setBoundingBoxScalingState, getCurrentZoomState } from '../../../tools/state.js';
+import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas.js';
+import labelProperies from '../label/properties.js';
 
 let originalBoundingBoxBottomCoordinate = 0;
 let originalBoundingBoxLeftCoordinate = 0;

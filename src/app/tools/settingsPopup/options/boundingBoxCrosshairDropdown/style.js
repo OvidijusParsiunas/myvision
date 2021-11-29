@@ -1,6 +1,6 @@
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
-import { getBoundingBoxCrosshairDropdownOpenState, setBoundingBoxCrosshairDropdownOpenState } from '../../../state';
-import { setStickyPopupProperties } from '../../../utils/popups/stickyPopup';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta.js';
+import { getBoundingBoxCrosshairDropdownOpenState, setBoundingBoxCrosshairDropdownOpenState } from '../../../state.js';
+import { setStickyPopupProperties } from '../../../utils/popups/stickyPopup.js';
 
 let boundingBoxCrosshairDropdownTriggerElement = null;
 let boundingBoxCrosshairDropdownElement = null;

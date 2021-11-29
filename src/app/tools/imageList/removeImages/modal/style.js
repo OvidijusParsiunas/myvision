@@ -1,8 +1,8 @@
-import { setRemoveImageModalDisplayedState, getCrosshairUsedOnCanvasState } from '../../../state';
-import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../../dimWindow/consts';
-import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { dimWindow, lightUpWindow } from '../../../dimWindow/dimWindowService';
-import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
+import { setRemoveImageModalDisplayedState, getCrosshairUsedOnCanvasState } from '../../../state.js';
+import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../../dimWindow/consts.js';
+import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
+import { dimWindow, lightUpWindow } from '../../../dimWindow/dimWindowService.js';
+import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut.js';
 
 let modalParentElement = null;
 

@@ -1,4 +1,4 @@
-import { DEFAULT_STROKE_WIDTH, DEFAULT_VERTICAL_DELTA, DEFAULT_HORIZONTAL_DELTA } from './consts';
+import { DEFAULT_STROKE_WIDTH, DEFAULT_VERTICAL_DELTA, DEFAULT_HORIZONTAL_DELTA } from './consts.js';
 
 const crosshairProps = {};
 

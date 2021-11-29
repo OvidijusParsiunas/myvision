@@ -1,5 +1,5 @@
-import { setResetCanvasEventsToDefaultFunc } from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasEventsFacade';
-import { resetCanvasEventsToDefault } from '../facade';
+import { setResetCanvasEventsToDefaultFunc } from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasEventsFacade.js';
+import { resetCanvasEventsToDefault } from '../facade.js';
 
 function assignResetCanvasEventsFuncToMouseEvents(canvas) {
   setResetCanvasEventsToDefaultFunc(resetCanvasEventsToDefault, canvas);

@@ -1,7 +1,7 @@
 import {
   getMachineLearningModalDisplayedState, getUploadDatasetsModalDisplayedState,
   getLabellerModalDisplayedState, getRemoveImageModalDisplayedState, getWelcomeModalDisplayedState,
-} from '../../state';
+} from '../../state.js';
 
 function isAnyModalOpen() {
   return getLabellerModalDisplayedState()

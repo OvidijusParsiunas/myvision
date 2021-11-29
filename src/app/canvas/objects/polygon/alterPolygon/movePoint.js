@@ -1,7 +1,7 @@
-import polygonProperties from '../properties';
-import { setPolygonLabelOffsetProps } from '../../label/label';
-import { generatePolygonAfterMove } from './resetCoordinatesAfterMove';
-import labelProperies from '../../label/properties';
+import polygonProperties from '../properties.js';
+import { setPolygonLabelOffsetProps } from '../../label/label.js';
+import { generatePolygonAfterMove } from './resetCoordinatesAfterMove.js';
+import labelProperies from '../../label/properties.js';
 
 function displayPolygonPointsAfterMoveImpl(canvasObj, polygonObj, polygonPoints) {
   return generatePolygonAfterMove(polygonObj, polygonPoints, canvasObj, polygonProperties);

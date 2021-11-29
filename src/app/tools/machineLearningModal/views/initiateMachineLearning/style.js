@@ -1,5 +1,5 @@
-import IS_FIREFOX from '../../../utils/browserType';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import IS_FIREFOX from '../../../utils/browserType.js';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta.js';
 
 let isNoImagesFoundInfoDisplayed = false;
 

@@ -1,32 +1,32 @@
-import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from './uploadImages/drawImageOnCanvas';
-import { updateCrosshairDimensionsAndHideAsync, moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes';
-import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label';
-import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
-import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { removeAllLabelListItems } from '../labelList/labelList';
-import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils';
-import labelProperties from '../../canvas/objects/label/properties';
-import { initialiseImageListML } from './imageListML';
-import { getCanvasReferences } from '../../canvas/utils/fabricUtils';
-import purgeCanvasMouseEvents from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers';
-import { updateImageNameElement } from '../imageSwitchPanel/style';
-import scrollIntoViewIfNeeded from '../utils/tableUtils';
-import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode';
-import { changeExistingImagesMovability } from '../settingsPopup/options/movableObjects';
-import { removeWatermarkFromCanvasAreaBackground } from '../../canvas/utils/watermark';
-import { initiateButtonPulseAnimation } from '../utils/buttons/pulseAnimation';
+import { drawImageFromList, getImageProperties, calculateCurrentImageHeightRatio } from './uploadImages/drawImageOnCanvas.js';
+import { updateCrosshairDimensionsAndHideAsync, moveCanvasCrosshairViaLastCanvasPositionAsync } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
+import { removeAllShapeRefs, retrieveAllShapeRefs } from '../../canvas/objects/allShapes/allShapes.js';
+import { retrieveAllLabelRefs, removeAllLabelRefs } from '../../canvas/objects/label/label.js';
+import { repopulateLabelAndShapeObjects } from '../../canvas/objects/allShapes/labelAndShapeBuilder.js';
+import { resetZoom, zoomOutObjectOnImageSelect } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker.js';
+import { removeAllLabelListItems } from '../labelList/labelList.js';
+import { switchCanvasContainerElements } from '../../canvas/utils/canvasUtils.js';
+import labelProperties from '../../canvas/objects/label/properties.js';
+import { initialiseImageListML } from './imageListML.js';
+import { getCanvasReferences } from '../../canvas/utils/fabricUtils.js';
+import purgeCanvasMouseEvents from '../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers.js';
+import assignDefaultEvents from '../../canvas/mouseInteractions/mouseEvents/eventHandlers/defaultEventHandlers.js';
+import { updateImageNameElement } from '../imageSwitchPanel/style.js';
+import scrollIntoViewIfNeeded from '../utils/tableUtils.js';
+import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode.js';
+import { changeExistingImagesMovability } from '../settingsPopup/options/movableObjects.js';
+import { removeWatermarkFromCanvasAreaBackground } from '../../canvas/utils/watermark.js';
+import { initiateButtonPulseAnimation } from '../utils/buttons/pulseAnimation.js';
 import {
   setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
   setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault, setEditShapesButtonToActive,
   setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
-} from '../toolkit/styling/state';
+} from '../toolkit/styling/state.js';
 import {
   getDefaultState, setCurrentImageId, getContinuousDrawingState,
   setHasMachineLearningButtonBeenHighligtedState, getCrosshairUsedOnCanvasState,
   getHasMachineLearningButtonBeenHighligtedState, getLastDrawingModeState,
-} from '../state';
+} from '../state.js';
 
 let currentlyActiveElement = null;
 let imageContainerElement = null;

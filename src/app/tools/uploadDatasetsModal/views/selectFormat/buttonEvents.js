@@ -1,5 +1,5 @@
-import { hideSelectFormatViewAssets, selectFormat } from './style';
-import { setFormatState } from '../../state';
+import { hideSelectFormatViewAssets, selectFormat } from './style.js';
+import { setFormatState } from '../../state.js';
 
 function moveToNextView(nextViewCallback) {
   hideSelectFormatViewAssets();

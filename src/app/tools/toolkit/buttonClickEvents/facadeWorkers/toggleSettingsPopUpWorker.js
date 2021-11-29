@@ -1,5 +1,5 @@
-import { getSettingsPopupOpenState } from '../../../state';
-import { displaySettingsPopup, hideSettingsPopup } from '../../../settingsPopup/style';
+import { getSettingsPopupOpenState } from '../../../state.js';
+import { displaySettingsPopup, hideSettingsPopup } from '../../../settingsPopup/style.js';
 
 function toggleSettingsPopup() {
   if (!getSettingsPopupOpenState()) {

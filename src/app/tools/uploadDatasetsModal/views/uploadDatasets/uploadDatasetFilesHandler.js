@@ -1,6 +1,6 @@
-import { IMAGE_FILE_INDICATOR } from '../../consts';
-import { getAcceptedFileFormat } from './style';
-import parseFile from './fileParser';
+import { IMAGE_FILE_INDICATOR } from '../../consts.js';
+import { getAcceptedFileFormat } from './style.js';
+import parseFile from './fileParser.js';
 
 let addFileFunc = null;
 let tableUpdaterFunc = null;

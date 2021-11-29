@@ -2,10 +2,10 @@ import {
   pointMouseUpEvents, pointMouseOutEvents,
   pointMouseDownEvents, pointMouseOverEvents,
   setRemovablePointsEventsCanvas, pointMouseMoveEvents,
-} from '../eventWorkers/removePointsOnNewPolygonEventsWorker';
+} from '../eventWorkers/removePointsOnNewPolygonEventsWorker.js';
 import {
   getTempPolygon,
-} from '../../../objects/polygon/polygon';
+} from '../../../objects/polygon/polygon.js';
 
 function assignRemovePointsOnDrawPolygonEvents(canvas) {
   setRemovablePointsEventsCanvas(canvas, getTempPolygon());

@@ -1,12 +1,12 @@
-import { getScrollbarWidth } from '../../../globalStyling/style';
-import scrollIntoViewIfNeeded from '../../../utils/tableUtils';
+import { getScrollbarWidth } from '../../../globalStyling/style.js';
+import scrollIntoViewIfNeeded from '../../../utils/tableUtils.js';
 import {
   getCaretPositionOnDiv, emptyContentEditableFirefoxBugFix,
   isVerticalScrollPresent, getDefaultFont, setCaretPositionOnDiv,
-} from '../../../utils/elementCaretUtils';
-import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
-import IS_FIREFOX from '../../../utils/browserType';
+} from '../../../utils/elementCaretUtils.js';
+import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils.js';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta.js';
+import IS_FIREFOX from '../../../utils/browserType.js';
 
 let editingActive = false;
 let activeTextRow = null;

@@ -3,7 +3,7 @@ import {
   instantiatePolygon, prepareCanvasForNewPolygon,
   placeholderToAddMouseDownEvents, shapeScrollEvents,
   drawPolygon, movePoints, resumeDrawingAfterRemovePoints,
-} from '../../../objects/polygon/polygon';
+} from '../../../objects/polygon/polygon.js';
 
 // should be moved to event worker
 function assignDrawPolygonEvents(canvas, resume) {

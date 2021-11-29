@@ -1,9 +1,9 @@
-import fabric from 'fabric';
-import polygonProperties from '../properties';
+// import fabric from 'fabric.js';
+import polygonProperties from '../properties.js';
 import {
   prepareObjectsForEditablePolygonPoints, setObjectPropertiesToDefault,
-} from '../../objectsProperties/changeProperties';
-import { getDefaultState, getAddingPolygonPointsState } from '../../../../tools/state';
+} from '../../objectsProperties/changeProperties.js';
+import { getDefaultState, getAddingPolygonPointsState } from '../../../../tools/state.js';
 
 function displayPolygonPointsWithStyleImpl(canvas, polygon, polygonPointsProps) {
   let pointId = 0;

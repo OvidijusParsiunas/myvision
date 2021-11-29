@@ -1,4 +1,4 @@
-import scrollIntoViewIfNeeded from '../utils/tableUtils';
+import scrollIntoViewIfNeeded from '../utils/tableUtils.js';
 
 let labelListElement = null;
 let currentlyHighlightedElement = null;

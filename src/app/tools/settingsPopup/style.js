@@ -1,6 +1,6 @@
-import { setSettingsPopupOpenState } from '../state';
-import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup';
-import { hideBoundingBoxCrosshairDropdown } from './options/boundingBoxCrosshairDropdown/style';
+import { setSettingsPopupOpenState } from '../state.js';
+import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup.js';
+import { hideBoundingBoxCrosshairDropdown } from './options/boundingBoxCrosshairDropdown/style.js';
 
 let settingsPopupElement = null;
 let settingsToolkitButtonElement = null;

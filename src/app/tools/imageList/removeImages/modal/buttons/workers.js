@@ -1,5 +1,5 @@
-import { closeRemoveImagesModal } from '../style';
-import { setDoNotShowRemoveImageModalAgainState, getDoNotShowRemoveImageModalAgainState } from '../state';
+import { closeRemoveImagesModal } from '../style.js';
+import { setDoNotShowRemoveImageModalAgainState, getDoNotShowRemoveImageModalAgainState } from '../state.js';
 
 function removeImage() {
   this.removeImageCallback();

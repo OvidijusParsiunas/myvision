@@ -1,46 +1,46 @@
-import { changeLabelText, changeLabelVisibilityById, changeVisibilityButtonActiveFlagById } from '../../canvas/objects/label/label';
+import { changeLabelText, changeLabelVisibilityById, changeVisibilityButtonActiveFlagById } from '../../canvas/objects/label/label.js';
 import {
   getShapeById, changeShapeVisibilityById, getShapeVisibilityById,
   highlightShapeFill, defaultShapeFill, changeShapeColorById, changeShapeLabelText,
-} from '../../canvas/objects/allShapes/allShapes';
-import { removePolygonPoints, isAddingPointsToPolygon } from '../../canvas/objects/polygon/alterPolygon/alterPolygon';
+} from '../../canvas/objects/allShapes/allShapes.js';
+import { removePolygonPoints, isAddingPointsToPolygon } from '../../canvas/objects/polygon/alterPolygon/alterPolygon.js';
 import {
   setNewShapeSelectedViaLabelListState, getAddingPolygonPointsState,
   getRemovingPolygonPointsState, setEditingLabelId, getLabelsVisibilityState,
   getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
-} from '../state';
-import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../toolkit/styling/state';
+} from '../state.js';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../toolkit/styling/state.js';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,
-} from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/defaultEventsWorker';
-import { pointMouseDownEvents, pointMouseUpEvents, setPolygonNotEditableOnClick } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker';
-import { pointMouseDownEvents as addPointsMouseDownEvents, pointMouseUpEvents as addPointsMouseUpEvents, setPolygonNotEditableOnClick as addPointsPolygonNotEditable } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker';
+} from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/defaultEventsWorker.js';
+import { pointMouseDownEvents, pointMouseUpEvents, setPolygonNotEditableOnClick } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/removePointsEventsWorker.js';
+import { pointMouseDownEvents as addPointsMouseDownEvents, pointMouseUpEvents as addPointsMouseUpEvents, setPolygonNotEditableOnClick as addPointsPolygonNotEditable } from '../../canvas/mouseInteractions/mouseEvents/eventWorkers/addPointsEventsWorker.js';
 import {
   setLabelListElementForHighlights, getCurrentlyHighlightedElement,
   removeHighlightOfListLabel, highlightLabelInTheList, changeLabelColor,
-} from './labelListHighlightUtils';
+} from './labelListHighlightUtils.js';
 import {
   addToLabelOptions, sendLabelOptionToFront, getLabelOptions, getLabelColor,
-} from './labelOptions';
+} from './labelOptions.js';
 import {
   dimActiveIcon, dimDefaultIcon, switchToActiveIcon, switchToDefaultIcon,
   highlightActiveIcon, highlightDefaultIcon, switchToHighlightedActiveIcon,
   switchToHighlightedDefaultIcon, switchToHighlightedDefaultVisibilityIcon,
-} from './iconHighlightUtils';
-import IS_FIREFOX from '../utils/browserType';
-import { resetLabellerModalOptions } from '../labellerModal/style';
-import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
-import { getScrollbarWidth } from '../globalStyling/style';
-import scrollIntoViewIfNeeded from '../utils/tableUtils';
+} from './iconHighlightUtils.js';
+import IS_FIREFOX from '../utils/browserType.js';
+import { resetLabellerModalOptions } from '../labellerModal/style.js';
+import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML.js';
+import { getScrollbarWidth } from '../globalStyling/style.js';
+import scrollIntoViewIfNeeded from '../utils/tableUtils.js';
 import {
   isVerticalScrollPresent, emptyContentEditableFirefoxBugFix,
   setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont,
-} from '../utils/elementCaretUtils';
-import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
-import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
-import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
-import { setDoNotDisplayButtonAfterTimeoutStateToFalse } from '../globalStyling/buttons/popovers';
+} from '../utils/elementCaretUtils.js';
+import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils.js';
+import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta.js';
+import { getKeyDownEventTimeout } from '../globalStyling/timeouts.js';
+import { setDoNotDisplayButtonAfterTimeoutStateToFalse } from '../globalStyling/buttons/popovers.js';
 
 let isEditingLabel = false;
 let keyDownEventTimeOut = 0;

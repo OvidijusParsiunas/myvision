@@ -1,5 +1,5 @@
-import { initialiseExportDatasetsPopupStyling } from './style';
-import assignExportDatasetsPopupButtonEventHandlers from './buttonClickEvents';
+import { initialiseExportDatasetsPopupStyling } from './style.js';
+import assignExportDatasetsPopupButtonEventHandlers from './buttonClickEvents.js';
 
 function initialiseExportDatasetsPopup() {
   initialiseExportDatasetsPopupStyling();

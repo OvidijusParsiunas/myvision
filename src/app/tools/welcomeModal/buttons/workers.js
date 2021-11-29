@@ -1,5 +1,5 @@
-import { closeWelcomeModal as closeWelcomeModalStyle } from '../style';
-import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark';
+import { closeWelcomeModal as closeWelcomeModalStyle } from '../style.js';
+import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark.js';
 
 function closeWelcomeModal() {
   closeWelcomeModalStyle();

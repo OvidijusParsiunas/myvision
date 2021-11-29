@@ -1,6 +1,6 @@
-import fabric from 'fabric';
-import { setPolygonLabelOffsetProps } from '../../label/label';
-import { removeShape, addShape, getShapeColorById } from '../../allShapes/allShapes';
+// import fabric from 'fabric.js';
+import { setPolygonLabelOffsetProps } from '../../label/label.js';
+import { removeShape, addShape, getShapeColorById } from '../../allShapes/allShapes.js';
 
 let currentPolygon = null;
 let polygonPoints = [];

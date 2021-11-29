@@ -1,5 +1,5 @@
-import { getSessionDirtyState, setSessionDirtyState } from '../state';
-import { initiateButtonPulseAnimation } from '../utils/buttons/pulseAnimation';
+import { getSessionDirtyState, setSessionDirtyState } from '../state.js';
+import { initiateButtonPulseAnimation } from '../utils/buttons/pulseAnimation.js';
 
 function highlightExportDatasetsButton() {
   const beginAnimationImmediately = false;

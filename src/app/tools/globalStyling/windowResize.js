@@ -1,16 +1,16 @@
-import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageList/uploadImages/drawImageOnCanvas';
-import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/objectsProperties/changeProperties';
-import labelProperies from '../../canvas/objects/label/properties';
-import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
+import { resizeCanvasAndImage, resizeCanvas, getCurrentImage } from '../imageList/uploadImages/drawImageOnCanvas.js';
+import { resizeAllObjectsDimensionsByDoubleScale } from '../../canvas/objects/objectsProperties/changeProperties.js';
+import labelProperies from '../../canvas/objects/label/properties.js';
+import { zoomCanvas } from '../toolkit/buttonClickEvents/facadeWorkers/zoomWorker.js';
 import {
   getSettingsPopupOpenState, getExportDatasetsPopupOpenState,
   getCurrentZoomState, getBoundingBoxCrosshairDropdownOpenState,
-} from '../state';
-import { validateFullLabellerModalVisibile } from '../labellerModal/style';
-import { setStickySettingsPopupProperties } from '../settingsPopup/style';
-import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style';
-import validateClientBrowserDimensions from './inadequateResourcesOverlay';
-import { setStickyBoundingBoxCrosshairDropdownProperties } from '../settingsPopup/options/boundingBoxCrosshairDropdown/style';
+} from '../state.js';
+import { validateFullLabellerModalVisibile } from '../labellerModal/style.js';
+import { setStickySettingsPopupProperties } from '../settingsPopup/style.js';
+import { setStickyExportDatasetsPopupProperties } from '../exportDatasetsPopup/style.js';
+import validateClientBrowserDimensions from './inadequateResourcesOverlay.js';
+import { setStickyBoundingBoxCrosshairDropdownProperties } from '../settingsPopup/options/boundingBoxCrosshairDropdown/style.js';
 
 let canvas = null;
 

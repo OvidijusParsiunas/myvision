@@ -1,6 +1,6 @@
-import { addSingleImageToList, addImageFromMultiUploadToList } from '../imageList';
-import { onImageLoad } from './drawImageOnCanvas';
-import { removeNoImagesFoundOnMLModalStyle } from '../../machineLearningModal/views/initiateMachineLearning/style';
+import { addSingleImageToList, addImageFromMultiUploadToList } from '../imageList.js';
+import { onImageLoad } from './drawImageOnCanvas.js';
+import { removeNoImagesFoundOnMLModalStyle } from '../../machineLearningModal/views/initiateMachineLearning/style.js';
 
 // potential to undo and validate in the drag and drop logic,
 // depending on what is being used for upload datasets

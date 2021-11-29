@@ -1,58 +1,58 @@
-import registerDescriptionViewButtonEventHandlers from './description/buttonEvents';
-import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescriptionViewAssets } from './description/style';
-import registerSelectFormatViewButtonEventHandlers from './selectFormat/buttonEvents';
-import { assignSelectFormatViewLocalVariables, prepareSelectFormatView, hideSelectFormatViewAssets } from './selectFormat/style';
-import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents';
-import { assignUseExistingImagesQstnViewLocalVariables, prepareUseExistingImagesQstnView, hideUseExistingImagesViewAssets } from './useExistingImagesQstn/style';
-import registerUseExistingImagesQstnViewButtonEventHandlers from './useExistingImagesQstn/buttonEvents';
-import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style';
-import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService';
-import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts';
-import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdater';
-import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdater';
-import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdater';
-import updateYOLOTXTTables from './uploadDatasets/tableUpdaters/YOLOTXTTableUpdater';
-import updateCSVTables from './uploadDatasets/tableUpdaters/CSVTableUpdater';
-import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator';
-import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator';
-import validateCSVFormat from './uploadDatasets/formatValidators/CSVValidator';
-import validateVOCXMLFormat from './uploadDatasets/formatValidators/VOCXMLValidator';
-import validateYOLOTXTFormat from './uploadDatasets/formatValidators/YOLOTXTValidator';
-import removeCOCOJSONFileHandler from './uploadDatasets/removeFileHandlers/COCOJSONRemoveFileHandler';
-import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSONRemoveFileHandler';
-import removeCSVFileHandler from './uploadDatasets/removeFileHandlers/CSVRemoveFileHandler';
-import removeYOLOTXTFileHandler from './uploadDatasets/removeFileHandlers/YOLOTXTRemoveFileHandler';
-import removeVOCXMLFileHandler from './uploadDatasets/removeFileHandlers/VOCXMLRemoveFileHandler';
-import COCOJSONObjectDatasetManager from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager';
-import VGGJSONObjectDatasetManager from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager';
-import CSVObjectDatasetManager from './uploadDatasets/datasetObjectManagers/CSVDatasetObjectManager';
-import VOCXMLObjectDatasetManager from './uploadDatasets/datasetObjectManagers/VOCXMLDatasetObjectManager';
-import YOLOTXTObjectDatasetManager from './uploadDatasets/datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import registerDescriptionViewButtonEventHandlers from './description/buttonEvents.js';
+import { assignDescriptionViewLocalVariables, prepareDescriptionView, hideDescriptionViewAssets } from './description/style.js';
+import registerSelectFormatViewButtonEventHandlers from './selectFormat/buttonEvents.js';
+import { assignSelectFormatViewLocalVariables, prepareSelectFormatView, hideSelectFormatViewAssets } from './selectFormat/style.js';
+import registerUploadDatasetsViewButtonEventHandlers from './uploadDatasets/buttonEvents.js';
+import { assignUseExistingImagesQstnViewLocalVariables, prepareUseExistingImagesQstnView, hideUseExistingImagesViewAssets } from './useExistingImagesQstn/style.js';
+import registerUseExistingImagesQstnViewButtonEventHandlers from './useExistingImagesQstn/buttonEvents.js';
+import { assignUploadDatasetsViewLocalVariables, prepareUploadDatasetsView, hideUploadDatasetsViewAssets } from './uploadDatasets/style.js';
+import { dimWindow, lightUpWindow } from '../../dimWindow/dimWindowService.js';
+import { SLOW_LIGHTUP_MILLISECONDS, SLOW_DIM_SECONDS, THICK_DIM } from '../../dimWindow/consts.js';
+import updateCOCOJSONTables from './uploadDatasets/tableUpdaters/COCOJSONTableUpdater.js';
+import updateVGGJSONTables from './uploadDatasets/tableUpdaters/VGGJSONTableUpdater.js';
+import updateVOCXMLTables from './uploadDatasets/tableUpdaters/VOCXMLTableUpdater.js';
+import updateYOLOTXTTables from './uploadDatasets/tableUpdaters/YOLOTXTTableUpdater.js';
+import updateCSVTables from './uploadDatasets/tableUpdaters/CSVTableUpdater.js';
+import validateCOCOJSONFormat from './uploadDatasets/formatValidators/COCOJSONValidator.js';
+import validateVGGJSONFormat from './uploadDatasets/formatValidators/VGGJSONValidator.js';
+import validateCSVFormat from './uploadDatasets/formatValidators/CSVValidator.js';
+import validateVOCXMLFormat from './uploadDatasets/formatValidators/VOCXMLValidator.js';
+import validateYOLOTXTFormat from './uploadDatasets/formatValidators/YOLOTXTValidator.js';
+import removeCOCOJSONFileHandler from './uploadDatasets/removeFileHandlers/COCOJSONRemoveFileHandler.js';
+import removeVGGJSONFileHandler from './uploadDatasets/removeFileHandlers/VGGJSONRemoveFileHandler.js';
+import removeCSVFileHandler from './uploadDatasets/removeFileHandlers/CSVRemoveFileHandler.js';
+import removeYOLOTXTFileHandler from './uploadDatasets/removeFileHandlers/YOLOTXTRemoveFileHandler.js';
+import removeVOCXMLFileHandler from './uploadDatasets/removeFileHandlers/VOCXMLRemoveFileHandler.js';
+import COCOJSONObjectDatasetManager from './uploadDatasets/datasetObjectManagers/COCOJSONDatasetObjectManager.js';
+import VGGJSONObjectDatasetManager from './uploadDatasets/datasetObjectManagers/VGGJSONDatasetObjectManager.js';
+import CSVObjectDatasetManager from './uploadDatasets/datasetObjectManagers/CSVDatasetObjectManager.js';
+import VOCXMLObjectDatasetManager from './uploadDatasets/datasetObjectManagers/VOCXMLDatasetObjectManager.js';
+import YOLOTXTObjectDatasetManager from './uploadDatasets/datasetObjectManagers/YOLOTXTDatasetObjectManager.js';
 import {
   setTableUpdater, setFormatValidator, setAddFile, addAlreadyUploadedImages,
-} from './uploadDatasets/uploadDatasetFilesHandler';
-import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler';
-import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler';
-import assembleFinalObjectFromCSV from './uploadDatasets/finalObjectAssemblers/CSVFinalObjectAssembler';
-import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssemblers/VOCXMLFinalObjectAssembler';
-import assembleFinalObjectFromYOLOTXT from './uploadDatasets/finalObjectAssemblers/YOLOTXTFinalObjectAssembler';
-import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages';
-import { getAllImageData } from '../../imageList/imageList';
+} from './uploadDatasets/uploadDatasetFilesHandler.js';
+import assembleFinalObjectFromCOCOJSON from './uploadDatasets/finalObjectAssemblers/COCOJSONFinalObjectAssembler.js';
+import assembleFinalObjectFromVGGJSON from './uploadDatasets/finalObjectAssemblers/VGGJSONFinalObjectAssembler.js';
+import assembleFinalObjectFromCSV from './uploadDatasets/finalObjectAssemblers/CSVFinalObjectAssembler.js';
+import assembleFinalObjectFromVOCXML from './uploadDatasets/finalObjectAssemblers/VOCXMLFinalObjectAssembler.js';
+import assembleFinalObjectFromYOLOTXT from './uploadDatasets/finalObjectAssemblers/YOLOTXTFinalObjectAssembler.js';
+import { setFinalObjectAssembler } from './uploadDatasets/drawShapesAndImages.js';
+import { getAllImageData } from '../../imageList/imageList.js';
 import {
   JSON_POSTFIX, CSV_POSTFIX, XML_POSTFIX, TXT_POSTFIX,
   ACCEPT_JSON_AND_IMG_FILES, ACCEPT_CSV_AND_IMG_FILES,
   ACCEPT_XML_AND_IMG_FILES, ACCEPT_TXT_AND_IMG_FILES,
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, YOLO_TXT_FORMAT,
   COCO_JSON_FORMAT, VGG_JSON_FORMAT, CSV_FORMAT, VOC_XML_FORMAT,
-} from '../consts';
+} from '../consts.js';
 import {
   getContinuousDrawingState, getLastDrawingModeState,
   setUploadDatasetsModalDisplayedState, getCrosshairUsedOnCanvasState,
-} from '../../state';
-import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/state';
-import { getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState } from '../state';
-import { moveCrosshair } from '../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { executeFunctionOnceOnMouseOver } from '../../../keyEvents/mouse/mouseOverOut';
+} from '../../state.js';
+import { setCreatePolygonButtonToActive, setCreateBoundingBoxButtonToActive } from '../../toolkit/styling/state.js';
+import { getFormatState, setReuseAlreadyUploadedImagesState, getReuseAlreadyUploadedImagesState } from '../state.js';
+import { moveCrosshair } from '../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
+import { executeFunctionOnceOnMouseOver } from '../../../keyEvents/mouse/mouseOverOut.js';
 
 let currentViewNumber = 1;
 let modalElement = null;

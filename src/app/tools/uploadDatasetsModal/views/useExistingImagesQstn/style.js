@@ -1,4 +1,4 @@
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta.js';
 
 let yesButtonElement = null;
 let noButtonElement = null;

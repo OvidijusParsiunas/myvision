@@ -1,7 +1,7 @@
-import { getCrosshairForBoundingBoxVisibleState, setCrosshairForBoundingBoxVisibleState, setCrosshairUsedOnCanvasState } from '../../../state';
-import { getCreateBoundingBoxButtonState } from '../../../toolkit/styling/state';
-import { setDrawCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/drawMode';
-import { setDrawWithCrosshairMode, removeCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
+import { getCrosshairForBoundingBoxVisibleState, setCrosshairForBoundingBoxVisibleState, setCrosshairUsedOnCanvasState } from '../../../state.js';
+import { getCreateBoundingBoxButtonState } from '../../../toolkit/styling/state.js';
+import { setDrawCursorMode } from '../../../../canvas/mouseInteractions/cursorModes/drawMode.js';
+import { setDrawWithCrosshairMode, removeCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
 
 let canvas = null;
 

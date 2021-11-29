@@ -1,4 +1,4 @@
-import { getMovableObjectsState } from '../../../tools/state';
+import { getMovableObjectsState } from '../../../tools/state.js';
 
 function setAllObjectsToUneditable(canvas) {
   canvas.forEachObject((iteratedObj) => {

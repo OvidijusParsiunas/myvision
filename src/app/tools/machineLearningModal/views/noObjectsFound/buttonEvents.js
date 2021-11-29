@@ -1,5 +1,5 @@
-import { hideNoObjectsFoundViewAssets } from './style';
-import { resetCursor } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { hideNoObjectsFoundViewAssets } from './style.js';
+import { resetCursor } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates.js';
 
 function closeModal(closeModalCallback) {
   resetCursor();

@@ -1,11 +1,11 @@
 import {
   setAddingPolygonPointsState, setDefaultState,
-} from '../../../../tools/state';
-import { resetAddPoints } from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../cursorModes/defaultMode';
-import assignDefaultEvents from '../eventHandlers/defaultEventHandlers';
-import purgeCanvasMouseEvents from './purgeAllMouseHandlers';
-import { setAddPointsButtonToDefault, setEditShapesButtonToActive } from '../../../../tools/toolkit/styling/state';
+} from '../../../../tools/state.js';
+import { resetAddPoints } from '../../../objects/polygon/alterPolygon/alterPolygon.js';
+import { setDefaultCursorModeAfterAlteringPolygonPoints } from '../../cursorModes/defaultMode.js';
+import assignDefaultEvents from '../eventHandlers/defaultEventHandlers.js';
+import purgeCanvasMouseEvents from './purgeAllMouseHandlers.js';
+import { setAddPointsButtonToDefault, setEditShapesButtonToActive } from '../../../../tools/toolkit/styling/state.js';
 
 let canvas = null;
 

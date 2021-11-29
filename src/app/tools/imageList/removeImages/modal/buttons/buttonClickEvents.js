@@ -1,4 +1,4 @@
-import { removeImage, cancelRemoveImage, toggleDoNotShowRemoveImageModalAgain } from './workers';
+import { removeImage, cancelRemoveImage, toggleDoNotShowRemoveImageModalAgain } from './workers.js';
 
 function assignRemoveImagesModalButtonEventHandlers(removeImageCallback) {
   window.approveRemoveImage = removeImage.bind({ removeImageCallback });

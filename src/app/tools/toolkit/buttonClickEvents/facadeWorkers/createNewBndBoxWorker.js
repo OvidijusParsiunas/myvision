@@ -1,15 +1,15 @@
-import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
+import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers.js';
+import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers.js';
 import {
   setPolygonEditingButtonsToDefault, setEditShapesButtonToDefault,
   setCreateBoundingBoxButtonToActive,
-} from '../../styling/state';
+} from '../../styling/state.js';
 import {
   setAlteringPolygonPointsState, setLastDrawingModeState, setDefaultState,
   setHasDrawnShapeState, getCrosshairUsedOnCanvasState,
-} from '../../../state';
-import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
+} from '../../../state.js';
+import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
+import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut.js';
 
 function initiateCreateNewBndBoxEvents(canvas) {
   // cancel drawing polygon

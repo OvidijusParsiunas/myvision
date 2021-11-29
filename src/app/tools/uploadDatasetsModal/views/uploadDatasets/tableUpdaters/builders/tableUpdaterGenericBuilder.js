@@ -1,12 +1,12 @@
 import {
   VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT, IMAGE_FILE_INDICATOR,
   ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, ACTIVE_ANNOTATION_FILE, ANNOTATION_FILE_INDICATOR,
-} from '../../../../consts';
+} from '../../../../consts.js';
 import {
   insertRowToImagesTable, enableFinishButton,
   disableFinishButton, changeAllImagesTableRowsToDefault,
   insertRowToAnnotationsTable, changeAnnotationRowToDefault,
-} from '../../style';
+} from '../../style.js';
 
 function validateExistingImagesWhenMultipleAnnotationFilesAllowed(datasetObject,
   updateImageFileErrorStatusFunc, validateFileFunc) {

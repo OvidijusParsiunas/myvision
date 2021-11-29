@@ -1,8 +1,8 @@
-import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
-import { interruptAllCanvasEvents } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
-import { removeActiveButtonPopover } from '../../globalStyling/buttons/popovers';
-import { canSwitchImage } from '../imageList';
-import isLeftMouseButtonClick from '../../utils/buttons/clickEvents';
+import { reassignReferenceToNewCanvas } from '../../../canvas/canvas.js';
+import { interruptAllCanvasEvents } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState.js';
+import { removeActiveButtonPopover } from '../../globalStyling/buttons/popovers.js';
+import { canSwitchImage } from '../imageList.js';
+import isLeftMouseButtonClick from '../../utils/buttons/clickEvents.js';
 
 function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) {
   removeActiveButtonPopover();

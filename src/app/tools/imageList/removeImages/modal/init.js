@@ -1,6 +1,6 @@
-import { initialiseRemoveImagesModalStyling } from './style';
-import assignRemoveImagesModalButtonEventHandlers from './buttons/buttonClickEvents';
-import { removeImage } from '../removeImages';
+import { initialiseRemoveImagesModalStyling } from './style.js';
+import assignRemoveImagesModalButtonEventHandlers from './buttons/buttonClickEvents.js';
+import { removeImage } from '../removeImages.js';
 
 function initialiseRemoveImagesModal() {
   initialiseRemoveImagesModalStyling();

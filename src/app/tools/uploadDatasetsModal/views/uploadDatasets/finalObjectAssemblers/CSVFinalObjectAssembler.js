@@ -1,5 +1,5 @@
-import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
-import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
+import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager.js';
+import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts.js';
 
 function addNewShapeToArray(annotationData, imageName, shapes) {
   const shapeObj = { type: null, coordinates: {}, imageName };

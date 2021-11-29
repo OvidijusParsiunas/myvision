@@ -1,9 +1,9 @@
-import fabric from 'fabric';
-import crosshairProps from '../../objects/crosshair/properties';
-import { getIsMouseOnCanvasStatus, executeFunctionOnceOnMouseOver, executeFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
-import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
-import { getCurrentZoomState } from '../../../tools/state';
-import { getCurrentCanvasContainerElement } from '../../utils/canvasUtils';
+// import fabric from 'fabric.js';
+import crosshairProps from '../../objects/crosshair/properties.js';
+import { getIsMouseOnCanvasStatus, executeFunctionOnceOnMouseOver, executeFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut.js';
+import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove.js';
+import { getCurrentZoomState } from '../../../tools/state.js';
+import { getCurrentCanvasContainerElement } from '../../utils/canvasUtils.js';
 
 let canvasRef = null;
 let canvasCrosshairLineX = null;

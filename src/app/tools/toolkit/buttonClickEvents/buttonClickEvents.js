@@ -1,15 +1,15 @@
-import { removeButtonPopoverIfActive, doNothingIfNotLeftMouseButtonPressWthArg } from '../../utils/buttons/clickMiddleware';
+import { removeButtonPopoverIfActive, doNothingIfNotLeftMouseButtonPressWthArg } from '../../utils/buttons/clickMiddleware.js';
 import {
   removePolygonPointBtnClick, createNewPolygonBtnClick,
   zoomBtnClick, machineLearningBtnClick, uploadDatasetsBtnClick,
   resetCanvasEventsToDefault, editShapesBtnClick, settingsBtnClick,
   addPointsBtnClick, createNewBndBoxBtnClick, exportDatasetsBtnClick,
-} from './facade';
+} from './facade.js';
 import {
   func1IfDrawRemovePointsElseInterruptAllWthFunc2,
   doNothingIfLabellingOrAddingNewPoints, interruptAllCanvasEventsBeforeFunc,
   interruptAllCanvasEventsBeforeMultipleFunc, doNothingIfLabellingInProgress,
-} from './eventMiddleware/buttonEventMiddleware';
+} from './eventMiddleware/buttonEventMiddleware.js';
 
 function assignToolkitButtonClickEventHandlers() {
   window.editShapes = doNothingIfLabellingInProgress.bind(this, editShapesBtnClick);

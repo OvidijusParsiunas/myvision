@@ -1,13 +1,13 @@
-import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
-import { getAllImageData } from '../../imageList/imageList';
-import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { getLabelOptions } from '../../labelList/labelOptions';
-import { getCurrentImageId } from '../../state';
+import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas.js';
+import { getAllImageData } from '../../imageList/imageList.js';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes.js';
+import { getLabelOptions } from '../../labelList/labelOptions.js';
+import { getCurrentImageId } from '../../state.js';
 import {
   roundNumberToDecimalPlaces,
   adjustIncorrectBoundingBoxCoordinates,
   adjustIncorrectPolygonPointCoordinates,
-} from '../sharedUtils/adjustShapeCoordinates';
+} from '../sharedUtils/adjustShapeCoordinates.js';
 
 const decimalPlaces = 2;
 

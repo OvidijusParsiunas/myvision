@@ -1,6 +1,6 @@
 import {
   COCO_JSON_FORMAT, VGG_JSON_FORMAT, CSV_FORMAT, VOC_XML_FORMAT, YOLO_TXT_FORMAT,
-} from './consts';
+} from './consts.js';
 
 const availableFormats = [
   COCO_JSON_FORMAT,

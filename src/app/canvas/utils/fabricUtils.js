@@ -1,4 +1,4 @@
-import fabric from 'fabric';
+// import fabric from 'fabric.js';
 
 let canvas1 = null;
 let canvas2 = null;

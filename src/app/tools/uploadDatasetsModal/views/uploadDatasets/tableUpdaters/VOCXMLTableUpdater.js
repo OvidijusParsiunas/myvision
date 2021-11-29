@@ -1,6 +1,6 @@
-import TableUpdaterHandlerBuilder from './builders/tableUpdaterGenericBuilder';
-import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
-import validateFormat from '../formatValidators/VOCXMLValidator';
+import TableUpdaterHandlerBuilder from './builders/tableUpdaterGenericBuilder.js';
+import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager.js';
+import validateFormat from '../formatValidators/VOCXMLValidator.js';
 
 const tableUpdater = TableUpdaterHandlerBuilder
   .buildTableUpdaterForMultipleAnnotationFilesStrategy(datasetObjectManager, validateFormat);

@@ -1,8 +1,8 @@
-import { drawShapesViaCoordinates } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { addImageFromMultiUploadToList } from '../../../imageList/imageList';
-import { removeNoImagesFoundOnMLModalStyle } from '../../../machineLearningModal/views/initiateMachineLearning/style';
-import { onImageLoad } from '../../../imageList/uploadImages/drawImageOnCanvas';
-import { getReuseAlreadyUploadedImagesState } from '../../state';
+import { drawShapesViaCoordinates } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates.js';
+import { addImageFromMultiUploadToList } from '../../../imageList/imageList.js';
+import { removeNoImagesFoundOnMLModalStyle } from '../../../machineLearningModal/views/initiateMachineLearning/style.js';
+import { onImageLoad } from '../../../imageList/uploadImages/drawImageOnCanvas.js';
+import { getReuseAlreadyUploadedImagesState } from '../../state.js';
 
 let finalObjectAssemblerFunc = null;
 

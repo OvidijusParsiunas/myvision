@@ -1,26 +1,26 @@
-import polygonProperties from '../properties';
-import sendPolygonPointsToFrontImpl from './stackPoints';
-import removePolygonPointsImpl from './removePoints';
-import removePolygonImpl from './removePolygon';
+import polygonProperties from '../properties.js';
+import sendPolygonPointsToFrontImpl from './stackPoints.js';
+import removePolygonPointsImpl from './removePoints.js';
+import removePolygonImpl from './removePolygon.js';
 import {
   initializeAddNewPointsImpl, addFirstPointImpl, resetAddPointPropertiesImpl,
   completePolygonImpl, drawLineImpl, clearAllAddPointsDataImpl,
   moveAddablePointImpl, addPointsMouseOverImpl, addPointImpl,
   resetAddPointsImpl, isAddingPointsToPolygonImpl, addPointsMouseOutImpl,
-} from './addPoint';
-import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint';
-import { removePolygonPointImpl, getCleanPolygonPointsArrayImpl } from './removePoint';
+} from './addPoint.js';
+import { displayPolygonPointsAfterMoveImpl, resetPolygonSelectableAreaImpl, movePolygonPointImpl } from './movePoint.js';
+import { removePolygonPointImpl, getCleanPolygonPointsArrayImpl } from './removePoint.js';
 import {
   displayPolygonPointsWithStyleImpl,
   changeDrawingPolygonPointsToRemovableImpl,
   changeObjectsToPolygonPointsToDefaultImpl,
   changeObjectsToPolygonPointsRemovaleImpl,
-} from './changePointsStyle';
+} from './changePointsStyle.js';
 import {
   getEditingLabelId, getLastPolygonActionWasMoveState,
   getNewShapeSelectedViaLabelListState, setNewShapeSelectedViaLabelListState,
-} from '../../../../tools/state';
-import { highlightShapeFill, defaultShapeFill } from '../../allShapes/allShapes';
+} from '../../../../tools/state.js';
+import { highlightShapeFill, defaultShapeFill } from '../../allShapes/allShapes.js';
 
 // this is the polygonInteractionsManager
 

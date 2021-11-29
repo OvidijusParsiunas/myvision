@@ -1,12 +1,12 @@
 import {
   setEditablePolygon, removePolygonPoint, removePolygonPoints, getPolygonEditingStatus,
   getPolygonIdIfEditing, cleanPolygonPointsArray, changeExistingPolygonPointsToRemovable,
-} from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { removeEditedPolygonId } from './defaultEventsWorker';
-import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
-import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
-import { setSessionDirtyState } from '../../../../tools/state';
+} from '../../../objects/polygon/alterPolygon/alterPolygon.js';
+import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils.js';
+import { removeEditedPolygonId } from './defaultEventsWorker.js';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils.js';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state.js';
+import { setSessionDirtyState } from '../../../../tools/state.js';
 
 let selectedPolygonId = null;
 let newPolygonSelected = false;

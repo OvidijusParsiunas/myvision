@@ -1,5 +1,5 @@
-import { getScrollbarWidth } from '../globalStyling/style';
-import IS_FIREFOX from './browserType';
+import { getScrollbarWidth } from '../globalStyling/style.js';
+import IS_FIREFOX from './browserType.js';
 
 function isHorizontalScrollPresent(parentElement) {
   return parentElement.scrollWidth > parentElement.clientWidth;

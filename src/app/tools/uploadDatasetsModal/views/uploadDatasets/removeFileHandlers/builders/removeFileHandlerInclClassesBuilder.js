@@ -2,11 +2,11 @@ import {
   CLASSES_FILES_ARRAY, FALTY_ANNOTATION_FILES_ARRAY,
   IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY, IMAGES_TABLE_INDICATOR,
   ACTIVE_CLASSES_FILE, ANNOTATIONS_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
-} from '../../../../consts';
+} from '../../../../consts.js';
 import {
   changeAllImagesTableRowsToDefault, removeRow, insertRowToAnnotationsTable,
   insertRowToImagesTable, enableFinishButton, disableFinishButton, changeClassesRowToDefault,
-} from '../../style';
+} from '../../style.js';
 
 function validateExistingImages(datasetObject, updateImageFileErrorStatusFunc, validateFormatFunc) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {

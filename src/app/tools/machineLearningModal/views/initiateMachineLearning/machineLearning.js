@@ -1,10 +1,10 @@
-import { getAllImageData } from '../../../imageList/imageList';
-import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { getCurrentImageId } from '../../../state';
+import { getAllImageData } from '../../../imageList/imageList.js';
+import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates.js';
+import { getCurrentImageId } from '../../../state.js';
 import {
   displayErrorMessage, changeToMLCompleteStyle, removeCancelButton, changeToNoImagesFoundStyle,
   displayNextButton, displayRetryButton, changeToLoadingStyle, removeLoadingContent,
-} from './style';
+} from './style.js';
 
 let tfModel = null;
 let isInProgress = false;

@@ -1,6 +1,6 @@
-import setDrawingMode from './setDrawingMode';
-import { removeEditedPolygonId } from '../eventWorkers/defaultEventsWorker';
-import { getLastDrawingModeState } from '../../../../tools/state';
+import setDrawingMode from './setDrawingMode.js';
+import { removeEditedPolygonId } from '../eventWorkers/defaultEventsWorker.js';
+import { getLastDrawingModeState } from '../../../../tools/state.js';
 
 let resetCanvasEventsFunc = null;
 let canvas = null;

@@ -1,4 +1,4 @@
-import { incrementShapeType, decrementShapeType } from '../../../tools/globalStatistics/globalStatistics';
+import { incrementShapeType, decrementShapeType } from '../../../tools/globalStatistics/globalStatistics.js';
 
 let shapes = {};
 let canvas = null;

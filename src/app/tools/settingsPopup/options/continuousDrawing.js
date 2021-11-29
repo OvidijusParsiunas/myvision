@@ -1,9 +1,9 @@
-import { getContinuousDrawingState, setContinuousDrawingState } from '../../state';
-import { setLabellerPopupDimProperties } from '../../labellerModal/style';
+import { getContinuousDrawingState, setContinuousDrawingState } from '../../state.js';
+import { setLabellerPopupDimProperties } from '../../labellerModal/style.js';
 import {
   QUICK_LIGHTUP_MILLISECONDS, SLOW_LIGHTUP_MILLISECONDS,
   QUICK_DIM_SECONDS, SLOW_DIM_SECONDS, THICK_DIM, THIN_DIM,
-} from '../../dimWindow/consts';
+} from '../../dimWindow/consts.js';
 
 function changeContinuousDrawingSetting() {
   if (getContinuousDrawingState()) {

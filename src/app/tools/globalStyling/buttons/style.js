@@ -1,4 +1,4 @@
-import IS_FIREFOX from '../../utils/browserType';
+import IS_FIREFOX from '../../utils/browserType.js';
 
 function applyStylingToElementsArray(elementsArray, property, value) {
   for (let i = 0; i < elementsArray.length; i += 1) {

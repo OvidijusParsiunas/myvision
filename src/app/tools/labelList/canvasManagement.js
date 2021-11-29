@@ -1,4 +1,4 @@
-import { assignCanvasForRemovingLabels } from './removeLabels/removeLabels';
+import { assignCanvasForRemovingLabels } from './removeLabels/removeLabels.js';
 
 function assignCanvasForLabelList(canvas) {
   assignCanvasForRemovingLabels(canvas);

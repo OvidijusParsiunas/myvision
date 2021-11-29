@@ -1,5 +1,5 @@
-import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
-import { IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY } from '../../../consts';
+import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager.js';
+import { IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY } from '../../../consts.js';
 
 function assembleShape(object, shapes, imageName) {
   const shapeObj = { type: null, coordinates: {}, imageName };

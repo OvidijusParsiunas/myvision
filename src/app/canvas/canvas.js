@@ -1,19 +1,19 @@
-import { assignCanvasForDrawingShapesViaCoordinates } from './utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
-import { assignCanvasMouseEvents } from '../tools/toolkit/buttonClickEvents/facade';
-import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/resetCanvasEvents';
-import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, reasignCanvas } from './utils/fabricUtils';
-import { assignCanvasForLabelManipulation } from './objects/label/label';
-import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allShapes';
-import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints';
-import assignCanvasForResizeWhenWindowResize from '../tools/globalStyling/windowResize';
-import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder';
-import { assignCanvasToDimWindowService } from '../tools/dimWindow/dimWindowService';
-import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils';
-import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/init';
-import { assignCanvasForHotKeys } from '../keyEvents/keyboard/hotKeys';
-import assignCanvasForLabelList from '../tools/labelList/canvasManagement';
-import assignCanvasForImageList from '../tools/imageList/canvasManagement';
+import { assignCanvasForDrawingShapesViaCoordinates } from './utils/drawShapesViaCoordinates/drawShapesViaCoordinates.js';
+import { assignCanvasMouseEvents } from '../tools/toolkit/buttonClickEvents/facade.js';
+import assignResetCanvasEventsFuncToMouseEvents from '../tools/toolkit/buttonClickEvents/facadeWorkersUtils/resetCanvasEvents.js';
+import { setBoundingBoxEditToolsToBeTransparent, createNewCanvas, reasignCanvas } from './utils/fabricUtils.js';
+import { assignCanvasForLabelManipulation } from './objects/label/label.js';
+import { assignCanvasForShapeFillManipulation } from './objects/allShapes/allShapes.js';
+import { assignCanvasForResettingToDefaultAfterAddPoints } from './mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasAfterAddPoints.js';
+import assignCanvasForResizeWhenWindowResize from '../tools/globalStyling/windowResize.js';
+import { assignCanvasForLabelAndShapeBuilder } from './objects/allShapes/labelAndShapeBuilder.js';
+import { assignCanvasToDimWindowService } from '../tools/dimWindow/dimWindowService.js';
+import { initialiseZoomVariables } from '../tools/toolkit/buttonClickEvents/facadeWorkers/zoomWorker.js';
+import { assignCanvasForUtils, assignNewCanvasForUtils } from './utils/canvasUtils.js';
+import { assignCanvasForSettingsPopup } from '../tools/settingsPopup/init.js';
+import { assignCanvasForHotKeys } from '../keyEvents/keyboard/hotKeys.js';
+import assignCanvasForLabelList from '../tools/labelList/canvasManagement.js';
+import assignCanvasForImageList from '../tools/imageList/canvasManagement.js';
 
 let currentCanvasInstance = null;
 

@@ -1,4 +1,4 @@
-import { closeWelcomeModal } from './workers';
+import { closeWelcomeModal } from './workers.js';
 
 function assignWelcomeModalButtonEventHandlers() {
   window.closeWelcomeModal = closeWelcomeModal;

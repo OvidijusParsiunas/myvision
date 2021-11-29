@@ -1,6 +1,6 @@
-import assignDrawPolygonEvents from '../eventHandlers/drawPolygonEventHandlers';
-import assignDrawBoundingBoxEvents from '../eventHandlers/drawBndBoxEventHandlers';
-import purgeCanvasMouseEvents from './purgeAllMouseHandlers';
+import assignDrawPolygonEvents from '../eventHandlers/drawPolygonEventHandlers.js';
+import assignDrawBoundingBoxEvents from '../eventHandlers/drawBndBoxEventHandlers.js';
+import purgeCanvasMouseEvents from './purgeAllMouseHandlers.js';
 
 function setDrawingMode(mode, canvas) {
   purgeCanvasMouseEvents(canvas);

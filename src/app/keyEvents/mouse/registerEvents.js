@@ -1,6 +1,6 @@
-import registerMouseDownEvents from './mouseDown';
-import { registerMouseMoveEvents } from './mouseMove';
-import { registerMouseOverOutEvents } from './mouseOverOut';
+import registerMouseDownEvents from './mouseDown.js';
+import { registerMouseMoveEvents } from './mouseMove.js';
+import { registerMouseOverOutEvents } from './mouseOverOut.js';
 
 function registerWindowMouseEvents() {
   registerMouseDownEvents();

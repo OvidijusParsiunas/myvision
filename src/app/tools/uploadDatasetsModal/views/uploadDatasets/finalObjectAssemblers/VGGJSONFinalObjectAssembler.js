@@ -1,5 +1,5 @@
-import datasetObjectManager from '../datasetObjectManagers/VGGJSONDatasetObjectManager';
-import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts';
+import datasetObjectManager from '../datasetObjectManagers/VGGJSONDatasetObjectManager.js';
+import { IMAGE_FILES_OBJECT, ACTIVE_ANNOTATION_FILE } from '../../../consts.js';
 
 function assembleShapes(regions, shapes, imageName) {
   for (let i = 0; i < regions.length; i += 1) {

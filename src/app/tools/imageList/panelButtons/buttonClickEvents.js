@@ -1,12 +1,12 @@
-import { switchImage } from '../imageList';
-import { doNothingIfNotLeftMouseButtonPress, removeButtonPopoverIfActive } from '../../utils/buttons/clickMiddleware';
-import uploadImages from '../uploadImages/uploadImages';
-import { resetCanvasEventsToDefault } from '../../toolkit/buttonClickEvents/facade';
+import { switchImage } from '../imageList.js';
+import { doNothingIfNotLeftMouseButtonPress, removeButtonPopoverIfActive } from '../../utils/buttons/clickMiddleware.js';
+import uploadImages from '../uploadImages/uploadImages.js';
+import { resetCanvasEventsToDefault } from '../../toolkit/buttonClickEvents/facade.js';
 import {
   interruptAllCanvasEventsBeforeFuncWInputs, replaceExistingCanvas,
-} from './buttonMiddleWare';
-import { discardActiveObject } from './discardActiveObject';
-import { triggerRemoveImage } from '../removeImages/removeImages';
+} from './buttonMiddleWare.js';
+import { discardActiveObject } from './discardActiveObject.js';
+import { triggerRemoveImage } from '../removeImages/removeImages.js';
 
 function triggeUploadImagesButton() {
   document.getElementById('uploadImages').click();

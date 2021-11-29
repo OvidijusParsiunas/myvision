@@ -2,7 +2,7 @@ import {
   pointMouseUpEvents, pointMouseOutEvents,
   pointMouseDownEvents, pointMouseOverEvents,
   setRemovablePointsEventsCanvas, pointMouseMoveEvents,
-} from '../eventWorkers/removePointsEventsWorker';
+} from '../eventWorkers/removePointsEventsWorker.js';
 
 function assignRemovePointsOnExistingPolygonEvents(canvas) {
   setRemovablePointsEventsCanvas(canvas);

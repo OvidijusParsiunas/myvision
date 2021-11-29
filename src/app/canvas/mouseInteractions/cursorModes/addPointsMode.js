@@ -1,4 +1,4 @@
-import { changePolygonPointsToWaitForAddingFirstPointImpl } from '../../objects/polygon/alterPolygon/changePointsStyle';
+import { changePolygonPointsToWaitForAddingFirstPointImpl } from '../../objects/polygon/alterPolygon/changePointsStyle.js';
 
 function setAddPointsMode(canvas, startingPoint) {
   changePolygonPointsToWaitForAddingFirstPointImpl(canvas, startingPoint);

@@ -1,6 +1,6 @@
-import { getLabelById, setPolygonLabelOffsetProps } from '../../label/label';
-import polygonProperties from '../properties';
-import labelProperties from '../../label/properties';
+import { getLabelById, setPolygonLabelOffsetProps } from '../../label/label.js';
+import polygonProperties from '../properties.js';
+import labelProperties from '../../label/properties.js';
 
 function realignLabelToLowestPointLocation(polygon) {
   let lowestPointIndex = 0;

@@ -1,6 +1,6 @@
-import { hideUploadDatasetsViewAssets } from './style';
-import { uploadDatasetFilesHandler } from './uploadDatasetFilesHandler';
-import { drawShapesAndImages } from './drawShapesAndImages';
+import { hideUploadDatasetsViewAssets } from './style.js';
+import { uploadDatasetFilesHandler } from './uploadDatasetFilesHandler.js';
+import { drawShapesAndImages } from './drawShapesAndImages.js';
 
 function triggerUploadDatasetFiles() {
   document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger').click();

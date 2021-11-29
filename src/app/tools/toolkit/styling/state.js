@@ -1,8 +1,8 @@
 import {
   setButtonToActive, setButtonToDefault, setButtonToDisabled, setButtonToGreyDefault,
-} from './styling';
-import { getPolygonDrawingInProgressState } from '../../state';
-import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
+} from './styling.js';
+import { getPolygonDrawingInProgressState } from '../../state.js';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes.js';
 
 const state = { ACTIVE: 'active', DEFAULT: 'default', DISABLED: 'disabled' };
 let removePointsState = state.DEFAULT;

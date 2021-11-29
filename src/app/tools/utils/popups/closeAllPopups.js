@@ -1,7 +1,7 @@
-import { isEditingLabelInLabelList, finishEditingLabelList } from '../../labelList/labelList';
-import { getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../../state';
-import { hideSettingsPopup } from '../../settingsPopup/style';
-import { hideExportDatasetsPopup } from '../../exportDatasetsPopup/style';
+import { isEditingLabelInLabelList, finishEditingLabelList } from '../../labelList/labelList.js';
+import { getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../../state.js';
+import { hideSettingsPopup } from '../../settingsPopup/style.js';
+import { hideExportDatasetsPopup } from '../../exportDatasetsPopup/style.js';
 
 function closeAllPopups(event) {
   event = event || { target: { classList: [] } };

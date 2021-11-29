@@ -2,7 +2,7 @@ import {
   polygonMouseDownEvents, polygonMouseUpEvents, polygonMoveEvents,
   shapeMouseOutEvents, shapeMouseOverEvents, prepareCanvasForDefaultEvents,
   boundingBoxScalingEvents, shapeScrollEvents,
-} from '../eventWorkers/defaultEventsWorker';
+} from '../eventWorkers/defaultEventsWorker.js';
 
 // not just for polygon
 function assignDefaultEvents(canvas, polygonId, afterAddPoints) {

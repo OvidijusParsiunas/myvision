@@ -1,4 +1,3 @@
-<!-- ATTENTION: All dev work must be done in the src/devIndexTemplate.html file and the changes can be viewed in publicDev/index.htmml -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,14 +5,8 @@
   <title>MyVision</title>
   <meta name="description" content="Online computer vision based ML training data generation tool.">
   <meta property="og:title" content="MyVision">
-  <meta property="og:description" content="Computer vision based ML training data generation tool">
-  <meta property="og:image" content="https://raw.githubusercontent.com/OvidijusParsiunas/myvision/gh-pages/assets/images/social%20preview%20screenshot%20-%206.PNG">
-  <meta property="og:url" content="https://myvision.ai/">
-  <meta name="twitter:title" content="MyVision">
-  <meta name="twitter:description" content="Computer vision based ML training data generation tool">
-  <meta name="twitter:image" content=" https://raw.githubusercontent.com/OvidijusParsiunas/myvision/gh-pages/assets/images/social%20preview%20screenshot%20-%206.PNG">
-  <meta name="twitter:card" content="summary_large_image">
-  <script src="assets/externals/fabricjs/fabric<%= htmlWebpackPlugin.options.externalsFileExtension %>" type="text/javascript"></script>
+  <script src="assets/js/fabric.min.js"></script>
+  <script src="assets/js/jszip.min.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
   <link rel="icon" href="assets/images/favicon 29.png">
 </head>
@@ -366,5 +359,7 @@
     </div>
     <div id="inadequate-client-resources-overlay-text"></div>
   </div>
+
+  <script type="module" src="app/index.js"></script>
 </body>
 </html>

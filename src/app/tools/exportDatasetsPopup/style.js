@@ -1,6 +1,6 @@
-import { getNumberOfShapeTypes } from '../globalStatistics/globalStatistics';
-import { setExportDatasetsPopupOpenState } from '../state';
-import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup';
+import { getNumberOfShapeTypes } from '../globalStatistics/globalStatistics.js';
+import { setExportDatasetsPopupOpenState } from '../state.js';
+import { setStickyPopupProperties, setPopupPosition } from '../utils/popups/stickyPopup.js';
 
 let isCheckboxSelected = false;
 let isExportButtonActive = false;

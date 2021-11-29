@@ -1,4 +1,4 @@
-import { setObjectsHoverCursorToDefault } from '../../objects/objectsProperties/changeProperties';
+import { setObjectsHoverCursorToDefault } from '../../objects/objectsProperties/changeProperties.js';
 
 function setRemovePointsOnExistingPolygonMode(canvas) {
   canvas.defaultCursor = 'default';

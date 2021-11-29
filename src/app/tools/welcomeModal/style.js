@@ -1,7 +1,7 @@
-import { setWelcomeModalDisplayedState } from '../state';
-import { lightUpWindow } from '../dimWindow/dimWindowService';
-import { SLOW_LIGHTUP_MILLISECONDS } from '../dimWindow/consts';
-import { onMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
+import { setWelcomeModalDisplayedState } from '../state.js';
+import { lightUpWindow } from '../dimWindow/dimWindowService.js';
+import { SLOW_LIGHTUP_MILLISECONDS } from '../dimWindow/consts.js';
+import { onMouseMoveEvent } from '../../keyEvents/mouse/mouseMove.js';
 
 let modalParentElement = null;
 let modalConntourParentElement = null;

@@ -1,5 +1,5 @@
-import initialiseLabelListButtonClickEvents from './panelButtons/buttonClickEvents';
-import { initialiseLabelList } from './labelList';
+import initialiseLabelListButtonClickEvents from './panelButtons/buttonClickEvents.js';
+import { initialiseLabelList } from './labelList.js';
 
 function initialiseLabelListFunctionality() {
   initialiseLabelList();

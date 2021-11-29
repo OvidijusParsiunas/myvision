@@ -1,5 +1,5 @@
-import { getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../../state';
-import IS_FIREFOX from '../../utils/browserType';
+import { getSettingsPopupOpenState, getExportDatasetsPopupOpenState } from '../../state.js';
+import IS_FIREFOX from '../../utils/browserType.js';
 
 const buttonPopovers = {};
 const HOVER_TIMEOUT = 500;

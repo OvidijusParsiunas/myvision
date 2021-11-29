@@ -1,9 +1,9 @@
 import {
   ANNOTATIONS_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, IMAGES_TABLE_INDICATOR,
-} from '../../consts';
-import IS_FIREFOX from '../../../utils/browserType';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+} from '../../consts.js';
+import IS_FIREFOX from '../../../utils/browserType.js';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta.js';
 
 let titleElement = null;
 let table1Element = null;

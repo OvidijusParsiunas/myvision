@@ -1,15 +1,15 @@
-import { removeEditedPolygonId } from './defaultEventsWorker';
+import { removeEditedPolygonId } from './defaultEventsWorker.js';
 import {
   removePolygonPoints, getPolygonEditingStatus, setEditablePolygon,
   getPolygonIfEditing, initializeAddNewPoints, addFirstPoint, getPolygonIdIfEditing,
   addPoint, completePolygon, drawLineOnMouseMove, moveAddablePoint, getPolygonPointsArray,
   addPointsMouseOver, resetAddPointProperties, addPointsMouseOut,
-} from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils';
-import { getCurrentZoomState, getDoubleScrollCanvasState, setSessionDirtyState } from '../../../../tools/state';
-import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils';
-import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
-import { getLastMouseMoveEvent } from '../../../../keyEvents/mouse/mouseMove';
+} from '../../../objects/polygon/alterPolygon/alterPolygon.js';
+import { enableActiveObjectsAppearInFront, preventActiveObjectsAppearInFront } from '../../../utils/canvasUtils.js';
+import { getCurrentZoomState, getDoubleScrollCanvasState, setSessionDirtyState } from '../../../../tools/state.js';
+import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../../tools/labelList/labelListHighlightUtils.js';
+import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state.js';
+import { getLastMouseMoveEvent } from '../../../../keyEvents/mouse/mouseMove.js';
 
 // Originally designed to be turned off after the points have been successfully added to a polygon
 

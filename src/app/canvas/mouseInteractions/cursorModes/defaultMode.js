@@ -1,6 +1,6 @@
-import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/alterPolygon/alterPolygon';
-import { setObjectPropertiesToDefaultWhenReadyToDraw } from '../../objects/objectsProperties/changeProperties';
-import { getMovableObjectsState } from '../../../tools/state';
+import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/alterPolygon/alterPolygon.js';
+import { setObjectPropertiesToDefaultWhenReadyToDraw } from '../../objects/objectsProperties/changeProperties.js';
+import { getMovableObjectsState } from '../../../tools/state.js';
 
 function setDefaultCanvasCursors(canvas) {
   canvas.defaultCursor = 'default';

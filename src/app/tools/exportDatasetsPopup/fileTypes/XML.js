@@ -1,16 +1,16 @@
-import JSZip from 'jszip';
-import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
-import { getAllImageData } from '../../imageList/imageList';
-import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { getCurrentImageId } from '../../state';
-import { adjustIncorrectBoundingBoxCoordinates, roundNumberToDecimalPlaces } from '../sharedUtils/adjustShapeCoordinates';
+//import JSZip from 'jszip.js';
+import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas.js';
+import { getAllImageData } from '../../imageList/imageList.js';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes.js';
+import { getCurrentImageId } from '../../state.js';
+import { adjustIncorrectBoundingBoxCoordinates, roundNumberToDecimalPlaces } from '../sharedUtils/adjustShapeCoordinates.js';
 
 /*
 If there is an error on generating zips - try to use a file receiver
-import FileSaver from 'file-saver';
-import { getImageProperties } from '../../uploadImages/drawImageOnCanvas';
-import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
-import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
+import FileSaver from 'file-saver.js';
+import { getImageProperties } from '../../uploadImages/drawImageOnCanvas.js';
+import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList.js';
+import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes.js';
 
 function getFileName() {
   const currentDate = new Date();

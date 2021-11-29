@@ -1,4 +1,4 @@
-import { CSV_POSTFIX, XML_POSTFIX, TXT_POSTFIX } from '../../../consts';
+import { CSV_POSTFIX, XML_POSTFIX, TXT_POSTFIX } from '../../../consts.js';
 
 function checkNumberOrStringTypeByFormat(subjectVariable, format) {
   switch (format) {

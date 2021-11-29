@@ -1,7 +1,7 @@
 import {
   setEditablePolygon, removePolygonPoint,
-} from '../../../objects/polygon/alterPolygon/alterPolygon';
-import { getCurrentlyHoveredDrawPoint } from '../../../objects/polygon/polygon';
+} from '../../../objects/polygon/alterPolygon/alterPolygon.js';
+import { getCurrentlyHoveredDrawPoint } from '../../../objects/polygon/polygon.js';
 
 let removingPoints = false;
 let canvas = null;

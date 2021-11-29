@@ -1,11 +1,11 @@
 import {
   JSON_POSTFIX, PROPERTIES_STRING, ACTIVE_ANNOTATION_FILE,
   ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
-} from '../../../consts';
-import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
-import { getReuseAlreadyUploadedImagesState } from '../../../state';
-import { checkObjectProperties, checkArrayElements } from './sharedUtils';
+} from '../../../consts.js';
+import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager.js';
+import { getAllImageData } from '../../../../imageList/imageList.js';
+import { getReuseAlreadyUploadedImagesState } from '../../../state.js';
+import { checkObjectProperties, checkArrayElements } from './sharedUtils.js';
 
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;

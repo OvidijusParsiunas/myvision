@@ -1,9 +1,9 @@
-import { resetObjectCursors as resetObjectCursorsForDefaultDraw } from '../../canvas/mouseInteractions/cursorModes/drawMode';
-import { setAllObjectsToUneditable as resetObjectCursorsForCrosshairDraw } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { getLabellerModalInputText, hideLabellerModal, resetLabellerModalOptions } from './style';
-import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder';
-import waitingForLabelCursorMode from '../../canvas/mouseInteractions/cursorModes/waitingForLabelSubmissionMode';
-import { getCrosshairUsedOnCanvasState } from '../state';
+import { resetObjectCursors as resetObjectCursorsForDefaultDraw } from '../../canvas/mouseInteractions/cursorModes/drawMode.js';
+import { setAllObjectsToUneditable as resetObjectCursorsForCrosshairDraw } from '../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode.js';
+import { getLabellerModalInputText, hideLabellerModal, resetLabellerModalOptions } from './style.js';
+import { generateLabelShapeGroup } from '../../canvas/objects/allShapes/labelAndShapeBuilder.js';
+import waitingForLabelCursorMode from '../../canvas/mouseInteractions/cursorModes/waitingForLabelSubmissionMode.js';
+import { getCrosshairUsedOnCanvasState } from '../state.js';
 
 let labellingState = false;
 let targetShape = null;

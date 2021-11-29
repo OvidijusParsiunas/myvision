@@ -1,7 +1,7 @@
-import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager.js';
 import {
   IMAGE_FILES_OBJECT, ACTIVE_CLASSES_FILE, VALID_ANNOTATION_FILES_ARRAY,
-} from '../../../consts';
+} from '../../../consts.js';
 
 function assembleShape(object, shapes, imageName, classes, imageElement) {
   const shapeObj = { type: null, coordinates: {}, imageName };

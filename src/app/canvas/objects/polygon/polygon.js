@@ -1,20 +1,20 @@
-import fabric from 'fabric';
-import polygonProperties from './properties';
-import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode';
-import { showLabellerModal } from '../../../tools/labellerModal/style';
-import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess';
+// import fabric from 'fabric.js';
+import polygonProperties from './properties.js';
+import { setDrawCursorMode, resetObjectCursors } from '../../mouseInteractions/cursorModes/drawMode.js';
+import { showLabellerModal } from '../../../tools/labellerModal/style.js';
+import { prepareLabelShape } from '../../../tools/labellerModal/labellingProcess.js';
 import {
   setPolygonDrawingInProgressState, setAddingPolygonPointsState,
   getMovableObjectsState, getAddingPolygonPointsState, setSessionDirtyState,
   setReadyToDrawShapeState, getCurrentZoomState, getDoubleScrollCanvasState,
-} from '../../../tools/state';
-import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
-import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
+} from '../../../tools/state.js';
+import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers.js';
+import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers.js';
 import {
   setAddPointsButtonToDefault, setRemovePointsButtonToDefault,
   setRemoveLabelsButtonToDefault, setCreatePolygonButtonToActive,
-} from '../../../tools/toolkit/styling/state';
-import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
+} from '../../../tools/toolkit/styling/state.js';
+import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove.js';
 
 let canvas = null;
 let pointArray = [];

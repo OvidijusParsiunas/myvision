@@ -1,5 +1,5 @@
-import { getMovableObjectsState } from '../../../tools/state';
-import { setPolygonLabelOffsetProps } from '../label/label';
+import { getMovableObjectsState } from '../../../tools/state.js';
+import { setPolygonLabelOffsetProps } from '../label/label.js';
 
 function prepareObjectsForEditablePolygonPoints(object, isDrawing) {
   if (isDrawing) {

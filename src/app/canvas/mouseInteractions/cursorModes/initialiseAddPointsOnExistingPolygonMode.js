@@ -1,5 +1,5 @@
-import polygonProperties from '../../objects/polygon/properties';
-import { getDefaultState, getAddingPolygonPointsState } from '../../../tools/state';
+import polygonProperties from '../../objects/polygon/properties.js';
+import { getDefaultState, getAddingPolygonPointsState } from '../../../tools/state.js';
 
 // change - objectsProperties
 // follow pattern used in remove points

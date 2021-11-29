@@ -1,22 +1,22 @@
-import { updateCurrentImageIds, getAllImageData } from '../imageList';
-import { setImageNameElementToDefault } from '../../imageSwitchPanel/style';
-import { removeAllLabelListItems } from '../../labelList/labelList';
-import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
-import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { decrementShapeType } from '../../globalStatistics/globalStatistics';
-import { setCurrentImage } from '../uploadImages/drawImageOnCanvas';
-import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker';
-import { getDoNotShowRemoveImageModalAgainState } from './modal/state';
-import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark';
+import { updateCurrentImageIds, getAllImageData } from '../imageList.js';
+import { setImageNameElementToDefault } from '../../imageSwitchPanel/style.js';
+import { removeAllLabelListItems } from '../../labelList/labelList.js';
+import { removeAllLabelRefs } from '../../../canvas/objects/label/label.js';
+import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes.js';
+import { decrementShapeType } from '../../globalStatistics/globalStatistics.js';
+import { setCurrentImage } from '../uploadImages/drawImageOnCanvas.js';
+import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWorker.js';
+import { getDoNotShowRemoveImageModalAgainState } from './modal/state.js';
+import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark.js';
 import {
   setPolygonEditingButtonsToDisabled, setZoomInButtonToDisabled,
   setCreatePolygonButtonToDisabled, setEditShapesButtonToDisabled,
   setCreateBoundingBoxButtonToDisabled, setRemoveImagesButtonsDisabled,
-} from '../../toolkit/styling/state';
+} from '../../toolkit/styling/state.js';
 import {
   getCurrentImageId, getContinuousDrawingState, getLastDrawingModeState, setDefaultState,
-} from '../../state';
-import { displayRemoveImagesModal } from './modal/style';
+} from '../../state.js';
+import { displayRemoveImagesModal } from './modal/style.js';
 
 let canvas = null;
 
