@@ -1,10 +1,10 @@
 import JSZip from 'jszip';
-import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
-import { getAllImageData } from '../../imageList/imageList';
-import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
-import { getLabelOptions, getMaxUsedLabelIndex } from '../../labelList/labelOptions';
-import { getCurrentImageId } from '../../state';
 import { adjustIncorrectBoundingBoxCoordinates } from '../sharedUtils/adjustShapeCoordinates';
+import { getLabelOptions, getMaxUsedLabelIndex } from '../../labelList/labelOptions';
+import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
+import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
+import { getAllImageData } from '../../imageList/imageList';
+import { getCurrentImageId } from '../../state';
 
 /*
 If there is an error on generating zips - try to use a file receiver
