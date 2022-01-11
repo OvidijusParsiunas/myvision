@@ -7,10 +7,6 @@
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "browser": {
-      "child_process": false,
-      "fs": false
-    },
     "cname-webpack-plugin": "^2.0.1",
     "copy-webpack-plugin": "^6.0.3",
     "eslint": "^5.16.0",
