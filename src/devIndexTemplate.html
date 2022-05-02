@@ -93,16 +93,16 @@
       </div>
       <div id="machine-learning-modal-progress-messages" style="display: none" class="modal-messages"></div>
       <div id="machine-learning-modal-loading-wheel" style="display: none" class="loading-wheel" ></div>
-      <div id="machine-learning-modal-loading-text" style="display: none">Loading...</div>
+      <div id="machine-learning-modal-loading-text" style="display: none"></div>
       <div id="machine-learning-modal-error-messages" style="display: none" class="modal-messages"></div>
       <div id="machine-learning-modal-info-messages" class="modal-messages"></div>
       <div id="machine-learning-modal-initiate-machine-learning-buttons" class="buttons modal-buttons">
-          <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="startMachineLearning()">Start</div>
+          <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="startMachineLearning()"></div>
           <!-- WORK -->
           <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
           <!-- WORK -->
           <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
-          <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelMLModal()">Cancel</div>
+          <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelMLModal()"></div>
           <!-- WORK -->
           <div id="machine-learning-modal-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
           <!-- WORK -->
@@ -116,21 +116,22 @@
             </table>
           </div>
           <div id="machine-learning-modal-generated-labels-buttons" class="buttons modal-buttons">
-            <div id="machine-learning-modal-generated-labels-submit-button" class="popup-label-button popup-proceed-button" onclick="submitMLGeneratedLabels()">Submit</div>
+            <div id="machine-learning-modal-generated-labels-submit-button" class="popup-label-button popup-proceed-button" onclick="submitMLGeneratedLabels()"></div>
           </div>
         </div>
       </div>
       <div id="machine-learning-modal-no-objects-buttons" style="display: none" class="buttons modal-buttons">
+          <!-- WORK -->
           <div id="machine-learning-modal-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningModal()">Close</div>
       </div>
     </div>
     <div id="upload-datasets-modal-parent" class="modal-parent" style="display: none" onmousemove="trackMouseMoveEvents(event)">
-      <div class="modal-title small-title">Upload Datasets</div>
+      <div id="upload-datasets-modal-title" class="modal-title small-title"></div>
       <div class="modal-title-border-line"></div>
       <div id="upload-datasets-modal-description" class="modal-description"></div>
       <div id="upload-datasets-modal-error-messages" style="display: none" class="modal-messages"></div>
       <div id="upload-datsets-modal-select-format-outer-container" style="display: none">
-        <div id="upload-datsets-modal-select-format-title" class="upload-datsets-modal-title">Choose Format</div>
+        <div id="upload-datsets-modal-select-format-title" class="upload-datsets-modal-title"></div>
         <div id="upload-datsets-modal-select-format-inner-container">
           <table id="upload-datsets-modal-select-format-table"></table>
         </div>
@@ -149,7 +150,7 @@
         </div>
         <div class="upload-datasets-modal-vertical-break-line"></div>
         <div id="upload-datasets-modal-upload-datasets-table-2" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
-          <div id="upload-datasets-modal-upload=datasets-annotations-table-title" class="upload-datasets-modal-upload-datasets-table-title">Annotations (.json)</div>
+          <div id="upload-datasets-modal-upload-datasets-annotations-table-title" class="upload-datasets-modal-upload-datasets-table-title"></div>
           <div id="upload-datsets-modal-upload-datasets-annotations-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets">
             <table id="upload-datsets-modal-upload-datasets-annotations-table" class="upload-datasets-modal-upload-datasets-table">
               <tbody></tbody>
@@ -158,7 +159,7 @@
        </div>
        <div class="upload-datasets-modal-vertical-break-line"></div>
        <div id="upload-datasets-modal-upload-datasets-table-3" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
-         <div class="upload-datasets-modal-upload-datasets-table-title">Images</div>
+         <div id="upload-datasets-modal-upload-datasets-images-table-title" class="upload-datasets-modal-upload-datasets-table-title"></div>
          <div id="upload-datsets-modal-upload-datasets-images-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets">
            <table id="upload-datsets-modal-upload-datasets-images-table" class="upload-datasets-modal-upload-datasets-table">
              <tbody></tbody>
@@ -167,18 +168,20 @@
       </div>
      </div>
       <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
-        <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="moveToSelectFormatView()">Start</div>
-        <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()">Back</div>
+        <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="moveToSelectFormatView()"></div>
+        <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()"></div>
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
-        <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
+        <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()"></div>
+        <!-- WORK -->
         <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
-        <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal(true)">Cancel</div>
-        <div id="upload-datsets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)">Yes</div>
-        <div id="upload-datasets-modal-no-button" style="display: none" class="popup-label-button popup-cancel-button" onclick="reuseAlreadyExistingImages(false)">No</div>
-        <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>
+        <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal(true)"></div>
+        <div id="upload-datsets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)"></div>
+        <div id="upload-datasets-modal-no-button" style="display: none" class="popup-label-button popup-cancel-button" onclick="reuseAlreadyExistingImages(false)"></div>
+        <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()"></div>
       </div>
     </div>
     <div id="remove-images-modal-parent" onmousemove="trackMouseMoveEvents(event)" style="display: none" class="modal-parent">
+      <!-- WORK -->
       <div class="modal-title small-title">Remove image</div>
       <div class="modal-title-border-line"></div>
       <div id="remove-images-modal-description" class="modal-description">
@@ -191,8 +194,8 @@
       </div>
       <div id="remove-images-modal-checkbox-parent">
         <input id="remove-images-modal-checkbox" class="checkbox" type="checkbox" name="something" onclick="toggleDoNotShowRemoveImageModalAgain()">
-            <!-- WORK -->
-            Do not show again
+          <!-- WORK -->
+          Do not show again
       </div>
     </div>
       <div id="export-datasets-popup-parent" class="export-datasets-popup-item" style="display: none;">
@@ -206,6 +209,7 @@
               <input id="export-datasets-popup-vgg-json-format-checkbox" class="export-datasets-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('VGG JSON', this)">
             </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data bounding-box-data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopupInformationPopover(4)" onmouseleave="removeExportPopupInformationPopover(4)">
+                <!-- WORK only -->
                 <div id="format-option-checkbox-popover-4" class="export-datasets-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
                 <div id="format-option-checkbox-arrow-4" class="export-datasets-popup-item arrow text-arrow-position default-arrow-color"></div>
                 CSV
@@ -241,19 +245,19 @@
           </table>
         </div>
       <div id="export-datasets-popup-export-button-container" class="export-datasets-popup-item button buttons popup-label-buttons">
-        <div id="export-datasets-popup-export-button" class="export-datasets-popup-item popup-label-button-disabled" onclick="exportDataset()">Export</div>
+        <div id="export-datasets-popup-export-button" class="export-datasets-popup-item popup-label-button-disabled" onclick="exportDataset()"></div>
       </div>
     </div>
     <div id="settings-popup" class="settings-popup-item">
       <table id="settings-table" class="settings-popup-item">
-        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleLabelsVisibility(true)">Label Visibility</div><input id="settings-popup-labels-visibility-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()"></td></tr>
-        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleMovableObjects(true)">Movable Objects</div><input id="settings-popup-movable-objects-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleMovableObjects()"></td></tr>
-        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleContinuousDrawing(true)">Continuous Drawing</div><input id="settings-popup-continuous-drawing-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleContinuousDrawing()"></td></tr>
-        <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Bounding box Crosshair</div><div id="settings-popup-bounding-box-crosshair-dropdown-trigger" class="settings-popup-item checkbox settings-checkbox" name="something" onclick="toggleBoundingBoxCrosshairDropdown()">&#x25BA;</div>
+        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div id="settings-popup-labels-visibility-text" class="settings-popup-item checkbox-text" onclick="toggleLabelsVisibility(true)"></div><input id="settings-popup-labels-visibility-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleLabelsVisibility()"></td></tr>
+        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div id="settings-popup-movable-objects-text" class="settings-popup-item checkbox-text" onclick="toggleMovableObjects(true)"></div><input id="settings-popup-movable-objects-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleMovableObjects()"></td></tr>
+        <tr onmouseenter="hideBoundingBoxCrosshairDropdown()"><td class="settings-popup-item settings-table-row-data"><div id="settings-popup-continuous-drawing-text" class="settings-popup-item checkbox-text" onclick="toggleContinuousDrawing(true)"></div><input id="settings-popup-continuous-drawing-checkbox" class="settings-popup-item checkbox settings-checkbox" type="checkbox" name="something" onclick="toggleContinuousDrawing()"></td></tr>
+        <tr><td class="settings-popup-item settings-table-row-data"><div id="settings-popup-bounding-box-crosshair-text" class="settings-popup-item checkbox-text"></div><div id="settings-popup-bounding-box-crosshair-dropdown-trigger" class="settings-popup-item checkbox settings-checkbox" name="something" onclick="toggleBoundingBoxCrosshairDropdown()">&#x25BA;</div>
           <div id="bounding-box-crosshair-dropdown" class="settings-popup-item">
             <table id="bounding-box-crosshair-dropdown-table" class="settings-popup-item">
-              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text" onclick="toggleCrosshair(true)">Visibility</div><input id="settings-popup-bounding-box-crosshair-visibility-checkbox" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="checkbox" checked="true" name="something" onclick="toggleCrosshair()"></td></tr>
-              <tr><td class="settings-popup-item settings-table-row-data"><div class="settings-popup-item checkbox-text">Color</div><input id="settings-popup-bounding-box-crosshair-color-picker" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="color" value="#ffffff" oninput="crosshairColorChange(this)"></td></tr>
+              <tr><td class="settings-popup-item settings-table-row-data"><div id="settings-popup-bounding-box-crosshair-visibility-text" class="settings-popup-item checkbox-text" onclick="toggleCrosshair(true)"></div><input id="settings-popup-bounding-box-crosshair-visibility-checkbox" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="checkbox" checked="true" name="something" onclick="toggleCrosshair()"></td></tr>
+              <tr><td class="settings-popup-item settings-table-row-data"><div id="settings-popup-bounding-box-crosshair-color-text" class="settings-popup-item checkbox-text"></div><input id="settings-popup-bounding-box-crosshair-color-picker" class="settings-popup-item bounding-box-crosshair-dropdown-icon checkbox settings-checkbox" type="color" value="#ffffff" oninput="crosshairColorChange(this)"></td></tr>
            </table>
           </div>
         </td>
@@ -265,32 +269,32 @@
       <button id="edit-shapes-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="editShapes(this, event)">
         <img id="edit-shapes-icon" src="assets/svg/interface.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="default-button-popover">Edit Shapes (E)</div>
+      <div class="core-button-hover-popover" id="edit-shapes-button-popover"></div>
       <button id="create-bounding-box-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="createNewBndBox(event)">
         <img id="new-bounding-box-icon" src="assets/svg/method-draw-image (13).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="bounding-box-button-popover">New Bounding box (W)</div>
+      <div class="core-button-hover-popover" id="bounding-box-button-popover"></div>
       <button id="create-polygon-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" type="button" onmouseup="createNewPolygon(event)">
         <img id="new-polygon-icon" src="assets/svg/method-draw-image (60).svg" draggable="false" class="toolkit-button-icon" alt="visibility"></img>
       </button>
-      <div class="core-button-hover-popover" id="polygon-button-popover">New Polygon (Q)</div>
+      <div class="core-button-hover-popover" id="polygon-button-popover"></div>
       <button id="add-points-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="addPoints(this, event)">
         <img id="add-points-icon" src="assets/svg/method-draw-image (70).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="add-points-button-popover">Add Points to Polygon (A)</div>
+      <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="add-points-button-popover"></div>
       <button id="remove-points-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="removePoint(this, event)">
         <img id="remove-points-icon" src="assets/svg/method-draw-image (69).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="remove-points-button-popover">Remove Polygon Points (R)</div>
+      <div class="core-button-hover-popover small-core-button-hover-popover-v-position" id="remove-points-button-popover"></div>
       <div id="left-side-bar-separator"></div>
       <button id="upload-datasets-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="uploadDatasets(event)">
         <img id="upload-datasets-icon" src="assets/svg/method-draw-image (99).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="upload-datasets-button-popover">Upload Datasets</div>
+      <div class="core-button-hover-popover" id="upload-datasets-button-popover"></div>
       <button id="export-datasets-button" class="export-datasets-popup-item toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="toggleExportDatasetsPopup(event)" onmouseenter="cancelPulseAnimation(this)">
         <img id="export-datasets-icon" src="assets/svg/method-draw-image - 2020-05-03T194003.376.svg" draggable="false" class="export-datasets-popup-item toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="export-datasets-button-popover">Export Datasets</div>
+      <div class="core-button-hover-popover" id="export-datasets-button-popover"></div>
       <button id="machine-learning-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="displayMachineLearningModal(event)" onmouseenter="cancelPulseAnimation(this)">
         <img id="machine-learning-icon" src="assets/svg/electronics.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>

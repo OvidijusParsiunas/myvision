@@ -9,6 +9,35 @@ let labellerModalTitle = null;
 let labellerModalSubmitButton = null;
 let labellerModalCancelButton = null;
 let machineLearningModalTitle = null;
+let machineLearningModalLoadingText = null;
+let machineLearningModalStartButton = null;
+let machineLearningModalCancelButton = null;
+let machineLearningModalGeneratedLabelsSubmitButton = null;
+let uploadDatasetsModalTitle = null;
+let uploadDatasetsModalFormatTitle = null;
+let uploadDatasetsModalAnnotationTableTitle = null;
+let uploadDatasetsModalImagesTableTitle = null;
+let uploadDatasetsModalStartButton = null;
+let uploadDatasetsModalBackButton = null;
+let uploadDatasetsModalUploadButton = null;
+let uploadDatasetsModalCancelButton = null;
+let uploadDatasetsModalYesButton = null;
+let uploadDatasetsModalNoButton = null;
+let uploadDatasetsModalFinishButton = null;
+let exportDatasetsPopupExportButton = null;
+let settingsPopupLabelsVisibility = null;
+let settingsPopupMovableObjects = null;
+let settingsPopupContinuousDrawing = null;
+let settingsPopupBoundingBoxCrosshair = null;
+let settingsPopupBoundingBoxCrosshairVisibility = null;
+let settingsPopupBoundingBoxCrosshairColor = null;
+let editShapesButtonPopover = null;
+let boundingBoxButtonPopover = null;
+let polygonButtonPopover = null;
+let addPointsButtonPopover = null;
+let removePointsButtonPopover = null;
+let uploadDatasetsButtonPopover = null;
+let exportDatasetsButtonPopover = null;
 
 function populateText() {
   const dictionary = getDictionary();
@@ -21,6 +50,35 @@ function populateText() {
   labellerModalSubmitButton.innerHTML = dictionary.SUBMIT;
   labellerModalCancelButton.innerHTML = dictionary.CANCEL;
   machineLearningModalTitle.innerHTML = dictionary.MODAL_TITLE;
+  machineLearningModalLoadingText.innerHTML = dictionary.LOADING;
+  machineLearningModalStartButton.innerHTML = dictionary.START;
+  machineLearningModalCancelButton.innerHTML = dictionary.CANCEL;
+  machineLearningModalGeneratedLabelsSubmitButton.innerHTML = dictionary.SUBMIT;
+  uploadDatasetsModalTitle.innerHTML = dictionary.UPLOAD_DATASETS;
+  uploadDatasetsModalFormatTitle.innerHTML = dictionary.CHOOSE_FORMAT;
+  uploadDatasetsModalAnnotationTableTitle.innerHTML = dictionary.ANNOTATIONS_JSON;
+  uploadDatasetsModalImagesTableTitle.innerHTML = dictionary.IMAGES;
+  uploadDatasetsModalStartButton.innerHTML = dictionary.START;
+  uploadDatasetsModalBackButton.innerHTML = dictionary.BACK;
+  uploadDatasetsModalUploadButton.innerHTML = dictionary.UPLOAD;
+  uploadDatasetsModalCancelButton.innerHTML = dictionary.UPLOAD;
+  uploadDatasetsModalYesButton.innerHTML = dictionary.YES;
+  uploadDatasetsModalNoButton.innerHTML = dictionary.NO;
+  uploadDatasetsModalFinishButton.innerHTML = dictionary.FINISH;
+  exportDatasetsPopupExportButton.innerHTML = dictionary.EXPORT;
+  settingsPopupLabelsVisibility.innerHTML = dictionary.LABEL_VISIBILITY;
+  settingsPopupMovableObjects.innerHTML = dictionary.MOVABLE_OBJECTS;
+  settingsPopupContinuousDrawing.innerHTML = dictionary.CONTINUOUS_DRAWING;
+  settingsPopupBoundingBoxCrosshair.innerHTML = dictionary.BOUNDING_BOX_CROSSHAIR;
+  settingsPopupBoundingBoxCrosshairVisibility.innerHTML = dictionary.VISIBILITY;
+  settingsPopupBoundingBoxCrosshairColor.innerHTML = dictionary.COLOR;
+  editShapesButtonPopover.innerHTML = dictionary.EDIT_SHAPES;
+  boundingBoxButtonPopover.innerHTML = dictionary.NEW_BOUNDING_BOX;
+  polygonButtonPopover.innerHTML = dictionary.NEW_POLYGON;
+  addPointsButtonPopover.innerHTML = dictionary.ADD_NEW_POINTS_TO_POLYGON;
+  removePointsButtonPopover.innerHTML = dictionary.REMOVE_POLYGON_POINTS;
+  uploadDatasetsButtonPopover.innerHTML = dictionary.UPLOAD_DATASETS;
+  exportDatasetsButtonPopover.innerHTML = dictionary.EXPORT_DATASETS;
 }
 
 function assignTextElements() {
@@ -33,6 +91,35 @@ function assignTextElements() {
   labellerModalSubmitButton = document.getElementById('labeller-modal-submit-button');
   labellerModalCancelButton = document.getElementById('labeller-modal-cancel-button');
   machineLearningModalTitle = document.getElementById('machine-learning-modal-title');
+  machineLearningModalLoadingText = document.getElementById('machine-learning-modal-loading-text');
+  machineLearningModalStartButton = document.getElementById('machine-learning-modal-initiate-start-button');
+  machineLearningModalCancelButton = document.getElementById('machine-learning-modal-initiate-cancel-button');
+  machineLearningModalGeneratedLabelsSubmitButton = document.getElementById('machine-learning-modal-generated-labels-submit-button');
+  uploadDatasetsModalTitle = document.getElementById('upload-datasets-modal-title');
+  uploadDatasetsModalFormatTitle = document.getElementById('upload-datsets-modal-select-format-title');
+  uploadDatasetsModalAnnotationTableTitle = document.getElementById('upload-datasets-modal-upload-datasets-annotations-table-title');
+  uploadDatasetsModalImagesTableTitle = document.getElementById('upload-datasets-modal-upload-datasets-images-table-title');
+  uploadDatasetsModalStartButton = document.getElementById('upload-datasets-modal-start-button');
+  uploadDatasetsModalBackButton = document.getElementById('upload-datasets-modal-back-button');
+  uploadDatasetsModalUploadButton = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
+  uploadDatasetsModalCancelButton = document.getElementById('upload-datasets-modal-cancel-button');
+  uploadDatasetsModalYesButton = document.getElementById('upload-datsets-modal-yes-button');
+  uploadDatasetsModalNoButton = document.getElementById('upload-datasets-modal-no-button');
+  uploadDatasetsModalFinishButton = document.getElementById('upload-datasets-modal-finish-button');
+  exportDatasetsPopupExportButton = document.getElementById('export-datasets-popup-export-button');
+  settingsPopupLabelsVisibility = document.getElementById('settings-popup-labels-visibility-text');
+  settingsPopupMovableObjects = document.getElementById('settings-popup-movable-objects-text');
+  settingsPopupContinuousDrawing = document.getElementById('settings-popup-continuous-drawing-text');
+  settingsPopupBoundingBoxCrosshair = document.getElementById('settings-popup-bounding-box-crosshair-text');
+  settingsPopupBoundingBoxCrosshairVisibility = document.getElementById('settings-popup-bounding-box-crosshair-visibility-text');
+  settingsPopupBoundingBoxCrosshairColor = document.getElementById('settings-popup-bounding-box-crosshair-color-text');
+  editShapesButtonPopover = document.getElementById('edit-shapes-button-popover');
+  boundingBoxButtonPopover = document.getElementById('bounding-box-button-popover');
+  polygonButtonPopover = document.getElementById('polygon-button-popover');
+  addPointsButtonPopover = document.getElementById('add-points-button-popover');
+  removePointsButtonPopover = document.getElementById('remove-points-button-popover');
+  uploadDatasetsButtonPopover = document.getElementById('upload-datasets-button-popover');
+  exportDatasetsButtonPopover = document.getElementById('export-datasets-button-popover');
 }
 
 export {

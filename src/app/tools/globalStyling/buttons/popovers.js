@@ -135,7 +135,7 @@ function removeUploadImagesButtonPopoverBugFix() {
 }
 
 function addPopoverFunctionalityToButtons() {
-  addPopoverFunctionalityToButton('edit-shapes-button', 'default-button-popover');
+  addPopoverFunctionalityToButton('edit-shapes-button', 'edit-shapes-button-popover');
   addPopoverFunctionalityToButton('create-bounding-box-button', 'bounding-box-button-popover');
   addPopoverFunctionalityToButton('create-polygon-button', 'polygon-button-popover');
   addPopoverFunctionalityToButton('add-points-button', 'add-points-button-popover');

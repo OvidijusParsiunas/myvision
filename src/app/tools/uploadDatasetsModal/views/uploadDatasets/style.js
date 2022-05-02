@@ -495,7 +495,7 @@ function assignUploadDatasetsViewLocalVariables() {
   finishButtonElement = document.getElementById('upload-datasets-modal-finish-button');
   imagesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table');
   imagesTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table-outer-container');
-  annotationsTableTitle = document.getElementById('upload-datasets-modal-upload=datasets-annotations-table-title');
+  annotationsTableTitle = document.getElementById('upload-datasets-modal-upload-datasets-annotations-table-title');
   annotationsTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table-outer-container');
   classesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-classes-table');
   annotationsTableElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table');
