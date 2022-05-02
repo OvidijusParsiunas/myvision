@@ -45,8 +45,10 @@ function validateImageFile(parsedObj, validAnnotationFiles) {
 
 function checkbndBoxTag(object) {
   const requiredProperties = {
+    // WORK: number
     xmin: 'number', ymin: 'number', xmax: 'number', ymax: 'number',
   };
+  // WORK: TAGS_STRING
   const result = checkObjectProperties(requiredProperties, object,
     XML_POSTFIX, TAGS_STRING);
   if (result.error) { return result; }
@@ -54,6 +56,7 @@ function checkbndBoxTag(object) {
 }
 
 function checkObjectTagChildTags(parsedObj) {
+  // WORK: string, object, array
   const requiredProperties = { name: 'number|string', bndbox: 'object' };
   const objectTag = parsedObj.annotation.object;
   if (Array.isArray(objectTag)) {

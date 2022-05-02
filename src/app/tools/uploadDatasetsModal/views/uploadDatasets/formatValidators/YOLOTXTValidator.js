@@ -59,6 +59,7 @@ function checkAllRows(rows) {
     const requiredProperties = {
       'class (1)': 'number', 'x (2)': 'number', 'y (3)': 'number', 'width (4)': 'number', 'height (5)': 'number',
     };
+    // WORK: ATTRIBUTES_STRING
     const result = checkObjectProperties(requiredProperties, annotationFields,
       TXT_POSTFIX, ATTRIBUTES_STRING);
     if (result.error) {
@@ -77,6 +78,7 @@ function validateAnnotationsAgainstActiveClassesFile(parsedObj, activeClassesFil
   const numberOfClasses = activeClassesFile.body.annotationData.length;
   for (let i = 0; i < annotationData.length; i += 1) {
     if (Math.abs(annotationData[i][0]) > numberOfClasses - 1) {
+      // WORK
       return { error: true, message: `This file contains a class number of ${annotationData[i][0]}, however the classes file only contains ${numberOfClasses} class(es) with the first reference starting from 0` };
     }
   }

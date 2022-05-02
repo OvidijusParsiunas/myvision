@@ -59,6 +59,7 @@ function checkRegionAttributesProperty(parsedObj) {
       const result = checkObjectProperties(requiredProperties, regions[y].region_attributes,
         JSON_POSTFIX, PROPERTIES_STRING);
       if (result.error) {
+        // WORK
         result.message += ' -> in region_attributes';
         return result;
       }
@@ -77,6 +78,7 @@ function checkShapeAttributesPolygonProperty(region) {
   if (result.error) { return result; }
   if (region.shape_attributes.all_points_x.length
       !== region.shape_attributes.all_points_y.length) {
+    // WORK
     return { error: true, message: 'all_points_x and all_points_y arrays must have equal size' };
   }
   result = checkArrayElements(region.shape_attributes.all_points_x, 'all_points_x', JSON_POSTFIX,
@@ -108,6 +110,7 @@ function checkShapeAttributesProperty(parsedObj) {
       let result = checkObjectProperties(requiredProperties, region.shape_attributes,
         JSON_POSTFIX, PROPERTIES_STRING);
       if (result.error) {
+        // WORK
         result.message += ' -> in shape_attributes';
         return result;
       }
@@ -124,6 +127,7 @@ function checkShapeAttributesProperty(parsedObj) {
           return result;
         }
       } else {
+        // WORK
         return { error: true, message: `The following shape type is not supported: ${region.shape_attributes.name} -> in shape_attributes` };
       }
     }
@@ -140,6 +144,7 @@ function checkRegionsProperty(parsedObj) {
       const result = checkObjectProperties(requiredProperties, regions[y],
         JSON_POSTFIX, PROPERTIES_STRING);
       if (result.error) {
+        // WORK
         result.message += ' -> in regions';
         return result;
       }
@@ -155,6 +160,7 @@ function checkAnnotationObjectsProperties(parsedObj) {
     const result = checkObjectProperties(requiredProperties, parsedObj[objectKeyNames[i]],
       JSON_POSTFIX, PROPERTIES_STRING);
     if (result.error) {
+      // WORK
       result.message += ' -> in annotation object';
       return result;
     }
