@@ -13,7 +13,7 @@ export default {
   CHOOSE_FORMAT: 'Choose Format',
   ANNOTATIONS_JSON: 'Annotations (.json)',
   LABELS: 'Labels',
-  IMAGES: 'Images',
+  IMAGES: 'Images:',
   EDIT_SHAPES: 'Edit Shapes (E)',
   NEW_BOUNDING_BOX: 'New Bounding box (W)',
   NEW_POLYGON: 'New Polygon (Q)',

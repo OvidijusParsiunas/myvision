@@ -13,7 +13,7 @@ export default {
   CHOOSE_FORMAT: '选择格式',
   ANNOTATIONS_JSON: '注释 (.json)',
   LABELS: '标签',
-  IMAGES: '图像',
+  IMAGES: '图像:',
   EDIT_SHAPES: '编辑形状 (E)',
   NEW_BOUNDING_BOX: '新边界框 (W)',
   NEW_POLYGON: '新多边形 (Q)',

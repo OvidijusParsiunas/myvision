@@ -1,125 +1,61 @@
 import { getDictionary } from './language';
 
-let welcomeModalDescriptionPar1 = null;
-let welcomeModalDescriptionPar2 = null;
-let welcomeModalDescriptionPar3 = null;
-let welcomeModalDescriptionPar4 = null;
-let startText = null;
-let labellerModalTitle = null;
-let labellerModalSubmitButton = null;
-let labellerModalCancelButton = null;
-let machineLearningModalTitle = null;
-let machineLearningModalLoadingText = null;
-let machineLearningModalStartButton = null;
-let machineLearningModalCancelButton = null;
-let machineLearningModalGeneratedLabelsSubmitButton = null;
-let uploadDatasetsModalTitle = null;
-let uploadDatasetsModalFormatTitle = null;
-let uploadDatasetsModalAnnotationTableTitle = null;
-let uploadDatasetsModalImagesTableTitle = null;
-let uploadDatasetsModalStartButton = null;
-let uploadDatasetsModalBackButton = null;
-let uploadDatasetsModalUploadButton = null;
-let uploadDatasetsModalCancelButton = null;
-let uploadDatasetsModalYesButton = null;
-let uploadDatasetsModalNoButton = null;
-let uploadDatasetsModalFinishButton = null;
-let exportDatasetsPopupExportButton = null;
-let settingsPopupLabelsVisibility = null;
-let settingsPopupMovableObjects = null;
-let settingsPopupContinuousDrawing = null;
-let settingsPopupBoundingBoxCrosshair = null;
-let settingsPopupBoundingBoxCrosshairVisibility = null;
-let settingsPopupBoundingBoxCrosshairColor = null;
-let editShapesButtonPopover = null;
-let boundingBoxButtonPopover = null;
-let polygonButtonPopover = null;
-let addPointsButtonPopover = null;
-let removePointsButtonPopover = null;
-let uploadDatasetsButtonPopover = null;
-let exportDatasetsButtonPopover = null;
+const textProperties = [
+  { id: 'welcome-modal-description-par-1', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_1' },
+  { id: 'welcome-modal-description-par-2', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_2' },
+  { id: 'welcome-modal-description-par-3', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_3' },
+  { id: 'welcome-modal-description-par-4', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_4' },
+  { id: 'start-text', dictionaryKey: 'START' },
+  { id: 'labeller-modal-title', dictionaryKey: 'LABEL_NAME' },
+  { id: 'labeller-modal-submit-button', dictionaryKey: 'SUBMIT' },
+  { id: 'labeller-modal-cancel-button', dictionaryKey: 'CANCEL' },
+  { id: 'machine-learning-modal-title', dictionaryKey: 'MODAL_TITLE' },
+  { id: 'machine-learning-modal-loading-text', dictionaryKey: 'LOADING' },
+  { id: 'machine-learning-modal-initiate-start-button', dictionaryKey: 'START' },
+  { id: 'machine-learning-modal-initiate-cancel-button', dictionaryKey: 'CANCEL' },
+  { id: 'machine-learning-modal-generated-labels-submit-button', dictionaryKey: 'SUBMIT' },
+  { id: 'upload-datasets-modal-title', dictionaryKey: 'UPLOAD_DATASETS' },
+  { id: 'upload-datsets-modal-select-format-title', dictionaryKey: 'CHOOSE_FORMAT' },
+  { id: 'upload-datasets-modal-upload-datasets-annotations-table-title', dictionaryKey: 'ANNOTATIONS_JSON' },
+  { id: 'upload-datasets-modal-upload-datasets-images-table-title', dictionaryKey: 'IMAGES' },
+  { id: 'upload-datasets-modal-start-button', dictionaryKey: 'START' },
+  { id: 'upload-datasets-modal-back-button', dictionaryKey: 'BACK' },
+  { id: 'upload-datasets-modal-upload-datasets-upload-button', dictionaryKey: 'UPLOAD' },
+  { id: 'upload-datasets-modal-cancel-button', dictionaryKey: 'CANCEL' },
+  { id: 'upload-datsets-modal-yes-button', dictionaryKey: 'YES' },
+  { id: 'upload-datasets-modal-no-button', dictionaryKey: 'NO' },
+  { id: 'upload-datasets-modal-finish-button', dictionaryKey: 'FINISH' },
+  { id: 'export-datasets-popup-export-button', dictionaryKey: 'EXPORT' },
+  { id: 'settings-popup-labels-visibility-text', dictionaryKey: 'LABEL_VISIBILITY' },
+  { id: 'settings-popup-movable-objects-text', dictionaryKey: 'MOVABLE_OBJECTS' },
+  { id: 'settings-popup-continuous-drawing-text', dictionaryKey: 'CONTINUOUS_DRAWING' },
+  { id: 'settings-popup-bounding-box-crosshair-text', dictionaryKey: 'BOUNDING_BOX_CROSSHAIR' },
+  { id: 'settings-popup-bounding-box-crosshair-visibility-text', dictionaryKey: 'VISIBILITY' },
+  { id: 'settings-popup-bounding-box-crosshair-color-text', dictionaryKey: 'COLOR' },
+  { id: 'edit-shapes-button-popover', dictionaryKey: 'EDIT_SHAPES' },
+  { id: 'bounding-box-button-popover', dictionaryKey: 'NEW_BOUNDING_BOX' },
+  { id: 'polygon-button-popover', dictionaryKey: 'NEW_POLYGON' },
+  { id: 'add-points-button-popover', dictionaryKey: 'ADD_NEW_POINTS_TO_POLYGON' },
+  { id: 'remove-points-button-popover', dictionaryKey: 'REMOVE_POLYGON_POINTS' },
+  { id: 'upload-datasets-button-popover', dictionaryKey: 'UPLOAD_DATASETS' },
+  { id: 'export-datasets-button-popover', dictionaryKey: 'EXPORT_DATASETS' },
+  { id: 'machine-learning-button-popover', dictionaryKey: 'MACHINE_LEARNING' },
+  { id: 'zoom-in-button-popover', dictionaryKey: 'ZOOM_IN' },
+  { id: 'zoom-out-button-popover', dictionaryKey: 'ZOOM_OUT' },
+  { id: 'image-list-title', dictionaryKey: 'IMAGES' },
+];
 
 function populateText() {
   const dictionary = getDictionary();
-  welcomeModalDescriptionPar1.innerHTML = dictionary.WELCOME_MODAL_DESCRIPTION_PAR_1;
-  welcomeModalDescriptionPar2.innerHTML = dictionary.WELCOME_MODAL_DESCRIPTION_PAR_2;
-  welcomeModalDescriptionPar3.innerHTML = dictionary.WELCOME_MODAL_DESCRIPTION_PAR_3;
-  welcomeModalDescriptionPar4.innerHTML = dictionary.WELCOME_MODAL_DESCRIPTION_PAR_4;
-  startText.innerHTML = dictionary.START;
-  labellerModalTitle.innerHTML = dictionary.LABEL_NAME;
-  labellerModalSubmitButton.innerHTML = dictionary.SUBMIT;
-  labellerModalCancelButton.innerHTML = dictionary.CANCEL;
-  machineLearningModalTitle.innerHTML = dictionary.MODAL_TITLE;
-  machineLearningModalLoadingText.innerHTML = dictionary.LOADING;
-  machineLearningModalStartButton.innerHTML = dictionary.START;
-  machineLearningModalCancelButton.innerHTML = dictionary.CANCEL;
-  machineLearningModalGeneratedLabelsSubmitButton.innerHTML = dictionary.SUBMIT;
-  uploadDatasetsModalTitle.innerHTML = dictionary.UPLOAD_DATASETS;
-  uploadDatasetsModalFormatTitle.innerHTML = dictionary.CHOOSE_FORMAT;
-  uploadDatasetsModalAnnotationTableTitle.innerHTML = dictionary.ANNOTATIONS_JSON;
-  uploadDatasetsModalImagesTableTitle.innerHTML = dictionary.IMAGES;
-  uploadDatasetsModalStartButton.innerHTML = dictionary.START;
-  uploadDatasetsModalBackButton.innerHTML = dictionary.BACK;
-  uploadDatasetsModalUploadButton.innerHTML = dictionary.UPLOAD;
-  uploadDatasetsModalCancelButton.innerHTML = dictionary.UPLOAD;
-  uploadDatasetsModalYesButton.innerHTML = dictionary.YES;
-  uploadDatasetsModalNoButton.innerHTML = dictionary.NO;
-  uploadDatasetsModalFinishButton.innerHTML = dictionary.FINISH;
-  exportDatasetsPopupExportButton.innerHTML = dictionary.EXPORT;
-  settingsPopupLabelsVisibility.innerHTML = dictionary.LABEL_VISIBILITY;
-  settingsPopupMovableObjects.innerHTML = dictionary.MOVABLE_OBJECTS;
-  settingsPopupContinuousDrawing.innerHTML = dictionary.CONTINUOUS_DRAWING;
-  settingsPopupBoundingBoxCrosshair.innerHTML = dictionary.BOUNDING_BOX_CROSSHAIR;
-  settingsPopupBoundingBoxCrosshairVisibility.innerHTML = dictionary.VISIBILITY;
-  settingsPopupBoundingBoxCrosshairColor.innerHTML = dictionary.COLOR;
-  editShapesButtonPopover.innerHTML = dictionary.EDIT_SHAPES;
-  boundingBoxButtonPopover.innerHTML = dictionary.NEW_BOUNDING_BOX;
-  polygonButtonPopover.innerHTML = dictionary.NEW_POLYGON;
-  addPointsButtonPopover.innerHTML = dictionary.ADD_NEW_POINTS_TO_POLYGON;
-  removePointsButtonPopover.innerHTML = dictionary.REMOVE_POLYGON_POINTS;
-  uploadDatasetsButtonPopover.innerHTML = dictionary.UPLOAD_DATASETS;
-  exportDatasetsButtonPopover.innerHTML = dictionary.EXPORT_DATASETS;
+  textProperties.forEach((textProperty) => {
+    textProperty.element.innerHTML = dictionary[textProperty.dictionaryKey];
+  });
 }
 
 function assignTextElements() {
-  welcomeModalDescriptionPar1 = document.getElementById('welcome-modal-description-par-1');
-  welcomeModalDescriptionPar2 = document.getElementById('welcome-modal-description-par-2');
-  welcomeModalDescriptionPar3 = document.getElementById('welcome-modal-description-par-3');
-  welcomeModalDescriptionPar4 = document.getElementById('welcome-modal-description-par-4');
-  startText = document.getElementById('start-text');
-  labellerModalTitle = document.getElementById('labeller-modal-title');
-  labellerModalSubmitButton = document.getElementById('labeller-modal-submit-button');
-  labellerModalCancelButton = document.getElementById('labeller-modal-cancel-button');
-  machineLearningModalTitle = document.getElementById('machine-learning-modal-title');
-  machineLearningModalLoadingText = document.getElementById('machine-learning-modal-loading-text');
-  machineLearningModalStartButton = document.getElementById('machine-learning-modal-initiate-start-button');
-  machineLearningModalCancelButton = document.getElementById('machine-learning-modal-initiate-cancel-button');
-  machineLearningModalGeneratedLabelsSubmitButton = document.getElementById('machine-learning-modal-generated-labels-submit-button');
-  uploadDatasetsModalTitle = document.getElementById('upload-datasets-modal-title');
-  uploadDatasetsModalFormatTitle = document.getElementById('upload-datsets-modal-select-format-title');
-  uploadDatasetsModalAnnotationTableTitle = document.getElementById('upload-datasets-modal-upload-datasets-annotations-table-title');
-  uploadDatasetsModalImagesTableTitle = document.getElementById('upload-datasets-modal-upload-datasets-images-table-title');
-  uploadDatasetsModalStartButton = document.getElementById('upload-datasets-modal-start-button');
-  uploadDatasetsModalBackButton = document.getElementById('upload-datasets-modal-back-button');
-  uploadDatasetsModalUploadButton = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
-  uploadDatasetsModalCancelButton = document.getElementById('upload-datasets-modal-cancel-button');
-  uploadDatasetsModalYesButton = document.getElementById('upload-datsets-modal-yes-button');
-  uploadDatasetsModalNoButton = document.getElementById('upload-datasets-modal-no-button');
-  uploadDatasetsModalFinishButton = document.getElementById('upload-datasets-modal-finish-button');
-  exportDatasetsPopupExportButton = document.getElementById('export-datasets-popup-export-button');
-  settingsPopupLabelsVisibility = document.getElementById('settings-popup-labels-visibility-text');
-  settingsPopupMovableObjects = document.getElementById('settings-popup-movable-objects-text');
-  settingsPopupContinuousDrawing = document.getElementById('settings-popup-continuous-drawing-text');
-  settingsPopupBoundingBoxCrosshair = document.getElementById('settings-popup-bounding-box-crosshair-text');
-  settingsPopupBoundingBoxCrosshairVisibility = document.getElementById('settings-popup-bounding-box-crosshair-visibility-text');
-  settingsPopupBoundingBoxCrosshairColor = document.getElementById('settings-popup-bounding-box-crosshair-color-text');
-  editShapesButtonPopover = document.getElementById('edit-shapes-button-popover');
-  boundingBoxButtonPopover = document.getElementById('bounding-box-button-popover');
-  polygonButtonPopover = document.getElementById('polygon-button-popover');
-  addPointsButtonPopover = document.getElementById('add-points-button-popover');
-  removePointsButtonPopover = document.getElementById('remove-points-button-popover');
-  uploadDatasetsButtonPopover = document.getElementById('upload-datasets-button-popover');
-  exportDatasetsButtonPopover = document.getElementById('export-datasets-button-popover');
+  textProperties.forEach((textProperty) => {
+    textProperty.element = document.getElementById(textProperty.id);
+  });
 }
 
 export {

@@ -298,18 +298,19 @@
       <button id="machine-learning-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="displayMachineLearningModal(event)" onmouseenter="cancelPulseAnimation(this)">
         <img id="machine-learning-icon" src="assets/svg/electronics.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="machine-learning-button-popover">Machine Learning</div>
+      <div class="core-button-hover-popover" id="machine-learning-button-popover"></div>
       <button id="zoom-in-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="zoom('in', event)">
         <img id="zoom-in-icon" src="assets/svg/multimedia (1).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="zoom-in-button-popover">Zoom In</div>
+      <div class="core-button-hover-popover" id="zoom-in-button-popover"></div>
       <button id="zoom-out-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="zoom('out', event)">
         <img id="zoom-out-icon" src="assets/svg/magnifying-glass.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="zoom-out-button-popover">Zoom Out</div>
+      <div class="core-button-hover-popover" id="zoom-out-button-popover"></div>
       <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="toggleSettingsPopup(event)">
         <img id="settings-icon" src="assets/svg/cogwheels.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
       </button>
+      <!-- WORK -->
       <div class="core-button-hover-popover" id="settings-button-popover">Settings</div>
     </div>
     <div id="right-side-bar">
@@ -322,6 +323,7 @@
                 <img class="remove-objects-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeLabel(this, event)">
               </button>
             </div>
+            <!-- WORK -->
             <div id="remove-labels-button-popover" class="core-button-hover-popover label-list-button-hover-popover-v-poisition">Remove Label</div>
           </div>
           <div id="label-list-overflow-parent" onscroll="labelListScroll()">
@@ -330,17 +332,19 @@
         </div>
         <div id="image-list-component" class="right-side-bar-component">
           <div id="image-list-title-parent" class="right-side-bar-component-title">
-            <div class="right-side-bar-title-text">Images:</div>
+            <div id="image-list-title" class="right-side-bar-title-text"></div>
             <div id="remove-images-button-container" class="remove-objects-button-container">
               <button id="remove-images-button" class="toolkit-button toolkit-button-default remove-objects-button">
                 <img class="remove-objects-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeImage(event)">
               </button>
             </div>
+            <!-- WORK -->
             <div id="remove-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Remove Image</div>
             <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
             <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload(event)">
               <img id="upload-images-icon" src="assets/svg/method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
             </button>
+            <!-- WORK -->
             <div id="upload-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Upload Images</div>
           </div>
           <div id="image-list-drag-and-drop-overlay" style="display: none"></div>
@@ -353,6 +357,7 @@
         <button id="previous-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('previous', event)">
           &lt;
           <div id="previous-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
+            <!-- WORK -->
             Previous Image (
             <div id="image-switch-button-popover-arrow-left" class="image-switch-button-popover-arrow">←</div>
             <div class="image-switch-button-popover-closing-bracket">)</div>
@@ -362,6 +367,7 @@
         <button id="next-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('next', event)">
           &gt;
           <div id="next-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
+            <!-- WORK -->
             Next Image (
             <div id="image-switch-button-popover-arrow-right" class="image-switch-button-popover-arrow">→</div>
             <div class="image-switch-button-popover-closing-bracket">)</div>
