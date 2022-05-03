@@ -19,14 +19,10 @@ function getAvailableLanguages() {
   return availableLanguages;
 }
 
-function getDictionary() {
-  return activeDictionary;
-}
-
 function getTextFromDictionary(dictionaryKey) {
   return activeDictionary[dictionaryKey];
 }
 
 export {
-  getAvailableLanguages, getLanguage, setLanguage, getDictionary, getTextFromDictionary,
+  getAvailableLanguages, getLanguage, setLanguage, getTextFromDictionary,
 };

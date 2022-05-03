@@ -1,4 +1,4 @@
-import { getDictionary } from './language';
+import { getTextFromDictionary } from './language';
 
 const textProperties = [
   { id: 'welcome-modal-title', dictionaryKey: 'WELCOME' },
@@ -65,9 +65,8 @@ const textProperties = [
 ];
 
 function populateText() {
-  const dictionary = getDictionary();
   textProperties.forEach((textProperty) => {
-    textProperty.element.innerHTML = dictionary[textProperty.dictionaryKey];
+    textProperty.element.innerHTML = getTextFromDictionary(textProperty.dictionaryKey);
   });
 }
 

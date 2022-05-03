@@ -1,11 +1,11 @@
+import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import { getReuseAlreadyUploadedImagesState } from '../../../state';
+import { getAllImageData } from '../../../../imageList/imageList';
+import { checkObjectProperties } from './sharedUtils';
 import {
   IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE,
   TXT_POSTFIX, ATTRIBUTES_STRING, ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR,
 } from '../../../consts';
-import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
-import { getReuseAlreadyUploadedImagesState } from '../../../state';
-import { checkObjectProperties } from './sharedUtils';
 
 function isImageAlreadyUploaded(newImageName) {
   const images = getAllImageData();
