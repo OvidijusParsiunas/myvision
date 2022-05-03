@@ -3,9 +3,10 @@ import {
   ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
-import { getReuseAlreadyUploadedImagesState } from '../../../state';
+import { getTextFromDictionary } from '../../../../text/languages/language';
 import { checkObjectProperties, checkArrayElements } from './sharedUtils';
+import { getReuseAlreadyUploadedImagesState } from '../../../state';
+import { getAllImageData } from '../../../../imageList/imageList';
 
 function checkAnnotationsMapToCategories(parsedObj) {
   const { annotations, categories } = parsedObj;
@@ -177,7 +178,7 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
         };
       }
     }
-    return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };
+    return { error: true, message: getTextFromDictionary('UPLOAD_DATASETS_FORMAT_VALIDATAOR_IMAGE_NOT_SPECIFIED'), alreadyUploaded };
   }
   return { error: false, message: '', alreadyUploaded };
 }

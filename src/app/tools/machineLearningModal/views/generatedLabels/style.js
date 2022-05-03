@@ -1,12 +1,13 @@
+import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
+import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getTextFromDictionary } from '../../../text/languages/language';
 import { getScrollbarWidth } from '../../../globalStyling/style';
 import scrollIntoViewIfNeeded from '../../../utils/tableUtils';
+import IS_FIREFOX from '../../../utils/browserType';
 import {
   getCaretPositionOnDiv, emptyContentEditableFirefoxBugFix,
   isVerticalScrollPresent, getDefaultFont, setCaretPositionOnDiv,
 } from '../../../utils/elementCaretUtils';
-import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
-import IS_FIREFOX from '../../../utils/browserType';
 
 let editingActive = false;
 let activeTextRow = null;
@@ -293,7 +294,7 @@ function populateGeneratedLabelsTable() {
 }
 
 function changeModalDescription() {
-  descriptionElement.innerHTML = 'The following names were automatically assigned to the generated objects, you can edit them below:';
+  descriptionElement.innerHTML = getTextFromDictionary('ML_SUCCESSFUL_ANNOTATION_RESULT');
 }
 
 function displayDescription() {

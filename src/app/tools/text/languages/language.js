@@ -23,6 +23,10 @@ function getDictionary() {
   return activeDictionary;
 }
 
+function getTextFromDictionary(dictionaryKey) {
+  return activeDictionary[dictionaryKey];
+}
+
 export {
-  getAvailableLanguages, getLanguage, setLanguage, getDictionary,
+  getAvailableLanguages, getLanguage, setLanguage, getDictionary, getTextFromDictionary,
 };

@@ -3,8 +3,9 @@ import {
   ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
+import { getTextFromDictionary } from '../../../../text/languages/language';
 import { getReuseAlreadyUploadedImagesState } from '../../../state';
+import { getAllImageData } from '../../../../imageList/imageList';
 import { checkObjectProperties } from './sharedUtils';
 
 function checkObject(JSONObject, validators) {
@@ -46,7 +47,7 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
         };
       }
     }
-    return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };
+    return { error: true, message: getTextFromDictionary('UPLOAD_DATASETS_FORMAT_VALIDATAOR_IMAGE_NOT_SPECIFIED'), alreadyUploaded };
   }
   return { error: false, message: '', alreadyUploaded };
 }

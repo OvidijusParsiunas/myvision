@@ -189,8 +189,8 @@
         Are you sure you want to remove the selected image?
       </div>
       <div id="remove-images-modal-buttons" class="buttons modal-buttons">
-        <div class="popup-label-button popup-proceed-button" onclick="approveRemoveImage()">Yes</div>
-        <div class="popup-label-button popup-cancel-button" onclick="cancelRemoveImage()">No</div>
+        <div id="remove-images-modal-yes-button" class="popup-label-button popup-proceed-button" onclick="approveRemoveImage()"></div>
+        <div id="remove-images-modal-no-button" class="popup-label-button popup-cancel-button" onclick="cancelRemoveImage()"></div>
       </div>
       <div id="remove-images-modal-checkbox-parent">
         <input id="remove-images-modal-checkbox" class="checkbox" type="checkbox" name="something" onclick="toggleDoNotShowRemoveImageModalAgain()">
@@ -199,7 +199,7 @@
       </div>
     </div>
       <div id="export-datasets-popup-parent" class="export-datasets-popup-item" style="display: none;">
-        <div id="export-datasets-popup-title" class="export-datasets-popup-item small-title">Choose format:</div>
+        <div id="export-datasets-popup-title" class="export-datasets-popup-item small-title"></div>
         <div id="parent-table-element" class="export-datasets-popup-item">
           <table id="export-datasets-table" class="export-datasets-popup-item">
             <tr><td class="export-datasets-popup-item data-format-table-row-data bounding-box-data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text generic-format-option-text">COCO JSON</div>
@@ -317,7 +317,7 @@
       <div id="right-side-bar-components">
         <div id="label-list-component" class="right-side-bar-component">
           <div id="label-list-title-parent" class="right-side-bar-component-title">
-            <div class="right-side-bar-title-text">Labels:</div>
+            <div id="label-list-title" class="right-side-bar-title-text"></div>
             <div id="remove-labels-button-container" class="remove-objects-button-container">
               <button id="remove-labels-button" class="toolkit-button toolkit-button-default remove-objects-button">
                 <img class="remove-objects-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeLabel(this, event)">
@@ -363,6 +363,7 @@
             <div class="image-switch-button-popover-closing-bracket">)</div>
           </div>
         </button>
+        <!-- WORK -->
         <div id="image-name">Image name</div>
         <button id="next-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('next', event)">
           &gt;

@@ -1,4 +1,5 @@
 import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getTextFromDictionary } from '../../../text/languages/language';
 
 let descriptionElement = null;
 let startButtonElement = null;
@@ -39,10 +40,10 @@ function moveDescriptionToLowerPosition() {
 
 function getDefaultDescriptionMarkup() {
   return `
-    Upload existing images/datasets and continue working on them in MyVision.
+    ${getTextFromDictionary('UPLOAD_DATASETS_MODAL_DESCRIPTION_PAR_1')}
     <br>
     <div class="upload-datasets-modal-description-break"></div>
-    It is important to note that everything you upload will never leave the privacy of your computer.`;
+    ${getTextFromDictionary('UPLOAD_DATASETS_MODAL_DESCRIPTION_PAR_2')}`;
 }
 
 function prepareDescriptionView() {
