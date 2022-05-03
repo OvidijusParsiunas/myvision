@@ -1,8 +1,8 @@
 import chineseMadarin from './dictionaries/chineseMandarin';
 import english from './dictionaries/english';
 
-const availableLanguages = ['EN', 'CH'];
-const languageToDictionary = { EN: english, CH: chineseMadarin };
+const availableLanguages = ['EN', 'CN'];
+const languageToDictionary = { EN: english, CN: chineseMadarin };
 let activeLanguage = availableLanguages[0];
 let activeDictionary = languageToDictionary[activeLanguage];
 

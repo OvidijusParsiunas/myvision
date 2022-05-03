@@ -21,8 +21,7 @@
   <div id="crosshair-line-x" class="crosshair-line"></div>
   <div id="crosshair-line-y" class="crosshair-line"></div>
   <div id="welcome-modal-parent" class="modal-parent welcome-modal-base">
-    <!-- WORK -->
-    <div class="modal-title small-title">Welcome</div>
+    <div id="welcome-modal-title" class="modal-title small-title"></div>
     <div class="modal-title-border-line"></div>
     <div id="welcome-modal-description" class="modal-description">
       <img id="welcome-modal-vision-ai-logo" src="assets/svg/eye 88.svg" draggable="false" class="welcome-modal-icon" alt="visibility">
@@ -98,15 +97,11 @@
       <div id="machine-learning-modal-info-messages" class="modal-messages"></div>
       <div id="machine-learning-modal-initiate-machine-learning-buttons" class="buttons modal-buttons">
           <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button" onclick="startMachineLearning()"></div>
-          <!-- WORK -->
-          <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
-          <!-- WORK -->
-          <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
+          <div id="machine-learning-modal-initiate-next-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()"></div>
+          <div id="machine-learning-modal-initiate-retry-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()"></div>
           <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelMLModal()"></div>
-          <!-- WORK -->
-          <div id="machine-learning-modal-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images</div>
-          <!-- WORK -->
-          <div id="machine-learning-modal-initiate-new-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')">New Images</div>
+          <div id="machine-learning-modal-initiate-all-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')"></div>
+          <div id="machine-learning-modal-initiate-new-images-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')"></div>
         </div>
       <div id="machine-learning-modal-generated-labels-outer-container" style="display: none">
         <div id="machine-learning-modal-generated-labels-inner-container">
@@ -121,8 +116,7 @@
         </div>
       </div>
       <div id="machine-learning-modal-no-objects-buttons" style="display: none" class="buttons modal-buttons">
-          <!-- WORK -->
-          <div id="machine-learning-modal-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningModal()">Close</div>
+          <div id="machine-learning-modal-no-objects-close-button" class="popup-label-button popup-cancel-button" onclick="closeMachineLearningModal()"></div>
       </div>
     </div>
     <div id="upload-datasets-modal-parent" class="modal-parent" style="display: none" onmousemove="trackMouseMoveEvents(event)">
@@ -172,8 +166,7 @@
         <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()"></div>
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()"></div>
-        <!-- WORK -->
-        <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
+        <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()"></div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal(true)"></div>
         <div id="upload-datsets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)"></div>
         <div id="upload-datasets-modal-no-button" style="display: none" class="popup-label-button popup-cancel-button" onclick="reuseAlreadyExistingImages(false)"></div>
@@ -181,8 +174,7 @@
       </div>
     </div>
     <div id="remove-images-modal-parent" onmousemove="trackMouseMoveEvents(event)" style="display: none" class="modal-parent">
-      <!-- WORK -->
-      <div class="modal-title small-title">Remove image</div>
+      <div id="remove-images-modal-title" class="modal-title small-title">Remove image</div>
       <div class="modal-title-border-line"></div>
       <div id="remove-images-modal-description" class="modal-description">
         <!-- WORK -->
@@ -310,8 +302,7 @@
       <button id="settings-button" class="settings-popup-item toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="toggleSettingsPopup(event)">
         <img id="settings-icon" src="assets/svg/cogwheels.svg" draggable="false" class="settings-popup-item toolkit-button-icon" alt="visibility">
       </button>
-      <!-- WORK -->
-      <div class="core-button-hover-popover" id="settings-button-popover">Settings</div>
+      <div class="core-button-hover-popover" id="settings-button-popover"></div>
     </div>
     <div id="right-side-bar">
       <div id="right-side-bar-components">
@@ -323,8 +314,7 @@
                 <img class="remove-objects-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeLabel(this, event)">
               </button>
             </div>
-            <!-- WORK -->
-            <div id="remove-labels-button-popover" class="core-button-hover-popover label-list-button-hover-popover-v-poisition">Remove Label</div>
+            <div id="remove-labels-button-popover" class="core-button-hover-popover label-list-button-hover-popover-v-poisition"></div>
           </div>
           <div id="label-list-overflow-parent" onscroll="labelListScroll()">
             <table id="label-list"></table>
@@ -338,14 +328,12 @@
                 <img class="remove-objects-button-icon" src="assets/svg/rubbish-can.svg" draggable="false" alt="visibility" onmouseup="removeImage(event)">
               </button>
             </div>
-            <!-- WORK -->
-            <div id="remove-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Remove Image</div>
+            <div id="remove-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position"></div>
             <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
             <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload(event)">
               <img id="upload-images-icon" src="assets/svg/method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
             </button>
-            <!-- WORK -->
-            <div id="upload-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Upload Images</div>
+            <div id="upload-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position"></div>
           </div>
           <div id="image-list-drag-and-drop-overlay" style="display: none"></div>
           <div id="image-list-image-container"></div>
@@ -357,19 +345,16 @@
         <button id="previous-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('previous', event)">
           &lt;
           <div id="previous-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
-            <!-- WORK -->
-            Previous Image (
+            <span id="previous-image-button-popover-text"></span>
             <div id="image-switch-button-popover-arrow-left" class="image-switch-button-popover-arrow">←</div>
             <div class="image-switch-button-popover-closing-bracket">)</div>
           </div>
         </button>
-        <!-- WORK -->
-        <div id="image-name">Image name</div>
+        <div id="image-name"></div>
         <button id="next-image-button" class="toolkit-button toolkit-button-disabled image-switch-button image-switch-button-disabled" onclick="switchImage('next', event)">
           &gt;
           <div id="next-image-button-popover" class="core-button-hover-popover image-switch-button-hover-popover">
-            <!-- WORK -->
-            Next Image (
+            <span id="next-image-button-popover-text"></span>
             <div id="image-switch-button-popover-arrow-right" class="image-switch-button-popover-arrow">→</div>
             <div class="image-switch-button-popover-closing-bracket">)</div>
           </div>
