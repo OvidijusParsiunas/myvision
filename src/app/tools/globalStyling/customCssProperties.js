@@ -1,3 +1,5 @@
+import { getActiveLanguage } from '../text/languages/language';
+
 let screenSizeDelta = 1;
 
 // when setting delta to bigger than 1.1, will need to consider zoom,
@@ -22,4 +24,11 @@ function setScreenSizeDelta() {
   return screenSizeDelta;
 }
 
-export { setScreenSizeDelta, getScreenSizeDelta };
+function setLanguageFontDelta() {
+  const modalButtonFontDelta = screenSizeDelta > 1 && getActiveLanguage() === 'EN' ? 0 : 1;
+  const popupButtonFontDelta = screenSizeDelta > 1 && getActiveLanguage() === 'EN' ? 0 : 1.5;
+  document.documentElement.style.setProperty('--modal-button-font-delta', `${modalButtonFontDelta}px`);
+  document.documentElement.style.setProperty('--popup-button-font-delta', `${popupButtonFontDelta}px`);
+}
+
+export { setScreenSizeDelta, getScreenSizeDelta, setLanguageFontDelta };

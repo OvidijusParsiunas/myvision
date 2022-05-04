@@ -1,4 +1,13 @@
 import { changeLabelText, changeLabelVisibilityById, changeVisibilityButtonActiveFlagById } from '../../canvas/objects/label/label';
+import { setDoNotDisplayButtonAfterTimeoutStateToFalse } from '../globalStyling/buttons/popovers';
+import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
+import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
+import { getScreenSizeDelta } from '../globalStyling/customCssProperties';
+import { resetLabellerModalOptions } from '../labellerModal/style';
+import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
+import { getScrollbarWidth } from '../globalStyling/style';
+import scrollIntoViewIfNeeded from '../utils/tableUtils';
+import IS_FIREFOX from '../utils/browserType';
 import {
   getShapeById, changeShapeVisibilityById, getShapeVisibilityById,
   highlightShapeFill, defaultShapeFill, changeShapeColorById, changeShapeLabelText,
@@ -28,19 +37,10 @@ import {
   highlightActiveIcon, highlightDefaultIcon, switchToHighlightedActiveIcon,
   switchToHighlightedDefaultIcon, switchToHighlightedDefaultVisibilityIcon,
 } from './iconHighlightUtils';
-import IS_FIREFOX from '../utils/browserType';
-import { resetLabellerModalOptions } from '../labellerModal/style';
-import { updateNumberOfUncheckedMLImages } from '../imageList/imageListML';
-import { getScrollbarWidth } from '../globalStyling/style';
-import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import {
   isVerticalScrollPresent, emptyContentEditableFirefoxBugFix,
   setCaretPositionOnDiv, getCaretPositionOnDiv, getDefaultFont,
 } from '../utils/elementCaretUtils';
-import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
-import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
-import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
-import { setDoNotDisplayButtonAfterTimeoutStateToFalse } from '../globalStyling/buttons/popovers';
 
 let isEditingLabel = false;
 let keyDownEventTimeOut = 0;

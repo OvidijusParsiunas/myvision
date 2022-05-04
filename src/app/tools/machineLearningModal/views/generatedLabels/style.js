@@ -1,5 +1,5 @@
 import { preprocessPastedText, preprocessLabelText } from '../../../utils/textProcessingUtils';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
 import { getTextFromDictionary } from '../../../text/languages/language';
 import { getScrollbarWidth } from '../../../globalStyling/style';
 import scrollIntoViewIfNeeded from '../../../utils/tableUtils';

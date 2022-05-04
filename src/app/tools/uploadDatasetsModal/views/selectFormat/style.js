@@ -1,5 +1,5 @@
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
 import { getAvailableFormats } from '../../state';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let descriptionElement = null;
 let cancelButtonElement = null;

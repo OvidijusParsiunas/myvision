@@ -1,7 +1,7 @@
 import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark';
 import { closeWelcomeModal as closeWelcomeModalStyle } from '../style';
 import initialiseLanguageBoundComponents from '../initAfterModalClose';
-import { setLanguage } from '../../text/languages/language';
+import { setActiveLanguage } from '../../text/languages/language';
 import { populateText } from '../../text/languages/style';
 
 function closeWelcomeModal() {
@@ -14,7 +14,7 @@ function closeWelcomeModal() {
 }
 
 function switchLanguage(language) {
-  setLanguage(language);
+  setActiveLanguage(language);
   populateText();
 }
 

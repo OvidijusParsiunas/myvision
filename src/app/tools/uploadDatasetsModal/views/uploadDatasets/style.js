@@ -2,7 +2,7 @@ import {
   ANNOTATIONS_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, IMAGES_TABLE_INDICATOR,
 } from '../../consts';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
 import { getTextFromDictionary } from '../../../text/languages/language';
 import IS_FIREFOX from '../../../utils/browserType';
 

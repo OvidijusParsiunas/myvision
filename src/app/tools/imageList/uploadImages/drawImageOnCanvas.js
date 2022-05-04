@@ -1,7 +1,7 @@
 import fabric from 'fabric';
 import { getLeftSideBarWidth, getRightSideBarWidth } from '../../globalStyling/style';
+import { getScreenSizeDelta } from '../../globalStyling/customCssProperties';
 import IS_FIREFOX from '../../utils/browserType';
-import { getScreenSizeDelta } from '../../globalStyling/screenSizeDelta';
 
 const initialFileStatus = {};
 const newFileStatus = { uploaded: false, name: null };

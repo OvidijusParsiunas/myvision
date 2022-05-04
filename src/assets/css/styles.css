@@ -577,7 +577,9 @@ input:focus {
 }
 
 .popup-label-buttons {
-  font-size: calc(14.55px / var(--screen-size-delta));
+  font-size: calc(
+    (14.55px / var(--screen-size-delta)) - var(--popup-button-font-delta)
+  );
 }
 
 .buttons {
@@ -852,7 +854,9 @@ input:focus {
 }
 
 .modal-buttons {
-  font-size: calc(14.5px / var(--screen-size-delta));
+  font-size: calc(
+    (14.5px / var(--screen-size-delta)) - var(--modal-button-font-delta)
+  );
 }
 
 .modal-messages {

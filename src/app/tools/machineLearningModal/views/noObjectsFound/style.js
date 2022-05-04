@@ -1,4 +1,4 @@
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
 import { getTextFromDictionary } from '../../../text/languages/language';
 
 let descriptionElement = null;
