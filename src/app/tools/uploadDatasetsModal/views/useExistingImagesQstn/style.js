@@ -78,7 +78,7 @@ function hideUseExistingImagesViewAssets() {
 }
 
 function assignUseExistingImagesQstnViewLocalVariables() {
-  yesButtonElement = document.getElementById('upload-datsets-modal-yes-button');
+  yesButtonElement = document.getElementById('upload-datasets-modal-yes-button');
   noButtonElement = document.getElementById('upload-datasets-modal-no-button');
   descriptionElement = document.getElementById('upload-datasets-modal-description');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');

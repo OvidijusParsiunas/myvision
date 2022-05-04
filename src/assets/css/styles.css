@@ -256,19 +256,19 @@ input:focus {
   padding-top: calc(4px / var(--screen-size-delta));
 }
 
-.upload-datsets-modal-title {
+.upload-datasets-modal-title {
   text-align: center;
   margin-top: calc(18px / var(--screen-size-delta));
   font-size: calc(16px / var(--screen-size-delta));
   user-select: none;
 }
 
-#upload-datsets-modal-select-format-title {
+#upload-datasets-modal-select-format-title {
   margin-bottom: 0px;
   margin-top: calc(6px / var(--screen-size-delta));
 }
 
-#upload-datsets-modal-select-format-inner-container {
+#upload-datasets-modal-select-format-inner-container {
   left: 0;
   right: 0;
   width: calc(170px / var(--screen-size-delta));
@@ -276,24 +276,24 @@ input:focus {
   margin-right: auto;
 }
 
-#upload-datsets-modal-select-format-table {
+#upload-datasets-modal-select-format-table {
   width: calc(169px / var(--screen-size-delta));
   padding: calc(2px / var(--screen-size-delta));
   padding-top: calc(6px / var(--screen-size-delta));
   padding-left: calc(5px / var(--screen-size-delta));
 }
 
-#upload-datsets-modal-upload-datasets-title {
+#upload-datasets-modal-upload-datasets-title {
   margin-bottom: calc(5px / var(--screen-size-delta));
 }
 
-.upload-datsets-modal-upload-datasets-two-table-strategy-section {
+.upload-datasets-modal-upload-datasets-two-table-strategy-section {
   width: calc(50% - 0.5px);
   text-align: center;
   float: left;
 }
 
-.upload-datsets-modal-upload-datasets-three-table-strategy-section {
+.upload-datasets-modal-upload-datasets-three-table-strategy-section {
   width: calc(33.3333% - 1px);
   text-align: center;
   float: left;
@@ -319,7 +319,7 @@ input:focus {
   padding-right: calc(7px / var(--screen-size-delta));
 }
 
-#upload-datsets-modal-next-button {
+#upload-datasets-modal-next-button {
   margin-right: calc(2px / var(--screen-size-delta));
   margin-left: calc(2px / var(--screen-size-delta));
 }
@@ -329,7 +329,7 @@ input:focus {
   margin-right: 0px;
 }
 
-.upload-datsets-modal-upload-datasets {
+.upload-datasets-modal-upload-datasets {
   max-width: calc(281px / var(--screen-size-delta));
   overflow-x: auto;
   display: inline-block;
@@ -1982,7 +1982,7 @@ body {
   #upload-datasets-modal-finish-button {
     margin-left: -1px;
   }
-  #upload-datsets-modal-select-format-title {
+  #upload-datasets-modal-select-format-title {
     margin-top: calc(7px / var(--screen-size-delta));
   }
   .upload-datasets-table {
