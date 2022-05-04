@@ -1,22 +1,12 @@
-import chineseMadarin from './dictionaries/chineseMandarin';
+import chineseMandarin from './dictionaries/chineseMandarin';
 import english from './dictionaries/english';
 
-const availableLanguages = ['EN', 'CN'];
-const languageToDictionary = { EN: english, CN: chineseMadarin };
-let activeLanguage = availableLanguages[0];
-let activeDictionary = languageToDictionary[activeLanguage];
-
-function getLanguage() {
-  return activeLanguage;
-}
+const languageToDictionary = { EN: english, CN: chineseMandarin };
+const defaultLanguage = Object.keys(languageToDictionary)[0];
+let activeDictionary = languageToDictionary[defaultLanguage];
 
 function setLanguage(newLanguage) {
-  activeLanguage = newLanguage;
   activeDictionary = languageToDictionary[newLanguage];
-}
-
-function getAvailableLanguages() {
-  return availableLanguages;
 }
 
 function getTextFromDictionary(dictionaryKey) {
@@ -24,5 +14,5 @@ function getTextFromDictionary(dictionaryKey) {
 }
 
 export {
-  getAvailableLanguages, getLanguage, setLanguage, getTextFromDictionary,
+  setLanguage, getTextFromDictionary,
 };

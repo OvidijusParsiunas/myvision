@@ -43,7 +43,7 @@ You can import existing annotation projects and continue working on them in MyVi
 ## Languages
 
 <!-- WORK -->
-MyVision is available in [English](./README.md) and [Chinese](./README.cn.md).
+MyVision is available in [English](./README.md) and [Chinese (Mandarin)](./README.cn.md).
 
 ## Local setup
 <!-- link to the file or bring the screen up to there -->
