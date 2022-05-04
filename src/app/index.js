@@ -1,6 +1,4 @@
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
-import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
-import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import { initialisePulseAnimationCancelling } from './tools/utils/buttons/pulseAnimation';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
@@ -35,8 +33,6 @@ registerWindowMouseEvents();
 initialiseWindowDimService();
 initialiseCoreButtonPopovers();
 initialiseExportDatasetsPopup();
-initialiseUploadDatasetsModal();
-initialiseMachineLearningModal();
 assignPassiveEventListeners();
 initialiseRemoveImagesModal();
 initialiseImageListFunctionality();

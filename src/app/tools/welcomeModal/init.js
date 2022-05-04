@@ -1,5 +1,5 @@
-import { initialiseWelcomeModalStyling } from './style';
 import assignWelcomeModalButtonEventHandlers from './buttons/buttonClickEvents';
+import { initialiseWelcomeModalStyling } from './style';
 
 function initialiseWelcomeModal() {
   initialiseWelcomeModalStyling();

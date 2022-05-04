@@ -1,7 +1,7 @@
 import { getTextFromDictionary } from './language';
 
 const textProperties = [
-  { id: 'welcome-modal-title', dictionaryKey: 'WELCOME' },
+  { id: 'welcome-modal-title-welcome-text', dictionaryKey: 'WELCOME' },
   { id: 'welcome-modal-description-par-1', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_1' },
   { id: 'welcome-modal-description-par-2', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_2' },
   { id: 'welcome-modal-description-par-3', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_3' },

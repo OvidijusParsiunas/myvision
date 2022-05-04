@@ -21,7 +21,12 @@
   <div id="crosshair-line-x" class="crosshair-line"></div>
   <div id="crosshair-line-y" class="crosshair-line"></div>
   <div id="welcome-modal-parent" class="modal-parent welcome-modal-base">
-    <div id="welcome-modal-title" class="modal-title small-title"></div>
+    <div id="welcome-modal-title">
+      <div id="welcome-modal-title-welcome-text" class="modal-title small-title"></div>
+      <div id="welcome-modal-language-text-parent" class="modal-title small-title modal-title-right">
+        <span class="language-text" onclick="switchLanguage('EN')">EN</span> | <span class="language-text" onclick="switchLanguage('CN')">CN</span>
+      </div>
+    </div>
     <div class="modal-title-border-line"></div>
     <div id="welcome-modal-description" class="modal-description">
       <img id="welcome-modal-vision-ai-logo" src="assets/svg/eye 88.svg" draggable="false" class="welcome-modal-icon" alt="visibility">

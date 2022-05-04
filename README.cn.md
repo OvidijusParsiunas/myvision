@@ -40,6 +40,10 @@ MyVision 是一个免费的基于计算机视觉的ML训练数据在线图像生
     <img width="1000" src="./readme/gifs/ezgif.com-gif-maker 4.gif" alt="Logo">
 </p>
 
+## 语言
+
+MyVision is available in [English](./README.md) and [Chinese](./README.cn.md).
+
 ## 本地设置
 <!-- link to the file or bring the screen up to there -->
 运行此项目无需设置，打开 [index.html](public/index.html) 文件，一切就绪！但是，如果您想对此数据库进行更改或完善，请按照以下说明进行操作：

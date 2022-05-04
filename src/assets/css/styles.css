@@ -72,6 +72,25 @@ input:focus {
   }
 }
 
+#welcome-modal-title {
+  display: table;
+  width: inherit;
+}
+
+#welcome-modal-title-welcome-text {
+  float: left;
+}
+
+#welcome-modal-language-text-parent {
+  float: right;
+  color: #343434;
+}
+
+.language-text:hover {
+  cursor: pointer;
+  font-weight: 600;
+}
+
 #welcome-modal-description {
   margin-left: calc(19px / var(--screen-size-delta));
   margin-top: calc(16px / var(--screen-size-delta));
@@ -809,6 +828,13 @@ input:focus {
 .modal-title {
   margin-top: calc(4px / var(--screen-size-delta));
   margin-left: calc(10px / var(--screen-size-delta));
+}
+
+.modal-title-right {
+  margin-top: calc(6px / var(--screen-size-delta));
+  margin-right: calc(11px / var(--screen-size-delta));
+  font-size: calc(13px / var(--screen-size-delta));
+  letter-spacing: -0.5px;
 }
 
 .modal-title-border-line {

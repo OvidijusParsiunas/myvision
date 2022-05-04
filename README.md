@@ -40,9 +40,9 @@ You can import existing annotation projects and continue working on them in MyVi
     <img width="1000" src="./readme/gifs/ezgif.com-gif-maker 4.gif" alt="Logo">
 </p>
 
-<!-- WORK -->
 ## Languages
 
+<!-- WORK -->
 MyVision is available in [English](./README.md) and [Chinese](./README.cn.md).
 
 ## Local setup
