@@ -4,7 +4,6 @@ import { findUserOS } from './tools/OS/OSManager';
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
-import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import initialiseDragAndDropFunctionality from './tools/dragAndDrop/dragAndDrop';
@@ -47,9 +46,6 @@ initialiseLabellerModal();
 // registers important events related to mouse over  canvas
 // ... and etc. probably for crosshair displaying os alike
 registerWindowMouseEvents();
-
-initialiseMachineLearningModal();
-
 
 assignPassiveEventListeners();
 

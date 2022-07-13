@@ -62,53 +62,7 @@
           onclick="cancelLabellingProcess()">Cancel</div>
       </div>
     </div>
-    <div id="machine-learning-modal-parent" class="modal-parent" style="display: none"
-      onmousemove="trackMouseMoveEvents(event)">
-      <div class="modal-title small-title">Machine Learning</div>
-      <div class="modal-title-border-line"></div>
-      <div id="machine-learning-modal-description" class="modal-description"></div>
-      <div id="machine-learning-modal-check-mark-parent" style="display: none">
-        <div id="machine-learning-modal-check-mark" class="draw"></div>
-      </div>
-      <div id="machine-learning-modal-progress-messages" style="display: none" class="modal-messages"></div>
-      <div id="machine-learning-modal-loading-wheel" style="display: none" class="loading-wheel"></div>
-      <div id="machine-learning-modal-loading-text" style="display: none">Loading...</div>
-      <div id="machine-learning-modal-error-messages" style="display: none" class="modal-messages"></div>
-      <div id="machine-learning-modal-info-messages" class="modal-messages"></div>
-      <div id="machine-learning-modal-initiate-machine-learning-buttons" class="buttons modal-buttons">
-        <div id="machine-learning-modal-initiate-start-button" class="popup-label-button popup-proceed-button"
-          onclick="startMachineLearning()">Start</div>
-        <div id="machine-learning-modal-initiate-next-button" style="display: none"
-          class="popup-label-button popup-proceed-button" onclick="changeInitiateMLToNextView()">Next</div>
-        <div id="machine-learning-modal-initiate-retry-button" style="display: none"
-          class="popup-label-button popup-proceed-button" onclick="retryMachineLearning()">Retry</div>
-        <div id="machine-learning-modal-initiate-cancel-button" class="popup-label-button popup-cancel-button"
-          onclick="cancelMLModal()">Cancel</div>
-        <div id="machine-learning-modal-initiate-all-images-button" style="display: none"
-          class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('all')">All Images
-        </div>
-        <div id="machine-learning-modal-initiate-new-images-button" style="display: none"
-          class="popup-label-button popup-proceed-button" onclick="startMachineLearningWithCoverage('new')">New Images
-        </div>
-      </div>
-      <div id="machine-learning-modal-generated-labels-outer-container" style="display: none">
-        <div id="machine-learning-modal-generated-labels-inner-container">
-          <div id="machine-learning-modal-generated-labels">
-            <table id="machine-learning-modal-generated-labels-table">
-              <tbody></tbody>
-            </table>
-          </div>
-          <div id="machine-learning-modal-generated-labels-buttons" class="buttons modal-buttons">
-            <div id="machine-learning-modal-generated-labels-submit-button"
-              class="popup-label-button popup-proceed-button" onclick="submitMLGeneratedLabels()">Submit</div>
-          </div>
-        </div>
-      </div>
-      <div id="machine-learning-modal-no-objects-buttons" style="display: none" class="buttons modal-buttons">
-        <div id="machine-learning-modal-no-objects-close-button" class="popup-label-button popup-cancel-button"
-          onclick="closeMachineLearningModal()">Close</div>
-      </div>
-    </div>
+
     <div id="right-side-bar">
       <div id="right-side-bar-components">
         <div id="label-list-component" class="right-side-bar-component">
