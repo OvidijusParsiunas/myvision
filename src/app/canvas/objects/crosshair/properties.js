@@ -31,7 +31,7 @@ function getVerticalDelta() {
 }
 
 function getCrosshairProps() {
-  const crosshairColor = document.getElementById('settings-popup-bounding-box-crosshair-color-picker').value;
+  const crosshairColor = '#ffffff';
   return {
     fill: crosshairColor,
     shapeName: 'crosshairLine',

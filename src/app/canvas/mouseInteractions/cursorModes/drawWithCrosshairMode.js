@@ -29,12 +29,12 @@ function bringCanvasCrosshairToFront(canvas) {
 
 function setCrosshairColor(element) {
   if (outsideCrosshairLineXElement) {
-    outsideCrosshairLineXElement.style.backgroundColor = element.value;
-    outsideCrosshairLineYElement.style.backgroundColor = element.value;
+    outsideCrosshairLineXElement.style.backgroundColor = '#fff';
+    outsideCrosshairLineYElement.style.backgroundColor = '#fff';
   }
   if (canvasCrosshairLineX) {
-    canvasCrosshairLineX.set({ fill: element.value, stroke: element.value });
-    canvasCrosshairLineY.set({ fill: element.value, stroke: element.value });
+    canvasCrosshairLineX.set({ fill: '#000', stroke: '#000' });
+    canvasCrosshairLineY.set({ fill: '#000', stroke: '#000' });
     canvasRef.renderAll();
   }
 }
