@@ -21,7 +21,7 @@ const defaultShapeColors = [
 
 const defaultLabelOptions = [
   {
-    text: 'dog',
+    text: 'dna',
     default: true,
     color: {
       default: 'hsl(82, 93%, 45%, 0.01)', highlight: 'hsl(82, 93%, 45%, 0.3)', stroke: 'hsl(82, 93%, 45%)', label: 'hsl(82, 93%, 45%, 0.25)',
@@ -30,7 +30,7 @@ const defaultLabelOptions = [
   // default: 'hsl(186, 75%, 51%, 0.01)', highlight: 'hsl(186, 75%, 51%, 0.3)',
   // stroke: 'hsl(186, 75%, 51%)', label: 'hsl(186, 75%, 51%, 0.25)',
   {
-    text: 'cat',
+    text: 'nuclei',
     default: true,
     color: {
       default: 'hsl(45, 77%, 53%, 0.01)', highlight: 'hsl(45, 77%, 53%, 0.3)', stroke: 'hsl(45, 77%, 53%)', label: 'hsl(45, 77%, 53%, 0.28)',

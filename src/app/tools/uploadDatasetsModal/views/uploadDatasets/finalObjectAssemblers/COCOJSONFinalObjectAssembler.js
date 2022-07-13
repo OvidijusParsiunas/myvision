@@ -36,6 +36,27 @@ function assembleNewFinalShape(annotationData, datasetObject, imageName, shapes)
   }
 }
 
+
+function assembleShape(annotationData, categories, imageName) {
+  const shapeObj = {
+    type: null, coordinates: {}, imageName,
+  };
+  for (let i = 0; i < categories.length; i += 1) {
+    if (annotationData.category_id === categories[i].id) {
+      shapeObj.coordinates.class = categories[i].name.toString();
+      break;
+    }
+  }
+  if (isBoundingBox(annotationData.segmentation[0], annotationData.bbox)) {
+    shapeObj.coordinates.bbox = annotationData.bbox;
+    shapeObj.type = 'boundingBox';
+  } else {
+    shapeObj.coordinates.points = annotationData.segmentation[0];
+    shapeObj.type = 'polygon';
+  }
+  return shapeObj;
+}
+
 function addShapeToShapesArray(imageId, annotations, shapes, datasetObject, imageName) {
   for (let i = 0; i < annotations.length; i += 1) {
     if (imageId === annotations[i].image_id) {
@@ -76,4 +97,4 @@ function assembleFinalObjectFromCOCOJSON() {
   return finalObject;
 }
 
-export { assembleFinalObjectFromCOCOJSON as default };
+export { assembleFinalObjectFromCOCOJSON as default, assembleShape };

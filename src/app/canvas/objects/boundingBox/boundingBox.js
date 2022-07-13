@@ -16,7 +16,6 @@ import {
 } from '../../../tools/state';
 import { getImageProperties } from '../../../tools/imageList/uploadImages/drawImageOnCanvas';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
-import { setAddPointsButtonToDefault, setCreateBoundingBoxButtonToActive } from '../../../tools/toolkit/styling/state';
 import { getScrollbarWidth } from '../../../tools/globalStyling/style';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 import { removeExecutedFunctionOnMouseOver, removeExecutedFunctionOnMouseOut } from '../../../keyEvents/mouse/mouseOverOut';
@@ -88,7 +87,6 @@ function setCursorMode(resetting) {
 }
 
 function resetDrawBoundingBoxMode() {
-  setCreateBoundingBoxButtonToActive();
   setReadyToDrawShapeState(true);
   setCursorMode(true);
   createNewBoundingBoxBtnClicked = true;
@@ -271,7 +269,6 @@ function prepareCanvasForNewBoundingBox(canvasObj) {
   setReadyToDrawShapeState(true);
   canvas.discardActiveObject();
   if (getAddingPolygonPointsState()) {
-    setAddPointsButtonToDefault();
     setAddingPolygonPointsState(false);
     finishDrawingBoundingBoxClick = skipMouseUpEvent;
   } else {

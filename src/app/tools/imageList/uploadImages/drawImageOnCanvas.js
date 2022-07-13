@@ -1,5 +1,5 @@
 import fabric from 'fabric';
-import { getLeftSideBarWidth, getRightSideBarWidth } from '../../globalStyling/style';
+import { getRightSideBarWidth } from '../../globalStyling/style';
 import IS_FIREFOX from '../../utils/browserType';
 import { getScreenSizeDelta } from '../../globalStyling/screenSizeDelta';
 
@@ -77,7 +77,7 @@ function setCanvasWrapperMaximumDimensions() {
 }
 
 function setNewCanvasProperties() {
-  const sideToolsTotalWidth = getLeftSideBarWidth() + getRightSideBarWidth();
+  const sideToolsTotalWidth = getRightSideBarWidth();
   const innerHeight = window.innerHeight - Math.ceil(35 + (29 / getScreenSizeDelta()));
   const innerWidth = window.innerWidth - sideToolsTotalWidth;
   canvasProperties.maximumCanvasHeight = canvasOuterMargin
@@ -147,11 +147,18 @@ function drawImageFromList(selectedImage) {
   draw();
 }
 
-function onImageLoad(arg) {
+function onImageLoad(arg, cb) {
   newFileStatus.uploaded = true;
+  console.log(this, this ? 'this' : 'not this');
+
   currentImage = this ? this : arg;
+  console.log("IMAGE LOADDED....")
   draw();
   canvas.setZoom(1);
+  console.log(cb)
+  if (cb) {
+    cb();
+  }
 }
 
 function assignCanvasForDrawingImage(canvasObj) {

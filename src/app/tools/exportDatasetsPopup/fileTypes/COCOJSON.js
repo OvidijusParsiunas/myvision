@@ -207,4 +207,14 @@ function downloadCOCOJSON() {
   downloadableElement.click();
 }
 
-export { downloadCOCOJSON as default };
+
+function generateOutput() {
+  const allImageProperties = getAllImageData();
+  saveCurrentImageDetails(allImageProperties);
+  const categoriesData = getCategoriesData();
+  const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties,
+    categoriesData.categoriesObject);
+  return imageAndAnnotationData.annotations;
+}
+
+export { downloadCOCOJSON as default, generateOutput };

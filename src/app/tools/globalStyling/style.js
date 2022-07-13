@@ -11,7 +11,7 @@ let leftSideBar = null;
 let rightSideBar = null;
 
 function windowHasScrollbar() {
-  return document.body.scrollHeight < document.documentElement.scrollHeight;
+  return false && document.body.scrollHeight < document.documentElement.scrollHeight;
 }
 
 // this will be used to resize the side-bars later on

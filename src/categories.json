@@ -1,0 +1,32 @@
+[
+    {
+        "id": 0,
+        "name": "dolphin",
+        "supercategory": "none"
+    },
+    {
+        "id": 1,
+        "name": "chicken",
+        "supercategory": "none"
+    },
+    {
+        "id": 2,
+        "name": "cat",
+        "supercategory": "none"
+    },
+    {
+        "id": 3,
+        "name": "dog",
+        "supercategory": "none"
+    },
+    {
+        "id": 4,
+        "name": "eye",
+        "supercategory": "none"
+    },
+    {
+        "id": 5,
+        "name": "ear",
+        "supercategory": "none"
+    }
+]

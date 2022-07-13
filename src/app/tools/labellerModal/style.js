@@ -1,6 +1,4 @@
 import { getLabelOptions } from '../labelList/labelOptions';
-import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
-import { QUICK_LIGHTUP_MILLISECONDS, QUICK_DIM_SECONDS, THIN_DIM } from '../dimWindow/consts';
 import { setLabellerModalDisplayedState } from '../state';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
 import IS_FIREFOX from '../utils/browserType';
@@ -19,9 +17,7 @@ let heightIncreasedForHorizontalScrollbar = false;
 let horizontalScrollSet = false;
 let fakeRightBorderAdded = false;
 let fakeBottomBorderAdded = false;
-let lightupTimePeriod = QUICK_LIGHTUP_MILLISECONDS;
-let dimTimePeriod = QUICK_DIM_SECONDS;
-let dimIntensity = THIN_DIM;
+
 let optionsListBorderWidth = 1;
 
 function initialiseParentElement() {
@@ -40,12 +36,12 @@ function addLabelToList(labelText, color) {
 
 function isVerticalScrollPresent() {
   return optionsElement.scrollHeight
-  > optionsElement.clientHeight;
+    > optionsElement.clientHeight;
 }
 
 function isHorizontalScrollPresent() {
   return optionsElement.scrollWidth
-  > optionsElement.clientWidth;
+    > optionsElement.clientWidth;
 }
 
 function addFakeRightBorder() {
@@ -136,7 +132,6 @@ function highlightInitialLabelOptionOnInit() {
 }
 
 function hideLabellerModal() {
-  lightUpWindow(lightupTimePeriod);
   parentElement.style.display = 'none';
   inputElement.value = inputElement.value.trim();
   setLabellerModalDisplayedState(false);
@@ -215,10 +210,10 @@ function resetLabellerModalOptions() {
 }
 
 function showLabellerModal() {
-  dimWindow(dimTimePeriod, dimIntensity);
   const lastMouseMoveEvent = getLastMouseMoveEvent();
   parentElement.style.top = `${lastMouseMoveEvent.clientY}px`;
   parentElement.style.left = `${lastMouseMoveEvent.clientX}px`;
+  console.log(parentElement, lastMouseMoveEvent.clientY, lastMouseMoveEvent.clientX);
   deleteAndAddLastRowToRefreshDiv();
   parentElement.style.display = 'block';
   setLabelOptionsHeight();
@@ -232,15 +227,9 @@ function showLabellerModal() {
   }, 0);
 }
 
-function setLabellerPopupDimProperties(lightupTimePeriodArg, dimTimePeriodArg, dimIntensityArg) {
-  lightupTimePeriod = lightupTimePeriodArg;
-  dimTimePeriod = dimTimePeriodArg;
-  dimIntensity = dimIntensityArg;
-}
-
 export {
   changeStyleWhenInputInvalid, initialiseLabellerModalOptionsList,
   showLabellerModal, hideLabellerModal, changeStyleWhenInputEmpty,
-  setLabellerPopupDimProperties, validateFullLabellerModalVisibile,
-  resetLabellerModalOptions, getLabellerModalInputText, changeStyleToAllowSubmit,
+  validateFullLabellerModalVisibile, resetLabellerModalOptions,
+  getLabellerModalInputText, changeStyleToAllowSubmit,
 };

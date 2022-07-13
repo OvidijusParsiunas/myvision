@@ -67,7 +67,7 @@ function zoomInObjects() {
       case 'polygon':
         iteratedObj.strokeWidth -= iteratedObj.strokeWidth * increaseShapeSizeRatios.polygon;
         iteratedObj.labelOffsetTop = iteratedObj.top
-        - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top);
+          - (iteratedObj.points[0].y - labelProperties.pointOffsetProperties().top);
         break;
       case 'tempPolygon':
       case 'addPointsLine':
@@ -116,7 +116,7 @@ function zoomOutObject(object) {
     case 'polygon':
       object.strokeWidth *= reduceShapeSizeRatios.polygon;
       object.labelOffsetTop = object.top
-      - (object.points[0].y - labelProperties.pointOffsetProperties().top);
+        - (object.points[0].y - labelProperties.pointOffsetProperties().top);
       break;
     case 'tempPolygon':
     case 'addPointsLine':
@@ -356,7 +356,7 @@ function resetZoom(switchImage) {
   setDoubleScrollCanvasState(false);
   setCurrentZoomState(currentZoom);
   enableCanvasOuterMargin();
-  setZoomOutButtonToDisabled();
+  // setZoomOutButtonToDisabled();
   if (getCrosshairUsedOnCanvasState()) {
     setCrosshairAfterZoom();
     resetCanvasCrosshairStrokeWidth(canvas);

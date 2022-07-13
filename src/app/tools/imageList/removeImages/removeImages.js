@@ -9,11 +9,6 @@ import { resetZoom } from '../../toolkit/buttonClickEvents/facadeWorkers/zoomWor
 import { getDoNotShowRemoveImageModalAgainState } from './modal/state';
 import { drawWatermarkOnCanvasAreaBackground } from '../../../canvas/utils/watermark';
 import {
-  setPolygonEditingButtonsToDisabled, setZoomInButtonToDisabled,
-  setCreatePolygonButtonToDisabled, setEditShapesButtonToDisabled,
-  setCreateBoundingBoxButtonToDisabled, setRemoveImagesButtonsDisabled,
-} from '../../toolkit/styling/state';
-import {
   getCurrentImageId, getContinuousDrawingState, getLastDrawingModeState, setDefaultState,
 } from '../../state';
 import { displayRemoveImagesModal } from './modal/style';
@@ -30,11 +25,6 @@ function resetEverything() {
   setImageNameElementToDefault();
   removeAllLabelListItems();
   drawWatermarkOnCanvasAreaBackground();
-  setCreateBoundingBoxButtonToDisabled();
-  setCreatePolygonButtonToDisabled();
-  setRemoveImagesButtonsDisabled();
-  setEditShapesButtonToDisabled();
-  setZoomInButtonToDisabled();
   canvas.clear();
   // the following deals with an overflow bug when resizing an empty canvas with previous dimensions
   canvas.setDimensions({ width: 1, height: 1 });
@@ -74,15 +64,15 @@ function resetRemainingImageElements() {
 function removeImage(allImageDataArr) {
   const allImageData = allImageDataArr || getAllImageData();
   const index = getCurrentImageId();
-  document.getElementById(index).parentElement.remove();
   resetRemainingImageElements();
   const previousImageDataLength = allImageData.length;
   allImageData.splice(index, 1);
   removeAllLabelRefs();
   removeAllShapes();
-  setPolygonEditingButtonsToDisabled();
   switchImage(index, allImageData, previousImageDataLength);
 }
+
+window.clearCanvas = removeImage;
 
 function triggerRemoveImage() {
   const allImageData = getAllImageData();

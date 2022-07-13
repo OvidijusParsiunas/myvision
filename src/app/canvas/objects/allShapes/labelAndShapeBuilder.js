@@ -8,17 +8,9 @@ import { getLabelsVisibilityState } from '../../../tools/state';
 import { addShape, addExistingShape, addShapeForInvisibleImage } from './allShapes';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import { preprocessLabelText } from '../../../tools/utils/textProcessingUtils';
-import { setPolygonEditingButtonsToDefault, setRemoveLabelsButtonToDisabled } from '../../../tools/toolkit/styling/state';
 
 let currentId = 0;
 let canvas = null;
-
-function setShapeEditingIcons(shape) {
-  if (shape.shapeName === 'polygon') {
-    setPolygonEditingButtonsToDefault();
-    setRemoveLabelsButtonToDisabled();
-  }
-}
 
 function findInitialLabelLocation(shape) {
   const locationObj = {};
@@ -76,7 +68,6 @@ function generateLabelShapeGroup(shape, text, image, isUsingMachineLearning) {
     addShape(shape, shapeColor, currentId);
     addNewLabelToListFromPopup(textShape.text, currentId, shapeColor.label);
   }
-  setShapeEditingIcons(shape);
   if (isUsingMachineLearning) {
     replaceCurrentShapeColourPropertiesWithMLPallette(shape);
   }

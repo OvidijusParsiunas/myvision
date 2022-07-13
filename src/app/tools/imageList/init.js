@@ -3,7 +3,6 @@ import initialiseImageListButtonClickEvents from './panelButtons/buttonClickEven
 import initialiseImageListButtonHoverEvents from './panelButtons/buttonHoverEvents';
 
 function initialiseImageListFunctionality() {
-  initialiseImageList();
   initialiseImageListButtonClickEvents();
   initialiseImageListButtonHoverEvents();
 }

@@ -11,8 +11,7 @@ import {
 import { preventOutOfBoundsPointsOnMove } from '../sharedUtils/moveBlockers';
 import { preventOutOfBoundsOnNewObject } from '../sharedUtils/newObjectBlockers';
 import {
-  setAddPointsButtonToDefault, setRemovePointsButtonToDefault,
-  setRemoveLabelsButtonToDefault, setCreatePolygonButtonToActive,
+  setAddPointsButtonToDefault,
 } from '../../../tools/toolkit/styling/state';
 import { getLastMouseMoveEvent } from '../../../keyEvents/mouse/mouseMove';
 
@@ -187,9 +186,6 @@ function addPoint(pointer) {
     invisiblePoint = new fabric.Circle(polygonProperties.invisiblePoint(pointer));
     canvas.add(invisiblePoint);
     point.set(polygonProperties.firstPoint());
-    setAddPointsButtonToDefault();
-    setRemovePointsButtonToDefault();
-    setRemoveLabelsButtonToDefault();
   }
   preventOutOfBoundsPointsOnMove(point, canvas);
   pointArray.push(point);
@@ -331,7 +327,7 @@ function instantiatePolygon(event) {
   }
 }
 
-function placeHolderFunc() {}
+function placeHolderFunc() { }
 
 function assignMouseUpClickFunc() {
   mouseUpClick = placeHolderFunc;
@@ -375,7 +371,6 @@ function prepareCanvasForNewPolygonsFromExternalSources(canvasObj) {
 
 function resetDrawPolygonMode() {
   polygonMode = true;
-  setCreatePolygonButtonToActive();
   setReadyToDrawShapeState(true);
   drawingFinished = false;
   clearPolygonData();

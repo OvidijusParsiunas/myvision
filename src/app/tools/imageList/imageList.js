@@ -16,16 +16,9 @@ import scrollIntoViewIfNeeded from '../utils/tableUtils';
 import { setDefaultCursorMode } from '../../canvas/mouseInteractions/cursorModes/defaultMode';
 import { changeExistingImagesMovability } from '../settingsPopup/options/movableObjects';
 import { removeWatermarkFromCanvasAreaBackground } from '../../canvas/utils/watermark';
-import { initiateButtonPulseAnimation } from '../utils/buttons/pulseAnimation';
 import {
-  setZoomInButtonToDefault, setCreatePolygonButtonToActive, setRemoveImagesButtonDefault,
-  setCreateBoundingBoxButtonToDefault, setCreatePolygonButtonToDefault, setEditShapesButtonToActive,
-  setCreateBoundingBoxButtonToActive, setPolygonEditingButtonsToDefault,
-} from '../toolkit/styling/state';
-import {
-  getDefaultState, setCurrentImageId, getContinuousDrawingState,
-  setHasMachineLearningButtonBeenHighligtedState, getCrosshairUsedOnCanvasState,
-  getHasMachineLearningButtonBeenHighligtedState, getLastDrawingModeState,
+  setCurrentImageId,
+  getCrosshairUsedOnCanvasState,
 } from '../state';
 
 let currentlyActiveElement = null;
@@ -96,7 +89,7 @@ function triggerAnimation(imageThumbnailElement) {
 }
 
 function addNewItemToImageList(imageData) {
-  const imageThumbnailElement = initialiseImageElement();
+  const imageThumbnailElement = document.createElement('img');
   imageThumbnailElement.id = newImageId;
   imageThumbnailElement.classList.add('image-list-thumbnail-image');
   imageThumbnailElement.src = imageData.src;
@@ -111,18 +104,17 @@ function addNewItemToImageList(imageData) {
   tickSVGElement.src = 'assets/svg/done-tick-highlighted.svg';
   const parentThumbnailDivElement = initiateDivElement();
   parentThumbnailDivElement.classList.add('image-list-thumbnail');
-  parentThumbnailDivElement.onclick = window.switchImage.bind(this, newImageId);
-  parentThumbnailDivElement.appendChild(imageThumbnailElement);
-  parentThumbnailDivElement.appendChild(colorOverlayElement);
-  parentThumbnailDivElement.appendChild(tickSVGElement);
-  imageContainerElement.appendChild(parentThumbnailDivElement);
-  triggerAnimation(imageThumbnailElement);
+  // parentThumbnailDivElement.onclick = window.switchImage.bind(this, newImageId);
+  // parentThumbnailDivElement.appendChild(imageThumbnailElement);
+  // parentThumbnailDivElement.appendChild(colorOverlayElement);
+  // parentThumbnailDivElement.appendChild(tickSVGElement);
+  // imageContainerElement.appendChild(parentThumbnailDivElement);
+  // triggerAnimation(imageThumbnailElement);
   return parentThumbnailDivElement;
 }
 
 function displayTickSVGOverImageThumbnail(id) {
-  const imageId = id !== undefined ? id : currentlySelectedImageId;
-  if (images[imageId]) images[imageId].thumbnailElementRef.childNodes[2].style.display = 'block';
+
 }
 
 function removeTickSVGOverImageThumbnail(id) {
@@ -152,9 +144,7 @@ function removeSelectedMLThumbnailHighlight(element) {
 }
 
 function setMLThumbnailOverlayToMLSelected(element) {
-  if (element.classList.contains('image-list-thumbnail-machine-learning')) {
-    element.classList.replace('image-list-thumbnail-machine-learning', 'image-list-thumbnail-machine-learning-selected');
-  }
+
 }
 
 function setSelectedMLThumbnailColourOverlayBackToDefault(element) {
@@ -186,13 +176,7 @@ function setCurrentlyActiveElementToInvisible() {
 }
 
 function highlightImageThumbnail(element) {
-  setCurrentlyActiveElementToInvisible();
-  setMLThumbnailOverlayToMLSelected(element);
-  if (hasCurrentImageThumbnailRedBorder) {
-    element.style.borderColor = '#ff4d4d';
-  }
-  element.style.display = 'block';
-  currentlyActiveElement = element;
+
 }
 
 function changeImageThumbnailBorderColorToRed() {
@@ -237,8 +221,6 @@ function captureCurrentImageData() {
 function saveAndRemoveCurrentImageDetails() {
   if (images.length > 1) {
     captureCurrentImageData();
-  } else {
-    setEditShapesButtonToActive();
   }
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(false);
@@ -258,40 +240,9 @@ function setDefaultImageProperties(image, imageMetadata) {
   image.analysedByML = false;
 }
 
-function setToolkitStylingOnNewImage() {
-  if (!getDefaultState() && getContinuousDrawingState()) {
-    const lastDrawnShapeState = getLastDrawingModeState();
-    if (lastDrawnShapeState === 'polygon') {
-      setCreatePolygonButtonToActive();
-      setCreateBoundingBoxButtonToDefault();
-    } else if (lastDrawnShapeState === 'boundingBox') {
-      setCreateBoundingBoxButtonToActive();
-      setCreatePolygonButtonToDefault();
-    } else {
-      assignDefaultEvents(canvas, null, false);
-      setCreatePolygonButtonToDefault();
-      setCreateBoundingBoxButtonToDefault();
-    }
-  } else {
-    setCreatePolygonButtonToDefault();
-    setCreateBoundingBoxButtonToDefault();
-  }
-  setPolygonEditingButtonsToDefault();
-  setRemoveImagesButtonDefault();
-  setZoomInButtonToDefault();
-}
 
 function changeCurrentImageNameElementText(imageName, isfirstFromMany) {
   updateImageNameElement(imageName, images, currentlySelectedImageId, isfirstFromMany);
-}
-
-function highlightMachineLearningButton() {
-  if (!getHasMachineLearningButtonBeenHighligtedState()) {
-    const beginAnimationImmediately = true;
-    initiateButtonPulseAnimation(document.getElementById('machine-learning-button'),
-      'rgb(184 233 179)', 'white', 5, beginAnimationImmediately);
-    setHasMachineLearningButtonBeenHighligtedState(true);
-  }
 }
 
 function displayUploadedImage(imageMetadata, isfirstFromMany) {
@@ -300,8 +251,6 @@ function displayUploadedImage(imageMetadata, isfirstFromMany) {
   changeCurrentImageNameElementText(imageMetadata.name, isfirstFromMany);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   removeWatermarkFromCanvasAreaBackground();
-  setToolkitStylingOnNewImage();
-  highlightMachineLearningButton();
   if (getCrosshairUsedOnCanvasState()) updateCrosshairDimensionsAndHideAsync(canvas);
 }
 
@@ -350,7 +299,8 @@ function changeToExistingImage(id) {
   removeAllLabelListItems();
   const timesZoomedOut = resetZoom(true);
   drawImageFromList(images[id].data);
-  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels,
+
+  repopulateLabelAndShapeObjects(images[id].shapes[key], images[id].labels,
     images[id].imageDimensions, images[id].data);
   switchCanvasContainerElements();
   changeExistingImagesMovability(images[id].shapes);
@@ -365,7 +315,6 @@ function changeToExistingImage(id) {
   currentlySelectedImageId = id;
   changeCurrentImageNameElementText(images[currentlySelectedImageId].name);
   resetCanvasForUnseenShapes();
-  setToolkitStylingOnNewImage();
   if (getCrosshairUsedOnCanvasState()) moveCanvasCrosshairViaLastCanvasPositionAsync();
 }
 

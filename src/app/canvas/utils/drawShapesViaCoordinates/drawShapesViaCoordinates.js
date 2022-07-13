@@ -281,6 +281,7 @@ function drawShapesViaCoordinates(shapesData, isUsingMachineLearning, reuseAlrea
   initiateResetCanvasEventsToDefaultEvent(canvas);
 }
 
+
 function assignCanvasForDrawingShapesViaCoordinates(canvasObj) {
   canvas = canvasObj;
 }

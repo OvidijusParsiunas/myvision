@@ -29,10 +29,12 @@ function uploadMultipleImages(uploadData) {
   }
 }
 
-function onSingleFileLoad(imageMetaData, e) {
+function onSingleFileLoad(imageMetaData, e, cb) {
   const image = new Image();
   image.src = e.target.result;
-  image.onload = onImageLoad;
+  image.onload = (e) => {
+    onImageLoad.call(image, e, cb);
+  };
   addSingleImageToList(imageMetaData, image);
   removeNoImagesFoundOnMLModalStyle();
 }
@@ -56,4 +58,4 @@ function uploadImages(uploadData) {
   }
 }
 
-export { uploadImages as default };
+export { uploadImages as default, onSingleFileLoad };
