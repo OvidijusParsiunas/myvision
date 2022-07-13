@@ -6,11 +6,8 @@ import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
-import initialiseDragAndDropFunctionality from './tools/dragAndDrop/dragAndDrop';
 import initialiseLabelListFunctionality from './tools/labelList/init';
 import { applyStyling } from './tools/globalStyling/style';
-import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
-import { initialisePulseAnimationCancelling } from './tools/utils/buttons/pulseAnimation';
 import { generateOutput } from './tools/exportDatasetsPopup/fileTypes/COCOJSON';
 import { onSingleFileLoad } from './tools/imageList/uploadImages/uploadImages';
 import { drawShapesViaCoordinates } from './canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
@@ -48,19 +45,7 @@ initialiseLabellerModal();
 registerWindowMouseEvents();
 
 assignPassiveEventListeners();
-
-
 initialiseLabelListFunctionality();
-
-
-initialiseDragAndDropFunctionality();
-
-
-initialiseImageSwitchPanelFunctionality();
-
-
-initialisePulseAnimationCancelling();
-
 initialiseShapeManipulationDeltas();
 
 window.setCanvasImage = (url, imageName, cb) => {
