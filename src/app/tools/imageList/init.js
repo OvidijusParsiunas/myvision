@@ -1,4 +1,3 @@
-import { initialiseImageList } from './imageList';
 import initialiseImageListButtonClickEvents from './panelButtons/buttonClickEvents';
 import initialiseImageListButtonHoverEvents from './panelButtons/buttonHoverEvents';
 

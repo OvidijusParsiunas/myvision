@@ -2,10 +2,6 @@ import { getCurrentImageId } from '../state';
 
 let allImageDataRef = null;
 
-function displayTickSVGOverImageThumbnail(element) {
-  element.style.display = 'block';
-}
-
 function setSelectedMLThumbnailColourOverlayBackToDefault(element) {
   if (element.classList.contains('image-list-thumbnail-machine-learning-selected')) {
     element.classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
@@ -20,7 +16,6 @@ function updateNumberOfUncheckedMLImages() {
     if (currentImage.numberOfMLGeneratedShapes === 0) {
       const thumbnailElements = currentImage.thumbnailElementRef.childNodes;
       setSelectedMLThumbnailColourOverlayBackToDefault(thumbnailElements[1]);
-      displayTickSVGOverImageThumbnail(thumbnailElements[2]);
     }
   }
 }

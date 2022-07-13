@@ -32,8 +32,8 @@ function uploadMultipleImages(uploadData) {
 function onSingleFileLoad(imageMetaData, e, cb) {
   const image = new Image();
   image.src = e.target.result;
-  image.onload = (e) => {
-    onImageLoad.call(image, e, cb);
+  image.onload = (ev) => {
+    onImageLoad.call(image, ev, cb);
   };
   addSingleImageToList(imageMetaData, image);
   removeNoImagesFoundOnMLModalStyle();

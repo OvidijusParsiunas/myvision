@@ -9,7 +9,6 @@ import {
   getRemovingPolygonPointsState, setEditingLabelId, getLabelsVisibilityState,
   getPolygonDrawingInProgressState, getShapeMovingState, getBoundingBoxScalingState,
 } from '../state';
-import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../toolkit/styling/state';
 import {
   polygonMouseDownEvents, polygonMouseUpEvents, getLastSelectedShapeId, removeEditedPolygonId,
   programaticallySelectBoundingBox, programaticallyDeselectBoundingBox, setShapeToInvisible,
@@ -173,7 +172,7 @@ function scrollHorizontallyToAppropriateWidth(text) {
   context.font = getDefaultFont(activeLabelTextElement);
   const metrics = context.measureText(text);
   if (isVerticalScrollPresent(labelListOverflowParentElement)
-      && metrics.width > 170 - getScrollbarWidth()) {
+    && metrics.width > 170 - getScrollbarWidth()) {
     labelListOverflowParentElement.scrollLeft = metrics.width - 165 + getScrollbarWidth() / 2;
   } else if (!isVerticalScrollPresent(labelListOverflowParentElement) && metrics.width > 170) {
     labelListOverflowParentElement.scrollLeft = metrics.width - 165;
@@ -197,7 +196,7 @@ function pasteHandlerOnDiv(event) {
   const caretPositionStart = caretPositionEnd - caretOnPaste.highlightRangeOnPaste;
   const preprocessedPastedData = preprocessPastedText(pastedData);
   activeLabelTextElement.innerHTML = activeLabelTextElement.innerHTML.slice(0, caretPositionStart)
-   + preprocessedPastedData + activeLabelTextElement.innerHTML.slice(caretPositionEnd);
+    + preprocessedPastedData + activeLabelTextElement.innerHTML.slice(caretPositionEnd);
   setCaretPositionOnDiv(caretPositionStart + preprocessedPastedData.length,
     activeLabelTextElement, false, scrollHorizontallyToAppropriateWidth);
 }
@@ -351,9 +350,9 @@ function removeFakeBottomBorderOnExistingDropdown() {
 
 function addFakeBottomBorder(activeDropdownElementPosition) {
   if (activeDropdownElements[0].style.borderBottom === 'none') {
-  // the reason why we have a delta here is because activeDropdownElements remembers the height
-  // before the bottom border is removed, hence when getBoundingClientRect is called
-  // the next time, the height presented is smaller
+    // the reason why we have a delta here is because activeDropdownElements remembers the height
+    // before the bottom border is removed, hence when getBoundingClientRect is called
+    // the next time, the height presented is smaller
     if (!newFakeDropdownBottomBorderDeltaGenerated) {
       chromiumFakeDropdownBorderElementTopDelta = originalActiveDropdownHeight
         - activeDropdownElementPosition.height;
@@ -367,7 +366,7 @@ function addFakeBottomBorder(activeDropdownElementPosition) {
   chromiumFakeDrodownBottomBorderElement.style.width = `${dropdownElementWidthInt}px`;
   if (!chromiumFakeDrodownBottomBorderTopDimension) {
     chromiumFakeDrodownBottomBorderTopDimension = activeDropdownElementPosition.height
-    + activeDropdownElementPosition.top + chromiumFakeDropdownBorderElementTopDelta - 0.6;
+      + activeDropdownElementPosition.top + chromiumFakeDropdownBorderElementTopDelta - 0.6;
   }
   chromiumFakeDrodownBottomBorderElement.style.top = `${chromiumFakeDrodownBottomBorderTopDimension}px`;
   originalActiveDropdownHeight = parseInt(activeDropdownElementPosition.height, 10);
@@ -488,7 +487,6 @@ function selectShape() {
 
 function deselectShape() {
   removeHighlightOfListLabel();
-  setRemoveLabelsButtonToDisabled();
   if (getRemovingPolygonPointsState()) {
     pointMouseDownEvents({});
     pointMouseUpEvents({});
@@ -625,11 +623,9 @@ function highlightLabel(currentlySelectedShapeName, idArg) {
   if (getRemovingPolygonPointsState() || getAddingPolygonPointsState()) {
     if (currentlySelectedShapeName !== 'bndBox') {
       highlightLabelInTheList(id);
-      setRemoveLabelsButtonToDefault();
     }
   } else {
     highlightLabelInTheList(id);
-    setRemoveLabelsButtonToDefault();
   }
 }
 
@@ -673,7 +669,7 @@ function finishEditingLabelList(event) {
         resetLabelElement();
       }
     } else if (event.target.nodeName === 'CANVAS' || event.target.className === 'toolkit-button-icon'
-        || event.target.className === 'toolkit-button-text' || event.target.id === activeLabelElementId) {
+      || event.target.className === 'toolkit-button-text' || event.target.id === activeLabelElementId) {
       addNewLabelToLabelOptions(activeLabelTextElement.innerHTML);
       stopEditing();
     } else {

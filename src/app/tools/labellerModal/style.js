@@ -213,7 +213,6 @@ function showLabellerModal() {
   const lastMouseMoveEvent = getLastMouseMoveEvent();
   parentElement.style.top = `${lastMouseMoveEvent.clientY}px`;
   parentElement.style.left = `${lastMouseMoveEvent.clientX}px`;
-  console.log(parentElement, lastMouseMoveEvent.clientY, lastMouseMoveEvent.clientX);
   deleteAndAddLastRowToRefreshDiv();
   parentElement.style.display = 'block';
   setLabelOptionsHeight();

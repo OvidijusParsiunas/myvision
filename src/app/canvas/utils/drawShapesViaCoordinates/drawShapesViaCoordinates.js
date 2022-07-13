@@ -15,10 +15,8 @@ import { repopulateDropdown } from '../../../tools/labelList/labelList';
 import purgeCanvasMouseEvents from '../../mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
 import {
   getAllImageData,
-  getLastImageIdByName,
   removeMLThumbnailHighlight,
   removeTickSVGOverImageThumbnail,
-  displayTickSVGOverImageThumbnail,
   removeSelectedMLThumbnailHighlight,
   setDefaultImageThumbnailHighlightToML,
   setDefaultImageThumbnailHighlightToMLSelected,
@@ -217,7 +215,6 @@ function generateNewShapesForFileUpload(shapes, allImageData, currentlySelectedI
       if (shapes[i].imageName === allImageData[y].name) {
         const isCurrentlySelectedImage = currentlySelectedImageId === y;
         generateShapeForFileUpload(shapes[i], allImageData[y], isCurrentlySelectedImage);
-        displayTickSVGOverImageThumbnail(getLastImageIdByName(allImageData[y].name));
         if (!reuseAlreadyUploadedImages) { break; }
       }
     }

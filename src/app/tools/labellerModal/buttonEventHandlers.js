@@ -7,7 +7,6 @@ import {
 import { resetDrawPolygonMode } from '../../canvas/objects/polygon/polygon';
 import { resetDrawBoundingBoxMode } from '../../canvas/objects/boundingBox/boundingBox';
 import { getLabelOptions } from '../labelList/labelOptions';
-import { displayTickSVGOverImageThumbnail } from '../imageList/imageList';
 import { preprocessPastedText, preprocessLabelText } from '../utils/textProcessingUtils';
 import { getKeyDownEventTimeout } from '../globalStyling/timeouts';
 import scrollIntoViewIfNeeded from '../utils/tableUtils';
@@ -59,7 +58,6 @@ function labelShape() {
     createLabelShape();
     setHasDrawnShapeState(true);
     resetDrawingMode();
-    displayTickSVGOverImageThumbnail();
     oneOrMoreLabelsAdded = true;
   }
 }
@@ -129,7 +127,7 @@ function inputKeyDown(event) {
       const optionsElementList = getOptionsElementList();
       for (let i = 0; i < optionsElementList.length; i += 1) {
         if (optionsElementList[i].childNodes[0].childNodes[0].childNodes[0].innerHTML
-            === textInputElement.value) {
+          === textInputElement.value) {
           [currentlySelectedLabelOption] = optionsElementList[i].childNodes;
           currentlySelectedLabelOption.style.backgroundColor = getLabelOptions()[i].color.label;
           currentlySelectedLabelOption.id = 'used';

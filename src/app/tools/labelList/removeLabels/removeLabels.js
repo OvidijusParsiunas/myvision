@@ -21,7 +21,6 @@ import { removeShape, getNumberOfShapes } from '../../../canvas/objects/allShape
 import { removeTickSVGOverImageThumbnail, getAllImageData } from '../../imageList/imageList';
 import {
   setRemovePointsButtonToDefault,
-  setRemoveLabelsButtonToDisabled,
   setPolygonEditingButtonsToDisabled,
 } from '../../toolkit/styling/state';
 
@@ -92,7 +91,6 @@ function removeActiveLabel() {
   if (getAllImageData().length > 0 && getNumberOfShapes() === 0) {
     removeTickSVGOverImageThumbnail(getCurrentImageId());
   }
-  setRemoveLabelsButtonToDisabled();
 }
 
 function assignCanvasForRemovingLabels(canvasObj) {

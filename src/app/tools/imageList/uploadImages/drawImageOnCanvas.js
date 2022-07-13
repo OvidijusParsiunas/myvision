@@ -149,13 +149,9 @@ function drawImageFromList(selectedImage) {
 
 function onImageLoad(arg, cb) {
   newFileStatus.uploaded = true;
-  console.log(this, this ? 'this' : 'not this');
-
   currentImage = this ? this : arg;
-  console.log("IMAGE LOADDED....")
   draw();
   canvas.setZoom(1);
-  console.log(cb)
   if (cb) {
     cb();
   }

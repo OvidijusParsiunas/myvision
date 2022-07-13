@@ -52,19 +52,9 @@ function removeAllShapes() {
   removeAllShapeRefs();
 }
 
-function resetRemainingImageElements() {
-  const imageNodes = document.getElementById('image-list-image-container').childNodes;
-  for (let i = 0; i < imageNodes.length; i += 1) {
-    const imageElement = imageNodes[i].childNodes[0];
-    imageElement.id = i;
-    imageNodes[i].onclick = window.switchImage.bind(this, i);
-  }
-}
-
 function removeImage(allImageDataArr) {
   const allImageData = allImageDataArr || getAllImageData();
   const index = getCurrentImageId();
-  resetRemainingImageElements();
   const previousImageDataLength = allImageData.length;
   allImageData.splice(index, 1);
   removeAllLabelRefs();

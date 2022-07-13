@@ -21,13 +21,12 @@ import {
   getCrosshairUsedOnCanvasState,
 } from '../state';
 
-let currentlyActiveElement = null;
+const currentlyActiveElement = null;
 let imageContainerElement = null;
 const images = [];
 let currentlySelectedImageId = 0;
 let canvas = null;
 let newImageId = 0;
-let hasCurrentImageThumbnailRedBorder = false;
 const ANIMATION_DURATION_MILLISECONDS = 300;
 
 function updateCurrentImageIds(currentId, newId) {
@@ -79,14 +78,6 @@ function appendAnimationReadyStyling(imageThumbnailElement) {
   imageThumbnailElement.style.maxHeight = '0%';
 }
 
-function triggerAnimation(imageThumbnailElement) {
-  setTimeout(() => {
-    imageThumbnailElement.style.maxHeight = '100%';
-    setTimeout(() => {
-      imageThumbnailElement.style.transition = '';
-    }, ANIMATION_DURATION_MILLISECONDS);
-  });
-}
 
 function addNewItemToImageList(imageData) {
   const imageThumbnailElement = document.createElement('img');
@@ -113,25 +104,17 @@ function addNewItemToImageList(imageData) {
   return parentThumbnailDivElement;
 }
 
-function displayTickSVGOverImageThumbnail(id) {
-
-}
-
 function removeTickSVGOverImageThumbnail(id) {
   images[id].thumbnailElementRef.childNodes[2].style.display = 'none';
 }
 
 function setDefaultImageThumbnailHighlightToMLSelected(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning-selected');
-  const imageId = element.childNodes[0].id;
-  displayTickSVGOverImageThumbnail(imageId);
 }
 
 function setDefaultImageThumbnailHighlightToML(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-default', 'image-list-thumbnail-machine-learning');
   element.childNodes[1].style.display = 'block';
-  const imageId = element.childNodes[0].id;
-  displayTickSVGOverImageThumbnail(imageId);
 }
 
 function removeMLThumbnailHighlight(element) {
@@ -143,14 +126,9 @@ function removeSelectedMLThumbnailHighlight(element) {
   element.childNodes[1].classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
 }
 
-function setMLThumbnailOverlayToMLSelected(element) {
-
-}
-
 function setSelectedMLThumbnailColourOverlayBackToDefault(element) {
   if (element.classList.contains('image-list-thumbnail-machine-learning-selected')) {
     element.classList.replace('image-list-thumbnail-machine-learning-selected', 'image-list-thumbnail-default');
-    displayTickSVGOverImageThumbnail();
   }
 }
 
@@ -168,26 +146,13 @@ function setMLGeneratedShapesToOriginalColorPallette() {
   }
 }
 
-function setCurrentlyActiveElementToInvisible() {
-  if (currentlyActiveElement) {
-    currentlyActiveElement.style.display = 'none';
-    setSelectedMLThumbnailColourOverlayBackToDefault(currentlyActiveElement);
-  }
-}
-
-function highlightImageThumbnail(element) {
-
-}
-
 function changeImageThumbnailBorderColorToRed() {
   if (currentlyActiveElement) {
-    hasCurrentImageThumbnailRedBorder = true;
     currentlyActiveElement.style.borderColor = '#ff4d4d';
   }
 }
 
 function resetImageThumbnailBorderColor() {
-  hasCurrentImageThumbnailRedBorder = false;
   if (currentlyActiveElement) {
     currentlyActiveElement.style.borderColor = '';
   }
@@ -245,10 +210,8 @@ function changeCurrentImageNameElementText(imageName, isfirstFromMany) {
   updateImageNameElement(imageName, images, currentlySelectedImageId, isfirstFromMany);
 }
 
-function displayUploadedImage(imageMetadata, isfirstFromMany) {
-  highlightImageThumbnail(images[newImageId].thumbnailElementRef.childNodes[1]);
+function displayUploadedImage() {
   saveAndRemoveCurrentImageDetails();
-  changeCurrentImageNameElementText(imageMetadata.name, isfirstFromMany);
   images[newImageId].thumbnailElementRef.scrollIntoView();
   removeWatermarkFromCanvasAreaBackground();
   if (getCrosshairUsedOnCanvasState()) updateCrosshairDimensionsAndHideAsync(canvas);
@@ -300,7 +263,7 @@ function changeToExistingImage(id) {
   const timesZoomedOut = resetZoom(true);
   drawImageFromList(images[id].data);
 
-  repopulateLabelAndShapeObjects(images[id].shapes[key], images[id].labels,
+  repopulateLabelAndShapeObjects(images[id].shapes, images[id].labels,
     images[id].imageDimensions, images[id].data);
   switchCanvasContainerElements();
   changeExistingImagesMovability(images[id].shapes);
@@ -309,7 +272,6 @@ function changeToExistingImage(id) {
       images[currentlySelectedImageId].labels, timesZoomedOut);
   }
   setCurrentImageId(id);
-  highlightImageThumbnail(images[id].thumbnailElementRef.childNodes[1]);
   scrollIntoViewIfNeeded(images[id].thumbnailElementRef, imageContainerElement);
   fixForObjectScalingBugOnCanvasSwitch();
   currentlySelectedImageId = id;
@@ -350,7 +312,7 @@ export {
   assignCanvasToImageList,
   setDefaultImageThumbnailHighlightToML, switchImage, canSwitchImage,
   changeImageThumbnailBorderColorToRed, resetImageThumbnailBorderColor,
-  displayTickSVGOverImageThumbnail, getAllImageData, initialiseImageList,
+  getAllImageData, initialiseImageList,
   addSingleImageToList, setSelectedMLThumbnailColourOverlayBackToDefault,
   addImageFromMultiUploadToList, updateCurrentImageIds, getLastImageIdByName,
   setDefaultImageThumbnailHighlightToMLSelected, removeTickSVGOverImageThumbnail,
