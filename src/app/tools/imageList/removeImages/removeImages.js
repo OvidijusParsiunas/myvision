@@ -1,5 +1,4 @@
 import { updateCurrentImageIds, getAllImageData } from '../imageList';
-import { setImageNameElementToDefault } from '../../imageSwitchPanel/style';
 import { removeAllLabelListItems } from '../../labelList/labelList';
 import { removeAllLabelRefs } from '../../../canvas/objects/label/label';
 import { removeAllShapeRefs, getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
@@ -22,7 +21,6 @@ function resetEverything() {
   window.editShapes();
   // the following is preparation to set an active drawing mode on a new image upload
   if (lastDrawingModeState) setDefaultState(false);
-  setImageNameElementToDefault();
   removeAllLabelListItems();
   drawWatermarkOnCanvasAreaBackground();
   canvas.clear();

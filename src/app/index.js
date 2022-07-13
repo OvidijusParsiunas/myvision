@@ -4,15 +4,11 @@ import { findUserOS } from './tools/OS/OSManager';
 import { constructCanvas } from './canvas/canvas';
 import initialiseToolkit from './tools/toolkit/init';
 import initialiseLabellerModal from './tools/labellerModal/buttons';
-import { initialiseUploadDatasetsModal } from './tools/uploadDatasetsModal/views/viewManager';
 import { initialiseMachineLearningModal } from './tools/machineLearningModal/views/viewManager';
-import initialiseExportDatasetsPopup from './tools/exportDatasetsPopup/init';
-import { initialiseSettingsPopup } from './tools/settingsPopup/init';
 import assignPassiveEventListeners from './tools/passiveEventListeners/passiveEventListeners';
 import initialiseShapeManipulationDeltas from './canvas/objects/deltaValueSetters/initialiseShapeManipulationDeltas';
 import initialiseDragAndDropFunctionality from './tools/dragAndDrop/dragAndDrop';
 import initialiseLabelListFunctionality from './tools/labelList/init';
-import initialiseRemoveImagesModal from './tools/imageList/removeImages/modal/init';
 import { applyStyling } from './tools/globalStyling/style';
 import { initialiseImageSwitchPanelFunctionality } from './tools/imageSwitchPanel/style';
 import { initialisePulseAnimationCancelling } from './tools/utils/buttons/pulseAnimation';
@@ -48,35 +44,14 @@ initialiseToolkit();
 // grabs variables from initial labels list and creates html nodes for options selection
 initialiseLabellerModal();
 
-
-// initializes styles of settings popup
-// assigns settings popup event handlers
-// assigns dom nodes to local vars
-// assigns event handlers to settings pop-up
-initialiseSettingsPopup();
-
 // registers important events related to mouse over  canvas
 // ... and etc. probably for crosshair displaying os alike
 registerWindowMouseEvents();
-
-
-// assigns dom nodes to local vars
-// assigns event handlers
-initialiseExportDatasetsPopup();
-
-
-initialiseUploadDatasetsModal();
-
 
 initialiseMachineLearningModal();
 
 
 assignPassiveEventListeners();
-
-
-initialiseRemoveImagesModal();
-
-
 
 
 initialiseLabelListFunctionality();

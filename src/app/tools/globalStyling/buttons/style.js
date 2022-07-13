@@ -26,7 +26,6 @@ function applySmallScreenButtonsStyle(buttonElements, screenSizeDelta) {
   applyStylingToElementsArray(buttonElements.buttonClassElements, 'lineHeight', 'initial');
   applyStylingToElementsArray(buttonElements.popupLabelButtonClassElements, 'paddingTop', `${7 / screenSizeDelta}px`);
   applyStylingToElementsArray(buttonElements.popupLabelDisabledButtonClassElements, 'paddingTop', `${7 / screenSizeDelta}px`);
-  buttonElements.exportDatasetsPopupExportButton.style.paddingTop = `${6 / screenSizeDelta}px`;
 }
 
 function getButtonElements() {
@@ -36,7 +35,6 @@ function getButtonElements() {
   buttons.buttonClassElements = document.getElementsByClassName('buttons');
   buttons.popupLabelButtonClassElements = document.getElementsByClassName('popup-label-button');
   buttons.popupLabelDisabledButtonClassElements = document.getElementsByClassName('popup-label-button-disabled');
-  buttons.exportDatasetsPopupExportButton = document.getElementById('export-datasets-popup-export-button');
   return buttons;
 }
 
