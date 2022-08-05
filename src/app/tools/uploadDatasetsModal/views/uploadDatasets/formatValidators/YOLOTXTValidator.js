@@ -59,7 +59,6 @@ function checkAllRows(rows) {
     const requiredProperties = {
       'class (1)': 'number', 'x (2)': 'number', 'y (3)': 'number', 'width (4)': 'number', 'height (5)': 'number',
     };
-    // WORK: ATTRIBUTES_STRING
     const result = checkObjectProperties(requiredProperties, annotationFields,
       TXT_POSTFIX, ATTRIBUTES_STRING);
     if (result.error) {
