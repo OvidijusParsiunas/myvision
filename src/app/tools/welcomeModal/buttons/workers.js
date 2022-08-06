@@ -49,7 +49,6 @@ export { closeWelcomeModal, initUserGuide };
 //   }, 3000);
 // }
 
-
 // add css
 /* @keyframes gradient {
 0% {

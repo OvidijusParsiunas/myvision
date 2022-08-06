@@ -129,7 +129,7 @@ function JSONtoXML(JSONObject, tabsString) {
 function buildDownloadableZip(annotatedImages) {
   const zip = new JSZip();
   const imagesFolder = zip.folder('images');
-  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
+  const regexToFindFirstWordBeforeFullStop = /^([^.]+)/;
   annotatedImages.forEach((annotatedImage) => {
     const imageName = `${regexToFindFirstWordBeforeFullStop.exec(annotatedImage.annotation.filename)[0]}.xml`;
     const annotatedImageXML = JSONtoXML(annotatedImage);

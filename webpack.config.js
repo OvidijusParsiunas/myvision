@@ -2,6 +2,7 @@ const FailOnErrorsPlugin = require('fail-on-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CNAMEWebpackPlugin = require('cname-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
 
 const env = process.env.NODE_ENV || 'development';
@@ -48,6 +49,7 @@ module.exports = () => {
         { from: `./src/assets/externals/${config.externalsDirectory}`, to: 'assets/externals' },
       ],
     }),
+    new ESLintPlugin({}),
   ]);
   return {
     entry: {
@@ -72,9 +74,6 @@ module.exports = () => {
               options: {
                 presets: ['@babel/preset-env'],
               },
-            },
-            {
-              loader: 'eslint-loader',
             },
           ],
         },

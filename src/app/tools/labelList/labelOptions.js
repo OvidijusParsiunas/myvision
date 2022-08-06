@@ -96,7 +96,6 @@ function sendLabelOptionToFront(id) {
   labelOptions[0] = firstObjectRef;
 }
 
-
 function randomLightnessValue() {
   return Math.floor(Math.random() * (70 - 40) + 40);
 }

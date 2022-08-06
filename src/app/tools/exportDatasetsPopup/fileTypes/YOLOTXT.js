@@ -116,7 +116,7 @@ function getImageAndAnnotationData(allImageProperties, classesData) {
 function generateAnnotationFilesData(allImageProperties, classesData) {
   const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, classesData);
   const annotationsFiles = [];
-  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
+  const regexToFindFirstWordBeforeFullStop = /^([^.]+)/;
   imageAndAnnotationData.forEach((annotatedImage) => {
     const imageName = `${regexToFindFirstWordBeforeFullStop.exec(annotatedImage.imageName)[0]}.txt`;
     annotationsFiles.push({ imageName, data: annotatedImage.data });

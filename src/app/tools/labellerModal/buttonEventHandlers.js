@@ -86,7 +86,6 @@ function selectLabelOption(text, element, color) {
 }
 
 function setCaretPosition(caretPos) {
-  textInputElement.value = textInputElement.value;
   if (textInputElement.createTextRange) {
     const range = textInputElement.createTextRange();
     range.move('character', caretPos);
