@@ -37,7 +37,7 @@ function parseCSV(fileMetaData, event) {
     const rows = event.target.result.split(/\r\n|\n/);
     const rowsOfAttributes = [];
     rows.forEach((line) => {
-      const attributes = line.split(',').filter(entry => entry.trim() !== '');
+      const attributes = line.split(',').filter((entry) => entry.trim() !== '');
       if (attributes.length > 0) { rowsOfAttributes.push(attributes); }
     });
     if (rowsOfAttributes[0].length === 8 && isArrayOfStrings(rowsOfAttributes[0])) {
@@ -113,7 +113,7 @@ function txtToJSON(result, fileMetaData) {
   lines.forEach((line) => {
     const attributes = line
       .split(' ')
-      .filter(entry => entry.trim() !== '')
+      .filter((entry) => entry.trim() !== '')
       .map((entry) => {
         const number = Number.parseFloat(entry, 10);
         if (!Number.isNaN(number)) { return number; }

@@ -269,7 +269,6 @@ export {
   setCreateBoundingBoxButtonToDisabled,
 };
 
-
 // function getSetterFunc(newState) {
 //   if (newState === state.ACTIVE) {
 //     return setButtonToActive;

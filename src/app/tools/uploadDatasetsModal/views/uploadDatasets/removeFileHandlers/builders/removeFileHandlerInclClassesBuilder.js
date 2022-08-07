@@ -101,7 +101,7 @@ function removeFileHandlerWthClasses(fileName, tableName, errorMessage) {
   } else if (tableName === IMAGES_TABLE_INDICATOR) {
     this.datasetObjectManager.removeFile(fileName, IMAGE_FILES_OBJECT);
     if (Object.keys(datasetObject[IMAGE_FILES_OBJECT])
-      .filter((key => !datasetObject[IMAGE_FILES_OBJECT][key].error))
+      .filter(((key) => !datasetObject[IMAGE_FILES_OBJECT][key].error))
       .length === 0) {
       disableFinishButton();
     }

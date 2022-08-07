@@ -29,11 +29,11 @@ function generateNewPolygon() {
 function calculateMovedPointsCoordinates() {
   const matrix = currentPolygon.calcTransformMatrix();
   const movedPoints = currentPolygon.get('points')
-    .map(p => new fabric.Point(
+    .map((p) => new fabric.Point(
       p.x - currentPolygon.pathOffset.x,
       p.y - currentPolygon.pathOffset.y,
     ))
-    .map(p => fabric.util.transformPoint(p, matrix));
+    .map((p) => fabric.util.transformPoint(p, matrix));
   return movedPoints;
 }
 

@@ -147,7 +147,6 @@ function addAnnotationFileWhenMultipleAllowedInclClasses(annotationFileObj, erro
   }
 }
 
-
 function moveAnnotationFileToFaltyArray(file) {
   const { name } = file.body.fileMetaData;
   removeFile(name, VALID_ANNOTATION_FILES_ARRAY);
@@ -270,7 +269,6 @@ const multipleAnnotationFilesInclClassesStrategyObjectManager = {
   addFile: addFileWhenMultipleAnnotationsInclClasses,
   addAnnotationFile: addAnnotationFileWhenMultipleAllowedInclClasses,
 };
-
 
 function buildObjectManagerForOneAnnotationFileStrategy() {
   return { ...oneAnnotationFileStrategyObjectManager };

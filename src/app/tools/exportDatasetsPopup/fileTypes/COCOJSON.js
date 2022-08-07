@@ -41,7 +41,6 @@ function calculatePolygonArea(coordinatesArg) {
   return area / 2;
 }
 
-
 function parsePolygonProperties(polygon, imageDimensions) {
   const properties = { segmentation: [], bbox: [], area: 0 };
   let minX = 999999999999;

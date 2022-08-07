@@ -7,7 +7,6 @@ import { removeActiveButtonPopover } from '../../../globalStyling/buttons/popove
 import isLeftMouseButtonClick from '../../../utils/buttons/clickEvents';
 import isElement from '../../../utils/elementType';
 
-
 function interruptAllCanvasEventsBeforeFunc(func, event) {
   if (event && !isLeftMouseButtonClick(event)) return;
   removeActiveButtonPopover();
