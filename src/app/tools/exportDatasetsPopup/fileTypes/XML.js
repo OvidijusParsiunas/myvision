@@ -1,9 +1,9 @@
 import JSZip from 'jszip';
+import { adjustIncorrectBoundingBoxCoordinates } from '../sharedUtils/adjustShapeCoordinates';
 import { getImageProperties } from '../../imageList/uploadImages/drawImageOnCanvas';
-import { getAllImageData } from '../../imageList/imageList';
 import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShapes';
+import { getAllImageData } from '../../imageList/imageList';
 import { getCurrentImageId } from '../../state';
-import { adjustIncorrectBoundingBoxCoordinates, roundNumberToDecimalPlaces } from '../sharedUtils/adjustShapeCoordinates';
 
 /*
 If there is an error on generating zips - try to use a file receiver
@@ -63,8 +63,8 @@ function parseBoundingBoxData(boundingBox, imageDimensions) {
   const {
     left, top, width, height,
   } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces);
-  const xMax = roundNumberToDecimalPlaces(left + width, decimalPlaces);
-  const yMax = roundNumberToDecimalPlaces(top + height, decimalPlaces);
+  const xMax = left + width;
+  const yMax = top + height;
   const truncated = isShapeTruncated(left, top, xMax, yMax, imageDimensions) ? 1 : 0;
   parsedShapeData.name = boundingBox.shapeLabelText;
   parsedShapeData.pose = 'Unspecified';
