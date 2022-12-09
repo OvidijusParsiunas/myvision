@@ -4,6 +4,7 @@ import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShape
 import { getLabelOptions } from '../../labelList/labelOptions';
 import { getCurrentImageId } from '../../state';
 import {
+  getRoundingValue,
   roundNumberToDecimalPlaces,
   adjustIncorrectBoundingBoxCoordinates,
   adjustIncorrectPolygonPointCoordinates,
@@ -60,13 +61,14 @@ function parsePolygonProperties(polygon, imageDimensions) {
     if (pointY > maxY) { maxY = pointY; }
   });
   properties.segmentation = [pointsArray];
-  const bboxWidth = roundNumberToDecimalPlaces(maxX - minX, decimalPlaces);
-  const bboxHeight = roundNumberToDecimalPlaces(maxY - minY, decimalPlaces);
+  const roundingValue = getRoundingValue(decimalPlaces);
+  const bboxWidth = roundNumberToDecimalPlaces(maxX - minX, roundingValue);
+  const bboxHeight = roundNumberToDecimalPlaces(maxY - minY, roundingValue);
   properties.bbox.push(minX);
   properties.bbox.push(minY);
   properties.bbox.push(bboxWidth);
   properties.bbox.push(bboxHeight);
-  properties.area = roundNumberToDecimalPlaces(calculatePolygonArea(pointsArray), decimalPlaces);
+  properties.area = roundNumberToDecimalPlaces(calculatePolygonArea(pointsArray), roundingValue);
   return properties;
 }
 
@@ -75,8 +77,9 @@ function parseBoundingBoxProperties(boundingBox, imageDimensions) {
   const {
     left, top, width, height,
   } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces);
-  const rightCoordinate = roundNumberToDecimalPlaces(left + width, decimalPlaces);
-  const bottomCoordinate = roundNumberToDecimalPlaces(top + height, decimalPlaces);
+  const roundingValue = getRoundingValue(decimalPlaces);
+  const rightCoordinate = roundNumberToDecimalPlaces(left + width, roundingValue);
+  const bottomCoordinate = roundNumberToDecimalPlaces(top + height, roundingValue);
   const pointsArray = [];
   pointsArray.push(left);
   pointsArray.push(top);
@@ -91,7 +94,7 @@ function parseBoundingBoxProperties(boundingBox, imageDimensions) {
   properties.bbox.push(top);
   properties.bbox.push(width);
   properties.bbox.push(height);
-  properties.area = roundNumberToDecimalPlaces(width * height, decimalPlaces);
+  properties.area = roundNumberToDecimalPlaces(width * height, roundingValue);
   return properties;
 }
 

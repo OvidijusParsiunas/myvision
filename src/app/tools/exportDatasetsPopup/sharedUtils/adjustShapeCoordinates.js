@@ -1,5 +1,3 @@
-import boundingBoxProps from '../../../canvas/objects/boundingBox/properties';
-
 const widthDelta = 3.5;
 const heightDelta = 2;
 
@@ -9,13 +7,9 @@ function adjustBoundingBoxCoordinates(left, top, width, height, imageDimensions)
   } = imageDimensions;
   if (left + width > originalWidth - widthDelta / scaleX) {
     width = originalWidth - left;
-  } else {
-    width += boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth;
   }
   if (top + height > originalHeight - heightDelta / scaleY) {
     height = originalHeight - top;
-  } else {
-    height += boundingBoxProps.getStandaloneBoundingBoxProperties(imageDimensions).strokeWidth;
   }
   return {
     finalLeft: left,
@@ -25,11 +19,21 @@ function adjustBoundingBoxCoordinates(left, top, width, height, imageDimensions)
   };
 }
 
-function calculateBoundingBoxCoordinates(boundingBox, imageDimensions) {
-  const left = boundingBox.left / imageDimensions.scaleX;
-  const top = boundingBox.top / imageDimensions.scaleY;
-  const width = boundingBox.width / imageDimensions.scaleX;
-  const height = boundingBox.height / imageDimensions.scaleY;
+function roundNumberToDecimalPlaces(number, roundingValue) {
+  return Math.round(number * roundingValue) / roundingValue;
+}
+
+function calculateBoundingBoxCoordinates(boundingBox, imageDimensions, roundingValue) {
+  let left = boundingBox.left / imageDimensions.scaleX;
+  let top = boundingBox.top / imageDimensions.scaleY;
+  let width = boundingBox.width / imageDimensions.scaleX;
+  let height = boundingBox.height / imageDimensions.scaleY;
+  if (roundingValue !== undefined && roundingValue !== null) {
+    left = roundNumberToDecimalPlaces(left, roundingValue);
+    top = roundNumberToDecimalPlaces(top, roundingValue);
+    width = roundNumberToDecimalPlaces(width, roundingValue);
+    height = roundNumberToDecimalPlaces(height, roundingValue);
+  }
   return {
     left, top, width, height,
   };
@@ -51,29 +55,19 @@ function getRoundingValue(decimalPlaces) {
   return roundingValue;
 }
 
-function roundNumberToDecimalPlaces(number, decimalPlaces) {
-  const roundingValue = getRoundingValue(decimalPlaces);
-  return floorNumber(number, roundingValue);
-}
-
-function ceilNumber(number, roundingValue) {
-  if (roundingValue === null) { return number; }
-  return Math.ceil(number * roundingValue) / roundingValue;
-}
-
 function adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces) {
   const roundingValue = getRoundingValue(decimalPlaces);
   const {
     left, top, width, height,
-  } = { ...calculateBoundingBoxCoordinates(boundingBox, imageDimensions, roundingValue) };
+  } = calculateBoundingBoxCoordinates(boundingBox, imageDimensions, roundingValue);
   const finalCoordinates = adjustBoundingBoxCoordinates(
-    left, top, width, height, imageDimensions, roundingValue,
+    left, top, width, height, imageDimensions,
   );
   return {
-    left: floorNumber(finalCoordinates.finalLeft, roundingValue),
-    top: floorNumber(finalCoordinates.finalTop, roundingValue),
-    width: ceilNumber(finalCoordinates.finalWidth, roundingValue),
-    height: ceilNumber(finalCoordinates.finalHeight, roundingValue),
+    left: finalCoordinates.finalLeft,
+    top: finalCoordinates.finalTop,
+    width: finalCoordinates.finalWidth,
+    height: finalCoordinates.finalHeight,
   };
 }
 
@@ -97,6 +91,7 @@ function adjustIncorrectPolygonPointCoordinates(polygonPoint, imageDimensions, d
 }
 
 export {
+  getRoundingValue,
   roundNumberToDecimalPlaces,
   adjustIncorrectBoundingBoxCoordinates,
   adjustIncorrectPolygonPointCoordinates,
