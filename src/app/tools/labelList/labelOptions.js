@@ -155,6 +155,18 @@ function generateRandomHSLColor() {
   return getRandomlyGeneratedShapeColor();
 }
 
+function updateMaxUsedLabelIndex(selectedLabelIndex) {
+  if (maxUsedLabelIndex < selectedLabelIndex) {
+    maxUsedLabelIndex = selectedLabelIndex;
+  } else if (maxUsedLabelIndex === selectedLabelIndex) {
+    maxUsedLabelIndex += 1;
+  }
+}
+
+function getMaxUsedLabelIndex() {
+  return maxUsedLabelIndex - 1;
+}
+
 function addToLabelOptions(text) {
   let foundAtIndex;
   for (let i = 0; i < labelOptions.length; i += 1) {
@@ -164,11 +176,11 @@ function addToLabelOptions(text) {
     }
   }
   if (foundAtIndex !== undefined) {
-    if (maxUsedLabelIndex <= foundAtIndex) { maxUsedLabelIndex = foundAtIndex; }
+    updateMaxUsedLabelIndex(foundAtIndex);
     sendLabelOptionToFront(foundAtIndex);
   } else {
     const color = generateRandomHSLColor();
-    maxUsedLabelIndex += 1;
+    updateMaxUsedLabelIndex(maxUsedLabelIndex + 1);
     labelOptions.unshift({ text, color });
     if (limitLabelOptions && (labelOptions.length > maxLabelOptions)) {
       labelOptions.pop();
@@ -178,10 +190,6 @@ function addToLabelOptions(text) {
       }
     }
   }
-}
-
-function getMaxUsedLabelIndex() {
-  return maxUsedLabelIndex - 1;
 }
 
 function getLabelOptions() {
