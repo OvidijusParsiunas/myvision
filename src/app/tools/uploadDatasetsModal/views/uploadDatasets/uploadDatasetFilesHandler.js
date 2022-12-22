@@ -23,20 +23,16 @@ function readFile(reader, file) {
   }
 }
 
-function getAcceptedDataFormat() {
-  const rawFileFormatString = getAcceptedFileFormat().split(',')[0];
-  return rawFileFormatString.substring(1, rawFileFormatString.length);
-}
-
-function validateFileFormat(file, acceptedDataFormat) {
-  return file.type.includes(acceptedDataFormat) || file.type.includes('image/');
+function validateFileFormat(file) {
+  const fileNameSegments = file.name.split('.');
+  const fileExtension = fileNameSegments[fileNameSegments.length - 1];
+  return getAcceptedFileFormat().includes(fileExtension) || file.type.includes('image/');
 }
 
 function uploadDatasetFilesHandler(uploadData) {
   if (uploadData.files && uploadData.files.length > 0) {
-    const acceptedDataFormat = getAcceptedDataFormat();
     for (let i = 0; i < uploadData.files.length; i += 1) {
-      if (validateFileFormat(uploadData.files[i], acceptedDataFormat)) {
+      if (validateFileFormat(uploadData.files[i])) {
         const reader = new FileReader();
         reader.onload = onFileLoad.bind(this, uploadData.files[i]);
         readFile(reader, uploadData.files[i]);
