@@ -16,7 +16,7 @@
     "html-webpack-plugin": "^5.5.0",
     "minimist": "^1.2.6",
     "webpack-cli": "^4.10.0",
-    "webpack": "^5.74.0",
+    "webpack": "^5.76.0",
     "fail-on-errors-webpack-plugin": "^3.0.0"
   },
   "scripts": {
