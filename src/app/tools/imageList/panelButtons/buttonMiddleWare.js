@@ -1,14 +1,15 @@
-import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
 import { interruptAllCanvasEvents } from '../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/resetCanvasState';
 import { removeActiveButtonPopover } from '../../globalStyling/buttons/popovers';
-import { canSwitchImage } from '../imageList';
+import { reassignReferenceToNewCanvas } from '../../../canvas/canvas';
 import isLeftMouseButtonClick from '../../utils/buttons/clickEvents';
+import { canSwitchImage } from '../imageList';
 
-function interruptAllCanvasEventsBeforeFuncWInputs(placeHolder, funcObj, input) {
+function interruptAllCanvasEventsBeforeFuncWInputs(_, funcObj, input, event) {
   removeActiveButtonPopover();
   interruptAllCanvasEvents();
   funcObj.resetCanvasEventsToDefault();
   funcObj.uploadImageFiles(input);
+  event.target.value = ''; // resetting to prevent Chrome issue of not being able to upload same file twice
 }
 
 function replaceExistingCanvas(func, func2, direction, event) {

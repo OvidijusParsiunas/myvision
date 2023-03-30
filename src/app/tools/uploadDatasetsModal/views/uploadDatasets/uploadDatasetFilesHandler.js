@@ -29,7 +29,7 @@ function validateFileFormat(file) {
   return getAcceptedFileFormat().includes(fileExtension) || file.type.includes('image/');
 }
 
-function uploadDatasetFilesHandler(uploadData) {
+function uploadDatasetFilesHandler(uploadData, event) {
   if (uploadData.files && uploadData.files.length > 0) {
     for (let i = 0; i < uploadData.files.length; i += 1) {
       if (validateFileFormat(uploadData.files[i])) {
@@ -39,6 +39,7 @@ function uploadDatasetFilesHandler(uploadData) {
       }
     }
   }
+  event.target.value = ''; // resetting to prevent Chrome issue of not being able to upload same file twice
 }
 
 function addAlreadyUploadedImages(images) {
