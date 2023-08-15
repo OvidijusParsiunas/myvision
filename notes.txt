@@ -1,3 +1,7 @@
+active trashcan icon for labels is brighter than images
+
+small new bug, use arrow down/up when labelling first object
+
 when opening up the labeller modal, there is a scrollbar
 
 the label trashcan has a stronger tint than the image

@@ -1,3 +1,5 @@
+<br />
+
 <!-- do a long readme -->
 <p align="center"> 
     <img style="margin-left: -25px" width="70%" src="./readme/images/logo with text 35.png" alt="Logo">
