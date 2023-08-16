@@ -9,7 +9,6 @@ import {
 } from '../../style';
 import { getTextFromDictionary } from '../../../../../text/languages/language';
 
-
 function validateExistingImagesWhenMultipleAnnotationFilesAllowed(datasetObject,
   updateImageFileErrorStatusFunc, validateFileFunc) {
   if (datasetObject[VALID_ANNOTATION_FILES_ARRAY].length > 0) {
