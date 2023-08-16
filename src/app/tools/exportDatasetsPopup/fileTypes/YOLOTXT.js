@@ -26,6 +26,9 @@ function downloadZip(xml) {
 }
 
 */
+
+const decimalPlaces = 6;
+
 function getFileName() {
   const currentDate = new Date();
   return `visionai-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
@@ -71,15 +74,15 @@ function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText);
   const {
     left, top, width, height,
-  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions);
+  } = adjustIncorrectBoundingBoxCoordinates(boundingBox, imageDimensions, decimalPlaces);
   const shapeWidthToImageWidth = width / imageDimensions.originalWidth;
   const shapeHeightToImageHeight = height / imageDimensions.originalHeight;
   const xmiddleToImageWidth = (left + (width / 2)) / imageDimensions.originalWidth;
   const ymiddleToImageHeight = (top + (height / 2)) / imageDimensions.originalHeight;
-  boundingBoxData.xmiddle = xmiddleToImageWidth.toFixed(6);
-  boundingBoxData.ymiddle = ymiddleToImageHeight.toFixed(6);
-  boundingBoxData.width = shapeWidthToImageWidth.toFixed(6);
-  boundingBoxData.height = shapeHeightToImageHeight.toFixed(6);
+  boundingBoxData.xmiddle = xmiddleToImageWidth.toFixed(decimalPlaces);
+  boundingBoxData.ymiddle = ymiddleToImageHeight.toFixed(decimalPlaces);
+  boundingBoxData.width = shapeWidthToImageWidth.toFixed(decimalPlaces);
+  boundingBoxData.height = shapeHeightToImageHeight.toFixed(decimalPlaces);
   return boundingBoxData;
 }
 
@@ -116,7 +119,7 @@ function getImageAndAnnotationData(allImageProperties, classesData) {
 function generateAnnotationFilesData(allImageProperties, classesData) {
   const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, classesData);
   const annotationsFiles = [];
-  const regexToFindFirstWordBeforeFullStop = new RegExp('^([^.]+)');
+  const regexToFindFirstWordBeforeFullStop = /^([^.]+)/;
   imageAndAnnotationData.forEach((annotatedImage) => {
     const imageName = `${regexToFindFirstWordBeforeFullStop.exec(annotatedImage.imageName)[0]}.txt`;
     annotationsFiles.push({ imageName, data: annotatedImage.data });

@@ -38,7 +38,6 @@ function hideNoObjectsFoundViewAssets() {
   buttonGroupElement.style.display = 'none';
 }
 
-
 function assignNoObjectsFoundViewLocalVariables() {
   descriptionElement = document.getElementById('machine-learning-modal-description');
   buttonGroupElement = document.getElementById('machine-learning-modal-no-objects-buttons');

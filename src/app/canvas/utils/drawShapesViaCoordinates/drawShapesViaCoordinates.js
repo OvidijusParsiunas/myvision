@@ -249,7 +249,6 @@ function drawShapesForML(shapesData, allImageData, currentlySelectedImageId,
   removeTempShapes();
 }
 
-
 function assignCanvasEvents() {
   if (getNumberOfShapeTypes().boundingBoxes === 0) {
     const { canvas1 } = getCanvasReferences();

@@ -46,9 +46,9 @@ function assertObjectType(expectedType, subjectVariable, format) {
     case 'array':
       return Array.isArray(subjectVariable);
     case 'array:number':
-      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'number').length === 0;
+      return Array.isArray(subjectVariable) && subjectVariable.filter((entry) => typeof entry !== 'number').length === 0;
     case 'array:object':
-      return Array.isArray(subjectVariable) && subjectVariable.filter(entry => typeof entry !== 'object').length === 0;
+      return Array.isArray(subjectVariable) && subjectVariable.filter((entry) => typeof entry !== 'object').length === 0;
     default:
       return true;
   }

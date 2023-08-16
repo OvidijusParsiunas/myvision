@@ -168,7 +168,7 @@
       <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
         <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="moveToSelectFormatView()"></div>
         <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()"></div>
-        <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
+        <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this, event)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()"></div>
         <div id="upload-datasets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()"></div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal(true)"></div>
@@ -329,7 +329,7 @@
               </button>
             </div>
             <div id="remove-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position"></div>
-            <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
+            <input id='uploadImages' type='file' onchange="uploadImages(this, event)" multiple accept="image/*" hidden/>
             <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload(event)">
               <img id="upload-images-icon" src="assets/svg/method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
             </button>

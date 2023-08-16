@@ -16,7 +16,7 @@
   <script src="assets/externals/fabricjs/fabric.min.js" type="text/javascript"></script>
   <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
   <link rel="icon" href="assets/images/favicon 29.png">
-</head>
+<script defer src="browserSupportBundle.cbe3df5eefc74ef5edab.js"></script><script defer src="appBundle.a49ce04b766cdbc841a7.js"></script></head>
 <body onresize="windowResize()" style="background-color: rgb(243, 243, 243)">
   <div id="crosshair-line-x" class="crosshair-line"></div>
   <div id="crosshair-line-y" class="crosshair-line"></div>
@@ -162,7 +162,7 @@
       <div id="upload-datasets-modal-buttons" class="buttons modal-buttons">
         <div id="upload-datasets-modal-start-button" class="popup-label-button popup-proceed-button" onclick="moveToSelectFormatView()">Start</div>
         <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()">Back</div>
-        <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this)" multiple hidden/>
+        <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this, event)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
         <div id="upload-datasets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal(true)">Cancel</div>
@@ -324,7 +324,7 @@
               </button>
             </div>
             <div id="remove-images-button-popover" class="core-button-hover-popover image-list-button-hover-popover-v-position">Remove Image</div>
-            <input id='uploadImages' type='file' onchange="uploadImages(this)" multiple accept="image/*" hidden/>
+            <input id='uploadImages' type='file' onchange="uploadImages(this, event)" multiple accept="image/*" hidden/>
             <button id="upload-images-button" class="toolkit-button toolkit-button-default" onmouseup="triggerImageUpload(event)">
               <img id="upload-images-icon" src="assets/svg/method-draw-image - 2020-05-05T022144.694.svg" draggable="false" alt="visibility">
             </button>
@@ -366,5 +366,5 @@
     </div>
     <div id="inadequate-client-resources-overlay-text"></div>
   </div>
-<script src="browserSupportBundle.b5251de0268b25af727e.js"></script><script src="appBundle.5002326d11e11c44655d.js"></script></body>
+</body>
 </html>

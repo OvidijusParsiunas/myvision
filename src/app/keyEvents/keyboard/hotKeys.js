@@ -101,7 +101,6 @@ function wKeyUpHandlerDefault() {
   }
 }
 
-
 function rKeyHandler() {
   if (!isAnyModalOpen() && !isEditingLabelInLabelList() && !getShapeMovingState() && getRemovePointsButtonState() !== 'disabled') {
     closeAllPopups();

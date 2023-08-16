@@ -209,7 +209,6 @@ function getTempPolygon() {
   return null;
 }
 
-
 function getCurrentlyHoveredDrawPoint() {
   return currentlyHoveredPoint;
 }

@@ -60,7 +60,6 @@ export { closeWelcomeModal, initUserGuide, switchLanguage };
 //   }, 3000);
 // }
 
-
 // add css
 /* @keyframes gradient {
 0% {

@@ -163,8 +163,8 @@ function startMachineLearning(nextViewCallback, setMachineLearningData, coverage
     isInProgress = true;
     if (!tfModel) {
       downloadTensorflowJS()
-        .then(resultScriptStatus => downloadCOCOSSD(resultScriptStatus))
-        .then(resultScriptStatus => loadModel(resultScriptStatus))
+        .then((resultScriptStatus) => downloadCOCOSSD(resultScriptStatus))
+        .then((resultScriptStatus) => loadModel(resultScriptStatus))
         .then(() => makePredictionsForAllImages(nextViewCallback, setMachineLearningData, coverage))
         .catch(() => errorHandler());
     } else {
