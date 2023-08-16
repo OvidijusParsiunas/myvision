@@ -1,6 +1,6 @@
 import {
-  JSON_POSTFIX, PROPERTIES_STRING, ACTIVE_ANNOTATION_FILE,
-  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
+  ACTIVE_ANNOTATION_FILE, VALID_ANNOTATION_FILES_ARRAY,
+  JSON_POSTFIX, ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 import { getTextFromDictionary } from '../../../../text/languages/language';
@@ -21,7 +21,7 @@ function checkAnnotationsMapToCategories(parsedObj) {
       }
     }
     if (!categoryIdValid) {
-      return { error: true, message: `The following category_id has not been found: ${annotation.category_id} -> in categories` };
+      return { error: true, message: `${getTextFromDictionary('THE_FOLLOWING_HAS_NOT_BEEN_FOUND')}category_id${getTextFromDictionary('HAS_NOT_FOUND')}: ${annotation.category_id} -> ${getTextFromDictionary('IN_1')}categories${getTextFromDictionary('IN_2')}` };
     }
   }
   return { error: false, message: '' };
@@ -40,7 +40,7 @@ function checkAnnotationsMapToImages(parsedObj) {
       }
     }
     if (!imageIdValid) {
-      return { error: true, message: `The following image_id has not been found: ${annotation.image_id} -> in annotations` };
+      return { error: true, message: `${getTextFromDictionary('THE_FOLLOWING_HAS_NOT_BEEN_FOUND')}image_id${getTextFromDictionary('HAS_NOT_FOUND')}: ${annotation.image_id} -> ${getTextFromDictionary('IN_1')}annotations${getTextFromDictionary('IN_2')}` };
     }
   }
   return { error: false, message: '' };
@@ -51,9 +51,9 @@ function checkImagesProperty(parsedObj) {
   const { images } = parsedObj;
   for (let i = 0; i < images.length; i += 1) {
     const result = checkObjectProperties(requiredProperties, images[i],
-      JSON_POSTFIX, PROPERTIES_STRING);
+      JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
     if (result.error) {
-      result.message += ' -> in images';
+      result.message += ` -> ${getTextFromDictionary('IN_1')}images${getTextFromDictionary('IN_2')}`;
       return result;
     }
   }
@@ -78,7 +78,7 @@ function checkSegmentationArray(segmentationArray) {
     if (result.error) { return result; }
   }
   if (segmentationArray.length < 1) {
-    return { error: true, message: `${arrayName} array is empty` };
+    return { error: true, message: `${arrayName}${getTextFromDictionary('ARRAY_EMPTY')}` };
   }
   return { error: false, message: '' };
 }
@@ -91,19 +91,19 @@ function checkAnnotationsProperty(parsedObj) {
   for (let i = 0; i < annotations.length; i += 1) {
     const annotation = annotations[i];
     let result = checkObjectProperties(requiredProperties, annotation,
-      JSON_POSTFIX, PROPERTIES_STRING);
+      JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
     if (result.error) {
-      result.message += ' -> in annotations';
+      result.message += ` -> ${getTextFromDictionary('IN_1')}annotations${getTextFromDictionary('IN_2')}`;
       return result;
     }
     result = checkSegmentationArray(annotation.segmentation);
     if (result.error) {
-      result.message += ' -> in annotations';
+      result.message += ` -> ${getTextFromDictionary('IN_1')}annotations${getTextFromDictionary('IN_2')}`;
       return result;
     }
     result = checkArrayElements(annotation.bbox, 'bbox', JSON_POSTFIX, { length: 4 });
     if (result.error) {
-      result.message += ' -> in annotations';
+      result.message += ` -> ${getTextFromDictionary('IN_1')}annotations${getTextFromDictionary('IN_2')}`;
       return result;
     }
   }
@@ -115,9 +115,9 @@ function checkCategoriesProperty(parsedObj) {
   const { categories } = parsedObj;
   for (let i = 0; i < categories.length; i += 1) {
     const result = checkObjectProperties(requiredProperties, categories[i],
-      JSON_POSTFIX, PROPERTIES_STRING);
+      JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
     if (result.error) {
-      result.message += ' -> in categories';
+      result.message += ` -> ${getTextFromDictionary('IN_1')}categories${getTextFromDictionary('IN_2')}`;
       return result;
     }
   }
@@ -128,7 +128,7 @@ function checkParentProperties(parsedObj) {
   const requiredProperties = { images: 'array:object', annotations: 'array:object', categories: 'array:object' };
   let result = {};
   result = checkObjectProperties(requiredProperties, parsedObj,
-    JSON_POSTFIX, PROPERTIES_STRING);
+    JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
   if (result.error) { return result; }
   result = checkArrayElements(parsedObj.images, 'images', JSON_POSTFIX, { minLength: 1 });
   if (result.error) { return result; }

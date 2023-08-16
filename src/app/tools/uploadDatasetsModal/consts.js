@@ -1,7 +1,3 @@
-// WORK
-export const ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE = 'Only one annotation file is allowed per dataset (app version 1.0)';
-// WORK
-export const ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE = 'Only one classes file is allowed per dataset (app version 1.0)';
 export const ANNOTATION_FILE_INDICATOR = 'annotation';
 export const CLASSES_FILE_INDICATOR = 'classes';
 export const IMAGE_FILE_INDICATOR = 'image';
@@ -29,6 +25,3 @@ export const TXT_POSTFIX = '.txt';
 export const CSV_POSTFIX = '.csv';
 export const TWO_TABLE_STRATEGY = 'two tables';
 export const THREE_TABLE_STRATEGY = 'three tables';
-export const PROPERTIES_STRING = 'properties';
-export const ATTRIBUTES_STRING = 'attributes';
-export const TAGS_STRING = 'tag(s)';

@@ -1,7 +1,8 @@
+import { getTextFromDictionary } from '../../../../../text/languages/language';
 import {
-  ANNOTATION_FILE_INDICATOR, CLASSES_FILES_ARRAY, CLASSES_TABLE_INDICATOR,
-  VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT, IMAGE_FILE_INDICATOR, CLASSES_FILE_INDICATOR,
-  ANNOTATIONS_TABLE_INDICATOR, FALTY_ANNOTATION_FILES_ARRAY, ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE,
+  CLASSES_FILE_INDICATOR, CLASSES_FILES_ARRAY, CLASSES_TABLE_INDICATOR,
+  VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT, IMAGE_FILE_INDICATOR,
+  ANNOTATIONS_TABLE_INDICATOR, FALTY_ANNOTATION_FILES_ARRAY, ANNOTATION_FILE_INDICATOR,
 } from '../../../../consts';
 import {
   insertRowToImagesTable, enableFinishButton, removeRow,
@@ -79,7 +80,7 @@ function validateExistingClassesFiles(classesFiles, validateFileFunc) {
     const { name } = classesFile.body.fileMetaData;
     if (!validationResult.error) {
       validationResult.error = true;
-      validationResult.message = ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE;
+      validationResult.message = getTextFromDictionary('ONE_CLASSES_FILE_ALLOWED_ERROR_MESSAGE');
     }
     insertRowToClassesTable(name, validationResult);
   });

@@ -744,7 +744,7 @@ input:focus {
 
 .format-option-checkbox-popover {
   margin-top: calc(-27px / var(--screen-size-delta));
-  margin-left: calc(21px / var(--screen-size-delta));
+  right: calc(6px / var(--screen-size-delta));
 }
 
 .format-option-text-popover {

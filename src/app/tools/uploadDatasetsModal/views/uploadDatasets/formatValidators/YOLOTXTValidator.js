@@ -1,10 +1,11 @@
 import datasetObjectManager from '../datasetObjectManagers/YOLOTXTDatasetObjectManager';
+import { getTextFromDictionary } from '../../../../text/languages/language';
 import { getReuseAlreadyUploadedImagesState } from '../../../state';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { checkObjectProperties } from './sharedUtils';
 import {
   IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY, ACTIVE_CLASSES_FILE,
-  TXT_POSTFIX, ATTRIBUTES_STRING, ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR,
+  TXT_POSTFIX, ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR,
 } from '../../../consts';
 
 function isImageAlreadyUploaded(newImageName) {
@@ -32,7 +33,7 @@ function validateImageFile(parsedObj, validAnnotationFiles) {
         };
       }
     }
-    return { error: true, message: 'This image is not specified in any of the valid annotations file(s)', alreadyUploaded };
+    return { error: true, message: getTextFromDictionary('IMAGE_NOT_VALID_IN_ANNOTATIONS'), alreadyUploaded };
   }
   return { error: false, message: '', alreadyUploaded };
 }
@@ -60,9 +61,9 @@ function checkAllRows(rows) {
       'class (1)': 'number', 'x (2)': 'number', 'y (3)': 'number', 'width (4)': 'number', 'height (5)': 'number',
     };
     const result = checkObjectProperties(requiredProperties, annotationFields,
-      TXT_POSTFIX, ATTRIBUTES_STRING);
+      TXT_POSTFIX, getTextFromDictionary('ATTRIBUTES'));
     if (result.error) {
-      result.message += ` -> on row ${i + 1}`;
+      result.message += ` -> ${getTextFromDictionary('YOLO_ROW_1')}${i + 1}${getTextFromDictionary('YOLO_ROW_2')}`;
       return result;
     }
   }
@@ -77,8 +78,7 @@ function validateAnnotationsAgainstActiveClassesFile(parsedObj, activeClassesFil
   const numberOfClasses = activeClassesFile.body.annotationData.length;
   for (let i = 0; i < annotationData.length; i += 1) {
     if (Math.abs(annotationData[i][0]) > numberOfClasses - 1) {
-      // WORK
-      return { error: true, message: `This file contains a class number of ${annotationData[i][0]}, however the classes file only contains ${numberOfClasses} class(es) with the first reference starting from 0` };
+      return { error: true, message: `${getTextFromDictionary('YOLO_CLASS_1')}${annotationData[i][0]}, ${getTextFromDictionary('YOLO_CLASS_2')}${numberOfClasses}${getTextFromDictionary('YOLO_CLASS_3')}` };
     }
   }
   return { error: false, message: '', valid: true };

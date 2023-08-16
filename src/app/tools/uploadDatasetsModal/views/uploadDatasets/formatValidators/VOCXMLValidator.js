@@ -1,10 +1,10 @@
 import datasetObjectManager from '../datasetObjectManagers/VOCXMLDatasetObjectManager';
+import { getTextFromDictionary } from '../../../../text/languages/language';
 import { getReuseAlreadyUploadedImagesState } from '../../../state';
 import { getAllImageData } from '../../../../imageList/imageList';
 import { checkObjectProperties } from './sharedUtils';
 import {
-  IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
-  XML_POSTFIX, TAGS_STRING, ANNOTATION_FILE_INDICATOR,
+  IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY, XML_POSTFIX, ANNOTATION_FILE_INDICATOR,
 } from '../../../consts';
 
 function setCurrentAnnotationFilesToInactive(annotationFiles) {
@@ -38,7 +38,7 @@ function validateImageFile(parsedObj, validAnnotationFiles) {
         };
       }
     }
-    return { error: true, message: 'This image is not specified in any of the valid annotations file(s)', alreadyUploaded };
+    return { error: true, message: getTextFromDictionary('IMAGE_NOT_VALID_IN_ANNOTATIONS'), alreadyUploaded };
   }
   return { error: false, message: '', alreadyUploaded };
 }
@@ -48,7 +48,7 @@ function checkbndBoxTag(object) {
     xmin: 'number', ymin: 'number', xmax: 'number', ymax: 'number',
   };
   const result = checkObjectProperties(requiredProperties, object,
-    XML_POSTFIX, TAGS_STRING);
+    XML_POSTFIX, getTextFromDictionary('TAGS'));
   if (result.error) { return result; }
   return { error: false, message: '' };
 }
@@ -60,14 +60,14 @@ function checkObjectTagChildTags(parsedObj) {
     for (let i = 0; i < objectTag.length; i += 1) {
       const object = objectTag[i];
       let result = checkObjectProperties(requiredProperties, object,
-        XML_POSTFIX, TAGS_STRING);
+        XML_POSTFIX, getTextFromDictionary('TAGS'));
       if (result.error) { return result; }
       result = checkbndBoxTag(object.bndbox);
       if (result.error) { return result; }
     }
   } else {
     let result = checkObjectProperties(requiredProperties, objectTag,
-      XML_POSTFIX, TAGS_STRING);
+      XML_POSTFIX, getTextFromDictionary('TAGS'));
     if (result.error) { return result; }
     result = checkbndBoxTag(objectTag.bndbox);
     if (result.error) { return result; }
@@ -78,13 +78,13 @@ function checkObjectTagChildTags(parsedObj) {
 function checkObjectTag(parsedObj) {
   const requiredProperties = { object: 'object|array' };
   return checkObjectProperties(requiredProperties, parsedObj.annotation,
-    XML_POSTFIX, TAGS_STRING);
+    XML_POSTFIX, getTextFromDictionary('TAGS'));
 }
 
 function checkParentTag(parsedObj) {
   const requiredProperties = { annotation: 'object' };
   return checkObjectProperties(requiredProperties, parsedObj,
-    XML_POSTFIX, TAGS_STRING);
+    XML_POSTFIX, getTextFromDictionary('TAGS'));
 }
 
 function checkObject(object, validators) {

@@ -1,6 +1,6 @@
 import {
-  CSV_POSTFIX, PROPERTIES_STRING, ACTIVE_ANNOTATION_FILE,
-  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
+  CSV_POSTFIX, ANNOTATION_FILE_INDICATOR,
+  ACTIVE_ANNOTATION_FILE, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/CSVDatasetObjectManager';
 import { getTextFromDictionary } from '../../../../text/languages/language';
@@ -55,7 +55,7 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
 function checkAllRows(rows) {
   for (let i = 0; i < rows.length; i += 1) {
     if (rows[i].length !== 8) {
-      return { error: true, message: `Row ${i + 1} contains ${rows[i].length} attributes, but the expected number is 8` };
+      return { error: true, message: `${getTextFromDictionary('CSV_ATTRIBUTES_1')}${i + 1}${getTextFromDictionary('CSV_ATTRIBUTES_2')}${rows[i].length}${getTextFromDictionary('CSV_ATTRIBUTES_3')}` };
     }
     const attributes = rows[i];
     const annotationFields = {};
@@ -78,7 +78,7 @@ function checkAllRows(rows) {
       'ymax(8)': 'number',
     };
     const result = checkObjectProperties(requiredProperties, annotationFields,
-      CSV_POSTFIX, PROPERTIES_STRING);
+      CSV_POSTFIX, getTextFromDictionary('PROPERTIES'));
     if (result.error) {
       result.message += ` -> on row ${i + 1}`;
       return result;

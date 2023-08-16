@@ -1,4 +1,5 @@
 import { IMAGE_FILE_INDICATOR, ANNOTATION_FILE_INDICATOR, CLASSES_FILE_INDICATOR } from '../../consts';
+import { getTextFromDictionary } from '../../../text/languages/language';
 
 function parseImageData(fileMetaData, event) {
   const image = new Image();
@@ -17,7 +18,7 @@ function parseJSON(fileMetaData, event) {
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid JSON - ${errorMessage}` },
+      errorObj: { error: true, message: `${getTextFromDictionary('INVALID')} JSON - ${errorMessage}` },
     };
   }
 }
@@ -51,7 +52,7 @@ function parseCSV(fileMetaData, event) {
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid CSV - ${errorMessage}` },
+      errorObj: { error: true, message: `${getTextFromDictionary('INVALID')} CSV - ${errorMessage}` },
     };
   }
 }
@@ -100,7 +101,7 @@ function parseXML(fileMetaData, event) {
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid XML - ${errorMessage}` },
+      errorObj: { error: true, message: `${getTextFromDictionary('INVALID')} XML - ${errorMessage}` },
     };
   }
 }
@@ -131,7 +132,7 @@ function txtToJSON(result, fileMetaData) {
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
-      errorObj: { error: true, message: 'Text file is empty', parsingError: true },
+      errorObj: { error: true, message: getTextFromDictionary('TXT_FILE_EMPTY'), parsingError: true },
     };
   }
   const fileFormat = isAnnotationsFile ? ANNOTATION_FILE_INDICATOR : CLASSES_FILE_INDICATOR;
@@ -145,7 +146,7 @@ function parseTXT(fileMetaData, event) {
     return {
       fileFormat: ANNOTATION_FILE_INDICATOR,
       body: { fileMetaData },
-      errorObj: { error: true, message: `Invalid text file - ${errorMessage}`, parsingError: true },
+      errorObj: { error: true, message: `${getTextFromDictionary('TXT_FILE_INVALID')} - ${errorMessage}`, parsingError: true },
     };
   }
 }

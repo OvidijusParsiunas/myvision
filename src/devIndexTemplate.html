@@ -139,8 +139,7 @@
         <div id="upload-datasets-modal-upload-datasets-title" class="upload-datasets-modal-title"></div>
         <div id="upload-datasets-drag-and-drop-overlay" style="display: none"></div>
         <div id="upload-datasets-modal-upload-datasets-table-1" style="display: none" class="upload-datasets-modal-upload-datasets-three-table-strategy-section">
-          <!-- WORK -->
-          <div class="upload-datasets-modal-upload-datasets-table-title">Classes (.txt)</div>
+          <div id="upload-datasets-modal-upload-datasets-classes-table-title" class="upload-datasets-modal-upload-datasets-table-title">Classes (.txt)</div>
           <div id="upload-datasets-modal-upload-datasets-classes-table-outer-container" class="upload-datasets-table upload-datasets-modal-upload-datasets">
             <table id="upload-datasets-modal-upload-datasets-classes-table" class="upload-datasets-modal-upload-datasets-table">
               <tbody></tbody>
@@ -182,8 +181,6 @@
       <div id="remove-images-modal-title" class="modal-title small-title">Remove image</div>
       <div class="modal-title-border-line"></div>
       <div id="remove-images-modal-description" class="modal-description">
-        <!-- WORK -->
-        Are you sure you want to remove the selected image?
       </div>
       <div id="remove-images-modal-buttons" class="buttons modal-buttons">
         <div id="remove-images-modal-yes-button" class="popup-label-button popup-proceed-button" onclick="approveRemoveImage()"></div>
@@ -191,8 +188,7 @@
       </div>
       <div id="remove-images-modal-checkbox-parent">
         <input id="remove-images-modal-checkbox" class="checkbox" type="checkbox" name="something" onclick="toggleDoNotShowRemoveImageModalAgain()">
-          <!-- WORK -->
-          Do not show again
+          <span id="remove-images-modal-checkbox-description"></span>
       </div>
     </div>
       <div id="export-datasets-popup-parent" class="export-datasets-popup-item" style="display: none;">
@@ -206,34 +202,33 @@
               <input id="export-datasets-popup-vgg-json-format-checkbox" class="export-datasets-popup-item generic-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('VGG JSON', this)">
             </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data bounding-box-data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopupInformationPopover(4)" onmouseleave="removeExportPopupInformationPopover(4)">
-                <!-- WORK only -->
-                <div id="format-option-checkbox-popover-4" class="export-datasets-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
+                <div id="format-option-checkbox-popover-4" class="export-datasets-popup-item popover format-option-popover format-option-text-popover"></div>
                 <div id="format-option-checkbox-arrow-4" class="export-datasets-popup-item arrow text-arrow-position default-arrow-color"></div>
                 CSV
               </div>
-              <div id="format-option-checkbox-popover-1" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover">Bounding boxes only</div>
+              <div id="format-option-checkbox-popover-1" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover"></div>
               <div id="format-option-checkbox-arrow-1" class="export-datasets-popup-item arrow checkbox-arrow-position default-arrow-color"></div>
               <div onmouseenter="displayExportPopupInformationPopover(1)" onmouseleave="removeExportPopupInformationPopover(1)" class="export-datasets-popup-item">
                 <input id="export-datasets-popup-csv-format-checkbox" class="export-datasets-popup-item bounding-box-format-option-checkbox checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('CSV', this)">
               </div>
               </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopupInformationPopover(5)" onmouseleave="removeExportPopupInformationPopover(5)">
-                <div id="format-option-checkbox-popover-5" class="export-datasets-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
+                <div id="format-option-checkbox-popover-5" class="export-datasets-popup-item popover format-option-popover format-option-text-popover"></div>
                 <div id="format-option-checkbox-arrow-5" class="export-datasets-popup-item arrow text-arrow-position default-arrow-color"></div>
                 VOC XML
               </div>
-              <div id="format-option-checkbox-popover-2" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover">Bounding boxes only</div>
+              <div id="format-option-checkbox-popover-2" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover"></div>
               <div id="format-option-checkbox-arrow-2" class="export-datasets-popup-item arrow checkbox-arrow-position default-arrow-color"></div>
               <div onmouseenter="displayExportPopupInformationPopover(2)" onmouseleave="removeExportPopupInformationPopover(2)" class="export-datasets-popup-item">
                 <input id="export-datasets-popup-voc-xml-format-checkbox" class="export-datasets-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('VOC XML', this)">
               </div>
               </td></tr>
             <tr><td class="export-datasets-popup-item data-format-table-row-data"><div class="export-datasets-popup-item checkbox-text format-option-text bounding-box-format-option-text" onmouseenter="displayExportPopupInformationPopover(6)" onmouseleave="removeExportPopupInformationPopover(6)">
-                <div id="format-option-checkbox-popover-6" class="export-datasets-popup-item popover format-option-popover format-option-text-popover">Bounding boxes only</div>
+                <div id="format-option-checkbox-popover-6" class="export-datasets-popup-item popover format-option-popover format-option-text-popover"></div>
                 <div id="format-option-checkbox-arrow-6" class="export-datasets-popup-item arrow text-arrow-position default-arrow-color"></div>
                 YOLO TXT
               </div>
-              <div id="format-option-checkbox-popover-3" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover">Bounding boxes only</div>
+              <div id="format-option-checkbox-popover-3" class="export-datasets-popup-item popover format-option-popover format-option-checkbox-popover"></div>
               <div id="format-option-checkbox-arrow-3" class="export-datasets-popup-item arrow checkbox-arrow-position default-arrow-color"></div>
               <div onmouseenter="displayExportPopupInformationPopover(3)" onmouseleave="removeExportPopupInformationPopover(3)" class="export-datasets-popup-item">
                   <input id="export-datasets-popup-yolo-txt-format-checkbox" class="export-datasets-popup-item checkbox bounding-box-format-option-checkbox" type="checkbox" name="something" onclick="selectExportDatasetsFormat('YOLO TXT', this)">

@@ -42,7 +42,7 @@ MyVision 是一个免费的基于计算机视觉的ML训练数据在线图像生
 
 ## 语言
 
-MyVision is available in [English](./README.md) and [Chinese](./README.cn.md).
+MyVision 适用于[英](./README.md)[中文](./README.cn.md)两种版本
 
 ## 本地设置
 <!-- link to the file or bring the screen up to there -->

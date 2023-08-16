@@ -21,6 +21,7 @@ const textProperties = [
   { id: 'machine-learning-modal-initiate-new-images-button', dictionaryKey: 'NEW_IMAGES' },
   { id: 'machine-learning-modal-generated-labels-submit-button', dictionaryKey: 'SUBMIT' },
   { id: 'label-list-title', dictionaryKey: 'LABELS' },
+  { id: 'upload-datasets-modal-upload-datasets-classes-table-title', dictionaryKey: 'CLASSES' },
   { id: 'upload-datasets-modal-upload-datasets-annotations-table-title', dictionaryKey: 'ANNOTATIONS_JSON' },
   { id: 'upload-datasets-modal-title', dictionaryKey: 'UPLOAD_DATASETS' },
   { id: 'upload-datasets-modal-select-format-title', dictionaryKey: 'CHOOSE_FORMAT' },
@@ -57,11 +58,19 @@ const textProperties = [
   { id: 'upload-images-button-popover', dictionaryKey: 'UPLOAD_IMAGES' },
   { id: 'image-list-title', dictionaryKey: 'IMAGES' },
   { id: 'remove-images-modal-title', dictionaryKey: 'REMOVE_IMAGE' },
+  { id: 'remove-images-modal-description', dictionaryKey: 'REMOVE_IMAGE_DESCRIPTION' },
+  { id: 'remove-images-modal-checkbox-description', dictionaryKey: 'REMOVE_IMAGE_NOT_SHOW_AGAIN' },
   { id: 'remove-images-modal-yes-button', dictionaryKey: 'YES' },
   { id: 'remove-images-modal-no-button', dictionaryKey: 'NO' },
   { id: 'image-name', dictionaryKey: 'IMAGE_NAME' },
   { id: 'previous-image-button-popover-text', dictionaryKey: 'PREVIOUS_IMAGE' },
   { id: 'next-image-button-popover-text', dictionaryKey: 'NEXT_IMAGE' },
+  { id: 'format-option-checkbox-popover-4', dictionaryKey: 'BOUNDING_BOXES_ONLY' },
+  { id: 'format-option-checkbox-popover-1', dictionaryKey: 'BOUNDING_BOXES_ONLY' },
+  { id: 'format-option-checkbox-popover-5', dictionaryKey: 'BOUNDING_BOXES_ONLY' },
+  { id: 'format-option-checkbox-popover-2', dictionaryKey: 'BOUNDING_BOXES_ONLY' },
+  { id: 'format-option-checkbox-popover-6', dictionaryKey: 'BOUNDING_BOXES_ONLY' },
+  { id: 'format-option-checkbox-popover-3', dictionaryKey: 'BOUNDING_BOXES_ONLY' },
 ];
 
 function populateText() {
