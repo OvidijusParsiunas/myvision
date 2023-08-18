@@ -106,4 +106,5 @@ export default {
   INVALID: '无效的',
   TXT_FILE_EMPTY: '文本文件为空',
   TXT_FILE_INVALID: '无效的文本文件',
+  DIFFERENT_TABLE_INFO: 'If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height',
 };

@@ -107,4 +107,5 @@ export default {
   INVALID: 'Invalid',
   TXT_FILE_EMPTY: 'Text file is empty',
   TXT_FILE_INVALID: 'Invalid text file',
+  DIFFERENT_TABLE_INFO: 'If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height',
 };

@@ -1,3 +1,5 @@
+render later after fonts are downloaded
+
 active trashcan icon for labels is brighter than images
 
 small new bug, use arrow down/up when labelling first object
