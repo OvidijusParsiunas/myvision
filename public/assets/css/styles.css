@@ -5,6 +5,11 @@
 input:focus {
   outline: none;
 }
+
+.hidden-text {
+  color: white;
+}
+
 #welcome-modal-parent {
   z-index: 4;
   opacity: 0;
@@ -65,6 +70,25 @@ input:focus {
   100% {
     opacity: 1;
   }
+}
+
+#welcome-modal-title {
+  display: table;
+  width: inherit;
+}
+
+#welcome-modal-title-welcome-text {
+  float: left;
+}
+
+#welcome-modal-language-text-parent {
+  float: right;
+  color: #343434;
+}
+
+.language-text:hover {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 #welcome-modal-description {
@@ -553,7 +577,9 @@ input:focus {
 }
 
 .popup-label-buttons {
-  font-size: calc(14.55px / var(--screen-size-delta));
+  font-size: calc(
+    (14.55px / var(--screen-size-delta)) - var(--popup-button-font-delta)
+  );
 }
 
 .buttons {
@@ -718,7 +744,7 @@ input:focus {
 
 .format-option-checkbox-popover {
   margin-top: calc(-27px / var(--screen-size-delta));
-  margin-left: calc(21px / var(--screen-size-delta));
+  right: calc(6px / var(--screen-size-delta));
 }
 
 .format-option-text-popover {
@@ -806,6 +832,13 @@ input:focus {
   margin-left: calc(10px / var(--screen-size-delta));
 }
 
+.modal-title-right {
+  margin-top: calc(6px / var(--screen-size-delta));
+  margin-right: calc(11px / var(--screen-size-delta));
+  font-size: calc(13px / var(--screen-size-delta));
+  letter-spacing: -0.5px;
+}
+
 .modal-title-border-line {
   width: 100%;
   margin-top: calc(5px / var(--screen-size-delta));
@@ -821,7 +854,9 @@ input:focus {
 }
 
 .modal-buttons {
-  font-size: calc(14.5px / var(--screen-size-delta));
+  font-size: calc(
+    (14.5px / var(--screen-size-delta)) - var(--modal-button-font-delta)
+  );
 }
 
 .modal-messages {
