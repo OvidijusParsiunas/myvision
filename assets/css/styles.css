@@ -3,8 +3,13 @@
 }
 
 input:focus {
-  outline:none; 
+  outline: none;
 }
+
+.hidden-text {
+  color: white;
+}
+
 #welcome-modal-parent {
   z-index: 4;
   opacity: 0;
@@ -12,7 +17,7 @@ input:focus {
 
 #welcome-modal-contour-animation-parent {
   background-color: transparent;
-  border: none; 
+  border: none;
   position: absolute;
   display: inline-block;
 }
@@ -41,30 +46,49 @@ input:focus {
 }
 
 @keyframes sketchIn {
-	0% {
-		stroke-dashoffset: 2000;
-	}
-	100% {
-		stroke-dashoffset: 0;
-	}
+  0% {
+    stroke-dashoffset: 2000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 @keyframes modalFadeIn {
   0% {
-    background-color:transparent;
+    background-color: transparent;
   }
   100% {
-    background-color:white;
+    background-color: white;
   }
 }
 
 @keyframes modalContentFadeIn {
   0% {
-    opacity:0;
+    opacity: 0;
   }
   100% {
-    opacity:1;
+    opacity: 1;
   }
+}
+
+#welcome-modal-title {
+  display: table;
+  width: inherit;
+}
+
+#welcome-modal-title-welcome-text {
+  float: left;
+}
+
+#welcome-modal-language-text-parent {
+  float: right;
+  color: #343434;
+}
+
+.language-text:hover {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 #welcome-modal-description {
@@ -171,7 +195,7 @@ input:focus {
   overflow-y: auto;
   overflow-x: auto;
   border: thin solid grey;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 2;
   max-height: 139px;
   /* firefox */
@@ -232,19 +256,19 @@ input:focus {
   padding-top: calc(4px / var(--screen-size-delta));
 }
 
-.upload-datsets-modal-title {
+.upload-datasets-modal-title {
   text-align: center;
   margin-top: calc(18px / var(--screen-size-delta));
   font-size: calc(16px / var(--screen-size-delta));
   user-select: none;
 }
 
-#upload-datsets-modal-select-format-title {
+#upload-datasets-modal-select-format-title {
   margin-bottom: 0px;
   margin-top: calc(6px / var(--screen-size-delta));
 }
 
-#upload-datsets-modal-select-format-inner-container {
+#upload-datasets-modal-select-format-inner-container {
   left: 0;
   right: 0;
   width: calc(170px / var(--screen-size-delta));
@@ -252,24 +276,24 @@ input:focus {
   margin-right: auto;
 }
 
-#upload-datsets-modal-select-format-table {
+#upload-datasets-modal-select-format-table {
   width: calc(169px / var(--screen-size-delta));
   padding: calc(2px / var(--screen-size-delta));
   padding-top: calc(6px / var(--screen-size-delta));
   padding-left: calc(5px / var(--screen-size-delta));
 }
 
-#upload-datsets-modal-upload-datasets-title {
+#upload-datasets-modal-upload-datasets-title {
   margin-bottom: calc(5px / var(--screen-size-delta));
 }
 
-.upload-datsets-modal-upload-datasets-two-table-strategy-section {
+.upload-datasets-modal-upload-datasets-two-table-strategy-section {
   width: calc(50% - 0.5px);
   text-align: center;
   float: left;
 }
 
-.upload-datsets-modal-upload-datasets-three-table-strategy-section {
+.upload-datasets-modal-upload-datasets-three-table-strategy-section {
   width: calc(33.3333% - 1px);
   text-align: center;
   float: left;
@@ -295,7 +319,7 @@ input:focus {
   padding-right: calc(7px / var(--screen-size-delta));
 }
 
-#upload-datsets-modal-next-button {
+#upload-datasets-modal-next-button {
   margin-right: calc(2px / var(--screen-size-delta));
   margin-left: calc(2px / var(--screen-size-delta));
 }
@@ -305,7 +329,7 @@ input:focus {
   margin-right: 0px;
 }
 
-.upload-datsets-modal-upload-datasets {
+.upload-datasets-modal-upload-datasets {
   max-width: calc(281px / var(--screen-size-delta));
   overflow-x: auto;
   display: inline-block;
@@ -442,7 +466,9 @@ input:focus {
   margin-top: calc(15px / var(--screen-size-delta));
 }
 
-.show {display: block;}
+.show {
+  display: block;
+}
 
 .labelText {
   white-space: pre;
@@ -450,7 +476,7 @@ input:focus {
 }
 
 .labelText:focus {
-  outline:0;
+  outline: 0;
 }
 
 .highlightedVisibilityIcon {
@@ -551,7 +577,9 @@ input:focus {
 }
 
 .popup-label-buttons {
-  font-size: calc(14.55px / var(--screen-size-delta));
+  font-size: calc(
+    (14.55px / var(--screen-size-delta)) - var(--popup-button-font-delta)
+  );
 }
 
 .buttons {
@@ -715,8 +743,8 @@ input:focus {
 }
 
 .format-option-checkbox-popover {
-  margin-top: calc(-27px / var(--screen-size-delta));;
-  margin-left: calc(21px / var(--screen-size-delta));;
+  margin-top: calc(-27px / var(--screen-size-delta));
+  right: calc(6px / var(--screen-size-delta));
 }
 
 .format-option-text-popover {
@@ -785,7 +813,7 @@ input:focus {
 
 .modal-parent {
   position: absolute;
-	font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: calc(14.5px / var(--screen-size-delta));
   line-height: 1.35;
   background-color: white;
@@ -804,6 +832,13 @@ input:focus {
   margin-left: calc(10px / var(--screen-size-delta));
 }
 
+.modal-title-right {
+  margin-top: calc(6px / var(--screen-size-delta));
+  margin-right: calc(11px / var(--screen-size-delta));
+  font-size: calc(13px / var(--screen-size-delta));
+  letter-spacing: -0.5px;
+}
+
 .modal-title-border-line {
   width: 100%;
   margin-top: calc(5px / var(--screen-size-delta));
@@ -819,7 +854,9 @@ input:focus {
 }
 
 .modal-buttons {
-  font-size: calc(14.5px / var(--screen-size-delta));
+  font-size: calc(
+    (14.5px / var(--screen-size-delta)) - var(--modal-button-font-delta)
+  );
 }
 
 .modal-messages {
@@ -1223,14 +1260,18 @@ input:focus {
 #image-list-image-container {
   overflow-x: hidden;
   overflow-y: auto;
-  height: calc(100vh - (100vh - 287px) / 2 - 37px - (54px / var(--screen-size-delta)));
+  height: calc(
+    100vh - (100vh - 287px) / 2 - 37px - (54px / var(--screen-size-delta))
+  );
   scrollbar-color: #8c8c8c #f9f9f9;
   scrollbar-width: thin;
 }
 
 #image-list-drag-and-drop-overlay {
   position: absolute;
-  height: calc(100vh - (100vh - 287px) / 2 - 45px - (54px / var(--screen-size-delta)));
+  height: calc(
+    100vh - (100vh - 287px) / 2 - 45px - (54px / var(--screen-size-delta))
+  );
   border: 4px dashed #68c7fb;
   width: 200px;
   z-index: 1;
@@ -1257,12 +1298,12 @@ input:focus {
 
 #window-dim {
   position: absolute;
-  background-color: rgba(0,0,0,0.25);
+  background-color: rgba(0, 0, 0, 0.25);
   top: 0px;
   width: 100%;
   height: 100%;
   z-index: 2;
-  background-color: '';
+  background-color: "";
   transition-property: background-color;
   transition-duration: 0.5s;
   transition-timing-function: linear;
@@ -1398,7 +1439,7 @@ input:focus {
 }
 
 #stub {
-  color: rgb(0,0,0,0);
+  color: rgb(0, 0, 0, 0);
   user-select: none;
   pointer-events: none;
 }
@@ -1455,7 +1496,7 @@ body {
 .toolkit-button-default:active {
   background-color: #dadada;
   /* background-color: #d4d4d4; */
-    /* background-color: #d8d8d8; */
+  /* background-color: #d8d8d8; */
 }
 
 .toolkit-button-table-cell {
@@ -1533,7 +1574,7 @@ body {
 
 #bounding-box-crosshair-dropdown-table {
   padding: 2px;
-  padding-bottom: 0px
+  padding-bottom: 0px;
 }
 
 .bounding-box-crosshair-dropdown-icon {
@@ -1541,7 +1582,7 @@ body {
   margin-left: 20px;
 }
 
-#settings-popup-bounding-box-crosshair-color-picker {  
+#settings-popup-bounding-box-crosshair-color-picker {
   background: none;
   border: none;
   padding: 0;
@@ -1590,7 +1631,8 @@ body {
 }
 
 #title-github-mark:hover {
-  filter: invert(41%) sepia(0%) saturate(0%) hue-rotate(102deg) brightness(98%) contrast(85%);
+  filter: invert(41%) sepia(0%) saturate(0%) hue-rotate(102deg) brightness(98%)
+    contrast(85%);
 }
 
 #settings-table {
@@ -1735,7 +1777,8 @@ body {
 }
 
 .image-list-thumbnail-image {
-  position: absolute; top: 0;
+  position: absolute;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
@@ -1828,7 +1871,8 @@ body {
 }
 
 #crosshair-icon {
-  filter: invert(54%) sepia(52%) saturate(682%) hue-rotate(163deg) brightness(95%) contrast(87%);
+  filter: invert(54%) sepia(52%) saturate(682%) hue-rotate(163deg)
+    brightness(95%) contrast(87%);
 }
 
 @media only screen and (max-height: 585px) {
@@ -1885,7 +1929,7 @@ body {
     line-height: calc(1.35 / var(--screen-size-delta));
   }
   #welcome-modal-start-button {
-    margin-top: calc(2px / var(--screen-size-delta))
+    margin-top: calc(2px / var(--screen-size-delta));
   }
   input.checkbox {
     margin-top: 2px;
@@ -1938,7 +1982,7 @@ body {
   #upload-datasets-modal-finish-button {
     margin-left: -1px;
   }
-  #upload-datsets-modal-select-format-title {
+  #upload-datasets-modal-select-format-title {
     margin-top: calc(7px / var(--screen-size-delta));
   }
   .upload-datasets-table {
@@ -1970,7 +2014,7 @@ body {
   #bounding-box-crosshair-dropdown-table {
     padding: 2px;
   }
-  #settings-popup-bounding-box-crosshair-color-picker {  
+  #settings-popup-bounding-box-crosshair-color-picker {
     background: none;
     border: none;
     padding: 0;
@@ -1982,11 +2026,15 @@ body {
 }
 
 /* removing dotted border when in focus on firefox */
-.toolkit-button::-moz-focus-inner { 
-  border: 0; 
+.toolkit-button::-moz-focus-inner {
+  border: 0;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
