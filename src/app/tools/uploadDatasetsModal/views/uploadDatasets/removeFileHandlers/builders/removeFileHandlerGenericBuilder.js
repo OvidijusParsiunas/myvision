@@ -1,12 +1,12 @@
 import {
-  ACTIVE_ANNOTATION_FILE, ANNOTATIONS_TABLE_INDICATOR,
-  ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, FALTY_ANNOTATION_FILES_ARRAY,
   IMAGE_FILES_OBJECT, VALID_ANNOTATION_FILES_ARRAY, IMAGES_TABLE_INDICATOR,
+  ACTIVE_ANNOTATION_FILE, ANNOTATIONS_TABLE_INDICATOR, FALTY_ANNOTATION_FILES_ARRAY,
 } from '../../../../consts';
 import {
   insertRowToImagesTable, enableFinishButton, disableFinishButton,
   changeAnnotationRowToDefault, changeAllImagesTableRowsToDefault, removeRow,
 } from '../../style';
+import { getTextFromDictionary } from '../../../../../text/languages/language';
 
 // pontential to move this out into shared validate logic
 // can't at the moment because validate is just one default function
@@ -57,7 +57,7 @@ function removeAnnotationFileWhenMultipleAnnotationFilesAllowed(fileName,
 function removeAnnotationFileWhenOneAnnotationFileAllowed(fileName, errorMessage, datasetObject) {
   if (errorMessage) {
     let annotationsArrayName;
-    if (errorMessage === ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE) {
+    if (errorMessage === getTextFromDictionary('ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE')) {
       annotationsArrayName = VALID_ANNOTATION_FILES_ARRAY;
     } else {
       annotationsArrayName = FALTY_ANNOTATION_FILES_ARRAY;

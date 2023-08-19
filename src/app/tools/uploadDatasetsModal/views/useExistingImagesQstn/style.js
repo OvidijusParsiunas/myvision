@@ -1,10 +1,10 @@
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
+import { getTextFromDictionary } from '../../../text/languages/language';
 
 let yesButtonElement = null;
 let noButtonElement = null;
 let descriptionElement = null;
 let buttonsGroupElement = null;
-const DESCRIPTION_TEXT = 'Reuse already uploaded images?';
 
 function displayYesButtonElement() {
   yesButtonElement.style.display = '';
@@ -59,7 +59,7 @@ function resetButtonGroupElementMarginTop() {
 }
 
 function prepareUseExistingImagesQstnView() {
-  setDescriptionElementText(DESCRIPTION_TEXT);
+  setDescriptionElementText(getTextFromDictionary('UPLOAD_DATASETS_MODAL_REUSE_IMAGES'));
   centerDescriptionElementText();
   setDescriptionElementMarginTop(61);
   displayYesButtonElement();
@@ -78,7 +78,7 @@ function hideUseExistingImagesViewAssets() {
 }
 
 function assignUseExistingImagesQstnViewLocalVariables() {
-  yesButtonElement = document.getElementById('upload-datsets-modal-yes-button');
+  yesButtonElement = document.getElementById('upload-datasets-modal-yes-button');
   noButtonElement = document.getElementById('upload-datasets-modal-no-button');
   descriptionElement = document.getElementById('upload-datasets-modal-description');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');

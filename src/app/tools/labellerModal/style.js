@@ -1,11 +1,11 @@
-import { getLabelOptions } from '../labelList/labelOptions';
-import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
 import { QUICK_LIGHTUP_MILLISECONDS, QUICK_DIM_SECONDS, THIN_DIM } from '../dimWindow/consts';
-import { setLabellerModalDisplayedState } from '../state';
 import { getScrollbarWidth, windowHasScrollbar } from '../globalStyling/style';
-import IS_FIREFOX from '../utils/browserType';
+import { getScreenSizeDelta } from '../globalStyling/customCssProperties';
+import { dimWindow, lightUpWindow } from '../dimWindow/dimWindowService';
 import { getLastMouseMoveEvent } from '../../keyEvents/mouse/mouseMove';
-import { getScreenSizeDelta } from '../globalStyling/screenSizeDelta';
+import { getLabelOptions } from '../labelList/labelOptions';
+import { setLabellerModalDisplayedState } from '../state';
+import IS_FIREFOX from '../utils/browserType';
 
 let parentElement = null;
 let optionsElement = null;

@@ -42,6 +42,10 @@ You can import existing annotation projects and continue working on them in MyVi
     <img width="830" src="./readme/gifs/ezgif.com-gif-maker 4.gif" alt="Logo">
 </p>
 
+## Languages
+
+MyVision is available in [English](./README.md) and [Chinese (Mandarin)](./README.cn.md).
+
 ## Local setup
 <!-- link to the file or bring the screen up to there -->
 No setup is required to run this project, open the [index.html](public/index.html) file and you are all set! However, if you want to make changes or contribute to this repository, please follow the instructions below:

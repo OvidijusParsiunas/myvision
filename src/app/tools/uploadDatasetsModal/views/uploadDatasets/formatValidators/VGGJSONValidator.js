@@ -1,11 +1,12 @@
 import {
-  JSON_POSTFIX, PROPERTIES_STRING, ACTIVE_ANNOTATION_FILE,
-  ANNOTATION_FILE_INDICATOR, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
+  JSON_POSTFIX, ANNOTATION_FILE_INDICATOR,
+  ACTIVE_ANNOTATION_FILE, IMAGE_FILE_INDICATOR, VALID_ANNOTATION_FILES_ARRAY,
 } from '../../../consts';
 import datasetObjectManager from '../datasetObjectManagers/VGGJSONDatasetObjectManager';
-import { getAllImageData } from '../../../../imageList/imageList';
-import { getReuseAlreadyUploadedImagesState } from '../../../state';
+import { getTextFromDictionary } from '../../../../text/languages/language';
 import { checkObjectProperties, checkArrayElements } from './sharedUtils';
+import { getReuseAlreadyUploadedImagesState } from '../../../state';
+import { getAllImageData } from '../../../../imageList/imageList';
 
 function setCurrentAnnotationFilesToInactive(annotationFiles) {
   annotationFiles.forEach((annotationFile) => {
@@ -38,7 +39,7 @@ function validateImageFile(parsedObj, validAnnotationFiles, activeAnnotationFile
         };
       }
     }
-    return { error: true, message: 'This image is not specified in the annotations file(s)', alreadyUploaded };
+    return { error: true, message: getTextFromDictionary('UPLOAD_DATASETS_FORMAT_VALIDATAOR_IMAGE_NOT_SPECIFIED'), alreadyUploaded };
   }
   return { error: false, message: '', alreadyUploaded };
 }
@@ -47,7 +48,7 @@ function checkObjectHasProperties(object, objectName) {
   if (Object.keys(object).length > 0) {
     return { error: false, message: '' };
   }
-  return { error: true, message: `The ${objectName} object does not contain any properties` };
+  return { error: true, message: `${getTextFromDictionary('THE')}${objectName} ${getTextFromDictionary('OBJECT_NO_PROPERTIES')}` };
 }
 
 function checkRegionAttributesProperty(parsedObj) {
@@ -57,9 +58,9 @@ function checkRegionAttributesProperty(parsedObj) {
     for (let y = 0; y < regions.length; y += 1) {
       const requiredProperties = { name: 'number|string' };
       const result = checkObjectProperties(requiredProperties, regions[y].region_attributes,
-        JSON_POSTFIX, PROPERTIES_STRING);
+        JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
       if (result.error) {
-        result.message += ' -> in region_attributes';
+        result.message += ` -> ${getTextFromDictionary('IN_1')}region_attributes${getTextFromDictionary('IN_2')}`;
         return result;
       }
     }
@@ -73,11 +74,11 @@ function checkShapeAttributesPolygonProperty(region) {
     all_points_x: elementsType, all_points_y: elementsType,
   };
   let result = checkObjectProperties(requiredProperties, region.shape_attributes,
-    JSON_POSTFIX, PROPERTIES_STRING);
+    JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
   if (result.error) { return result; }
   if (region.shape_attributes.all_points_x.length
       !== region.shape_attributes.all_points_y.length) {
-    return { error: true, message: 'all_points_x and all_points_y arrays must have equal size' };
+    return { error: true, message: getTextFromDictionary('VGG_EQUAL_SIZE_ARRAYS') };
   }
   result = checkArrayElements(region.shape_attributes.all_points_x, 'all_points_x', JSON_POSTFIX,
     { elementsType, minLength: 3 });
@@ -93,7 +94,7 @@ function checkShapeAttributesRectProperty(region) {
     x: 'number', y: 'number', width: 'number', height: 'number',
   };
   const result = checkObjectProperties(requiredProperties, region.shape_attributes,
-    JSON_POSTFIX, PROPERTIES_STRING);
+    JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
   if (result.error) { return result; }
   return { error: false, message: '' };
 }
@@ -106,25 +107,25 @@ function checkShapeAttributesProperty(parsedObj) {
       const region = regions[y];
       const requiredProperties = { name: 'string' };
       let result = checkObjectProperties(requiredProperties, region.shape_attributes,
-        JSON_POSTFIX, PROPERTIES_STRING);
+        JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
       if (result.error) {
-        result.message += ' -> in shape_attributes';
+        result.message += ` -> ${getTextFromDictionary('IN_1')}shape_attributes${getTextFromDictionary('IN_2')}`;
         return result;
       }
       if (region.shape_attributes.name === 'rect') {
         result = checkShapeAttributesRectProperty(region);
         if (result.error) {
-          result.message += ' -> in shape_attributes';
+          result.message += ` -> ${getTextFromDictionary('IN_1')}shape_attributes${getTextFromDictionary('IN_2')}`;
           return result;
         }
       } else if (region.shape_attributes.name === 'polygon') {
         result = checkShapeAttributesPolygonProperty(region);
         if (result.error) {
-          result.message += ' -> in shape_attributes';
+          result.message += ` -> ${getTextFromDictionary('IN_1')}shape_attributes${getTextFromDictionary('IN_2')}`;
           return result;
         }
       } else {
-        return { error: true, message: `The following shape type is not supported: ${region.shape_attributes.name} -> in shape_attributes` };
+        return { error: true, message: `${getTextFromDictionary('SHAPE_NOT_SUPPORTED')}: ${region.shape_attributes.name} -> ${getTextFromDictionary('IN_1')}shape_attributes${getTextFromDictionary('IN_2')}` };
       }
     }
   }
@@ -138,9 +139,9 @@ function checkRegionsProperty(parsedObj) {
     const { regions } = parsedObj[objectKeyNames[i]];
     for (let y = 0; y < regions.length; y += 1) {
       const result = checkObjectProperties(requiredProperties, regions[y],
-        JSON_POSTFIX, PROPERTIES_STRING);
+        JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
       if (result.error) {
-        result.message += ' -> in regions';
+        result.message += ` -> ${getTextFromDictionary('IN_1')}regions${getTextFromDictionary('IN_2')}`;
         return result;
       }
     }
@@ -153,9 +154,9 @@ function checkAnnotationObjectsProperties(parsedObj) {
   const objectKeyNames = Object.keys(parsedObj);
   for (let i = 0; i < objectKeyNames.length; i += 1) {
     const result = checkObjectProperties(requiredProperties, parsedObj[objectKeyNames[i]],
-      JSON_POSTFIX, PROPERTIES_STRING);
+      JSON_POSTFIX, getTextFromDictionary('PROPERTIES'));
     if (result.error) {
-      result.message += ' -> in annotation object';
+      result.message += ` -> ${getTextFromDictionary('IN_1')}${getTextFromDictionary('ANNOTATION_OBJECT')}${getTextFromDictionary('IN_2')}`;
       return result;
     }
   }

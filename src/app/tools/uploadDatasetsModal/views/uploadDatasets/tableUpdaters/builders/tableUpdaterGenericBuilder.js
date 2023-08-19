@@ -1,12 +1,13 @@
 import {
   VALID_ANNOTATION_FILES_ARRAY, IMAGE_FILES_OBJECT, IMAGE_FILE_INDICATOR,
-  ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE, ACTIVE_ANNOTATION_FILE, ANNOTATION_FILE_INDICATOR,
+  ACTIVE_ANNOTATION_FILE, ANNOTATION_FILE_INDICATOR,
 } from '../../../../consts';
 import {
   insertRowToImagesTable, enableFinishButton,
   disableFinishButton, changeAllImagesTableRowsToDefault,
   insertRowToAnnotationsTable, changeAnnotationRowToDefault,
 } from '../../style';
+import { getTextFromDictionary } from '../../../../../text/languages/language';
 
 function validateExistingImagesWhenMultipleAnnotationFilesAllowed(datasetObject,
   updateImageFileErrorStatusFunc, validateFileFunc) {
@@ -55,7 +56,7 @@ function reValidateExistingAnnotations(annotationFiles, validateFileFunc) {
     const { name } = annotationFile.body.fileMetaData;
     if (!validationResult.error) {
       validationResult.error = true;
-      validationResult.message = ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE;
+      validationResult.message = getTextFromDictionary('ONE_ANNOTATION_FILE_ALLOWED_ERROR_MESSAGE');
     }
     insertRowToAnnotationsTable(name, validationResult);
   });

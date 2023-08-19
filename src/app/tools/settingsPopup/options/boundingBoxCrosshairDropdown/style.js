@@ -1,5 +1,5 @@
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 import { getBoundingBoxCrosshairDropdownOpenState, setBoundingBoxCrosshairDropdownOpenState } from '../../../state';
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
 import { setStickyPopupProperties } from '../../../utils/popups/stickyPopup';
 
 let boundingBoxCrosshairDropdownTriggerElement = null;

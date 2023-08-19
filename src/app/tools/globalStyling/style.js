@@ -1,9 +1,9 @@
-import downloadFonts from './fonts';
-import IS_FIREFOX from '../utils/browserType';
-import { setScreenSizeDelta } from './screenSizeDelta';
-import { setKeyDownEventTimeOut } from './timeouts';
-import setButtonsStyle from './buttons/style';
 import validateClientBrowserDimensions from './inadequateResourcesOverlay';
+import { setScreenSizeDelta } from './customCssProperties';
+import { setKeyDownEventTimeOut } from './timeouts';
+import IS_FIREFOX from '../utils/browserType';
+import setButtonsStyle from './buttons/style';
+import downloadFonts from './fonts';
 
 let canvasWrapperParentElement = null;
 let zoomOverflowWrapperParentElement = null;

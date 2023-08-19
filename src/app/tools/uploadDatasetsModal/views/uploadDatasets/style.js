@@ -2,8 +2,9 @@ import {
   ANNOTATIONS_TABLE_INDICATOR, CLASSES_TABLE_INDICATOR,
   TWO_TABLE_STRATEGY, THREE_TABLE_STRATEGY, IMAGES_TABLE_INDICATOR,
 } from '../../consts';
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
+import { getTextFromDictionary } from '../../../text/languages/language';
 import IS_FIREFOX from '../../../utils/browserType';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let titleElement = null;
 let table1Element = null;
@@ -36,8 +37,8 @@ const POPOVER_RIGHT_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-tabl
 const POPOVER_ARROW_RIGHT_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-right';
 const POPOVER_CENTER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-center';
 const POPOVER_ARROW_CENTER_POSITION_CLASS = 'upload-datasets-modal-upload-datasets-table-row-popover-arrow-center';
-const TWO_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-two-table-strategy-section';
-const THREE_TABLE_STRATEGY_CLASS = 'upload-datsets-modal-upload-datasets-three-table-strategy-section';
+const TWO_TABLE_STRATEGY_CLASS = 'upload-datasets-modal-upload-datasets-two-table-strategy-section';
+const THREE_TABLE_STRATEGY_CLASS = 'upload-datasets-modal-upload-datasets-three-table-strategy-section';
 const POPOVER_ERROR_THEME_CLASS = 'error-popover-color-theme';
 const POPOVER_ARROW_ERROR_THEME_CLASS = 'upload-datasets-modal-upload-datasets-table-error-row-popover-arrow';
 const POPOVER_INFORMATION_THEME_CLASS = 'information-popover-color-theme';
@@ -46,7 +47,6 @@ const ERROR_TEXT_THEME_CLASS = 'upload-datasets-modal-upload-datasets-table-row-
 const PROCEED_BUTTON_CLASS = 'popup-proceed-button';
 const ACTIVE_BUTTON_CLASS = 'popup-label-button';
 const DISABLED_BUTTON_CLASS = 'popup-label-button-disabled';
-const CLASSES_FILE_POPUP_INFORMATION = 'If this file belongs in the annotations table, make sure that each row contains exactly 5 attributes: class x y width height';
 let currentAnnotationsPopoverPositionClass = null;
 let currentAnnotationsPopoverArrowPositionClass = null;
 
@@ -155,11 +155,11 @@ function removeRow(subjectFileName, tableName) {
 
 function getTableName(tableId) {
   switch (tableId) {
-    case 'upload-datsets-modal-upload-datasets-annotations-table':
+    case 'upload-datasets-modal-upload-datasets-annotations-table':
       return ANNOTATIONS_TABLE_INDICATOR;
-    case 'upload-datsets-modal-upload-datasets-images-table':
+    case 'upload-datasets-modal-upload-datasets-images-table':
       return IMAGES_TABLE_INDICATOR;
-    case 'upload-datsets-modal-upload-datasets-classes-table':
+    case 'upload-datasets-modal-upload-datasets-classes-table':
       return CLASSES_TABLE_INDICATOR;
     default:
       return ANNOTATIONS_TABLE_INDICATOR;
@@ -205,7 +205,7 @@ function insertRowToClassesTable(fileName, validationResult) {
   let textThemeClass;
   if (!validationResult.error) {
     validationResult.information = true;
-    validationResult.message = CLASSES_FILE_POPUP_INFORMATION;
+    validationResult.message = getTextFromDictionary('DIFFERENT_TABLE_INFO');
     popoverThemeClass = POPOVER_INFORMATION_THEME_CLASS;
     popoverArrowThemeClass = POPOVER_ARROW_INFORMATION_THEME_CLASS;
     textThemeClass = '';
@@ -351,7 +351,7 @@ function changeThreeTableStrategyToTwo() {
 }
 
 function setAnnotationsTableTitle(format) {
-  annotationsTableTitle.innerHTML = `Annotations (${format})`;
+  annotationsTableTitle.innerHTML = `${getTextFromDictionary('ANNOTATIONS')} (${format})`;
 }
 
 function setButtonGroupElementMarginTop(length) {
@@ -487,18 +487,18 @@ function assignUploadDatasetsViewLocalVariables() {
   table2Element = document.getElementById('upload-datasets-modal-upload-datasets-table-2');
   table3Element = document.getElementById('upload-datasets-modal-upload-datasets-table-3');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
-  titleElement = document.getElementById('upload-datsets-modal-upload-datasets-title');
-  uploadDatasetsOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-outer-container');
+  titleElement = document.getElementById('upload-datasets-modal-upload-datasets-title');
+  uploadDatasetsOuterContainerElement = document.getElementById('upload-datasets-modal-upload-datasets-outer-container');
   backButtonElement = document.getElementById('upload-datasets-modal-back-button');
   uploadButtonElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-button');
   uploadDatasetFilesTriggerElement = document.getElementById('upload-datasets-modal-upload-datasets-upload-trigger');
   finishButtonElement = document.getElementById('upload-datasets-modal-finish-button');
-  imagesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table');
-  imagesTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-images-table-outer-container');
-  annotationsTableTitle = document.getElementById('upload-datasets-modal-upload=datasets-annotations-table-title');
-  annotationsTableOuterContainerElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table-outer-container');
-  classesTableElement = document.getElementById('upload-datsets-modal-upload-datasets-classes-table');
-  annotationsTableElement = document.getElementById('upload-datsets-modal-upload-datasets-annotations-table');
+  imagesTableElement = document.getElementById('upload-datasets-modal-upload-datasets-images-table');
+  imagesTableOuterContainerElement = document.getElementById('upload-datasets-modal-upload-datasets-images-table-outer-container');
+  annotationsTableTitle = document.getElementById('upload-datasets-modal-upload-datasets-annotations-table-title');
+  annotationsTableOuterContainerElement = document.getElementById('upload-datasets-modal-upload-datasets-annotations-table-outer-container');
+  classesTableElement = document.getElementById('upload-datasets-modal-upload-datasets-classes-table');
+  annotationsTableElement = document.getElementById('upload-datasets-modal-upload-datasets-annotations-table');
   uploadDatasetsModalElement = document.getElementById('upload-datasets-modal-parent');
 }
 

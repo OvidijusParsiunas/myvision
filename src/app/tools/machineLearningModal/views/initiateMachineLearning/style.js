@@ -1,5 +1,6 @@
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
+import { getTextFromDictionary } from '../../../text/languages/language';
 import IS_FIREFOX from '../../../utils/browserType';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let isNoImagesFoundInfoDisplayed = false;
 
@@ -237,13 +238,13 @@ function changeToLoadingStyle() {
 function changeToMLCompleteStyle() {
   displayCheckMarkWthAnimation();
   changeProgressMessageColor('#1e6d1e');
-  updateProgressMessage('Finished!');
+  updateProgressMessage(getTextFromDictionary('FINISHED'));
 }
 
 function changeToNoImagesFoundStyle() {
   displayUploadImagesButton();
   disableStartButton();
-  displayInfoMessage('Please upload an image to get started.');
+  displayInfoMessage(getTextFromDictionary('ML_MODAL_PLEASE_UPLOAD_IMAGE'));
   setDescriptionElementMarginBottom(`${3 / getScreenSizeDelta()}px`);
   const newModalHeight = IS_FIREFOX ? `${277 / getScreenSizeDelta()}px` : `${273 / getScreenSizeDelta()}px`;
   setModalHeight(newModalHeight);
@@ -273,11 +274,11 @@ function hideInitiateMachineLearningViewAssets() {
 
 function getDefaultDescriptionMarkup() {
   return `
-    You can use a pre-trained Machine Learning model to automatically annotate objects with bounding boxes!
+    ${getTextFromDictionary('ML_MODAL_DESCRIPTION_PAR_1')}
     <div class="upload-datasets-modal-description-break"></div>
-    Click 'Start' to download the 'COCO-SSD' model and use it to generate bounding boxes for your images.
+    ${getTextFromDictionary('ML_MODAL_DESCRIPTION_PAR_2')}
     <div class="upload-datasets-modal-description-break"></div>
-    In addition, because this model operates locally on the browser, your data will never leave the privacy of your computer.`;
+    ${getTextFromDictionary('ML_MODAL_DESCRIPTION_PAR_3')}`;
 }
 
 function prepareInstantiateMachineLearningView() {

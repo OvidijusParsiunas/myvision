@@ -123,37 +123,37 @@
       <div class="modal-title-border-line"></div>
       <div id="upload-datasets-modal-description" class="modal-description"></div>
       <div id="upload-datasets-modal-error-messages" style="display: none" class="modal-messages"></div>
-      <div id="upload-datsets-modal-select-format-outer-container" style="display: none">
-        <div id="upload-datsets-modal-select-format-title" class="upload-datsets-modal-title">Choose Format</div>
-        <div id="upload-datsets-modal-select-format-inner-container">
-          <table id="upload-datsets-modal-select-format-table"></table>
+      <div id="upload-datasets-modal-select-format-outer-container" style="display: none">
+        <div id="upload-datasets-modal-select-format-title" class="upload-datasets-modal-title">Choose Format</div>
+        <div id="upload-datasets-modal-select-format-inner-container">
+          <table id="upload-datasets-modal-select-format-table"></table>
         </div>
       </div>
-      <div id="upload-datsets-modal-upload-datasets-outer-container" style="display: none">
-        <div id="upload-datsets-modal-upload-datasets-title" class="upload-datsets-modal-title"></div>
+      <div id="upload-datasets-modal-upload-datasets-outer-container" style="display: none">
+        <div id="upload-datasets-modal-upload-datasets-title" class="upload-datasets-modal-title"></div>
         <div id="upload-datasets-drag-and-drop-overlay" style="display: none"></div>
-        <div id="upload-datasets-modal-upload-datasets-table-1" style="display: none" class="upload-datsets-modal-upload-datasets-three-table-strategy-section">
+        <div id="upload-datasets-modal-upload-datasets-table-1" style="display: none" class="upload-datasets-modal-upload-datasets-three-table-strategy-section">
           <div class="upload-datasets-modal-upload-datasets-table-title">Classes (.txt)</div>
-          <div id="upload-datsets-modal-upload-datasets-classes-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets">
-            <table id="upload-datsets-modal-upload-datasets-classes-table" class="upload-datasets-modal-upload-datasets-table">
+          <div id="upload-datasets-modal-upload-datasets-classes-table-outer-container" class="upload-datasets-table upload-datasets-modal-upload-datasets">
+            <table id="upload-datasets-modal-upload-datasets-classes-table" class="upload-datasets-modal-upload-datasets-table">
               <tbody></tbody>
             </table>
          </div>
         </div>
         <div class="upload-datasets-modal-vertical-break-line"></div>
-        <div id="upload-datasets-modal-upload-datasets-table-2" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
-          <div id="upload-datasets-modal-upload=datasets-annotations-table-title" class="upload-datasets-modal-upload-datasets-table-title">Annotations (.json)</div>
-          <div id="upload-datsets-modal-upload-datasets-annotations-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets">
-            <table id="upload-datsets-modal-upload-datasets-annotations-table" class="upload-datasets-modal-upload-datasets-table">
+        <div id="upload-datasets-modal-upload-datasets-table-2" class="upload-datasets-modal-upload-datasets-two-table-strategy-section">
+          <div id="upload-datasets-modal-upload-datasets-annotations-table-title" class="upload-datasets-modal-upload-datasets-table-title">Annotations (.json)</div>
+          <div id="upload-datasets-modal-upload-datasets-annotations-table-outer-container" class="upload-datasets-table upload-datasets-modal-upload-datasets">
+            <table id="upload-datasets-modal-upload-datasets-annotations-table" class="upload-datasets-modal-upload-datasets-table">
               <tbody></tbody>
             </table>
          </div>
        </div>
        <div class="upload-datasets-modal-vertical-break-line"></div>
-       <div id="upload-datasets-modal-upload-datasets-table-3" class="upload-datsets-modal-upload-datasets-two-table-strategy-section">
+       <div id="upload-datasets-modal-upload-datasets-table-3" class="upload-datasets-modal-upload-datasets-two-table-strategy-section">
          <div class="upload-datasets-modal-upload-datasets-table-title">Images</div>
-         <div id="upload-datsets-modal-upload-datasets-images-table-outer-container" class="upload-datasets-table upload-datsets-modal-upload-datasets">
-           <table id="upload-datsets-modal-upload-datasets-images-table" class="upload-datasets-modal-upload-datasets-table">
+         <div id="upload-datasets-modal-upload-datasets-images-table-outer-container" class="upload-datasets-table upload-datasets-modal-upload-datasets">
+           <table id="upload-datasets-modal-upload-datasets-images-table" class="upload-datasets-modal-upload-datasets-table">
              <tbody></tbody>
            </table>
         </div>
@@ -164,9 +164,9 @@
         <div id="upload-datasets-modal-back-button" style="display: none" class="popup-label-button popup-back-button" onclick="goBackToSelectFormatView()">Back</div>
         <input id='upload-datasets-modal-upload-datasets-upload-trigger' type='file' onchange="uploadDatasetFilesHandler(this, event)" multiple hidden/>
         <div id="upload-datasets-modal-upload-datasets-upload-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="triggerUploadDatasetFiles()">Upload</div>
-        <div id="upload-datsets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
+        <div id="upload-datasets-modal-next-button" style="display: none" class="popup-label-button-disabled" onclick="moveToUploadDatasetsView()">Next</div>
         <div id="upload-datasets-modal-cancel-button" class="popup-label-button popup-cancel-button" onclick="cancelUploadDatasetsModal(true)">Cancel</div>
-        <div id="upload-datsets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)">Yes</div>
+        <div id="upload-datasets-modal-yes-button" style="display: none" class="popup-label-button popup-proceed-button" onclick="reuseAlreadyExistingImages(true)">Yes</div>
         <div id="upload-datasets-modal-no-button" style="display: none" class="popup-label-button popup-cancel-button" onclick="reuseAlreadyExistingImages(false)">No</div>
         <div id="upload-datasets-modal-finish-button" style="display: none" class="popup-label-button popup-label-button-disabled" onclick="drawShapesAndImages()">Finish</div>
       </div>
@@ -256,7 +256,7 @@
       <button id="edit-shapes-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="editShapes(this, event)">
         <img id="edit-shapes-icon" src="assets/svg/interface.svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>
-      <div class="core-button-hover-popover" id="default-button-popover">Edit Shapes (E)</div>
+      <div class="core-button-hover-popover" id="edit-shapes-button-popover">Edit Shapes (E)</div>
       <button id="create-bounding-box-button" class="toolkit-button toolkit-button-default toolkit-button-table-cell" onmouseup="createNewBndBox(event)">
         <img id="new-bounding-box-icon" src="assets/svg/method-draw-image (13).svg" draggable="false" class="toolkit-button-icon" alt="visibility">
       </button>

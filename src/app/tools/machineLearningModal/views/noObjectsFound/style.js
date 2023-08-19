@@ -1,10 +1,11 @@
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
+import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
+import { getTextFromDictionary } from '../../../text/languages/language';
 
 let descriptionElement = null;
 let buttonGroupElement = null;
 
 function changeModalDescription() {
-  descriptionElement.innerHTML = 'The model has not identified any objects within the uploaded images.';
+  descriptionElement.innerHTML = getTextFromDictionary('ML_NO_ANNOTATED_IMAGES_RESULT');
 }
 
 function displayDescription() {

@@ -389,8 +389,7 @@ function topOverflowScroll(event) {
     } else {
       event.target.top = newPositionTop - event.transform.offsetY;
     }
-  } else
-  if (event.target.shapeName === 'polygon') {
+  } else if (event.target.shapeName === 'polygon') {
     event.target.top = newPositionTop - event.transform.offsetY;
   } else if (event.target.shapeName === 'point') {
     event.target.top = newPositionTop;

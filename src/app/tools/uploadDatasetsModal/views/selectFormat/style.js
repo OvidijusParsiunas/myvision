@@ -1,5 +1,5 @@
+import { getScreenSizeDelta, getModalButtonFontDelta } from '../../../globalStyling/customCssProperties';
 import { getAvailableFormats } from '../../state';
-import { getScreenSizeDelta } from '../../../globalStyling/screenSizeDelta';
 
 let descriptionElement = null;
 let cancelButtonElement = null;
@@ -77,8 +77,10 @@ function hideDescriptionElement() {
   descriptionElement.style.display = 'none';
 }
 
+// the getModalButtonFontDelta() function value is used as a workaround to get the buttons higher
+// when the screen is small and the active language is chinese (mandarin)
 function setButtonGroupElementMarginTop(length) {
-  buttonsGroupElement.style.marginTop = `${length / getScreenSizeDelta()}px`;
+  buttonsGroupElement.style.marginTop = `${length / getScreenSizeDelta() - getModalButtonFontDelta()}px`;
 }
 
 function resetButtonGroupElementMarginTop() {
@@ -122,12 +124,12 @@ function hideSelectFormatViewAssets() {
 }
 
 function assignSelectFormatViewLocalVariables() {
-  tableElement = document.getElementById('upload-datsets-modal-select-format-table');
-  nextButtonElement = document.getElementById('upload-datsets-modal-next-button');
+  tableElement = document.getElementById('upload-datasets-modal-select-format-table');
+  nextButtonElement = document.getElementById('upload-datasets-modal-next-button');
   descriptionElement = document.getElementById('upload-datasets-modal-description');
   cancelButtonElement = document.getElementById('upload-datasets-modal-cancel-button');
   buttonsGroupElement = document.getElementById('upload-datasets-modal-buttons');
-  selectFormatOuterContainerElement = document.getElementById('upload-datsets-modal-select-format-outer-container');
+  selectFormatOuterContainerElement = document.getElementById('upload-datasets-modal-select-format-outer-container');
 }
 
 export {

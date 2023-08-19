@@ -1,5 +1,6 @@
-import { getAllImageData } from '../../../imageList/imageList';
 import { drawTempShapesToShowCaseMLResults, updateImageThumbnails } from '../../../../canvas/utils/drawShapesViaCoordinates/drawShapesViaCoordinates';
+import { getTextFromDictionary } from '../../../text/languages/language';
+import { getAllImageData } from '../../../imageList/imageList';
 import { getCurrentImageId } from '../../../state';
 import {
   displayErrorMessage, changeToMLCompleteStyle, removeCancelButton, changeToNoImagesFoundStyle,
@@ -16,7 +17,7 @@ const cocoSSDScript = { element: document.createElement('script'), status: { dow
 
 function errorHandler() {
   removeLoadingContent();
-  displayErrorMessage('ERROR! Something went wrong, please try again later.');
+  displayErrorMessage(getTextFromDictionary('ML_MODAL_ERROR'));
   displayRetryButton();
   isInProgress = false;
 }
