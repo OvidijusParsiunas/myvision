@@ -8,26 +8,38 @@ import { highlightLabelInTheList, removeHighlightOfListLabel } from '../../../..
 import { setRemoveLabelsButtonToDefault, setRemoveLabelsButtonToDisabled } from '../../../../tools/toolkit/styling/state';
 import { setSessionDirtyState } from '../../../../tools/state';
 
-let selectedPolygonId = null;
-let newPolygonSelected = false;
-let canvas = null;
-let removedPolygonPoints = false;
-let selectedNothing = false;
-let ignoredFirstMouseMovement = false;
-let currentlyHoveredPoint = null;
-let lastHoveredPoint = null;
-let mouseMoved = false;
+// Initialize variables
+let selectedPolygonId = null; // Holds the ID of the currently selected polygon
+let newPolygonSelected = false; // Flag to indicate if a new polygon has been selected
+let canvas = null; // Reference to the Fabric.js canvas object
+let removedPolygonPoints = false; // Flag to indicate if polygon points have been removed
+let selectedNothing = false; // Flag to indicate if no shape was selected
+let ignoredFirstMouseMovement = false; // Flag to ignore the first mouse movement
+let currentlyHoveredPoint = null; // Reference to the point being hovered over
+let lastHoveredPoint = null; // Reference to the last point that was hovered over
+let mouseMoved = false; // Flag to indicate if the mouse has moved
 
+/**
+ * selectShape: Highlight a shape in the list and enable the remove button
+ * @param {string} shapeId - The ID of the shape to be selected
+ */
 function selectShape(shapeId) {
   highlightLabelInTheList(shapeId);
   setRemoveLabelsButtonToDefault();
 }
 
+/**
+ * deselectShape: Remove the highlight from the shape in the list and disable the remove button
+ */
 function deselectShape() {
   removeHighlightOfListLabel();
   setRemoveLabelsButtonToDisabled();
 }
 
+/**
+ * setRemovablePointsEventsCanvas: Set up event listeners for removing polygon points
+ * @param {object} canvasObj - The Fabric.js canvas object
+ */
 function setRemovablePointsEventsCanvas(canvasObj) {
   changeExistingPolygonPointsToRemovable(canvasObj);
   canvas = canvasObj;
@@ -41,6 +53,10 @@ function setRemovablePointsEventsCanvas(canvasObj) {
   }
 }
 
+/**
+ * prepareToEditPolygonPoints: Prepare the canvas for editing polygon points
+ * @param {object} event - The event object containing information about the event
+ */
 function prepareToEditPolygonPoints(event) {
   if (removedPolygonPoints) {
     cleanPolygonPointsArray();
@@ -57,12 +73,19 @@ function prepareToEditPolygonPoints(event) {
   mouseMoved = false;
 }
 
+/**
+ * setPolygonNotEditableOnClick: Set the polygon as not editable and reset the state
+ */
 function setPolygonNotEditableOnClick() {
   removePolygonPoints();
   selectedPolygonId = null;
   deselectShape();
 }
 
+/**
+ * pointMouseDownEvents: Handle the mouse down event on a point
+ * @param {object} event - The event object containing information about the event
+ */
 function pointMouseDownEvents(event) {
   if (event.target) {
     enableActiveObjectsAppearInFront(canvas);
@@ -83,6 +106,9 @@ function pointMouseDownEvents(event) {
   }
 }
 
+/**
+ * removePointViaKeyboard: Remove the last hovered point using the keyboard
+ */
 function removePointViaKeyboard() {
   if (!mouseMoved) {
     if (lastHoveredPoint) {
@@ -97,6 +123,10 @@ function removePointViaKeyboard() {
   currentlyHoveredPoint = null;
 }
 
+/**
+ * pointMouseOverEvents: Handle the mouse over event on a point
+ * @param {object} event - The event object containing information about the event
+ */
 function pointMouseOverEvents(event) {
   if (event.target && event.target.shapeName === 'point' && event.target.fill === 'red') {
     event.target.stroke = 'red';
@@ -105,6 +135,10 @@ function pointMouseOverEvents(event) {
   }
 }
 
+/**
+ * pointMouseUpEvents: Handle the mouse up event on a polygon or a point
+ * @param {object} event - The event object containing information about the event
+ */
 function pointMouseUpEvents(event) {
   if (event.target && event.target.shapeName === 'polygon' && (selectedNothing || newPolygonSelected)) {
     // subset can be reused
@@ -114,6 +148,10 @@ function pointMouseUpEvents(event) {
   }
 }
 
+/**
+ * pointMouseOutEvents: Handle the mouse out event on a point
+ * @param {object} event - The event object containing information about the event
+ */
 function pointMouseOutEvents(event) {
   if (event.target && event.target.shapeName === 'point' && event.target.fill === 'red') {
     event.target.stroke = 'black';
@@ -125,6 +163,9 @@ function pointMouseOutEvents(event) {
   }
 }
 
+/**
+ * pointMouseMoveEvents: Handle the mouse move event
+ */
 function pointMouseMoveEvents() {
   if (ignoredFirstMouseMovement) {
     mouseMoved = true;
