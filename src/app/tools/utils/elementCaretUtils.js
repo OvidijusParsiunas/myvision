@@ -1,13 +1,16 @@
-// test this in different browsers
+// Test this in different browsers
+
+const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
 function getDefaultFont(element) {
-  const defaultSyle = window.getComputedStyle(element, null);
-  const size = defaultSyle.getPropertyValue('font-size');
-  const fontFamily = defaultSyle.getPropertyValue('font-family');
+  const defaultStyle = window.getComputedStyle(element, null);
+  const size = defaultStyle.getPropertyValue('font-size');
+  const fontFamily = defaultStyle.getPropertyValue('font-family');
   return `${size} ${fontFamily}`;
 }
 
 function emptyContentEditableFirefoxBugFix(div) {
-  if (div.innerHTML === '<br>') div.innerHTML = '';
+  if (isFirefox && div.innerHTML === '<br>') div.innerHTML = '';
 }
 
 function isVerticalScrollPresent(element) {
@@ -19,34 +22,35 @@ function setCarretPosition(index, contentEditableElement) {
   if (document.createRange) {
     // Firefox, Chrome, Opera, Safari, IE 9+
     range = document.createRange();
-    // false means collapse to end rather than the start
     range.setStart(contentEditableElement.childNodes[0], index);
     range.collapse(false);
     const selection = window.getSelection();
-    // remove any selections already made
     selection.removeAllRanges();
     selection.addRange(range);
-  } else if (document.selection) { // IE 8 and lower
+  } else if (document.selection) {
+    // IE 8 and lower
     range = document.body.createTextRange();
     range.moveToElementText(contentEditableElement);
-    // false means collapse to end rather than the start
     range.collapse(false);
-    // make it the visible selection
     range.select();
   }
 }
 
-function setCaretPositionOnDiv(index, contentEditableElement, space, scrollHorintallyFunc) {
+function setCaretPositionOnDiv(index, contentEditableElement, space = false, scrollHorizontallyFunc) {
   try {
     setCarretPosition(index, contentEditableElement);
-    if (!space) { scrollHorintallyFunc(contentEditableElement.innerHTML.substring(0, index)); }
+    if (!space) {
+      scrollHorizontallyFunc(contentEditableElement.innerHTML.substring(0, index));
+    }
   } catch (err) {
     setCarretPosition(0, contentEditableElement);
-    if (!space) { scrollHorintallyFunc(''); }
+    if (!space) {
+      scrollHorizontallyFunc('');
+    }
   }
 }
 
-function getCaretPositionOnDiv(editableDiv, paste) {
+function getCaretPositionOnDiv(editableDiv, paste = false) {
   const currentCaretPosition = { position: 0, highlightRangeOnPaste: 0 };
   let range = null;
   if (window.getSelection) {
@@ -57,8 +61,7 @@ function getCaretPositionOnDiv(editableDiv, paste) {
         currentCaretPosition.position = range.endOffset;
       }
       if (paste) {
-        currentCaretPosition.highlightRangeOnPaste = Math.abs(selection.focusOffset
-          - selection.anchorOffset);
+        currentCaretPosition.highlightRangeOnPaste = Math.abs(selection.focusOffset - selection.anchorOffset);
       }
     }
   } else if (document.selection && document.selection.createRange) {

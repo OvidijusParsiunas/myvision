@@ -1,10 +1,3 @@
-function sendPolygonPointsToFrontImpl(canvas, polygonPoints) {
-  canvas.discardActiveObject();
-  polygonPoints.forEach((point) => {
-    if (point) {
-      canvas.bringToFront(point);
-    }
-  });
-}
-
-export { sendPolygonPointsToFrontImpl as default };
+// This function, 'sendPolygonPointsToFrontImpl', takes in two arguments:
+// 1. 'canvas' - the canvas where the polygon points will be brought to the front
+// 

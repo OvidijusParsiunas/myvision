@@ -1,17 +1,23 @@
-import purgeCanvasMouseEvents from '../../../../canvas/mouseInteractions/mouseEvents/resetCanvasUtils/purgeAllMouseHandlers';
-import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
+import { useEffect } from 'react';
 import {
-  setPolygonEditingButtonsToDefault, setEditShapesButtonToDefault,
+  executeFunctionOnceOnMouseOver,
+  getCrosshairUsedOnCanvasState,
+  purgeCanvasMouseEvents,
+  setAlteringPolygonPointsState,
   setCreateBoundingBoxButtonToActive,
-} from '../../styling/state';
-import {
-  setAlteringPolygonPointsState, setLastDrawingModeState, setDefaultState,
-  setHasDrawnShapeState, getCrosshairUsedOnCanvasState,
+  setDefaultState,
+  setEditShapesButtonToDefault,
+  setHasDrawnShapeState,
+  setLastDrawingModeState,
+  setPolygonEditingButtonsToDefault,
+  setAlteringPolygonPointsState,
 } from '../../../state';
-import { moveCrosshair } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { executeFunctionOnceOnMouseOver } from '../../../../keyEvents/mouse/mouseOverOut';
+import assignDrawBoundingBoxEvents from '../../../../canvas/mouseInteractions/mouseEvents/eventHandlers/drawBndBoxEventHandlers';
+import moveCrosshair from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
 
 function initiateCreateNewBndBoxEvents(canvas) {
+  if (!canvas) return null;
+
   // cancel drawing polygon
   // or hold on since polygons will not be drawin with no canvas
   if (canvas.backgroundImage) {
@@ -26,6 +32,14 @@ function initiateCreateNewBndBoxEvents(canvas) {
     setLastDrawingModeState('boundingBox');
     setHasDrawnShapeState(false);
   }
+
+  useEffect(() => {
+    return () => {
+      // handle side effects of changing the state here
+    };
+  }, []);
+
+  return <canvas ref={canvas} />;
 }
 
-export { initiateCreateNewBndBoxEvents as default };
+export default initiateCreateNewBndBoxEvents;

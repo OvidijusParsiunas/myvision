@@ -1,16 +1,25 @@
 import { setCrosshairColor } from '../../../../canvas/mouseInteractions/cursorModes/drawWithCrosshairMode';
-import { toggleCrosshair } from './toggleCrosshairWorker';
+import { toggleCrosshair as toggleCrosshairWorker } from './toggleCrosshairWorker';
 
-function toggleCheckbox(func, isText) {
+interface ToggleCheckboxParams {
+  func: () => void;
+  isText?: boolean;
+}
+
+function toggleCheckbox({ func, isText = false }: ToggleCheckboxParams) {
   func();
-  if (isText) { this.checked = !this.checked; }
+  if (isText) {
+    this.checked = !this.checked;
+  }
 }
 
-function assignBoundingBoxCrosshairDropdownButtonEventHandlers() {
-  window.toggleCrosshair = toggleCheckbox.bind(
-    document.getElementById('settings-popup-bounding-box-crosshair-visibility-checkbox'), toggleCrosshair,
-  );
-  window.crosshairColorChange = setCrosshairColor;
-}
+const assignBoundingBoxCrosshairDropdownButtonEventHandlers = () => {
+  const checkbox = document.getElementById('settings-popup-bounding-box-crosshair-visibility-checkbox');
+  if (checkbox) {
+    window.toggleCrosshair = toggleCheckbox.bind(checkbox, { func: toggleCrosshairWorker });
+    window.crosshairColorChange = setCrosshairColor;
+  }
+};
 
-export { assignBoundingBoxCrosshairDropdownButtonEventHandlers as default };
+export default assignBoundingBoxCrosshairDropdownButtonEventHandlers;
+

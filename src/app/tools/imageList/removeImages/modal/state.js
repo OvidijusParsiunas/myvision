@@ -1,11 +1,11 @@
-let doNotShowRemoveImageModalAgainState = false;
+const imageModalState = {
+  doNotShowRemoveImageModalAgain: false,
+  get doNotShowRemoveImageModalAgainState() {
+    return this.doNotShowRemoveImageModalAgain;
+  },
+  set doNotShowRemoveImageModalAgainState(state) {
+    this.doNotShowRemoveImageModalAgain = state;
+  }
+};
 
-function getDoNotShowRemoveImageModalAgainState() {
-  return doNotShowRemoveImageModalAgainState;
-}
-
-function setDoNotShowRemoveImageModalAgainState(state) {
-  doNotShowRemoveImageModalAgainState = state;
-}
-
-export { getDoNotShowRemoveImageModalAgainState, setDoNotShowRemoveImageModalAgainState };
+export { imageModalState };

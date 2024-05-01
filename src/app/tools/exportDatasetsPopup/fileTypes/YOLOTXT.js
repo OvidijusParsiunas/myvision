@@ -6,34 +6,22 @@ import { getAllExistingShapes } from '../../../canvas/objects/allShapes/allShape
 import { getAllImageData } from '../../imageList/imageList';
 import { getCurrentImageId } from '../../state';
 
-/*
-If there is an error on generating zips - try to use a file receiver
-import FileSaver from 'file-saver';
-import { getImageProperties } from '../../uploadImages/drawImageOnCanvas';
-import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
-import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
+// If there is an error on generating zips - try to use a file receiver
+// import FileSaver from 'file-saver';
+// import { getImageProperties } from '../../uploadImages/drawImageOnCanvas';
+// import { getAllImageData, getCurrentlySelectedImageId } from '../../../../../imageList/imageList';
+// import { getAllExistingShapes } from '../../../../../../canvas/objects/allShapes/allShapes';
 
-function getFileName() {
-  const currentDate = new Date();
-  return `visionai-${currentDate.getDay()}-
-    ${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
-}
-
-function downloadZip(xml) {
-  xml.generateAsync({ type: 'blob' }).then((blob) => {
-    FileSaver.saveAs(blob, getFileName());
-  });
-}
-
-*/
-
+// Number of decimal places for rounding coordinates
 const decimalPlaces = 6;
 
+// Generate a file name with the current date
 function getFileName() {
   const currentDate = new Date();
   return `visionai-${currentDate.getDay()}-${currentDate.getMonth()}-${currentDate.getFullYear()}.zip`;
 }
 
+// Download a zip file using HTML5 download attribute
 function downloadZip(xml) {
   const pom = document.createElement('a');
   xml.generateAsync({ type: 'blob' }).then((blob) => {
@@ -46,6 +34,7 @@ function downloadZip(xml) {
   });
 }
 
+// Create a zip file with images and annotations
 function buildDownloadableZip(annotationFilesData, classesFileData) {
   const zip = new JSZip();
   const imagesFolder = zip.folder('images');
@@ -56,6 +45,7 @@ function buildDownloadableZip(annotationFilesData, classesFileData) {
   return imagesFolder;
 }
 
+// Generate a string for the classes file
 function generateClassesFileData(classesData) {
   let classesString = '';
   Object.keys(classesData).forEach((key) => {
@@ -65,10 +55,12 @@ function generateClassesFileData(classesData) {
   return classesString;
 }
 
+// Get class id by label text
 function getClassIdByLabelText(classes, text) {
   return classes[text];
 }
 
+// Parse bounding box data for annotation files
 function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   const boundingBoxData = {};
   boundingBoxData.class = getClassIdByLabelText(classes, boundingBox.shapeLabelText);
@@ -86,16 +78,17 @@ function parseBoundingBoxData(boundingBox, imageDimensions, classes) {
   return boundingBoxData;
 }
 
+// Generate an annotated string for an image
 function getAnnotatedString(boundingBox, imageDimensions, classesData) {
   let str = '';
-  const boundingBoxData = parseBoundingBoxData(boundingBox, imageDimensions,
-    classesData);
+  const boundingBoxData = parseBoundingBoxData(boundingBox, imageDimensions, classesData);
   Object.keys(boundingBoxData).forEach((boundingBoxKey) => {
     str += `${boundingBoxData[boundingBoxKey]} `;
   });
   return str;
 }
 
+// Get image and annotation data for all images
 function getImageAndAnnotationData(allImageProperties, classesData) {
   const imageAndAnnotationData = [];
   allImageProperties.forEach((image) => {
@@ -116,6 +109,7 @@ function getImageAndAnnotationData(allImageProperties, classesData) {
   return imageAndAnnotationData;
 }
 
+// Generate annotation files data for all images
 function generateAnnotationFilesData(allImageProperties, classesData) {
   const imageAndAnnotationData = getImageAndAnnotationData(allImageProperties, classesData);
   const annotationsFiles = [];
@@ -127,6 +121,7 @@ function generateAnnotationFilesData(allImageProperties, classesData) {
   return annotationsFiles;
 }
 
+// Get classes data from label options
 function getClassesData() {
   const classesData = {};
   const labels = getLabelOptions();
@@ -140,6 +135,7 @@ function getClassesData() {
   return classesData;
 }
 
+// Save current image details
 function saveCurrentImageDetails(allImageProperties) {
   const currentlySelectedImageId = getCurrentImageId();
   const currentlySelectedImageProperties = getImageProperties();
@@ -152,6 +148,7 @@ function saveCurrentImageDetails(allImageProperties) {
   allImageProperties[currentlySelectedImageId].shapes = getAllExistingShapes();
 }
 
+// Download YOLO txt format annotations
 function downloadYOLOTXT() {
   const allImageProperties = getAllImageData();
   saveCurrentImageDetails(allImageProperties);

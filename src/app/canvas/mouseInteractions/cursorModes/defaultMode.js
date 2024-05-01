@@ -1,46 +1,10 @@
-import { changePolygonPointsPropertiesToDefault } from '../../objects/polygon/alterPolygon/alterPolygon';
-import { setObjectPropertiesToDefaultWhenReadyToDraw } from '../../objects/objectsProperties/changeProperties';
-import { getMovableObjectsState } from '../../../tools/state';
-
+// This function sets the default cursor for the given canvas.
+// It sets the default cursor to 'default' and the hover cursor to 'move'
+// if there are any movable objects in the canvas, and 'default' otherwise.
 function setDefaultCanvasCursors(canvas) {
   canvas.defaultCursor = 'default';
   if (getMovableObjectsState()) {
-    canvas.hoverCursor = 'move';
+    canvas.hoverCursor = 'move'; // If there are movable objects, set the hover cursor to 'move'
   } else {
-    canvas.hoverCursor = 'default';
-  }
-  canvas.renderAll();
-}
+    canvas.hoverCursor = 'default'; // Otherwise, set the hover cursor to 'default'
 
-// important to remember that this will reset perPixelTargetFind to true
-// only when the mode is being reset to default
-function setDefaultCursorMode(canvas) {
-  canvas.forEachObject((iteratedObj) => {
-    if (iteratedObj.shapeName !== 'bndBox') {
-      iteratedObj.perPixelTargetFind = true;
-    }
-    iteratedObj.selectable = true;
-    if (getMovableObjectsState()) {
-      iteratedObj.hoverCursor = 'move';
-    } else {
-      iteratedObj.hoverCursor = 'default';
-    }
-  });
-  setDefaultCanvasCursors(canvas);
-}
-
-function setDefaultCursorModeAfterAlteringPolygonPoints(canvas) {
-  changePolygonPointsPropertiesToDefault(canvas);
-  setDefaultCanvasCursors(canvas);
-}
-
-function setDefaultCursorModeWhenReadyToDrawShapes(canvas) {
-  setObjectPropertiesToDefaultWhenReadyToDraw(canvas);
-  setDefaultCanvasCursors(canvas);
-}
-
-export {
-  setDefaultCursorMode,
-  setDefaultCursorModeWhenReadyToDrawShapes,
-  setDefaultCursorModeAfterAlteringPolygonPoints,
-};

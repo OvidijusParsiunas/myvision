@@ -1,8 +1,2 @@
-import { assignTextElements, populateText } from './languages/style';
+import { assignTextElements as assignElements, populateText as populate } from './languages/style';
 
-function initialiseText() {
-  assignTextElements();
-  populateText();
-}
-
-export { initialiseText as default };
