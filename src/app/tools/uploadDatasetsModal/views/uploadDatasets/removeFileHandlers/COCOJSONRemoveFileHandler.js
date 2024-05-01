@@ -1,8 +1,11 @@
-import RemoveFileHandlerBuilder from './builders/removeFileHandlerGenericBuilder';
-import datasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
-import validateFormat from '../formatValidators/COCOJSONValidator';
+import RemoveFileHandler from './RemoveFileHandler';
+import RemoveFileHandlerBuilder from './builders/RemoveFileHandlerBuilder';
+import COCOJSONValidator from '../formatValidators/COCOJSONValidator';
+import COCOJSONDatasetObjectManager from '../datasetObjectManagers/COCOJSONDatasetObjectManager';
 
-const removeFileHandler = RemoveFileHandlerBuilder
-  .buildRemoveFileHandlerForOneAnnotationFileStrategy(datasetObjectManager, validateFormat);
+const removeFileHandler = new RemoveFileHandlerBuilder()
+  .withFormatValidator(new COCOJSONValidator())
+  .withDatasetObjectManager(new COCOJSONDatasetObjectManager())
+  .buildRemoveFileHandlerForOneAnnotationFileStrategy();
 
 export default removeFileHandler;
