@@ -2,12 +2,14 @@ import fabric from 'fabric';
 import { setPolygonLabelOffsetProps } from '../../label/label';
 import { removeShape, addShape, getShapeColorById } from '../../allShapes/allShapes';
 
+// Initialize variables for storing the current polygon, its points, the canvas, and its properties
 let currentPolygon = null;
 let polygonPoints = [];
 let canvas = null;
 let polygonProperties = null;
 let movePolygonPointOffsetReduction = 0;
 
+// Function to set the objects for the current polygon, points array, canvas, and properties object
 function setObjets(polygonObj, polygonPointsArray, canvasObj, polygonPropertiesObj) {
   currentPolygon = polygonObj;
   polygonPoints = polygonPointsArray;
@@ -15,6 +17,7 @@ function setObjets(polygonObj, polygonPointsArray, canvasObj, polygonPropertiesO
   polygonProperties = polygonPropertiesObj;
 }
 
+// Function to generate a new polygon with the given properties
 function generateNewPolygon() {
   const newPolygon = new fabric.Polygon([], polygonProperties.newPolygon());
   newPolygon.set({
@@ -26,6 +29,7 @@ function generateNewPolygon() {
   return newPolygon;
 }
 
+// Function to calculate the new points coordinates after moving the polygon
 function calculateMovedPointsCoordinates() {
   const matrix = currentPolygon.calcTransformMatrix();
   const movedPoints = currentPolygon.get('points')
@@ -37,6 +41,7 @@ function calculateMovedPointsCoordinates() {
   return movedPoints;
 }
 
+// Function to generate new points based on the moved points coordinates
 function generateNewPoints(movedPoints) {
   let pointId = 0;
   const movedPointsCoordinates = [];
@@ -51,6 +56,7 @@ function generateNewPoints(movedPoints) {
   return movedPointsCoordinates;
 }
 
+// Function to move the polygon to its new position
 function movePolygonToNewPosition() {
   const newPosition = currentPolygon._calcDimensions();
   currentPolygon.set({
@@ -67,6 +73,7 @@ function movePolygonToNewPosition() {
   canvas.renderAll();
 }
 
+// Function to generate the polygon after moving it and updating the points array
 function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, polygonPropertiesObj) {
   setObjets(polygonObj, polygonPointsArray, canvasObj, polygonPropertiesObj);
   const newPolygon = generateNewPolygon();
@@ -84,8 +91,11 @@ function generatePolygonAfterMove(polygonObj, polygonPointsArray, canvasObj, pol
   return currentPolygon;
 }
 
+// Function to change the move polygon path offset reduction value
 function changeMovePolygonPathOffset(newOffsetReduction) {
   movePolygonPointOffsetReduction = newOffsetReduction;
 }
 
+// Export the generatePolygonAfterMove and changeMovePolygonPathOffset functions for use in other modules
 export { generatePolygonAfterMove, changeMovePolygonPathOffset };
+
