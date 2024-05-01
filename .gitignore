@@ -1,2 +1,8 @@
-node_modules/
-publicDev/
+// This directory contains third-party libraries and modules required by this project.
+// These modules are installed and managed using the Node Package Manager (npm).
+// To install or update these modules, run `npm install` or `npm update` in the project root directory.
+
+
+// This directory contains development files that are served by a web server.
+// These files may include HTML, CSS, JavaScript, and other assets required for the application.
+// Note that these files are not intended for production use and should be replaced with optimized versions.
