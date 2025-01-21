@@ -1,12 +1,15 @@
+import { setValueFromLocalStorage, getValueFromLocalStorage } from '../../localStorage/localStorage';
 import chineseMandarin from './dictionaries/chineseMandarin';
 import english from './dictionaries/english';
 
+const STORAGE_KEY = 'language';
 const languageToDictionary = { EN: english, CN: chineseMandarin };
-let activeLanguage = Object.keys(languageToDictionary)[0];
+let activeLanguage = getValueFromLocalStorage(STORAGE_KEY) || Object.keys(languageToDictionary)[0];
 let activeDictionary = languageToDictionary[activeLanguage];
 
 function setActiveLanguage(newLanguage) {
   activeLanguage = newLanguage;
+  setValueFromLocalStorage(STORAGE_KEY, newLanguage);
   activeDictionary = languageToDictionary[newLanguage];
 }
 
