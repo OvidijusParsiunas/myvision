@@ -1,33 +1,43 @@
 import { getScreenSizeDelta } from '../../../globalStyling/customCssProperties';
 import { getTextFromDictionary } from '../../../text/languages/language';
 
-let descriptionElement = null;
-let buttonGroupElement = null;
+let descriptionElement: HTMLElement | null = null;
+let buttonGroupElement: HTMLElement | null = null;
 
 function changeModalDescription() {
-  descriptionElement.innerHTML = getTextFromDictionary('ML_NO_ANNOTATED_IMAGES_RESULT');
+  if (descriptionElement) {
+    descriptionElement.innerHTML = getTextFromDictionary('ML_NO_ANNOTATED_IMAGES_RESULT');
+  }
 }
 
 function displayDescription() {
-  descriptionElement.style.display = '';
+  if (descriptionElement) {
+    descriptionElement.style.display = '';
+  }
 }
 
-function setDescriptionElementMargins(top, bottom) {
-  descriptionElement.style.marginTop = top;
-  descriptionElement.style.marginBottom = bottom;
+function setDescriptionElementMargins() {
+  if (descriptionElement) {
+    descriptionElement.style.marginTop = `${19 / getScreenSizeDelta()}px`;
+    descriptionElement.style.marginBottom = `${15 / getScreenSizeDelta()}px`;
+  }
 }
 
 function setDefaultDescriptionElementMargins() {
-  descriptionElement.style.marginTop = '';
-  descriptionElement.style.marginBottom = '';
+  if (descriptionElement) {
+    descriptionElement.style.marginTop = '';
+    descriptionElement.style.marginBottom = '';
+  }
 }
 
 function displayButtonGroupElement() {
-  buttonGroupElement.style.display = '';
+  if (buttonGroupElement) {
+    buttonGroupElement.style.display = '';
+  }
 }
 
 function displayNoObjectsFoundView() {
-  setDescriptionElementMargins(`${19 / getScreenSizeDelta()}px`, `${15 / getScreenSizeDelta()}px`);
+  setDescriptionElementMargins();
   changeModalDescription();
   displayDescription();
   displayButtonGroupElement();
@@ -35,7 +45,9 @@ function displayNoObjectsFoundView() {
 
 function hideNoObjectsFoundViewAssets() {
   setDefaultDescriptionElementMargins();
-  buttonGroupElement.style.display = 'none';
+  if (buttonGroupElement) {
+    buttonGroupElement.style.display = 'none';
+  }
 }
 
 function assignNoObjectsFoundViewLocalVariables() {
@@ -43,6 +55,9 @@ function assignNoObjectsFoundViewLocalVariables() {
   buttonGroupElement = document.getElementById('machine-learning-modal-no-objects-buttons');
 }
 
-export {
-  assignNoObjectsFoundViewLocalVariables, displayNoObjectsFoundView, hideNoObjectsFoundViewAssets,
+export default {
+  assignNoObjectsFoundViewLocalVariables,
+  displayNoObjectsFoundView,
+  hideNoObjectsFoundViewAssets,
 };
+
