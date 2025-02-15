@@ -2,10 +2,10 @@ import { getTextFromDictionary } from './language';
 
 const textProperties = [
   { id: 'welcome-modal-title-welcome-text', dictionaryKey: 'WELCOME' },
-  { id: 'welcome-modal-description-par-1', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_1' },
-  { id: 'welcome-modal-description-par-2', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_2' },
-  { id: 'welcome-modal-description-par-3', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_3' },
-  { id: 'welcome-modal-description-par-4', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_4' },
+  { id: 'welcome-modal-description-part-1', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_1' },
+  { id: 'welcome-modal-description-part-2', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_2' },
+  { id: 'welcome-modal-description-part-3', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_3' },
+  { id: 'welcome-modal-description-part-4', dictionaryKey: 'WELCOME_MODAL_DESCRIPTION_PAR_4' },
   { id: 'start-text', dictionaryKey: 'START' },
   { id: 'labeller-modal-title', dictionaryKey: 'LABEL_NAME' },
   { id: 'labeller-modal-submit-button', dictionaryKey: 'SUBMIT' },
